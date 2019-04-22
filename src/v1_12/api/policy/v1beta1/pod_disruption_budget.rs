@@ -81,8 +81,7 @@ pub enum CreateNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
     Created(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
     Accepted(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedPodDisruptionBudgetResponse {
@@ -112,8 +111,20 @@ impl crate::Response for CreateNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((CreateNamespacedPodDisruptionBudgetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -221,8 +232,7 @@ pub struct DeleteCollectionNamespacedPodDisruptionBudgetOptional<'a> {
 pub enum DeleteCollectionNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedPodDisruptionBudgetResponse {
@@ -249,8 +259,20 @@ impl crate::Response for DeleteCollectionNamespacedPodDisruptionBudgetResponse {
                     Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -336,8 +358,7 @@ pub enum DeleteNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedPodDisruptionBudgetResponse {
@@ -372,8 +393,20 @@ impl crate::Response for DeleteNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((DeleteNamespacedPodDisruptionBudgetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -451,8 +484,7 @@ impl PodDisruptionBudget {
 #[derive(Debug)]
 pub enum ListNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudgetList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedPodDisruptionBudgetResponse {
@@ -466,8 +498,20 @@ impl crate::Response for ListNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((ListNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -540,8 +584,7 @@ impl PodDisruptionBudget {
 #[derive(Debug)]
 pub enum ListPodDisruptionBudgetForAllNamespacesResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudgetList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPodDisruptionBudgetForAllNamespacesResponse {
@@ -555,8 +598,20 @@ impl crate::Response for ListPodDisruptionBudgetForAllNamespacesResponse {
                 };
                 Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -625,8 +680,7 @@ pub struct PatchNamespacedPodDisruptionBudgetOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedPodDisruptionBudgetResponse {
@@ -640,8 +694,20 @@ impl crate::Response for PatchNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((PatchNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -710,8 +776,7 @@ pub struct PatchNamespacedPodDisruptionBudgetStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedPodDisruptionBudgetStatusResponse {
@@ -725,8 +790,20 @@ impl crate::Response for PatchNamespacedPodDisruptionBudgetStatusResponse {
                 };
                 Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -798,8 +875,7 @@ pub struct ReadNamespacedPodDisruptionBudgetOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
@@ -813,8 +889,20 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((ReadNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -874,8 +962,7 @@ pub struct ReadNamespacedPodDisruptionBudgetStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
@@ -889,8 +976,20 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
                 };
                 Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -960,8 +1059,7 @@ pub struct ReplaceNamespacedPodDisruptionBudgetOptional<'a> {
 pub enum ReplaceNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
     Created(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedPodDisruptionBudgetResponse {
@@ -983,8 +1081,20 @@ impl crate::Response for ReplaceNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1054,8 +1164,7 @@ pub struct ReplaceNamespacedPodDisruptionBudgetStatusOptional<'a> {
 pub enum ReplaceNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
     Created(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedPodDisruptionBudgetStatusResponse {
@@ -1077,8 +1186,20 @@ impl crate::Response for ReplaceNamespacedPodDisruptionBudgetStatusResponse {
                 };
                 Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1149,8 +1270,7 @@ impl PodDisruptionBudget {
 #[derive(Debug)]
 pub enum WatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedPodDisruptionBudgetResponse {
@@ -1166,8 +1286,20 @@ impl crate::Response for WatchNamespacedPodDisruptionBudgetResponse {
                 };
                 Ok((WatchNamespacedPodDisruptionBudgetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedPodDisruptionBudgetResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1233,8 +1365,7 @@ impl PodDisruptionBudget {
 #[derive(Debug)]
 pub enum WatchPodDisruptionBudgetForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPodDisruptionBudgetForAllNamespacesResponse {
@@ -1250,8 +1381,20 @@ impl crate::Response for WatchPodDisruptionBudgetForAllNamespacesResponse {
                 };
                 Ok((WatchPodDisruptionBudgetForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchPodDisruptionBudgetForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPodDisruptionBudgetForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

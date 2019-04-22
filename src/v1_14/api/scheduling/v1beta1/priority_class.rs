@@ -80,8 +80,7 @@ pub enum CreatePriorityClassResponse {
     Ok(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
     Created(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
     Accepted(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreatePriorityClassResponse {
@@ -111,8 +110,20 @@ impl crate::Response for CreatePriorityClassResponse {
                 };
                 Ok((CreatePriorityClassResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreatePriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((CreatePriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreatePriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -209,8 +220,7 @@ pub struct DeleteCollectionPriorityClassOptional<'a> {
 pub enum DeleteCollectionPriorityClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionPriorityClassResponse {
@@ -237,8 +247,20 @@ impl crate::Response for DeleteCollectionPriorityClassResponse {
                     Ok((DeleteCollectionPriorityClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionPriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionPriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -319,8 +341,7 @@ pub enum DeletePriorityClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeletePriorityClassResponse {
@@ -355,8 +376,20 @@ impl crate::Response for DeletePriorityClassResponse {
                 };
                 Ok((DeletePriorityClassResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeletePriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((DeletePriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeletePriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -425,8 +458,7 @@ impl PriorityClass {
 #[derive(Debug)]
 pub enum ListPriorityClassResponse {
     Ok(crate::v1_14::api::scheduling::v1beta1::PriorityClassList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPriorityClassResponse {
@@ -440,8 +472,20 @@ impl crate::Response for ListPriorityClassResponse {
                 };
                 Ok((ListPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ListPriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -517,8 +561,7 @@ pub struct PatchPriorityClassOptional<'a> {
 #[derive(Debug)]
 pub enum PatchPriorityClassResponse {
     Ok(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchPriorityClassResponse {
@@ -532,8 +575,20 @@ impl crate::Response for PatchPriorityClassResponse {
                 };
                 Ok((PatchPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((PatchPriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchPriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -600,8 +655,7 @@ pub struct ReadPriorityClassOptional<'a> {
 #[derive(Debug)]
 pub enum ReadPriorityClassResponse {
     Ok(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadPriorityClassResponse {
@@ -615,8 +669,20 @@ impl crate::Response for ReadPriorityClassResponse {
                 };
                 Ok((ReadPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ReadPriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadPriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -687,8 +753,7 @@ pub struct ReplacePriorityClassOptional<'a> {
 pub enum ReplacePriorityClassResponse {
     Ok(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
     Created(crate::v1_14::api::scheduling::v1beta1::PriorityClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplacePriorityClassResponse {
@@ -710,8 +775,20 @@ impl crate::Response for ReplacePriorityClassResponse {
                 };
                 Ok((ReplacePriorityClassResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplacePriorityClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -773,8 +850,7 @@ impl PriorityClass {
 #[derive(Debug)]
 pub enum WatchPriorityClassResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PriorityClass>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPriorityClassResponse {
@@ -790,8 +866,20 @@ impl crate::Response for WatchPriorityClassResponse {
                 };
                 Ok((WatchPriorityClassResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((WatchPriorityClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPriorityClassResponse::Other(result), read))
+            },
         }
     }
 }

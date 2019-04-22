@@ -65,8 +65,7 @@ pub struct CreateNamespacedBindingOptional<'a> {
 #[derive(Debug)]
 pub enum CreateNamespacedBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedBindingResponse {
@@ -80,8 +79,20 @@ impl crate::Response for CreateNamespacedBindingResponse {
                 };
                 Ok((CreateNamespacedBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -144,8 +155,7 @@ pub struct CreateNamespacedPodBindingOptional<'a> {
 #[derive(Debug)]
 pub enum CreateNamespacedPodBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedPodBindingResponse {
@@ -159,8 +169,20 @@ impl crate::Response for CreateNamespacedPodBindingResponse {
                 };
                 Ok((CreateNamespacedPodBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedPodBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedPodBindingResponse::Other(result), read))
+            },
         }
     }
 }

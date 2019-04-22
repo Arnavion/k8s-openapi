@@ -74,8 +74,7 @@ pub enum CreateValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Created(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Accepted(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateValidatingWebhookConfigurationResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateValidatingWebhookConfigurationResponse {
                 };
                 Ok((CreateValidatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -209,8 +220,7 @@ pub struct DeleteCollectionValidatingWebhookConfigurationOptional<'a> {
 pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionValidatingWebhookConfigurationResponse {
@@ -237,8 +247,20 @@ impl crate::Response for DeleteCollectionValidatingWebhookConfigurationResponse 
                     Ok((DeleteCollectionValidatingWebhookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -319,8 +341,7 @@ pub enum DeleteValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteValidatingWebhookConfigurationResponse {
@@ -355,8 +376,20 @@ impl crate::Response for DeleteValidatingWebhookConfigurationResponse {
                 };
                 Ok((DeleteValidatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -429,8 +462,7 @@ impl ValidatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum ListValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListValidatingWebhookConfigurationResponse {
@@ -444,8 +476,20 @@ impl crate::Response for ListValidatingWebhookConfigurationResponse {
                 };
                 Ok((ListValidatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ pub struct PatchValidatingWebhookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum PatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchValidatingWebhookConfigurationResponse {
@@ -524,8 +567,20 @@ impl crate::Response for PatchValidatingWebhookConfigurationResponse {
                 };
                 Ok((PatchValidatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -592,8 +647,7 @@ pub struct ReadValidatingWebhookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum ReadValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadValidatingWebhookConfigurationResponse {
@@ -607,8 +661,20 @@ impl crate::Response for ReadValidatingWebhookConfigurationResponse {
                 };
                 Ok((ReadValidatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -673,8 +739,7 @@ pub struct ReplaceValidatingWebhookConfigurationOptional<'a> {
 pub enum ReplaceValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Created(crate::v1_13::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceValidatingWebhookConfigurationResponse {
@@ -696,8 +761,20 @@ impl crate::Response for ReplaceValidatingWebhookConfigurationResponse {
                 };
                 Ok((ReplaceValidatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -763,8 +840,7 @@ impl ValidatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchValidatingWebhookConfigurationResponse {
@@ -780,8 +856,20 @@ impl crate::Response for WatchValidatingWebhookConfigurationResponse {
                 };
                 Ok((WatchValidatingWebhookConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchValidatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchValidatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchValidatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }

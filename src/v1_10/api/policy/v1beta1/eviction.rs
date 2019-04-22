@@ -72,8 +72,7 @@ pub enum CreateNamespacedPodEvictionResponse {
     Ok(crate::v1_10::api::policy::v1beta1::Eviction),
     Created(crate::v1_10::api::policy::v1beta1::Eviction),
     Accepted(crate::v1_10::api::policy::v1beta1::Eviction),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedPodEvictionResponse {
@@ -103,8 +102,20 @@ impl crate::Response for CreateNamespacedPodEvictionResponse {
                 };
                 Ok((CreateNamespacedPodEvictionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodEvictionResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedPodEvictionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedPodEvictionResponse::Other(result), read))
+            },
         }
     }
 }

@@ -67,8 +67,7 @@ pub enum CreateNamespacedConfigMapResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMap),
     Created(crate::v1_9::api::core::v1::ConfigMap),
     Accepted(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedConfigMapResponse {
@@ -98,8 +97,20 @@ impl crate::Response for CreateNamespacedConfigMapResponse {
                 };
                 Ok((CreateNamespacedConfigMapResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -205,8 +216,7 @@ pub struct DeleteCollectionNamespacedConfigMapOptional<'a> {
 pub enum DeleteCollectionNamespacedConfigMapResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedConfigMapResponse {
@@ -233,8 +243,20 @@ impl crate::Response for DeleteCollectionNamespacedConfigMapResponse {
                     Ok((DeleteCollectionNamespacedConfigMapResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -313,8 +335,7 @@ pub struct DeleteNamespacedConfigMapOptional<'a> {
 pub enum DeleteNamespacedConfigMapResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedConfigMapResponse {
@@ -341,8 +362,20 @@ impl crate::Response for DeleteNamespacedConfigMapResponse {
                     Ok((DeleteNamespacedConfigMapResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -415,8 +448,7 @@ impl ConfigMap {
 #[derive(Debug)]
 pub enum ListConfigMapForAllNamespacesResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMapList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListConfigMapForAllNamespacesResponse {
@@ -430,8 +462,20 @@ impl crate::Response for ListConfigMapForAllNamespacesResponse {
                 };
                 Ok((ListConfigMapForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListConfigMapForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListConfigMapForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListConfigMapForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ impl ConfigMap {
 #[derive(Debug)]
 pub enum ListNamespacedConfigMapResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMapList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedConfigMapResponse {
@@ -524,8 +567,20 @@ impl crate::Response for ListNamespacedConfigMapResponse {
                 };
                 Ok((ListNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -588,8 +643,7 @@ pub struct PatchNamespacedConfigMapOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedConfigMapResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedConfigMapResponse {
@@ -603,8 +657,20 @@ impl crate::Response for PatchNamespacedConfigMapResponse {
                 };
                 Ok((PatchNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -676,8 +742,7 @@ pub struct ReadNamespacedConfigMapOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedConfigMapResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedConfigMapResponse {
@@ -691,8 +756,20 @@ impl crate::Response for ReadNamespacedConfigMapResponse {
                 };
                 Ok((ReadNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -756,8 +833,7 @@ pub struct ReplaceNamespacedConfigMapOptional<'a> {
 pub enum ReplaceNamespacedConfigMapResponse {
     Ok(crate::v1_9::api::core::v1::ConfigMap),
     Created(crate::v1_9::api::core::v1::ConfigMap),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedConfigMapResponse {
@@ -779,8 +855,20 @@ impl crate::Response for ReplaceNamespacedConfigMapResponse {
                 };
                 Ok((ReplaceNamespacedConfigMapResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }
@@ -846,8 +934,7 @@ impl ConfigMap {
 #[derive(Debug)]
 pub enum WatchConfigMapForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchConfigMapForAllNamespacesResponse {
@@ -863,8 +950,20 @@ impl crate::Response for WatchConfigMapForAllNamespacesResponse {
                 };
                 Ok((WatchConfigMapForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchConfigMapForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchConfigMapForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchConfigMapForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -935,8 +1034,7 @@ impl ConfigMap {
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedConfigMapResponse {
@@ -952,8 +1050,20 @@ impl crate::Response for WatchNamespacedConfigMapResponse {
                 };
                 Ok((WatchNamespacedConfigMapResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedConfigMapResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedConfigMapResponse::Other(result), read))
+            },
         }
     }
 }

@@ -64,8 +64,7 @@ pub enum CreateSubjectAccessReviewResponse {
     Ok(crate::v1_9::api::authorization::v1beta1::SubjectAccessReview),
     Created(crate::v1_9::api::authorization::v1beta1::SubjectAccessReview),
     Accepted(crate::v1_9::api::authorization::v1beta1::SubjectAccessReview),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateSubjectAccessReviewResponse {
@@ -95,8 +94,20 @@ impl crate::Response for CreateSubjectAccessReviewResponse {
                 };
                 Ok((CreateSubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateSubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateSubjectAccessReviewResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateSubjectAccessReviewResponse::Other(result), read))
+            },
         }
     }
 }

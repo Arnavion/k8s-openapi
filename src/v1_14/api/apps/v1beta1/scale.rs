@@ -91,8 +91,7 @@ pub struct PatchNamespacedDeploymentScaleOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedDeploymentScaleResponse {
@@ -106,8 +105,20 @@ impl crate::Response for PatchNamespacedDeploymentScaleResponse {
                 };
                 Ok((PatchNamespacedDeploymentScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedDeploymentScaleResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedDeploymentScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedDeploymentScaleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -188,8 +199,7 @@ pub struct PatchNamespacedStatefulSetScaleOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedStatefulSetScaleResponse {
@@ -203,8 +213,20 @@ impl crate::Response for PatchNamespacedStatefulSetScaleResponse {
                 };
                 Ok((PatchNamespacedStatefulSetScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedStatefulSetScaleResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedStatefulSetScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedStatefulSetScaleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -264,8 +286,7 @@ pub struct ReadNamespacedDeploymentScaleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedDeploymentScaleResponse {
@@ -279,8 +300,20 @@ impl crate::Response for ReadNamespacedDeploymentScaleResponse {
                 };
                 Ok((ReadNamespacedDeploymentScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedDeploymentScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedDeploymentScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedDeploymentScaleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -340,8 +373,7 @@ pub struct ReadNamespacedStatefulSetScaleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedStatefulSetScaleResponse {
@@ -355,8 +387,20 @@ impl crate::Response for ReadNamespacedStatefulSetScaleResponse {
                 };
                 Ok((ReadNamespacedStatefulSetScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedStatefulSetScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedStatefulSetScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedStatefulSetScaleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -432,8 +476,7 @@ pub struct ReplaceNamespacedDeploymentScaleOptional<'a> {
 pub enum ReplaceNamespacedDeploymentScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
     Created(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedDeploymentScaleResponse {
@@ -455,8 +498,20 @@ impl crate::Response for ReplaceNamespacedDeploymentScaleResponse {
                 };
                 Ok((ReplaceNamespacedDeploymentScaleResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedDeploymentScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedDeploymentScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedDeploymentScaleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -532,8 +587,7 @@ pub struct ReplaceNamespacedStatefulSetScaleOptional<'a> {
 pub enum ReplaceNamespacedStatefulSetScaleResponse {
     Ok(crate::v1_14::api::apps::v1beta1::Scale),
     Created(crate::v1_14::api::apps::v1beta1::Scale),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedStatefulSetScaleResponse {
@@ -555,8 +609,20 @@ impl crate::Response for ReplaceNamespacedStatefulSetScaleResponse {
                 };
                 Ok((ReplaceNamespacedStatefulSetScaleResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedStatefulSetScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedStatefulSetScaleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedStatefulSetScaleResponse::Other(result), read))
+            },
         }
     }
 }

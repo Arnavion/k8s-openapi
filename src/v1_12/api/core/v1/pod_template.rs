@@ -79,8 +79,7 @@ pub enum CreateNamespacedPodTemplateResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplate),
     Created(crate::v1_12::api::core::v1::PodTemplate),
     Accepted(crate::v1_12::api::core::v1::PodTemplate),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedPodTemplateResponse {
@@ -110,8 +109,20 @@ impl crate::Response for CreateNamespacedPodTemplateResponse {
                 };
                 Ok((CreateNamespacedPodTemplateResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -219,8 +230,7 @@ pub struct DeleteCollectionNamespacedPodTemplateOptional<'a> {
 pub enum DeleteCollectionNamespacedPodTemplateResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::core::v1::PodTemplate),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedPodTemplateResponse {
@@ -247,8 +257,20 @@ impl crate::Response for DeleteCollectionNamespacedPodTemplateResponse {
                     Ok((DeleteCollectionNamespacedPodTemplateResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -334,8 +356,7 @@ pub enum DeleteNamespacedPodTemplateResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::core::v1::PodTemplate),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedPodTemplateResponse {
@@ -370,8 +391,20 @@ impl crate::Response for DeleteNamespacedPodTemplateResponse {
                 };
                 Ok((DeleteNamespacedPodTemplateResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -449,8 +482,7 @@ impl PodTemplate {
 #[derive(Debug)]
 pub enum ListNamespacedPodTemplateResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplateList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedPodTemplateResponse {
@@ -464,8 +496,20 @@ impl crate::Response for ListNamespacedPodTemplateResponse {
                 };
                 Ok((ListNamespacedPodTemplateResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -538,8 +582,7 @@ impl PodTemplate {
 #[derive(Debug)]
 pub enum ListPodTemplateForAllNamespacesResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplateList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPodTemplateForAllNamespacesResponse {
@@ -553,8 +596,20 @@ impl crate::Response for ListPodTemplateForAllNamespacesResponse {
                 };
                 Ok((ListPodTemplateForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPodTemplateForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListPodTemplateForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPodTemplateForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -623,8 +678,7 @@ pub struct PatchNamespacedPodTemplateOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedPodTemplateResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplate),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedPodTemplateResponse {
@@ -638,8 +692,20 @@ impl crate::Response for PatchNamespacedPodTemplateResponse {
                 };
                 Ok((PatchNamespacedPodTemplateResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -711,8 +777,7 @@ pub struct ReadNamespacedPodTemplateOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedPodTemplateResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplate),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedPodTemplateResponse {
@@ -726,8 +791,20 @@ impl crate::Response for ReadNamespacedPodTemplateResponse {
                 };
                 Ok((ReadNamespacedPodTemplateResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -797,8 +874,7 @@ pub struct ReplaceNamespacedPodTemplateOptional<'a> {
 pub enum ReplaceNamespacedPodTemplateResponse {
     Ok(crate::v1_12::api::core::v1::PodTemplate),
     Created(crate::v1_12::api::core::v1::PodTemplate),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedPodTemplateResponse {
@@ -820,8 +896,20 @@ impl crate::Response for ReplaceNamespacedPodTemplateResponse {
                 };
                 Ok((ReplaceNamespacedPodTemplateResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -892,8 +980,7 @@ impl PodTemplate {
 #[derive(Debug)]
 pub enum WatchNamespacedPodTemplateResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodTemplate>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedPodTemplateResponse {
@@ -909,8 +996,20 @@ impl crate::Response for WatchNamespacedPodTemplateResponse {
                 };
                 Ok((WatchNamespacedPodTemplateResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodTemplateResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedPodTemplateResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedPodTemplateResponse::Other(result), read))
+            },
         }
     }
 }
@@ -976,8 +1075,7 @@ impl PodTemplate {
 #[derive(Debug)]
 pub enum WatchPodTemplateForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodTemplate>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPodTemplateForAllNamespacesResponse {
@@ -993,8 +1091,20 @@ impl crate::Response for WatchPodTemplateForAllNamespacesResponse {
                 };
                 Ok((WatchPodTemplateForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPodTemplateForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchPodTemplateForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPodTemplateForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

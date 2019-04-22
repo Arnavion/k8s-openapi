@@ -79,8 +79,7 @@ pub enum CreateVolumeAttachmentResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
     Created(crate::v1_14::api::storage::v1::VolumeAttachment),
     Accepted(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateVolumeAttachmentResponse {
@@ -110,8 +109,20 @@ impl crate::Response for CreateVolumeAttachmentResponse {
                 };
                 Ok((CreateVolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((CreateVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -208,8 +219,7 @@ pub struct DeleteCollectionVolumeAttachmentOptional<'a> {
 pub enum DeleteCollectionVolumeAttachmentResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionVolumeAttachmentResponse {
@@ -236,8 +246,20 @@ impl crate::Response for DeleteCollectionVolumeAttachmentResponse {
                     Ok((DeleteCollectionVolumeAttachmentResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -318,8 +340,7 @@ pub enum DeleteVolumeAttachmentResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1::VolumeAttachment),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteVolumeAttachmentResponse {
@@ -354,8 +375,20 @@ impl crate::Response for DeleteVolumeAttachmentResponse {
                 };
                 Ok((DeleteVolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -424,8 +457,7 @@ impl VolumeAttachment {
 #[derive(Debug)]
 pub enum ListVolumeAttachmentResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachmentList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListVolumeAttachmentResponse {
@@ -439,8 +471,20 @@ impl crate::Response for ListVolumeAttachmentResponse {
                 };
                 Ok((ListVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ListVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -516,8 +560,7 @@ pub struct PatchVolumeAttachmentOptional<'a> {
 #[derive(Debug)]
 pub enum PatchVolumeAttachmentResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchVolumeAttachmentResponse {
@@ -531,8 +574,20 @@ impl crate::Response for PatchVolumeAttachmentResponse {
                 };
                 Ok((PatchVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((PatchVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -608,8 +663,7 @@ pub struct PatchVolumeAttachmentStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchVolumeAttachmentStatusResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchVolumeAttachmentStatusResponse {
@@ -623,8 +677,20 @@ impl crate::Response for PatchVolumeAttachmentStatusResponse {
                 };
                 Ok((PatchVolumeAttachmentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchVolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchVolumeAttachmentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchVolumeAttachmentStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -691,8 +757,7 @@ pub struct ReadVolumeAttachmentOptional<'a> {
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadVolumeAttachmentResponse {
@@ -706,8 +771,20 @@ impl crate::Response for ReadVolumeAttachmentResponse {
                 };
                 Ok((ReadVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ReadVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -762,8 +839,7 @@ pub struct ReadVolumeAttachmentStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentStatusResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadVolumeAttachmentStatusResponse {
@@ -777,8 +853,20 @@ impl crate::Response for ReadVolumeAttachmentStatusResponse {
                 };
                 Ok((ReadVolumeAttachmentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadVolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadVolumeAttachmentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadVolumeAttachmentStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -849,8 +937,7 @@ pub struct ReplaceVolumeAttachmentOptional<'a> {
 pub enum ReplaceVolumeAttachmentResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
     Created(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceVolumeAttachmentResponse {
@@ -872,8 +959,20 @@ impl crate::Response for ReplaceVolumeAttachmentResponse {
                 };
                 Ok((ReplaceVolumeAttachmentResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }
@@ -944,8 +1043,7 @@ pub struct ReplaceVolumeAttachmentStatusOptional<'a> {
 pub enum ReplaceVolumeAttachmentStatusResponse {
     Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
     Created(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceVolumeAttachmentStatusResponse {
@@ -967,8 +1065,20 @@ impl crate::Response for ReplaceVolumeAttachmentStatusResponse {
                 };
                 Ok((ReplaceVolumeAttachmentStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceVolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceVolumeAttachmentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceVolumeAttachmentStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1030,8 +1140,7 @@ impl VolumeAttachment {
 #[derive(Debug)]
 pub enum WatchVolumeAttachmentResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<VolumeAttachment>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchVolumeAttachmentResponse {
@@ -1047,8 +1156,20 @@ impl crate::Response for WatchVolumeAttachmentResponse {
                 };
                 Ok((WatchVolumeAttachmentResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((WatchVolumeAttachmentResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchVolumeAttachmentResponse::Other(result), read))
+            },
         }
     }
 }

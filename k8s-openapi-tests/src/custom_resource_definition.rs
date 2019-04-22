@@ -133,37 +133,36 @@ fn create() {
 		};
 
 		loop {
-			enum Result {
-				Ok(apiextensions::CustomResourceDefinition),
-				Conflict,
-				Retry,
-			}
-
 			let (request, response_body) =
 				apiextensions::CustomResourceDefinition::create_custom_resource_definition(&custom_resource_definition, Default::default())
 				.expect("couldn't create custom resource definition");
 			let response = client.execute(request).expect("couldn't create custom resource definition");
 
-			let custom_resource_definition =
-				crate::get_single_value(response, response_body, |response, status_code, _response_body| k8s_match!(response, {
-					k8s_if_1_8!(apiextensions::CreateCustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CREATED =>
-						match serde_json::from_slice(_response_body) {
-							Ok(custom_resource_definition) => Ok(crate::ValueResult::GotValue(Result::Ok(custom_resource_definition))),
-							Err(ref err) if err.is_eof() => Ok(crate::ValueResult::NeedMoreData),
-							Err(err) => Err(err.into()),
-						}),
-					k8s_if_ge_1_9!(apiextensions::CreateCustomResourceDefinitionResponse::Created(custom_resource_definition) =>
-						Ok(crate::ValueResult::GotValue(Result::Ok(custom_resource_definition)))),
-					apiextensions::CreateCustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CONFLICT =>
-						Ok(crate::ValueResult::GotValue(Result::Conflict)),
-					apiextensions::CreateCustomResourceDefinitionResponse::Other if status_code == http::StatusCode::INTERNAL_SERVER_ERROR =>
-						Ok(crate::ValueResult::GotValue(Result::Retry)),
-					other => Err(format!("{:?} {}", other, status_code).into()),
+			let success =
+				crate::get_single_value(response, response_body, |response, status_code| k8s_match!((response, status_code), {
+					k8s_if_1_8!((apiextensions::CreateCustomResourceDefinitionResponse::Other(value), http::StatusCode::CREATED) => {
+						let value = match value? {
+							Some(value) => value,
+							None => return Ok(crate::ValueResult::NeedMoreData),
+						};
+						let _: apiextensions::CustomResourceDefinition = serde::Deserialize::deserialize(value)?;
+						Ok(crate::ValueResult::GotValue(true))
+					}),
+
+					k8s_if_ge_1_9!((apiextensions::CreateCustomResourceDefinitionResponse::Created(_), _) =>
+						Ok(crate::ValueResult::GotValue(true))),
+
+					(_, http::StatusCode::CONFLICT) =>
+						Ok(crate::ValueResult::GotValue(true)),
+
+					(_, http::StatusCode::INTERNAL_SERVER_ERROR) =>
+						Ok(crate::ValueResult::GotValue(false)),
+
+					(other, status_code) => Err(format!("{:?} {}", other, status_code).into()),
 				})).expect("couldn't create custom resource definition");
 
-			match custom_resource_definition {
-				Result::Ok(_) | Result::Conflict => break,
-				Result::Retry => (),
+			if success {
+				break;
 			}
 		}
 
@@ -175,7 +174,7 @@ fn create() {
 				.expect("couldn't get custom resource definition");
 			let custom_resource_definition = {
 				let response = client.execute(request).expect("couldn't get custom resource definition");
-				crate::get_single_value(response, response_body, |response, status_code, _| match response {
+				crate::get_single_value(response, response_body, |response, status_code| match response {
 					apiextensions::ReadCustomResourceDefinitionResponse::Ok(custom_resource_definition) => Ok(crate::ValueResult::GotValue(custom_resource_definition)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("couldn't get custom resource definition")
@@ -208,7 +207,7 @@ fn create() {
 			.expect("couldn't create custom resource");
 		let fb1 = {
 			let response = client.execute(request).expect("couldn't create custom resource");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
+			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
 				CreateFooBarResponse::Created(fb) => Ok(crate::ValueResult::GotValue(fb)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't create custom resource")
@@ -221,7 +220,7 @@ fn create() {
 		let request = http::Request::delete(fb1_self_link).body(vec![]).expect("couldn't delete custom resource");
 		{
 			let response = client.execute(request).expect("couldn't delete custom resource");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
+			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
 				DeleteFooBarResponse::Ok => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete custom resource");
@@ -244,7 +243,7 @@ fn create() {
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
-				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
+				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
 					CreateFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
@@ -269,7 +268,7 @@ fn create() {
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
-				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
+				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
 					CreateFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
@@ -284,7 +283,7 @@ fn create() {
 		let request = http::Request::delete(custom_resource_definition_self_link).body(vec![]).expect("couldn't delete custom resource definition");
 		{
 			let response = client.execute(request).expect("couldn't delete custom resource definition");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
+			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
 				apiextensions::DeleteCollectionCustomResourceDefinitionResponse::OkStatus(_) |
 				apiextensions::DeleteCollectionCustomResourceDefinitionResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),

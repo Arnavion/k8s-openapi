@@ -64,8 +64,7 @@ pub enum CreateCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Accepted(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateCustomResourceDefinitionResponse {
@@ -95,8 +94,20 @@ impl crate::Response for CreateCustomResourceDefinitionResponse {
                 };
                 Ok((CreateCustomResourceDefinitionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((CreateCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -197,8 +208,7 @@ pub struct DeleteCollectionCustomResourceDefinitionOptional<'a> {
 pub enum DeleteCollectionCustomResourceDefinitionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionCustomResourceDefinitionResponse {
@@ -225,8 +235,20 @@ impl crate::Response for DeleteCollectionCustomResourceDefinitionResponse {
                     Ok((DeleteCollectionCustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -300,8 +322,7 @@ pub struct DeleteCustomResourceDefinitionOptional<'a> {
 pub enum DeleteCustomResourceDefinitionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCustomResourceDefinitionResponse {
@@ -328,8 +349,20 @@ impl crate::Response for DeleteCustomResourceDefinitionResponse {
                     Ok((DeleteCustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -402,8 +435,7 @@ impl CustomResourceDefinition {
 #[derive(Debug)]
 pub enum ListCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListCustomResourceDefinitionResponse {
@@ -417,8 +449,20 @@ impl crate::Response for ListCustomResourceDefinitionResponse {
                 };
                 Ok((ListCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ListCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -476,8 +520,7 @@ pub struct PatchCustomResourceDefinitionOptional<'a> {
 #[derive(Debug)]
 pub enum PatchCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchCustomResourceDefinitionResponse {
@@ -491,8 +534,20 @@ impl crate::Response for PatchCustomResourceDefinitionResponse {
                 };
                 Ok((PatchCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((PatchCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -559,8 +614,7 @@ pub struct ReadCustomResourceDefinitionOptional<'a> {
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadCustomResourceDefinitionResponse {
@@ -574,8 +628,20 @@ impl crate::Response for ReadCustomResourceDefinitionResponse {
                 };
                 Ok((ReadCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ReadCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -634,8 +700,7 @@ pub struct ReplaceCustomResourceDefinitionOptional<'a> {
 pub enum ReplaceCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCustomResourceDefinitionResponse {
@@ -657,8 +722,20 @@ impl crate::Response for ReplaceCustomResourceDefinitionResponse {
                 };
                 Ok((ReplaceCustomResourceDefinitionResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -717,8 +794,7 @@ pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
 pub enum ReplaceCustomResourceDefinitionStatusResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCustomResourceDefinitionStatusResponse {
@@ -740,8 +816,20 @@ impl crate::Response for ReplaceCustomResourceDefinitionStatusResponse {
                 };
                 Ok((ReplaceCustomResourceDefinitionStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCustomResourceDefinitionStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCustomResourceDefinitionStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCustomResourceDefinitionStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -807,8 +895,7 @@ impl CustomResourceDefinition {
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<CustomResourceDefinition>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchCustomResourceDefinitionResponse {
@@ -824,8 +911,20 @@ impl crate::Response for WatchCustomResourceDefinitionResponse {
                 };
                 Ok((WatchCustomResourceDefinitionResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((WatchCustomResourceDefinitionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchCustomResourceDefinitionResponse::Other(result), read))
+            },
         }
     }
 }

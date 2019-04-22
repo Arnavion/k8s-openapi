@@ -68,8 +68,7 @@ pub struct CreateNamespacedCronJobOptional<'a> {
 #[derive(Debug)]
 pub enum CreateNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedCronJobResponse {
@@ -83,8 +82,20 @@ impl crate::Response for CreateNamespacedCronJobResponse {
                 };
                 Ok((CreateNamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -190,8 +201,7 @@ pub struct DeleteCollectionNamespacedCronJobOptional<'a> {
 pub enum DeleteCollectionNamespacedCronJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedCronJobResponse {
@@ -218,8 +228,20 @@ impl crate::Response for DeleteCollectionNamespacedCronJobResponse {
                     Ok((DeleteCollectionNamespacedCronJobResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -298,8 +320,7 @@ pub struct DeleteNamespacedCronJobOptional<'a> {
 pub enum DeleteNamespacedCronJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedCronJobResponse {
@@ -326,8 +347,20 @@ impl crate::Response for DeleteNamespacedCronJobResponse {
                     Ok((DeleteNamespacedCronJobResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -400,8 +433,7 @@ impl CronJob {
 #[derive(Debug)]
 pub enum ListCronJobForAllNamespacesResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJobList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListCronJobForAllNamespacesResponse {
@@ -415,8 +447,20 @@ impl crate::Response for ListCronJobForAllNamespacesResponse {
                 };
                 Ok((ListCronJobForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCronJobForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCronJobForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListCronJobForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -494,8 +538,7 @@ impl CronJob {
 #[derive(Debug)]
 pub enum ListNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJobList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedCronJobResponse {
@@ -509,8 +552,20 @@ impl crate::Response for ListNamespacedCronJobResponse {
                 };
                 Ok((ListNamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -573,8 +628,7 @@ pub struct PatchNamespacedCronJobOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedCronJobResponse {
@@ -588,8 +642,20 @@ impl crate::Response for PatchNamespacedCronJobResponse {
                 };
                 Ok((PatchNamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -652,8 +718,7 @@ pub struct PatchNamespacedCronJobStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedCronJobStatusResponse {
@@ -667,8 +732,20 @@ impl crate::Response for PatchNamespacedCronJobStatusResponse {
                 };
                 Ok((PatchNamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedCronJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedCronJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedCronJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -740,8 +817,7 @@ pub struct ReadNamespacedCronJobOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedCronJobResponse {
@@ -755,8 +831,20 @@ impl crate::Response for ReadNamespacedCronJobResponse {
                 };
                 Ok((ReadNamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -816,8 +904,7 @@ pub struct ReadNamespacedCronJobStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedCronJobStatusResponse {
@@ -831,8 +918,20 @@ impl crate::Response for ReadNamespacedCronJobStatusResponse {
                 };
                 Ok((ReadNamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedCronJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedCronJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedCronJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -895,8 +994,7 @@ pub struct ReplaceNamespacedCronJobOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedCronJobResponse {
@@ -910,8 +1008,20 @@ impl crate::Response for ReplaceNamespacedCronJobResponse {
                 };
                 Ok((ReplaceNamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -974,8 +1084,7 @@ pub struct ReplaceNamespacedCronJobStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1beta1::CronJob),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedCronJobStatusResponse {
@@ -989,8 +1098,20 @@ impl crate::Response for ReplaceNamespacedCronJobStatusResponse {
                 };
                 Ok((ReplaceNamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedCronJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedCronJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedCronJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1056,8 +1177,7 @@ impl CronJob {
 #[derive(Debug)]
 pub enum WatchCronJobForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchCronJobForAllNamespacesResponse {
@@ -1073,8 +1193,20 @@ impl crate::Response for WatchCronJobForAllNamespacesResponse {
                 };
                 Ok((WatchCronJobForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCronJobForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCronJobForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchCronJobForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1145,8 +1277,7 @@ impl CronJob {
 #[derive(Debug)]
 pub enum WatchNamespacedCronJobResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedCronJobResponse {
@@ -1162,8 +1293,20 @@ impl crate::Response for WatchNamespacedCronJobResponse {
                 };
                 Ok((WatchNamespacedCronJobResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedCronJobResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedCronJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedCronJobResponse::Other(result), read))
+            },
         }
     }
 }

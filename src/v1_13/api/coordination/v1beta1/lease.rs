@@ -79,8 +79,7 @@ pub enum CreateNamespacedLeaseResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::Lease),
     Created(crate::v1_13::api::coordination::v1beta1::Lease),
     Accepted(crate::v1_13::api::coordination::v1beta1::Lease),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedLeaseResponse {
@@ -110,8 +109,20 @@ impl crate::Response for CreateNamespacedLeaseResponse {
                 };
                 Ok((CreateNamespacedLeaseResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -219,8 +230,7 @@ pub struct DeleteCollectionNamespacedLeaseOptional<'a> {
 pub enum DeleteCollectionNamespacedLeaseResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::coordination::v1beta1::Lease),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
@@ -247,8 +257,20 @@ impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
                     Ok((DeleteCollectionNamespacedLeaseResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -334,8 +356,7 @@ pub enum DeleteNamespacedLeaseResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::coordination::v1beta1::Lease),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedLeaseResponse {
@@ -370,8 +391,20 @@ impl crate::Response for DeleteNamespacedLeaseResponse {
                 };
                 Ok((DeleteNamespacedLeaseResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -444,8 +477,7 @@ impl Lease {
 #[derive(Debug)]
 pub enum ListLeaseForAllNamespacesResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::LeaseList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListLeaseForAllNamespacesResponse {
@@ -459,8 +491,20 @@ impl crate::Response for ListLeaseForAllNamespacesResponse {
                 };
                 Ok((ListLeaseForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListLeaseForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListLeaseForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListLeaseForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -538,8 +582,7 @@ impl Lease {
 #[derive(Debug)]
 pub enum ListNamespacedLeaseResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::LeaseList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedLeaseResponse {
@@ -553,8 +596,20 @@ impl crate::Response for ListNamespacedLeaseResponse {
                 };
                 Ok((ListNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -623,8 +678,7 @@ pub struct PatchNamespacedLeaseOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedLeaseResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::Lease),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedLeaseResponse {
@@ -638,8 +692,20 @@ impl crate::Response for PatchNamespacedLeaseResponse {
                 };
                 Ok((PatchNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -711,8 +777,7 @@ pub struct ReadNamespacedLeaseOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedLeaseResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::Lease),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedLeaseResponse {
@@ -726,8 +791,20 @@ impl crate::Response for ReadNamespacedLeaseResponse {
                 };
                 Ok((ReadNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -797,8 +874,7 @@ pub struct ReplaceNamespacedLeaseOptional<'a> {
 pub enum ReplaceNamespacedLeaseResponse {
     Ok(crate::v1_13::api::coordination::v1beta1::Lease),
     Created(crate::v1_13::api::coordination::v1beta1::Lease),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedLeaseResponse {
@@ -820,8 +896,20 @@ impl crate::Response for ReplaceNamespacedLeaseResponse {
                 };
                 Ok((ReplaceNamespacedLeaseResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }
@@ -887,8 +975,7 @@ impl Lease {
 #[derive(Debug)]
 pub enum WatchLeaseForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchLeaseForAllNamespacesResponse {
@@ -904,8 +991,20 @@ impl crate::Response for WatchLeaseForAllNamespacesResponse {
                 };
                 Ok((WatchLeaseForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchLeaseForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchLeaseForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchLeaseForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -976,8 +1075,7 @@ impl Lease {
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedLeaseResponse {
@@ -993,8 +1091,20 @@ impl crate::Response for WatchNamespacedLeaseResponse {
                 };
                 Ok((WatchNamespacedLeaseResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedLeaseResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedLeaseResponse::Other(result), read))
+            },
         }
     }
 }

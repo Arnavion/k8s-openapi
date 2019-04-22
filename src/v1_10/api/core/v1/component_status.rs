@@ -80,8 +80,7 @@ impl ComponentStatus {
 #[derive(Debug)]
 pub enum ListComponentStatusResponse {
     Ok(crate::v1_10::api::core::v1::ComponentStatusList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListComponentStatusResponse {
@@ -95,8 +94,20 @@ impl crate::Response for ListComponentStatusResponse {
                 };
                 Ok((ListComponentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListComponentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ListComponentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListComponentStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -151,8 +162,7 @@ pub struct ReadComponentStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadComponentStatusResponse {
     Ok(crate::v1_10::api::core::v1::ComponentStatus),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadComponentStatusResponse {
@@ -166,8 +176,20 @@ impl crate::Response for ReadComponentStatusResponse {
                 };
                 Ok((ReadComponentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadComponentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadComponentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadComponentStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -233,8 +255,7 @@ impl ComponentStatus {
 #[derive(Debug)]
 pub enum WatchComponentStatusResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ComponentStatus>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchComponentStatusResponse {
@@ -250,8 +271,20 @@ impl crate::Response for WatchComponentStatusResponse {
                 };
                 Ok((WatchComponentStatusResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchComponentStatusResponse::Unauthorized, 0)),
-            _ => Ok((WatchComponentStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchComponentStatusResponse::Other(result), read))
+            },
         }
     }
 }

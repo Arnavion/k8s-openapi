@@ -8,7 +8,7 @@ fn watch_pods() {
 			api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
 		let response = client.execute(request).expect("couldn't watch pods");
 		let pod_watch_events =
-			crate::get_multiple_values(response, response_body, |response, status_code, _| match response {
+			crate::get_multiple_values(response, response_body, |response, status_code| match response {
 				api::WatchNamespacedPodResponse::Ok(pod_watch_event) =>
 					Ok(crate::ValueResult::GotValue(pod_watch_event)),
 				other => Err(format!("{:?} {}", other, status_code).into()),

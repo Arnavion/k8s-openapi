@@ -68,8 +68,7 @@ pub struct CreateNamespacedReplicationControllerOptional<'a> {
 #[derive(Debug)]
 pub enum CreateNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedReplicationControllerResponse {
@@ -83,8 +82,20 @@ impl crate::Response for CreateNamespacedReplicationControllerResponse {
                 };
                 Ok((CreateNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -190,8 +201,7 @@ pub struct DeleteCollectionNamespacedReplicationControllerOptional<'a> {
 pub enum DeleteCollectionNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedReplicationControllerResponse {
@@ -218,8 +228,20 @@ impl crate::Response for DeleteCollectionNamespacedReplicationControllerResponse
                     Ok((DeleteCollectionNamespacedReplicationControllerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -298,8 +320,7 @@ pub struct DeleteNamespacedReplicationControllerOptional<'a> {
 pub enum DeleteNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedReplicationControllerResponse {
@@ -326,8 +347,20 @@ impl crate::Response for DeleteNamespacedReplicationControllerResponse {
                     Ok((DeleteNamespacedReplicationControllerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -405,8 +438,7 @@ impl ReplicationController {
 #[derive(Debug)]
 pub enum ListNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationControllerList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedReplicationControllerResponse {
@@ -420,8 +452,20 @@ impl crate::Response for ListNamespacedReplicationControllerResponse {
                 };
                 Ok((ListNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -494,8 +538,7 @@ impl ReplicationController {
 #[derive(Debug)]
 pub enum ListReplicationControllerForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationControllerList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListReplicationControllerForAllNamespacesResponse {
@@ -509,8 +552,20 @@ impl crate::Response for ListReplicationControllerForAllNamespacesResponse {
                 };
                 Ok((ListReplicationControllerForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListReplicationControllerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListReplicationControllerForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListReplicationControllerForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -573,8 +628,7 @@ pub struct PatchNamespacedReplicationControllerOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedReplicationControllerResponse {
@@ -588,8 +642,20 @@ impl crate::Response for PatchNamespacedReplicationControllerResponse {
                 };
                 Ok((PatchNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -652,8 +718,7 @@ pub struct PatchNamespacedReplicationControllerStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedReplicationControllerStatusResponse {
@@ -667,8 +732,20 @@ impl crate::Response for PatchNamespacedReplicationControllerStatusResponse {
                 };
                 Ok((PatchNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedReplicationControllerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedReplicationControllerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -740,8 +817,7 @@ pub struct ReadNamespacedReplicationControllerOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedReplicationControllerResponse {
@@ -755,8 +831,20 @@ impl crate::Response for ReadNamespacedReplicationControllerResponse {
                 };
                 Ok((ReadNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -816,8 +904,7 @@ pub struct ReadNamespacedReplicationControllerStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedReplicationControllerStatusResponse {
@@ -831,8 +918,20 @@ impl crate::Response for ReadNamespacedReplicationControllerStatusResponse {
                 };
                 Ok((ReadNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedReplicationControllerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedReplicationControllerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -895,8 +994,7 @@ pub struct ReplaceNamespacedReplicationControllerOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedReplicationControllerResponse {
@@ -910,8 +1008,20 @@ impl crate::Response for ReplaceNamespacedReplicationControllerResponse {
                 };
                 Ok((ReplaceNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -974,8 +1084,7 @@ pub struct ReplaceNamespacedReplicationControllerStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_8::api::core::v1::ReplicationController),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedReplicationControllerStatusResponse {
@@ -989,8 +1098,20 @@ impl crate::Response for ReplaceNamespacedReplicationControllerStatusResponse {
                 };
                 Ok((ReplaceNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedReplicationControllerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedReplicationControllerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1061,8 +1182,7 @@ impl ReplicationController {
 #[derive(Debug)]
 pub enum WatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedReplicationControllerResponse {
@@ -1078,8 +1198,20 @@ impl crate::Response for WatchNamespacedReplicationControllerResponse {
                 };
                 Ok((WatchNamespacedReplicationControllerResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedReplicationControllerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedReplicationControllerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1145,8 +1277,7 @@ impl ReplicationController {
 #[derive(Debug)]
 pub enum WatchReplicationControllerForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchReplicationControllerForAllNamespacesResponse {
@@ -1162,8 +1293,20 @@ impl crate::Response for WatchReplicationControllerForAllNamespacesResponse {
                 };
                 Ok((WatchReplicationControllerForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchReplicationControllerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchReplicationControllerForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchReplicationControllerForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

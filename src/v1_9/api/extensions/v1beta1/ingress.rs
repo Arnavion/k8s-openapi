@@ -70,8 +70,7 @@ pub enum CreateNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
     Accepted(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedIngressResponse {
@@ -101,8 +100,20 @@ impl crate::Response for CreateNamespacedIngressResponse {
                 };
                 Ok((CreateNamespacedIngressResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -208,8 +219,7 @@ pub struct DeleteCollectionNamespacedIngressOptional<'a> {
 pub enum DeleteCollectionNamespacedIngressResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedIngressResponse {
@@ -236,8 +246,20 @@ impl crate::Response for DeleteCollectionNamespacedIngressResponse {
                     Ok((DeleteCollectionNamespacedIngressResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -316,8 +338,7 @@ pub struct DeleteNamespacedIngressOptional<'a> {
 pub enum DeleteNamespacedIngressResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedIngressResponse {
@@ -344,8 +365,20 @@ impl crate::Response for DeleteNamespacedIngressResponse {
                     Ok((DeleteNamespacedIngressResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -418,8 +451,7 @@ impl Ingress {
 #[derive(Debug)]
 pub enum ListIngressForAllNamespacesResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::IngressList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListIngressForAllNamespacesResponse {
@@ -433,8 +465,20 @@ impl crate::Response for ListIngressForAllNamespacesResponse {
                 };
                 Ok((ListIngressForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListIngressForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListIngressForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListIngressForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -512,8 +556,7 @@ impl Ingress {
 #[derive(Debug)]
 pub enum ListNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::IngressList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedIngressResponse {
@@ -527,8 +570,20 @@ impl crate::Response for ListNamespacedIngressResponse {
                 };
                 Ok((ListNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -591,8 +646,7 @@ pub struct PatchNamespacedIngressOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedIngressResponse {
@@ -606,8 +660,20 @@ impl crate::Response for PatchNamespacedIngressResponse {
                 };
                 Ok((PatchNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -670,8 +736,7 @@ pub struct PatchNamespacedIngressStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedIngressStatusResponse {
@@ -685,8 +750,20 @@ impl crate::Response for PatchNamespacedIngressStatusResponse {
                 };
                 Ok((PatchNamespacedIngressStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedIngressStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedIngressStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -758,8 +835,7 @@ pub struct ReadNamespacedIngressOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedIngressResponse {
@@ -773,8 +849,20 @@ impl crate::Response for ReadNamespacedIngressResponse {
                 };
                 Ok((ReadNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -834,8 +922,7 @@ pub struct ReadNamespacedIngressStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedIngressStatusResponse {
@@ -849,8 +936,20 @@ impl crate::Response for ReadNamespacedIngressStatusResponse {
                 };
                 Ok((ReadNamespacedIngressStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedIngressStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedIngressStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -914,8 +1013,7 @@ pub struct ReplaceNamespacedIngressOptional<'a> {
 pub enum ReplaceNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedIngressResponse {
@@ -937,8 +1035,20 @@ impl crate::Response for ReplaceNamespacedIngressResponse {
                 };
                 Ok((ReplaceNamespacedIngressResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1002,8 +1112,7 @@ pub struct ReplaceNamespacedIngressStatusOptional<'a> {
 pub enum ReplaceNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedIngressStatusResponse {
@@ -1025,8 +1134,20 @@ impl crate::Response for ReplaceNamespacedIngressStatusResponse {
                 };
                 Ok((ReplaceNamespacedIngressStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedIngressStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedIngressStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1092,8 +1213,7 @@ impl Ingress {
 #[derive(Debug)]
 pub enum WatchIngressForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchIngressForAllNamespacesResponse {
@@ -1109,8 +1229,20 @@ impl crate::Response for WatchIngressForAllNamespacesResponse {
                 };
                 Ok((WatchIngressForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchIngressForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchIngressForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchIngressForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1181,8 +1313,7 @@ impl Ingress {
 #[derive(Debug)]
 pub enum WatchNamespacedIngressResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedIngressResponse {
@@ -1198,8 +1329,20 @@ impl crate::Response for WatchNamespacedIngressResponse {
                 };
                 Ok((WatchNamespacedIngressResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedIngressResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedIngressResponse::Other(result), read))
+            },
         }
     }
 }

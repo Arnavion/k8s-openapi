@@ -65,8 +65,7 @@ pub enum CreateClusterRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
     Created(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
     Accepted(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateClusterRoleBindingResponse {
@@ -96,8 +95,20 @@ impl crate::Response for CreateClusterRoleBindingResponse {
                 };
                 Ok((CreateClusterRoleBindingResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -171,8 +182,7 @@ pub struct DeleteClusterRoleBindingOptional<'a> {
 pub enum DeleteClusterRoleBindingResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteClusterRoleBindingResponse {
@@ -199,8 +209,20 @@ impl crate::Response for DeleteClusterRoleBindingResponse {
                     Ok((DeleteClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -301,8 +323,7 @@ pub struct DeleteCollectionClusterRoleBindingOptional<'a> {
 pub enum DeleteCollectionClusterRoleBindingResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionClusterRoleBindingResponse {
@@ -329,8 +350,20 @@ impl crate::Response for DeleteCollectionClusterRoleBindingResponse {
                     Ok((DeleteCollectionClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -403,8 +436,7 @@ impl ClusterRoleBinding {
 #[derive(Debug)]
 pub enum ListClusterRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::ClusterRoleBindingList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListClusterRoleBindingResponse {
@@ -418,8 +450,20 @@ impl crate::Response for ListClusterRoleBindingResponse {
                 };
                 Ok((ListClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ListClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -477,8 +521,7 @@ pub struct PatchClusterRoleBindingOptional<'a> {
 #[derive(Debug)]
 pub enum PatchClusterRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchClusterRoleBindingResponse {
@@ -492,8 +535,20 @@ impl crate::Response for PatchClusterRoleBindingResponse {
                 };
                 Ok((PatchClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((PatchClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -548,8 +603,7 @@ pub struct ReadClusterRoleBindingOptional<'a> {
 #[derive(Debug)]
 pub enum ReadClusterRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadClusterRoleBindingResponse {
@@ -563,8 +617,20 @@ impl crate::Response for ReadClusterRoleBindingResponse {
                 };
                 Ok((ReadClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReadClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -623,8 +689,7 @@ pub struct ReplaceClusterRoleBindingOptional<'a> {
 pub enum ReplaceClusterRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
     Created(crate::v1_9::api::rbac::v1beta1::ClusterRoleBinding),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceClusterRoleBindingResponse {
@@ -646,8 +711,20 @@ impl crate::Response for ReplaceClusterRoleBindingResponse {
                 };
                 Ok((ReplaceClusterRoleBindingResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }
@@ -713,8 +790,7 @@ impl ClusterRoleBinding {
 #[derive(Debug)]
 pub enum WatchClusterRoleBindingResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRoleBinding>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchClusterRoleBindingResponse {
@@ -730,8 +806,20 @@ impl crate::Response for WatchClusterRoleBindingResponse {
                 };
                 Ok((WatchClusterRoleBindingResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((WatchClusterRoleBindingResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchClusterRoleBindingResponse::Other(result), read))
+            },
         }
     }
 }

@@ -65,8 +65,7 @@ pub struct ConnectDeleteNodeProxyOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectDeleteNodeProxyResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectDeleteNodeProxyResponse {
@@ -90,8 +89,20 @@ impl crate::Response for ConnectDeleteNodeProxyResponse {
                 };
                 Ok((ConnectDeleteNodeProxyResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectDeleteNodeProxyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectDeleteNodeProxyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -151,8 +162,7 @@ pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectDeleteNodeProxyWithPathResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
@@ -176,8 +186,20 @@ impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
                 };
                 Ok((ConnectDeleteNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectDeleteNodeProxyWithPathResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectDeleteNodeProxyWithPathResponse::Other(result), read))
+            },
         }
     }
 }
@@ -232,8 +254,7 @@ pub struct ConnectGetNodeProxyOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectGetNodeProxyResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectGetNodeProxyResponse {
@@ -257,8 +278,20 @@ impl crate::Response for ConnectGetNodeProxyResponse {
                 };
                 Ok((ConnectGetNodeProxyResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectGetNodeProxyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectGetNodeProxyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -318,8 +351,7 @@ pub struct ConnectGetNodeProxyWithPathOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectGetNodeProxyWithPathResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectGetNodeProxyWithPathResponse {
@@ -343,8 +375,20 @@ impl crate::Response for ConnectGetNodeProxyWithPathResponse {
                 };
                 Ok((ConnectGetNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectGetNodeProxyWithPathResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectGetNodeProxyWithPathResponse::Other(result), read))
+            },
         }
     }
 }
@@ -399,8 +443,7 @@ pub struct ConnectPatchNodeProxyOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPatchNodeProxyResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPatchNodeProxyResponse {
@@ -424,8 +467,20 @@ impl crate::Response for ConnectPatchNodeProxyResponse {
                 };
                 Ok((ConnectPatchNodeProxyResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPatchNodeProxyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPatchNodeProxyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -485,8 +540,7 @@ pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPatchNodeProxyWithPathResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
@@ -510,8 +564,20 @@ impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
                 };
                 Ok((ConnectPatchNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPatchNodeProxyWithPathResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPatchNodeProxyWithPathResponse::Other(result), read))
+            },
         }
     }
 }
@@ -566,8 +632,7 @@ pub struct ConnectPostNodeProxyOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPostNodeProxyResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPostNodeProxyResponse {
@@ -591,8 +656,20 @@ impl crate::Response for ConnectPostNodeProxyResponse {
                 };
                 Ok((ConnectPostNodeProxyResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPostNodeProxyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPostNodeProxyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -652,8 +729,7 @@ pub struct ConnectPostNodeProxyWithPathOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPostNodeProxyWithPathResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPostNodeProxyWithPathResponse {
@@ -677,8 +753,20 @@ impl crate::Response for ConnectPostNodeProxyWithPathResponse {
                 };
                 Ok((ConnectPostNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPostNodeProxyWithPathResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPostNodeProxyWithPathResponse::Other(result), read))
+            },
         }
     }
 }
@@ -733,8 +821,7 @@ pub struct ConnectPutNodeProxyOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPutNodeProxyResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPutNodeProxyResponse {
@@ -758,8 +845,20 @@ impl crate::Response for ConnectPutNodeProxyResponse {
                 };
                 Ok((ConnectPutNodeProxyResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPutNodeProxyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPutNodeProxyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -819,8 +918,7 @@ pub struct ConnectPutNodeProxyWithPathOptional<'a> {
 #[derive(Debug)]
 pub enum ConnectPutNodeProxyWithPathResponse {
     Ok(String),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ConnectPutNodeProxyWithPathResponse {
@@ -844,8 +942,20 @@ impl crate::Response for ConnectPutNodeProxyWithPathResponse {
                 };
                 Ok((ConnectPutNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectPutNodeProxyWithPathResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ConnectPutNodeProxyWithPathResponse::Other(result), read))
+            },
         }
     }
 }
@@ -912,8 +1022,7 @@ pub enum CreateNodeResponse {
     Ok(crate::v1_14::api::core::v1::Node),
     Created(crate::v1_14::api::core::v1::Node),
     Accepted(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNodeResponse {
@@ -943,8 +1052,20 @@ impl crate::Response for CreateNodeResponse {
                 };
                 Ok((CreateNodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNodeResponse::Unauthorized, 0)),
-            _ => Ok((CreateNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1041,8 +1162,7 @@ pub struct DeleteCollectionNodeOptional<'a> {
 pub enum DeleteCollectionNodeResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNodeResponse {
@@ -1069,8 +1189,20 @@ impl crate::Response for DeleteCollectionNodeResponse {
                     Ok((DeleteCollectionNodeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1151,8 +1283,7 @@ pub enum DeleteNodeResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::core::v1::Node),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNodeResponse {
@@ -1187,8 +1318,20 @@ impl crate::Response for DeleteNodeResponse {
                 };
                 Ok((DeleteNodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1257,8 +1400,7 @@ impl Node {
 #[derive(Debug)]
 pub enum ListNodeResponse {
     Ok(crate::v1_14::api::core::v1::NodeList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNodeResponse {
@@ -1272,8 +1414,20 @@ impl crate::Response for ListNodeResponse {
                 };
                 Ok((ListNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNodeResponse::Unauthorized, 0)),
-            _ => Ok((ListNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1349,8 +1503,7 @@ pub struct PatchNodeOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNodeResponse {
     Ok(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNodeResponse {
@@ -1364,8 +1517,20 @@ impl crate::Response for PatchNodeResponse {
                 };
                 Ok((PatchNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNodeResponse::Unauthorized, 0)),
-            _ => Ok((PatchNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1441,8 +1606,7 @@ pub struct PatchNodeStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNodeStatusResponse {
     Ok(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNodeStatusResponse {
@@ -1456,8 +1620,20 @@ impl crate::Response for PatchNodeStatusResponse {
                 };
                 Ok((PatchNodeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNodeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNodeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1524,8 +1700,7 @@ pub struct ReadNodeOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNodeResponse {
     Ok(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNodeResponse {
@@ -1539,8 +1714,20 @@ impl crate::Response for ReadNodeResponse {
                 };
                 Ok((ReadNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNodeResponse::Unauthorized, 0)),
-            _ => Ok((ReadNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1595,8 +1782,7 @@ pub struct ReadNodeStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNodeStatusResponse {
     Ok(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNodeStatusResponse {
@@ -1610,8 +1796,20 @@ impl crate::Response for ReadNodeStatusResponse {
                 };
                 Ok((ReadNodeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNodeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNodeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1682,8 +1880,7 @@ pub struct ReplaceNodeOptional<'a> {
 pub enum ReplaceNodeResponse {
     Ok(crate::v1_14::api::core::v1::Node),
     Created(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNodeResponse {
@@ -1705,8 +1902,20 @@ impl crate::Response for ReplaceNodeResponse {
                 };
                 Ok((ReplaceNodeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNodeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1777,8 +1986,7 @@ pub struct ReplaceNodeStatusOptional<'a> {
 pub enum ReplaceNodeStatusResponse {
     Ok(crate::v1_14::api::core::v1::Node),
     Created(crate::v1_14::api::core::v1::Node),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNodeStatusResponse {
@@ -1800,8 +2008,20 @@ impl crate::Response for ReplaceNodeStatusResponse {
                 };
                 Ok((ReplaceNodeStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNodeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNodeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1863,8 +2083,7 @@ impl Node {
 #[derive(Debug)]
 pub enum WatchNodeResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Node>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNodeResponse {
@@ -1880,8 +2099,20 @@ impl crate::Response for WatchNodeResponse {
                 };
                 Ok((WatchNodeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNodeResponse::Unauthorized, 0)),
-            _ => Ok((WatchNodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNodeResponse::Other(result), read))
+            },
         }
     }
 }

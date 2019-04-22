@@ -62,8 +62,7 @@ pub struct CreateTokenReviewOptional<'a> {
 #[derive(Debug)]
 pub enum CreateTokenReviewResponse {
     Ok(crate::v1_8::api::authentication::v1beta1::TokenReview),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateTokenReviewResponse {
@@ -77,8 +76,20 @@ impl crate::Response for CreateTokenReviewResponse {
                 };
                 Ok((CreateTokenReviewResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateTokenReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateTokenReviewResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateTokenReviewResponse::Other(result), read))
+            },
         }
     }
 }

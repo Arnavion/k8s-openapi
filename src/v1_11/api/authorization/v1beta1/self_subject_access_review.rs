@@ -64,8 +64,7 @@ pub enum CreateSelfSubjectAccessReviewResponse {
     Ok(crate::v1_11::api::authorization::v1beta1::SelfSubjectAccessReview),
     Created(crate::v1_11::api::authorization::v1beta1::SelfSubjectAccessReview),
     Accepted(crate::v1_11::api::authorization::v1beta1::SelfSubjectAccessReview),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateSelfSubjectAccessReviewResponse {
@@ -95,8 +94,20 @@ impl crate::Response for CreateSelfSubjectAccessReviewResponse {
                 };
                 Ok((CreateSelfSubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateSelfSubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateSelfSubjectAccessReviewResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateSelfSubjectAccessReviewResponse::Other(result), read))
+            },
         }
     }
 }

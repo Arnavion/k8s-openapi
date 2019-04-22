@@ -38,8 +38,7 @@ pub fn get_api_versions(
 #[derive(Debug)]
 pub enum GetAPIVersionsResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroupList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAPIVersionsResponse {
@@ -53,8 +52,20 @@ impl crate::Response for GetAPIVersionsResponse {
                 };
                 Ok((GetAPIVersionsResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAPIVersionsResponse::Unauthorized, 0)),
-            _ => Ok((GetAPIVersionsResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAPIVersionsResponse::Other(result), read))
+            },
         }
     }
 }
@@ -80,8 +91,7 @@ pub fn get_admissionregistration_api_group(
 #[derive(Debug)]
 pub enum GetAdmissionregistrationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
@@ -95,8 +105,20 @@ impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
                 };
                 Ok((GetAdmissionregistrationAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAdmissionregistrationAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetAdmissionregistrationAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAdmissionregistrationAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -122,8 +144,7 @@ pub fn get_admissionregistration_v1alpha1_api_resources(
 #[derive(Debug)]
 pub enum GetAdmissionregistrationV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAdmissionregistrationV1alpha1APIResourcesResponse {
@@ -137,8 +158,20 @@ impl crate::Response for GetAdmissionregistrationV1alpha1APIResourcesResponse {
                 };
                 Ok((GetAdmissionregistrationV1alpha1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAdmissionregistrationV1alpha1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAdmissionregistrationV1alpha1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAdmissionregistrationV1alpha1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -164,8 +197,7 @@ pub fn get_apiextensions_api_group(
 #[derive(Debug)]
 pub enum GetApiextensionsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetApiextensionsAPIGroupResponse {
@@ -179,8 +211,20 @@ impl crate::Response for GetApiextensionsAPIGroupResponse {
                 };
                 Ok((GetApiextensionsAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetApiextensionsAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetApiextensionsAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetApiextensionsAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -206,8 +250,7 @@ pub fn get_apiextensions_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetApiextensionsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
@@ -221,8 +264,20 @@ impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
                 };
                 Ok((GetApiextensionsV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetApiextensionsV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetApiextensionsV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetApiextensionsV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -248,8 +303,7 @@ pub fn get_apiregistration_api_group(
 #[derive(Debug)]
 pub enum GetApiregistrationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetApiregistrationAPIGroupResponse {
@@ -263,8 +317,20 @@ impl crate::Response for GetApiregistrationAPIGroupResponse {
                 };
                 Ok((GetApiregistrationAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetApiregistrationAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetApiregistrationAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetApiregistrationAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -290,8 +356,7 @@ pub fn get_apiregistration_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetApiregistrationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
@@ -305,8 +370,20 @@ impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
                 };
                 Ok((GetApiregistrationV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetApiregistrationV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetApiregistrationV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetApiregistrationV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -332,8 +409,7 @@ pub fn get_apps_api_group(
 #[derive(Debug)]
 pub enum GetAppsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAppsAPIGroupResponse {
@@ -347,8 +423,20 @@ impl crate::Response for GetAppsAPIGroupResponse {
                 };
                 Ok((GetAppsAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAppsAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetAppsAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAppsAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -374,8 +462,7 @@ pub fn get_apps_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetAppsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAppsV1beta1APIResourcesResponse {
@@ -389,8 +476,20 @@ impl crate::Response for GetAppsV1beta1APIResourcesResponse {
                 };
                 Ok((GetAppsV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAppsV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAppsV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAppsV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -416,8 +515,7 @@ pub fn get_apps_v1beta2_api_resources(
 #[derive(Debug)]
 pub enum GetAppsV1beta2APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAppsV1beta2APIResourcesResponse {
@@ -431,8 +529,20 @@ impl crate::Response for GetAppsV1beta2APIResourcesResponse {
                 };
                 Ok((GetAppsV1beta2APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAppsV1beta2APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAppsV1beta2APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAppsV1beta2APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -458,8 +568,7 @@ pub fn get_authentication_api_group(
 #[derive(Debug)]
 pub enum GetAuthenticationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthenticationAPIGroupResponse {
@@ -473,8 +582,20 @@ impl crate::Response for GetAuthenticationAPIGroupResponse {
                 };
                 Ok((GetAuthenticationAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthenticationAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthenticationAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthenticationAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -500,8 +621,7 @@ pub fn get_authentication_v1_api_resources(
 #[derive(Debug)]
 pub enum GetAuthenticationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthenticationV1APIResourcesResponse {
@@ -515,8 +635,20 @@ impl crate::Response for GetAuthenticationV1APIResourcesResponse {
                 };
                 Ok((GetAuthenticationV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthenticationV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthenticationV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthenticationV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -542,8 +674,7 @@ pub fn get_authentication_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetAuthenticationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
@@ -557,8 +688,20 @@ impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
                 };
                 Ok((GetAuthenticationV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthenticationV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthenticationV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthenticationV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -584,8 +727,7 @@ pub fn get_authorization_api_group(
 #[derive(Debug)]
 pub enum GetAuthorizationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthorizationAPIGroupResponse {
@@ -599,8 +741,20 @@ impl crate::Response for GetAuthorizationAPIGroupResponse {
                 };
                 Ok((GetAuthorizationAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthorizationAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthorizationAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthorizationAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -626,8 +780,7 @@ pub fn get_authorization_v1_api_resources(
 #[derive(Debug)]
 pub enum GetAuthorizationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthorizationV1APIResourcesResponse {
@@ -641,8 +794,20 @@ impl crate::Response for GetAuthorizationV1APIResourcesResponse {
                 };
                 Ok((GetAuthorizationV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthorizationV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthorizationV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthorizationV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -668,8 +833,7 @@ pub fn get_authorization_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetAuthorizationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
@@ -683,8 +847,20 @@ impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
                 };
                 Ok((GetAuthorizationV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAuthorizationV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAuthorizationV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAuthorizationV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -710,8 +886,7 @@ pub fn get_autoscaling_api_group(
 #[derive(Debug)]
 pub enum GetAutoscalingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAutoscalingAPIGroupResponse {
@@ -725,8 +900,20 @@ impl crate::Response for GetAutoscalingAPIGroupResponse {
                 };
                 Ok((GetAutoscalingAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAutoscalingAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetAutoscalingAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAutoscalingAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -752,8 +939,7 @@ pub fn get_autoscaling_v1_api_resources(
 #[derive(Debug)]
 pub enum GetAutoscalingV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAutoscalingV1APIResourcesResponse {
@@ -767,8 +953,20 @@ impl crate::Response for GetAutoscalingV1APIResourcesResponse {
                 };
                 Ok((GetAutoscalingV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAutoscalingV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAutoscalingV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAutoscalingV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -794,8 +992,7 @@ pub fn get_autoscaling_v2beta1_api_resources(
 #[derive(Debug)]
 pub enum GetAutoscalingV2beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
@@ -809,8 +1006,20 @@ impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
                 };
                 Ok((GetAutoscalingV2beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetAutoscalingV2beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetAutoscalingV2beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetAutoscalingV2beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -836,8 +1045,7 @@ pub fn get_batch_api_group(
 #[derive(Debug)]
 pub enum GetBatchAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetBatchAPIGroupResponse {
@@ -851,8 +1059,20 @@ impl crate::Response for GetBatchAPIGroupResponse {
                 };
                 Ok((GetBatchAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetBatchAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetBatchAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetBatchAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -878,8 +1098,7 @@ pub fn get_batch_v1_api_resources(
 #[derive(Debug)]
 pub enum GetBatchV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetBatchV1APIResourcesResponse {
@@ -893,8 +1112,20 @@ impl crate::Response for GetBatchV1APIResourcesResponse {
                 };
                 Ok((GetBatchV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetBatchV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetBatchV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetBatchV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -920,8 +1151,7 @@ pub fn get_batch_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetBatchV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetBatchV1beta1APIResourcesResponse {
@@ -935,8 +1165,20 @@ impl crate::Response for GetBatchV1beta1APIResourcesResponse {
                 };
                 Ok((GetBatchV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetBatchV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetBatchV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetBatchV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -962,8 +1204,7 @@ pub fn get_batch_v2alpha1_api_resources(
 #[derive(Debug)]
 pub enum GetBatchV2alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
@@ -977,8 +1218,20 @@ impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
                 };
                 Ok((GetBatchV2alpha1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetBatchV2alpha1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetBatchV2alpha1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetBatchV2alpha1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1004,8 +1257,7 @@ pub fn get_certificates_api_group(
 #[derive(Debug)]
 pub enum GetCertificatesAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetCertificatesAPIGroupResponse {
@@ -1019,8 +1271,20 @@ impl crate::Response for GetCertificatesAPIGroupResponse {
                 };
                 Ok((GetCertificatesAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetCertificatesAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetCertificatesAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetCertificatesAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1046,8 +1310,7 @@ pub fn get_certificates_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetCertificatesV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
@@ -1061,8 +1324,20 @@ impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
                 };
                 Ok((GetCertificatesV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetCertificatesV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetCertificatesV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetCertificatesV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1088,8 +1363,7 @@ pub fn get_code_version(
 #[derive(Debug)]
 pub enum GetCodeVersionResponse {
     Ok(crate::v1_8::apimachinery::pkg::version::Info),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetCodeVersionResponse {
@@ -1103,8 +1377,20 @@ impl crate::Response for GetCodeVersionResponse {
                 };
                 Ok((GetCodeVersionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetCodeVersionResponse::Unauthorized, 0)),
-            _ => Ok((GetCodeVersionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetCodeVersionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1130,8 +1416,7 @@ pub fn get_core_api_versions(
 #[derive(Debug)]
 pub enum GetCoreAPIVersionsResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIVersions),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetCoreAPIVersionsResponse {
@@ -1145,8 +1430,20 @@ impl crate::Response for GetCoreAPIVersionsResponse {
                 };
                 Ok((GetCoreAPIVersionsResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetCoreAPIVersionsResponse::Unauthorized, 0)),
-            _ => Ok((GetCoreAPIVersionsResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetCoreAPIVersionsResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1172,8 +1469,7 @@ pub fn get_core_v1_api_resources(
 #[derive(Debug)]
 pub enum GetCoreV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetCoreV1APIResourcesResponse {
@@ -1187,8 +1483,20 @@ impl crate::Response for GetCoreV1APIResourcesResponse {
                 };
                 Ok((GetCoreV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetCoreV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetCoreV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetCoreV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1214,8 +1522,7 @@ pub fn get_extensions_api_group(
 #[derive(Debug)]
 pub enum GetExtensionsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetExtensionsAPIGroupResponse {
@@ -1229,8 +1536,20 @@ impl crate::Response for GetExtensionsAPIGroupResponse {
                 };
                 Ok((GetExtensionsAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetExtensionsAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetExtensionsAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetExtensionsAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1256,8 +1575,7 @@ pub fn get_extensions_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetExtensionsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
@@ -1271,8 +1589,20 @@ impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
                 };
                 Ok((GetExtensionsV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetExtensionsV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetExtensionsV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetExtensionsV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1298,8 +1628,7 @@ pub fn get_networking_api_group(
 #[derive(Debug)]
 pub enum GetNetworkingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetNetworkingAPIGroupResponse {
@@ -1313,8 +1642,20 @@ impl crate::Response for GetNetworkingAPIGroupResponse {
                 };
                 Ok((GetNetworkingAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetNetworkingAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetNetworkingAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetNetworkingAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1340,8 +1681,7 @@ pub fn get_networking_v1_api_resources(
 #[derive(Debug)]
 pub enum GetNetworkingV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetNetworkingV1APIResourcesResponse {
@@ -1355,8 +1695,20 @@ impl crate::Response for GetNetworkingV1APIResourcesResponse {
                 };
                 Ok((GetNetworkingV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetNetworkingV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetNetworkingV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetNetworkingV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1382,8 +1734,7 @@ pub fn get_policy_api_group(
 #[derive(Debug)]
 pub enum GetPolicyAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetPolicyAPIGroupResponse {
@@ -1397,8 +1748,20 @@ impl crate::Response for GetPolicyAPIGroupResponse {
                 };
                 Ok((GetPolicyAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetPolicyAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetPolicyAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetPolicyAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1424,8 +1787,7 @@ pub fn get_policy_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetPolicyV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
@@ -1439,8 +1801,20 @@ impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
                 };
                 Ok((GetPolicyV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetPolicyV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetPolicyV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetPolicyV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1466,8 +1840,7 @@ pub fn get_rbac_authorization_api_group(
 #[derive(Debug)]
 pub enum GetRbacAuthorizationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
@@ -1481,8 +1854,20 @@ impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
                 };
                 Ok((GetRbacAuthorizationAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetRbacAuthorizationAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetRbacAuthorizationAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetRbacAuthorizationAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1508,8 +1893,7 @@ pub fn get_rbac_authorization_v1_api_resources(
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
@@ -1523,8 +1907,20 @@ impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
                 };
                 Ok((GetRbacAuthorizationV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetRbacAuthorizationV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetRbacAuthorizationV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetRbacAuthorizationV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1550,8 +1946,7 @@ pub fn get_rbac_authorization_v1alpha1_api_resources(
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
@@ -1565,8 +1960,20 @@ impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
                 };
                 Ok((GetRbacAuthorizationV1alpha1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetRbacAuthorizationV1alpha1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetRbacAuthorizationV1alpha1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetRbacAuthorizationV1alpha1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1592,8 +1999,7 @@ pub fn get_rbac_authorization_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
@@ -1607,8 +2013,20 @@ impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
                 };
                 Ok((GetRbacAuthorizationV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetRbacAuthorizationV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetRbacAuthorizationV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetRbacAuthorizationV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1634,8 +2052,7 @@ pub fn get_scheduling_api_group(
 #[derive(Debug)]
 pub enum GetSchedulingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetSchedulingAPIGroupResponse {
@@ -1649,8 +2066,20 @@ impl crate::Response for GetSchedulingAPIGroupResponse {
                 };
                 Ok((GetSchedulingAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetSchedulingAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetSchedulingAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetSchedulingAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1676,8 +2105,7 @@ pub fn get_scheduling_v1alpha1_api_resources(
 #[derive(Debug)]
 pub enum GetSchedulingV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
@@ -1691,8 +2119,20 @@ impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
                 };
                 Ok((GetSchedulingV1alpha1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetSchedulingV1alpha1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetSchedulingV1alpha1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetSchedulingV1alpha1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1718,8 +2158,7 @@ pub fn get_settings_api_group(
 #[derive(Debug)]
 pub enum GetSettingsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetSettingsAPIGroupResponse {
@@ -1733,8 +2172,20 @@ impl crate::Response for GetSettingsAPIGroupResponse {
                 };
                 Ok((GetSettingsAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetSettingsAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetSettingsAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetSettingsAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1760,8 +2211,7 @@ pub fn get_settings_v1alpha1_api_resources(
 #[derive(Debug)]
 pub enum GetSettingsV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
@@ -1775,8 +2225,20 @@ impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
                 };
                 Ok((GetSettingsV1alpha1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetSettingsV1alpha1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetSettingsV1alpha1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetSettingsV1alpha1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1802,8 +2264,7 @@ pub fn get_storage_api_group(
 #[derive(Debug)]
 pub enum GetStorageAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetStorageAPIGroupResponse {
@@ -1817,8 +2278,20 @@ impl crate::Response for GetStorageAPIGroupResponse {
                 };
                 Ok((GetStorageAPIGroupResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetStorageAPIGroupResponse::Unauthorized, 0)),
-            _ => Ok((GetStorageAPIGroupResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetStorageAPIGroupResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1844,8 +2317,7 @@ pub fn get_storage_v1_api_resources(
 #[derive(Debug)]
 pub enum GetStorageV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetStorageV1APIResourcesResponse {
@@ -1859,8 +2331,20 @@ impl crate::Response for GetStorageV1APIResourcesResponse {
                 };
                 Ok((GetStorageV1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetStorageV1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetStorageV1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetStorageV1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1886,8 +2370,7 @@ pub fn get_storage_v1beta1_api_resources(
 #[derive(Debug)]
 pub enum GetStorageV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for GetStorageV1beta1APIResourcesResponse {
@@ -1901,8 +2384,20 @@ impl crate::Response for GetStorageV1beta1APIResourcesResponse {
                 };
                 Ok((GetStorageV1beta1APIResourcesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((GetStorageV1beta1APIResourcesResponse::Unauthorized, 0)),
-            _ => Ok((GetStorageV1beta1APIResourcesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((GetStorageV1beta1APIResourcesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1932,15 +2427,26 @@ pub fn log_file_handler(
 /// Use `<LogFileHandlerResponse as Response>::try_from_parts` to parse the HTTP response body of [`log_file_handler`]
 #[derive(Debug)]
 pub enum LogFileHandlerResponse {
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for LogFileHandlerResponse {
-    fn try_from_parts(status_code: http::StatusCode, _: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::UNAUTHORIZED => Ok((LogFileHandlerResponse::Unauthorized, 0)),
-            _ => Ok((LogFileHandlerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((LogFileHandlerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1963,15 +2469,26 @@ pub fn log_file_list_handler(
 /// Use `<LogFileListHandlerResponse as Response>::try_from_parts` to parse the HTTP response body of [`log_file_list_handler`]
 #[derive(Debug)]
 pub enum LogFileListHandlerResponse {
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for LogFileListHandlerResponse {
-    fn try_from_parts(status_code: http::StatusCode, _: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::UNAUTHORIZED => Ok((LogFileListHandlerResponse::Unauthorized, 0)),
-            _ => Ok((LogFileListHandlerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((LogFileListHandlerResponse::Other(result), read))
+            },
         }
     }
 }

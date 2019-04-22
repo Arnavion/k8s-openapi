@@ -60,8 +60,7 @@ pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum CreateExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateExternalAdmissionHookConfigurationResponse {
@@ -75,8 +74,20 @@ impl crate::Response for CreateExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((CreateExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -177,8 +188,7 @@ pub struct DeleteCollectionExternalAdmissionHookConfigurationOptional<'a> {
 pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionExternalAdmissionHookConfigurationResponse {
@@ -205,8 +215,20 @@ impl crate::Response for DeleteCollectionExternalAdmissionHookConfigurationRespo
                     Ok((DeleteCollectionExternalAdmissionHookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -280,8 +302,7 @@ pub struct DeleteExternalAdmissionHookConfigurationOptional<'a> {
 pub enum DeleteExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteExternalAdmissionHookConfigurationResponse {
@@ -308,8 +329,20 @@ impl crate::Response for DeleteExternalAdmissionHookConfigurationResponse {
                     Ok((DeleteExternalAdmissionHookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -382,8 +415,7 @@ impl ExternalAdmissionHookConfiguration {
 #[derive(Debug)]
 pub enum ListExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListExternalAdmissionHookConfigurationResponse {
@@ -397,8 +429,20 @@ impl crate::Response for ListExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((ListExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -456,8 +500,7 @@ pub struct PatchExternalAdmissionHookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum PatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchExternalAdmissionHookConfigurationResponse {
@@ -471,8 +514,20 @@ impl crate::Response for PatchExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((PatchExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -539,8 +594,7 @@ pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum ReadExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadExternalAdmissionHookConfigurationResponse {
@@ -554,8 +608,20 @@ impl crate::Response for ReadExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((ReadExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -613,8 +679,7 @@ pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceExternalAdmissionHookConfigurationResponse {
@@ -628,8 +693,20 @@ impl crate::Response for ReplaceExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((ReplaceExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -695,8 +772,7 @@ impl ExternalAdmissionHookConfiguration {
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ExternalAdmissionHookConfiguration>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchExternalAdmissionHookConfigurationResponse {
@@ -712,8 +788,20 @@ impl crate::Response for WatchExternalAdmissionHookConfigurationResponse {
                 };
                 Ok((WatchExternalAdmissionHookConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchExternalAdmissionHookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchExternalAdmissionHookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }

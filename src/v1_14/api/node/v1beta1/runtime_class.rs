@@ -74,8 +74,7 @@ pub enum CreateRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Created(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Accepted(crate::v1_14::api::node::v1beta1::RuntimeClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateRuntimeClassResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateRuntimeClassResponse {
                 };
                 Ok((CreateRuntimeClassResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((CreateRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -203,8 +214,7 @@ pub struct DeleteCollectionRuntimeClassOptional<'a> {
 pub enum DeleteCollectionRuntimeClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::node::v1beta1::RuntimeClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionRuntimeClassResponse {
@@ -231,8 +241,20 @@ impl crate::Response for DeleteCollectionRuntimeClassResponse {
                     Ok((DeleteCollectionRuntimeClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -313,8 +335,7 @@ pub enum DeleteRuntimeClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteRuntimeClassResponse {
@@ -349,8 +370,20 @@ impl crate::Response for DeleteRuntimeClassResponse {
                 };
                 Ok((DeleteRuntimeClassResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -419,8 +452,7 @@ impl RuntimeClass {
 #[derive(Debug)]
 pub enum ListRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClassList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListRuntimeClassResponse {
@@ -434,8 +466,20 @@ impl crate::Response for ListRuntimeClassResponse {
                 };
                 Ok((ListRuntimeClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((ListRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -511,8 +555,7 @@ pub struct PatchRuntimeClassOptional<'a> {
 #[derive(Debug)]
 pub enum PatchRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchRuntimeClassResponse {
@@ -526,8 +569,20 @@ impl crate::Response for PatchRuntimeClassResponse {
                 };
                 Ok((PatchRuntimeClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((PatchRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -594,8 +649,7 @@ pub struct ReadRuntimeClassOptional<'a> {
 #[derive(Debug)]
 pub enum ReadRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadRuntimeClassResponse {
@@ -609,8 +663,20 @@ impl crate::Response for ReadRuntimeClassResponse {
                 };
                 Ok((ReadRuntimeClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((ReadRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -681,8 +747,7 @@ pub struct ReplaceRuntimeClassOptional<'a> {
 pub enum ReplaceRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Created(crate::v1_14::api::node::v1beta1::RuntimeClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceRuntimeClassResponse {
@@ -704,8 +769,20 @@ impl crate::Response for ReplaceRuntimeClassResponse {
                 };
                 Ok((ReplaceRuntimeClassResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -767,8 +844,7 @@ impl RuntimeClass {
 #[derive(Debug)]
 pub enum WatchRuntimeClassResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchRuntimeClassResponse {
@@ -784,8 +860,20 @@ impl crate::Response for WatchRuntimeClassResponse {
                 };
                 Ok((WatchRuntimeClassResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRuntimeClassResponse::Unauthorized, 0)),
-            _ => Ok((WatchRuntimeClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchRuntimeClassResponse::Other(result), read))
+            },
         }
     }
 }

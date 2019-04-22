@@ -76,8 +76,7 @@ pub enum CreateCertificateSigningRequestResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Accepted(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateCertificateSigningRequestResponse {
@@ -107,8 +106,20 @@ impl crate::Response for CreateCertificateSigningRequestResponse {
                 };
                 Ok((CreateCertificateSigningRequestResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((CreateCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -189,8 +200,7 @@ pub enum DeleteCertificateSigningRequestResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCertificateSigningRequestResponse {
@@ -225,8 +235,20 @@ impl crate::Response for DeleteCertificateSigningRequestResponse {
                 };
                 Ok((DeleteCertificateSigningRequestResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -329,8 +351,7 @@ pub struct DeleteCollectionCertificateSigningRequestOptional<'a> {
 pub enum DeleteCollectionCertificateSigningRequestResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionCertificateSigningRequestResponse {
@@ -357,8 +378,20 @@ impl crate::Response for DeleteCollectionCertificateSigningRequestResponse {
                     Ok((DeleteCollectionCertificateSigningRequestResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -431,8 +464,7 @@ impl CertificateSigningRequest {
 #[derive(Debug)]
 pub enum ListCertificateSigningRequestResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequestList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListCertificateSigningRequestResponse {
@@ -446,8 +478,20 @@ impl crate::Response for ListCertificateSigningRequestResponse {
                 };
                 Ok((ListCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ListCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -511,8 +555,7 @@ pub struct PatchCertificateSigningRequestOptional<'a> {
 #[derive(Debug)]
 pub enum PatchCertificateSigningRequestResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchCertificateSigningRequestResponse {
@@ -526,8 +569,20 @@ impl crate::Response for PatchCertificateSigningRequestResponse {
                 };
                 Ok((PatchCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((PatchCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -591,8 +646,7 @@ pub struct PatchCertificateSigningRequestStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchCertificateSigningRequestStatusResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchCertificateSigningRequestStatusResponse {
@@ -606,8 +660,20 @@ impl crate::Response for PatchCertificateSigningRequestStatusResponse {
                 };
                 Ok((PatchCertificateSigningRequestStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCertificateSigningRequestStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCertificateSigningRequestStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchCertificateSigningRequestStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -674,8 +740,7 @@ pub struct ReadCertificateSigningRequestOptional<'a> {
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadCertificateSigningRequestResponse {
@@ -689,8 +754,20 @@ impl crate::Response for ReadCertificateSigningRequestResponse {
                 };
                 Ok((ReadCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ReadCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -745,8 +822,7 @@ pub struct ReadCertificateSigningRequestStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestStatusResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadCertificateSigningRequestStatusResponse {
@@ -760,8 +836,20 @@ impl crate::Response for ReadCertificateSigningRequestStatusResponse {
                 };
                 Ok((ReadCertificateSigningRequestStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCertificateSigningRequestStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCertificateSigningRequestStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadCertificateSigningRequestStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -826,8 +914,7 @@ pub struct ReplaceCertificateSigningRequestOptional<'a> {
 pub enum ReplaceCertificateSigningRequestResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCertificateSigningRequestResponse {
@@ -849,8 +936,20 @@ impl crate::Response for ReplaceCertificateSigningRequestResponse {
                 };
                 Ok((ReplaceCertificateSigningRequestResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }
@@ -915,8 +1014,7 @@ pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
 pub enum ReplaceCertificateSigningRequestApprovalResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCertificateSigningRequestApprovalResponse {
@@ -938,8 +1036,20 @@ impl crate::Response for ReplaceCertificateSigningRequestApprovalResponse {
                 };
                 Ok((ReplaceCertificateSigningRequestApprovalResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestApprovalResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificateSigningRequestApprovalResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCertificateSigningRequestApprovalResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1004,8 +1114,7 @@ pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
 pub enum ReplaceCertificateSigningRequestStatusResponse {
     Ok(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_12::api::certificates::v1beta1::CertificateSigningRequest),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCertificateSigningRequestStatusResponse {
@@ -1027,8 +1136,20 @@ impl crate::Response for ReplaceCertificateSigningRequestStatusResponse {
                 };
                 Ok((ReplaceCertificateSigningRequestStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificateSigningRequestStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCertificateSigningRequestStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1094,8 +1215,7 @@ impl CertificateSigningRequest {
 #[derive(Debug)]
 pub enum WatchCertificateSigningRequestResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<CertificateSigningRequest>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchCertificateSigningRequestResponse {
@@ -1111,8 +1231,20 @@ impl crate::Response for WatchCertificateSigningRequestResponse {
                 };
                 Ok((WatchCertificateSigningRequestResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((WatchCertificateSigningRequestResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchCertificateSigningRequestResponse::Other(result), read))
+            },
         }
     }
 }

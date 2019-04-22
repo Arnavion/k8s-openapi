@@ -5,6 +5,7 @@
     clippy::default_trait_access,
     clippy::doc_markdown,
     clippy::large_enum_variant,
+    clippy::single_match_else,
     clippy::type_complexity,
     clippy::use_self,
 )]
@@ -104,6 +105,19 @@
 //!    only a wrapper around the underlying `Response::try_from_parts` function, and handles growing and shrinking its inner buffer as necessary. It also
 //!    helps ensure that the response body is parsed as the *correct* type for the operation, `ListNamespacedPodResponse` in this case, and not some other type.
 //!    However, you can instead use your own byte buffer instead of the `ResponseBody` value and call `ListNamespacedPodResponse::try_from_parts` yourself.
+//!
+//! 1. The response types are enums with variants corresponding to HTTP status codes. For example, the `ListNamespacedPodResponse::Ok` variant corresponds to the
+//!    HTTP 200 response of the list-namespaced-pod API.
+//! 
+//!    Each response enum also has an `Other` variant, that is yielded when the response status code does not match any of the other variants.
+//!    This variant has a `Result<Option<`[`serde_json::Value`]`>, `[`serde_json::Error`]`>` value.
+//!
+//!    If the response body is empty, this value will be `Ok(None)`.
+//!
+//!    If the response body is not empty, this value will be an `Ok(Some(value))` or Err(err) from attempting to parse that body as a `serde_json::Value`.
+//!    If you expect the response body to be a specific JSON type such as [`apimachinery::pkg::apis::meta::v1::Status`], you can use the `serde_json::Value`
+//!    as a [`serde::Deserializer`] like `let status = <Status as Deserialize>::deserialize(value)?;`. On the other hand, if you expect the response body to not be
+//!    a JSON value, then ignore the `Err(err)` and parse the raw bytes of the response into the appropriate type.
 //!
 //! Also see the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
 //! a synchronous client with this style of API.

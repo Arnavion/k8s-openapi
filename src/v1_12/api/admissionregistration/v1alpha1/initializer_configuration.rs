@@ -74,8 +74,7 @@ pub enum CreateInitializerConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Created(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Accepted(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateInitializerConfigurationResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateInitializerConfigurationResponse {
                 };
                 Ok((CreateInitializerConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -209,8 +220,7 @@ pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
 pub enum DeleteCollectionInitializerConfigurationResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionInitializerConfigurationResponse {
@@ -237,8 +247,20 @@ impl crate::Response for DeleteCollectionInitializerConfigurationResponse {
                     Ok((DeleteCollectionInitializerConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -319,8 +341,7 @@ pub enum DeleteInitializerConfigurationResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteInitializerConfigurationResponse {
@@ -355,8 +376,20 @@ impl crate::Response for DeleteInitializerConfigurationResponse {
                 };
                 Ok((DeleteInitializerConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -429,8 +462,7 @@ impl InitializerConfiguration {
 #[derive(Debug)]
 pub enum ListInitializerConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfigurationList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListInitializerConfigurationResponse {
@@ -444,8 +476,20 @@ impl crate::Response for ListInitializerConfigurationResponse {
                 };
                 Ok((ListInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ pub struct PatchInitializerConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum PatchInitializerConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchInitializerConfigurationResponse {
@@ -524,8 +567,20 @@ impl crate::Response for PatchInitializerConfigurationResponse {
                 };
                 Ok((PatchInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -592,8 +647,7 @@ pub struct ReadInitializerConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum ReadInitializerConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadInitializerConfigurationResponse {
@@ -607,8 +661,20 @@ impl crate::Response for ReadInitializerConfigurationResponse {
                 };
                 Ok((ReadInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -673,8 +739,7 @@ pub struct ReplaceInitializerConfigurationOptional<'a> {
 pub enum ReplaceInitializerConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Created(crate::v1_12::api::admissionregistration::v1alpha1::InitializerConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceInitializerConfigurationResponse {
@@ -696,8 +761,20 @@ impl crate::Response for ReplaceInitializerConfigurationResponse {
                 };
                 Ok((ReplaceInitializerConfigurationResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -763,8 +840,7 @@ impl InitializerConfiguration {
 #[derive(Debug)]
 pub enum WatchInitializerConfigurationResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<InitializerConfiguration>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchInitializerConfigurationResponse {
@@ -780,8 +856,20 @@ impl crate::Response for WatchInitializerConfigurationResponse {
                 };
                 Ok((WatchInitializerConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchInitializerConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchInitializerConfigurationResponse::Other(result), read))
+            },
         }
     }
 }

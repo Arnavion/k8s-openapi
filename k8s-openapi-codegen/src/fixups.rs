@@ -52,7 +52,7 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 
 	if let Some(operation) = spec.operations.iter_mut().find(|o| o.id == "createAppsV1beta1NamespacedDeploymentRollback") {
 		for response in operation.responses.values_mut() {
-			if let Some(crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)), .. }) = response {
+			if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)), .. } = response {
 				if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
 					std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
 					found = true;
@@ -527,11 +527,11 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		watch_operation.parameters[watch_index] = watch_parameter.clone();
 		watch_operation.parameters.swap_remove(std::cmp::max(continue_index, limit_index));
 		watch_operation.parameters.swap_remove(std::cmp::min(continue_index, limit_index));
-		watch_operation.responses.insert(reqwest::StatusCode::OK, Some(crate::swagger20::Schema {
+		watch_operation.responses.insert(reqwest::StatusCode::OK, crate::swagger20::Schema {
 			description: None,
 			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
 			kubernetes_group_kind_versions: None,
-		}));
+		});
 
 		spec.operations[original_list_operation_index] = list_operation;
 		spec.operations.push(watch_operation);

@@ -82,8 +82,7 @@ pub enum CreateNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
     Created(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
     Accepted(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedHorizontalPodAutoscalerResponse {
@@ -113,8 +112,20 @@ impl crate::Response for CreateNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -216,8 +227,7 @@ pub struct DeleteCollectionNamespacedHorizontalPodAutoscalerOptional<'a> {
 pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
@@ -244,8 +254,20 @@ impl crate::Response for DeleteCollectionNamespacedHorizontalPodAutoscalerRespon
                     Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -331,8 +353,7 @@ pub enum DeleteNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedHorizontalPodAutoscalerResponse {
@@ -367,8 +388,20 @@ impl crate::Response for DeleteNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -437,8 +470,7 @@ impl HorizontalPodAutoscaler {
 #[derive(Debug)]
 pub enum ListHorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscalerList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListHorizontalPodAutoscalerForAllNamespacesResponse {
@@ -452,8 +484,20 @@ impl crate::Response for ListHorizontalPodAutoscalerForAllNamespacesResponse {
                 };
                 Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -527,8 +571,7 @@ impl HorizontalPodAutoscaler {
 #[derive(Debug)]
 pub enum ListNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscalerList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedHorizontalPodAutoscalerResponse {
@@ -542,8 +585,20 @@ impl crate::Response for ListNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((ListNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -624,8 +679,7 @@ pub struct PatchNamespacedHorizontalPodAutoscalerOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedHorizontalPodAutoscalerResponse {
@@ -639,8 +693,20 @@ impl crate::Response for PatchNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -721,8 +787,7 @@ pub struct PatchNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedHorizontalPodAutoscalerStatusResponse {
@@ -736,8 +801,20 @@ impl crate::Response for PatchNamespacedHorizontalPodAutoscalerStatusResponse {
                 };
                 Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -809,8 +886,7 @@ pub struct ReadNamespacedHorizontalPodAutoscalerOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedHorizontalPodAutoscalerResponse {
@@ -824,8 +900,20 @@ impl crate::Response for ReadNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -885,8 +973,7 @@ pub struct ReadNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedHorizontalPodAutoscalerStatusResponse {
@@ -900,8 +987,20 @@ impl crate::Response for ReadNamespacedHorizontalPodAutoscalerStatusResponse {
                 };
                 Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -977,8 +1076,7 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerOptional<'a> {
 pub enum ReplaceNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
     Created(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerResponse {
@@ -1000,8 +1098,20 @@ impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1077,8 +1187,7 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 pub enum ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
     Created(crate::v1_14::api::autoscaling::v2beta1::HorizontalPodAutoscaler),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
@@ -1100,8 +1209,20 @@ impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerStatusResponse 
                 };
                 Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1163,8 +1284,7 @@ impl HorizontalPodAutoscaler {
 #[derive(Debug)]
 pub enum WatchHorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchHorizontalPodAutoscalerForAllNamespacesResponse {
@@ -1180,8 +1300,20 @@ impl crate::Response for WatchHorizontalPodAutoscalerForAllNamespacesResponse {
                 };
                 Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1248,8 +1380,7 @@ impl HorizontalPodAutoscaler {
 #[derive(Debug)]
 pub enum WatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedHorizontalPodAutoscalerResponse {
@@ -1265,8 +1396,20 @@ impl crate::Response for WatchNamespacedHorizontalPodAutoscalerResponse {
                 };
                 Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Other(result), read))
+            },
         }
     }
 }

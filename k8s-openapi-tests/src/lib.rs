@@ -243,7 +243,7 @@ fn get_single_value<'a, R, F, T>(
 	f: F,
 ) -> Result<T, Error> where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
 {
 	get_multiple_values(response, response_body, f)?.next().unwrap_or_else(|| Err("unexpected EOF".into()))
 }
@@ -254,7 +254,7 @@ fn get_multiple_values<'a, R, F, T>(
 	f: F,
 ) -> Result<MultipleValuesIterator<'a, R, F, T>, Error> where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
 {
 	let response_body = response_body(response.status_code);
 
@@ -279,14 +279,14 @@ struct MultipleValuesIterator<'a, R, F, T> {
 
 impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
 {
 	type Item = Result<T, Error>;
 
 	fn next(&mut self) -> Option<Self::Item> {
 		loop {
 			match self.response_body.parse() {
-				Ok(value) => match (self.f)(value, self.response_body.status_code, &*self.response_body) {
+				Ok(value) => match (self.f)(value, self.response_body.status_code) {
 					Ok(ValueResult::GotValue(result)) => return Some(Ok(result)),
 					Ok(ValueResult::NeedMoreData) => (),
 					Err(err) => return Some(Err(err)),

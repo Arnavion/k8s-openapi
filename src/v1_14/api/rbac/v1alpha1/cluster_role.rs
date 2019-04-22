@@ -77,8 +77,7 @@ pub enum CreateClusterRoleResponse {
     Ok(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
     Created(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
     Accepted(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateClusterRoleResponse {
@@ -108,8 +107,20 @@ impl crate::Response for CreateClusterRoleResponse {
                 };
                 Ok((CreateClusterRoleResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((CreateClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -190,8 +201,7 @@ pub enum DeleteClusterRoleResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteClusterRoleResponse {
@@ -226,8 +236,20 @@ impl crate::Response for DeleteClusterRoleResponse {
                 };
                 Ok((DeleteClusterRoleResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -324,8 +346,7 @@ pub struct DeleteCollectionClusterRoleOptional<'a> {
 pub enum DeleteCollectionClusterRoleResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionClusterRoleResponse {
@@ -352,8 +373,20 @@ impl crate::Response for DeleteCollectionClusterRoleResponse {
                     Ok((DeleteCollectionClusterRoleResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -422,8 +455,7 @@ impl ClusterRole {
 #[derive(Debug)]
 pub enum ListClusterRoleResponse {
     Ok(crate::v1_14::api::rbac::v1alpha1::ClusterRoleList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListClusterRoleResponse {
@@ -437,8 +469,20 @@ impl crate::Response for ListClusterRoleResponse {
                 };
                 Ok((ListClusterRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((ListClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -514,8 +558,7 @@ pub struct PatchClusterRoleOptional<'a> {
 #[derive(Debug)]
 pub enum PatchClusterRoleResponse {
     Ok(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchClusterRoleResponse {
@@ -529,8 +572,20 @@ impl crate::Response for PatchClusterRoleResponse {
                 };
                 Ok((PatchClusterRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((PatchClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -585,8 +640,7 @@ pub struct ReadClusterRoleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadClusterRoleResponse {
     Ok(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadClusterRoleResponse {
@@ -600,8 +654,20 @@ impl crate::Response for ReadClusterRoleResponse {
                 };
                 Ok((ReadClusterRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReadClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -672,8 +738,7 @@ pub struct ReplaceClusterRoleOptional<'a> {
 pub enum ReplaceClusterRoleResponse {
     Ok(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
     Created(crate::v1_14::api::rbac::v1alpha1::ClusterRole),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceClusterRoleResponse {
@@ -695,8 +760,20 @@ impl crate::Response for ReplaceClusterRoleResponse {
                 };
                 Ok((ReplaceClusterRoleResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -758,8 +835,7 @@ impl ClusterRole {
 #[derive(Debug)]
 pub enum WatchClusterRoleResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchClusterRoleResponse {
@@ -775,8 +851,20 @@ impl crate::Response for WatchClusterRoleResponse {
                 };
                 Ok((WatchClusterRoleResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchClusterRoleResponse::Unauthorized, 0)),
-            _ => Ok((WatchClusterRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchClusterRoleResponse::Other(result), read))
+            },
         }
     }
 }

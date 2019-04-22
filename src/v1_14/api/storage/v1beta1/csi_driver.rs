@@ -74,8 +74,7 @@ pub enum CreateCSIDriverResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
     Created(crate::v1_14::api::storage::v1beta1::CSIDriver),
     Accepted(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateCSIDriverResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateCSIDriverResponse {
                 };
                 Ok((CreateCSIDriverResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((CreateCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -187,8 +198,7 @@ pub enum DeleteCSIDriverResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1beta1::CSIDriver),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCSIDriverResponse {
@@ -223,8 +233,20 @@ impl crate::Response for DeleteCSIDriverResponse {
                 };
                 Ok((DeleteCSIDriverResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -321,8 +343,7 @@ pub struct DeleteCollectionCSIDriverOptional<'a> {
 pub enum DeleteCollectionCSIDriverResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionCSIDriverResponse {
@@ -349,8 +370,20 @@ impl crate::Response for DeleteCollectionCSIDriverResponse {
                     Ok((DeleteCollectionCSIDriverResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -419,8 +452,7 @@ impl CSIDriver {
 #[derive(Debug)]
 pub enum ListCSIDriverResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSIDriverList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListCSIDriverResponse {
@@ -434,8 +466,20 @@ impl crate::Response for ListCSIDriverResponse {
                 };
                 Ok((ListCSIDriverResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((ListCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -511,8 +555,7 @@ pub struct PatchCSIDriverOptional<'a> {
 #[derive(Debug)]
 pub enum PatchCSIDriverResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchCSIDriverResponse {
@@ -526,8 +569,20 @@ impl crate::Response for PatchCSIDriverResponse {
                 };
                 Ok((PatchCSIDriverResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((PatchCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -594,8 +649,7 @@ pub struct ReadCSIDriverOptional<'a> {
 #[derive(Debug)]
 pub enum ReadCSIDriverResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadCSIDriverResponse {
@@ -609,8 +663,20 @@ impl crate::Response for ReadCSIDriverResponse {
                 };
                 Ok((ReadCSIDriverResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((ReadCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -681,8 +747,7 @@ pub struct ReplaceCSIDriverOptional<'a> {
 pub enum ReplaceCSIDriverResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
     Created(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCSIDriverResponse {
@@ -704,8 +769,20 @@ impl crate::Response for ReplaceCSIDriverResponse {
                 };
                 Ok((ReplaceCSIDriverResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }
@@ -767,8 +844,7 @@ impl CSIDriver {
 #[derive(Debug)]
 pub enum WatchCSIDriverResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<CSIDriver>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchCSIDriverResponse {
@@ -784,8 +860,20 @@ impl crate::Response for WatchCSIDriverResponse {
                 };
                 Ok((WatchCSIDriverResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCSIDriverResponse::Unauthorized, 0)),
-            _ => Ok((WatchCSIDriverResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchCSIDriverResponse::Other(result), read))
+            },
         }
     }
 }

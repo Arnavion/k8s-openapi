@@ -74,8 +74,7 @@ pub enum CreateMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Created(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Accepted(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateMutatingWebhookConfigurationResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateMutatingWebhookConfigurationResponse {
                 };
                 Ok((CreateMutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -209,8 +220,7 @@ pub struct DeleteCollectionMutatingWebhookConfigurationOptional<'a> {
 pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionMutatingWebhookConfigurationResponse {
@@ -237,8 +247,20 @@ impl crate::Response for DeleteCollectionMutatingWebhookConfigurationResponse {
                     Ok((DeleteCollectionMutatingWebhookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -319,8 +341,7 @@ pub enum DeleteMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
@@ -355,8 +376,20 @@ impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
                 };
                 Ok((DeleteMutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -429,8 +462,7 @@ impl MutatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum ListMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListMutatingWebhookConfigurationResponse {
@@ -444,8 +476,20 @@ impl crate::Response for ListMutatingWebhookConfigurationResponse {
                 };
                 Ok((ListMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ pub struct PatchMutatingWebhookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum PatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchMutatingWebhookConfigurationResponse {
@@ -524,8 +567,20 @@ impl crate::Response for PatchMutatingWebhookConfigurationResponse {
                 };
                 Ok((PatchMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -592,8 +647,7 @@ pub struct ReadMutatingWebhookConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum ReadMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadMutatingWebhookConfigurationResponse {
@@ -607,8 +661,20 @@ impl crate::Response for ReadMutatingWebhookConfigurationResponse {
                 };
                 Ok((ReadMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -673,8 +739,7 @@ pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
 pub enum ReplaceMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Created(crate::v1_12::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
@@ -696,8 +761,20 @@ impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
                 };
                 Ok((ReplaceMutatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }
@@ -763,8 +840,7 @@ impl MutatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum WatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<MutatingWebhookConfiguration>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchMutatingWebhookConfigurationResponse {
@@ -780,8 +856,20 @@ impl crate::Response for WatchMutatingWebhookConfigurationResponse {
                 };
                 Ok((WatchMutatingWebhookConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchMutatingWebhookConfigurationResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchMutatingWebhookConfigurationResponse::Other(result), read))
+            },
         }
     }
 }

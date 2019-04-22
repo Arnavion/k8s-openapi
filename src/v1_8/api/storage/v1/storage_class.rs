@@ -74,8 +74,7 @@ pub struct CreateStorageClassOptional<'a> {
 #[derive(Debug)]
 pub enum CreateStorageClassResponse {
     Ok(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateStorageClassResponse {
@@ -89,8 +88,20 @@ impl crate::Response for CreateStorageClassResponse {
                 };
                 Ok((CreateStorageClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((CreateStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -191,8 +202,7 @@ pub struct DeleteCollectionStorageClassOptional<'a> {
 pub enum DeleteCollectionStorageClassResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionStorageClassResponse {
@@ -219,8 +229,20 @@ impl crate::Response for DeleteCollectionStorageClassResponse {
                     Ok((DeleteCollectionStorageClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -294,8 +316,7 @@ pub struct DeleteStorageClassOptional<'a> {
 pub enum DeleteStorageClassResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteStorageClassResponse {
@@ -322,8 +343,20 @@ impl crate::Response for DeleteStorageClassResponse {
                     Ok((DeleteStorageClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -396,8 +429,7 @@ impl StorageClass {
 #[derive(Debug)]
 pub enum ListStorageClassResponse {
     Ok(crate::v1_8::api::storage::v1::StorageClassList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListStorageClassResponse {
@@ -411,8 +443,20 @@ impl crate::Response for ListStorageClassResponse {
                 };
                 Ok((ListStorageClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((ListStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -470,8 +514,7 @@ pub struct PatchStorageClassOptional<'a> {
 #[derive(Debug)]
 pub enum PatchStorageClassResponse {
     Ok(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchStorageClassResponse {
@@ -485,8 +528,20 @@ impl crate::Response for PatchStorageClassResponse {
                 };
                 Ok((PatchStorageClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((PatchStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -553,8 +608,7 @@ pub struct ReadStorageClassOptional<'a> {
 #[derive(Debug)]
 pub enum ReadStorageClassResponse {
     Ok(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadStorageClassResponse {
@@ -568,8 +622,20 @@ impl crate::Response for ReadStorageClassResponse {
                 };
                 Ok((ReadStorageClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((ReadStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -627,8 +693,7 @@ pub struct ReplaceStorageClassOptional<'a> {
 #[derive(Debug)]
 pub enum ReplaceStorageClassResponse {
     Ok(crate::v1_8::api::storage::v1::StorageClass),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceStorageClassResponse {
@@ -642,8 +707,20 @@ impl crate::Response for ReplaceStorageClassResponse {
                 };
                 Ok((ReplaceStorageClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceStorageClassResponse::Other(result), read))
+            },
         }
     }
 }
@@ -709,8 +786,7 @@ impl StorageClass {
 #[derive(Debug)]
 pub enum WatchStorageClassResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<StorageClass>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchStorageClassResponse {
@@ -726,8 +802,20 @@ impl crate::Response for WatchStorageClassResponse {
                 };
                 Ok((WatchStorageClassResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageClassResponse::Unauthorized, 0)),
-            _ => Ok((WatchStorageClassResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchStorageClassResponse::Other(result), read))
+            },
         }
     }
 }

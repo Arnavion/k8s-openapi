@@ -70,8 +70,7 @@ pub enum CreateNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
     Created(crate::v1_9::api::core::v1::ResourceQuota),
     Accepted(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedResourceQuotaResponse {
@@ -101,8 +100,20 @@ impl crate::Response for CreateNamespacedResourceQuotaResponse {
                 };
                 Ok((CreateNamespacedResourceQuotaResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -208,8 +219,7 @@ pub struct DeleteCollectionNamespacedResourceQuotaOptional<'a> {
 pub enum DeleteCollectionNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedResourceQuotaResponse {
@@ -236,8 +246,20 @@ impl crate::Response for DeleteCollectionNamespacedResourceQuotaResponse {
                     Ok((DeleteCollectionNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -316,8 +338,7 @@ pub struct DeleteNamespacedResourceQuotaOptional<'a> {
 pub enum DeleteNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedResourceQuotaResponse {
@@ -344,8 +365,20 @@ impl crate::Response for DeleteNamespacedResourceQuotaResponse {
                     Ok((DeleteNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -423,8 +456,7 @@ impl ResourceQuota {
 #[derive(Debug)]
 pub enum ListNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuotaList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedResourceQuotaResponse {
@@ -438,8 +470,20 @@ impl crate::Response for ListNamespacedResourceQuotaResponse {
                 };
                 Ok((ListNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -512,8 +556,7 @@ impl ResourceQuota {
 #[derive(Debug)]
 pub enum ListResourceQuotaForAllNamespacesResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuotaList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListResourceQuotaForAllNamespacesResponse {
@@ -527,8 +570,20 @@ impl crate::Response for ListResourceQuotaForAllNamespacesResponse {
                 };
                 Ok((ListResourceQuotaForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListResourceQuotaForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListResourceQuotaForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListResourceQuotaForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -591,8 +646,7 @@ pub struct PatchNamespacedResourceQuotaOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedResourceQuotaResponse {
@@ -606,8 +660,20 @@ impl crate::Response for PatchNamespacedResourceQuotaResponse {
                 };
                 Ok((PatchNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -670,8 +736,7 @@ pub struct PatchNamespacedResourceQuotaStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedResourceQuotaStatusResponse {
@@ -685,8 +750,20 @@ impl crate::Response for PatchNamespacedResourceQuotaStatusResponse {
                 };
                 Ok((PatchNamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedResourceQuotaStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedResourceQuotaStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -758,8 +835,7 @@ pub struct ReadNamespacedResourceQuotaOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedResourceQuotaResponse {
@@ -773,8 +849,20 @@ impl crate::Response for ReadNamespacedResourceQuotaResponse {
                 };
                 Ok((ReadNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -834,8 +922,7 @@ pub struct ReadNamespacedResourceQuotaStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedResourceQuotaStatusResponse {
@@ -849,8 +936,20 @@ impl crate::Response for ReadNamespacedResourceQuotaStatusResponse {
                 };
                 Ok((ReadNamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedResourceQuotaStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedResourceQuotaStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -914,8 +1013,7 @@ pub struct ReplaceNamespacedResourceQuotaOptional<'a> {
 pub enum ReplaceNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
     Created(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedResourceQuotaResponse {
@@ -937,8 +1035,20 @@ impl crate::Response for ReplaceNamespacedResourceQuotaResponse {
                 };
                 Ok((ReplaceNamespacedResourceQuotaResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1002,8 +1112,7 @@ pub struct ReplaceNamespacedResourceQuotaStatusOptional<'a> {
 pub enum ReplaceNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_9::api::core::v1::ResourceQuota),
     Created(crate::v1_9::api::core::v1::ResourceQuota),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedResourceQuotaStatusResponse {
@@ -1025,8 +1134,20 @@ impl crate::Response for ReplaceNamespacedResourceQuotaStatusResponse {
                 };
                 Ok((ReplaceNamespacedResourceQuotaStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedResourceQuotaStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedResourceQuotaStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1097,8 +1218,7 @@ impl ResourceQuota {
 #[derive(Debug)]
 pub enum WatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedResourceQuotaResponse {
@@ -1114,8 +1234,20 @@ impl crate::Response for WatchNamespacedResourceQuotaResponse {
                 };
                 Ok((WatchNamespacedResourceQuotaResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedResourceQuotaResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedResourceQuotaResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1181,8 +1313,7 @@ impl ResourceQuota {
 #[derive(Debug)]
 pub enum WatchResourceQuotaForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchResourceQuotaForAllNamespacesResponse {
@@ -1198,8 +1329,20 @@ impl crate::Response for WatchResourceQuotaForAllNamespacesResponse {
                 };
                 Ok((WatchResourceQuotaForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchResourceQuotaForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchResourceQuotaForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchResourceQuotaForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

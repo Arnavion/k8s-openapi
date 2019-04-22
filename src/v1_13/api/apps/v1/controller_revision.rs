@@ -82,8 +82,7 @@ pub enum CreateNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevision),
     Created(crate::v1_13::api::apps::v1::ControllerRevision),
     Accepted(crate::v1_13::api::apps::v1::ControllerRevision),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedControllerRevisionResponse {
@@ -113,8 +112,20 @@ impl crate::Response for CreateNamespacedControllerRevisionResponse {
                 };
                 Ok((CreateNamespacedControllerRevisionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -222,8 +233,7 @@ pub struct DeleteCollectionNamespacedControllerRevisionOptional<'a> {
 pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1::ControllerRevision),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
@@ -250,8 +260,20 @@ impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
                     Ok((DeleteCollectionNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -337,8 +359,7 @@ pub enum DeleteNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1::ControllerRevision),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedControllerRevisionResponse {
@@ -373,8 +394,20 @@ impl crate::Response for DeleteNamespacedControllerRevisionResponse {
                 };
                 Ok((DeleteNamespacedControllerRevisionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -447,8 +480,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum ListControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevisionList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
@@ -462,8 +494,20 @@ impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
                 };
                 Ok((ListControllerRevisionForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListControllerRevisionForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListControllerRevisionForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListControllerRevisionForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -541,8 +585,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum ListNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevisionList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedControllerRevisionResponse {
@@ -556,8 +599,20 @@ impl crate::Response for ListNamespacedControllerRevisionResponse {
                 };
                 Ok((ListNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -626,8 +681,7 @@ pub struct PatchNamespacedControllerRevisionOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevision),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedControllerRevisionResponse {
@@ -641,8 +695,20 @@ impl crate::Response for PatchNamespacedControllerRevisionResponse {
                 };
                 Ok((PatchNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -714,8 +780,7 @@ pub struct ReadNamespacedControllerRevisionOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevision),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedControllerRevisionResponse {
@@ -729,8 +794,20 @@ impl crate::Response for ReadNamespacedControllerRevisionResponse {
                 };
                 Ok((ReadNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -800,8 +877,7 @@ pub struct ReplaceNamespacedControllerRevisionOptional<'a> {
 pub enum ReplaceNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::api::apps::v1::ControllerRevision),
     Created(crate::v1_13::api::apps::v1::ControllerRevision),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedControllerRevisionResponse {
@@ -823,8 +899,20 @@ impl crate::Response for ReplaceNamespacedControllerRevisionResponse {
                 };
                 Ok((ReplaceNamespacedControllerRevisionResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }
@@ -890,8 +978,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum WatchControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchControllerRevisionForAllNamespacesResponse {
@@ -907,8 +994,20 @@ impl crate::Response for WatchControllerRevisionForAllNamespacesResponse {
                 };
                 Ok((WatchControllerRevisionForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchControllerRevisionForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchControllerRevisionForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchControllerRevisionForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -979,8 +1078,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum WatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedControllerRevisionResponse {
@@ -996,8 +1094,20 @@ impl crate::Response for WatchNamespacedControllerRevisionResponse {
                 };
                 Ok((WatchNamespacedControllerRevisionResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedControllerRevisionResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedControllerRevisionResponse::Other(result), read))
+            },
         }
     }
 }

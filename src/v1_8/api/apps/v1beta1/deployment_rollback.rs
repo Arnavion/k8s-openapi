@@ -73,8 +73,7 @@ pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentRollbackResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
@@ -88,8 +87,20 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                 };
                 Ok((CreateNamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedDeploymentRollbackResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedDeploymentRollbackResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedDeploymentRollbackResponse::Other(result), read))
+            },
         }
     }
 }

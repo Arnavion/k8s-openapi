@@ -82,8 +82,7 @@ pub enum CreateNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Created(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Accepted(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedPersistentVolumeClaimResponse {
@@ -113,8 +112,20 @@ impl crate::Response for CreateNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((CreateNamespacedPersistentVolumeClaimResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -216,8 +227,7 @@ pub struct DeleteCollectionNamespacedPersistentVolumeClaimOptional<'a> {
 pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedPersistentVolumeClaimResponse {
@@ -244,8 +254,20 @@ impl crate::Response for DeleteCollectionNamespacedPersistentVolumeClaimResponse
                     Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -331,8 +353,7 @@ pub enum DeleteNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedPersistentVolumeClaimResponse {
@@ -367,8 +388,20 @@ impl crate::Response for DeleteNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((DeleteNamespacedPersistentVolumeClaimResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -442,8 +475,7 @@ impl PersistentVolumeClaim {
 #[derive(Debug)]
 pub enum ListNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaimList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedPersistentVolumeClaimResponse {
@@ -457,8 +489,20 @@ impl crate::Response for ListNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((ListNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -527,8 +571,7 @@ impl PersistentVolumeClaim {
 #[derive(Debug)]
 pub enum ListPersistentVolumeClaimForAllNamespacesResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaimList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPersistentVolumeClaimForAllNamespacesResponse {
@@ -542,8 +585,20 @@ impl crate::Response for ListPersistentVolumeClaimForAllNamespacesResponse {
                 };
                 Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -624,8 +679,7 @@ pub struct PatchNamespacedPersistentVolumeClaimOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedPersistentVolumeClaimResponse {
@@ -639,8 +693,20 @@ impl crate::Response for PatchNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((PatchNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -721,8 +787,7 @@ pub struct PatchNamespacedPersistentVolumeClaimStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedPersistentVolumeClaimStatusResponse {
@@ -736,8 +801,20 @@ impl crate::Response for PatchNamespacedPersistentVolumeClaimStatusResponse {
                 };
                 Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -809,8 +886,7 @@ pub struct ReadNamespacedPersistentVolumeClaimOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
@@ -824,8 +900,20 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((ReadNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -885,8 +973,7 @@ pub struct ReadNamespacedPersistentVolumeClaimStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
@@ -900,8 +987,20 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
                 };
                 Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -977,8 +1076,7 @@ pub struct ReplaceNamespacedPersistentVolumeClaimOptional<'a> {
 pub enum ReplaceNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Created(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedPersistentVolumeClaimResponse {
@@ -1000,8 +1098,20 @@ impl crate::Response for ReplaceNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1077,8 +1187,7 @@ pub struct ReplaceNamespacedPersistentVolumeClaimStatusOptional<'a> {
 pub enum ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Created(crate::v1_14::api::core::v1::PersistentVolumeClaim),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedPersistentVolumeClaimStatusResponse {
@@ -1100,8 +1209,20 @@ impl crate::Response for ReplaceNamespacedPersistentVolumeClaimStatusResponse {
                 };
                 Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1168,8 +1289,7 @@ impl PersistentVolumeClaim {
 #[derive(Debug)]
 pub enum WatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedPersistentVolumeClaimResponse {
@@ -1185,8 +1305,20 @@ impl crate::Response for WatchNamespacedPersistentVolumeClaimResponse {
                 };
                 Ok((WatchNamespacedPersistentVolumeClaimResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedPersistentVolumeClaimResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1248,8 +1380,7 @@ impl PersistentVolumeClaim {
 #[derive(Debug)]
 pub enum WatchPersistentVolumeClaimForAllNamespacesResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPersistentVolumeClaimForAllNamespacesResponse {
@@ -1265,8 +1396,20 @@ impl crate::Response for WatchPersistentVolumeClaimForAllNamespacesResponse {
                 };
                 Ok((WatchPersistentVolumeClaimForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchPersistentVolumeClaimForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPersistentVolumeClaimForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

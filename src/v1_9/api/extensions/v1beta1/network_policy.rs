@@ -67,8 +67,7 @@ pub enum CreateNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
     Created(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
     Accepted(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedNetworkPolicyResponse {
@@ -98,8 +97,20 @@ impl crate::Response for CreateNamespacedNetworkPolicyResponse {
                 };
                 Ok((CreateNamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -205,8 +216,7 @@ pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
 pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedNetworkPolicyResponse {
@@ -233,8 +243,20 @@ impl crate::Response for DeleteCollectionNamespacedNetworkPolicyResponse {
                     Ok((DeleteCollectionNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -313,8 +335,7 @@ pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
 pub enum DeleteNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedNetworkPolicyResponse {
@@ -341,8 +362,20 @@ impl crate::Response for DeleteNamespacedNetworkPolicyResponse {
                     Ok((DeleteNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -420,8 +453,7 @@ impl NetworkPolicy {
 #[derive(Debug)]
 pub enum ListNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicyList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedNetworkPolicyResponse {
@@ -435,8 +467,20 @@ impl crate::Response for ListNamespacedNetworkPolicyResponse {
                 };
                 Ok((ListNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ impl NetworkPolicy {
 #[derive(Debug)]
 pub enum ListNetworkPolicyForAllNamespacesResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicyList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNetworkPolicyForAllNamespacesResponse {
@@ -524,8 +567,20 @@ impl crate::Response for ListNetworkPolicyForAllNamespacesResponse {
                 };
                 Ok((ListNetworkPolicyForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListNetworkPolicyForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNetworkPolicyForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -588,8 +643,7 @@ pub struct PatchNamespacedNetworkPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedNetworkPolicyResponse {
@@ -603,8 +657,20 @@ impl crate::Response for PatchNamespacedNetworkPolicyResponse {
                 };
                 Ok((PatchNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -676,8 +742,7 @@ pub struct ReadNamespacedNetworkPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedNetworkPolicyResponse {
@@ -691,8 +756,20 @@ impl crate::Response for ReadNamespacedNetworkPolicyResponse {
                 };
                 Ok((ReadNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -756,8 +833,7 @@ pub struct ReplaceNamespacedNetworkPolicyOptional<'a> {
 pub enum ReplaceNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
     Created(crate::v1_9::api::extensions::v1beta1::NetworkPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedNetworkPolicyResponse {
@@ -779,8 +855,20 @@ impl crate::Response for ReplaceNamespacedNetworkPolicyResponse {
                 };
                 Ok((ReplaceNamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -851,8 +939,7 @@ impl NetworkPolicy {
 #[derive(Debug)]
 pub enum WatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedNetworkPolicyResponse {
@@ -868,8 +955,20 @@ impl crate::Response for WatchNamespacedNetworkPolicyResponse {
                 };
                 Ok((WatchNamespacedNetworkPolicyResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedNetworkPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedNetworkPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -935,8 +1034,7 @@ impl NetworkPolicy {
 #[derive(Debug)]
 pub enum WatchNetworkPolicyForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNetworkPolicyForAllNamespacesResponse {
@@ -952,8 +1050,20 @@ impl crate::Response for WatchNetworkPolicyForAllNamespacesResponse {
                 };
                 Ok((WatchNetworkPolicyForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchNetworkPolicyForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNetworkPolicyForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

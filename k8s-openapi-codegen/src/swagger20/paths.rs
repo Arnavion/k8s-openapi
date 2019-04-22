@@ -93,7 +93,7 @@ pub struct Operation {
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 	pub parameters: Vec<std::sync::Arc<Parameter>>,
 	pub path: Path,
-	pub responses: std::collections::BTreeMap<reqwest::StatusCode, Option<super::Schema>>,
+	pub responses: std::collections::BTreeMap<reqwest::StatusCode, super::Schema>,
 	pub tag: String,
 }
 

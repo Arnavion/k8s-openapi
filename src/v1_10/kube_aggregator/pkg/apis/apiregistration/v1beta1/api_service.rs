@@ -64,8 +64,7 @@ pub enum CreateAPIServiceResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Accepted(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateAPIServiceResponse {
@@ -95,8 +94,20 @@ impl crate::Response for CreateAPIServiceResponse {
                 };
                 Ok((CreateAPIServiceResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((CreateAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -170,8 +181,7 @@ pub struct DeleteAPIServiceOptional<'a> {
 pub enum DeleteAPIServiceResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteAPIServiceResponse {
@@ -198,8 +208,20 @@ impl crate::Response for DeleteAPIServiceResponse {
                     Ok((DeleteAPIServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -300,8 +322,7 @@ pub struct DeleteCollectionAPIServiceOptional<'a> {
 pub enum DeleteCollectionAPIServiceResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionAPIServiceResponse {
@@ -328,8 +349,20 @@ impl crate::Response for DeleteCollectionAPIServiceResponse {
                     Ok((DeleteCollectionAPIServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -402,8 +435,7 @@ impl APIService {
 #[derive(Debug)]
 pub enum ListAPIServiceResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListAPIServiceResponse {
@@ -417,8 +449,20 @@ impl crate::Response for ListAPIServiceResponse {
                 };
                 Ok((ListAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ListAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -476,8 +520,7 @@ pub struct PatchAPIServiceOptional<'a> {
 #[derive(Debug)]
 pub enum PatchAPIServiceResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchAPIServiceResponse {
@@ -491,8 +534,20 @@ impl crate::Response for PatchAPIServiceResponse {
                 };
                 Ok((PatchAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((PatchAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -559,8 +614,7 @@ pub struct ReadAPIServiceOptional<'a> {
 #[derive(Debug)]
 pub enum ReadAPIServiceResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadAPIServiceResponse {
@@ -574,8 +628,20 @@ impl crate::Response for ReadAPIServiceResponse {
                 };
                 Ok((ReadAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReadAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -634,8 +700,7 @@ pub struct ReplaceAPIServiceOptional<'a> {
 pub enum ReplaceAPIServiceResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceAPIServiceResponse {
@@ -657,8 +722,20 @@ impl crate::Response for ReplaceAPIServiceResponse {
                 };
                 Ok((ReplaceAPIServiceResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }
@@ -717,8 +794,7 @@ pub struct ReplaceAPIServiceStatusOptional<'a> {
 pub enum ReplaceAPIServiceStatusResponse {
     Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceAPIServiceStatusResponse {
@@ -740,8 +816,20 @@ impl crate::Response for ReplaceAPIServiceStatusResponse {
                 };
                 Ok((ReplaceAPIServiceStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAPIServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAPIServiceStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceAPIServiceStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -807,8 +895,7 @@ impl APIService {
 #[derive(Debug)]
 pub enum WatchAPIServiceResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<APIService>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchAPIServiceResponse {
@@ -824,8 +911,20 @@ impl crate::Response for WatchAPIServiceResponse {
                 };
                 Ok((WatchAPIServiceResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((WatchAPIServiceResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchAPIServiceResponse::Other(result), read))
+            },
         }
     }
 }

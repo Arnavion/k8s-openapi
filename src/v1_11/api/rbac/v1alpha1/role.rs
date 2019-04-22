@@ -67,8 +67,7 @@ pub enum CreateNamespacedRoleResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::Role),
     Created(crate::v1_11::api::rbac::v1alpha1::Role),
     Accepted(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedRoleResponse {
@@ -98,8 +97,20 @@ impl crate::Response for CreateNamespacedRoleResponse {
                 };
                 Ok((CreateNamespacedRoleResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -205,8 +216,7 @@ pub struct DeleteCollectionNamespacedRoleOptional<'a> {
 pub enum DeleteCollectionNamespacedRoleResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedRoleResponse {
@@ -233,8 +243,20 @@ impl crate::Response for DeleteCollectionNamespacedRoleResponse {
                     Ok((DeleteCollectionNamespacedRoleResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -313,8 +335,7 @@ pub struct DeleteNamespacedRoleOptional<'a> {
 pub enum DeleteNamespacedRoleResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedRoleResponse {
@@ -341,8 +362,20 @@ impl crate::Response for DeleteNamespacedRoleResponse {
                     Ok((DeleteNamespacedRoleResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -420,8 +453,7 @@ impl Role {
 #[derive(Debug)]
 pub enum ListNamespacedRoleResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::RoleList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedRoleResponse {
@@ -435,8 +467,20 @@ impl crate::Response for ListNamespacedRoleResponse {
                 };
                 Ok((ListNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ impl Role {
 #[derive(Debug)]
 pub enum ListRoleForAllNamespacesResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::RoleList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListRoleForAllNamespacesResponse {
@@ -524,8 +567,20 @@ impl crate::Response for ListRoleForAllNamespacesResponse {
                 };
                 Ok((ListRoleForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRoleForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListRoleForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListRoleForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -588,8 +643,7 @@ pub struct PatchNamespacedRoleOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedRoleResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedRoleResponse {
@@ -603,8 +657,20 @@ impl crate::Response for PatchNamespacedRoleResponse {
                 };
                 Ok((PatchNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -664,8 +730,7 @@ pub struct ReadNamespacedRoleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedRoleResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedRoleResponse {
@@ -679,8 +744,20 @@ impl crate::Response for ReadNamespacedRoleResponse {
                 };
                 Ok((ReadNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -744,8 +821,7 @@ pub struct ReplaceNamespacedRoleOptional<'a> {
 pub enum ReplaceNamespacedRoleResponse {
     Ok(crate::v1_11::api::rbac::v1alpha1::Role),
     Created(crate::v1_11::api::rbac::v1alpha1::Role),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedRoleResponse {
@@ -767,8 +843,20 @@ impl crate::Response for ReplaceNamespacedRoleResponse {
                 };
                 Ok((ReplaceNamespacedRoleResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -839,8 +927,7 @@ impl Role {
 #[derive(Debug)]
 pub enum WatchNamespacedRoleResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedRoleResponse {
@@ -856,8 +943,20 @@ impl crate::Response for WatchNamespacedRoleResponse {
                 };
                 Ok((WatchNamespacedRoleResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedRoleResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedRoleResponse::Other(result), read))
+            },
         }
     }
 }
@@ -923,8 +1022,7 @@ impl Role {
 #[derive(Debug)]
 pub enum WatchRoleForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchRoleForAllNamespacesResponse {
@@ -940,8 +1038,20 @@ impl crate::Response for WatchRoleForAllNamespacesResponse {
                 };
                 Ok((WatchRoleForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRoleForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchRoleForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchRoleForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }

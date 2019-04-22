@@ -74,8 +74,7 @@ pub enum CreateCSINodeResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSINode),
     Created(crate::v1_14::api::storage::v1beta1::CSINode),
     Accepted(crate::v1_14::api::storage::v1beta1::CSINode),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateCSINodeResponse {
@@ -105,8 +104,20 @@ impl crate::Response for CreateCSINodeResponse {
                 };
                 Ok((CreateCSINodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((CreateCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -187,8 +198,7 @@ pub enum DeleteCSINodeResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1beta1::CSINode),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCSINodeResponse {
@@ -223,8 +233,20 @@ impl crate::Response for DeleteCSINodeResponse {
                 };
                 Ok((DeleteCSINodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -321,8 +343,7 @@ pub struct DeleteCollectionCSINodeOptional<'a> {
 pub enum DeleteCollectionCSINodeResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_14::api::storage::v1beta1::CSINode),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionCSINodeResponse {
@@ -349,8 +370,20 @@ impl crate::Response for DeleteCollectionCSINodeResponse {
                     Ok((DeleteCollectionCSINodeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -419,8 +452,7 @@ impl CSINode {
 #[derive(Debug)]
 pub enum ListCSINodeResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSINodeList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListCSINodeResponse {
@@ -434,8 +466,20 @@ impl crate::Response for ListCSINodeResponse {
                 };
                 Ok((ListCSINodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((ListCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -511,8 +555,7 @@ pub struct PatchCSINodeOptional<'a> {
 #[derive(Debug)]
 pub enum PatchCSINodeResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSINode),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchCSINodeResponse {
@@ -526,8 +569,20 @@ impl crate::Response for PatchCSINodeResponse {
                 };
                 Ok((PatchCSINodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((PatchCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -594,8 +649,7 @@ pub struct ReadCSINodeOptional<'a> {
 #[derive(Debug)]
 pub enum ReadCSINodeResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSINode),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadCSINodeResponse {
@@ -609,8 +663,20 @@ impl crate::Response for ReadCSINodeResponse {
                 };
                 Ok((ReadCSINodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((ReadCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -681,8 +747,7 @@ pub struct ReplaceCSINodeOptional<'a> {
 pub enum ReplaceCSINodeResponse {
     Ok(crate::v1_14::api::storage::v1beta1::CSINode),
     Created(crate::v1_14::api::storage::v1beta1::CSINode),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceCSINodeResponse {
@@ -704,8 +769,20 @@ impl crate::Response for ReplaceCSINodeResponse {
                 };
                 Ok((ReplaceCSINodeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceCSINodeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -767,8 +844,7 @@ impl CSINode {
 #[derive(Debug)]
 pub enum WatchCSINodeResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<CSINode>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchCSINodeResponse {
@@ -784,8 +860,20 @@ impl crate::Response for WatchCSINodeResponse {
                 };
                 Ok((WatchCSINodeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCSINodeResponse::Unauthorized, 0)),
-            _ => Ok((WatchCSINodeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchCSINodeResponse::Other(result), read))
+            },
         }
     }
 }

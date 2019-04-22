@@ -67,8 +67,7 @@ pub enum CreateNamespacedLimitRangeResponse {
     Ok(crate::v1_11::api::core::v1::LimitRange),
     Created(crate::v1_11::api::core::v1::LimitRange),
     Accepted(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedLimitRangeResponse {
@@ -98,8 +97,20 @@ impl crate::Response for CreateNamespacedLimitRangeResponse {
                 };
                 Ok((CreateNamespacedLimitRangeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -205,8 +216,7 @@ pub struct DeleteCollectionNamespacedLimitRangeOptional<'a> {
 pub enum DeleteCollectionNamespacedLimitRangeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedLimitRangeResponse {
@@ -233,8 +243,20 @@ impl crate::Response for DeleteCollectionNamespacedLimitRangeResponse {
                     Ok((DeleteCollectionNamespacedLimitRangeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -313,8 +335,7 @@ pub struct DeleteNamespacedLimitRangeOptional<'a> {
 pub enum DeleteNamespacedLimitRangeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedLimitRangeResponse {
@@ -341,8 +362,20 @@ impl crate::Response for DeleteNamespacedLimitRangeResponse {
                     Ok((DeleteNamespacedLimitRangeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -415,8 +448,7 @@ impl LimitRange {
 #[derive(Debug)]
 pub enum ListLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_11::api::core::v1::LimitRangeList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListLimitRangeForAllNamespacesResponse {
@@ -430,8 +462,20 @@ impl crate::Response for ListLimitRangeForAllNamespacesResponse {
                 };
                 Ok((ListLimitRangeForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListLimitRangeForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListLimitRangeForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListLimitRangeForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -509,8 +553,7 @@ impl LimitRange {
 #[derive(Debug)]
 pub enum ListNamespacedLimitRangeResponse {
     Ok(crate::v1_11::api::core::v1::LimitRangeList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedLimitRangeResponse {
@@ -524,8 +567,20 @@ impl crate::Response for ListNamespacedLimitRangeResponse {
                 };
                 Ok((ListNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -588,8 +643,7 @@ pub struct PatchNamespacedLimitRangeOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedLimitRangeResponse {
     Ok(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedLimitRangeResponse {
@@ -603,8 +657,20 @@ impl crate::Response for PatchNamespacedLimitRangeResponse {
                 };
                 Ok((PatchNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -676,8 +742,7 @@ pub struct ReadNamespacedLimitRangeOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedLimitRangeResponse {
     Ok(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedLimitRangeResponse {
@@ -691,8 +756,20 @@ impl crate::Response for ReadNamespacedLimitRangeResponse {
                 };
                 Ok((ReadNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -756,8 +833,7 @@ pub struct ReplaceNamespacedLimitRangeOptional<'a> {
 pub enum ReplaceNamespacedLimitRangeResponse {
     Ok(crate::v1_11::api::core::v1::LimitRange),
     Created(crate::v1_11::api::core::v1::LimitRange),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedLimitRangeResponse {
@@ -779,8 +855,20 @@ impl crate::Response for ReplaceNamespacedLimitRangeResponse {
                 };
                 Ok((ReplaceNamespacedLimitRangeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -846,8 +934,7 @@ impl LimitRange {
 #[derive(Debug)]
 pub enum WatchLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchLimitRangeForAllNamespacesResponse {
@@ -863,8 +950,20 @@ impl crate::Response for WatchLimitRangeForAllNamespacesResponse {
                 };
                 Ok((WatchLimitRangeForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchLimitRangeForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchLimitRangeForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchLimitRangeForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -935,8 +1034,7 @@ impl LimitRange {
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedLimitRangeResponse {
@@ -952,8 +1050,20 @@ impl crate::Response for WatchNamespacedLimitRangeResponse {
                 };
                 Ok((WatchNamespacedLimitRangeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedLimitRangeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedLimitRangeResponse::Other(result), read))
+            },
         }
     }
 }

@@ -14,7 +14,7 @@ fn list() {
 			.expect("couldn't list deployments");
 		let response = client.execute(request).expect("couldn't list deployments");;
 		let deployment_list =
-			crate::get_single_value(response, response_body, |response, status_code, _| match response {
+			crate::get_single_value(response, response_body, |response, status_code| match response {
 				apps::ListNamespacedDeploymentResponse::Ok(deployment_list) =>
 					Ok(crate::ValueResult::GotValue(deployment_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),

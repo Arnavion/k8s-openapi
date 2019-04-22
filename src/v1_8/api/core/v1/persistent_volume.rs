@@ -63,8 +63,7 @@ pub struct CreatePersistentVolumeOptional<'a> {
 #[derive(Debug)]
 pub enum CreatePersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreatePersistentVolumeResponse {
@@ -78,8 +77,20 @@ impl crate::Response for CreatePersistentVolumeResponse {
                 };
                 Ok((CreatePersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreatePersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((CreatePersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreatePersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -180,8 +191,7 @@ pub struct DeleteCollectionPersistentVolumeOptional<'a> {
 pub enum DeleteCollectionPersistentVolumeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionPersistentVolumeResponse {
@@ -208,8 +218,20 @@ impl crate::Response for DeleteCollectionPersistentVolumeResponse {
                     Ok((DeleteCollectionPersistentVolumeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionPersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionPersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -283,8 +305,7 @@ pub struct DeletePersistentVolumeOptional<'a> {
 pub enum DeletePersistentVolumeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeletePersistentVolumeResponse {
@@ -311,8 +332,20 @@ impl crate::Response for DeletePersistentVolumeResponse {
                     Ok((DeletePersistentVolumeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeletePersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((DeletePersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeletePersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -385,8 +418,7 @@ impl PersistentVolume {
 #[derive(Debug)]
 pub enum ListPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPersistentVolumeResponse {
@@ -400,8 +432,20 @@ impl crate::Response for ListPersistentVolumeResponse {
                 };
                 Ok((ListPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ListPersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -459,8 +503,7 @@ pub struct PatchPersistentVolumeOptional<'a> {
 #[derive(Debug)]
 pub enum PatchPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchPersistentVolumeResponse {
@@ -474,8 +517,20 @@ impl crate::Response for PatchPersistentVolumeResponse {
                 };
                 Ok((PatchPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((PatchPersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchPersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -533,8 +588,7 @@ pub struct PatchPersistentVolumeStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchPersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchPersistentVolumeStatusResponse {
@@ -548,8 +602,20 @@ impl crate::Response for PatchPersistentVolumeStatusResponse {
                 };
                 Ok((PatchPersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchPersistentVolumeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchPersistentVolumeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -616,8 +682,7 @@ pub struct ReadPersistentVolumeOptional<'a> {
 #[derive(Debug)]
 pub enum ReadPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadPersistentVolumeResponse {
@@ -631,8 +696,20 @@ impl crate::Response for ReadPersistentVolumeResponse {
                 };
                 Ok((ReadPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ReadPersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadPersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -687,8 +764,7 @@ pub struct ReadPersistentVolumeStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadPersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadPersistentVolumeStatusResponse {
@@ -702,8 +778,20 @@ impl crate::Response for ReadPersistentVolumeStatusResponse {
                 };
                 Ok((ReadPersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadPersistentVolumeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadPersistentVolumeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -761,8 +849,7 @@ pub struct ReplacePersistentVolumeOptional<'a> {
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplacePersistentVolumeResponse {
@@ -776,8 +863,20 @@ impl crate::Response for ReplacePersistentVolumeResponse {
                 };
                 Ok((ReplacePersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplacePersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }
@@ -835,8 +934,7 @@ pub struct ReplacePersistentVolumeStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplacePersistentVolumeStatusResponse {
@@ -850,8 +948,20 @@ impl crate::Response for ReplacePersistentVolumeStatusResponse {
                 };
                 Ok((ReplacePersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePersistentVolumeStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplacePersistentVolumeStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -917,8 +1027,7 @@ impl PersistentVolume {
 #[derive(Debug)]
 pub enum WatchPersistentVolumeResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolume>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPersistentVolumeResponse {
@@ -934,8 +1043,20 @@ impl crate::Response for WatchPersistentVolumeResponse {
                 };
                 Ok((WatchPersistentVolumeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((WatchPersistentVolumeResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPersistentVolumeResponse::Other(result), read))
+            },
         }
     }
 }

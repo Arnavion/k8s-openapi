@@ -70,8 +70,7 @@ pub enum CreateNamespacedJobResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
     Created(crate::v1_9::api::batch::v1::Job),
     Accepted(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateNamespacedJobResponse {
@@ -101,8 +100,20 @@ impl crate::Response for CreateNamespacedJobResponse {
                 };
                 Ok((CreateNamespacedJobResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((CreateNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -208,8 +219,7 @@ pub struct DeleteCollectionNamespacedJobOptional<'a> {
 pub enum DeleteCollectionNamespacedJobResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionNamespacedJobResponse {
@@ -236,8 +246,20 @@ impl crate::Response for DeleteCollectionNamespacedJobResponse {
                     Ok((DeleteCollectionNamespacedJobResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -316,8 +338,7 @@ pub struct DeleteNamespacedJobOptional<'a> {
 pub enum DeleteNamespacedJobResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteNamespacedJobResponse {
@@ -344,8 +365,20 @@ impl crate::Response for DeleteNamespacedJobResponse {
                     Ok((DeleteNamespacedJobResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -418,8 +451,7 @@ impl Job {
 #[derive(Debug)]
 pub enum ListJobForAllNamespacesResponse {
     Ok(crate::v1_9::api::batch::v1::JobList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListJobForAllNamespacesResponse {
@@ -433,8 +465,20 @@ impl crate::Response for ListJobForAllNamespacesResponse {
                 };
                 Ok((ListJobForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListJobForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListJobForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListJobForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -512,8 +556,7 @@ impl Job {
 #[derive(Debug)]
 pub enum ListNamespacedJobResponse {
     Ok(crate::v1_9::api::batch::v1::JobList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListNamespacedJobResponse {
@@ -527,8 +570,20 @@ impl crate::Response for ListNamespacedJobResponse {
                 };
                 Ok((ListNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ListNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -591,8 +646,7 @@ pub struct PatchNamespacedJobOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedJobResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedJobResponse {
@@ -606,8 +660,20 @@ impl crate::Response for PatchNamespacedJobResponse {
                 };
                 Ok((PatchNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -670,8 +736,7 @@ pub struct PatchNamespacedJobStatusOptional<'a> {
 #[derive(Debug)]
 pub enum PatchNamespacedJobStatusResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchNamespacedJobStatusResponse {
@@ -685,8 +750,20 @@ impl crate::Response for PatchNamespacedJobStatusResponse {
                 };
                 Ok((PatchNamespacedJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchNamespacedJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -758,8 +835,7 @@ pub struct ReadNamespacedJobOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedJobResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedJobResponse {
@@ -773,8 +849,20 @@ impl crate::Response for ReadNamespacedJobResponse {
                 };
                 Ok((ReadNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -834,8 +922,7 @@ pub struct ReadNamespacedJobStatusOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedJobStatusResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadNamespacedJobStatusResponse {
@@ -849,8 +936,20 @@ impl crate::Response for ReadNamespacedJobStatusResponse {
                 };
                 Ok((ReadNamespacedJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadNamespacedJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -914,8 +1013,7 @@ pub struct ReplaceNamespacedJobOptional<'a> {
 pub enum ReplaceNamespacedJobResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
     Created(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedJobResponse {
@@ -937,8 +1035,20 @@ impl crate::Response for ReplaceNamespacedJobResponse {
                 };
                 Ok((ReplaceNamespacedJobResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1002,8 +1112,7 @@ pub struct ReplaceNamespacedJobStatusOptional<'a> {
 pub enum ReplaceNamespacedJobStatusResponse {
     Ok(crate::v1_9::api::batch::v1::Job),
     Created(crate::v1_9::api::batch::v1::Job),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceNamespacedJobStatusResponse {
@@ -1025,8 +1134,20 @@ impl crate::Response for ReplaceNamespacedJobStatusResponse {
                 };
                 Ok((ReplaceNamespacedJobStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceNamespacedJobStatusResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedJobStatusResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1092,8 +1213,7 @@ impl Job {
 #[derive(Debug)]
 pub enum WatchJobForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchJobForAllNamespacesResponse {
@@ -1109,8 +1229,20 @@ impl crate::Response for WatchJobForAllNamespacesResponse {
                 };
                 Ok((WatchJobForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchJobForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchJobForAllNamespacesResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchJobForAllNamespacesResponse::Other(result), read))
+            },
         }
     }
 }
@@ -1181,8 +1313,7 @@ impl Job {
 #[derive(Debug)]
 pub enum WatchNamespacedJobResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchNamespacedJobResponse {
@@ -1198,8 +1329,20 @@ impl crate::Response for WatchNamespacedJobResponse {
                 };
                 Ok((WatchNamespacedJobResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedJobResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedJobResponse::Other(result), read))
+            },
         }
     }
 }

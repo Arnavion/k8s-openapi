@@ -73,8 +73,7 @@ pub enum CreateAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Created(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Accepted(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreateAuditSinkResponse {
@@ -104,8 +103,20 @@ impl crate::Response for CreateAuditSinkResponse {
                 };
                 Ok((CreateAuditSinkResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -186,8 +197,7 @@ pub enum DeleteAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteAuditSinkResponse {
@@ -222,8 +232,20 @@ impl crate::Response for DeleteAuditSinkResponse {
                 };
                 Ok((DeleteAuditSinkResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -326,8 +348,7 @@ pub struct DeleteCollectionAuditSinkOptional<'a> {
 pub enum DeleteCollectionAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionAuditSinkResponse {
@@ -354,8 +375,20 @@ impl crate::Response for DeleteCollectionAuditSinkResponse {
                     Ok((DeleteCollectionAuditSinkResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -428,8 +461,7 @@ impl AuditSink {
 #[derive(Debug)]
 pub enum ListAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSinkList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListAuditSinkResponse {
@@ -443,8 +475,20 @@ impl crate::Response for ListAuditSinkResponse {
                 };
                 Ok((ListAuditSinkResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((ListAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -508,8 +552,7 @@ pub struct PatchAuditSinkOptional<'a> {
 #[derive(Debug)]
 pub enum PatchAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchAuditSinkResponse {
@@ -523,8 +566,20 @@ impl crate::Response for PatchAuditSinkResponse {
                 };
                 Ok((PatchAuditSinkResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((PatchAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -591,8 +646,7 @@ pub struct ReadAuditSinkOptional<'a> {
 #[derive(Debug)]
 pub enum ReadAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadAuditSinkResponse {
@@ -606,8 +660,20 @@ impl crate::Response for ReadAuditSinkResponse {
                 };
                 Ok((ReadAuditSinkResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((ReadAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -672,8 +738,7 @@ pub struct ReplaceAuditSinkOptional<'a> {
 pub enum ReplaceAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Created(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplaceAuditSinkResponse {
@@ -695,8 +760,20 @@ impl crate::Response for ReplaceAuditSinkResponse {
                 };
                 Ok((ReplaceAuditSinkResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }
@@ -762,8 +839,7 @@ impl AuditSink {
 #[derive(Debug)]
 pub enum WatchAuditSinkResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<AuditSink>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchAuditSinkResponse {
@@ -779,8 +855,20 @@ impl crate::Response for WatchAuditSinkResponse {
                 };
                 Ok((WatchAuditSinkResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAuditSinkResponse::Unauthorized, 0)),
-            _ => Ok((WatchAuditSinkResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchAuditSinkResponse::Other(result), read))
+            },
         }
     }
 }

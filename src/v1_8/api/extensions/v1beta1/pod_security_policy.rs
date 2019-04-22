@@ -60,8 +60,7 @@ pub struct CreatePodSecurityPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum CreatePodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for CreatePodSecurityPolicyResponse {
@@ -75,8 +74,20 @@ impl crate::Response for CreatePodSecurityPolicyResponse {
                 };
                 Ok((CreatePodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreatePodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((CreatePodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreatePodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -177,8 +188,7 @@ pub struct DeleteCollectionPodSecurityPolicyOptional<'a> {
 pub enum DeleteCollectionPodSecurityPolicyResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeleteCollectionPodSecurityPolicyResponse {
@@ -205,8 +215,20 @@ impl crate::Response for DeleteCollectionPodSecurityPolicyResponse {
                     Ok((DeleteCollectionPodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCollectionPodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionPodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -280,8 +302,7 @@ pub struct DeletePodSecurityPolicyOptional<'a> {
 pub enum DeletePodSecurityPolicyResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for DeletePodSecurityPolicyResponse {
@@ -308,8 +329,20 @@ impl crate::Response for DeletePodSecurityPolicyResponse {
                     Ok((DeletePodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeletePodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeletePodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeletePodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -382,8 +415,7 @@ impl PodSecurityPolicy {
 #[derive(Debug)]
 pub enum ListPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicyList),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ListPodSecurityPolicyResponse {
@@ -397,8 +429,20 @@ impl crate::Response for ListPodSecurityPolicyResponse {
                 };
                 Ok((ListPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ListPodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListPodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -456,8 +500,7 @@ pub struct PatchPodSecurityPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum PatchPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for PatchPodSecurityPolicyResponse {
@@ -471,8 +514,20 @@ impl crate::Response for PatchPodSecurityPolicyResponse {
                 };
                 Ok((PatchPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((PatchPodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchPodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -539,8 +594,7 @@ pub struct ReadPodSecurityPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum ReadPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReadPodSecurityPolicyResponse {
@@ -554,8 +608,20 @@ impl crate::Response for ReadPodSecurityPolicyResponse {
                 };
                 Ok((ReadPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReadPodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadPodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -613,8 +679,7 @@ pub struct ReplacePodSecurityPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum ReplacePodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for ReplacePodSecurityPolicyResponse {
@@ -628,8 +693,20 @@ impl crate::Response for ReplacePodSecurityPolicyResponse {
                 };
                 Ok((ReplacePodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplacePodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
@@ -695,8 +772,7 @@ impl PodSecurityPolicy {
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PodSecurityPolicy>),
-    Unauthorized,
-    Other,
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl crate::Response for WatchPodSecurityPolicyResponse {
@@ -712,8 +788,20 @@ impl crate::Response for WatchPodSecurityPolicyResponse {
                 };
                 Ok((WatchPodSecurityPolicyResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((WatchPodSecurityPolicyResponse::Other, 0)),
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchPodSecurityPolicyResponse::Other(result), read))
+            },
         }
     }
 }
