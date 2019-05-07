@@ -1456,24 +1456,30 @@ fn write_operation(
 	let (required_parameters, optional_parameters): (Vec<_>, Vec<_>) = parameters.iter().partition(|(_, _, parameter)| parameter.required);
 	let any_optional_fields_have_lifetimes = optional_parameters.iter().any(|(_, parameter_type, _)| parameter_type.starts_with('&'));
 
-	let mut wrote_description = false;
+	let mut need_empty_line = false;
+
 	if let Some(description) = operation.description.as_ref() {
 		for line in get_comment_text(description, "") {
 			writeln!(file, "{}///{}", indent, line)?;
-			wrote_description = true;
+			need_empty_line = true;
 		}
 	}
+	if let Some(operation_result_name) = &operation_result_name {
+		if need_empty_line {
+			writeln!(file, "{}///", indent)?;
+		}
 
-	if wrote_description {
-		writeln!(file, "{}///", indent)?;
+		writeln!(file,
+			"{}/// Use the returned [`crate::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
+			indent, operation_result_name, operation_result_name)?;
+		need_empty_line = true;
 	}
 
-	writeln!(file,
-		"{}/// Use the returned [`crate::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
-		indent, operation_result_name, operation_result_name)?;
-
 	if !parameters.is_empty() {
-		writeln!(file, "{}///", indent)?;
+		if need_empty_line {
+			writeln!(file, "{}///", indent)?;
+		}
+
 		writeln!(file, "{}/// # Arguments", indent)?;
 		for (parameter_name, _, parameter) in &required_parameters {
 			writeln!(file, "{}///", indent)?;
@@ -1504,7 +1510,14 @@ fn write_operation(
 		}
 		writeln!(file, ",")?;
 	}
-	writeln!(file, "{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<{}>), crate::RequestError> {{", indent, operation_result_name)?;
+	if let Some(operation_result_name) = &operation_result_name {
+		writeln!(file,
+			"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<{}>), crate::RequestError> {{",
+			indent, operation_result_name)?;
+	}
+	else {
+		writeln!(file, "{}) -> Result<http::Request<Vec<u8>>, crate::RequestError> {{", indent)?;
+	}
 
 	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query) || watch_parameter.is_some();
@@ -1606,10 +1619,15 @@ fn write_operation(
 		writeln!(file, "vec![];")?;
 	}
 
-	writeln!(file, "{}    match __request.body(__body) {{", indent)?;
-	writeln!(file, "{}        Ok(body) => Ok((body, crate::ResponseBody::new)),", indent)?;
-	writeln!(file, "{}        Err(err) => Err(crate::RequestError::Http(err)),", indent)?;
-	writeln!(file, "{}    }}", indent)?;
+	if operation_result_name.is_some() {
+		writeln!(file, "{}    match __request.body(__body) {{", indent)?;
+		writeln!(file, "{}        Ok(body) => Ok((body, crate::ResponseBody::new)),", indent)?;
+		writeln!(file, "{}        Err(err) => Err(crate::RequestError::Http(err)),", indent)?;
+		writeln!(file, "{}    }}", indent)?;
+	}
+	else {
+		writeln!(file, "{}    __request.body(__body).map_err(crate::RequestError::Http)", indent)?;
+	}
 	writeln!(file, "{}}}", indent)?;
 
 	if type_name_and_ref_path_and_parent_mod_rs.is_some() {
@@ -1622,10 +1640,16 @@ fn write_operation(
 			operation.kubernetes_action == Some(swagger20::KubernetesAction::List) ||
 			operation.kubernetes_action == Some(swagger20::KubernetesAction::Watch)
 		{
-			writeln!(parent_mod_rs, "    {},", operation_result_name)?;
+			if let Some(operation_result_name) = &operation_result_name {
+				writeln!(parent_mod_rs, "    {},", operation_result_name)?;
+			}
 		}
 		else {
-			writeln!(parent_mod_rs, "    {}, {},", operation_optional_parameters_name, operation_result_name)?;
+			write!(parent_mod_rs, "    {},", operation_optional_parameters_name)?;
+			if let Some(operation_result_name) = &operation_result_name {
+				write!(parent_mod_rs, " {},", operation_result_name)?;
+			}
+			writeln!(parent_mod_rs)?;
 		}
 	}
 
@@ -1667,146 +1691,152 @@ fn write_operation(
 		writeln!(file, "}}")?;
 	}
 
-	writeln!(file)?;
+	if let Some(operation_result_name) = &operation_result_name {
+		writeln!(file)?;
 
-	if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
-		writeln!(file, "/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]", operation_result_name, type_name, operation_fn_name)?;
-	}
-	else {
-		writeln!(file, "/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}`]", operation_result_name, operation_fn_name)?;
-	}
-
-	writeln!(file, "#[derive(Debug)]")?;
-	writeln!(file, "pub enum {} {{", operation_result_name)?;
-
-	for &(_, variant_name, schema, is_delete_ok_status) in &operation_responses {
-		if is_delete_ok_status {
-			// DELETE operations that return metav1.Status for HTTP 200 can also return the object itself instead.
-			//
-			// Ref https://github.com/kubernetes/kubernetes/issues/59501
-			writeln!(file, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?;
-			writeln!(file, "    {}Value({}),", variant_name, get_fully_qualified_type_name(
-				type_name_and_ref_path_and_parent_mod_rs.as_ref()
-					.map(|(_, type_ref_path, _)| type_ref_path)
-					.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
-				&replace_namespaces,
-				mod_root)?)?;
+		if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
+			writeln!(file,
+				"/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]",
+				operation_result_name, type_name, operation_fn_name)?;
 		}
 		else {
-			match &schema.kind {
-				crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)) if ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent" =>
-					writeln!(
-						file,
-						"    {}({}<{}>),",
-						variant_name,
-						get_rust_type(&schema.kind, replace_namespaces, mod_root)?,
-						type_name_and_ref_path_and_parent_mod_rs.as_ref()
-							.map(|(type_name, _, _)| type_name)
-							.ok_or_else(|| "WatchEvent operation that isn't associated with a type")?)?,
-
-				_ => writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?,
-			}
+			writeln!(file,
+				"/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}`]",
+				operation_result_name, operation_fn_name)?;
 		}
-	}
 
-	writeln!(file, "    Other(Result<Option<serde_json::Value>, serde_json::Error>),")?;
-	writeln!(file, "}}")?;
-	writeln!(file)?;
+		writeln!(file, "#[derive(Debug)]")?;
+		writeln!(file, "pub enum {} {{", operation_result_name)?;
 
-	writeln!(file, "impl crate::Response for {} {{", operation_result_name)?;
-	writeln!(file, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {{")?;
-
-	let is_watch = match operation.kubernetes_action {
-		Some(swagger20::KubernetesAction::Watch) | Some(swagger20::KubernetesAction::WatchList) => true,
-		_ => false,
-	};
-
-	writeln!(file, "        match status_code {{")?;
-	for &(http_status_code, variant_name, schema, is_delete_ok_status) in &operation_responses {
-		writeln!(file, "            http::StatusCode::{} => {{", http_status_code)?;
-
-		match &schema.kind {
-			swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-				writeln!(file, "                if buf.is_empty() {{")?;
-				writeln!(file, "                    return Err(crate::ResponseError::NeedMoreData);")?;
-				writeln!(file, "                }}")?;
-				writeln!(file)?;
-				writeln!(file, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
-				writeln!(file, "                    Ok(s) => (s, buf.len()),")?;
-				writeln!(file, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
-				writeln!(file, "                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),")?;
-				writeln!(file, "                        (0, None) => return Err(crate::ResponseError::NeedMoreData),")?;
-				writeln!(file, "                        (valid_up_to, _) => (")?;
-				writeln!(file, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
-				writeln!(file, "                            valid_up_to,")?;
-				writeln!(file, "                        ),")?;
-				writeln!(file, "                    }},")?;
-				writeln!(file, "                }};")?;
-				writeln!(file, "                Ok(({}::{}(result.to_string()), len))", operation_result_name, variant_name)?;
-			},
-
-			swagger20::SchemaKind::Ref(_) => if is_watch {
-				writeln!(file, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
-				writeln!(file, "                let (result, byte_offset) = match deserializer.next() {{")?;
-				writeln!(file, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
-				writeln!(file, "                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
-				writeln!(file, "                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),")?;
-				writeln!(file, "                    None => return Err(crate::ResponseError::NeedMoreData),")?;
-				writeln!(file, "                }};")?;
-				writeln!(file, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
-			}
-			else if is_delete_ok_status {
-				writeln!(file, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
-				writeln!(file, "                    Ok(value) => value,")?;
-				writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
-				writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
-				writeln!(file, "                }};")?;
-				writeln!(file, r#"                let is_status = match result.get("kind") {{"#)?;
-				writeln!(file, r#"                    Some(serde_json::Value::String(s)) if s == "Status" => true,"#)?;
-				writeln!(file, "                    _ => false,")?;
-				writeln!(file, "                }};")?;
-				writeln!(file, "                if is_status {{")?;
-				writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
-				writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
-				writeln!(file, "                    Ok(({}::{}Status(result), buf.len()))", operation_result_name, variant_name)?;
-				writeln!(file, "                }}")?;
-				writeln!(file, "                else {{")?;
-				writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
-				writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
-				writeln!(file, "                    Ok(({}::{}Value(result), buf.len()))", operation_result_name, variant_name)?;
-				writeln!(file, "                }}")?;
+		for &(_, variant_name, schema, is_delete_ok_status) in &operation_responses {
+			if is_delete_ok_status {
+				// DELETE operations that return metav1.Status for HTTP 200 can also return the object itself instead.
+				//
+				// Ref https://github.com/kubernetes/kubernetes/issues/59501
+				writeln!(file, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?;
+				writeln!(file, "    {}Value({}),", variant_name, get_fully_qualified_type_name(
+					type_name_and_ref_path_and_parent_mod_rs.as_ref()
+						.map(|(_, type_ref_path, _)| type_ref_path)
+						.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
+					&replace_namespaces,
+					mod_root)?)?;
 			}
 			else {
-				writeln!(file, "                let result = match serde_json::from_slice(buf) {{")?;
-				writeln!(file, "                    Ok(value) => value,")?;
-				writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
-				writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
-				writeln!(file, "                }};")?;
-				writeln!(file, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
-			},
+				match &schema.kind {
+					crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)) if ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent" =>
+						writeln!(
+							file,
+							"    {}({}<{}>),",
+							variant_name,
+							get_rust_type(&schema.kind, replace_namespaces, mod_root)?,
+							type_name_and_ref_path_and_parent_mod_rs.as_ref()
+								.map(|(type_name, _, _)| type_name)
+								.ok_or_else(|| "WatchEvent operation that isn't associated with a type")?)?,
 
-			other => return Err(format!("operation {} has unrecognized type for response of variant {}: {:?}", operation.id, variant_name, other).into()),
+					_ => writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?,
+				}
+			}
 		}
 
+		writeln!(file, "    Other(Result<Option<serde_json::Value>, serde_json::Error>),")?;
+		writeln!(file, "}}")?;
+		writeln!(file)?;
+
+		writeln!(file, "impl crate::Response for {} {{", operation_result_name)?;
+		writeln!(file, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {{")?;
+
+		let is_watch = match operation.kubernetes_action {
+			Some(swagger20::KubernetesAction::Watch) | Some(swagger20::KubernetesAction::WatchList) => true,
+			_ => false,
+		};
+
+		writeln!(file, "        match status_code {{")?;
+		for &(http_status_code, variant_name, schema, is_delete_ok_status) in &operation_responses {
+			writeln!(file, "            http::StatusCode::{} => {{", http_status_code)?;
+
+			match &schema.kind {
+				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+					writeln!(file, "                if buf.is_empty() {{")?;
+					writeln!(file, "                    return Err(crate::ResponseError::NeedMoreData);")?;
+					writeln!(file, "                }}")?;
+					writeln!(file)?;
+					writeln!(file, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
+					writeln!(file, "                    Ok(s) => (s, buf.len()),")?;
+					writeln!(file, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
+					writeln!(file, "                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),")?;
+					writeln!(file, "                        (0, None) => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                        (valid_up_to, _) => (")?;
+					writeln!(file, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
+					writeln!(file, "                            valid_up_to,")?;
+					writeln!(file, "                        ),")?;
+					writeln!(file, "                    }},")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                Ok(({}::{}(result.to_string()), len))", operation_result_name, variant_name)?;
+				},
+
+				swagger20::SchemaKind::Ref(_) => if is_watch {
+					writeln!(file, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
+					writeln!(file, "                let (result, byte_offset) = match deserializer.next() {{")?;
+					writeln!(file, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
+					writeln!(file, "                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),")?;
+					writeln!(file, "                    None => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
+				}
+				else if is_delete_ok_status {
+					writeln!(file, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                    Ok(value) => value,")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, r#"                let is_status = match result.get("kind") {{"#)?;
+					writeln!(file, r#"                    Some(serde_json::Value::String(s)) if s == "Status" => true,"#)?;
+					writeln!(file, "                    _ => false,")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                if is_status {{")?;
+					writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
+					writeln!(file, "                    Ok(({}::{}Status(result), buf.len()))", operation_result_name, variant_name)?;
+					writeln!(file, "                }}")?;
+					writeln!(file, "                else {{")?;
+					writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
+					writeln!(file, "                    Ok(({}::{}Value(result), buf.len()))", operation_result_name, variant_name)?;
+					writeln!(file, "                }}")?;
+				}
+				else {
+					writeln!(file, "                let result = match serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                    Ok(value) => value,")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
+				},
+
+				other => return Err(format!("operation {} has unrecognized type for response of variant {}: {:?}", operation.id, variant_name, other).into()),
+			}
+
+			writeln!(file, "            }},")?;
+		}
+		writeln!(file, "            _ => {{")?;
+		writeln!(file, "                let (result, read) =")?;
+		writeln!(file, "                    if buf.is_empty() {{")?;
+		writeln!(file, "                        (Ok(None), 0)")?;
+		writeln!(file, "                    }}")?;
+		writeln!(file, "                    else {{")?;
+		writeln!(file, "                        match serde_json::from_slice(buf) {{")?;
+		writeln!(file, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
+		writeln!(file, "                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+		writeln!(file, "                            Err(err) => (Err(err), 0),")?;
+		writeln!(file, "                        }}")?;
+		writeln!(file, "                    }};")?;
+		writeln!(file, "                Ok(({}::Other(result), read))", operation_result_name)?;
 		writeln!(file, "            }},")?;
+		writeln!(file, "        }}")?;
+		writeln!(file, "    }}")?;
+		writeln!(file, "}}")?;
 	}
-	writeln!(file, "            _ => {{")?;
-	writeln!(file, "                let (result, read) =")?;
-	writeln!(file, "                    if buf.is_empty() {{")?;
-	writeln!(file, "                        (Ok(None), 0)")?;
-	writeln!(file, "                    }}")?;
-	writeln!(file, "                    else {{")?;
-	writeln!(file, "                        match serde_json::from_slice(buf) {{")?;
-	writeln!(file, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
-	writeln!(file, "                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
-	writeln!(file, "                            Err(err) => (Err(err), 0),")?;
-	writeln!(file, "                        }}")?;
-	writeln!(file, "                    }};")?;
-	writeln!(file, "                Ok(({}::Other(result), read))", operation_result_name)?;
-	writeln!(file, "            }},")?;
-	writeln!(file, "        }}")?;
-	writeln!(file, "    }}")?;
-	writeln!(file, "}}")?;
 
 	Ok(())
 }
@@ -1815,7 +1845,7 @@ fn get_operation_names(
 	operation: &swagger20::Operation,
 	strip_tag: bool,
 	mod_root: &str,
-) -> Result<(std::borrow::Cow<'static, str>, String, String), Error> {
+) -> Result<(std::borrow::Cow<'static, str>, Option<String>, String), Error> {
 	let operation_id =
 		if strip_tag {
 			// For functions associatd with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
@@ -1847,7 +1877,13 @@ fn get_operation_names(
 	let mut chars = operation_id.chars();
 	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
 	let rest_chars = chars.as_str();
-	let operation_result_name = format!("{}{}Response", first_char, rest_chars);
+	let operation_result_name =
+		if operation.kubernetes_action == Some(swagger20::KubernetesAction::Connect) {
+			None
+		}
+		else {
+			Some(format!("{}{}Response", first_char, rest_chars))
+		};
 	let operation_optional_parameters_name = match operation.kubernetes_action {
 		Some(swagger20::KubernetesAction::List) => format!("crate::{}::ListOptional", mod_root),
 		Some(swagger20::KubernetesAction::Watch) => format!("crate::{}::WatchOptional", mod_root),

@@ -20,8 +20,6 @@ pub struct Service {
 impl Service {
     /// connect DELETE requests to proxy of Service
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectDeleteNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
-    ///
     /// # Arguments
     ///
     /// * `name`
@@ -39,7 +37,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectDeleteNamespacedServiceProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedServiceProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -52,10 +50,7 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -66,58 +61,10 @@ pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_delete_namespaced_service_proxy`]
-#[derive(Debug)]
-pub enum ConnectDeleteNamespacedServiceProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNamespacedServiceProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNamespacedServiceProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1DeleteNamespacedServiceProxyWithPath
 
 impl Service {
     /// connect DELETE requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectDeleteNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -141,7 +88,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectDeleteNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -154,10 +101,7 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -168,58 +112,10 @@ pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_delete_namespaced_service_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectDeleteNamespacedServiceProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNamespacedServiceProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNamespacedServiceProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedServiceProxy
 
 impl Service {
     /// connect GET requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectGetNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -238,7 +134,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedServiceProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedServiceProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -251,10 +147,7 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -265,58 +158,10 @@ pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_get_namespaced_service_proxy`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedServiceProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedServiceProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedServiceProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedServiceProxyWithPath
 
 impl Service {
     /// connect GET requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectGetNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -340,7 +185,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectGetNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -353,10 +198,7 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -367,58 +209,10 @@ pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_get_namespaced_service_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedServiceProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedServiceProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedServiceProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNamespacedServiceProxy
 
 impl Service {
     /// connect PATCH requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPatchNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -437,7 +231,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPatchNamespacedServiceProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedServiceProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -450,10 +244,7 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -464,58 +255,10 @@ pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_patch_namespaced_service_proxy`]
-#[derive(Debug)]
-pub enum ConnectPatchNamespacedServiceProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNamespacedServiceProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNamespacedServiceProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNamespacedServiceProxyWithPath
 
 impl Service {
     /// connect PATCH requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPatchNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -539,7 +282,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPatchNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -552,10 +295,7 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -566,58 +306,10 @@ pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_patch_namespaced_service_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPatchNamespacedServiceProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNamespacedServiceProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNamespacedServiceProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedServiceProxy
 
 impl Service {
     /// connect POST requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPostNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -636,7 +328,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedServiceProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedServiceProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -649,10 +341,7 @@ impl Service {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -663,58 +352,10 @@ pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_post_namespaced_service_proxy`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedServiceProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedServiceProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedServiceProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedServiceProxyWithPath
 
 impl Service {
     /// connect POST requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPostNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -738,7 +379,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPostNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -751,10 +392,7 @@ impl Service {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -765,58 +403,10 @@ pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_post_namespaced_service_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedServiceProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedServiceProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedServiceProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNamespacedServiceProxy
 
 impl Service {
     /// connect PUT requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPutNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -835,7 +425,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPutNamespacedServiceProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedServiceProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -848,10 +438,7 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -862,58 +449,10 @@ pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPutNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_put_namespaced_service_proxy`]
-#[derive(Debug)]
-pub enum ConnectPutNamespacedServiceProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNamespacedServiceProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNamespacedServiceProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNamespacedServiceProxyWithPath
 
 impl Service {
     /// connect PUT requests to proxy of Service
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPutNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -937,7 +476,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPutNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -950,10 +489,7 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -962,52 +498,6 @@ impl Service {
 pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
-}
-
-/// Use `<ConnectPutNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_put_namespaced_service_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPutNamespacedServiceProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNamespacedServiceProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNamespacedServiceProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
 }
 
 // Generated from operation createCoreV1NamespacedService

@@ -20,8 +20,6 @@ pub struct Node {
 impl Node {
     /// connect DELETE requests to proxy of Node
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNodeProxyResponse`]`>` constructor, or [`ConnectDeleteNodeProxyResponse`] directly, to parse the HTTP response.
-    ///
     /// # Arguments
     ///
     /// * `name`
@@ -34,7 +32,7 @@ impl Node {
     pub fn connect_delete_node_proxy(
         name: &str,
         optional: ConnectDeleteNodeProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNodeProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNodeProxyOptional {
             path,
         } = optional;
@@ -47,10 +45,7 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -61,58 +56,10 @@ pub struct ConnectDeleteNodeProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_delete_node_proxy`]
-#[derive(Debug)]
-pub enum ConnectDeleteNodeProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNodeProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNodeProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNodeProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1DeleteNodeProxyWithPath
 
 impl Node {
     /// connect DELETE requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNodeProxyWithPathResponse`]`>` constructor, or [`ConnectDeleteNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -131,7 +78,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectDeleteNodeProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNodeProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -144,10 +91,7 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -158,58 +102,10 @@ pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_delete_node_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectDeleteNodeProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNodeProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNodeProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNodeProxy
 
 impl Node {
     /// connect GET requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNodeProxyResponse`]`>` constructor, or [`ConnectGetNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -223,7 +119,7 @@ impl Node {
     pub fn connect_get_node_proxy(
         name: &str,
         optional: ConnectGetNodeProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNodeProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNodeProxyOptional {
             path,
         } = optional;
@@ -236,10 +132,7 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -250,58 +143,10 @@ pub struct ConnectGetNodeProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_get_node_proxy`]
-#[derive(Debug)]
-pub enum ConnectGetNodeProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNodeProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNodeProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNodeProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNodeProxyWithPath
 
 impl Node {
     /// connect GET requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNodeProxyWithPathResponse`]`>` constructor, or [`ConnectGetNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -320,7 +165,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectGetNodeProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNodeProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -333,10 +178,7 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -347,58 +189,10 @@ pub struct ConnectGetNodeProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_get_node_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectGetNodeProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNodeProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNodeProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNodeProxy
 
 impl Node {
     /// connect PATCH requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNodeProxyResponse`]`>` constructor, or [`ConnectPatchNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -412,7 +206,7 @@ impl Node {
     pub fn connect_patch_node_proxy(
         name: &str,
         optional: ConnectPatchNodeProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNodeProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNodeProxyOptional {
             path,
         } = optional;
@@ -425,10 +219,7 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -439,58 +230,10 @@ pub struct ConnectPatchNodeProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_patch_node_proxy`]
-#[derive(Debug)]
-pub enum ConnectPatchNodeProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNodeProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNodeProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNodeProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNodeProxyWithPath
 
 impl Node {
     /// connect PATCH requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPatchNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -509,7 +252,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPatchNodeProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNodeProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -522,10 +265,7 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -536,58 +276,10 @@ pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_patch_node_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPatchNodeProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNodeProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNodeProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNodeProxy
 
 impl Node {
     /// connect POST requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNodeProxyResponse`]`>` constructor, or [`ConnectPostNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -601,7 +293,7 @@ impl Node {
     pub fn connect_post_node_proxy(
         name: &str,
         optional: ConnectPostNodeProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNodeProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNodeProxyOptional {
             path,
         } = optional;
@@ -614,10 +306,7 @@ impl Node {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -628,58 +317,10 @@ pub struct ConnectPostNodeProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_post_node_proxy`]
-#[derive(Debug)]
-pub enum ConnectPostNodeProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNodeProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNodeProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNodeProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNodeProxyWithPath
 
 impl Node {
     /// connect POST requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPostNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -698,7 +339,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPostNodeProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNodeProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -711,10 +352,7 @@ impl Node {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -725,58 +363,10 @@ pub struct ConnectPostNodeProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_post_node_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPostNodeProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNodeProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNodeProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNodeProxy
 
 impl Node {
     /// connect PUT requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNodeProxyResponse`]`>` constructor, or [`ConnectPutNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -790,7 +380,7 @@ impl Node {
     pub fn connect_put_node_proxy(
         name: &str,
         optional: ConnectPutNodeProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNodeProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNodeProxyOptional {
             path,
         } = optional;
@@ -803,10 +393,7 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -817,58 +404,10 @@ pub struct ConnectPutNodeProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPutNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_put_node_proxy`]
-#[derive(Debug)]
-pub enum ConnectPutNodeProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNodeProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNodeProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNodeProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNodeProxyWithPath
 
 impl Node {
     /// connect PUT requests to proxy of Node
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPutNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -887,7 +426,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPutNodeProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNodeProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -900,10 +439,7 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -912,52 +448,6 @@ impl Node {
 pub struct ConnectPutNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
-}
-
-/// Use `<ConnectPutNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_put_node_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPutNodeProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNodeProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNodeProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
 }
 
 // Generated from operation createCoreV1Node

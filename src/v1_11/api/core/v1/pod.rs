@@ -20,8 +20,6 @@ pub struct Pod {
 impl Pod {
     /// connect DELETE requests to proxy of Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedPodProxyResponse`]`>` constructor, or [`ConnectDeleteNamespacedPodProxyResponse`] directly, to parse the HTTP response.
-    ///
     /// # Arguments
     ///
     /// * `name`
@@ -39,7 +37,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectDeleteNamespacedPodProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedPodProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNamespacedPodProxyOptional {
             path,
         } = optional;
@@ -52,10 +50,7 @@ impl Pod {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -66,58 +61,10 @@ pub struct ConnectDeleteNamespacedPodProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNamespacedPodProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_delete_namespaced_pod_proxy`]
-#[derive(Debug)]
-pub enum ConnectDeleteNamespacedPodProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNamespacedPodProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNamespacedPodProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1DeleteNamespacedPodProxyWithPath
 
 impl Pod {
     /// connect DELETE requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedPodProxyWithPathResponse`]`>` constructor, or [`ConnectDeleteNamespacedPodProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -141,7 +88,7 @@ impl Pod {
         namespace: &str,
         path: &str,
         optional: ConnectDeleteNamespacedPodProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedPodProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectDeleteNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
@@ -154,10 +101,7 @@ impl Pod {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -168,58 +112,10 @@ pub struct ConnectDeleteNamespacedPodProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectDeleteNamespacedPodProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_delete_namespaced_pod_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectDeleteNamespacedPodProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectDeleteNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedPodAttach
 
 impl Pod {
     /// connect GET requests to attach of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedPodAttachResponse`]`>` constructor, or [`ConnectGetNamespacedPodAttachResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -238,7 +134,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedPodAttachOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedPodAttachResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedPodAttachOptional {
             container,
             stderr,
@@ -267,10 +163,7 @@ impl Pod {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -289,58 +182,10 @@ pub struct ConnectGetNamespacedPodAttachOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Use `<ConnectGetNamespacedPodAttachResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_get_namespaced_pod_attach`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedPodAttachResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedPodAttachResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedPodAttachResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedPodAttachResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedPodExec
 
 impl Pod {
     /// connect GET requests to exec of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedPodExecResponse`]`>` constructor, or [`ConnectGetNamespacedPodExecResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -359,7 +204,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedPodExecOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedPodExecResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedPodExecOptional {
             command,
             container,
@@ -392,10 +237,7 @@ impl Pod {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -416,58 +258,10 @@ pub struct ConnectGetNamespacedPodExecOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Use `<ConnectGetNamespacedPodExecResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_get_namespaced_pod_exec`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedPodExecResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedPodExecResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedPodExecResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedPodExecResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedPodPortforward
 
 impl Pod {
     /// connect GET requests to portforward of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedPodPortforwardResponse`]`>` constructor, or [`ConnectGetNamespacedPodPortforwardResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -486,7 +280,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedPodPortforwardOptional,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedPodPortforwardResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedPodPortforwardOptional {
             ports,
         } = optional;
@@ -499,10 +293,7 @@ impl Pod {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -513,58 +304,10 @@ pub struct ConnectGetNamespacedPodPortforwardOptional {
     pub ports: Option<i64>,
 }
 
-/// Use `<ConnectGetNamespacedPodPortforwardResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_get_namespaced_pod_portforward`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedPodPortforwardResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedPodPortforwardResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedPodPortforwardResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedPodPortforwardResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedPodProxy
 
 impl Pod {
     /// connect GET requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedPodProxyResponse`]`>` constructor, or [`ConnectGetNamespacedPodProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -583,7 +326,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedPodProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedPodProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedPodProxyOptional {
             path,
         } = optional;
@@ -596,10 +339,7 @@ impl Pod {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -610,58 +350,10 @@ pub struct ConnectGetNamespacedPodProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNamespacedPodProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_get_namespaced_pod_proxy`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedPodProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedPodProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedPodProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1GetNamespacedPodProxyWithPath
 
 impl Pod {
     /// connect GET requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedPodProxyWithPathResponse`]`>` constructor, or [`ConnectGetNamespacedPodProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -685,7 +377,7 @@ impl Pod {
         namespace: &str,
         path: &str,
         optional: ConnectGetNamespacedPodProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedPodProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectGetNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
@@ -698,10 +390,7 @@ impl Pod {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -712,58 +401,10 @@ pub struct ConnectGetNamespacedPodProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectGetNamespacedPodProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_get_namespaced_pod_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectGetNamespacedPodProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectGetNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectGetNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectGetNamespacedPodProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNamespacedPodProxy
 
 impl Pod {
     /// connect PATCH requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedPodProxyResponse`]`>` constructor, or [`ConnectPatchNamespacedPodProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -782,7 +423,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPatchNamespacedPodProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedPodProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNamespacedPodProxyOptional {
             path,
         } = optional;
@@ -795,10 +436,7 @@ impl Pod {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -809,58 +447,10 @@ pub struct ConnectPatchNamespacedPodProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNamespacedPodProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_patch_namespaced_pod_proxy`]
-#[derive(Debug)]
-pub enum ConnectPatchNamespacedPodProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNamespacedPodProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNamespacedPodProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PatchNamespacedPodProxyWithPath
 
 impl Pod {
     /// connect PATCH requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedPodProxyWithPathResponse`]`>` constructor, or [`ConnectPatchNamespacedPodProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -884,7 +474,7 @@ impl Pod {
         namespace: &str,
         path: &str,
         optional: ConnectPatchNamespacedPodProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedPodProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPatchNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
@@ -897,10 +487,7 @@ impl Pod {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -911,58 +498,10 @@ pub struct ConnectPatchNamespacedPodProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPatchNamespacedPodProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_patch_namespaced_pod_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPatchNamespacedPodProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPatchNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedPodAttach
 
 impl Pod {
     /// connect POST requests to attach of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedPodAttachResponse`]`>` constructor, or [`ConnectPostNamespacedPodAttachResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -981,7 +520,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedPodAttachOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedPodAttachResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedPodAttachOptional {
             container,
             stderr,
@@ -1010,10 +549,7 @@ impl Pod {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1032,58 +568,10 @@ pub struct ConnectPostNamespacedPodAttachOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Use `<ConnectPostNamespacedPodAttachResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_post_namespaced_pod_attach`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedPodAttachResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedPodAttachResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedPodAttachResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedPodAttachResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedPodExec
 
 impl Pod {
     /// connect POST requests to exec of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedPodExecResponse`]`>` constructor, or [`ConnectPostNamespacedPodExecResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1102,7 +590,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedPodExecOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedPodExecResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedPodExecOptional {
             command,
             container,
@@ -1135,10 +623,7 @@ impl Pod {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1159,58 +644,10 @@ pub struct ConnectPostNamespacedPodExecOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Use `<ConnectPostNamespacedPodExecResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_post_namespaced_pod_exec`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedPodExecResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedPodExecResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedPodExecResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedPodExecResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedPodPortforward
 
 impl Pod {
     /// connect POST requests to portforward of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedPodPortforwardResponse`]`>` constructor, or [`ConnectPostNamespacedPodPortforwardResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1229,7 +666,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedPodPortforwardOptional,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedPodPortforwardResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedPodPortforwardOptional {
             ports,
         } = optional;
@@ -1242,10 +679,7 @@ impl Pod {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1256,58 +690,10 @@ pub struct ConnectPostNamespacedPodPortforwardOptional {
     pub ports: Option<i64>,
 }
 
-/// Use `<ConnectPostNamespacedPodPortforwardResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_post_namespaced_pod_portforward`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedPodPortforwardResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedPodPortforwardResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedPodPortforwardResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedPodPortforwardResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedPodProxy
 
 impl Pod {
     /// connect POST requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedPodProxyResponse`]`>` constructor, or [`ConnectPostNamespacedPodProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1326,7 +712,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedPodProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedPodProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedPodProxyOptional {
             path,
         } = optional;
@@ -1339,10 +725,7 @@ impl Pod {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1353,58 +736,10 @@ pub struct ConnectPostNamespacedPodProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNamespacedPodProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_post_namespaced_pod_proxy`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedPodProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedPodProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedPodProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PostNamespacedPodProxyWithPath
 
 impl Pod {
     /// connect POST requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedPodProxyWithPathResponse`]`>` constructor, or [`ConnectPostNamespacedPodProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1428,7 +763,7 @@ impl Pod {
         namespace: &str,
         path: &str,
         optional: ConnectPostNamespacedPodProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedPodProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPostNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
@@ -1441,10 +776,7 @@ impl Pod {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1455,58 +787,10 @@ pub struct ConnectPostNamespacedPodProxyWithPathOptional<'a> {
     pub path_: Option<&'a str>,
 }
 
-/// Use `<ConnectPostNamespacedPodProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_post_namespaced_pod_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPostNamespacedPodProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPostNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPostNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPostNamespacedPodProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNamespacedPodProxy
 
 impl Pod {
     /// connect PUT requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedPodProxyResponse`]`>` constructor, or [`ConnectPutNamespacedPodProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1525,7 +809,7 @@ impl Pod {
         name: &str,
         namespace: &str,
         optional: ConnectPutNamespacedPodProxyOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedPodProxyResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNamespacedPodProxyOptional {
             path,
         } = optional;
@@ -1538,10 +822,7 @@ impl Pod {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1552,58 +833,10 @@ pub struct ConnectPutNamespacedPodProxyOptional<'a> {
     pub path: Option<&'a str>,
 }
 
-/// Use `<ConnectPutNamespacedPodProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_put_namespaced_pod_proxy`]
-#[derive(Debug)]
-pub enum ConnectPutNamespacedPodProxyResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNamespacedPodProxyResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNamespacedPodProxyResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation connectCoreV1PutNamespacedPodProxyWithPath
 
 impl Pod {
     /// connect PUT requests to proxy of Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedPodProxyWithPathResponse`]`>` constructor, or [`ConnectPutNamespacedPodProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1627,7 +860,7 @@ impl Pod {
         namespace: &str,
         path: &str,
         optional: ConnectPutNamespacedPodProxyWithPathOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedPodProxyWithPathResponse>), crate::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let ConnectPutNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
@@ -1640,10 +873,7 @@ impl Pod {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1652,52 +882,6 @@ impl Pod {
 pub struct ConnectPutNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
-}
-
-/// Use `<ConnectPutNamespacedPodProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::connect_put_namespaced_pod_proxy_with_path`]
-#[derive(Debug)]
-pub enum ConnectPutNamespacedPodProxyWithPathResponse {
-    Ok(String),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-impl crate::Response for ConnectPutNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                if buf.is_empty() {
-                    return Err(crate::ResponseError::NeedMoreData);
-                }
-
-                let (result, len) = match std::str::from_utf8(buf) {
-                    Ok(s) => (s, buf.len()),
-                    Err(err) => match (err.valid_up_to(), err.error_len()) {
-                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
-                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
-                        (valid_up_to, _) => (
-                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
-                            valid_up_to,
-                        ),
-                    },
-                };
-                Ok((ConnectPutNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ConnectPutNamespacedPodProxyWithPathResponse::Other(result), read))
-            },
-        }
-    }
 }
 
 // Generated from operation createCoreV1NamespacedPod
