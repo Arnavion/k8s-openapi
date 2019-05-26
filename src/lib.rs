@@ -1,7 +1,7 @@
 #![warn(rust_2018_idioms)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
-    clippy::cyclomatic_complexity,
+    clippy::cognitive_complexity,
     clippy::default_trait_access,
     clippy::doc_markdown,
     clippy::large_enum_variant,
