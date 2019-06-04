@@ -280,7 +280,9 @@ impl PersistentVolume {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -494,7 +496,9 @@ impl PersistentVolume {
         let PatchPersistentVolumeOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -579,7 +583,9 @@ impl PersistentVolume {
         let PatchPersistentVolumeStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -663,7 +669,9 @@ impl PersistentVolume {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -755,7 +763,9 @@ impl PersistentVolume {
         let ReadPersistentVolumeStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -840,7 +850,9 @@ impl PersistentVolume {
         let ReplacePersistentVolumeOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -934,7 +946,9 @@ impl PersistentVolume {
         let ReplacePersistentVolumeStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
+        let __url = format!("/api/v1/persistentvolumes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);

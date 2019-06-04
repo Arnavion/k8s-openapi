@@ -41,7 +41,10 @@ impl Service {
         let ConnectDeleteNamespacedServiceProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -92,7 +95,11 @@ impl Service {
         let ConnectDeleteNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -138,7 +145,10 @@ impl Service {
         let ConnectGetNamespacedServiceProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -189,7 +199,11 @@ impl Service {
         let ConnectGetNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -235,7 +249,10 @@ impl Service {
         let ConnectPatchNamespacedServiceProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -286,7 +303,11 @@ impl Service {
         let ConnectPatchNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -332,7 +353,10 @@ impl Service {
         let ConnectPostNamespacedServiceProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -383,7 +407,11 @@ impl Service {
         let ConnectPostNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -429,7 +457,10 @@ impl Service {
         let ConnectPutNamespacedServiceProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -480,7 +511,11 @@ impl Service {
         let ConnectPutNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -526,7 +561,9 @@ impl Service {
         let CreateNamespacedServiceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -634,7 +671,10 @@ impl Service {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -754,7 +794,9 @@ impl Service {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -958,7 +1000,10 @@ impl Service {
         let PatchNamespacedServiceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1048,7 +1093,10 @@ impl Service {
         let PatchNamespacedServiceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1137,7 +1185,10 @@ impl Service {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -1234,7 +1285,10 @@ impl Service {
         let ReadNamespacedServiceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1324,7 +1378,10 @@ impl Service {
         let ReplaceNamespacedServiceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1423,7 +1480,10 @@ impl Service {
         let ReplaceNamespacedServiceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1521,7 +1581,9 @@ impl Service {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

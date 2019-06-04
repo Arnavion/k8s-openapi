@@ -41,7 +41,9 @@ impl Deployment {
         let CreateNamespacedDeploymentOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -149,7 +151,9 @@ impl Deployment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -295,7 +299,10 @@ impl Deployment {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -515,7 +522,9 @@ impl Deployment {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -619,7 +628,10 @@ impl Deployment {
         let PatchNamespacedDeploymentOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -709,7 +721,10 @@ impl Deployment {
         let PatchNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -798,7 +813,10 @@ impl Deployment {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -895,7 +913,10 @@ impl Deployment {
         let ReadNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -985,7 +1006,10 @@ impl Deployment {
         let ReplaceNamespacedDeploymentOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1084,7 +1108,10 @@ impl Deployment {
         let ReplaceNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1277,7 +1304,9 @@ impl Deployment {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

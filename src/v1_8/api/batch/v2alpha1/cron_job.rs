@@ -41,7 +41,9 @@ impl CronJob {
         let CreateNamespacedCronJobOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -131,7 +133,9 @@ impl CronJob {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -277,7 +281,10 @@ impl CronJob {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -497,7 +504,9 @@ impl CronJob {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -601,7 +610,10 @@ impl CronJob {
         let PatchNamespacedCronJobOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -691,7 +703,10 @@ impl CronJob {
         let PatchNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -780,7 +795,10 @@ impl CronJob {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -877,7 +895,10 @@ impl CronJob {
         let ReadNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -967,7 +988,10 @@ impl CronJob {
         let ReplaceNamespacedCronJobOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1057,7 +1081,10 @@ impl CronJob {
         let ReplaceNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1241,7 +1268,9 @@ impl CronJob {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
+        let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

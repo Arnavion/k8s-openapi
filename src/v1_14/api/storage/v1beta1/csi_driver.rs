@@ -149,7 +149,9 @@ impl CSIDriver {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -513,7 +515,9 @@ impl CSIDriver {
             force,
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -612,7 +616,9 @@ impl CSIDriver {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -709,7 +715,9 @@ impl CSIDriver {
             field_manager,
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);

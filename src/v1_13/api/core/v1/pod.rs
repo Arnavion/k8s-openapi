@@ -41,7 +41,10 @@ impl Pod {
         let ConnectDeleteNamespacedPodProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -92,7 +95,11 @@ impl Pod {
         let ConnectDeleteNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -142,7 +149,10 @@ impl Pod {
             stdout,
             tty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
@@ -213,7 +223,10 @@ impl Pod {
             stdout,
             tty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
             __query_pairs.append_pair("command", command);
@@ -284,7 +297,10 @@ impl Pod {
         let ConnectGetNamespacedPodPortforwardOptional {
             ports,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
             __query_pairs.append_pair("ports", &ports.to_string());
@@ -330,7 +346,10 @@ impl Pod {
         let ConnectGetNamespacedPodProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -381,7 +400,11 @@ impl Pod {
         let ConnectGetNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -427,7 +450,10 @@ impl Pod {
         let ConnectPatchNamespacedPodProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -478,7 +504,11 @@ impl Pod {
         let ConnectPatchNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -528,7 +558,10 @@ impl Pod {
             stdout,
             tty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
@@ -599,7 +632,10 @@ impl Pod {
             stdout,
             tty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
             __query_pairs.append_pair("command", command);
@@ -670,7 +706,10 @@ impl Pod {
         let ConnectPostNamespacedPodPortforwardOptional {
             ports,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
             __query_pairs.append_pair("ports", &ports.to_string());
@@ -716,7 +755,10 @@ impl Pod {
         let ConnectPostNamespacedPodProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -767,7 +809,11 @@ impl Pod {
         let ConnectPostNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -813,7 +859,10 @@ impl Pod {
         let ConnectPutNamespacedPodProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -864,7 +913,11 @@ impl Pod {
         let ConnectPutNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -912,7 +965,9 @@ impl Pod {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1030,7 +1085,9 @@ impl Pod {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1179,7 +1236,10 @@ impl Pod {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1313,7 +1373,9 @@ impl Pod {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1518,7 +1580,10 @@ impl Pod {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1614,7 +1679,10 @@ impl Pod {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1708,7 +1776,10 @@ impl Pod {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -1812,7 +1883,10 @@ impl Pod {
             tail_lines,
             timestamps,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
@@ -1944,7 +2018,10 @@ impl Pod {
         let ReadNamespacedPodStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -2035,7 +2112,10 @@ impl Pod {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -2140,7 +2220,10 @@ impl Pod {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -2243,7 +2326,9 @@ impl Pod {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/pods?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

@@ -286,7 +286,9 @@ impl RuntimeClass {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?", name = name);
+        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -513,7 +515,9 @@ impl RuntimeClass {
             force,
             pretty,
         } = optional;
-        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?", name = name);
+        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -612,7 +616,9 @@ impl RuntimeClass {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?", name = name);
+        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -709,7 +715,9 @@ impl RuntimeClass {
             field_manager,
             pretty,
         } = optional;
-        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?", name = name);
+        let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);

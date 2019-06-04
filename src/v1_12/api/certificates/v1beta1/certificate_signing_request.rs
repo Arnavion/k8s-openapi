@@ -151,7 +151,9 @@ impl CertificateSigningRequest {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -523,7 +525,9 @@ impl CertificateSigningRequest {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -614,7 +618,9 @@ impl CertificateSigningRequest {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -703,7 +709,9 @@ impl CertificateSigningRequest {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -795,7 +803,9 @@ impl CertificateSigningRequest {
         let ReadCertificateSigningRequestStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -881,7 +891,9 @@ impl CertificateSigningRequest {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -981,7 +993,9 @@ impl CertificateSigningRequest {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/approval?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/approval?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1081,7 +1095,9 @@ impl CertificateSigningRequest {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?", name = name);
+        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);

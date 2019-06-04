@@ -36,7 +36,9 @@ impl Node {
         let ConnectDeleteNodeProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -82,7 +84,10 @@ impl Node {
         let ConnectDeleteNodeProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -123,7 +128,9 @@ impl Node {
         let ConnectGetNodeProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -169,7 +176,10 @@ impl Node {
         let ConnectGetNodeProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -210,7 +220,9 @@ impl Node {
         let ConnectPatchNodeProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -256,7 +268,10 @@ impl Node {
         let ConnectPatchNodeProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -297,7 +312,9 @@ impl Node {
         let ConnectPostNodeProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -343,7 +360,10 @@ impl Node {
         let ConnectPostNodeProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -384,7 +404,9 @@ impl Node {
         let ConnectPutNodeProxyOptional {
             path,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/proxy?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
@@ -430,7 +452,10 @@ impl Node {
         let ConnectPutNodeProxyWithPathOptional {
             path_,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            path = url::percent_encoding::percent_encode(path.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
@@ -730,7 +755,9 @@ impl Node {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let __url = format!("/api/v1/nodes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -959,7 +986,9 @@ impl Node {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let __url = format!("/api/v1/nodes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1050,7 +1079,9 @@ impl Node {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1139,7 +1170,9 @@ impl Node {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let __url = format!("/api/v1/nodes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -1231,7 +1264,9 @@ impl Node {
         let ReadNodeStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1317,7 +1352,9 @@ impl Node {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let __url = format!("/api/v1/nodes/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1417,7 +1454,9 @@ impl Node {
             dry_run,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let __url = format!("/api/v1/nodes/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);

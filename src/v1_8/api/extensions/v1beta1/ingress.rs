@@ -41,7 +41,9 @@ impl Ingress {
         let CreateNamespacedIngressOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -131,7 +133,9 @@ impl Ingress {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -277,7 +281,10 @@ impl Ingress {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -497,7 +504,9 @@ impl Ingress {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -601,7 +610,10 @@ impl Ingress {
         let PatchNamespacedIngressOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -691,7 +703,10 @@ impl Ingress {
         let PatchNamespacedIngressStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -780,7 +795,10 @@ impl Ingress {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -877,7 +895,10 @@ impl Ingress {
         let ReadNamespacedIngressStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -967,7 +988,10 @@ impl Ingress {
         let ReplaceNamespacedIngressOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1057,7 +1081,10 @@ impl Ingress {
         let ReplaceNamespacedIngressStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -1241,7 +1268,9 @@ impl Ingress {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?", namespace = namespace);
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

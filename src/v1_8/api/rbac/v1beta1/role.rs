@@ -38,7 +38,9 @@ impl Role {
         let CreateNamespacedRoleOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?", namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -128,7 +130,9 @@ impl Role {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?", namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -274,7 +278,10 @@ impl Role {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -394,7 +401,9 @@ impl Role {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?", namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -598,7 +607,10 @@ impl Role {
         let PatchNamespacedRoleOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -685,7 +697,10 @@ impl Role {
         let ReadNamespacedRoleOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -775,7 +790,10 @@ impl Role {
         let ReplaceNamespacedRoleOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -864,7 +882,9 @@ impl Role {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?", namespace = namespace);
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

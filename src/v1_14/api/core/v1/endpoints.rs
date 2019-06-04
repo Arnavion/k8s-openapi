@@ -51,7 +51,9 @@ impl Endpoints {
             field_manager,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -168,7 +170,9 @@ impl Endpoints {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -312,7 +316,10 @@ impl Endpoints {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -541,7 +548,9 @@ impl Endpoints {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -645,7 +654,10 @@ impl Endpoints {
             force,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -749,7 +761,10 @@ impl Endpoints {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -851,7 +866,10 @@ impl Endpoints {
             field_manager,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -1049,7 +1067,9 @@ impl Endpoints {
             resource_version,
             timeout_seconds,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
+            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);

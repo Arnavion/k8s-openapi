@@ -139,7 +139,9 @@ impl Namespace {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -353,7 +355,9 @@ impl Namespace {
         let PatchNamespaceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -438,7 +442,9 @@ impl Namespace {
         let PatchNamespaceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -522,7 +528,9 @@ impl Namespace {
             export,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -614,7 +622,9 @@ impl Namespace {
         let ReadNamespaceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -699,7 +709,9 @@ impl Namespace {
         let ReplaceNamespaceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -793,7 +805,9 @@ impl Namespace {
         let ReplaceNamespaceFinalizeOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}/finalize?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}/finalize?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -887,7 +901,9 @@ impl Namespace {
         let ReplaceNamespaceStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
+        let __url = format!("/api/v1/namespaces/{name}/status?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);

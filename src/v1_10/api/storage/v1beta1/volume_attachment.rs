@@ -282,7 +282,9 @@ impl VolumeAttachment {
             pretty,
             propagation_policy,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
@@ -496,7 +498,9 @@ impl VolumeAttachment {
         let PatchVolumeAttachmentOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -580,7 +584,9 @@ impl VolumeAttachment {
             export,
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
@@ -675,7 +681,9 @@ impl VolumeAttachment {
         let ReplaceVolumeAttachmentOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?", name = name);
+        let __url = format!("/apis/storage.k8s.io/v1beta1/volumeattachments/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);

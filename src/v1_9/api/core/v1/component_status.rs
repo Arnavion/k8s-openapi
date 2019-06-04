@@ -135,7 +135,9 @@ impl ComponentStatus {
         let ReadComponentStatusOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/componentstatuses/{name}?", name = name);
+        let __url = format!("/api/v1/componentstatuses/{name}?",
+            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);

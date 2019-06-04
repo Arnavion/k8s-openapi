@@ -1537,10 +1537,24 @@ fn write_operation(
 			write!(file, "?")?;
 		}
 		write!(file, r#"""#)?;
-		for (parameter_name, _, parameter) in &parameters {
-			if parameter.location == swagger20::ParameterLocation::Path {
-				write!(file, ", {} = {}", parameter_name, parameter_name)?;
+		if !parameters.is_empty() {
+			writeln!(file, ",")?;
+			for (parameter_name, parameter_type, parameter) in &parameters {
+				if parameter.location == swagger20::ParameterLocation::Path {
+					match parameter.schema.kind {
+						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => (),
+						_ => return Err(format!("parameter {} is in the path but is a {:?}", parameter_name, parameter_type).into()),
+					}
+
+					writeln!(
+						file,
+						"{}        {} = url::percent_encoding::percent_encode({}.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),",
+						indent,
+						parameter_name,
+						parameter_name)?;
+				}
 			}
+			write!(file, "{}    ", indent)?;
 		}
 		writeln!(file, ");")?;
 	}
