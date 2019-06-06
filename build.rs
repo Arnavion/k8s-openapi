@@ -1,7 +1,7 @@
 const MIN: usize = 8;
 const MAX: usize = 14;
 
-fn main() -> Result<(), Box<std::error::Error>> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
 
     let version = {
