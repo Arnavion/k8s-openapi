@@ -65,7 +65,7 @@ This crate is instead based on the [sans-io approach](https://sans-io.readthedoc
 
 For example, the `list_namespaced_pod` does not return `Result<ListNamespacedPodResponse>` or `impl Future<Item = ListNamespacedPodResponse>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
 
-The `ListNamespacedPodResponse` type has `try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function which knows how to parse a combination of HTTP status code and response bytes into the appropriate result. No matter how you executed the request, you would have a status code and some response bytes. The function returns either a successful response, or an error if the response could not be parsed or if more response bytes are needed (ie you need to call the function again after reading more bytes from your HTTP response).
+The `ListNamespacedPodResponse` type has an `fn try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function which knows how to parse a combination of HTTP status code and response bytes into the appropriate result. No matter how you executed the request, you would have a status code and some response bytes. The function returns either a successful response, or an error if the response could not be parsed or if more response bytes are needed (ie you need to call the function again after reading more bytes from your HTTP response).
 
 There is also a top-level `ResponseBody` type that contains its own internal growable byte buffer, if you don't want to manage a byte buffer yourself. See the crate docs for details.
 

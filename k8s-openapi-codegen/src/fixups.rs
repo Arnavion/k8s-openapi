@@ -69,7 +69,7 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 	}
 }
 
-// This type not annotated with "x-kubernetes-group-version-kind", which would make its associated functions end up in the mod root
+// Type is not annotated with "x-kubernetes-group-version-kind", which would make its associated functions end up in the mod root.
 //
 // Ref: https://github.com/kubernetes/kubernetes/issues/49465
 // Ref: https://github.com/kubernetes/kubernetes/pull/64174
@@ -211,7 +211,7 @@ pub(crate) mod json_ty {
 	}
 
 	// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
-	// In fact this type is either a `bool` or a `JSONSchemaProps`.
+	// In fact this type is either a `JSONSchemaProps` or a `bool`.
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
@@ -227,7 +227,7 @@ pub(crate) mod json_ty {
 	}
 
 	// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
-	// In fact this type is either a `bool` or a `JSONSchemaProps`.
+	// In fact this type is either a `JSONSchemaProps` or a `Vec<String>`.
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
