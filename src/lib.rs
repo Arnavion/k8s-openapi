@@ -14,7 +14,7 @@
 //!
 //! Each supported version of Kubernetes is represented by a feature name (like `v1_9`). Only one such feature can be enabled at a time.
 //!
-//! **These docs have been generated with the `
+//! These docs have been generated with the `
 
 #![cfg_attr(feature = "v1_8", doc = "v1_8")]
 #![cfg_attr(feature = "v1_9", doc = "v1_9")]
@@ -24,25 +24,70 @@
 #![cfg_attr(feature = "v1_13", doc = "v1_13")]
 #![cfg_attr(feature = "v1_14", doc = "v1_14")]
 
-//! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`**
+//! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
-//! If you're writing a library crate that supports multiple versions of Kubernetes (eg >= v1.9), it's recommended that your crate does *not*
-//! enable the corresponding feature directly (eg `k8s-openapi = { features = ["v1_9"] }`). Instead, let the application crate that uses your library
-//! enable the feature corresponding to the version of Kubernetes that *it* supports. This ensures that the entire crate graph can use a common set
-//! of types from this crate.
+//! If you're writing an application crate, your crate must depend on `k8s-openapi` and enable the feature corresponding to the version of Kubernetes
+//! that your application supports.
 //!
-//! For things that differ between versions, such as the fully-qualified paths of imports, use the `k8s_*` macros to emit different code
-//! depending on which feature eventually gets enabled. See the docs of the macros for more details.
+//! ```toml
+//! # For application crates
 //!
-//! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.10), you can put something like this at the top of your crate root:
-//!
-//! ```rust,ignore
-//! #[macro_use] extern crate k8s_openapi;
-//!
-//! k8s_if_le_1_10! {
-//!     compile_error!("This crate requires v1_11 or higher feature to be enabled in the k8s-openapi crate.");
-//! }
+//! [dependencies]
+//! k8s-openapi = { version = "...", features = ["v1_14"] }
 //! ```
+//!
+//! If you're writing a library crate, your crate *must not* enable any features of `k8s-openapi` directly. The choice of which feature to enable
+//! must be left to the application crate that uses your library. This ensures that all `k8s-openapi`-using dependencies in that application crate's dependency graph
+//! use the same set of `k8s-openapi` types and are interoperable.
+//!
+//! If your library crate has tests or examples, you should also add a dev-dependency on `k8s-openapi` in addition to the direct dependency,
+//! and enable a version feature only for that dev-dependency.
+//!
+//! ```toml
+//! # For library crates
+//!
+//! [dependencies]
+//! k8s-openapi = "..."
+//!
+//! [dev-dependencies]
+//! k8s-openapi = { version = "...", features = ["v1_14"] }
+//! ```
+//!
+//! Your crate may need to emit different code depending on which feature of `k8s-openapi` gets selected eventually.
+//! For such things, use the `k8s_*` macros to emit different code depending on which feature eventually gets enabled. See the docs of the macros for more details.
+//!
+//! For example:
+//!
+//! - Your crate requires the `v1_11` or higher feature to be enabled because it uses types that were only added in Kubernetes 1.11.
+//!   Your crate would fail to compile if a lower feature was enabled.
+//!
+//!   You can generate a custom compiler error with the `compile_error!` macro, and emit it from your crate root.
+//!
+//!   ```rust,ignore
+//!   #[macro_use] extern crate k8s_openapi;
+//!
+//!   k8s_if_le_1_10! {
+//!       compile_error!("This crate requires the v1_11 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!   }
+//!   ```
+//!
+//! - Your crate creates a custom resource definition. If the `v1_9` or later feature is enabled, your crate also wants to set a validation spec on the CRD.
+//!
+//!   ```rust,ignore
+//!   let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!       ... // Set all fields except `validation`, ie only those available in v1.8
+//!   };
+//!
+//!   k8s_if_ge_1_9! {
+//!       // Set `validation`
+//!       let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!           validation: Some(apiextensions::CustomResourceValidation { ... },
+//!           ..custom_resource_definition_spec
+//!       };
+//!   }
+//!   ```
+//!
+//! (These macros are required because `cargo` does not give any way to test for your crate to determine the features enabled on another crate, ie `k8s-openapi`.)
 //!
 //!
 //! # Examples
