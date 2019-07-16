@@ -28,3 +28,36 @@ pub struct ListOptional<'a> {
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
 }
+
+impl ListOptional<'_> {
+    #[doc(hidden)]
+    /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
+    ///
+    /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.
+    pub fn __serialize<T>(
+        self,
+        __query_pairs: &mut crate::url::form_urlencoded::Serializer<T>,
+    ) where T: crate::url::form_urlencoded::Target {
+        if let Some(continue_) = self.continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(field_selector) = self.field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
+        }
+        if let Some(label_selector) = self.label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = self.limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = self.pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(resource_version) = self.resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = self.timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+    }
+}

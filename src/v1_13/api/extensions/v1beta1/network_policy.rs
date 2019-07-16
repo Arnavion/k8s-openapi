@@ -41,9 +41,9 @@ impl NetworkPolicy {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies?",
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -161,9 +161,9 @@ impl NetworkPolicy {
             watch,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies?",
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -233,7 +233,7 @@ pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
+    OkValue(NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -312,10 +312,10 @@ impl NetworkPolicy {
             propagation_policy,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -361,7 +361,7 @@ pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
 #[derive(Debug)]
 pub enum DeleteNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
+    OkValue(NetworkPolicy),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
@@ -438,44 +438,11 @@ impl NetworkPolicy {
         namespace: &str,
         optional: crate::v1_13::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedNetworkPolicyResponse>), crate::RequestError> {
-        let crate::v1_13::ListOptional {
-            continue_,
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies?",
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -540,42 +507,9 @@ impl NetworkPolicy {
     pub fn list_network_policy_for_all_namespaces(
         optional: crate::v1_13::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
-        let crate::v1_13::ListOptional {
-            continue_,
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = "/apis/extensions/v1beta1/networkpolicies?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -656,10 +590,10 @@ impl NetworkPolicy {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -753,10 +687,10 @@ impl NetworkPolicy {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -857,10 +791,10 @@ impl NetworkPolicy {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -954,37 +888,11 @@ impl NetworkPolicy {
         namespace: &str,
         optional: crate::v1_13::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
-        let crate::v1_13::WatchOptional {
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies?",
-            namespace = url::percent_encoding::percent_encode(namespace.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        __query_pairs.append_pair("watch", "true");
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1051,35 +959,9 @@ impl NetworkPolicy {
     pub fn watch_network_policy_for_all_namespaces(
         optional: crate::v1_13::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
-        let crate::v1_13::WatchOptional {
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = "/apis/extensions/v1beta1/networkpolicies?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        __query_pairs.append_pair("watch", "true");
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);

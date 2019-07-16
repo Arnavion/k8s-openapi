@@ -34,7 +34,7 @@ impl InitializerConfiguration {
             pretty,
         } = optional;
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -119,7 +119,7 @@ impl InitializerConfiguration {
             watch,
         } = optional;
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -187,7 +187,7 @@ pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum DeleteCollectionInitializerConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    OkValue(InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -260,9 +260,9 @@ impl InitializerConfiguration {
             propagation_policy,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -303,7 +303,7 @@ pub struct DeleteInitializerConfigurationOptional<'a> {
 #[derive(Debug)]
 pub enum DeleteInitializerConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    OkValue(InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -366,42 +366,9 @@ impl InitializerConfiguration {
     pub fn list_initializer_configuration(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListInitializerConfigurationResponse>), crate::RequestError> {
-        let crate::v1_8::ListOptional {
-            continue_,
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -476,9 +443,9 @@ impl InitializerConfiguration {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -562,9 +529,9 @@ impl InitializerConfiguration {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -659,9 +626,9 @@ impl InitializerConfiguration {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?",
-            name = url::percent_encoding::percent_encode(name.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -736,35 +703,9 @@ impl InitializerConfiguration {
     pub fn watch_initializer_configuration(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchInitializerConfigurationResponse>), crate::RequestError> {
-        let crate::v1_8::WatchOptional {
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        __query_pairs.append_pair("watch", "true");
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);

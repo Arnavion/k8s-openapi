@@ -1,20 +1,21 @@
 use k8s_openapi::{http, serde_json};
 
 #[test]
-fn create() {
+fn test() {
 	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-	#[derive(Debug, Default, serde_derive::Deserialize, serde_derive::Serialize)]
-	struct FooBar {
-		#[serde(rename = "apiVersion")]
-		pub api_version: Option<String>,
-		pub kind: Option<String>,
-		pub metadata: Option<meta::ObjectMeta>,
-		pub spec: Option<FooBarSpec>,
-	}
-
-	#[derive(Debug, Default, serde_derive::Deserialize, serde_derive::Serialize)]
+	#[derive(
+		Clone, Debug, PartialEq,
+		k8s_openapi_derive::CustomResourceDefinition,
+		serde_derive::Deserialize, serde_derive::Serialize,
+	)]
+	#[custom_resource_definition(
+		group = "k8s-openapi-tests-custom-resource-definition.com",
+		version = "v1",
+		plural = "foobars",
+		namespaced,
+	)]
 	struct FooBarSpec {
 		prop1: String,
 		prop2: Vec<bool>,
@@ -22,64 +23,20 @@ fn create() {
 		prop3: Option<i32>,
 	}
 
-	#[derive(Debug)]
-	enum CreateFooBarResponse {
-		Created(FooBar),
-		UnprocessableEntity(meta::Status),
-		Other,
-	}
+	crate::Client::with("custom_resource_definition-test", |client| {
+		let plural = "foobars";
 
-	impl k8s_openapi::Response for CreateFooBarResponse {
-		fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), k8s_openapi::ResponseError> {
-			match status_code {
-				http::StatusCode::CREATED => {
-					let result = match serde_json::from_slice(buf) {
-						Ok(value) => value,
-						Err(ref err) if err.is_eof() => return Err(k8s_openapi::ResponseError::NeedMoreData),
-						Err(err) => return Err(k8s_openapi::ResponseError::Json(err)),
-					};
-					Ok((CreateFooBarResponse::Created(result), buf.len()))
-				},
-				http::StatusCode::UNPROCESSABLE_ENTITY => {
-					let result = match serde_json::from_slice(buf) {
-						Ok(value) => value,
-						Err(ref err) if err.is_eof() => return Err(k8s_openapi::ResponseError::NeedMoreData),
-						Err(err) => return Err(k8s_openapi::ResponseError::Json(err)),
-					};
-					Ok((CreateFooBarResponse::UnprocessableEntity(result), buf.len()))
-				},
-				_ => Ok((CreateFooBarResponse::Other, 0)),
-			}
-		}
-	}
-
-	#[derive(Debug)]
-	enum DeleteFooBarResponse {
-		Ok,
-		Other,
-	}
-
-	impl k8s_openapi::Response for DeleteFooBarResponse {
-		fn try_from_parts(status_code: http::StatusCode, _: &[u8]) -> Result<(Self, usize), k8s_openapi::ResponseError> {
-			match status_code {
-				http::StatusCode::OK => Ok((DeleteFooBarResponse::Ok, 0)),
-				_ => Ok((DeleteFooBarResponse::Other, 0)),
-			}
-		}
-	}
-
-	crate::Client::with("custom_resource_definition-create", |client| {
 		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-			group: "k8s-openapi-tests-custom-resource-definition.com".to_string(),
+			group: <FooBar as k8s_openapi::Resource>::group().to_owned(),
 			names: apiextensions::CustomResourceDefinitionNames {
-				kind: "FooBar".to_string(),
-				plural: "foobars".to_string(),
-				short_names: Some(vec!["fb".to_string()]),
-				singular: Some("foobar".to_string()),
+				kind: <FooBar as k8s_openapi::Resource>::kind().to_owned(),
+				plural: plural.to_owned(),
+				short_names: Some(vec!["fb".to_owned()]),
+				singular: Some("foobar".to_owned()),
 				..Default::default()
 			},
-			scope: "Namespaced".to_string(),
-			version: "v1".to_string().into(),
+			scope: "Namespaced".to_owned(),
+			version: <FooBar as k8s_openapi::Resource>::version().to_owned().into(),
 			..Default::default()
 		};
 
@@ -125,7 +82,7 @@ fn create() {
 
 		let custom_resource_definition = apiextensions::CustomResourceDefinition {
 			metadata: Some(meta::ObjectMeta {
-				name: Some("foobars.k8s-openapi-tests-custom-resource-definition.com".to_string()),
+				name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group())),
 				..Default::default()
 			}),
 			spec: custom_resource_definition_spec.into(),
@@ -170,7 +127,7 @@ fn create() {
 		let custom_resource_definition = loop {
 			let (request, response_body) =
 				apiextensions::CustomResourceDefinition::read_custom_resource_definition(
-					"foobars.k8s-openapi-tests-custom-resource-definition.com", Default::default())
+					&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group().to_owned()), Default::default())
 				.expect("couldn't get custom resource definition");
 			let custom_resource_definition = {
 				let response = client.execute(request).expect("couldn't get custom resource definition");
@@ -187,9 +144,9 @@ fn create() {
 			client.sleep(std::time::Duration::from_secs(1));
 		};
 
+
+		// Create CR
 		let fb1 = FooBar {
-			api_version: Some("k8s-openapi-tests-custom-resource-definition.com/v1".to_string()),
-			kind: Some("FooBar".to_string()),
 			metadata: Some(meta::ObjectMeta {
 				name: Some("fb1".to_string()),
 				..Default::default()
@@ -197,65 +154,129 @@ fn create() {
 			spec: Some(FooBarSpec {
 				prop1: "value1".to_string(),
 				prop2: vec![true, false, true],
-				..Default::default()
+				prop3: None,
 			}),
-			..Default::default()
 		};
-		let request =
-			http::Request::post("/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars")
-			.body(serde_json::to_vec(&fb1).expect("couldn't create custom resource definition"))
-			.expect("couldn't create custom resource");
+		let (request, response_body) =
+			FooBar::create_namespaced_foo_bar("default", &fb1)
+			.expect("couldn't create FooBar");
 		let fb1 = {
-			let response = client.execute(request).expect("couldn't create custom resource");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-				CreateFooBarResponse::Created(fb) => Ok(crate::ValueResult::GotValue(fb)),
+			let response = client.execute(request).expect("couldn't create FooBar");
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				CreateNamespacedFooBarResponse::Ok(fb) |
+				CreateNamespacedFooBarResponse::Created(fb) =>
+					Ok(crate::ValueResult::GotValue(fb)),
+
 				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't create custom resource")
+			}).expect("couldn't create FooBar")
 		};
 
-		let fb1_self_link = {
-			let metadata = fb1.metadata.expect("couldn't get custom resource metadata");
-			metadata.self_link.expect("couldn't get custom resource self link")
-		};
-		let request = http::Request::delete(fb1_self_link).body(vec![]).expect("couldn't delete custom resource");
-		{
-			let response = client.execute(request).expect("couldn't delete custom resource");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-				DeleteFooBarResponse::Ok => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't delete custom resource");
-		}
 
+		// List CR
+		let (request, response_body) = FooBar::list_namespaced_foo_bar("default", Default::default()).expect("couldn't list FooBars");
+		let response = client.execute(request).expect("couldn't list FooBars");
+		let foo_bar_list =
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				ListNamespacedFooBarResponse::Ok(foo_bar_list) => Ok(crate::ValueResult::GotValue(foo_bar_list)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't list FooBars");
+		assert_eq!(k8s_openapi::kind(&foo_bar_list), "FooBarList");
+		let _ =
+			foo_bar_list
+			.items.into_iter()
+			.find(|fb| fb.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name == "fb1"))
+			.expect("couldn't find FooBar");
+
+
+		// Read CR
+		let (request, response_body) = FooBar::read_namespaced_foo_bar("fb1", "default").expect("couldn't read FooBar");
+		let response = client.execute(request).expect("couldn't read FooBar");
+		let fb1_2 =
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				ReadNamespacedFooBarResponse::Ok(fb) => Ok(crate::ValueResult::GotValue(fb)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't read FooBar");
+		assert_eq!(fb1_2.metadata.as_ref().unwrap().name.as_ref().unwrap(), "fb1");
+
+
+		// Watch CR
+		let (request, response_body) = FooBar::watch_namespaced_foo_bar("default", Default::default()).expect("couldn't watch FooBars");
+		let response = client.execute(request).expect("couldn't watch FooBars");
+		let foo_bar_watch_events =
+			crate::get_multiple_values(response, response_body, |response, status_code| match response {
+				WatchNamespacedFooBarResponse::Ok(foo_bar_watch_event) =>
+					Ok(crate::ValueResult::GotValue(foo_bar_watch_event)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't watch FooBars");
+		let _ =
+			foo_bar_watch_events
+			.map(|foo_bar_watch_event| foo_bar_watch_event.expect("couldn't get FooBar watch event"))
+			.find_map(|foo_bar_watch_event| {
+				println!("{:?}", foo_bar_watch_event);
+
+				let fb = match foo_bar_watch_event {
+					meta::WatchEvent::Added(fb) => fb,
+					_ => return None,
+				};
+
+				if fb.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name == "fb1") {
+					Some(fb)
+				}
+				else {
+					None
+				}
+			}).expect("couldn't find FooBar");
+
+
+		// Delete CR
+		let (request, response_body) = {
+			let metadata = fb1.metadata.as_ref().expect("create FooBar response did not set metadata");
+			let name = metadata.name.as_ref().expect("create FooBar response did not set metadata.name");
+			let namespace = metadata.namespace.as_ref().expect("create FooBar response did not set metadata.namespace");
+			FooBar::delete_namespaced_foo_bar(name, namespace).expect("couldn't delete FooBar")
+		};
+		let () = {
+			let response = client.execute(request).expect("couldn't delete FooBar");
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				DeleteNamespacedFooBarResponse::OkStatus(_) |
+				DeleteNamespacedFooBarResponse::OkValue(_) =>
+					Ok(crate::ValueResult::GotValue(())),
+
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't delete FooBar")
+		};
+
+
+		// Create invalid CR
 		k8s_if_ge_1_9! {
 			let fb2 = serde_json::Value::Object(vec![
-				("apiVersion".to_string(), serde_json::Value::String("k8s-openapi-tests-custom-resource-definition.com/v1".to_string())),
-				("kind".to_string(), serde_json::Value::String("FooBar".to_string())),
+				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::api_version().to_owned())),
+				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::kind().to_owned())),
 				("metadata".to_string(), serde_json::Value::Object(vec![
-					("name".to_string(), serde_json::Value::String("fb1".to_string())),
+					("name".to_string(), serde_json::Value::String("fb2".to_string())),
 				].into_iter().collect())),
 				("spec".to_string(), serde_json::Value::Object(vec![
 					("prop1".to_string(), serde_json::Value::String("value1".to_string())),
 				].into_iter().collect())),
 			].into_iter().collect());
 			let request =
-				http::Request::post("/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars")
+				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
+					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
 				.body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
 				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-					CreateFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
+					CreateNamespacedFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
 			}
-		}
 
-		k8s_if_ge_1_9! {
 			let fb3 = serde_json::Value::Object(vec![
-				("apiVersion".to_string(), serde_json::Value::String("k8s-openapi-tests-custom-resource-definition.com/v1".to_string())),
-				("kind".to_string(), serde_json::Value::String("FooBar".to_string())),
+				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::api_version().to_owned())),
+				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::kind().to_owned())),
 				("metadata".to_string(), serde_json::Value::Object(vec![
-					("name".to_string(), serde_json::Value::String("fb1".to_string())),
+					("name".to_string(), serde_json::Value::String("fb3".to_string())),
 				].into_iter().collect())),
 				("spec".to_string(), serde_json::Value::Object(vec![
 					("prop1".to_string(), serde_json::Value::String("value1".to_string())),
@@ -263,23 +284,25 @@ fn create() {
 				].into_iter().collect())),
 			].into_iter().collect());
 			let request =
-				http::Request::post("/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars")
+				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
+					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
 				.body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
 				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-					CreateFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
+					CreateNamespacedFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
 			}
 		}
 
+
+		// Delete CRD
 		let custom_resource_definition_self_link = {
 			let metadata = custom_resource_definition.metadata.expect("couldn't get custom resource definition metadata");
 			metadata.self_link.expect("couldn't get custom resource definition self link")
 		};
-
 		let request = http::Request::delete(custom_resource_definition_self_link).body(vec![]).expect("couldn't delete custom resource definition");
 		{
 			let response = client.execute(request).expect("couldn't delete custom resource definition");

@@ -52,9 +52,9 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 
 	if let Some(operation) = spec.operations.iter_mut().find(|o| o.id == "createAppsV1beta1NamespacedDeploymentRollback") {
 		for response in operation.responses.values_mut() {
-			if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)), .. } = response {
-				if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-					std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
+			if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }), .. } = response {
+				if path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
+					std::mem::replace(path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
 					found = true;
 				}
 			}
@@ -365,8 +365,8 @@ pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::
 	for operation in &mut spec.operations {
 		if operation.method == crate::swagger20::Method::Delete {
 			if let Some((index, body_parameter)) = operation.parameters.iter().enumerate().find(|(_, p)| p.location == crate::swagger20::ParameterLocation::Body) {
-				if let crate::swagger20::SchemaKind::Ref(ref_path) = &body_parameter.schema.kind {
-					if &**ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions" {
+				if let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = &body_parameter.schema.kind {
+					if path == "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions" {
 						operation.parameters.remove(index);
 						found = true;
 					}
@@ -403,7 +403,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	let mut watch_optional_definition: std::collections::BTreeMap<crate::swagger20::PropertyName, crate::swagger20::Schema> = Default::default();
 	let mut list_operations = vec![];
 
-	for operation in &spec.operations {
+	for operation in &mut spec.operations {
 		if operation.kubernetes_action != Some(crate::swagger20::KubernetesAction::List) {
 			continue;
 		}
@@ -443,11 +443,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}
 		}
 
-		let continue_index = operation.parameters.iter().position(|p| p.name == "continue").unwrap();
-		let limit_index = operation.parameters.iter().position(|p| p.name == "limit").unwrap();
-		let watch_index = operation.parameters.iter().position(|p| p.name == "watch").unwrap();
-
-		list_operations.push((operation.id.to_owned(), continue_index, limit_index, watch_index));
+		list_operations.push(operation.id.to_owned());
 	}
 
 	if list_operations.is_empty() {
@@ -466,20 +462,39 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		kubernetes_group_kind_versions: None,
 	});
 
-	let watch_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+	let list_optional_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
 		location: crate::swagger20::ParameterLocation::Query,
-		name: "watch".to_string(),
+		name: "optional".to_owned(),
 		required: true,
 		schema: crate::swagger20::Schema {
 			description: None,
-			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchParameter),
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+				path: "io.k8s.ListOptional".to_owned(),
+				relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+				can_be_default: None,
+			}),
+			kubernetes_group_kind_versions: None,
+		},
+	});
+
+	let watch_optional_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+		location: crate::swagger20::ParameterLocation::Query,
+		name: "optional".to_owned(),
+		required: true,
+		schema: crate::swagger20::Schema {
+			description: None,
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+				path: "io.k8s.WatchOptional".to_owned(),
+				relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+				can_be_default: None,
+			}),
 			kubernetes_group_kind_versions: None,
 		},
 	});
 
 	let mut converted_watch_operations: std::collections::HashSet<_> = Default::default();
 
-	for (list_operation_id, continue_index, limit_index, watch_index) in list_operations {
+	for list_operation_id in list_operations {
 		let watch_operation_id = list_operation_id.replacen("list", "watch", 1);
 		let watch_list_operation_id =
 			if watch_operation_id.ends_with("ForAllNamespaces") {
@@ -512,7 +527,11 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}),
 			..original_list_operation.clone()
 		};
-		list_operation.parameters.swap_remove(watch_index);
+		list_operation.parameters =
+			list_operation.parameters.into_iter()
+			.filter(|parameter| parameter.required)
+			.chain(std::iter::once(list_optional_parameter.clone()))
+			.collect();
 
 		let mut watch_operation = crate::swagger20::Operation {
 			description: Some({
@@ -524,12 +543,18 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			kubernetes_action: Some(crate::swagger20::KubernetesAction::Watch),
 			..original_list_operation.clone()
 		};
-		watch_operation.parameters[watch_index] = watch_parameter.clone();
-		watch_operation.parameters.swap_remove(std::cmp::max(continue_index, limit_index));
-		watch_operation.parameters.swap_remove(std::cmp::min(continue_index, limit_index));
+		watch_operation.parameters =
+			watch_operation.parameters.into_iter()
+			.filter(|parameter| parameter.required)
+			.chain(std::iter::once(watch_optional_parameter.clone()))
+			.collect();
 		watch_operation.responses.insert(reqwest::StatusCode::OK, crate::swagger20::Schema {
-			description: None,
-			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
+			description: Some("OK".to_owned()),
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+				path: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned(),
+				relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+				can_be_default: None,
+			}),
 			kubernetes_group_kind_versions: None,
 		});
 

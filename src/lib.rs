@@ -32,8 +32,7 @@
 //! of types from this crate.
 //!
 //! For things that differ between versions, such as the fully-qualified paths of imports, use the `k8s_*` macros to emit different code
-//! depending on which feature eventually gets enabled. See the docs of the macros, and the `k8s-openapi-tests` directory in the repository,
-//! for more details.
+//! depending on which feature eventually gets enabled. See the docs of the macros for more details.
 //!
 //! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.10), you can put something like this at the top of your crate root:
 //!
@@ -119,8 +118,9 @@
 //!    as a [`serde::Deserializer`] like `let status = <Status as Deserialize>::deserialize(value)?;`. On the other hand, if you expect the response body to not be
 //!    a JSON value, then ignore the `Err(err)` and parse the raw bytes of the response into the appropriate type.
 //!
-//! Also see the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
-//! a synchronous client with this style of API.
+//! Also see the `get_single_value` and `get_multiple_values` functions in
+//! [the `k8s-openapi-tests` directory in the repository](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-tests/src)
+//! for examples of how to use a synchronous client with this style of API.
 //!
 //! ```rust,no_run
 //! // Re-export of the http crate since it's used in the public API
@@ -212,10 +212,16 @@
 //!     Ok(())
 //! }
 //! ```
+//!
+//! # Custom resource definitions
+//!
+//! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating clientsets
+//! for custom resources. See that crate's docs for more information.
 
 pub use chrono;
 pub use http;
 pub use serde_json;
+pub use url;
 
 /// A wrapper around a list of bytes.
 ///

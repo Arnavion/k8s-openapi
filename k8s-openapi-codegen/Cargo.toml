@@ -6,9 +6,10 @@ publish = false
 edition = "2018"
 
 [dependencies]
-backtrace = "0.3.x"
-env_logger = "0.6.x"
-log = "0.4.x"
-reqwest = "0.9.x"
-serde = { version = "1.0.x", features = ["rc"] }
-serde_derive = "1.0.x"
+backtrace = "0.3"
+env_logger = "0.6"
+k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common" }
+log = "0.4"
+reqwest = "0.9"
+serde = "1"
+serde_derive = "1"

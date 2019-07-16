@@ -108,7 +108,7 @@ fn create() {
 		let job_pod_status = loop {
 			let (request, response_body) = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
 			let pod_list = {
-				let response = client.execute(request).expect("couldn't list pods");;
+				let response = client.execute(request).expect("couldn't list pods");
 				crate::get_single_value(response, response_body, |response, status_code| match response {
 					api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
@@ -159,7 +159,7 @@ fn create() {
 			})
 			.expect("couldn't list pods");
 		let pod_list = {
-			let response = client.execute(request).expect("couldn't list pods");;
+			let response = client.execute(request).expect("couldn't list pods");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
 				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),

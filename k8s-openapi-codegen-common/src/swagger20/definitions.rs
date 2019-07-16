@@ -44,20 +44,16 @@ impl std::fmt::Display for PropertyName {
 }
 
 #[derive(Clone, Debug)]
-pub struct RefPath(pub String);
-
-impl std::ops::Deref for RefPath {
-	type Target = str;
-
-	fn deref(&self) -> &Self::Target {
-		self.0.deref()
-	}
+pub struct RefPath {
+	pub path: String,
+	pub relative_to: RefPathRelativeTo,
+	pub can_be_default: Option<bool>,
 }
 
-impl std::fmt::Display for RefPath {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		self.0.fmt(f)
-	}
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum RefPathRelativeTo {
+	Crate,
+	Scope,
 }
 
 impl<'de> serde::Deserialize<'de> for RefPath {
@@ -84,7 +80,11 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 			return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&path), &"path like `#/definitions/$definitionName`"));
 		}
 
-		Ok(RefPath(ref_path))
+		Ok(RefPath {
+			path: ref_path,
+			relative_to: RefPathRelativeTo::Crate,
+			can_be_default: None,
+		})
 	}
 }
 
@@ -198,9 +198,6 @@ pub enum Type {
 	// Special types for common parameters of list and watch operations
 	ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
-
-	// Special type for implicit watch parameter of a watch operation
-	WatchParameter,
 }
 
 impl Type {

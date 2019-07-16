@@ -1,0 +1,28 @@
+[package]
+name = "k8s-openapi-derive"
+version = "0.4.0-beta.1"
+license = "Apache-2.0"
+authors = ["Arnavion <arnavion@gmail.com>"]
+categories = ["api-bindings", "web-programming::http-client"]
+description = "Custom derives for the Kubernetes client API"
+documentation = "https://docs.rs/k8s-openapi-derive"
+edition = "2018"
+keywords = ["client", "kubernetes", "k8s", "http"]
+readme = "README.md"
+repository = "https://github.com/Arnavion/k8s-openapi"
+include = [
+	"Cargo.toml",
+	"LICENSE",
+	"README.md",
+	"src/**/*",
+]
+
+[dependencies]
+http = "0.1"
+k8s-openapi-codegen-common = { version = "=0.4.0", path = "../k8s-openapi-codegen-common" }
+proc-macro2 = "0.4"
+quote = "0.6"
+syn = "0.15"
+
+[lib]
+proc-macro = true

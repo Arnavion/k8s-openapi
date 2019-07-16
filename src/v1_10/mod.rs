@@ -2733,7 +2733,7 @@ pub fn log_file_handler(
     logpath: &str,
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<LogFileHandlerResponse>), crate::RequestError> {
     let __url = format!("/logs/{logpath}",
-        logpath = url::percent_encoding::percent_encode(logpath.as_bytes(), url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        logpath = crate::url::percent_encoding::percent_encode(logpath.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
     );
 
     let mut __request = http::Request::get(__url);

@@ -6,19 +6,20 @@ publish = false
 edition = "2018"
 
 [dependencies]
-backtrace = "0.3.x"
+backtrace = "0.3"
 dirs = "2"
 k8s-openapi = { path = ".." }
-reqwest = "0.9.x"
-serde = "1.0.x"
-serde_derive = "1.0.x"
-serde_yaml = "0.8.x"
+k8s-openapi-derive = { path = "../k8s-openapi-derive" }
+reqwest = "0.9"
+serde = "1"
+serde_derive = "1"
+serde_yaml = "0.8"
 
 [target.'cfg(windows)'.dependencies]
 winapi = { version = "0.3.6", features = ["bcrypt", "errhandlingapi", "minwindef", "ncrypt", "wincrypt", "winnt"] }
 
 [target.'cfg(not(windows))'.dependencies]
-openssl = "0.10.x"
+openssl = "0.10"
 
 [features]
 test_v1_8 = ["k8s-openapi/v1_8"]

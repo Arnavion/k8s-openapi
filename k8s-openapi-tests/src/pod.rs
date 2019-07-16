@@ -4,7 +4,7 @@ fn list() {
 
 	crate::Client::with("pod-list", |client| {
 		let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-		let response = client.execute(request).expect("couldn't list pods");;
+		let response = client.execute(request).expect("couldn't list pods");
 		let pod_list =
 			crate::get_single_value(response, response_body, |response, status_code| match response {
 				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),

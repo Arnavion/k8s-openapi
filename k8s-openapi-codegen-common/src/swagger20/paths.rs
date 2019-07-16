@@ -56,34 +56,6 @@ pub enum Method {
 	Put,
 }
 
-#[allow(clippy::use_self)]
-impl<'de> serde::Deserialize<'de> for Method {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		struct Visitor;
-
-		impl<'de> serde::de::Visitor<'de> for Visitor {
-			type Value = Method;
-
-			fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-				write!(f, "string representation of HTTP method")
-			}
-
-			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
-				Ok(match v {
-					"delete" => Method::Delete,
-					"Get" => Method::Get,
-					"Patch" => Method::Patch,
-					"Post" => Method::Post,
-					"Put" => Method::Put,
-					v => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(v), &self)),
-				})
-			}
-		}
-
-		deserializer.deserialize_str(Visitor)
-	}
-}
-
 #[derive(Clone, Debug)]
 pub struct Operation {
 	pub description: Option<String>,
@@ -93,7 +65,7 @@ pub struct Operation {
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 	pub parameters: Vec<std::sync::Arc<Parameter>>,
 	pub path: Path,
-	pub responses: std::collections::BTreeMap<reqwest::StatusCode, super::Schema>,
+	pub responses: std::collections::BTreeMap<http::StatusCode, super::Schema>,
 	pub tag: String,
 }
 

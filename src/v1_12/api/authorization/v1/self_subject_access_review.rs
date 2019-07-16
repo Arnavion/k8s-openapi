@@ -38,7 +38,7 @@ impl SelfSubjectAccessReview {
             pretty,
         } = optional;
         let __url = "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
