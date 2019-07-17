@@ -1,4 +1,5 @@
-#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct DefinitionPath(pub String);
 
 impl std::ops::Deref for DefinitionPath {
@@ -26,7 +27,8 @@ pub enum NumberFormat {
 	Double,
 }
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct PropertyName(pub String);
 
 impl std::ops::Deref for PropertyName {
@@ -56,6 +58,7 @@ pub enum RefPathRelativeTo {
 	Scope,
 }
 
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for RefPath {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
 		let path: String = serde::Deserialize::deserialize(deserializer)?;
@@ -95,10 +98,11 @@ pub struct Schema {
 	pub kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
 }
 
+#[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
 impl<'de> serde::Deserialize<'de> for Schema {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		struct InnerSchema {
 			#[serde(rename = "additionalProperties")]
 			additional_properties: Option<Box<Schema>>,
@@ -201,6 +205,7 @@ pub enum Type {
 }
 
 impl Type {
+	#[cfg(feature = "serde")]
 	pub(crate) fn parse<'de, D>(
 		ty: &str,
 		additional_properties: Option<Box<Schema>>,

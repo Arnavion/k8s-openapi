@@ -13,6 +13,7 @@ pub enum KubernetesAction {
 	WatchList,
 }
 
+#[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
 impl<'de> serde::Deserialize<'de> for KubernetesAction {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
@@ -77,10 +78,11 @@ pub struct Parameter {
 	pub schema: super::Schema,
 }
 
+#[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
 impl<'de> serde::Deserialize<'de> for Parameter {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		struct InnerParameter {
 			description: Option<String>,
 			#[serde(rename = "in")]
@@ -146,7 +148,8 @@ pub enum ParameterLocation {
 	Query,
 }
 
-#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct Path(pub String);
 
 impl std::ops::Deref for Path {

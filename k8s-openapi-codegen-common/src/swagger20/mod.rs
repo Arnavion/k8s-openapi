@@ -7,7 +7,8 @@ pub use self::info::*;
 mod paths;
 pub use self::paths::*;
 
-#[derive(Clone, Debug, Eq, PartialEq, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct KubernetesGroupKindVersion {
 	pub group: String,
 	pub kind: String,
@@ -35,10 +36,11 @@ pub struct Spec {
 	pub operations: Vec<Operation>,
 }
 
+#[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
 impl<'de> serde::Deserialize<'de> for Spec {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		pub struct InnerSpec {
 			swagger: String,
 			info: Info,
@@ -46,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			paths: std::collections::BTreeMap<Path, InnerPathItem>,
 		}
 
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		struct InnerPathItem {
 			delete: Option<InnerOperation>,
 			get: Option<InnerOperation>,
@@ -57,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			parameters: Vec<std::sync::Arc<Parameter>>,
 		}
 
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		struct InnerOperation {
 			description: Option<String>,
 			#[serde(rename = "operationId")]
@@ -72,7 +74,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			tags: (String,),
 		}
 
-		#[derive(Debug, serde_derive::Deserialize)]
+		#[derive(Debug, serde::Deserialize)]
 		struct InnerResponse {
 			schema: Option<Schema>,
 		}
