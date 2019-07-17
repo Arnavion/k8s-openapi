@@ -23,6 +23,7 @@
 #![cfg_attr(feature = "v1_12", doc = "v1_12")]
 #![cfg_attr(feature = "v1_13", doc = "v1_13")]
 #![cfg_attr(feature = "v1_14", doc = "v1_14")]
+#![cfg_attr(feature = "v1_15", doc = "v1_15")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -538,6 +539,7 @@ mods! {
     v1_12 "v1_12"
     v1_13 "v1_13"
     v1_14 "v1_14"
+    v1_15 "v1_15"
 }
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

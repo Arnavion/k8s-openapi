@@ -19,6 +19,8 @@ jobs:
         feature: v1_13
       v1_14:
         feature: v1_14
+      v1_15:
+        feature: v1_15
     maxParallel: 10
 
   steps:

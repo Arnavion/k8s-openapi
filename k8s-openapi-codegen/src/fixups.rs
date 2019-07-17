@@ -424,16 +424,16 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 					return Err(format!("operation {} is a list operation but doesn't have a {} parameter", operation.id, expected_parameter_name).into());
 				};
 
-			if expected_parameter_name != "watch" {
+			if expected_parameter_name != "allowWatchBookmarks" && expected_parameter_name != "watch" {
 				list_optional_definition
 					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
-					.or_insert_with(|| expected_parameter.clone().schema);
+					.or_insert_with(|| expected_parameter.schema.clone());
 			}
 
 			if expected_parameter_name != "continue" && expected_parameter_name != "limit" && expected_parameter_name != "watch" {
 				watch_optional_definition
 					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
-					.or_insert_with(|| expected_parameter.clone().schema);
+					.or_insert_with(|| expected_parameter.schema.clone());
 			}
 		}
 

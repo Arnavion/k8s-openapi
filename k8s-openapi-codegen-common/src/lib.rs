@@ -682,11 +682,28 @@ pub fn run<W>(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(raw_extension_ref_path)) => {
+			let has_bookmark_event_type = {
+				let watch_optional_schema =
+					definitions.get(&swagger20::DefinitionPath("io.k8s.WatchOptional".to_owned()))
+					.ok_or("could not find io.k8s.WatchOptional")?;
+				let watch_optional_properties =
+					if let swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(properties)) = &watch_optional_schema.kind {
+						properties
+					}
+					else {
+						return Err("io.k8s.WatchOptional has unexpected schema kind".into());
+					};
+				watch_optional_properties.contains_key(&swagger20::PropertyName("allowWatchBookmarks".to_owned()))
+			};
+
 			writeln!(out, "#[derive(Clone, Debug, PartialEq)]")?;
 			writeln!(out, "{}enum {}<T> {{", vis, type_name)?;
 			writeln!(out, "    Added(T),")?;
 			writeln!(out, "    Deleted(T),")?;
 			writeln!(out, "    Modified(T),")?;
+			if has_bookmark_event_type {
+				writeln!(out, "    Bookmark(T),")?;
+			}
 			writeln!(out, "    ErrorStatus({}),", get_rust_type(
 				&swagger20::SchemaKind::Ref(swagger20::RefPath {
 					path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
@@ -737,6 +754,9 @@ pub fn run<W>(
 			writeln!(out, "            Added,")?;
 			writeln!(out, "            Deleted,")?;
 			writeln!(out, "            Modified,")?;
+			if has_bookmark_event_type {
+				writeln!(out, "            Bookmark,")?;
+			}
 			writeln!(out, "            Error,")?;
 			writeln!(out, "        }}")?;
 			writeln!(out)?;
@@ -756,10 +776,18 @@ pub fn run<W>(
 			writeln!(out, r#"                            "ADDED" => WatchEventType::Added,"#)?;
 			writeln!(out, r#"                            "DELETED" => WatchEventType::Deleted,"#)?;
 			writeln!(out, r#"                            "MODIFIED" => WatchEventType::Modified,"#)?;
+			if has_bookmark_event_type {
+				writeln!(out, r#"                            "BOOKMARK" => WatchEventType::Bookmark,"#)?;
+			}
 			writeln!(out, r#"                            "ERROR" => WatchEventType::Error,"#)?;
 			writeln!(out, "                            _ => return Err(serde::de::Error::unknown_variant(")?;
 			writeln!(out, "                                v,")?;
-			writeln!(out, r#"                                &["ADDED", "DELETED", "MODIFIED", "ERROR"],"#)?;
+			if has_bookmark_event_type {
+				writeln!(out, r#"                                &["ADDED", "DELETED", "MODIFIED", "BOOKMARK", "ERROR"],"#)?;
+			}
+			else {
+				writeln!(out, r#"                                &["ADDED", "DELETED", "MODIFIED", "ERROR"],"#)?;
+			}
 			writeln!(out, "                            )),")?;
 			writeln!(out, "                        }})")?;
 			writeln!(out, "                    }}")?;
@@ -806,6 +834,12 @@ pub fn run<W>(
 			writeln!(out, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
 			writeln!(out, "                        {}::Modified(serde::Deserialize::deserialize(value_object)?)", type_name)?;
 			writeln!(out, "                    }},")?;
+			if has_bookmark_event_type {
+				writeln!(out, "                    WatchEventType::Bookmark => {{")?;
+				writeln!(out, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
+				writeln!(out, "                        {}::Bookmark(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+				writeln!(out, "                    }},")?;
+			}
 			writeln!(out)?;
 			writeln!(out, "                    WatchEventType::Error => {{")?;
 			writeln!(out, "                        let is_status =")?;
@@ -860,6 +894,12 @@ pub fn run<W>(
 			writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;"#)?;
 			writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
 			writeln!(out, "            }},")?;
+			if has_bookmark_event_type {
+				writeln!(out, "            {}::Bookmark(object) => {{", type_name)?;
+				writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "BOOKMARK")?;"#)?;
+				writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+				writeln!(out, "            }},")?;
+			}
 			writeln!(out, "            {}::ErrorStatus(object) => {{", type_name)?;
 			writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;"#)?;
 			writeln!(out, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;

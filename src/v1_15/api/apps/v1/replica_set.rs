@@ -1,0 +1,1522 @@
+// Generated from definition io.k8s.api.apps.v1.ReplicaSet
+
+/// ReplicaSet ensures that a specified number of pod replicas are running at any given time.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct ReplicaSet {
+    /// If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+
+    /// Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
+    pub spec: Option<crate::v1_15::api::apps::v1::ReplicaSetSpec>,
+
+    /// Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
+    pub status: Option<crate::v1_15::api::apps::v1::ReplicaSetStatus>,
+}
+
+// Begin apps/v1/ReplicaSet
+
+// Generated from operation createAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// create a ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedReplicaSetResponse`]`>` constructor, or [`CreateNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn create_namespaced_replica_set(
+        namespace: &str,
+        body: &crate::v1_15::api::apps::v1::ReplicaSet,
+        optional: CreateNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedReplicaSetResponse>), crate::RequestError> {
+        let CreateNamespacedReplicaSetOptional {
+            dry_run,
+            field_manager,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?",
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_manager) = field_manager {
+            __query_pairs.append_pair("fieldManager", field_manager);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::create_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct CreateNamespacedReplicaSetOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
+    pub field_manager: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<CreateNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::create_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum CreateNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Created(crate::v1_15::api::apps::v1::ReplicaSet),
+    Accepted(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for CreateNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((CreateNamespacedReplicaSetResponse::Ok(result), buf.len()))
+            },
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((CreateNamespacedReplicaSetResponse::Created(result), buf.len()))
+            },
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((CreateNamespacedReplicaSetResponse::Accepted(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((CreateNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation deleteAppsV1CollectionNamespacedReplicaSet
+
+impl ReplicaSet {
+    /// delete collection of ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedReplicaSetResponse`]`>` constructor, or [`DeleteCollectionNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn delete_collection_namespaced_replica_set(
+        namespace: &str,
+        optional: DeleteCollectionNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedReplicaSetResponse>), crate::RequestError> {
+        let DeleteCollectionNamespacedReplicaSetOptional {
+            allow_watch_bookmarks,
+            continue_,
+            dry_run,
+            field_selector,
+            grace_period_seconds,
+            label_selector,
+            limit,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?",
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(allow_watch_bookmarks) = allow_watch_bookmarks {
+            __query_pairs.append_pair("allowWatchBookmarks", &allow_watch_bookmarks.to_string());
+        }
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
+        }
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", propagation_policy);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::delete(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::delete_collection_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct DeleteCollectionNamespacedReplicaSetOptional<'a> {
+    /// allowWatchBookmarks requests watch events with type "BOOKMARK". Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server's discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored.
+    ///
+    /// This field is alpha and can be changed or removed without notice.
+    pub allow_watch_bookmarks: Option<bool>,
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
+    ///
+    /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    pub propagation_policy: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
+}
+
+/// Use `<DeleteCollectionNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_collection_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum DeleteCollectionNamespacedReplicaSetResponse {
+    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for DeleteCollectionNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                let is_status = match result.get("kind") {
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
+                    Ok((DeleteCollectionNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
+                    Ok((DeleteCollectionNamespacedReplicaSetResponse::OkValue(result), buf.len()))
+                }
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteCollectionNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation deleteAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// delete a ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedReplicaSetResponse`]`>` constructor, or [`DeleteNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn delete_namespaced_replica_set(
+        name: &str,
+        namespace: &str,
+        optional: DeleteNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedReplicaSetResponse>), crate::RequestError> {
+        let DeleteNamespacedReplicaSetOptional {
+            dry_run,
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+        }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", propagation_policy);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::delete(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::delete_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct DeleteNamespacedReplicaSetOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    pub propagation_policy: Option<&'a str>,
+}
+
+/// Use `<DeleteNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum DeleteNamespacedReplicaSetResponse {
+    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(ReplicaSet),
+    Accepted(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for DeleteNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                let is_status = match result.get("kind") {
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
+                    Ok((DeleteNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
+                    Ok((DeleteNamespacedReplicaSetResponse::OkValue(result), buf.len()))
+                }
+            },
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((DeleteNamespacedReplicaSetResponse::Accepted(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((DeleteNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation listAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// list or watch objects of kind ReplicaSet
+    ///
+    /// This operation only supports listing all items of this type.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedReplicaSetResponse`]`>` constructor, or [`ListNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn list_namespaced_replica_set(
+        namespace: &str,
+        optional: crate::v1_15::ListOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedReplicaSetResponse>), crate::RequestError> {
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?",
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Use `<ListNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum ListNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSetList),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ListNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ListNamespacedReplicaSetResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation listAppsV1ReplicaSetForAllNamespaces
+
+impl ReplicaSet {
+    /// list or watch objects of kind ReplicaSet
+    ///
+    /// This operation only supports listing all items of this type.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListReplicaSetForAllNamespacesResponse`]`>` constructor, or [`ListReplicaSetForAllNamespacesResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn list_replica_set_for_all_namespaces(
+        optional: crate::v1_15::ListOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicaSetForAllNamespacesResponse>), crate::RequestError> {
+        let __url = "/apis/apps/v1/replicasets?".to_string();
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Use `<ListReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_replica_set_for_all_namespaces`]
+#[derive(Debug)]
+pub enum ListReplicaSetForAllNamespacesResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSetList),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ListReplicaSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ListReplicaSetForAllNamespacesResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ListReplicaSetForAllNamespacesResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation patchAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// partially update the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicaSetResponse`]`>` constructor, or [`PatchNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn patch_namespaced_replica_set(
+        name: &str,
+        namespace: &str,
+        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: PatchNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetResponse>), crate::RequestError> {
+        let PatchNamespacedReplicaSetOptional {
+            dry_run,
+            field_manager,
+            force,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_manager) = field_manager {
+            __query_pairs.append_pair("fieldManager", field_manager);
+        }
+        if let Some(force) = force {
+            __query_pairs.append_pair("force", &force.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct PatchNamespacedReplicaSetOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
+    pub field_manager: Option<&'a str>,
+    /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
+    pub force: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<PatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum PatchNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for PatchNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((PatchNamespacedReplicaSetResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation patchAppsV1NamespacedReplicaSetStatus
+
+impl ReplicaSet {
+    /// partially update status of the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicaSetStatusResponse`]`>` constructor, or [`PatchNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn patch_namespaced_replica_set_status(
+        name: &str,
+        namespace: &str,
+        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: PatchNamespacedReplicaSetStatusOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetStatusResponse>), crate::RequestError> {
+        let PatchNamespacedReplicaSetStatusOptional {
+            dry_run,
+            field_manager,
+            force,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_manager) = field_manager {
+            __query_pairs.append_pair("fieldManager", field_manager);
+        }
+        if let Some(force) = force {
+            __query_pairs.append_pair("force", &force.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set_status`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct PatchNamespacedReplicaSetStatusOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
+    pub field_manager: Option<&'a str>,
+    /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
+    pub force: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<PatchNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set_status`]
+#[derive(Debug)]
+pub enum PatchNamespacedReplicaSetStatusResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for PatchNamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((PatchNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((PatchNamespacedReplicaSetStatusResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation readAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// read the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetResponse`]`>` constructor, or [`ReadNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn read_namespaced_replica_set(
+        name: &str,
+        namespace: &str,
+        optional: ReadNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetResponse>), crate::RequestError> {
+        let ReadNamespacedReplicaSetOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
+        }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct ReadNamespacedReplicaSetOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify. Deprecated. Planned for removal in 1.18.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<ReadNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum ReadNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ReadNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReadNamespacedReplicaSetResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation readAppsV1NamespacedReplicaSetStatus
+
+impl ReplicaSet {
+    /// read status of the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetStatusResponse`]`>` constructor, or [`ReadNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn read_namespaced_replica_set_status(
+        name: &str,
+        namespace: &str,
+        optional: ReadNamespacedReplicaSetStatusOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetStatusResponse>), crate::RequestError> {
+        let ReadNamespacedReplicaSetStatusOptional {
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set_status`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<ReadNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set_status`]
+#[derive(Debug)]
+pub enum ReadNamespacedReplicaSetStatusResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReadNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReadNamespacedReplicaSetStatusResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation replaceAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// replace the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicaSetResponse`]`>` constructor, or [`ReplaceNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn replace_namespaced_replica_set(
+        name: &str,
+        namespace: &str,
+        body: &crate::v1_15::api::apps::v1::ReplicaSet,
+        optional: ReplaceNamespacedReplicaSetOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetResponse>), crate::RequestError> {
+        let ReplaceNamespacedReplicaSetOptional {
+            dry_run,
+            field_manager,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_manager) = field_manager {
+            __query_pairs.append_pair("fieldManager", field_manager);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct ReplaceNamespacedReplicaSetOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
+    pub field_manager: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<ReplaceNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum ReplaceNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Created(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ReplaceNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNamespacedReplicaSetResponse::Ok(result), buf.len()))
+            },
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNamespacedReplicaSetResponse::Created(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation replaceAppsV1NamespacedReplicaSetStatus
+
+impl ReplicaSet {
+    /// replace status of the specified ReplicaSet
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicaSetStatusResponse`]`>` constructor, or [`ReplaceNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn replace_namespaced_replica_set_status(
+        name: &str,
+        namespace: &str,
+        body: &crate::v1_15::api::apps::v1::ReplicaSet,
+        optional: ReplaceNamespacedReplicaSetStatusOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetStatusResponse>), crate::RequestError> {
+        let ReplaceNamespacedReplicaSetStatusOptional {
+            dry_run,
+            field_manager,
+            pretty,
+        } = optional;
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?",
+            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(field_manager) = field_manager {
+            __query_pairs.append_pair("fieldManager", field_manager);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set_status`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
+    pub field_manager: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+}
+
+/// Use `<ReplaceNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set_status`]
+#[derive(Debug)]
+pub enum ReplaceNamespacedReplicaSetStatusResponse {
+    Ok(crate::v1_15::api::apps::v1::ReplicaSet),
+    Created(crate::v1_15::api::apps::v1::ReplicaSet),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for ReplaceNamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+            },
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNamespacedReplicaSetStatusResponse::Created(result), buf.len()))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((ReplaceNamespacedReplicaSetStatusResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation watchAppsV1NamespacedReplicaSet
+
+impl ReplicaSet {
+    /// list or watch objects of kind ReplicaSet
+    ///
+    /// This operation only supports watching one item, or a list of items, of this type for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedReplicaSetResponse`]`>` constructor, or [`WatchNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_namespaced_replica_set(
+        namespace: &str,
+        optional: crate::v1_15::WatchOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicaSetResponse>), crate::RequestError> {
+        let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?",
+            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+        );
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Use `<WatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_namespaced_replica_set`]
+#[derive(Debug)]
+pub enum WatchNamespacedReplicaSetResponse {
+    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for WatchNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchNamespacedReplicaSetResponse::Ok(result), byte_offset))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchNamespacedReplicaSetResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// Generated from operation watchAppsV1ReplicaSetForAllNamespaces
+
+impl ReplicaSet {
+    /// list or watch objects of kind ReplicaSet
+    ///
+    /// This operation only supports watching one item, or a list of items, of this type for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchReplicaSetForAllNamespacesResponse`]`>` constructor, or [`WatchReplicaSetForAllNamespacesResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_replica_set_for_all_namespaces(
+        optional: crate::v1_15::WatchOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicaSetForAllNamespacesResponse>), crate::RequestError> {
+        let __url = "/apis/apps/v1/replicasets?".to_string();
+        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
+        optional.__serialize(&mut __query_pairs);
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Use `<WatchReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_replica_set_for_all_namespaces`]
+#[derive(Debug)]
+pub enum WatchReplicaSetForAllNamespacesResponse {
+    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
+    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+}
+
+impl crate::Response for WatchReplicaSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchReplicaSetForAllNamespacesResponse::Ok(result), byte_offset))
+            },
+            _ => {
+                let (result, read) =
+                    if buf.is_empty() {
+                        (Ok(None), 0)
+                    }
+                    else {
+                        match serde_json::from_slice(buf) {
+                            Ok(value) => (Ok(Some(value)), buf.len()),
+                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) => (Err(err), 0),
+                        }
+                    };
+                Ok((WatchReplicaSetForAllNamespacesResponse::Other(result), read))
+            },
+        }
+    }
+}
+
+// End apps/v1/ReplicaSet
+
+impl crate::Resource for ReplicaSet {
+    fn api_version() -> &'static str {
+        "apps/v1"
+    }
+
+    fn group() -> &'static str {
+        "apps"
+    }
+
+    fn kind() -> &'static str {
+        "ReplicaSet"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
+}
+
+impl crate::Metadata for ReplicaSet {
+    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
+impl<'de> serde::Deserialize<'de> for ReplicaSet {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_api_version,
+            Key_kind,
+            Key_metadata,
+            Key_spec,
+            Key_status,
+            Other,
+        }
+
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                        Ok(match v {
+                            "apiVersion" => Field::Key_api_version,
+                            "kind" => Field::Key_kind,
+                            "metadata" => Field::Key_metadata,
+                            "spec" => Field::Key_spec,
+                            "status" => Field::Key_status,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> serde::de::Visitor<'de> for Visitor {
+            type Value = ReplicaSet;
+
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "struct ReplicaSet")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_15::api::apps::v1::ReplicaSetSpec> = None;
+                let mut value_status: Option<crate::v1_15::api::apps::v1::ReplicaSetStatus> = None;
+
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_api_version => {
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            }
+                        },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(ReplicaSet {
+                    metadata: value_metadata,
+                    spec: value_spec,
+                    status: value_status,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "ReplicaSet",
+            &[
+                "apiVersion",
+                "kind",
+                "metadata",
+                "spec",
+                "status",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl serde::Serialize for ReplicaSet {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "ReplicaSet",
+            2 +
+            self.metadata.as_ref().map_or(0, |_| 1) +
+            self.spec.as_ref().map_or(0, |_| 1) +
+            self.status.as_ref().map_or(0, |_| 1),
+        )?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        if let Some(value) = &self.metadata {
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+        }
+        if let Some(value) = &self.spec {
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+        }
+        if let Some(value) = &self.status {
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+        }
+        serde::ser::SerializeStruct::end(state)
+    }
+}
