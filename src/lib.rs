@@ -88,7 +88,7 @@
 //!   }
 //!   ```
 //!
-//! (These macros are required because `cargo` does not give any way to test for your crate to determine the features enabled on another crate, ie `k8s-openapi`.)
+//! (These macros are required because `cargo` does not give any way for your crate to determine the features enabled on another crate, ie `k8s-openapi`.)
 //!
 //!
 //! # Examples
@@ -118,9 +118,15 @@
 //!    this struct is taken as the last parameter of `Pod::list_namespaced_pod`. This struct impls [`Default`] so that you can just pass in `Default::default()`
 //!    if you don't want to specify values for any of the optional parameters.
 //!
-//!    All list API that take optional parameters do so using the [`ListOptional`] struct. Similarly, all watch API that take optional parameters do so using
-//!    the [`WatchOptional`] struct. Other API functions with unique parameters have their own `Optional` structs, such as [`api::core::v1::DeleteNamespacedPodOptional`]
-//!    for [`api::core::v1::Pod::delete_namespaced_pod`]
+//!    Some API operations have a single common type for optional parameters:
+//!
+//!    - All delete API take optional parameters using the [`DeleteOptional`] struct.
+//!    - All list API take optional parameters using the [`ListOptional`] struct.
+//!    - All watch API take optional parameters using the [`WatchOptional`] struct.
+//!    - All delete-collection API take optional parameters using the [`DeleteOptional`] struct for delete options and the [`ListOptional`] struct for list options.
+//!
+//!    Other API functions have their own `Optional` structs with fields corresponding to the specific parameters for those functions,
+//!    such as [`api::core::v1::ReadNamespacedPodOptional`] for [`api::core::v1::Pod::read_namespaced_pod`]
 //!
 //! 1. The function returns an [`http::Request`] value with the URL path, query string, and request body filled out according to the parameters
 //!    given to the function. The function does *not* execute this request. You can execute this `http::Request` using any HTTP client library you want to use.

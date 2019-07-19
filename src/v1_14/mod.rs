@@ -1,4 +1,9 @@
 
+mod delete_optional;
+pub use self::delete_optional::{
+    DeleteOptional,
+};
+
 mod list_optional;
 pub use self::list_optional::{
     ListOptional,

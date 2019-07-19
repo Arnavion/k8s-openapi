@@ -8,8 +8,8 @@ mod initializer_configuration;
 pub use self::initializer_configuration::{
     InitializerConfiguration,
     CreateInitializerConfigurationOptional, CreateInitializerConfigurationResponse,
-    DeleteCollectionInitializerConfigurationOptional, DeleteCollectionInitializerConfigurationResponse,
-    DeleteInitializerConfigurationOptional, DeleteInitializerConfigurationResponse,
+    DeleteCollectionInitializerConfigurationResponse,
+    DeleteInitializerConfigurationResponse,
     ListInitializerConfigurationResponse,
     PatchInitializerConfigurationOptional, PatchInitializerConfigurationResponse,
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,

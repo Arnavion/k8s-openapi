@@ -3,8 +3,8 @@ mod job;
 pub use self::job::{
     Job,
     CreateNamespacedJobOptional, CreateNamespacedJobResponse,
-    DeleteCollectionNamespacedJobOptional, DeleteCollectionNamespacedJobResponse,
-    DeleteNamespacedJobOptional, DeleteNamespacedJobResponse,
+    DeleteCollectionNamespacedJobResponse,
+    DeleteNamespacedJobResponse,
     ListJobForAllNamespacesResponse,
     ListNamespacedJobResponse,
     PatchNamespacedJobOptional, PatchNamespacedJobResponse,

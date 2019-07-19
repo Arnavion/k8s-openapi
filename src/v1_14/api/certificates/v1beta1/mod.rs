@@ -3,8 +3,8 @@ mod certificate_signing_request;
 pub use self::certificate_signing_request::{
     CertificateSigningRequest,
     CreateCertificateSigningRequestOptional, CreateCertificateSigningRequestResponse,
-    DeleteCertificateSigningRequestOptional, DeleteCertificateSigningRequestResponse,
-    DeleteCollectionCertificateSigningRequestOptional, DeleteCollectionCertificateSigningRequestResponse,
+    DeleteCertificateSigningRequestResponse,
+    DeleteCollectionCertificateSigningRequestResponse,
     ListCertificateSigningRequestResponse,
     PatchCertificateSigningRequestOptional, PatchCertificateSigningRequestResponse,
     PatchCertificateSigningRequestStatusOptional, PatchCertificateSigningRequestStatusResponse,

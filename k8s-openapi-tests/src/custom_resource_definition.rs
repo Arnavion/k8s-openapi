@@ -233,7 +233,7 @@ fn test() {
 			let metadata = fb1.metadata.as_ref().expect("create FooBar response did not set metadata");
 			let name = metadata.name.as_ref().expect("create FooBar response did not set metadata.name");
 			let namespace = metadata.namespace.as_ref().expect("create FooBar response did not set metadata.namespace");
-			FooBar::delete_namespaced_foo_bar(name, namespace).expect("couldn't delete FooBar")
+			FooBar::delete_namespaced_foo_bar(name, namespace, Default::default()).expect("couldn't delete FooBar")
 		};
 		let () = {
 			let response = client.execute(request).expect("couldn't delete FooBar");

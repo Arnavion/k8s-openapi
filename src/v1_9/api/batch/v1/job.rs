@@ -133,89 +133,32 @@ impl Job {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `optional`
+    /// * `delete_optional`
     ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
+    ///     Delete options. Use `Default::default()` to not pass any.
+    ///
+    /// * `list_optional`
+    ///
+    ///     List options. Use `Default::default()` to not pass any.
     pub fn delete_collection_namespaced_job(
         namespace: &str,
-        optional: DeleteCollectionNamespacedJobOptional<'_>,
+        delete_optional: crate::v1_9::DeleteOptional<'_>,
+        list_optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedJobResponse>), crate::RequestError> {
-        let DeleteCollectionNamespacedJobOptional {
-            continue_,
-            field_selector,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-            watch,
-        } = optional;
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs?",
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        list_optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::delete(__url);
-        let __body = vec![];
+        let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
             Ok(body) => Ok((body, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::delete_collection_namespaced_job`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct DeleteCollectionNamespacedJobOptional<'a> {
-    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
-    /// If true, partially initialized resources are included in the response.
-    pub include_uninitialized: Option<bool>,
-    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    pub label_selector: Option<&'a str>,
-    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    pub limit: Option<i64>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    pub resource_version: Option<&'a str>,
-    /// Timeout for the list/watch call.
-    pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<DeleteCollectionNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_collection_namespaced_job`]
@@ -291,53 +234,20 @@ impl Job {
     pub fn delete_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: DeleteNamespacedJobOptional<'_>,
+        optional: crate::v1_9::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedJobResponse>), crate::RequestError> {
-        let DeleteNamespacedJobOptional {
-            grace_period_seconds,
-            orphan_dependents,
-            pretty,
-            propagation_policy,
-        } = optional;
-        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}?",
+        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(grace_period_seconds) = grace_period_seconds {
-            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-        }
-        if let Some(orphan_dependents) = orphan_dependents {
-            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(propagation_policy) = propagation_policy {
-            __query_pairs.append_pair("propagationPolicy", propagation_policy);
-        }
-        let __url = __query_pairs.finish();
 
         let mut __request = http::Request::delete(__url);
-        let __body = vec![];
+        let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
             Ok(body) => Ok((body, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::delete_namespaced_job`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct DeleteNamespacedJobOptional<'a> {
-    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    pub grace_period_seconds: Option<i64>,
-    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    pub orphan_dependents: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
-    pub propagation_policy: Option<&'a str>,
 }
 
 /// Use `<DeleteNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_namespaced_job`]

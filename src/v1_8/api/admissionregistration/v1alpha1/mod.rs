@@ -13,8 +13,8 @@ mod external_admission_hook_configuration;
 pub use self::external_admission_hook_configuration::{
     ExternalAdmissionHookConfiguration,
     CreateExternalAdmissionHookConfigurationOptional, CreateExternalAdmissionHookConfigurationResponse,
-    DeleteCollectionExternalAdmissionHookConfigurationOptional, DeleteCollectionExternalAdmissionHookConfigurationResponse,
-    DeleteExternalAdmissionHookConfigurationOptional, DeleteExternalAdmissionHookConfigurationResponse,
+    DeleteCollectionExternalAdmissionHookConfigurationResponse,
+    DeleteExternalAdmissionHookConfigurationResponse,
     ListExternalAdmissionHookConfigurationResponse,
     PatchExternalAdmissionHookConfigurationOptional, PatchExternalAdmissionHookConfigurationResponse,
     ReadExternalAdmissionHookConfigurationOptional, ReadExternalAdmissionHookConfigurationResponse,
@@ -36,8 +36,8 @@ mod initializer_configuration;
 pub use self::initializer_configuration::{
     InitializerConfiguration,
     CreateInitializerConfigurationOptional, CreateInitializerConfigurationResponse,
-    DeleteCollectionInitializerConfigurationOptional, DeleteCollectionInitializerConfigurationResponse,
-    DeleteInitializerConfigurationOptional, DeleteInitializerConfigurationResponse,
+    DeleteCollectionInitializerConfigurationResponse,
+    DeleteInitializerConfigurationResponse,
     ListInitializerConfigurationResponse,
     PatchInitializerConfigurationOptional, PatchInitializerConfigurationResponse,
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,

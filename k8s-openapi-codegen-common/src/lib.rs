@@ -916,6 +916,7 @@ pub fn run<W>(
 			run_result.num_generated_structs += 1;
 		},
 
+		swagger20::SchemaKind::Ty(ty @ swagger20::Type::DeleteOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::ListOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::WatchOptional(_)) => {
 			struct Property<'a> {
@@ -926,7 +927,9 @@ pub fn run<W>(
 			}
 
 			let properties = match ty {
-				swagger20::Type::ListOptional(properties) | swagger20::Type::WatchOptional(properties) => properties,
+				swagger20::Type::DeleteOptional(properties) |
+				swagger20::Type::ListOptional(properties) |
+				swagger20::Type::WatchOptional(properties) => properties,
 				_ => unreachable!(),
 			};
 
@@ -977,35 +980,68 @@ pub fn run<W>(
 
 			writeln!(out)?;
 
-			writeln!(out, "impl {}<'_> {{", type_name)?;
-			writeln!(out, "    #[doc(hidden)]")?;
-			writeln!(out, "    /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]")?;
-			writeln!(out, "    ///")?;
-			writeln!(out, "    /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.")?;
-			writeln!(out, "    {}fn __serialize<T>(", vis)?;
-			writeln!(out, "        self,")?;
-			writeln!(out, "        __query_pairs: &mut crate::url::form_urlencoded::Serializer<T>,")?;
-			writeln!(out, "    ) where T: crate::url::form_urlencoded::Target {{")?;
-			for Property { name, schema, field_name, .. } in properties {
-				writeln!(out, "        if let Some({}) = self.{} {{", field_name, field_name)?;
-				match schema.kind {
-					swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
-					swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-					swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
-						writeln!(out, r#"            __query_pairs.append_pair("{}", &{}.to_string());"#, name, field_name)?,
+			match ty {
+				swagger20::Type::DeleteOptional(_) => {
+					writeln!(out, "impl serde::Serialize for {}<'_> {{", type_name)?;
+					writeln!(out, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+					writeln!(out, "        let mut state = serializer.serialize_struct(")?;
+					writeln!(out, r#"            "{}","#, type_name)?;
 
-					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
-						writeln!(out, r#"            __query_pairs.append_pair("{}", {});"#, name, field_name)?,
+					for (i, Property { field_name, .. }) in properties.iter().enumerate() {
+						if i > 0 {
+							writeln!(out, " +")?;
+						}
+						write!(out, "            self.{}.as_ref().map_or(0, |_| 1)", field_name)?;
+					}
+					writeln!(out, ",")?;
 
-					_ => unreachable!(),
-				}
-				writeln!(out, "        }}")?;
+					writeln!(out, "        )?;")?;
+
+					for Property { name, field_name, .. } in &properties {
+						writeln!(out, "        if let Some(value) = &self.{} {{", field_name)?;
+						writeln!(out, r#"            serde::ser::SerializeStruct::serialize_field(&mut state, "{}", value)?;"#, name)?;
+						writeln!(out, "        }}")?;
+					}
+					writeln!(out, "        serde::ser::SerializeStruct::end(state)")?;
+					writeln!(out, "    }}")?;
+					writeln!(out, "}}")?;
+				},
+
+				swagger20::Type::ListOptional(_) |
+				swagger20::Type::WatchOptional(_) => {
+					writeln!(out, "impl {}<'_> {{", type_name)?;
+					writeln!(out, "    #[doc(hidden)]")?;
+					writeln!(out, "    /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]")?;
+					writeln!(out, "    ///")?;
+					writeln!(out, "    /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.")?;
+					writeln!(out, "    {}fn __serialize<T>(", vis)?;
+					writeln!(out, "        self,")?;
+					writeln!(out, "        __query_pairs: &mut crate::url::form_urlencoded::Serializer<T>,")?;
+					writeln!(out, "    ) where T: crate::url::form_urlencoded::Target {{")?;
+					for Property { name, schema, field_name, .. } in properties {
+						writeln!(out, "        if let Some({}) = self.{} {{", field_name, field_name)?;
+						match schema.kind {
+							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
+							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+							swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
+								writeln!(out, r#"            __query_pairs.append_pair("{}", &{}.to_string());"#, name, field_name)?,
+
+							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
+								writeln!(out, r#"            __query_pairs.append_pair("{}", {});"#, name, field_name)?,
+
+							_ => unreachable!(),
+						}
+						writeln!(out, "        }}")?;
+					}
+					if let swagger20::Type::WatchOptional(_) = ty {
+						writeln!(out, r#"        __query_pairs.append_pair("watch", "true");"#)?;
+					}
+					writeln!(out, "    }}")?;
+					writeln!(out, "}}")?;
+				},
+
+				_ => unreachable!(),
 			}
-			if let swagger20::Type::WatchOptional(_) = ty {
-				writeln!(out, r#"        __query_pairs.append_pair("watch", "true");"#)?;
-			}
-			writeln!(out, "    }}")?;
-			writeln!(out, "}}")?;
 
 			run_result.num_generated_structs += 1;
 		},
@@ -1204,6 +1240,14 @@ fn get_rust_borrow_type(
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
+		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.DeleteOptional" =>
+			if let Some(mod_root) = mod_root {
+				Ok(format!("{}::{}::DeleteOptional<'_>", crate_root, mod_root).into())
+			}
+			else {
+				Ok(format!("{}::DeleteOptional<'_>", crate_root).into())
+			},
+
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ListOptional" =>
 			if let Some(mod_root) = mod_root {
 				Ok(format!("{}::{}::ListOptional<'_>", crate_root, mod_root).into())
@@ -1249,6 +1293,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 	}
@@ -1292,6 +1337,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 	}
@@ -1331,7 +1377,7 @@ pub fn write_operation(
 	writeln!(out, "// Generated from operation {}", operation.id)?;
 
 	let (operation_fn_name, operation_result_name, operation_optional_parameters_name) =
-		get_operation_names(operation, type_name_and_ref_path.is_some(), crate_root, mod_root)?;
+		get_operation_names(operation, type_name_and_ref_path.is_some())?;
 
 	let operation_responses: Result<Vec<_>, _> =
 		operation.responses.iter()
@@ -1397,6 +1443,23 @@ pub fn write_operation(
 		.collect();
 	let mut parameters = parameters?;
 
+	let delete_optional_parameter =
+		if let Some(index) =
+			parameters.iter()
+			.position(|(_, _, parameter)|
+				if let swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) = &parameter.schema.kind {
+					path == "io.k8s.DeleteOptional"
+				}
+				else {
+					false
+				})
+		{
+			Some(parameters.swap_remove(index))
+		}
+		else {
+			None
+		};
+
 	let list_or_watch_optional_parameter =
 		if let Some(index) =
 			parameters.iter()
@@ -1446,7 +1509,7 @@ pub fn write_operation(
 		need_empty_line = true;
 	}
 
-	if !parameters.is_empty() || list_or_watch_optional_parameter.is_some() {
+	if !parameters.is_empty() || delete_optional_parameter.is_some() || list_or_watch_optional_parameter.is_some() {
 		if need_empty_line {
 			writeln!(out, "{}///", indent)?;
 		}
@@ -1462,7 +1525,27 @@ pub fn write_operation(
 				}
 			}
 		}
-		if !optional_parameters.is_empty() || list_or_watch_optional_parameter.is_some() {
+		if let Some((parameter_name, _, parameter)) = &delete_optional_parameter {
+			writeln!(out, "{}///", indent)?;
+			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
+			if let Some(description) = parameter.schema.description.as_ref() {
+				writeln!(out, "{}///", indent)?;
+				for line in get_comment_text(description, "    ") {
+					writeln!(out, "{}///{}", indent, line)?;
+				}
+			}
+		}
+		if let Some((parameter_name, _, parameter)) = &list_or_watch_optional_parameter {
+			writeln!(out, "{}///", indent)?;
+			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
+			if let Some(description) = parameter.schema.description.as_ref() {
+				writeln!(out, "{}///", indent)?;
+				for line in get_comment_text(description, "    ") {
+					writeln!(out, "{}///{}", indent, line)?;
+				}
+			}
+		}
+		if !optional_parameters.is_empty() {
 			writeln!(out, "{}///", indent)?;
 			writeln!(out, "{}/// * `optional`", indent)?;
 			writeln!(out, "{}///", indent)?;
@@ -1472,6 +1555,9 @@ pub fn write_operation(
 
 	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
 	for (parameter_name, parameter_type, _) in &required_parameters {
+		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+	}
+	if let Some((parameter_name, parameter_type, _)) = &delete_optional_parameter {
 		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
 	}
 	if let Some((parameter_name, parameter_type, _)) = &list_or_watch_optional_parameter {
@@ -1597,7 +1683,9 @@ pub fn write_operation(
 
 	writeln!(out, "{}    let mut __request = http::Request::{}(__url);", indent, method)?;
 
-	let body_parameter = parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body);
+	let body_parameter =
+		delete_optional_parameter.as_ref()
+		.or_else(|| parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body));
 
 	write!(out, "{}    let __body = ", indent)?;
 	if let Some((parameter_name, _, parameter)) = body_parameter {
@@ -1628,11 +1716,7 @@ pub fn write_operation(
 		writeln!(out, "}}")?;
 	}
 
-	if
-		!optional_parameters.is_empty() &&
-		operation.kubernetes_action != Some(swagger20::KubernetesAction::List) &&
-		operation.kubernetes_action != Some(swagger20::KubernetesAction::Watch)
-	{
+	if !optional_parameters.is_empty() {
 		writeln!(out)?;
 
 		if let Some((type_name, _)) = type_name_and_ref_path {
@@ -1815,12 +1899,7 @@ pub fn write_operation(
 	}
 
 	let mut result = (None, operation_result_name);
-	if
-		type_name_and_ref_path.is_some() &&
-		!optional_parameters.is_empty() &&
-		operation.kubernetes_action != Some(swagger20::KubernetesAction::List) &&
-		operation.kubernetes_action != Some(swagger20::KubernetesAction::Watch)
-	{
+	if type_name_and_ref_path.is_some() && !optional_parameters.is_empty() {
 		result.0 = Some(operation_optional_parameters_name);
 	}
 	Ok(result)
@@ -1829,8 +1908,6 @@ pub fn write_operation(
 fn get_operation_names(
 	operation: &swagger20::Operation,
 	strip_tag: bool,
-	crate_root: &str,
-	mod_root: Option<&str>,
 ) -> Result<(std::borrow::Cow<'static, str>, Option<String>, String), Error> {
 	let operation_id =
 		if strip_tag {
@@ -1870,13 +1947,7 @@ fn get_operation_names(
 		else {
 			Some(format!("{}{}Response", first_char, rest_chars))
 		};
-	let operation_optional_parameters_name = match (operation.kubernetes_action, mod_root) {
-		(Some(swagger20::KubernetesAction::List), Some(mod_root)) => format!("{}::{}::ListOptional", crate_root, mod_root),
-		(Some(swagger20::KubernetesAction::List), None) => format!("{}::ListOptional", crate_root),
-		(Some(swagger20::KubernetesAction::Watch), Some(mod_root)) => format!("{}::{}::WatchOptional", crate_root, mod_root),
-		(Some(swagger20::KubernetesAction::Watch), None) => format!("{}::WatchOptional", crate_root),
-		_ => format!("{}{}Optional", first_char, rest_chars),
-	};
+	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }

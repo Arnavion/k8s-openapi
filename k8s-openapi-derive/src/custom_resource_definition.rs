@@ -343,6 +343,20 @@ impl super::CustomDerive for CustomResourceDefinition {
 					parameters: vec![
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
+						Some(std::sync::Arc::new(swagger20::Parameter {
+							location: swagger20::ParameterLocation::Query,
+							name: "optional".to_owned(),
+							required: true,
+							schema: swagger20::Schema {
+								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
+								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+									path: "io.k8s.DeleteOptional".to_owned(),
+									relative_to: swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+							},
+						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
 					responses: vec![
@@ -368,7 +382,61 @@ impl super::CustomDerive for CustomResourceDefinition {
 					tag: String::new(),
 				},
 
-				// TODO: deleteCollection
+				swagger20::Operation {
+					description: Some(format!("Delete a collection of objects of kind {}", cr_name)),
+					id: format!("deleteCollection{}{}", namespace_operation_id_component, cr_name),
+					method: swagger20::Method::Delete,
+					kubernetes_action: Some(swagger20::KubernetesAction::DeleteCollection),
+					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
+						group: group.clone(),
+						kind: cr_name.clone(),
+						version: version.clone(),
+					}),
+					parameters: vec![
+						namespace_parameter.clone(),
+						Some(std::sync::Arc::new(swagger20::Parameter {
+							location: swagger20::ParameterLocation::Query,
+							name: "deleteOptional".to_owned(),
+							required: true,
+							schema: swagger20::Schema {
+								description: Some("Delete options. Use `Default::default()` to not pass any.".to_owned()),
+								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+									path: "io.k8s.DeleteOptional".to_owned(),
+									relative_to: swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+							},
+						})),
+						Some(std::sync::Arc::new(swagger20::Parameter {
+							location: swagger20::ParameterLocation::Query,
+							name: "listOptional".to_owned(),
+							required: true,
+							schema: swagger20::Schema {
+								description: Some("List options. Use `Default::default()` to not pass any.".to_owned()),
+								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+									path: "io.k8s.ListOptional".to_owned(),
+									relative_to: swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+							},
+						})),
+					].into_iter().flatten().collect(),
+					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
+					responses: vec![
+						(http::StatusCode::OK, swagger20::Schema {
+							description: Some("OK".to_owned()),
+							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+								path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
+								relative_to: swagger20::RefPathRelativeTo::Crate,
+								can_be_default: None,
+							}),
+							kubernetes_group_kind_versions: None,
+						}),
+					].into_iter().collect(),
+					tag: String::new(),
+				},
 
 				swagger20::Operation {
 					description: Some(format!("List objects of kind {}", cr_name)),
@@ -387,7 +455,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							name: "optional".to_owned(),
 							required: true,
 							schema: swagger20::Schema {
-								description: None,
+								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.ListOptional".to_owned(),
 									relative_to: swagger20::RefPathRelativeTo::Crate,
@@ -731,7 +799,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							name: "optional".to_owned(),
 							required: true,
 							schema: swagger20::Schema {
-								description: None,
+								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.WatchOptional".to_owned(),
 									relative_to: swagger20::RefPathRelativeTo::Crate,

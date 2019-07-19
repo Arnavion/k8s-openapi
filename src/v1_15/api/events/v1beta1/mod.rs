@@ -3,8 +3,8 @@ mod event;
 pub use self::event::{
     Event,
     CreateNamespacedEventOptional, CreateNamespacedEventResponse,
-    DeleteCollectionNamespacedEventOptional, DeleteCollectionNamespacedEventResponse,
-    DeleteNamespacedEventOptional, DeleteNamespacedEventResponse,
+    DeleteCollectionNamespacedEventResponse,
+    DeleteNamespacedEventResponse,
     ListEventForAllNamespacesResponse,
     ListNamespacedEventResponse,
     PatchNamespacedEventOptional, PatchNamespacedEventResponse,

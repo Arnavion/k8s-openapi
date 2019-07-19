@@ -3,8 +3,8 @@ mod audit_sink;
 pub use self::audit_sink::{
     AuditSink,
     CreateAuditSinkOptional, CreateAuditSinkResponse,
-    DeleteAuditSinkOptional, DeleteAuditSinkResponse,
-    DeleteCollectionAuditSinkOptional, DeleteCollectionAuditSinkResponse,
+    DeleteAuditSinkResponse,
+    DeleteCollectionAuditSinkResponse,
     ListAuditSinkResponse,
     PatchAuditSinkOptional, PatchAuditSinkResponse,
     ReadAuditSinkOptional, ReadAuditSinkResponse,

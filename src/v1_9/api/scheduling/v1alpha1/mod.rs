@@ -3,8 +3,8 @@ mod priority_class;
 pub use self::priority_class::{
     PriorityClass,
     CreatePriorityClassOptional, CreatePriorityClassResponse,
-    DeleteCollectionPriorityClassOptional, DeleteCollectionPriorityClassResponse,
-    DeletePriorityClassOptional, DeletePriorityClassResponse,
+    DeleteCollectionPriorityClassResponse,
+    DeletePriorityClassResponse,
     ListPriorityClassResponse,
     PatchPriorityClassOptional, PatchPriorityClassResponse,
     ReadPriorityClassOptional, ReadPriorityClassResponse,

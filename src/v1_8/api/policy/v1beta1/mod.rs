@@ -9,8 +9,8 @@ mod pod_disruption_budget;
 pub use self::pod_disruption_budget::{
     PodDisruptionBudget,
     CreateNamespacedPodDisruptionBudgetOptional, CreateNamespacedPodDisruptionBudgetResponse,
-    DeleteCollectionNamespacedPodDisruptionBudgetOptional, DeleteCollectionNamespacedPodDisruptionBudgetResponse,
-    DeleteNamespacedPodDisruptionBudgetOptional, DeleteNamespacedPodDisruptionBudgetResponse,
+    DeleteCollectionNamespacedPodDisruptionBudgetResponse,
+    DeleteNamespacedPodDisruptionBudgetResponse,
     ListNamespacedPodDisruptionBudgetResponse,
     ListPodDisruptionBudgetForAllNamespacesResponse,
     PatchNamespacedPodDisruptionBudgetOptional, PatchNamespacedPodDisruptionBudgetResponse,

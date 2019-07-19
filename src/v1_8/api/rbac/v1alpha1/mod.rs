@@ -3,8 +3,8 @@ mod cluster_role;
 pub use self::cluster_role::{
     ClusterRole,
     CreateClusterRoleOptional, CreateClusterRoleResponse,
-    DeleteClusterRoleOptional, DeleteClusterRoleResponse,
-    DeleteCollectionClusterRoleOptional, DeleteCollectionClusterRoleResponse,
+    DeleteClusterRoleResponse,
+    DeleteCollectionClusterRoleResponse,
     ListClusterRoleResponse,
     PatchClusterRoleOptional, PatchClusterRoleResponse,
     ReadClusterRoleOptional, ReadClusterRoleResponse,
@@ -16,8 +16,8 @@ mod cluster_role_binding;
 pub use self::cluster_role_binding::{
     ClusterRoleBinding,
     CreateClusterRoleBindingOptional, CreateClusterRoleBindingResponse,
-    DeleteClusterRoleBindingOptional, DeleteClusterRoleBindingResponse,
-    DeleteCollectionClusterRoleBindingOptional, DeleteCollectionClusterRoleBindingResponse,
+    DeleteClusterRoleBindingResponse,
+    DeleteCollectionClusterRoleBindingResponse,
     ListClusterRoleBindingResponse,
     PatchClusterRoleBindingOptional, PatchClusterRoleBindingResponse,
     ReadClusterRoleBindingOptional, ReadClusterRoleBindingResponse,
@@ -44,8 +44,8 @@ mod role;
 pub use self::role::{
     Role,
     CreateNamespacedRoleOptional, CreateNamespacedRoleResponse,
-    DeleteCollectionNamespacedRoleOptional, DeleteCollectionNamespacedRoleResponse,
-    DeleteNamespacedRoleOptional, DeleteNamespacedRoleResponse,
+    DeleteCollectionNamespacedRoleResponse,
+    DeleteNamespacedRoleResponse,
     ListNamespacedRoleResponse,
     ListRoleForAllNamespacesResponse,
     PatchNamespacedRoleOptional, PatchNamespacedRoleResponse,
@@ -59,8 +59,8 @@ mod role_binding;
 pub use self::role_binding::{
     RoleBinding,
     CreateNamespacedRoleBindingOptional, CreateNamespacedRoleBindingResponse,
-    DeleteCollectionNamespacedRoleBindingOptional, DeleteCollectionNamespacedRoleBindingResponse,
-    DeleteNamespacedRoleBindingOptional, DeleteNamespacedRoleBindingResponse,
+    DeleteCollectionNamespacedRoleBindingResponse,
+    DeleteNamespacedRoleBindingResponse,
     ListNamespacedRoleBindingResponse,
     ListRoleBindingForAllNamespacesResponse,
     PatchNamespacedRoleBindingOptional, PatchNamespacedRoleBindingResponse,

@@ -3,8 +3,8 @@ mod custom_resource_definition;
 pub use self::custom_resource_definition::{
     CustomResourceDefinition,
     CreateCustomResourceDefinitionOptional, CreateCustomResourceDefinitionResponse,
-    DeleteCollectionCustomResourceDefinitionOptional, DeleteCollectionCustomResourceDefinitionResponse,
-    DeleteCustomResourceDefinitionOptional, DeleteCustomResourceDefinitionResponse,
+    DeleteCollectionCustomResourceDefinitionResponse,
+    DeleteCustomResourceDefinitionResponse,
     ListCustomResourceDefinitionResponse,
     PatchCustomResourceDefinitionOptional, PatchCustomResourceDefinitionResponse,
     ReadCustomResourceDefinitionOptional, ReadCustomResourceDefinitionResponse,

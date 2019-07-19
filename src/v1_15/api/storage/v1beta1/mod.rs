@@ -3,8 +3,8 @@ mod csi_driver;
 pub use self::csi_driver::{
     CSIDriver,
     CreateCSIDriverOptional, CreateCSIDriverResponse,
-    DeleteCSIDriverOptional, DeleteCSIDriverResponse,
-    DeleteCollectionCSIDriverOptional, DeleteCollectionCSIDriverResponse,
+    DeleteCSIDriverResponse,
+    DeleteCollectionCSIDriverResponse,
     ListCSIDriverResponse,
     PatchCSIDriverOptional, PatchCSIDriverResponse,
     ReadCSIDriverOptional, ReadCSIDriverResponse,
@@ -26,8 +26,8 @@ mod csi_node;
 pub use self::csi_node::{
     CSINode,
     CreateCSINodeOptional, CreateCSINodeResponse,
-    DeleteCSINodeOptional, DeleteCSINodeResponse,
-    DeleteCollectionCSINodeOptional, DeleteCollectionCSINodeResponse,
+    DeleteCSINodeResponse,
+    DeleteCollectionCSINodeResponse,
     ListCSINodeResponse,
     PatchCSINodeOptional, PatchCSINodeResponse,
     ReadCSINodeOptional, ReadCSINodeResponse,
@@ -54,8 +54,8 @@ mod storage_class;
 pub use self::storage_class::{
     StorageClass,
     CreateStorageClassOptional, CreateStorageClassResponse,
-    DeleteCollectionStorageClassOptional, DeleteCollectionStorageClassResponse,
-    DeleteStorageClassOptional, DeleteStorageClassResponse,
+    DeleteCollectionStorageClassResponse,
+    DeleteStorageClassResponse,
     ListStorageClassResponse,
     PatchStorageClassOptional, PatchStorageClassResponse,
     ReadStorageClassOptional, ReadStorageClassResponse,
@@ -72,8 +72,8 @@ mod volume_attachment;
 pub use self::volume_attachment::{
     VolumeAttachment,
     CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse,
-    DeleteCollectionVolumeAttachmentOptional, DeleteCollectionVolumeAttachmentResponse,
-    DeleteVolumeAttachmentOptional, DeleteVolumeAttachmentResponse,
+    DeleteCollectionVolumeAttachmentResponse,
+    DeleteVolumeAttachmentResponse,
     ListVolumeAttachmentResponse,
     PatchVolumeAttachmentOptional, PatchVolumeAttachmentResponse,
     ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,

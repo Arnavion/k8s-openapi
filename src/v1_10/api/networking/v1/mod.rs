@@ -8,8 +8,8 @@ mod network_policy;
 pub use self::network_policy::{
     NetworkPolicy,
     CreateNamespacedNetworkPolicyOptional, CreateNamespacedNetworkPolicyResponse,
-    DeleteCollectionNamespacedNetworkPolicyOptional, DeleteCollectionNamespacedNetworkPolicyResponse,
-    DeleteNamespacedNetworkPolicyOptional, DeleteNamespacedNetworkPolicyResponse,
+    DeleteCollectionNamespacedNetworkPolicyResponse,
+    DeleteNamespacedNetworkPolicyResponse,
     ListNamespacedNetworkPolicyResponse,
     ListNetworkPolicyForAllNamespacesResponse,
     PatchNamespacedNetworkPolicyOptional, PatchNamespacedNetworkPolicyResponse,

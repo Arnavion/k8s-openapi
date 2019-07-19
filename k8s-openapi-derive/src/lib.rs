@@ -148,9 +148,15 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     fn delete_namespaced_foo_bar(
 ///         name: &str,
 ///         namespace: &str,
+///         optional: k8s_openapi::DeleteOptional<'_>,
 ///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<DeleteNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
 ///
-///     // TODO: delete_collection
+///     /// Delete a collection of objects of kind FooBar
+///     fn delete_namespaced_foo_bar(
+///         namespace: &str,
+///         delete_optional: k8s_openapi::DeleteOptional<'_>,
+///         list_optional: k8s_openapi::ListOptional<'_>,
+///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<DeleteNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
 ///
 ///     /// List objects of kind FooBar
 ///     fn list_namespaced_foo_bar(

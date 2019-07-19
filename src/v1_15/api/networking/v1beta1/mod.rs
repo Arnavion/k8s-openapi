@@ -13,8 +13,8 @@ mod ingress;
 pub use self::ingress::{
     Ingress,
     CreateNamespacedIngressOptional, CreateNamespacedIngressResponse,
-    DeleteCollectionNamespacedIngressOptional, DeleteCollectionNamespacedIngressResponse,
-    DeleteNamespacedIngressOptional, DeleteNamespacedIngressResponse,
+    DeleteCollectionNamespacedIngressResponse,
+    DeleteNamespacedIngressResponse,
     ListIngressForAllNamespacesResponse,
     ListNamespacedIngressResponse,
     PatchNamespacedIngressOptional, PatchNamespacedIngressResponse,

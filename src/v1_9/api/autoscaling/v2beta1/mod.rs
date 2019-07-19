@@ -8,8 +8,8 @@ mod horizontal_pod_autoscaler;
 pub use self::horizontal_pod_autoscaler::{
     HorizontalPodAutoscaler,
     CreateNamespacedHorizontalPodAutoscalerOptional, CreateNamespacedHorizontalPodAutoscalerResponse,
-    DeleteCollectionNamespacedHorizontalPodAutoscalerOptional, DeleteCollectionNamespacedHorizontalPodAutoscalerResponse,
-    DeleteNamespacedHorizontalPodAutoscalerOptional, DeleteNamespacedHorizontalPodAutoscalerResponse,
+    DeleteCollectionNamespacedHorizontalPodAutoscalerResponse,
+    DeleteNamespacedHorizontalPodAutoscalerResponse,
     ListHorizontalPodAutoscalerForAllNamespacesResponse,
     ListNamespacedHorizontalPodAutoscalerResponse,
     PatchNamespacedHorizontalPodAutoscalerOptional, PatchNamespacedHorizontalPodAutoscalerResponse,

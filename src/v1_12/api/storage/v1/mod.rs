@@ -3,8 +3,8 @@ mod storage_class;
 pub use self::storage_class::{
     StorageClass,
     CreateStorageClassOptional, CreateStorageClassResponse,
-    DeleteCollectionStorageClassOptional, DeleteCollectionStorageClassResponse,
-    DeleteStorageClassOptional, DeleteStorageClassResponse,
+    DeleteCollectionStorageClassResponse,
+    DeleteStorageClassResponse,
     ListStorageClassResponse,
     PatchStorageClassOptional, PatchStorageClassResponse,
     ReadStorageClassOptional, ReadStorageClassResponse,

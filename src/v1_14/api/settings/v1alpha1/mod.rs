@@ -3,8 +3,8 @@ mod pod_preset;
 pub use self::pod_preset::{
     PodPreset,
     CreateNamespacedPodPresetOptional, CreateNamespacedPodPresetResponse,
-    DeleteCollectionNamespacedPodPresetOptional, DeleteCollectionNamespacedPodPresetResponse,
-    DeleteNamespacedPodPresetOptional, DeleteNamespacedPodPresetResponse,
+    DeleteCollectionNamespacedPodPresetResponse,
+    DeleteNamespacedPodPresetResponse,
     ListNamespacedPodPresetResponse,
     ListPodPresetForAllNamespacesResponse,
     PatchNamespacedPodPresetOptional, PatchNamespacedPodPresetResponse,

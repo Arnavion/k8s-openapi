@@ -39,8 +39,8 @@ mod pod_disruption_budget;
 pub use self::pod_disruption_budget::{
     PodDisruptionBudget,
     CreateNamespacedPodDisruptionBudgetOptional, CreateNamespacedPodDisruptionBudgetResponse,
-    DeleteCollectionNamespacedPodDisruptionBudgetOptional, DeleteCollectionNamespacedPodDisruptionBudgetResponse,
-    DeleteNamespacedPodDisruptionBudgetOptional, DeleteNamespacedPodDisruptionBudgetResponse,
+    DeleteCollectionNamespacedPodDisruptionBudgetResponse,
+    DeleteNamespacedPodDisruptionBudgetResponse,
     ListNamespacedPodDisruptionBudgetResponse,
     ListPodDisruptionBudgetForAllNamespacesResponse,
     PatchNamespacedPodDisruptionBudgetOptional, PatchNamespacedPodDisruptionBudgetResponse,
@@ -72,8 +72,8 @@ mod pod_security_policy;
 pub use self::pod_security_policy::{
     PodSecurityPolicy,
     CreatePodSecurityPolicyOptional, CreatePodSecurityPolicyResponse,
-    DeleteCollectionPodSecurityPolicyOptional, DeleteCollectionPodSecurityPolicyResponse,
-    DeletePodSecurityPolicyOptional, DeletePodSecurityPolicyResponse,
+    DeleteCollectionPodSecurityPolicyResponse,
+    DeletePodSecurityPolicyResponse,
     ListPodSecurityPolicyResponse,
     PatchPodSecurityPolicyOptional, PatchPodSecurityPolicyResponse,
     ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse,

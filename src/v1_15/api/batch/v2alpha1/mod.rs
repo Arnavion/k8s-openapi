@@ -3,8 +3,8 @@ mod cron_job;
 pub use self::cron_job::{
     CronJob,
     CreateNamespacedCronJobOptional, CreateNamespacedCronJobResponse,
-    DeleteCollectionNamespacedCronJobOptional, DeleteCollectionNamespacedCronJobResponse,
-    DeleteNamespacedCronJobOptional, DeleteNamespacedCronJobResponse,
+    DeleteCollectionNamespacedCronJobResponse,
+    DeleteNamespacedCronJobResponse,
     ListCronJobForAllNamespacesResponse,
     ListNamespacedCronJobResponse,
     PatchNamespacedCronJobOptional, PatchNamespacedCronJobResponse,

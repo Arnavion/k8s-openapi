@@ -3,8 +3,8 @@ mod runtime_class;
 pub use self::runtime_class::{
     RuntimeClass,
     CreateRuntimeClassOptional, CreateRuntimeClassResponse,
-    DeleteCollectionRuntimeClassOptional, DeleteCollectionRuntimeClassResponse,
-    DeleteRuntimeClassOptional, DeleteRuntimeClassResponse,
+    DeleteCollectionRuntimeClassResponse,
+    DeleteRuntimeClassResponse,
     ListRuntimeClassResponse,
     PatchRuntimeClassOptional, PatchRuntimeClassResponse,
     ReadRuntimeClassOptional, ReadRuntimeClassResponse,

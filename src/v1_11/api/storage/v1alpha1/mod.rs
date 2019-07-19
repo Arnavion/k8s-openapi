@@ -3,8 +3,8 @@ mod volume_attachment;
 pub use self::volume_attachment::{
     VolumeAttachment,
     CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse,
-    DeleteCollectionVolumeAttachmentOptional, DeleteCollectionVolumeAttachmentResponse,
-    DeleteVolumeAttachmentOptional, DeleteVolumeAttachmentResponse,
+    DeleteCollectionVolumeAttachmentResponse,
+    DeleteVolumeAttachmentResponse,
     ListVolumeAttachmentResponse,
     PatchVolumeAttachmentOptional, PatchVolumeAttachmentResponse,
     ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,

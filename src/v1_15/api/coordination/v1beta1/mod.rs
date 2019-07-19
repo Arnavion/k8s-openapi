@@ -3,8 +3,8 @@ mod lease;
 pub use self::lease::{
     Lease,
     CreateNamespacedLeaseOptional, CreateNamespacedLeaseResponse,
-    DeleteCollectionNamespacedLeaseOptional, DeleteCollectionNamespacedLeaseResponse,
-    DeleteNamespacedLeaseOptional, DeleteNamespacedLeaseResponse,
+    DeleteCollectionNamespacedLeaseResponse,
+    DeleteNamespacedLeaseResponse,
     ListLeaseForAllNamespacesResponse,
     ListNamespacedLeaseResponse,
     PatchNamespacedLeaseOptional, PatchNamespacedLeaseResponse,

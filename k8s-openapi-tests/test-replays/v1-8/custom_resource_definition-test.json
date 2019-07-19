@@ -44,7 +44,7 @@
   {
     "request_url": "/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars/fb1",
     "request_method": "DELETE",
-    "request_body": "",
+    "request_body": "{}",
     "response_status_code": 200,
     "response_body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Success\",\"details\":{\"name\":\"fb1\",\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"kind\":\"foobars\",\"uid\":\"aca0f10f-a803-11e9-9497-080027c86072\"}}\n"
   },

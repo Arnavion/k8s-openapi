@@ -44,6 +44,33 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
 	}
 }
 
+// This fixup copies the `io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions` type to `io.k8s.DeleteOptional` and modifies its parameters to be optional borrows.
+// This makes the new type consistent with `io.k8s.ListOptional` and `io.k8s.WatchOptional` and allows it to be used as a common parameter for
+// delete and delete-collection API operations.
+//
+// The original `DeleteOptions` type is still kept since it's used as a field of `io.k8s.api.policy.v1beta1.Eviction`
+pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let delete_options_schema =
+		spec.definitions.get(&crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions".to_owned()))
+		.ok_or("could not find io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")?;
+	let delete_options_properties =
+		if let crate::swagger20::SchemaKind::Properties(properties) = &delete_options_schema.kind {
+			properties
+		}
+		else {
+			return Err("io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions is not a SchemaKind::Properties".into());
+		};
+	let delete_optional_properties = delete_options_properties.iter().map(|(name, (schema, _))| (name.clone(), schema.clone())).collect();
+
+	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.DeleteOptional".to_owned()), crate::swagger20::Schema {
+		description: Some("Common parameters for all delete and delete-collection operations.".to_owned()),
+		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::DeleteOptional(delete_optional_properties)),
+		kubernetes_group_kind_versions: None,
+	});
+
+	Ok(())
+}
+
 // The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
 //
 // Ref: https://github.com/kubernetes/kubernetes/pull/63837
@@ -357,20 +384,90 @@ pub(crate) fn remove_compat_refs(spec: &mut crate::swagger20::Spec) -> Result<()
 	Ok(())
 }
 
-// DELETE operations duplicate all their path=query parameters with a path=body DeleteOptions parameter.
-// Remove the path=body parameter.
-pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+// The spec describes delete-collection operations as having query parameters that are a union of parameters of list and delete operations.
+// In particular, they have watch-specific parameters that shouldn't be there, and get removed for regular list operations by
+// the `separate_watch_from_list_operations` fixup below.
+//
+// So replace these path=query parameters with `ListOptional` and `DeleteOptions` parameters.
+pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let mut found = false;
 
 	for operation in &mut spec.operations {
-		if operation.method == crate::swagger20::Method::Delete {
-			if let Some((index, body_parameter)) = operation.parameters.iter().enumerate().find(|(_, p)| p.location == crate::swagger20::ParameterLocation::Body) {
+		if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::DeleteCollection) {
+			operation.parameters = operation.parameters.drain(..).filter(|p| p.location == crate::swagger20::ParameterLocation::Path).collect();
+			operation.parameters.push(std::sync::Arc::new(crate::swagger20::Parameter {
+				location: crate::swagger20::ParameterLocation::Body,
+				name: "deleteOptional".to_owned(),
+				required: true,
+				schema: crate::swagger20::Schema {
+					description: Some("Delete options. Use `Default::default()` to not pass any.".to_owned()),
+					kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+						path: "io.k8s.DeleteOptional".to_owned(),
+						relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+						can_be_default: None,
+					}),
+					kubernetes_group_kind_versions: None,
+				},
+			}));
+			operation.parameters.push(std::sync::Arc::new(crate::swagger20::Parameter {
+				location: crate::swagger20::ParameterLocation::Query,
+				name: "listOptional".to_owned(),
+				required: true,
+				schema: crate::swagger20::Schema {
+					description: Some("List options. Use `Default::default()` to not pass any.".to_owned()),
+					kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+						path: "io.k8s.ListOptional".to_owned(),
+						relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+						can_be_default: None,
+					}),
+					kubernetes_group_kind_versions: None,
+				},
+			}));
+
+			found = true;
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied remove-delete-collection-operations-query-parameters fixup".into())
+	}
+}
+
+// Delete operations duplicate some of the properties of their path=body `DeleteOptions` parameter with path=query parameters.
+//
+// Remove the path=query parameters and replace the path=body parameter with an `io.k8s.DeleteOptional` parameter.
+pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut found = false;
+
+	for operation in &mut spec.operations {
+		if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Delete) {
+			if let Some(body_parameter) = operation.parameters.iter().find(|p| p.location == crate::swagger20::ParameterLocation::Body) {
 				if let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = &body_parameter.schema.kind {
 					if path == "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions" {
-						operation.parameters.remove(index);
+						operation.parameters = operation.parameters.drain(..).filter(|p| p.location == crate::swagger20::ParameterLocation::Path).collect();
+						operation.parameters.push(std::sync::Arc::new(crate::swagger20::Parameter {
+							location: crate::swagger20::ParameterLocation::Body,
+							name: "optional".to_owned(),
+							required: true,
+							schema: crate::swagger20::Schema {
+								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
+								kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+									path: "io.k8s.DeleteOptional".to_owned(),
+									relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+							},
+						}));
 						found = true;
+						continue;
 					}
 				}
+
+				return Err(format!("DELETE operation {} does not have a DeleteOptions body parameter", operation.id).into());
 			}
 		}
 	}
@@ -379,22 +476,22 @@ pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::
 		Ok(())
 	}
 	else {
-		Err("never applied remove-body-parameters-for-get-and-delete fixup".into())
+		Err("never applied remove-delete-operations-query-parameters fixup".into())
 	}
 }
 
-/// Some watch and watchlist operations (eg `watchCoreV1NamespacedPod` and `watchCoreV1NamespacedPodList`) are deprecated in favor of the corresponding list operation
-/// (eg `listCoreV1NamespacedPod`). The watch operation is equivalent to using the list operation with `watch=true` and `field_selector=...`, and the watchlist operation
-/// to using the list operation with just `watch=true`.
-///
-/// This fixup removes such watch and watchlist operations from the parsed spec entirely. It then synthesizes two functions - a list operation and a watch operation.
-/// Neither function has a `watch` parameter, but the `watch` operation sets `watch=true` in its URL's query string implicitly. It uses the list operation's URI and
-/// parameters as a base.
-///
-/// This also helps solve the problem that the default list operation's response type is a list type, which would be incorrect if the user called the function
-/// with the `watch` parameter set. Thus it's applied even to those list operations which don't have corresponding deprecated watch or watchlist operations.
-///
-/// This fixup also synthesizes mod-root-level `ListOptional` and `WatchOptional` types which have the common parameters of all list and watch operations respectively.
+// Some watch and watchlist operations (eg `watchCoreV1NamespacedPod` and `watchCoreV1NamespacedPodList`) are deprecated in favor of the corresponding list operation
+// (eg `listCoreV1NamespacedPod`). The watch operation is equivalent to using the list operation with `watch=true` and `field_selector=...`, and the watchlist operation
+// to using the list operation with just `watch=true`.
+//
+// This fixup removes such watch and watchlist operations from the parsed spec entirely. It then synthesizes two functions - a list operation and a watch operation.
+// Neither function has a `watch` parameter, but the `watch` operation sets `watch=true` in its URL's query string implicitly. It uses the list operation's URI and
+// parameters as a base.
+//
+// This also helps solve the problem that the default list operation's response type is a list type, which would be incorrect if the user called the function
+// with the `watch` parameter set. Thus it's applied even to those list operations which don't have corresponding deprecated watch or watchlist operations.
+//
+// This fixup also synthesizes mod-root-level `ListOptional` and `WatchOptional` types which have the common parameters of all list and watch operations respectively.
 pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	use std::fmt::Write;
 
@@ -467,7 +564,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		name: "optional".to_owned(),
 		required: true,
 		schema: crate::swagger20::Schema {
-			description: None,
+			description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
 				path: "io.k8s.ListOptional".to_owned(),
 				relative_to: crate::swagger20::RefPathRelativeTo::Crate,
@@ -482,7 +579,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		name: "optional".to_owned(),
 		required: true,
 		schema: crate::swagger20::Schema {
-			description: None,
+			description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
 				path: "io.k8s.WatchOptional".to_owned(),
 				relative_to: crate::swagger20::RefPathRelativeTo::Crate,

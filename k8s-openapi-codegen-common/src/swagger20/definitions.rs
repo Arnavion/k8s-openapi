@@ -199,7 +199,8 @@ pub enum Type {
 	JSONSchemaPropsOrStringArray,
 	WatchEvent(RefPath),
 
-	// Special types for common parameters of list and watch operations
+	// Special types for common parameters of delete, list and watch operations respectively
+	DeleteOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
 }

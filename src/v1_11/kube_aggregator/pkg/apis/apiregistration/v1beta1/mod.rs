@@ -3,8 +3,8 @@ mod api_service;
 pub use self::api_service::{
     APIService,
     CreateAPIServiceOptional, CreateAPIServiceResponse,
-    DeleteAPIServiceOptional, DeleteAPIServiceResponse,
-    DeleteCollectionAPIServiceOptional, DeleteCollectionAPIServiceResponse,
+    DeleteAPIServiceResponse,
+    DeleteCollectionAPIServiceResponse,
     ListAPIServiceResponse,
     PatchAPIServiceOptional, PatchAPIServiceResponse,
     PatchAPIServiceStatusOptional, PatchAPIServiceStatusResponse,
