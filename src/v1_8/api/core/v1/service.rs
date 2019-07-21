@@ -573,7 +573,7 @@ impl Service {
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -663,7 +663,7 @@ impl Service {
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -758,7 +758,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -817,7 +817,7 @@ impl Service {
     pub fn list_service_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceForAllNamespacesResponse>), crate::RequestError> {
-        let __url = "/api/v1/services?".to_string();
+        let __url = "/api/v1/services?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -825,7 +825,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -911,7 +911,7 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1004,7 +1004,7 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1081,7 +1081,7 @@ impl Service {
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1113,7 +1113,7 @@ impl crate::Response for ProxyDELETENamespacedServiceResponse {
                         ),
                     },
                 };
-                Ok((ProxyDELETENamespacedServiceResponse::Ok(result.to_string()), len))
+                Ok((ProxyDELETENamespacedServiceResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1167,7 +1167,7 @@ impl Service {
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1199,7 +1199,7 @@ impl crate::Response for ProxyDELETENamespacedServiceWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyDELETENamespacedServiceWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyDELETENamespacedServiceWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1247,7 +1247,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1279,7 +1279,7 @@ impl crate::Response for ProxyGETNamespacedServiceResponse {
                         ),
                     },
                 };
-                Ok((ProxyGETNamespacedServiceResponse::Ok(result.to_string()), len))
+                Ok((ProxyGETNamespacedServiceResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1333,7 +1333,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1365,7 +1365,7 @@ impl crate::Response for ProxyGETNamespacedServiceWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyGETNamespacedServiceWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyGETNamespacedServiceWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1413,7 +1413,7 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1445,7 +1445,7 @@ impl crate::Response for ProxyPATCHNamespacedServiceResponse {
                         ),
                     },
                 };
-                Ok((ProxyPATCHNamespacedServiceResponse::Ok(result.to_string()), len))
+                Ok((ProxyPATCHNamespacedServiceResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1499,7 +1499,7 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1531,7 +1531,7 @@ impl crate::Response for ProxyPATCHNamespacedServiceWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPATCHNamespacedServiceWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPATCHNamespacedServiceWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1579,7 +1579,7 @@ impl Service {
         let mut __request = http::Request::post(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1611,7 +1611,7 @@ impl crate::Response for ProxyPOSTNamespacedServiceResponse {
                         ),
                     },
                 };
-                Ok((ProxyPOSTNamespacedServiceResponse::Ok(result.to_string()), len))
+                Ok((ProxyPOSTNamespacedServiceResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1665,7 +1665,7 @@ impl Service {
         let mut __request = http::Request::post(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1697,7 +1697,7 @@ impl crate::Response for ProxyPOSTNamespacedServiceWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPOSTNamespacedServiceWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPOSTNamespacedServiceWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1745,7 +1745,7 @@ impl Service {
         let mut __request = http::Request::put(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1777,7 +1777,7 @@ impl crate::Response for ProxyPUTNamespacedServiceResponse {
                         ),
                     },
                 };
-                Ok((ProxyPUTNamespacedServiceResponse::Ok(result.to_string()), len))
+                Ok((ProxyPUTNamespacedServiceResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1831,7 +1831,7 @@ impl Service {
         let mut __request = http::Request::put(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1863,7 +1863,7 @@ impl crate::Response for ProxyPUTNamespacedServiceWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPUTNamespacedServiceWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPUTNamespacedServiceWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1932,7 +1932,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2026,7 +2026,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2119,7 +2119,7 @@ impl Service {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2212,7 +2212,7 @@ impl Service {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2293,7 +2293,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2354,7 +2354,7 @@ impl Service {
     pub fn watch_service_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceForAllNamespacesResponse>), crate::RequestError> {
-        let __url = "/api/v1/services?".to_string();
+        let __url = "/api/v1/services?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -2362,7 +2362,7 @@ impl Service {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }

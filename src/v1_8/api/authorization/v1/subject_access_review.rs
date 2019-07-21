@@ -35,7 +35,7 @@ impl SubjectAccessReview {
         let CreateSubjectAccessReviewOptional {
             pretty,
         } = optional;
-        let __url = "/apis/authorization.k8s.io/v1/subjectaccessreviews?".to_string();
+        let __url = "/apis/authorization.k8s.io/v1/subjectaccessreviews?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -45,7 +45,7 @@ impl SubjectAccessReview {
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }

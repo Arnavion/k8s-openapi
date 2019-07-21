@@ -61,7 +61,7 @@ impl RoleBinding {
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -167,7 +167,7 @@ impl RoleBinding {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -256,7 +256,7 @@ impl RoleBinding {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -353,7 +353,7 @@ impl RoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -412,7 +412,7 @@ impl RoleBinding {
     pub fn list_role_binding_for_all_namespaces(
         optional: crate::v1_14::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRoleBindingForAllNamespacesResponse>), crate::RequestError> {
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -420,7 +420,7 @@ impl RoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -518,7 +518,7 @@ impl RoleBinding {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -614,7 +614,7 @@ impl RoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -715,7 +715,7 @@ impl RoleBinding {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -809,7 +809,7 @@ impl RoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -870,7 +870,7 @@ impl RoleBinding {
     pub fn watch_role_binding_for_all_namespaces(
         optional: crate::v1_14::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRoleBindingForAllNamespacesResponse>), crate::RequestError> {
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -878,7 +878,7 @@ impl RoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }

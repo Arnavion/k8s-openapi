@@ -569,7 +569,7 @@ pub fn run<W>(
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
-			writeln!(out, "                self.visit_string(v.to_string())")?;
+			writeln!(out, "                self.visit_string(v.to_owned())")?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
@@ -1627,7 +1627,7 @@ pub fn write_operation(
 		if have_query_parameters {
 			write!(out, "?")?;
 		}
-		writeln!(out, r#"".to_string();"#)?;
+		writeln!(out, r#"".to_owned();"#)?;
 	}
 
 	if have_query_parameters {
@@ -1703,7 +1703,7 @@ pub fn write_operation(
 
 	if operation_result_name.is_some() {
 		writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-		writeln!(out, "{}        Ok(body) => Ok((body, {}::ResponseBody::new)),", indent, crate_root)?;
+		writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
 		writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
 		writeln!(out, "{}    }}", indent)?;
 	}
@@ -1831,7 +1831,7 @@ pub fn write_operation(
 					writeln!(out, "                        ),")?;
 					writeln!(out, "                    }},")?;
 					writeln!(out, "                }};")?;
-					writeln!(out, "                Ok(({}::{}(result.to_string()), len))", operation_result_name, variant_name)?;
+					writeln!(out, "                Ok(({}::{}(result.to_owned()), len))", operation_result_name, variant_name)?;
 				},
 
 				swagger20::SchemaKind::Ref(_) => if is_watch {

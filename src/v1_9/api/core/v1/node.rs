@@ -496,7 +496,7 @@ impl Node {
         let CreateNodeOptional {
             pretty,
         } = optional;
-        let __url = "/api/v1/nodes?".to_string();
+        let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -506,7 +506,7 @@ impl Node {
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -593,7 +593,7 @@ impl Node {
         delete_optional: crate::v1_9::DeleteOptional<'_>,
         list_optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNodeResponse>), crate::RequestError> {
-        let __url = "/api/v1/nodes?".to_string();
+        let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -601,7 +601,7 @@ impl Node {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -684,7 +684,7 @@ impl Node {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -757,7 +757,7 @@ impl Node {
     pub fn list_node(
         optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNodeResponse>), crate::RequestError> {
-        let __url = "/api/v1/nodes?".to_string();
+        let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -765,7 +765,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -845,7 +845,7 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -932,7 +932,7 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1003,7 +1003,7 @@ impl Node {
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1035,7 +1035,7 @@ impl crate::Response for ProxyDELETENodeResponse {
                         ),
                     },
                 };
-                Ok((ProxyDELETENodeResponse::Ok(result.to_string()), len))
+                Ok((ProxyDELETENodeResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1083,7 +1083,7 @@ impl Node {
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1115,7 +1115,7 @@ impl crate::Response for ProxyDELETENodeWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyDELETENodeWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyDELETENodeWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1157,7 +1157,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1189,7 +1189,7 @@ impl crate::Response for ProxyGETNodeResponse {
                         ),
                     },
                 };
-                Ok((ProxyGETNodeResponse::Ok(result.to_string()), len))
+                Ok((ProxyGETNodeResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1237,7 +1237,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1269,7 +1269,7 @@ impl crate::Response for ProxyGETNodeWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyGETNodeWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyGETNodeWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1311,7 +1311,7 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1343,7 +1343,7 @@ impl crate::Response for ProxyPATCHNodeResponse {
                         ),
                     },
                 };
-                Ok((ProxyPATCHNodeResponse::Ok(result.to_string()), len))
+                Ok((ProxyPATCHNodeResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1391,7 +1391,7 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1423,7 +1423,7 @@ impl crate::Response for ProxyPATCHNodeWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPATCHNodeWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPATCHNodeWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1465,7 +1465,7 @@ impl Node {
         let mut __request = http::Request::post(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1497,7 +1497,7 @@ impl crate::Response for ProxyPOSTNodeResponse {
                         ),
                     },
                 };
-                Ok((ProxyPOSTNodeResponse::Ok(result.to_string()), len))
+                Ok((ProxyPOSTNodeResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1545,7 +1545,7 @@ impl Node {
         let mut __request = http::Request::post(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1577,7 +1577,7 @@ impl crate::Response for ProxyPOSTNodeWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPOSTNodeWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPOSTNodeWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1619,7 +1619,7 @@ impl Node {
         let mut __request = http::Request::put(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1651,7 +1651,7 @@ impl crate::Response for ProxyPUTNodeResponse {
                         ),
                     },
                 };
-                Ok((ProxyPUTNodeResponse::Ok(result.to_string()), len))
+                Ok((ProxyPUTNodeResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1699,7 +1699,7 @@ impl Node {
         let mut __request = http::Request::put(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1731,7 +1731,7 @@ impl crate::Response for ProxyPUTNodeWithPathResponse {
                         ),
                     },
                 };
-                Ok((ProxyPUTNodeWithPathResponse::Ok(result.to_string()), len))
+                Ok((ProxyPUTNodeWithPathResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1794,7 +1794,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1882,7 +1882,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -1969,7 +1969,7 @@ impl Node {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2065,7 +2065,7 @@ impl Node {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -2140,7 +2140,7 @@ impl Node {
     pub fn watch_node(
         optional: crate::v1_9::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNodeResponse>), crate::RequestError> {
-        let __url = "/api/v1/nodes?".to_string();
+        let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -2148,7 +2148,7 @@ impl Node {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }

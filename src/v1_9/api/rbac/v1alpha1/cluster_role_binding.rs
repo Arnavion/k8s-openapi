@@ -36,7 +36,7 @@ impl ClusterRoleBinding {
         let CreateClusterRoleBindingOptional {
             pretty,
         } = optional;
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -46,7 +46,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -140,7 +140,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -216,7 +216,7 @@ impl ClusterRoleBinding {
         delete_optional: crate::v1_9::DeleteOptional<'_>,
         list_optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionClusterRoleBindingResponse>), crate::RequestError> {
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -224,7 +224,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -297,7 +297,7 @@ impl ClusterRoleBinding {
     pub fn list_cluster_role_binding(
         optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleBindingResponse>), crate::RequestError> {
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -305,7 +305,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -385,7 +385,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -469,7 +469,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -556,7 +556,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
@@ -631,7 +631,7 @@ impl ClusterRoleBinding {
     pub fn watch_cluster_role_binding(
         optional: crate::v1_9::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleBindingResponse>), crate::RequestError> {
-        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_string();
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
@@ -639,7 +639,7 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }

@@ -50,7 +50,7 @@ impl<'de> serde::Deserialize<'de> for IntOrString {
             }
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
-                self.visit_string(v.to_string())
+                self.visit_string(v.to_owned())
             }
 
             fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: serde::de::Error {
