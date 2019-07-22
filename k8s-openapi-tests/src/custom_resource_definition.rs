@@ -124,7 +124,7 @@ fn test() {
 		}
 
 		// Wait for CRD to be registered
-		let custom_resource_definition = loop {
+		loop {
 			let (request, response_body) =
 				apiextensions::CustomResourceDefinition::read_custom_resource_definition(
 					&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group().to_owned()), Default::default())
@@ -138,11 +138,11 @@ fn test() {
 			};
 
 			if custom_resource_definition.status.as_ref().map_or(false, |status| status.accepted_names.kind == "FooBar") {
-				break custom_resource_definition;
+				break;
 			}
 
 			client.sleep(std::time::Duration::from_secs(1));
-		};
+		}
 
 
 		// Create CR
@@ -262,6 +262,7 @@ fn test() {
 			let request =
 				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
 					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
+				.header(http::header::CONTENT_TYPE, "application/json")
 				.body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
 			{
@@ -286,6 +287,7 @@ fn test() {
 			let request =
 				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
 					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
+				.header(http::header::CONTENT_TYPE, "application/json")
 				.body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
 			{
@@ -299,18 +301,16 @@ fn test() {
 
 
 		// Delete CRD
-		let custom_resource_definition_self_link = {
-			let metadata = custom_resource_definition.metadata.expect("couldn't get custom resource definition metadata");
-			metadata.self_link.expect("couldn't get custom resource definition self link")
-		};
-		let request = http::Request::delete(custom_resource_definition_self_link).body(vec![]).expect("couldn't delete custom resource definition");
-		{
-			let response = client.execute(request).expect("couldn't delete custom resource definition");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-				apiextensions::DeleteCollectionCustomResourceDefinitionResponse::OkStatus(_) |
-				apiextensions::DeleteCollectionCustomResourceDefinitionResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't delete custom resource definition");
-		}
+		let (request, response_body) =
+			apiextensions::CustomResourceDefinition::delete_custom_resource_definition(
+				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group()),
+				Default::default())
+			.expect("couldn't delete custom resource definition");
+		let response = client.execute(request).expect("couldn't delete custom resource definition");
+		crate::get_single_value(response, response_body, |response, status_code| match response {
+			apiextensions::DeleteCustomResourceDefinitionResponse::OkStatus(_) |
+			apiextensions::DeleteCustomResourceDefinitionResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+			other => Err(format!("{:?} {}", other, status_code).into()),
+		}).expect("couldn't delete custom resource definition");
 	});
 }

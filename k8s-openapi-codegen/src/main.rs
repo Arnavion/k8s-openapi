@@ -155,6 +155,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			&spec.definitions,
 			&mut spec.operations,
 			definition_path,
+			swagger20::RefPathRelativeTo::Crate,
 			replace_namespaces,
 			"crate",
 			Some(mod_root),

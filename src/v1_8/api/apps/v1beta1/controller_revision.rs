@@ -51,7 +51,8 @@ impl ControllerRevision {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -136,6 +137,7 @@ impl ControllerRevision {
 
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -147,7 +149,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(ControllerRevision),
+    OkValue(crate::v1_8::api::apps::v1beta1::ControllerRevisionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -225,6 +227,7 @@ impl ControllerRevision {
 
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -236,7 +239,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum DeleteNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(ControllerRevision),
+    OkValue(crate::v1_8::api::apps::v1beta1::ControllerRevision),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -465,7 +468,12 @@ impl ControllerRevision {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+        }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -660,7 +668,8 @@ impl ControllerRevision {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),

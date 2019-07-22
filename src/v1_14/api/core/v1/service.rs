@@ -579,7 +579,8 @@ impl Service {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -684,6 +685,7 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -695,7 +697,7 @@ impl Service {
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(Service),
+    OkValue(crate::v1_14::api::core::v1::Service),
     Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
@@ -945,7 +947,12 @@ impl Service {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+        }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -1056,7 +1063,12 @@ impl Service {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+        }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -1355,7 +1367,8 @@ impl Service {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -1469,7 +1482,8 @@ impl Service {
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),

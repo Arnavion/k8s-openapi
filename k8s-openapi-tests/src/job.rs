@@ -153,29 +153,21 @@ fn create() {
 
 		// Delete all pods of the job using label selector
 		let (request, response_body) =
-			api::Pod::list_namespaced_pod("default", k8s_openapi::ListOptional {
-				label_selector: Some("job-name=k8s-openapi-tests-create-job"),
-				..Default::default()
-			})
-			.expect("couldn't list pods");
-		let pod_list = {
-			let response = client.execute(request).expect("couldn't list pods");
+			api::Pod::delete_collection_namespaced_pod(
+				"default",
+				Default::default(),
+				k8s_openapi::ListOptional {
+					label_selector: Some("job-name=k8s-openapi-tests-create-job"),
+					..Default::default()
+				},
+			)
+			.expect("couldn't delete pods collection");
+		{
+			let response = client.execute(request).expect("couldn't delete pods collection");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+				api::DeleteCollectionNamespacedPodResponse::OkStatus(_) | api::DeleteCollectionNamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't list pods")
-		};
-
-		for pod in pod_list.items {
-			let self_link =
-				pod.metadata.expect("couldn't get job pod metadata")
-				.self_link.expect("couldn't get job pod self link");
-			let request = http::Request::delete(self_link).body(vec![]).expect("couldn't delete job pod");
-			let response = client.execute(request).expect("couldn't delete job pod");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-				api::DeleteNamespacedPodResponse::OkStatus(_) | api::DeleteNamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't delete job pod");
+			}).expect("couldn't delete pods collection");
 		}
 	});
 }

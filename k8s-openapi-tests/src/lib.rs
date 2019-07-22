@@ -51,6 +51,7 @@ struct Replay {
 	request_method: http::Method,
 	#[serde(with = "bytestring")]
 	request_body: Vec<u8>,
+	request_content_type: Option<String>,
 	response_status_code: u16,
 	#[serde(with = "bytestring")]
 	response_body: Vec<u8>,
@@ -151,12 +152,20 @@ impl Client {
 	}
 
 	fn execute<'a>(&'a mut self, request: http::Request<Vec<u8>>) -> Result<ClientResponse<'a>, Error> {
-		let (method, path, body) = {
+		let (path, method, body, content_type) = {
+			let content_type =
+				request.headers()
+				.get(http::header::CONTENT_TYPE)
+				.map(|value|
+					value
+					.to_str().expect("Content-Type header is not set to valid utf-8 string")
+					.to_owned());
+
 			let (parts, body) = request.into_parts();
 			let mut url: http::uri::Parts = parts.uri.into();
 			let path = url.path_and_query.take().expect("request doesn't have path and query");
 
-			(parts.method, path, body)
+			(path, parts.method, body, content_type)
 		};
 
 		match self {
@@ -165,6 +174,7 @@ impl Client {
 					request_url: path.to_string(),
 					request_method: method.clone(),
 					request_body: body.clone(),
+					request_content_type: content_type.clone(),
 					response_status_code: 0,
 					response_body: vec![],
 				});
@@ -175,7 +185,15 @@ impl Client {
 				url.path_and_query = Some(path);
 				let url = http::Uri::from_parts(url)?.to_string();
 
-				let response = inner.request(method, &url).body(body).send()?;
+				let request = inner.request(method, &url);
+				let request =
+					if let Some(content_type) = content_type {
+						request.header(http::header::CONTENT_TYPE, content_type)
+					}
+					else {
+						request
+					};
+				let response = request.body(body).send()?;
 				replay.response_status_code = response.status().as_u16();
 
 				Ok(ClientResponse {
@@ -189,6 +207,7 @@ impl Client {
 				assert_eq!(path.to_string(), replay.request_url);
 				assert_eq!(method, replay.request_method);
 				assert_eq!(body, replay.request_body);
+				assert_eq!(content_type, replay.request_content_type);
 				Ok(ClientResponse {
 					status_code: http::StatusCode::from_u16(replay.response_status_code).unwrap(),
 					body: ClientResponseBody::Replaying(std::io::Cursor::new(replay.response_body)),
@@ -401,6 +420,8 @@ mod deployment;
 mod job;
 
 mod logs;
+
+mod patch;
 
 mod pod;
 

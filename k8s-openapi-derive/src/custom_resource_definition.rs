@@ -833,6 +833,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&spec.definitions,
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_name.clone()),
+				swagger20::RefPathRelativeTo::Scope,
 				&[
 					(&["io".into(), "k8s".into()], &[]),
 				],
@@ -851,6 +852,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&spec.definitions,
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_list_name.clone()),
+				swagger20::RefPathRelativeTo::Scope,
 				&[
 					(&["io".into(), "k8s".into()], &[]),
 				],

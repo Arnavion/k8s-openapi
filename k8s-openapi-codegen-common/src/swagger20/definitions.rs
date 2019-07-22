@@ -197,6 +197,7 @@ pub enum Type {
 	JSONSchemaPropsOrArray,
 	JSONSchemaPropsOrBool,
 	JSONSchemaPropsOrStringArray,
+	Patch,
 	WatchEvent(RefPath),
 
 	// Special types for common parameters of delete, list and watch operations respectively

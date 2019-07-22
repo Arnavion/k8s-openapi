@@ -69,6 +69,7 @@ pub fn run<W>(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	operations: &mut Vec<swagger20::Operation>,
 	definition_path: &swagger20::DefinitionPath,
+	ref_path_relative_to: swagger20::RefPathRelativeTo,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
 	mod_root: Option<&str>,
@@ -91,7 +92,7 @@ pub fn run<W>(
 
 	let type_ref_path = swagger20::RefPath {
 		path: definition_path.0.clone(),
-		relative_to: swagger20::RefPathRelativeTo::Scope,
+		relative_to: ref_path_relative_to,
 		can_be_default: None,
 	};
 
@@ -674,6 +675,27 @@ pub fn run<W>(
 				_ => unreachable!(),
 			}
 
+			writeln!(out, "        }}")?;
+			writeln!(out, "    }}")?;
+			writeln!(out, "}}")?;
+
+			run_result.num_generated_structs += 1;
+		},
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => {
+			writeln!(out, "#[derive(Clone, Debug, PartialEq)]")?;
+			writeln!(out, "{}enum {} {{", vis, type_name)?;
+			writeln!(out, "    Json(Vec<serde_json::Value>),")?;
+			writeln!(out, "    Merge(serde_json::Value),")?;
+			writeln!(out, "    StrategicMerge(serde_json::Value),")?;
+			writeln!(out, "}}")?;
+			writeln!(out)?;
+			writeln!(out, "impl serde::Serialize for {} {{", type_name)?;
+			writeln!(out, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+			writeln!(out, "        match self {{")?;
+			writeln!(out, r#"            {}::Json(patch) => serializer.serialize_newtype_struct("{}", patch),"#, type_name, type_name)?;
+			writeln!(out, r#"            {}::Merge(patch) |"#, type_name)?;
+			writeln!(out, r#"            {}::StrategicMerge(patch) => serializer.serialize_newtype_struct("{}", patch),"#, type_name, type_name)?;
 			writeln!(out, "        }}")?;
 			writeln!(out, "    }}")?;
 			writeln!(out, "}}")?;
@@ -1291,6 +1313,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1335,6 +1358,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1688,13 +1712,37 @@ pub fn write_operation(
 		.or_else(|| parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body));
 
 	write!(out, "{}    let __body = ", indent)?;
-	if let Some((parameter_name, _, parameter)) = body_parameter {
+	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
 		if parameter.required {
-			writeln!(out, "serde_json::to_vec(&{}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+			if parameter_type.starts_with('&') {
+				writeln!(out, "serde_json::to_vec({}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+			}
+			else {
+				writeln!(out, "serde_json::to_vec(&{}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+			}
 		}
 		else {
 			writeln!(out)?;
 			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}::RequestError::Json))?;", parameter_name, crate_root)?;
+		}
+
+		let is_patch =
+			if let swagger20::SchemaKind::Ref(ref_path) = &parameter.schema.kind {
+				ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Patch"
+			}
+			else {
+				false
+			};
+		if is_patch {
+			let patch_type = get_rust_type(&parameter.schema.kind, replace_namespaces, crate_root, mod_root)?;
+			writeln!(out, "{}    __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
+			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
+			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
+			writeln!(out, r#"{}        {}::StrategicMerge(_) => "application/strategic-merge-patch+json","#, indent, patch_type)?;
+			writeln!(out, "{}    }}));", indent)?;
+		}
+		else {
+			writeln!(out, r#"{}    __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));"#, indent)?;
 		}
 	}
 	else {
@@ -1769,17 +1817,28 @@ pub fn write_operation(
 
 		for &(_, variant_name, schema, is_delete_ok_status) in &operation_responses {
 			if is_delete_ok_status {
-				// DELETE operations that return metav1.Status for HTTP 200 can also return the object itself instead.
+				// Delete and delete-collection operations that return metav1.Status for HTTP 200 can also return the object itself instead.
+				//
+				// In case of delete-collection operations, this is the list object corresponding to the associated type.
 				//
 				// Ref https://github.com/kubernetes/kubernetes/issues/59501
+
 				writeln!(out, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root, mod_root)?)?;
-				writeln!(out, "    {}Value({}),", variant_name, get_fully_qualified_type_name(
-					type_name_and_ref_path.as_ref()
-						.map(|(_, type_ref_path)| type_ref_path)
-						.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
-					&replace_namespaces,
-					crate_root,
-					mod_root)?)?;
+
+				let associated_type =
+					get_fully_qualified_type_name(
+						type_name_and_ref_path.as_ref()
+							.map(|(_, type_ref_path)| type_ref_path)
+							.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
+						&replace_namespaces,
+						crate_root,
+						mod_root)?;
+				if operation.kubernetes_action == Some(swagger20::KubernetesAction::DeleteCollection) {
+					writeln!(out, "    {}Value({}List),", variant_name, associated_type)?;
+				}
+				else {
+					writeln!(out, "    {}Value({}),", variant_name, associated_type)?;
+				}
 			}
 			else {
 				match &schema.kind {

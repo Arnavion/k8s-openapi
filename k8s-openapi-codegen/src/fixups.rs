@@ -332,6 +332,17 @@ pub(crate) mod optional_properties {
 	}
 }
 
+// Annotate the `patch` type as `swagger20::Type::Patch` for special codegen.
+pub(crate) fn patch(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.Patch".to_owned());
+	if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+		definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Patch);
+		return Ok(());
+	}
+
+	Err("never applied Patch override".into())
+}
+
 // The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
 // While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
 // The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
