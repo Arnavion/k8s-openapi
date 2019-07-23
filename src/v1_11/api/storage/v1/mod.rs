@@ -6,7 +6,7 @@ pub use self::storage_class::{
     DeleteCollectionStorageClassResponse,
     DeleteStorageClassResponse,
     ListStorageClassResponse,
-    PatchStorageClassOptional, PatchStorageClassResponse,
+    PatchStorageClassResponse,
     ReadStorageClassOptional, ReadStorageClassResponse,
     ReplaceStorageClassOptional, ReplaceStorageClassResponse,
     WatchStorageClassResponse,

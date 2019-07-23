@@ -53,6 +53,7 @@ impl SupportedVersion {
 		let fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
 			SupportedVersion::V1_8 => &[
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::deployment_rollback_create_response_type,
 				crate::fixups::gvk::api_service_list_v1beta1,
 				crate::fixups::gvk::api_service_v1beta1,
@@ -76,6 +77,7 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_9 => &[
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::deployment_rollback_create_response_type,
 				crate::fixups::gvk::api_service_list_v1beta1,
 				crate::fixups::gvk::api_service_v1beta1,
@@ -99,6 +101,7 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_10 => &[
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::deployment_rollback_create_response_type,
 				crate::fixups::gvk::api_service_list_v1,
 				crate::fixups::gvk::api_service_list_v1beta1,
@@ -124,6 +127,7 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_11 => &[
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::deployment_rollback_create_response_type,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
@@ -142,6 +146,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_12 => &[
 				crate::fixups::connect_options_gvk,
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
@@ -158,6 +163,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_13 => &[
 				crate::fixups::connect_options_gvk,
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
@@ -174,6 +180,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_14 => &[
 				crate::fixups::connect_options_gvk,
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
@@ -189,6 +196,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_15 => &[
 				crate::fixups::connect_options_gvk,
 				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,

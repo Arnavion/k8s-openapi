@@ -472,19 +472,14 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedStatefulSetOptional<'_>,
+        optional: crate::v1_11::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetResponse>), crate::RequestError> {
-        let PatchNamespacedStatefulSetOptional {
-            pretty,
-        } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -499,13 +494,6 @@ impl StatefulSet {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedStatefulSetOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::patch_namespaced_stateful_set`]
@@ -570,19 +558,14 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedStatefulSetStatusOptional<'_>,
+        optional: crate::v1_11::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetStatusResponse>), crate::RequestError> {
-        let PatchNamespacedStatefulSetStatusOptional {
-            pretty,
-        } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -597,13 +580,6 @@ impl StatefulSet {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set_status`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedStatefulSetStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::patch_namespaced_stateful_set_status`]

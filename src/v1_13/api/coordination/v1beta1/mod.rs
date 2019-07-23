@@ -7,7 +7,7 @@ pub use self::lease::{
     DeleteNamespacedLeaseResponse,
     ListLeaseForAllNamespacesResponse,
     ListNamespacedLeaseResponse,
-    PatchNamespacedLeaseOptional, PatchNamespacedLeaseResponse,
+    PatchNamespacedLeaseResponse,
     ReadNamespacedLeaseOptional, ReadNamespacedLeaseResponse,
     ReplaceNamespacedLeaseOptional, ReplaceNamespacedLeaseResponse,
     WatchLeaseForAllNamespacesResponse,

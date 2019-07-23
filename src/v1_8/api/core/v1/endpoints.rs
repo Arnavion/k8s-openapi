@@ -460,19 +460,14 @@ impl Endpoints {
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedEndpointsOptional<'_>,
+        optional: crate::v1_8::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEndpointsResponse>), crate::RequestError> {
-        let PatchNamespacedEndpointsOptional {
-            pretty,
-        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -487,13 +482,6 @@ impl Endpoints {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Endpoints::patch_namespaced_endpoints`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedEndpointsOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::patch_namespaced_endpoints`]

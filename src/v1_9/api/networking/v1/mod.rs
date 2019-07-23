@@ -12,7 +12,7 @@ pub use self::network_policy::{
     DeleteNamespacedNetworkPolicyResponse,
     ListNamespacedNetworkPolicyResponse,
     ListNetworkPolicyForAllNamespacesResponse,
-    PatchNamespacedNetworkPolicyOptional, PatchNamespacedNetworkPolicyResponse,
+    PatchNamespacedNetworkPolicyResponse,
     ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse,
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyResponse,

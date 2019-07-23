@@ -11,7 +11,7 @@ pub use self::initializer_configuration::{
     DeleteCollectionInitializerConfigurationResponse,
     DeleteInitializerConfigurationResponse,
     ListInitializerConfigurationResponse,
-    PatchInitializerConfigurationOptional, PatchInitializerConfigurationResponse,
+    PatchInitializerConfigurationResponse,
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,
     ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse,
     WatchInitializerConfigurationResponse,

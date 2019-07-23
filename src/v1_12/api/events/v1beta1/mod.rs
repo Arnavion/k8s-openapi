@@ -7,7 +7,7 @@ pub use self::event::{
     DeleteNamespacedEventResponse,
     ListEventForAllNamespacesResponse,
     ListNamespacedEventResponse,
-    PatchNamespacedEventOptional, PatchNamespacedEventResponse,
+    PatchNamespacedEventResponse,
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
     WatchEventForAllNamespacesResponse,

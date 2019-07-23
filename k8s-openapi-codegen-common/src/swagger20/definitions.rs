@@ -200,9 +200,10 @@ pub enum Type {
 	Patch,
 	WatchEvent(RefPath),
 
-	// Special types for common parameters of delete, list and watch operations respectively
+	// Special types for common parameters of delete, list, patch and watch operations respectively
 	DeleteOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
+	PatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
 }
 

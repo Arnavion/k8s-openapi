@@ -6,7 +6,7 @@ pub use self::custom_resource_definition::{
     DeleteCollectionCustomResourceDefinitionResponse,
     DeleteCustomResourceDefinitionResponse,
     ListCustomResourceDefinitionResponse,
-    PatchCustomResourceDefinitionOptional, PatchCustomResourceDefinitionResponse,
+    PatchCustomResourceDefinitionResponse,
     ReadCustomResourceDefinitionOptional, ReadCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionOptional, ReplaceCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionStatusOptional, ReplaceCustomResourceDefinitionStatusResponse,

@@ -6,7 +6,7 @@ pub use self::runtime_class::{
     DeleteCollectionRuntimeClassResponse,
     DeleteRuntimeClassResponse,
     ListRuntimeClassResponse,
-    PatchRuntimeClassOptional, PatchRuntimeClassResponse,
+    PatchRuntimeClassResponse,
     ReadRuntimeClassOptional, ReadRuntimeClassResponse,
     ReplaceRuntimeClassOptional, ReplaceRuntimeClassResponse,
     WatchRuntimeClassResponse,

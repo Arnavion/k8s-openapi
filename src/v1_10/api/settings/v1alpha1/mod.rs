@@ -7,7 +7,7 @@ pub use self::pod_preset::{
     DeleteNamespacedPodPresetResponse,
     ListNamespacedPodPresetResponse,
     ListPodPresetForAllNamespacesResponse,
-    PatchNamespacedPodPresetOptional, PatchNamespacedPodPresetResponse,
+    PatchNamespacedPodPresetResponse,
     ReadNamespacedPodPresetOptional, ReadNamespacedPodPresetResponse,
     ReplaceNamespacedPodPresetOptional, ReplaceNamespacedPodPresetResponse,
     WatchNamespacedPodPresetResponse,

@@ -6,7 +6,7 @@ pub use self::api_service::{
     DeleteAPIServiceResponse,
     DeleteCollectionAPIServiceResponse,
     ListAPIServiceResponse,
-    PatchAPIServiceOptional, PatchAPIServiceResponse,
+    PatchAPIServiceResponse,
     ReadAPIServiceOptional, ReadAPIServiceResponse,
     ReplaceAPIServiceOptional, ReplaceAPIServiceResponse,
     ReplaceAPIServiceStatusOptional, ReplaceAPIServiceStatusResponse,

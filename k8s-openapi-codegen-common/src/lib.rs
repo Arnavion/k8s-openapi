@@ -940,6 +940,7 @@ pub fn run<W>(
 
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::DeleteOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::ListOptional(_)) |
+		swagger20::SchemaKind::Ty(ty @ swagger20::Type::PatchOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::WatchOptional(_)) => {
 			struct Property<'a> {
 				name: &'a str,
@@ -951,6 +952,7 @@ pub fn run<W>(
 			let properties = match ty {
 				swagger20::Type::DeleteOptional(properties) |
 				swagger20::Type::ListOptional(properties) |
+				swagger20::Type::PatchOptional(properties) |
 				swagger20::Type::WatchOptional(properties) => properties,
 				_ => unreachable!(),
 			};
@@ -1030,6 +1032,7 @@ pub fn run<W>(
 				},
 
 				swagger20::Type::ListOptional(_) |
+				swagger20::Type::PatchOptional(_) |
 				swagger20::Type::WatchOptional(_) => {
 					writeln!(out, "impl {}<'_> {{", type_name)?;
 					writeln!(out, "    #[doc(hidden)]")?;
@@ -1278,6 +1281,14 @@ fn get_rust_borrow_type(
 				Ok(format!("{}::ListOptional<'_>", crate_root).into())
 			},
 
+		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.PatchOptional" =>
+			if let Some(mod_root) = mod_root {
+				Ok(format!("{}::{}::PatchOptional<'_>", crate_root, mod_root).into())
+			}
+			else {
+				Ok(format!("{}::PatchOptional<'_>", crate_root).into())
+			},
+
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.WatchOptional" =>
 			if let Some(mod_root) = mod_root {
 				Ok(format!("{}::{}::WatchOptional<'_>", crate_root, mod_root).into())
@@ -1318,6 +1329,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) => Err("PatchOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 	}
 }
@@ -1363,6 +1375,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) => Err("PatchOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 	}
 }
@@ -1484,12 +1497,12 @@ pub fn write_operation(
 			None
 		};
 
-	let list_or_watch_optional_parameter =
+	let list_or_patch_or_watch_optional_parameter =
 		if let Some(index) =
 			parameters.iter()
 			.position(|(_, _, parameter)|
 				if let swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) = &parameter.schema.kind {
-					path == "io.k8s.ListOptional" || path == "io.k8s.WatchOptional"
+					path == "io.k8s.ListOptional" || path == "io.k8s.PatchOptional" || path == "io.k8s.WatchOptional"
 				}
 				else {
 					false
@@ -1533,7 +1546,7 @@ pub fn write_operation(
 		need_empty_line = true;
 	}
 
-	if !parameters.is_empty() || delete_optional_parameter.is_some() || list_or_watch_optional_parameter.is_some() {
+	if !parameters.is_empty() || delete_optional_parameter.is_some() || list_or_patch_or_watch_optional_parameter.is_some() {
 		if need_empty_line {
 			writeln!(out, "{}///", indent)?;
 		}
@@ -1559,7 +1572,7 @@ pub fn write_operation(
 				}
 			}
 		}
-		if let Some((parameter_name, _, parameter)) = &list_or_watch_optional_parameter {
+		if let Some((parameter_name, _, parameter)) = &list_or_patch_or_watch_optional_parameter {
 			writeln!(out, "{}///", indent)?;
 			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
 			if let Some(description) = parameter.schema.description.as_ref() {
@@ -1584,7 +1597,7 @@ pub fn write_operation(
 	if let Some((parameter_name, parameter_type, _)) = &delete_optional_parameter {
 		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
 	}
-	if let Some((parameter_name, parameter_type, _)) = &list_or_watch_optional_parameter {
+	if let Some((parameter_name, parameter_type, _)) = &list_or_patch_or_watch_optional_parameter {
 		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
 	}
 	if !optional_parameters.is_empty() {
@@ -1606,7 +1619,7 @@ pub fn write_operation(
 	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
 	let have_query_parameters =
 		parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query) ||
-		list_or_watch_optional_parameter.is_some();
+		list_or_patch_or_watch_optional_parameter.is_some();
 
 	if !optional_parameters.is_empty() {
 		writeln!(out, "{}    let {} {{", indent, operation_optional_parameters_name)?;
@@ -1656,7 +1669,7 @@ pub fn write_operation(
 
 	if have_query_parameters {
 		writeln!(out, "{}    let mut __query_pairs = {}::url::form_urlencoded::Serializer::new(__url);", indent, crate_root)?;
-		if let Some((parameter_name, _, _)) = &list_or_watch_optional_parameter {
+		if let Some((parameter_name, _, _)) = &list_or_patch_or_watch_optional_parameter {
 			writeln!(out, "{}    {}.__serialize(&mut __query_pairs);", indent, parameter_name)?;
 		}
 		else {

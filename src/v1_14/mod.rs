@@ -9,6 +9,11 @@ pub use self::list_optional::{
     ListOptional,
 };
 
+mod patch_optional;
+pub use self::patch_optional::{
+    PatchOptional,
+};
+
 mod watch_optional;
 pub use self::watch_optional::{
     WatchOptional,

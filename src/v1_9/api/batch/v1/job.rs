@@ -470,19 +470,14 @@ impl Job {
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedJobOptional<'_>,
+        optional: crate::v1_9::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobResponse>), crate::RequestError> {
-        let PatchNamespacedJobOptional {
-            pretty,
-        } = optional;
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -497,13 +492,6 @@ impl Job {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::patch_namespaced_job`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedJobOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job`]
@@ -568,19 +556,14 @@ impl Job {
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedJobStatusOptional<'_>,
+        optional: crate::v1_9::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobStatusResponse>), crate::RequestError> {
-        let PatchNamespacedJobStatusOptional {
-            pretty,
-        } = optional;
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -595,13 +578,6 @@ impl Job {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::patch_namespaced_job_status`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedJobStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job_status`]

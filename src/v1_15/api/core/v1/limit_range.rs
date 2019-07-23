@@ -488,31 +488,14 @@ impl LimitRange {
         name: &str,
         namespace: &str,
         body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchNamespacedLimitRangeOptional<'_>,
+        optional: crate::v1_15::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLimitRangeResponse>), crate::RequestError> {
-        let PatchNamespacedLimitRangeOptional {
-            dry_run,
-            field_manager,
-            force,
-            pretty,
-        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}?",
             name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(field_manager) = field_manager {
-            __query_pairs.append_pair("fieldManager", field_manager);
-        }
-        if let Some(force) = force {
-            __query_pairs.append_pair("force", &force.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::patch(__url);
@@ -527,19 +510,6 @@ impl LimitRange {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`LimitRange::patch_namespaced_limit_range`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct PatchNamespacedLimitRangeOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
-    pub field_manager: Option<&'a str>,
-    /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
-    pub force: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<PatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::patch_namespaced_limit_range`]

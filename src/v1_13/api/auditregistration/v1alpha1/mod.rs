@@ -6,7 +6,7 @@ pub use self::audit_sink::{
     DeleteAuditSinkResponse,
     DeleteCollectionAuditSinkResponse,
     ListAuditSinkResponse,
-    PatchAuditSinkOptional, PatchAuditSinkResponse,
+    PatchAuditSinkResponse,
     ReadAuditSinkOptional, ReadAuditSinkResponse,
     ReplaceAuditSinkOptional, ReplaceAuditSinkResponse,
     WatchAuditSinkResponse,

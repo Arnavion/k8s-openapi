@@ -169,7 +169,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
-///         optional: PatchNamespacedFooBarOptional<'_>,
+///         optional: k8s_openapi::PatchOptional<'_>,
 ///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<PatchNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
 ///
 ///     /// Partially update the state of the specified FooBar
@@ -177,7 +177,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
-///         optional: PatchNamespacedFooBarStatusOptional<'_>,
+///         optional: k8s_openapi::PatchOptional<'_>,
 ///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<PatchNamespacedFooBarStatusResponse>), k8s_openapi::RequestError> { ... }
 ///
 ///     /// Read the specified FooBar

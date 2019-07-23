@@ -71,6 +71,81 @@ pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Resul
 	Ok(())
 }
 
+// This fixup extracts the common optional parameters of patch operations into the `io.k8s.PatchOptional` type. This makes the new type consistent with
+// `io.k8s.ListOptional` and `io.k8s.WatchOptional` and allows it to be used as a common parameter for patch API operations.
+pub(crate) fn create_patch_optional(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut patch_optional_parameters: Option<std::collections::HashSet<String>> = None;
+	let mut patch_optional_definition: std::collections::BTreeMap<crate::swagger20::PropertyName, crate::swagger20::Schema> = Default::default();
+
+	let patch_optional_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+		location: crate::swagger20::ParameterLocation::Query,
+		name: "optional".to_owned(),
+		required: true,
+		schema: crate::swagger20::Schema {
+			description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
+				path: "io.k8s.PatchOptional".to_owned(),
+				relative_to: crate::swagger20::RefPathRelativeTo::Crate,
+				can_be_default: None,
+			}),
+			kubernetes_group_kind_versions: None,
+		},
+	});
+
+	for operation in &mut spec.operations {
+		if operation.kubernetes_action != Some(crate::swagger20::KubernetesAction::Patch) {
+			continue;
+		}
+
+		{
+			let patch_optional_parameters =
+				&*patch_optional_parameters
+				.get_or_insert_with(||
+					operation.parameters.iter()
+					.filter_map(|p| if p.required { None } else { Some(p.name.clone()) })
+					.collect());
+
+			for expected_parameter_name in patch_optional_parameters {
+				let expected_parameter =
+					if let Some(expected_parameter) = operation.parameters.iter().find(|p| p.name == *expected_parameter_name && !p.required) {
+						&**expected_parameter
+					}
+					else {
+						return Err(format!("operation {} is a patch operation but doesn't have a {} parameter", operation.id, expected_parameter_name).into());
+					};
+
+				patch_optional_definition
+					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+					.or_insert_with(|| expected_parameter.schema.clone());
+			}
+
+			for parameter in &operation.parameters {
+				if !parameter.required && !patch_optional_parameters.contains(&*parameter.name) {
+					return Err(format!("operation {} contains unexpected optional parameter {}", operation.id, parameter.name).into());
+				}
+			}
+		}
+
+		operation.parameters =
+			operation.parameters.drain(..)
+			.filter(|p| p.required)
+			.chain(std::iter::once(patch_optional_parameter.clone()))
+			.collect();
+	}
+
+	if patch_optional_definition.is_empty() {
+		return Err("never found any patch operations".into());
+	}
+
+	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.PatchOptional".to_string()), crate::swagger20::Schema {
+		description: Some("Common parameters for all patch operations.".to_string()),
+		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::PatchOptional(patch_optional_definition)),
+		kubernetes_group_kind_versions: None,
+	});
+
+	Ok(())
+}
+
 // The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
 //
 // Ref: https://github.com/kubernetes/kubernetes/pull/63837

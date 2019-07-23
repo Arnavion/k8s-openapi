@@ -6,7 +6,7 @@ pub use self::volume_attachment::{
     DeleteCollectionVolumeAttachmentResponse,
     DeleteVolumeAttachmentResponse,
     ListVolumeAttachmentResponse,
-    PatchVolumeAttachmentOptional, PatchVolumeAttachmentResponse,
+    PatchVolumeAttachmentResponse,
     ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,
     ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse,
     WatchVolumeAttachmentResponse,

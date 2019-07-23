@@ -6,7 +6,7 @@ pub use self::certificate_signing_request::{
     DeleteCertificateSigningRequestResponse,
     DeleteCollectionCertificateSigningRequestResponse,
     ListCertificateSigningRequestResponse,
-    PatchCertificateSigningRequestOptional, PatchCertificateSigningRequestResponse,
+    PatchCertificateSigningRequestResponse,
     ReadCertificateSigningRequestOptional, ReadCertificateSigningRequestResponse,
     ReplaceCertificateSigningRequestOptional, ReplaceCertificateSigningRequestResponse,
     ReplaceCertificateSigningRequestApprovalOptional, ReplaceCertificateSigningRequestApprovalResponse,

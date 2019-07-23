@@ -12,8 +12,8 @@ pub use self::horizontal_pod_autoscaler::{
     DeleteNamespacedHorizontalPodAutoscalerResponse,
     ListHorizontalPodAutoscalerForAllNamespacesResponse,
     ListNamespacedHorizontalPodAutoscalerResponse,
-    PatchNamespacedHorizontalPodAutoscalerOptional, PatchNamespacedHorizontalPodAutoscalerResponse,
-    PatchNamespacedHorizontalPodAutoscalerStatusOptional, PatchNamespacedHorizontalPodAutoscalerStatusResponse,
+    PatchNamespacedHorizontalPodAutoscalerResponse,
+    PatchNamespacedHorizontalPodAutoscalerStatusResponse,
     ReadNamespacedHorizontalPodAutoscalerOptional, ReadNamespacedHorizontalPodAutoscalerResponse,
     ReadNamespacedHorizontalPodAutoscalerStatusOptional, ReadNamespacedHorizontalPodAutoscalerStatusResponse,
     ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse,
@@ -40,7 +40,7 @@ pub use self::horizontal_pod_autoscaler_status::{
 mod scale;
 pub use self::scale::{
     Scale,
-    PatchNamespacedReplicationControllerScaleOptional, PatchNamespacedReplicationControllerScaleResponse,
+    PatchNamespacedReplicationControllerScaleResponse,
     ReadNamespacedReplicationControllerScaleOptional, ReadNamespacedReplicationControllerScaleResponse,
     ReplaceNamespacedReplicationControllerScaleOptional, ReplaceNamespacedReplicationControllerScaleResponse,
 };

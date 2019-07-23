@@ -6,7 +6,7 @@ pub use self::priority_class::{
     DeleteCollectionPriorityClassResponse,
     DeletePriorityClassResponse,
     ListPriorityClassResponse,
-    PatchPriorityClassOptional, PatchPriorityClassResponse,
+    PatchPriorityClassResponse,
     ReadPriorityClassOptional, ReadPriorityClassResponse,
     ReplacePriorityClassOptional, ReplacePriorityClassResponse,
     WatchPriorityClassResponse,
