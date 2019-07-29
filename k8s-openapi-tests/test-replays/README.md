@@ -2,25 +2,32 @@ To generate these test files:
 
 1. Download the appropriate version of minikube
 
-	```powershell
-	iwr -OutFile ./minikube.0.30.0.exe 'https://storage.googleapis.com/minikube/releases/v0.30.0/minikube-windows-amd64'
+	```bash
+	V='1.2.0'
+	curl -Lo ~/bin/minikube-$V "https://storage.googleapis.com/minikube/releases/v$V/minikube-linux-amd64"
+	chmod +x ~/bin/minikube-$V
 	```
 
-	```bash
-	curl -Lo ./minikube.0.30.0 'https://storage.googleapis.com/minikube/releases/v0.30.0/minikube-linux-amd64'
-	chmod +x ./minikube.0.30.0
-	```
-
-1. Create the cluster.
+1. Create the cluster
 
 	```bash
-	./minikube.0.30.0 --logtostderr -v9999 start --vm-driver virtualbox --profile minikube --bootstrapper kubeadm --kubernetes-version v1.12.3
+	minikube-$V --logtostderr -v9999 start --vm-driver kvm2 --profile minikube --bootstrapper kubeadm --kubernetes-version v1.15.1
 	```
 
 1. Run the tests in record mode
 
 	```bash
-	K8S_RECORD=1 cargo test --features 'test_v1_12'
+	K8S_RECORD=1 cargo test --features 'test_v1_15'
+	```
+
+1. Delete the VM and its network
+
+	```bash
+	virsh destroy minikube
+	virsh undefine minikube
+	virsh net-undefine minikube-net
+	virsh net-destroy minikube-net
+	rm -rf ~/.kube ~/.minikube
 	```
 
 ---
@@ -40,3 +47,20 @@ To generate these test files:
 		<tr><td>1.15.1</td><td>1.2.0</td></tr>
 	</tbody>
 </table>
+
+---
+
+# Misc
+
+- If `minikube start` fails with:
+
+	>`Unable to start VM: create: Error creating machine: Error in driver during machine creation: ensuring active networks: starting network default: virError(Code=38, Domain=0, Message='error creating bridge interface virbr0: File exists')`
+
+	Destroy the VM and its network as above, then reset the `default` libvirt network with:
+
+	```bash
+	virsh net-undefine default
+	virsh net-destroy default
+	virsh net-define /usr/share/libvirt/networks/default.xml
+	virsh net-start default
+	```
