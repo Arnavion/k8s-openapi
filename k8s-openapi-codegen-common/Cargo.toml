@@ -1,6 +1,6 @@
 [package]
 name = "k8s-openapi-codegen-common"
-version = "0.4.0"
+version = "0.5.0"
 license = "Apache-2.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
 categories = ["api-bindings", "web-programming::http-client"]

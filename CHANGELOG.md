@@ -1,3 +1,42 @@
+# v0.5.0 (2019-08-04)
+
+- BREAKING CHANGE: The optional parameters of delete, list, patch and watch operations are now emitted as a single common type - `k8s_openapi::DeleteOptional`, `k8s_openapi::ListOptional`, `k8s_openapi::PatchOptional` and `k8s_openapi::WatchOptional` respectively. For example, where an operation like `k8s_openapi::api::core::v1::Pod::list_namespaced_pod` used to have an `optional: k8s_openapi::api::core::v1::ListNamespacedPodOptional<'_>`, it now has an `optional: k8s_openapi::ListOptional<'_>` parameter instead.
+
+  This is because these per-operation optional structs all had the same members.
+
+  Furthermore, delete-collection operations like `Pod::delete_collection_namespaced_pod` now take two optional parameters, one of type `k8s_openapi::ListOptional` that determines which items will be selected for deletion, and the other of type `k8s_openapi::DeleteOptional` which determines how the selected items will be deleted.
+
+- BREAKING CHANGE: Most response types had an empty `Unauthorized` variant, and did not have other useful variants like `Forbidden` or `Conflict`. To handle those variants, you would have had to match on the empty `Other` variant and manually parse the response body into a JSON value.
+
+  Now these empty variants like `Unauthorized` are no longer emitted, and the previously empty `Other` variant is now emitted as `Other(Result<Option<serde_json::Value>, Error>)`. If the response body is empty, the response will be parsed as `Other(Ok(None))`. Otherwise, it will be parsed as JSON into `Other(Ok(Some(response)))` or `Other(Err(err))`.
+
+- BREAKING CHANGE: The `apimachinery::pkg::apis::meta::v1::Patch` type used to be incorrectly emitted as an empty struct. It is now emitted as an enum with variants corresponding to the three types of patches supported by Kubernetes - `Json(Vec<serde_json::Value>)`, `Merge(serde_json::Value)` and `StrategicMerge(serde_json::Value)`.
+
+- BREAKING CHANGE: The `apimachinery::pkg::apis::meta::v1::WatchEvent` type used to be emitted as a struct containing a weakly-typed `object` and stringly-typed `type_` fields. It is now generic on the type of object and is emitted as `enum WatchEvent<T>` with `Added(T)`, `Deleted(T)`, `Modified(T)`, `ErrorStatus(metav1::Status)` and `ErrorOther(RawExtension)` members. For v1.15 and above, the enum also has a `Bookmark(T)` variant.
+
+- BREAKING CHANGE: The `apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus` type used to be incorrectly emitted as an empty struct. It is now emitted as a newtype around `serde_json::Value`
+
+- BREAKING CHANGE: The connect and exec operations on `Node`, `Pod` and `Service` no longer have a corresponding response type. The response types were bogus, and these operations are not HTTP requests but SPDY or WebSocket requests anyway. The functions still return `http::Request`, and you will need to decompose these into types that your SPDY / WebSocket crate uses.
+
+- BUGFIX: Operation parameters that were used as path components of the request URL (such as `namespace`) are now correctly encoded instead of being used verbatim.
+
+- FEATURE: The `http::Request` returned by API operation functions now has the `Content-Type` header set if the request has a body. Particularly for patch operations, this sets the correct `Content-Type` header corresponding to the type of patch used.
+
+- FEATURE: A new crate `k8s-openapi-derive` is now released. This crate contains a custom derive that can be used on a CRD spec type to generate the corresponding CRD type, its `k8s_openapi::Resource` and `k8s_openapi::Metadata` impls, and CRUD operations. See that crate's docs for more details.
+
+Corresponding Kubernetes API server versions:
+
+- v1.8.15
+- v1.9.11
+- v1.10.13
+- v1.11.10
+- v1.12.10
+- v1.13.8
+- v1.14.4
+- v1.15.1
+
+---
+
 # v0.4.0 (2019-03-07)
 
 - A new `Resource` trait is implemented on all resource types to get their API version, group, kind and version properties. See docs for details.
