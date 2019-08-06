@@ -44,7 +44,7 @@ To generate these test files:
 		<tr><td>1.12.10</td><td>0.30.0</td></tr>
 		<tr><td>1.13.9</td><td>0.35.0</td></tr>
 		<tr><td>1.14.5</td><td>1.1.1</td></tr>
-		<tr><td>1.15.1</td><td>1.2.0</td></tr>
+		<tr><td>1.15.2</td><td>1.3.0</td></tr>
 	</tbody>
 </table>
 
