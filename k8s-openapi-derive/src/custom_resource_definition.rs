@@ -42,7 +42,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			for meta in metas {
 				let meta: &dyn quote::ToTokens = match &meta {
 					syn::NestedMeta::Meta(syn::Meta::NameValue(meta)) =>
-						if meta.ident == "group" {
+						if meta.path.is_ident("group") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								group = Some(lit.value());
 								continue;
@@ -51,7 +51,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
 							}
 						}
-						else if meta.ident == "plural" {
+						else if meta.path.is_ident("plural") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								plural = Some(lit.value());
 								continue;
@@ -60,7 +60,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
 							}
 						}
-						else if meta.ident == "version" {
+						else if meta.path.is_ident("version") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								version = Some(lit.value());
 								continue;
@@ -73,8 +73,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 							meta
 						},
 
-					syn::NestedMeta::Meta(syn::Meta::Word(ident)) =>
-						if ident == "namespaced" {
+					syn::NestedMeta::Meta(syn::Meta::Path(path)) =>
+						if path.is_ident("namespaced") {
 							namespaced = true;
 							continue;
 						}
