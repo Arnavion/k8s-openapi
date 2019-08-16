@@ -166,7 +166,7 @@
 //!
 //!    If the response body is empty, this value will be `Ok(None)`.
 //!
-//!    If the response body is not empty, this value will be an `Ok(Some(value))` or Err(err) from attempting to parse that body as a `serde_json::Value`.
+//!    If the response body is not empty, this value will be an `Ok(Some(value))` or `Err(err)` from attempting to parse that body as a `serde_json::Value`.
 //!    If you expect the response body to be a specific JSON type such as [`apimachinery::pkg::apis::meta::v1::Status`], you can use the `serde_json::Value`
 //!    as a [`serde::Deserializer`] like `let status = <Status as Deserialize>::deserialize(value)?;`. On the other hand, if you expect the response body to not be
 //!    a JSON value, then ignore the `Err(err)` and parse the raw bytes of the response into the appropriate type.
