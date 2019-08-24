@@ -1590,6 +1590,10 @@ pub fn write_operation(
 		}
 	}
 
+	if mod_root.is_some() {
+		writeln!(out, r#"{}#[cfg(feature = "api")]"#, indent)?;
+	}
+
 	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
 	for (parameter_name, parameter_type, _) in &required_parameters {
 		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
@@ -1787,6 +1791,9 @@ pub fn write_operation(
 			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
+		if mod_root.is_some() {
+			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
 		write!(out, "{}struct {}", vis, operation_optional_parameters_name)?;
 		if any_optional_fields_have_lifetimes {
@@ -1825,6 +1832,9 @@ pub fn write_operation(
 				operation_result_name, operation_fn_name)?;
 		}
 
+		if mod_root.is_some() {
+			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+		}
 		writeln!(out, "#[derive(Debug)]")?;
 		writeln!(out, "{}enum {} {{", vis, operation_result_name)?;
 
@@ -1874,6 +1884,9 @@ pub fn write_operation(
 		writeln!(out, "}}")?;
 		writeln!(out)?;
 
+		if mod_root.is_some() {
+			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+		}
 		writeln!(out, "impl {}::Response for {} {{", crate_root, operation_result_name)?;
 		writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}::ResponseError> {{", crate_root)?;
 

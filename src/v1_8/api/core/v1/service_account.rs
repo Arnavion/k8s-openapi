@@ -36,6 +36,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_service_account(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::ServiceAccount,
@@ -64,6 +65,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::create_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -71,12 +73,14 @@ pub struct CreateNamespacedServiceAccountOptional<'a> {
 }
 
 /// Use `<CreateNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::create_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceAccountResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -126,6 +130,7 @@ impl ServiceAccount {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_service_account(
         namespace: &str,
         delete_optional: crate::v1_8::DeleteOptional<'_>,
@@ -149,6 +154,7 @@ impl ServiceAccount {
 }
 
 /// Use `<DeleteCollectionNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::delete_collection_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedServiceAccountResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -156,6 +162,7 @@ pub enum DeleteCollectionNamespacedServiceAccountResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -218,6 +225,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_service_account(
         name: &str,
         namespace: &str,
@@ -239,6 +247,7 @@ impl ServiceAccount {
 }
 
 /// Use `<DeleteNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::delete_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceAccountResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -246,6 +255,7 @@ pub enum DeleteNamespacedServiceAccountResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -306,6 +316,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_service_account(
         namespace: &str,
         optional: crate::v1_8::ListOptional<'_>,
@@ -327,12 +338,14 @@ impl ServiceAccount {
 }
 
 /// Use `<ListNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::list_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceAccountResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccountList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -376,6 +389,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_service_account_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceAccountForAllNamespacesResponse>), crate::RequestError> {
@@ -394,12 +408,14 @@ impl ServiceAccount {
 }
 
 /// Use `<ListServiceAccountForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::list_service_account_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceAccountForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccountList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListServiceAccountForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -451,6 +467,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_service_account(
         name: &str,
         namespace: &str,
@@ -480,12 +497,14 @@ impl ServiceAccount {
 }
 
 /// Use `<PatchNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::patch_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceAccountResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -535,6 +554,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_service_account(
         name: &str,
         namespace: &str,
@@ -571,6 +591,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::read_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceAccountOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -582,12 +603,14 @@ pub struct ReadNamespacedServiceAccountOptional<'a> {
 }
 
 /// Use `<ReadNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::read_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceAccountResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -639,6 +662,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_service_account(
         name: &str,
         namespace: &str,
@@ -669,6 +693,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -676,12 +701,14 @@ pub struct ReplaceNamespacedServiceAccountOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::replace_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceAccountResponse {
     Ok(crate::v1_8::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -729,6 +756,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_service_account(
         namespace: &str,
         optional: crate::v1_8::WatchOptional<'_>,
@@ -750,12 +778,14 @@ impl ServiceAccount {
 }
 
 /// Use `<WatchNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_namespaced_service_account`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceAccountResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -801,6 +831,7 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_service_account_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceAccountForAllNamespacesResponse>), crate::RequestError> {
@@ -819,12 +850,14 @@ impl ServiceAccount {
 }
 
 /// Use `<WatchServiceAccountForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_service_account_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchServiceAccountForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchServiceAccountForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

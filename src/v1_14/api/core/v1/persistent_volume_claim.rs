@@ -33,6 +33,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_persistent_volume_claim(
         namespace: &str,
         body: &crate::v1_14::api::core::v1::PersistentVolumeClaim,
@@ -69,6 +70,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Optional parameters of [`PersistentVolumeClaim::create_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPersistentVolumeClaimOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -80,6 +82,7 @@ pub struct CreateNamespacedPersistentVolumeClaimOptional<'a> {
 }
 
 /// Use `<CreateNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::create_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
@@ -88,6 +91,7 @@ pub enum CreateNamespacedPersistentVolumeClaimResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -153,6 +157,7 @@ impl PersistentVolumeClaim {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_persistent_volume_claim(
         namespace: &str,
         delete_optional: crate::v1_14::DeleteOptional<'_>,
@@ -176,6 +181,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<DeleteCollectionNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::delete_collection_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -183,6 +189,7 @@ pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -245,6 +252,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
@@ -266,6 +274,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<DeleteNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::delete_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -274,6 +283,7 @@ pub enum DeleteNamespacedPersistentVolumeClaimResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -342,6 +352,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_persistent_volume_claim(
         namespace: &str,
         optional: crate::v1_14::ListOptional<'_>,
@@ -363,12 +374,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<ListNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::list_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaimList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -412,6 +425,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_persistent_volume_claim_for_all_namespaces(
         optional: crate::v1_14::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPersistentVolumeClaimForAllNamespacesResponse>), crate::RequestError> {
@@ -430,12 +444,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<ListPersistentVolumeClaimForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::list_persistent_volume_claim_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPersistentVolumeClaimForAllNamespacesResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaimList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListPersistentVolumeClaimForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -487,6 +503,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
@@ -516,12 +533,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<PatchNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -573,6 +592,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
@@ -602,12 +622,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<PatchNamespacedPersistentVolumeClaimStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -657,6 +679,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
@@ -693,6 +716,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Optional parameters of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPersistentVolumeClaimOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -704,12 +728,14 @@ pub struct ReadNamespacedPersistentVolumeClaimOptional<'a> {
 }
 
 /// Use `<ReadNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -759,6 +785,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
@@ -787,6 +814,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Optional parameters of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPersistentVolumeClaimStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -794,12 +822,14 @@ pub struct ReadNamespacedPersistentVolumeClaimStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedPersistentVolumeClaimStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -851,6 +881,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
@@ -889,6 +920,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Optional parameters of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPersistentVolumeClaimOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -900,6 +932,7 @@ pub struct ReplaceNamespacedPersistentVolumeClaimOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
@@ -907,6 +940,7 @@ pub enum ReplaceNamespacedPersistentVolumeClaimResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -966,6 +1000,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
@@ -1004,6 +1039,7 @@ impl PersistentVolumeClaim {
 }
 
 /// Optional parameters of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPersistentVolumeClaimStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1015,6 +1051,7 @@ pub struct ReplaceNamespacedPersistentVolumeClaimStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedPersistentVolumeClaimStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_14::api::core::v1::PersistentVolumeClaim),
@@ -1022,6 +1059,7 @@ pub enum ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1077,6 +1115,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_persistent_volume_claim(
         namespace: &str,
         optional: crate::v1_14::WatchOptional<'_>,
@@ -1098,12 +1137,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<WatchNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1149,6 +1190,7 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_persistent_volume_claim_for_all_namespaces(
         optional: crate::v1_14::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeClaimForAllNamespacesResponse>), crate::RequestError> {
@@ -1167,12 +1209,14 @@ impl PersistentVolumeClaim {
 }
 
 /// Use `<WatchPersistentVolumeClaimForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::watch_persistent_volume_claim_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeClaimForAllNamespacesResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchPersistentVolumeClaimForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

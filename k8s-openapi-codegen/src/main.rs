@@ -149,7 +149,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	for definition_path in spec.definitions.keys() {
 		log::trace!("Working on {} ...", definition_path);
 
-		let parent_mod_rs_file = std::cell::RefCell::new(None);
+		let parent_mod_rs_file_and_mod_name = std::cell::RefCell::new(None);
 
 		let run_result = k8s_openapi_codegen_common::run(
 			&spec.definitions,
@@ -200,36 +200,40 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 				writeln!(parent_mod_rs)?;
 				writeln!(parent_mod_rs, "mod {};", mod_name)?;
-				writeln!(parent_mod_rs, "pub use self::{}::{{", mod_name)?;
-				writeln!(parent_mod_rs, "    {},", type_name)?;
-
-				parent_mod_rs_file.replace(Some(parent_mod_rs));
+				writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
 
 				let file_name = current.join(&*mod_name).with_extension("rs");
 				let file = std::io::BufWriter::new(std::fs::File::create(file_name)?);
 
+				parent_mod_rs_file_and_mod_name.replace(Some((parent_mod_rs, mod_name)));
+
 				Ok(file)
 			},
 			|operation_optional_parameters_name, operation_result_name| {
-				let mut parent_mod_rs = parent_mod_rs_file.borrow_mut();
-				let parent_mod_rs = parent_mod_rs.as_mut().unwrap();
+				let mut parent_mod_rs_file_and_mod_name = parent_mod_rs_file_and_mod_name.borrow_mut();
+				let (parent_mod_rs, mod_name) = parent_mod_rs_file_and_mod_name.as_mut().unwrap();
 				match (operation_optional_parameters_name, operation_result_name) {
 					(Some(operation_optional_parameters_name), Some(operation_result_name)) =>
-						writeln!(parent_mod_rs, "    {}, {},", operation_optional_parameters_name, operation_result_name)?,
+						writeln!(
+							parent_mod_rs,
+							r#"#[cfg(feature = "api")] pub use self::{}::{{{}, {}}};"#,
+							mod_name, operation_optional_parameters_name, operation_result_name)?,
 					(Some(operation_optional_parameters_name), None) =>
-						writeln!(parent_mod_rs, "    {},", operation_optional_parameters_name)?,
+						writeln!(
+							parent_mod_rs,
+							r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
+							mod_name, operation_optional_parameters_name)?,
 					(None, Some(operation_result_name)) =>
-						writeln!(parent_mod_rs, "    {},", operation_result_name)?,
+						writeln!(
+							parent_mod_rs,
+							r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
+							mod_name, operation_result_name)?,
 					(None, None) =>
 						(),
 				}
 				Ok(())
 			},
 		)?;
-
-		let mut parent_mod_rs = parent_mod_rs_file.borrow_mut();
-		let parent_mod_rs = parent_mod_rs.as_mut().unwrap();
-		writeln!(parent_mod_rs, "}};")?;
 
 		num_generated_structs += run_result.num_generated_structs;
 		num_generated_type_aliases += run_result.num_generated_type_aliases;

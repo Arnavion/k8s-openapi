@@ -33,6 +33,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_config_map(
         namespace: &str,
         body: &crate::v1_11::api::core::v1::ConfigMap,
@@ -61,6 +62,7 @@ impl ConfigMap {
 }
 
 /// Optional parameters of [`ConfigMap::create_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -68,6 +70,7 @@ pub struct CreateNamespacedConfigMapOptional<'a> {
 }
 
 /// Use `<CreateNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::create_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
@@ -76,6 +79,7 @@ pub enum CreateNamespacedConfigMapResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -141,6 +145,7 @@ impl ConfigMap {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_config_map(
         namespace: &str,
         delete_optional: crate::v1_11::DeleteOptional<'_>,
@@ -164,6 +169,7 @@ impl ConfigMap {
 }
 
 /// Use `<DeleteCollectionNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::delete_collection_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedConfigMapResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -171,6 +177,7 @@ pub enum DeleteCollectionNamespacedConfigMapResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -233,6 +240,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_config_map(
         name: &str,
         namespace: &str,
@@ -254,6 +262,7 @@ impl ConfigMap {
 }
 
 /// Use `<DeleteNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::delete_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedConfigMapResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -261,6 +270,7 @@ pub enum DeleteNamespacedConfigMapResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -317,6 +327,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_config_map_for_all_namespaces(
         optional: crate::v1_11::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListConfigMapForAllNamespacesResponse>), crate::RequestError> {
@@ -335,12 +346,14 @@ impl ConfigMap {
 }
 
 /// Use `<ListConfigMapForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::list_config_map_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListConfigMapForAllNamespacesResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMapList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListConfigMapForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -388,6 +401,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_config_map(
         namespace: &str,
         optional: crate::v1_11::ListOptional<'_>,
@@ -409,12 +423,14 @@ impl ConfigMap {
 }
 
 /// Use `<ListNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::list_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMapList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -466,6 +482,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_config_map(
         name: &str,
         namespace: &str,
@@ -495,12 +512,14 @@ impl ConfigMap {
 }
 
 /// Use `<PatchNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::patch_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -550,6 +569,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_config_map(
         name: &str,
         namespace: &str,
@@ -586,6 +606,7 @@ impl ConfigMap {
 }
 
 /// Optional parameters of [`ConfigMap::read_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedConfigMapOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -597,12 +618,14 @@ pub struct ReadNamespacedConfigMapOptional<'a> {
 }
 
 /// Use `<ReadNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::read_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -654,6 +677,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_config_map(
         name: &str,
         namespace: &str,
@@ -684,6 +708,7 @@ impl ConfigMap {
 }
 
 /// Optional parameters of [`ConfigMap::replace_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -691,6 +716,7 @@ pub struct ReplaceNamespacedConfigMapOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::replace_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
@@ -698,6 +724,7 @@ pub enum ReplaceNamespacedConfigMapResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -749,6 +776,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_config_map_for_all_namespaces(
         optional: crate::v1_11::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchConfigMapForAllNamespacesResponse>), crate::RequestError> {
@@ -767,12 +795,14 @@ impl ConfigMap {
 }
 
 /// Use `<WatchConfigMapForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_config_map_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchConfigMapForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchConfigMapForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -822,6 +852,7 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_config_map(
         namespace: &str,
         optional: crate::v1_11::WatchOptional<'_>,
@@ -843,12 +874,14 @@ impl ConfigMap {
 }
 
 /// Use `<WatchNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_namespaced_config_map`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

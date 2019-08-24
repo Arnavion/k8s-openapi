@@ -26,6 +26,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_pod_security_policy(
         body: &crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy,
         optional: CreatePodSecurityPolicyOptional<'_>,
@@ -51,6 +52,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::create_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -58,6 +60,7 @@ pub struct CreatePodSecurityPolicyOptional<'a> {
 }
 
 /// Use `<CreatePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::create_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreatePodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -66,6 +69,7 @@ pub enum CreatePodSecurityPolicyResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreatePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -127,6 +131,7 @@ impl PodSecurityPolicy {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_pod_security_policy(
         delete_optional: crate::v1_9::DeleteOptional<'_>,
         list_optional: crate::v1_9::ListOptional<'_>,
@@ -147,6 +152,7 @@ impl PodSecurityPolicy {
 }
 
 /// Use `<DeleteCollectionPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::delete_collection_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionPodSecurityPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -154,6 +160,7 @@ pub enum DeleteCollectionPodSecurityPolicyResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -212,6 +219,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_pod_security_policy(
         name: &str,
         optional: crate::v1_9::DeleteOptional<'_>,
@@ -231,6 +239,7 @@ impl PodSecurityPolicy {
 }
 
 /// Use `<DeletePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::delete_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeletePodSecurityPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,6 +247,7 @@ pub enum DeletePodSecurityPolicyResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeletePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -294,6 +304,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_pod_security_policy(
         optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodSecurityPolicyResponse>), crate::RequestError> {
@@ -312,12 +323,14 @@ impl PodSecurityPolicy {
 }
 
 /// Use `<ListPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::list_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -365,6 +378,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_pod_security_policy(
         name: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
@@ -392,12 +406,14 @@ impl PodSecurityPolicy {
 }
 
 /// Use `<PatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::patch_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -443,6 +459,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_pod_security_policy(
         name: &str,
         optional: ReadPodSecurityPolicyOptional<'_>,
@@ -477,6 +494,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::read_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPodSecurityPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -488,12 +506,14 @@ pub struct ReadPodSecurityPolicyOptional<'a> {
 }
 
 /// Use `<ReadPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::read_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -541,6 +561,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_pod_security_policy(
         name: &str,
         body: &crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy,
@@ -569,6 +590,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::replace_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -576,6 +598,7 @@ pub struct ReplacePodSecurityPolicyOptional<'a> {
 }
 
 /// Use `<ReplacePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::replace_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplacePodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -583,6 +606,7 @@ pub enum ReplacePodSecurityPolicyResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplacePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -634,6 +658,7 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_pod_security_policy(
         optional: crate::v1_9::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyResponse>), crate::RequestError> {
@@ -652,12 +677,14 @@ impl PodSecurityPolicy {
 }
 
 /// Use `<WatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<PodSecurityPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

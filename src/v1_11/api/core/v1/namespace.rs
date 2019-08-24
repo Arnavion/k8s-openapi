@@ -29,6 +29,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespace(
         body: &crate::v1_11::api::core::v1::Namespace,
         optional: CreateNamespaceOptional<'_>,
@@ -54,6 +55,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::create_namespace`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -61,6 +63,7 @@ pub struct CreateNamespaceOptional<'a> {
 }
 
 /// Use `<CreateNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::create_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespaceResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
@@ -69,6 +72,7 @@ pub enum CreateNamespaceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -130,6 +134,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespace(
         name: &str,
         optional: crate::v1_11::DeleteOptional<'_>,
@@ -149,6 +154,7 @@ impl Namespace {
 }
 
 /// Use `<DeleteNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::delete_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespaceResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -156,6 +162,7 @@ pub enum DeleteNamespaceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -212,6 +219,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespace(
         optional: crate::v1_11::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespaceResponse>), crate::RequestError> {
@@ -230,12 +238,14 @@ impl Namespace {
 }
 
 /// Use `<ListNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::list_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespaceResponse {
     Ok(crate::v1_11::api::core::v1::NamespaceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -283,6 +293,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespace(
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
@@ -310,12 +321,14 @@ impl Namespace {
 }
 
 /// Use `<PatchNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::patch_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespaceResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -363,6 +376,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespace_status(
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
@@ -390,12 +404,14 @@ impl Namespace {
 }
 
 /// Use `<PatchNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::patch_namespace_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespaceStatusResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -441,6 +457,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespace(
         name: &str,
         optional: ReadNamespaceOptional<'_>,
@@ -475,6 +492,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::read_namespace`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -486,12 +504,14 @@ pub struct ReadNamespaceOptional<'a> {
 }
 
 /// Use `<ReadNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespaceResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -537,6 +557,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespace_status(
         name: &str,
         optional: ReadNamespaceStatusOptional<'_>,
@@ -563,6 +584,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::read_namespace_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -570,12 +592,14 @@ pub struct ReadNamespaceStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespaceStatusResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -623,6 +647,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespace(
         name: &str,
         body: &crate::v1_11::api::core::v1::Namespace,
@@ -651,6 +676,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -658,6 +684,7 @@ pub struct ReplaceNamespaceOptional<'a> {
 }
 
 /// Use `<ReplaceNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespaceResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
@@ -665,6 +692,7 @@ pub enum ReplaceNamespaceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -720,6 +748,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespace_finalize(
         name: &str,
         body: &crate::v1_11::api::core::v1::Namespace,
@@ -748,6 +777,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace_finalize`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceFinalizeOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -755,6 +785,7 @@ pub struct ReplaceNamespaceFinalizeOptional<'a> {
 }
 
 /// Use `<ReplaceNamespaceFinalizeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace_finalize`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespaceFinalizeResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
@@ -762,6 +793,7 @@ pub enum ReplaceNamespaceFinalizeResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespaceFinalizeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -817,6 +849,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespace_status(
         name: &str,
         body: &crate::v1_11::api::core::v1::Namespace,
@@ -845,6 +878,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -852,6 +886,7 @@ pub struct ReplaceNamespaceStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespaceStatusResponse {
     Ok(crate::v1_11::api::core::v1::Namespace),
@@ -859,6 +894,7 @@ pub enum ReplaceNamespaceStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -910,6 +946,7 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespace(
         optional: crate::v1_11::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespaceResponse>), crate::RequestError> {
@@ -928,12 +965,14 @@ impl Namespace {
 }
 
 /// Use `<WatchNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::watch_namespace`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespaceResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<Namespace>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

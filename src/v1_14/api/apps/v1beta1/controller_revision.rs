@@ -33,6 +33,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_controller_revision(
         namespace: &str,
         body: &crate::v1_14::api::apps::v1beta1::ControllerRevision,
@@ -69,6 +70,7 @@ impl ControllerRevision {
 }
 
 /// Optional parameters of [`ControllerRevision::create_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedControllerRevisionOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -80,6 +82,7 @@ pub struct CreateNamespacedControllerRevisionOptional<'a> {
 }
 
 /// Use `<CreateNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::create_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevision),
@@ -88,6 +91,7 @@ pub enum CreateNamespacedControllerRevisionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -153,6 +157,7 @@ impl ControllerRevision {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_controller_revision(
         namespace: &str,
         delete_optional: crate::v1_14::DeleteOptional<'_>,
@@ -176,6 +181,7 @@ impl ControllerRevision {
 }
 
 /// Use `<DeleteCollectionNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_collection_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -183,6 +189,7 @@ pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -245,6 +252,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_controller_revision(
         name: &str,
         namespace: &str,
@@ -266,6 +274,7 @@ impl ControllerRevision {
 }
 
 /// Use `<DeleteNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -274,6 +283,7 @@ pub enum DeleteNamespacedControllerRevisionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -338,6 +348,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_controller_revision_for_all_namespaces(
         optional: crate::v1_14::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListControllerRevisionForAllNamespacesResponse>), crate::RequestError> {
@@ -356,12 +367,14 @@ impl ControllerRevision {
 }
 
 /// Use `<ListControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_controller_revision_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevisionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -409,6 +422,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_controller_revision(
         namespace: &str,
         optional: crate::v1_14::ListOptional<'_>,
@@ -430,12 +444,14 @@ impl ControllerRevision {
 }
 
 /// Use `<ListNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevisionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -487,6 +503,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_controller_revision(
         name: &str,
         namespace: &str,
@@ -516,12 +533,14 @@ impl ControllerRevision {
 }
 
 /// Use `<PatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::patch_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevision),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -571,6 +590,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_controller_revision(
         name: &str,
         namespace: &str,
@@ -607,6 +627,7 @@ impl ControllerRevision {
 }
 
 /// Optional parameters of [`ControllerRevision::read_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedControllerRevisionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -618,12 +639,14 @@ pub struct ReadNamespacedControllerRevisionOptional<'a> {
 }
 
 /// Use `<ReadNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::read_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevision),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -675,6 +698,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_controller_revision(
         name: &str,
         namespace: &str,
@@ -713,6 +737,7 @@ impl ControllerRevision {
 }
 
 /// Optional parameters of [`ControllerRevision::replace_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedControllerRevisionOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -724,6 +749,7 @@ pub struct ReplaceNamespacedControllerRevisionOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::replace_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::api::apps::v1beta1::ControllerRevision),
@@ -731,6 +757,7 @@ pub enum ReplaceNamespacedControllerRevisionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -782,6 +809,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_controller_revision_for_all_namespaces(
         optional: crate::v1_14::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchControllerRevisionForAllNamespacesResponse>), crate::RequestError> {
@@ -800,12 +828,14 @@ impl ControllerRevision {
 }
 
 /// Use `<WatchControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_controller_revision_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchControllerRevisionForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -855,6 +885,7 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_controller_revision(
         namespace: &str,
         optional: crate::v1_14::WatchOptional<'_>,
@@ -876,12 +907,14 @@ impl ControllerRevision {
 }
 
 /// Use `<WatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_namespaced_controller_revision`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

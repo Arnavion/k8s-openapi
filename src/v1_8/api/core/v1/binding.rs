@@ -30,6 +30,7 @@ impl Binding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_binding(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Binding,
@@ -58,6 +59,7 @@ impl Binding {
 }
 
 /// Optional parameters of [`Binding::create_namespaced_binding`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -65,12 +67,14 @@ pub struct CreateNamespacedBindingOptional<'a> {
 }
 
 /// Use `<CreateNamespacedBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`Binding::create_namespaced_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -122,6 +126,7 @@ impl Binding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_pod_binding(
         name: &str,
         namespace: &str,
@@ -152,6 +157,7 @@ impl Binding {
 }
 
 /// Optional parameters of [`Binding::create_namespaced_pod_binding`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -159,12 +165,14 @@ pub struct CreateNamespacedPodBindingOptional<'a> {
 }
 
 /// Use `<CreateNamespacedPodBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`Binding::create_namespaced_pod_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedPodBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

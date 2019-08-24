@@ -28,6 +28,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_custom_resource_definition(
         body: &crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: CreateCustomResourceDefinitionOptional<'_>,
@@ -53,6 +54,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::create_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -60,12 +62,14 @@ pub struct CreateCustomResourceDefinitionOptional<'a> {
 }
 
 /// Use `<CreateCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::create_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -111,6 +115,7 @@ impl CustomResourceDefinition {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_custom_resource_definition(
         delete_optional: crate::v1_8::DeleteOptional<'_>,
         list_optional: crate::v1_8::ListOptional<'_>,
@@ -131,6 +136,7 @@ impl CustomResourceDefinition {
 }
 
 /// Use `<DeleteCollectionCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::delete_collection_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionCustomResourceDefinitionResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -138,6 +144,7 @@ pub enum DeleteCollectionCustomResourceDefinitionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -196,6 +203,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_custom_resource_definition(
         name: &str,
         optional: crate::v1_8::DeleteOptional<'_>,
@@ -215,6 +223,7 @@ impl CustomResourceDefinition {
 }
 
 /// Use `<DeleteCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::delete_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCustomResourceDefinitionResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -222,6 +231,7 @@ pub enum DeleteCustomResourceDefinitionResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -278,6 +288,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_custom_resource_definition(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCustomResourceDefinitionResponse>), crate::RequestError> {
@@ -296,12 +307,14 @@ impl CustomResourceDefinition {
 }
 
 /// Use `<ListCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::list_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -349,6 +362,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_custom_resource_definition(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
@@ -376,12 +390,14 @@ impl CustomResourceDefinition {
 }
 
 /// Use `<PatchCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::patch_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -427,6 +443,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_custom_resource_definition(
         name: &str,
         optional: ReadCustomResourceDefinitionOptional<'_>,
@@ -461,6 +478,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCustomResourceDefinitionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -472,12 +490,14 @@ pub struct ReadCustomResourceDefinitionOptional<'a> {
 }
 
 /// Use `<ReadCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -525,6 +545,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_custom_resource_definition(
         name: &str,
         body: &crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
@@ -553,6 +574,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -560,12 +582,14 @@ pub struct ReplaceCustomResourceDefinitionOptional<'a> {
 }
 
 /// Use `<ReplaceCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::replace_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -613,6 +637,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_custom_resource_definition_status(
         name: &str,
         body: &crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
@@ -641,6 +666,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -648,12 +674,14 @@ pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
 }
 
 /// Use `<ReplaceCustomResourceDefinitionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::replace_custom_resource_definition_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionStatusResponse {
     Ok(crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceCustomResourceDefinitionStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -697,6 +725,7 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_custom_resource_definition(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCustomResourceDefinitionResponse>), crate::RequestError> {
@@ -715,12 +744,14 @@ impl CustomResourceDefinition {
 }
 
 /// Use `<WatchCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::watch_custom_resource_definition`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<CustomResourceDefinition>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

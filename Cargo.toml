@@ -29,6 +29,10 @@ serde-value = "0.6.x"
 url = "1.7.x"
 
 [features]
+default = ["api"]
+
+api = [] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
+
 # Each feature corresponds to a supported version of Kubernetes
 v1_8 = []
 v1_9 = []

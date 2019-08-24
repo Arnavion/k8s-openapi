@@ -37,6 +37,7 @@ impl DeploymentRollback {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_deployment_rollback(
         name: &str,
         namespace: &str,
@@ -67,6 +68,7 @@ impl DeploymentRollback {
 }
 
 /// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -74,12 +76,14 @@ pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
 }
 
 /// Use `<CreateNamespacedDeploymentRollbackResponse as Response>::try_from_parts` to parse the HTTP response body of [`DeploymentRollback::create_namespaced_deployment_rollback`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentRollbackResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::DeploymentRollback),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

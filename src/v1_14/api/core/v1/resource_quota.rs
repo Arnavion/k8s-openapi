@@ -33,6 +33,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_resource_quota(
         namespace: &str,
         body: &crate::v1_14::api::core::v1::ResourceQuota,
@@ -69,6 +70,7 @@ impl ResourceQuota {
 }
 
 /// Optional parameters of [`ResourceQuota::create_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -80,6 +82,7 @@ pub struct CreateNamespacedResourceQuotaOptional<'a> {
 }
 
 /// Use `<CreateNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::create_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
@@ -88,6 +91,7 @@ pub enum CreateNamespacedResourceQuotaResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -153,6 +157,7 @@ impl ResourceQuota {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_resource_quota(
         namespace: &str,
         delete_optional: crate::v1_14::DeleteOptional<'_>,
@@ -176,6 +181,7 @@ impl ResourceQuota {
 }
 
 /// Use `<DeleteCollectionNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::delete_collection_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -183,6 +189,7 @@ pub enum DeleteCollectionNamespacedResourceQuotaResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -245,6 +252,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_resource_quota(
         name: &str,
         namespace: &str,
@@ -266,6 +274,7 @@ impl ResourceQuota {
 }
 
 /// Use `<DeleteNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::delete_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -274,6 +283,7 @@ pub enum DeleteNamespacedResourceQuotaResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -342,6 +352,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_resource_quota(
         namespace: &str,
         optional: crate::v1_14::ListOptional<'_>,
@@ -363,12 +374,14 @@ impl ResourceQuota {
 }
 
 /// Use `<ListNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::list_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuotaList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -412,6 +425,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_resource_quota_for_all_namespaces(
         optional: crate::v1_14::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListResourceQuotaForAllNamespacesResponse>), crate::RequestError> {
@@ -430,12 +444,14 @@ impl ResourceQuota {
 }
 
 /// Use `<ListResourceQuotaForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::list_resource_quota_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListResourceQuotaForAllNamespacesResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuotaList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListResourceQuotaForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -487,6 +503,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_resource_quota(
         name: &str,
         namespace: &str,
@@ -516,12 +533,14 @@ impl ResourceQuota {
 }
 
 /// Use `<PatchNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::patch_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -573,6 +592,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
@@ -602,12 +622,14 @@ impl ResourceQuota {
 }
 
 /// Use `<PatchNamespacedResourceQuotaStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::patch_namespaced_resource_quota_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -657,6 +679,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_resource_quota(
         name: &str,
         namespace: &str,
@@ -693,6 +716,7 @@ impl ResourceQuota {
 }
 
 /// Optional parameters of [`ResourceQuota::read_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedResourceQuotaOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -704,12 +728,14 @@ pub struct ReadNamespacedResourceQuotaOptional<'a> {
 }
 
 /// Use `<ReadNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::read_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -759,6 +785,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
@@ -787,6 +814,7 @@ impl ResourceQuota {
 }
 
 /// Optional parameters of [`ResourceQuota::read_namespaced_resource_quota_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedResourceQuotaStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -794,12 +822,14 @@ pub struct ReadNamespacedResourceQuotaStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedResourceQuotaStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::read_namespaced_resource_quota_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -851,6 +881,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_resource_quota(
         name: &str,
         namespace: &str,
@@ -889,6 +920,7 @@ impl ResourceQuota {
 }
 
 /// Optional parameters of [`ResourceQuota::replace_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -900,6 +932,7 @@ pub struct ReplaceNamespacedResourceQuotaOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::replace_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
@@ -907,6 +940,7 @@ pub enum ReplaceNamespacedResourceQuotaResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -966,6 +1000,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
@@ -1004,6 +1039,7 @@ impl ResourceQuota {
 }
 
 /// Optional parameters of [`ResourceQuota::replace_namespaced_resource_quota_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedResourceQuotaStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1015,6 +1051,7 @@ pub struct ReplaceNamespacedResourceQuotaStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedResourceQuotaStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::replace_namespaced_resource_quota_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_14::api::core::v1::ResourceQuota),
@@ -1022,6 +1059,7 @@ pub enum ReplaceNamespacedResourceQuotaStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1077,6 +1115,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_resource_quota(
         namespace: &str,
         optional: crate::v1_14::WatchOptional<'_>,
@@ -1098,12 +1137,14 @@ impl ResourceQuota {
 }
 
 /// Use `<WatchNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::watch_namespaced_resource_quota`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1149,6 +1190,7 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_resource_quota_for_all_namespaces(
         optional: crate::v1_14::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchResourceQuotaForAllNamespacesResponse>), crate::RequestError> {
@@ -1167,12 +1209,14 @@ impl ResourceQuota {
 }
 
 /// Use `<WatchResourceQuotaForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::watch_resource_quota_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchResourceQuotaForAllNamespacesResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchResourceQuotaForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

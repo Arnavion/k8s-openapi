@@ -30,6 +30,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_lease(
         namespace: &str,
         body: &crate::v1_15::api::coordination::v1::Lease,
@@ -66,6 +67,7 @@ impl Lease {
 }
 
 /// Optional parameters of [`Lease::create_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -77,6 +79,7 @@ pub struct CreateNamespacedLeaseOptional<'a> {
 }
 
 /// Use `<CreateNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::create_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLeaseResponse {
     Ok(crate::v1_15::api::coordination::v1::Lease),
@@ -85,6 +88,7 @@ pub enum CreateNamespacedLeaseResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -150,6 +154,7 @@ impl Lease {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_lease(
         namespace: &str,
         delete_optional: crate::v1_15::DeleteOptional<'_>,
@@ -173,6 +178,7 @@ impl Lease {
 }
 
 /// Use `<DeleteCollectionNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_collection_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLeaseResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -180,6 +186,7 @@ pub enum DeleteCollectionNamespacedLeaseResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -242,6 +249,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_lease(
         name: &str,
         namespace: &str,
@@ -263,6 +271,7 @@ impl Lease {
 }
 
 /// Use `<DeleteNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedLeaseResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -271,6 +280,7 @@ pub enum DeleteNamespacedLeaseResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -335,6 +345,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_lease_for_all_namespaces(
         optional: crate::v1_15::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLeaseForAllNamespacesResponse>), crate::RequestError> {
@@ -353,12 +364,14 @@ impl Lease {
 }
 
 /// Use `<ListLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_lease_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLeaseForAllNamespacesResponse {
     Ok(crate::v1_15::api::coordination::v1::LeaseList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListLeaseForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -406,6 +419,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_lease(
         namespace: &str,
         optional: crate::v1_15::ListOptional<'_>,
@@ -427,12 +441,14 @@ impl Lease {
 }
 
 /// Use `<ListNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLeaseResponse {
     Ok(crate::v1_15::api::coordination::v1::LeaseList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -484,6 +500,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_lease(
         name: &str,
         namespace: &str,
@@ -513,12 +530,14 @@ impl Lease {
 }
 
 /// Use `<PatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::patch_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedLeaseResponse {
     Ok(crate::v1_15::api::coordination::v1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -568,6 +587,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_lease(
         name: &str,
         namespace: &str,
@@ -604,6 +624,7 @@ impl Lease {
 }
 
 /// Optional parameters of [`Lease::read_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedLeaseOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -615,12 +636,14 @@ pub struct ReadNamespacedLeaseOptional<'a> {
 }
 
 /// Use `<ReadNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::read_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedLeaseResponse {
     Ok(crate::v1_15::api::coordination::v1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -672,6 +695,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_lease(
         name: &str,
         namespace: &str,
@@ -710,6 +734,7 @@ impl Lease {
 }
 
 /// Optional parameters of [`Lease::replace_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -721,6 +746,7 @@ pub struct ReplaceNamespacedLeaseOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::replace_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLeaseResponse {
     Ok(crate::v1_15::api::coordination::v1::Lease),
@@ -728,6 +754,7 @@ pub enum ReplaceNamespacedLeaseResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -779,6 +806,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_lease_for_all_namespaces(
         optional: crate::v1_15::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLeaseForAllNamespacesResponse>), crate::RequestError> {
@@ -797,12 +825,14 @@ impl Lease {
 }
 
 /// Use `<WatchLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_lease_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchLeaseForAllNamespacesResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchLeaseForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -852,6 +882,7 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_lease(
         namespace: &str,
         optional: crate::v1_15::WatchOptional<'_>,
@@ -873,12 +904,14 @@ impl Lease {
 }
 
 /// Use `<WatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_namespaced_lease`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

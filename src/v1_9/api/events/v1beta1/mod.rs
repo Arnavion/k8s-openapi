@@ -1,25 +1,19 @@
 
 mod event;
-pub use self::event::{
-    Event,
-    CreateNamespacedEventOptional, CreateNamespacedEventResponse,
-    DeleteCollectionNamespacedEventResponse,
-    DeleteNamespacedEventResponse,
-    ListEventForAllNamespacesResponse,
-    ListNamespacedEventResponse,
-    PatchNamespacedEventResponse,
-    ReadNamespacedEventOptional, ReadNamespacedEventResponse,
-    ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
-    WatchEventForAllNamespacesResponse,
-    WatchNamespacedEventResponse,
-};
+pub use self::event::Event;
+#[cfg(feature = "api")] pub use self::event::{CreateNamespacedEventOptional, CreateNamespacedEventResponse};
+#[cfg(feature = "api")] pub use self::event::DeleteCollectionNamespacedEventResponse;
+#[cfg(feature = "api")] pub use self::event::DeleteNamespacedEventResponse;
+#[cfg(feature = "api")] pub use self::event::ListEventForAllNamespacesResponse;
+#[cfg(feature = "api")] pub use self::event::ListNamespacedEventResponse;
+#[cfg(feature = "api")] pub use self::event::PatchNamespacedEventResponse;
+#[cfg(feature = "api")] pub use self::event::{ReadNamespacedEventOptional, ReadNamespacedEventResponse};
+#[cfg(feature = "api")] pub use self::event::{ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse};
+#[cfg(feature = "api")] pub use self::event::WatchEventForAllNamespacesResponse;
+#[cfg(feature = "api")] pub use self::event::WatchNamespacedEventResponse;
 
 mod event_list;
-pub use self::event_list::{
-    EventList,
-};
+pub use self::event_list::EventList;
 
 mod event_series;
-pub use self::event_series::{
-    EventSeries,
-};
+pub use self::event_series::EventSeries;

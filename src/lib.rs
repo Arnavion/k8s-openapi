@@ -266,6 +266,17 @@
 //! }
 //! ```
 //!
+//!
+//! # Crate features
+//!
+//! - As mentioned above, enabling one of the `v1_*` features selects which version of the Kubernetes API server this crate should target.
+//!
+//! - If the `api` feature is disabled, the library will only contain the resource types like [`api::core::v1::Pod`] and not the associated operation functions
+//!   like [`api::core::v1::Pod::read_namespaced_pod`]. The corresponding `Response` and `Optional` types will also not be accessible.
+//!
+//!   This feature is enabled by default, but can be disabled if your crate does not need the operation functions to save on compile time and resources.
+//!
+//!
 //! # Custom resource definitions
 //!
 //! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating clientsets

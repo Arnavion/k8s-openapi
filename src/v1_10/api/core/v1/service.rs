@@ -33,6 +33,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_delete_namespaced_service_proxy(
         name: &str,
         namespace: &str,
@@ -58,6 +59,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -86,6 +88,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_delete_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
@@ -113,6 +116,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -137,6 +141,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_get_namespaced_service_proxy(
         name: &str,
         namespace: &str,
@@ -162,6 +167,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_get_namespaced_service_proxy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -190,6 +196,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_get_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
@@ -217,6 +224,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -241,6 +249,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_patch_namespaced_service_proxy(
         name: &str,
         namespace: &str,
@@ -266,6 +275,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -294,6 +304,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_patch_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
@@ -321,6 +332,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -345,6 +357,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_post_namespaced_service_proxy(
         name: &str,
         namespace: &str,
@@ -370,6 +383,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_post_namespaced_service_proxy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -398,6 +412,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_post_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
@@ -425,6 +440,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -449,6 +465,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_put_namespaced_service_proxy(
         name: &str,
         namespace: &str,
@@ -474,6 +491,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_put_namespaced_service_proxy`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -502,6 +520,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn connect_put_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
@@ -529,6 +548,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
@@ -553,6 +573,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_service(
         namespace: &str,
         body: &crate::v1_10::api::core::v1::Service,
@@ -581,6 +602,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::create_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -588,6 +610,7 @@ pub struct CreateNamespacedServiceOptional<'a> {
 }
 
 /// Use `<CreateNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::create_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceResponse {
     Ok(crate::v1_10::api::core::v1::Service),
@@ -596,6 +619,7 @@ pub enum CreateNamespacedServiceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -661,6 +685,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_service(
         name: &str,
         namespace: &str,
@@ -682,6 +707,7 @@ impl Service {
 }
 
 /// Use `<DeleteNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::delete_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -689,6 +715,7 @@ pub enum DeleteNamespacedServiceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -749,6 +776,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_service(
         namespace: &str,
         optional: crate::v1_10::ListOptional<'_>,
@@ -770,12 +798,14 @@ impl Service {
 }
 
 /// Use `<ListNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceResponse {
     Ok(crate::v1_10::api::core::v1::ServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -819,6 +849,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_service_for_all_namespaces(
         optional: crate::v1_10::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceForAllNamespacesResponse>), crate::RequestError> {
@@ -837,12 +868,14 @@ impl Service {
 }
 
 /// Use `<ListServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_service_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceForAllNamespacesResponse {
     Ok(crate::v1_10::api::core::v1::ServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListServiceForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -894,6 +927,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_service(
         name: &str,
         namespace: &str,
@@ -923,12 +957,14 @@ impl Service {
 }
 
 /// Use `<PatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::patch_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceResponse {
     Ok(crate::v1_10::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -980,6 +1016,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_service_status(
         name: &str,
         namespace: &str,
@@ -1009,12 +1046,14 @@ impl Service {
 }
 
 /// Use `<PatchNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::patch_namespaced_service_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1064,6 +1103,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_service(
         name: &str,
         namespace: &str,
@@ -1100,6 +1140,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::read_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -1111,12 +1152,14 @@ pub struct ReadNamespacedServiceOptional<'a> {
 }
 
 /// Use `<ReadNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceResponse {
     Ok(crate::v1_10::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1166,6 +1209,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_service_status(
         name: &str,
         namespace: &str,
@@ -1194,6 +1238,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::read_namespaced_service_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -1201,12 +1246,14 @@ pub struct ReadNamespacedServiceStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1258,6 +1305,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_service(
         name: &str,
         namespace: &str,
@@ -1288,6 +1336,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::replace_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -1295,6 +1344,7 @@ pub struct ReplaceNamespacedServiceOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::replace_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceResponse {
     Ok(crate::v1_10::api::core::v1::Service),
@@ -1302,6 +1352,7 @@ pub enum ReplaceNamespacedServiceResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1361,6 +1412,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_service_status(
         name: &str,
         namespace: &str,
@@ -1391,6 +1443,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::replace_namespaced_service_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -1398,6 +1451,7 @@ pub struct ReplaceNamespacedServiceStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::replace_namespaced_service_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Service),
@@ -1405,6 +1459,7 @@ pub enum ReplaceNamespacedServiceStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1460,6 +1515,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_service(
         namespace: &str,
         optional: crate::v1_10::WatchOptional<'_>,
@@ -1481,12 +1537,14 @@ impl Service {
 }
 
 /// Use `<WatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1532,6 +1590,7 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_service_for_all_namespaces(
         optional: crate::v1_10::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceForAllNamespacesResponse>), crate::RequestError> {
@@ -1550,12 +1609,14 @@ impl Service {
 }
 
 /// Use `<WatchServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_service_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchServiceForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchServiceForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

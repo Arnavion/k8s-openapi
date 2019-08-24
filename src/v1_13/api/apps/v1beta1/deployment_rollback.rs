@@ -37,6 +37,7 @@ impl DeploymentRollback {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_deployment_rollback(
         name: &str,
         namespace: &str,
@@ -75,6 +76,7 @@ impl DeploymentRollback {
 }
 
 /// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -86,6 +88,7 @@ pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
 }
 
 /// Use `<CreateNamespacedDeploymentRollbackResponse as Response>::try_from_parts` to parse the HTTP response body of [`DeploymentRollback::create_namespaced_deployment_rollback`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentRollbackResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -94,6 +97,7 @@ pub enum CreateNamespacedDeploymentRollbackResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

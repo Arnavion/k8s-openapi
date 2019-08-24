@@ -32,6 +32,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_priority_class(
         body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
         optional: CreatePriorityClassOptional<'_>,
@@ -65,6 +66,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::create_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -76,6 +78,7 @@ pub struct CreatePriorityClassOptional<'a> {
 }
 
 /// Use `<CreatePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::create_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreatePriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -84,6 +87,7 @@ pub enum CreatePriorityClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreatePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -145,6 +149,7 @@ impl PriorityClass {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_priority_class(
         delete_optional: crate::v1_12::DeleteOptional<'_>,
         list_optional: crate::v1_12::ListOptional<'_>,
@@ -165,6 +170,7 @@ impl PriorityClass {
 }
 
 /// Use `<DeleteCollectionPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::delete_collection_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionPriorityClassResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -172,6 +178,7 @@ pub enum DeleteCollectionPriorityClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -230,6 +237,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_priority_class(
         name: &str,
         optional: crate::v1_12::DeleteOptional<'_>,
@@ -249,6 +257,7 @@ impl PriorityClass {
 }
 
 /// Use `<DeletePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::delete_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeletePriorityClassResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -257,6 +266,7 @@ pub enum DeletePriorityClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeletePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -321,6 +331,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_priority_class(
         optional: crate::v1_12::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPriorityClassResponse>), crate::RequestError> {
@@ -339,12 +350,14 @@ impl PriorityClass {
 }
 
 /// Use `<ListPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::list_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -392,6 +405,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_priority_class(
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
@@ -419,12 +433,14 @@ impl PriorityClass {
 }
 
 /// Use `<PatchPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::patch_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -470,6 +486,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_priority_class(
         name: &str,
         optional: ReadPriorityClassOptional<'_>,
@@ -504,6 +521,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::read_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPriorityClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -515,12 +533,14 @@ pub struct ReadPriorityClassOptional<'a> {
 }
 
 /// Use `<ReadPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::read_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -568,6 +588,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_priority_class(
         name: &str,
         body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
@@ -600,6 +621,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::replace_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -609,6 +631,7 @@ pub struct ReplacePriorityClassOptional<'a> {
 }
 
 /// Use `<ReplacePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::replace_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplacePriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -616,6 +639,7 @@ pub enum ReplacePriorityClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplacePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -667,6 +691,7 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_priority_class(
         optional: crate::v1_12::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPriorityClassResponse>), crate::RequestError> {
@@ -685,12 +710,14 @@ impl PriorityClass {
 }
 
 /// Use `<WatchPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::watch_priority_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPriorityClassResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PriorityClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

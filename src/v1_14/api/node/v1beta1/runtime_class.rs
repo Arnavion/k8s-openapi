@@ -26,6 +26,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_runtime_class(
         body: &crate::v1_14::api::node::v1beta1::RuntimeClass,
         optional: CreateRuntimeClassOptional<'_>,
@@ -59,6 +60,7 @@ impl RuntimeClass {
 }
 
 /// Optional parameters of [`RuntimeClass::create_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateRuntimeClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -70,6 +72,7 @@ pub struct CreateRuntimeClassOptional<'a> {
 }
 
 /// Use `<CreateRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::create_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
@@ -78,6 +81,7 @@ pub enum CreateRuntimeClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -139,6 +143,7 @@ impl RuntimeClass {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_runtime_class(
         delete_optional: crate::v1_14::DeleteOptional<'_>,
         list_optional: crate::v1_14::ListOptional<'_>,
@@ -159,6 +164,7 @@ impl RuntimeClass {
 }
 
 /// Use `<DeleteCollectionRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::delete_collection_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionRuntimeClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -166,6 +172,7 @@ pub enum DeleteCollectionRuntimeClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -224,6 +231,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_runtime_class(
         name: &str,
         optional: crate::v1_14::DeleteOptional<'_>,
@@ -243,6 +251,7 @@ impl RuntimeClass {
 }
 
 /// Use `<DeleteRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::delete_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteRuntimeClassResponse {
     OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
@@ -251,6 +260,7 @@ pub enum DeleteRuntimeClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -315,6 +325,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_runtime_class(
         optional: crate::v1_14::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRuntimeClassResponse>), crate::RequestError> {
@@ -333,12 +344,14 @@ impl RuntimeClass {
 }
 
 /// Use `<ListRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::list_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -386,6 +399,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_runtime_class(
         name: &str,
         body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
@@ -413,12 +427,14 @@ impl RuntimeClass {
 }
 
 /// Use `<PatchRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::patch_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -464,6 +480,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_runtime_class(
         name: &str,
         optional: ReadRuntimeClassOptional<'_>,
@@ -498,6 +515,7 @@ impl RuntimeClass {
 }
 
 /// Optional parameters of [`RuntimeClass::read_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadRuntimeClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -509,12 +527,14 @@ pub struct ReadRuntimeClassOptional<'a> {
 }
 
 /// Use `<ReadRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::read_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -562,6 +582,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_runtime_class(
         name: &str,
         body: &crate::v1_14::api::node::v1beta1::RuntimeClass,
@@ -598,6 +619,7 @@ impl RuntimeClass {
 }
 
 /// Optional parameters of [`RuntimeClass::replace_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceRuntimeClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -609,6 +631,7 @@ pub struct ReplaceRuntimeClassOptional<'a> {
 }
 
 /// Use `<ReplaceRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::replace_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceRuntimeClassResponse {
     Ok(crate::v1_14::api::node::v1beta1::RuntimeClass),
@@ -616,6 +639,7 @@ pub enum ReplaceRuntimeClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -667,6 +691,7 @@ impl RuntimeClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_runtime_class(
         optional: crate::v1_14::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRuntimeClassResponse>), crate::RequestError> {
@@ -685,12 +710,14 @@ impl RuntimeClass {
 }
 
 /// Use `<WatchRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::watch_runtime_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchRuntimeClassResponse {
     Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchRuntimeClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

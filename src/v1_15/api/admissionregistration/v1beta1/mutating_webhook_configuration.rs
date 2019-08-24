@@ -26,6 +26,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_mutating_webhook_configuration(
         body: &crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         optional: CreateMutatingWebhookConfigurationOptional<'_>,
@@ -59,6 +60,7 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -70,6 +72,7 @@ pub struct CreateMutatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<CreateMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -78,6 +81,7 @@ pub enum CreateMutatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -139,6 +143,7 @@ impl MutatingWebhookConfiguration {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_mutating_webhook_configuration(
         delete_optional: crate::v1_15::DeleteOptional<'_>,
         list_optional: crate::v1_15::ListOptional<'_>,
@@ -159,6 +164,7 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Use `<DeleteCollectionMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -166,6 +172,7 @@ pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -224,6 +231,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_mutating_webhook_configuration(
         name: &str,
         optional: crate::v1_15::DeleteOptional<'_>,
@@ -243,6 +251,7 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Use `<DeleteMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -251,6 +260,7 @@ pub enum DeleteMutatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -315,6 +325,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_mutating_webhook_configuration(
         optional: crate::v1_15::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListMutatingWebhookConfigurationResponse>), crate::RequestError> {
@@ -333,12 +344,14 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Use `<ListMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -386,6 +399,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_mutating_webhook_configuration(
         name: &str,
         body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
@@ -413,12 +427,14 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Use `<PatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -464,6 +480,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_mutating_webhook_configuration(
         name: &str,
         optional: ReadMutatingWebhookConfigurationOptional<'_>,
@@ -498,6 +515,7 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadMutatingWebhookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -509,12 +527,14 @@ pub struct ReadMutatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<ReadMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -562,6 +582,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_mutating_webhook_configuration(
         name: &str,
         body: &crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
@@ -598,6 +619,7 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -609,6 +631,7 @@ pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<ReplaceMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -616,6 +639,7 @@ pub enum ReplaceMutatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -667,6 +691,7 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_mutating_webhook_configuration(
         optional: crate::v1_15::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchMutatingWebhookConfigurationResponse>), crate::RequestError> {
@@ -685,12 +710,14 @@ impl MutatingWebhookConfiguration {
 }
 
 /// Use `<WatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<MutatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

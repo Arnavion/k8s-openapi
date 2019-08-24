@@ -69,6 +69,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_event(
         namespace: &str,
         body: &crate::v1_15::api::core::v1::Event,
@@ -105,6 +106,7 @@ impl Event {
 }
 
 /// Optional parameters of [`Event::create_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -116,6 +118,7 @@ pub struct CreateNamespacedEventOptional<'a> {
 }
 
 /// Use `<CreateNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::create_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedEventResponse {
     Ok(crate::v1_15::api::core::v1::Event),
@@ -124,6 +127,7 @@ pub enum CreateNamespacedEventResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -189,6 +193,7 @@ impl Event {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_event(
         namespace: &str,
         delete_optional: crate::v1_15::DeleteOptional<'_>,
@@ -212,6 +217,7 @@ impl Event {
 }
 
 /// Use `<DeleteCollectionNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::delete_collection_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEventResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -219,6 +225,7 @@ pub enum DeleteCollectionNamespacedEventResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -281,6 +288,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_event(
         name: &str,
         namespace: &str,
@@ -302,6 +310,7 @@ impl Event {
 }
 
 /// Use `<DeleteNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::delete_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedEventResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -310,6 +319,7 @@ pub enum DeleteNamespacedEventResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -374,6 +384,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_event_for_all_namespaces(
         optional: crate::v1_15::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEventForAllNamespacesResponse>), crate::RequestError> {
@@ -392,12 +403,14 @@ impl Event {
 }
 
 /// Use `<ListEventForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::list_event_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListEventForAllNamespacesResponse {
     Ok(crate::v1_15::api::core::v1::EventList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListEventForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -445,6 +458,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_event(
         namespace: &str,
         optional: crate::v1_15::ListOptional<'_>,
@@ -466,12 +480,14 @@ impl Event {
 }
 
 /// Use `<ListNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::list_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedEventResponse {
     Ok(crate::v1_15::api::core::v1::EventList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -523,6 +539,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_event(
         name: &str,
         namespace: &str,
@@ -552,12 +569,14 @@ impl Event {
 }
 
 /// Use `<PatchNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::patch_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedEventResponse {
     Ok(crate::v1_15::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -607,6 +626,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_event(
         name: &str,
         namespace: &str,
@@ -643,6 +663,7 @@ impl Event {
 }
 
 /// Optional parameters of [`Event::read_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedEventOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -654,12 +675,14 @@ pub struct ReadNamespacedEventOptional<'a> {
 }
 
 /// Use `<ReadNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::read_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedEventResponse {
     Ok(crate::v1_15::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -711,6 +734,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_event(
         name: &str,
         namespace: &str,
@@ -749,6 +773,7 @@ impl Event {
 }
 
 /// Optional parameters of [`Event::replace_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -760,6 +785,7 @@ pub struct ReplaceNamespacedEventOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::replace_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedEventResponse {
     Ok(crate::v1_15::api::core::v1::Event),
@@ -767,6 +793,7 @@ pub enum ReplaceNamespacedEventResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -818,6 +845,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_event_for_all_namespaces(
         optional: crate::v1_15::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEventForAllNamespacesResponse>), crate::RequestError> {
@@ -836,12 +864,14 @@ impl Event {
 }
 
 /// Use `<WatchEventForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_event_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchEventForAllNamespacesResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchEventForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -891,6 +921,7 @@ impl Event {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_event(
         namespace: &str,
         optional: crate::v1_15::WatchOptional<'_>,
@@ -912,12 +943,14 @@ impl Event {
 }
 
 /// Use `<WatchNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_namespaced_event`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedEventResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedEventResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

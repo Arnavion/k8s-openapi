@@ -29,6 +29,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_cluster_role(
         body: &crate::v1_15::api::rbac::v1alpha1::ClusterRole,
         optional: CreateClusterRoleOptional<'_>,
@@ -62,6 +63,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::create_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -73,6 +75,7 @@ pub struct CreateClusterRoleOptional<'a> {
 }
 
 /// Use `<CreateClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::create_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateClusterRoleResponse {
     Ok(crate::v1_15::api::rbac::v1alpha1::ClusterRole),
@@ -81,6 +84,7 @@ pub enum CreateClusterRoleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -142,6 +146,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_cluster_role(
         name: &str,
         optional: crate::v1_15::DeleteOptional<'_>,
@@ -161,6 +166,7 @@ impl ClusterRole {
 }
 
 /// Use `<DeleteClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteClusterRoleResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -169,6 +175,7 @@ pub enum DeleteClusterRoleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -235,6 +242,7 @@ impl ClusterRole {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_cluster_role(
         delete_optional: crate::v1_15::DeleteOptional<'_>,
         list_optional: crate::v1_15::ListOptional<'_>,
@@ -255,6 +263,7 @@ impl ClusterRole {
 }
 
 /// Use `<DeleteCollectionClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_collection_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -262,6 +271,7 @@ pub enum DeleteCollectionClusterRoleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -318,6 +328,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_cluster_role(
         optional: crate::v1_15::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleResponse>), crate::RequestError> {
@@ -336,12 +347,14 @@ impl ClusterRole {
 }
 
 /// Use `<ListClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::list_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleResponse {
     Ok(crate::v1_15::api::rbac::v1alpha1::ClusterRoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -389,6 +402,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_cluster_role(
         name: &str,
         body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
@@ -416,12 +430,14 @@ impl ClusterRole {
 }
 
 /// Use `<PatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::patch_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchClusterRoleResponse {
     Ok(crate::v1_15::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -467,6 +483,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_cluster_role(
         name: &str,
         optional: ReadClusterRoleOptional<'_>,
@@ -493,6 +510,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::read_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -500,12 +518,14 @@ pub struct ReadClusterRoleOptional<'a> {
 }
 
 /// Use `<ReadClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::read_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadClusterRoleResponse {
     Ok(crate::v1_15::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -553,6 +573,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_cluster_role(
         name: &str,
         body: &crate::v1_15::api::rbac::v1alpha1::ClusterRole,
@@ -589,6 +610,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::replace_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -600,6 +622,7 @@ pub struct ReplaceClusterRoleOptional<'a> {
 }
 
 /// Use `<ReplaceClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::replace_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceClusterRoleResponse {
     Ok(crate::v1_15::api::rbac::v1alpha1::ClusterRole),
@@ -607,6 +630,7 @@ pub enum ReplaceClusterRoleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -658,6 +682,7 @@ impl ClusterRole {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_cluster_role(
         optional: crate::v1_15::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleResponse>), crate::RequestError> {
@@ -676,12 +701,14 @@ impl ClusterRole {
 }
 
 /// Use `<WatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::watch_cluster_role`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchClusterRoleResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchClusterRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

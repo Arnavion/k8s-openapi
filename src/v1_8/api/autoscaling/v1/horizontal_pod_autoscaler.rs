@@ -33,6 +33,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler,
@@ -61,6 +62,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Optional parameters of [`HorizontalPodAutoscaler::create_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -68,12 +70,14 @@ pub struct CreateNamespacedHorizontalPodAutoscalerOptional<'a> {
 }
 
 /// Use `<CreateNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::create_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -123,6 +127,7 @@ impl HorizontalPodAutoscaler {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
         delete_optional: crate::v1_8::DeleteOptional<'_>,
@@ -146,6 +151,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<DeleteCollectionNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::delete_collection_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -153,6 +159,7 @@ pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -215,6 +222,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
@@ -236,6 +244,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<DeleteNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::delete_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -243,6 +252,7 @@ pub enum DeleteNamespacedHorizontalPodAutoscalerResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -299,6 +309,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_horizontal_pod_autoscaler_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
@@ -317,12 +328,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<ListHorizontalPodAutoscalerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::list_horizontal_pod_autoscaler_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListHorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListHorizontalPodAutoscalerForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -370,6 +383,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
         optional: crate::v1_8::ListOptional<'_>,
@@ -391,12 +405,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<ListNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::list_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -448,6 +464,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
@@ -477,12 +494,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<PatchNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -534,6 +553,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
@@ -563,12 +583,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<PatchNamespacedHorizontalPodAutoscalerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -618,6 +640,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
@@ -654,6 +677,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Optional parameters of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -665,12 +689,14 @@ pub struct ReadNamespacedHorizontalPodAutoscalerOptional<'a> {
 }
 
 /// Use `<ReadNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -720,6 +746,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
@@ -748,6 +775,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Optional parameters of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -755,12 +783,14 @@ pub struct ReadNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedHorizontalPodAutoscalerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -812,6 +842,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
@@ -842,6 +873,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Optional parameters of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -849,12 +881,14 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -906,6 +940,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
@@ -936,6 +971,7 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Optional parameters of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -943,12 +979,14 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedHorizontalPodAutoscalerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -992,6 +1030,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_horizontal_pod_autoscaler_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
@@ -1010,12 +1049,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<WatchHorizontalPodAutoscalerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchHorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchHorizontalPodAutoscalerForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1065,6 +1106,7 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
         optional: crate::v1_8::WatchOptional<'_>,
@@ -1086,12 +1128,14 @@ impl HorizontalPodAutoscaler {
 }
 
 /// Use `<WatchNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

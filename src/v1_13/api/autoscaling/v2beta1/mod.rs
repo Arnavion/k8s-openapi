@@ -1,93 +1,61 @@
 
 mod cross_version_object_reference;
-pub use self::cross_version_object_reference::{
-    CrossVersionObjectReference,
-};
+pub use self::cross_version_object_reference::CrossVersionObjectReference;
 
 mod external_metric_source;
-pub use self::external_metric_source::{
-    ExternalMetricSource,
-};
+pub use self::external_metric_source::ExternalMetricSource;
 
 mod external_metric_status;
-pub use self::external_metric_status::{
-    ExternalMetricStatus,
-};
+pub use self::external_metric_status::ExternalMetricStatus;
 
 mod horizontal_pod_autoscaler;
-pub use self::horizontal_pod_autoscaler::{
-    HorizontalPodAutoscaler,
-    CreateNamespacedHorizontalPodAutoscalerOptional, CreateNamespacedHorizontalPodAutoscalerResponse,
-    DeleteCollectionNamespacedHorizontalPodAutoscalerResponse,
-    DeleteNamespacedHorizontalPodAutoscalerResponse,
-    ListHorizontalPodAutoscalerForAllNamespacesResponse,
-    ListNamespacedHorizontalPodAutoscalerResponse,
-    PatchNamespacedHorizontalPodAutoscalerResponse,
-    PatchNamespacedHorizontalPodAutoscalerStatusResponse,
-    ReadNamespacedHorizontalPodAutoscalerOptional, ReadNamespacedHorizontalPodAutoscalerResponse,
-    ReadNamespacedHorizontalPodAutoscalerStatusOptional, ReadNamespacedHorizontalPodAutoscalerStatusResponse,
-    ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse,
-    ReplaceNamespacedHorizontalPodAutoscalerStatusOptional, ReplaceNamespacedHorizontalPodAutoscalerStatusResponse,
-    WatchHorizontalPodAutoscalerForAllNamespacesResponse,
-    WatchNamespacedHorizontalPodAutoscalerResponse,
-};
+pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{CreateNamespacedHorizontalPodAutoscalerOptional, CreateNamespacedHorizontalPodAutoscalerResponse};
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::DeleteCollectionNamespacedHorizontalPodAutoscalerResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::DeleteNamespacedHorizontalPodAutoscalerResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ListHorizontalPodAutoscalerForAllNamespacesResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ListNamespacedHorizontalPodAutoscalerResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::PatchNamespacedHorizontalPodAutoscalerResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::PatchNamespacedHorizontalPodAutoscalerStatusResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReadNamespacedHorizontalPodAutoscalerOptional, ReadNamespacedHorizontalPodAutoscalerResponse};
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReadNamespacedHorizontalPodAutoscalerStatusOptional, ReadNamespacedHorizontalPodAutoscalerStatusResponse};
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse};
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReplaceNamespacedHorizontalPodAutoscalerStatusOptional, ReplaceNamespacedHorizontalPodAutoscalerStatusResponse};
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::WatchHorizontalPodAutoscalerForAllNamespacesResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::WatchNamespacedHorizontalPodAutoscalerResponse;
 
 mod horizontal_pod_autoscaler_condition;
-pub use self::horizontal_pod_autoscaler_condition::{
-    HorizontalPodAutoscalerCondition,
-};
+pub use self::horizontal_pod_autoscaler_condition::HorizontalPodAutoscalerCondition;
 
 mod horizontal_pod_autoscaler_list;
-pub use self::horizontal_pod_autoscaler_list::{
-    HorizontalPodAutoscalerList,
-};
+pub use self::horizontal_pod_autoscaler_list::HorizontalPodAutoscalerList;
 
 mod horizontal_pod_autoscaler_spec;
-pub use self::horizontal_pod_autoscaler_spec::{
-    HorizontalPodAutoscalerSpec,
-};
+pub use self::horizontal_pod_autoscaler_spec::HorizontalPodAutoscalerSpec;
 
 mod horizontal_pod_autoscaler_status;
-pub use self::horizontal_pod_autoscaler_status::{
-    HorizontalPodAutoscalerStatus,
-};
+pub use self::horizontal_pod_autoscaler_status::HorizontalPodAutoscalerStatus;
 
 mod metric_spec;
-pub use self::metric_spec::{
-    MetricSpec,
-};
+pub use self::metric_spec::MetricSpec;
 
 mod metric_status;
-pub use self::metric_status::{
-    MetricStatus,
-};
+pub use self::metric_status::MetricStatus;
 
 mod object_metric_source;
-pub use self::object_metric_source::{
-    ObjectMetricSource,
-};
+pub use self::object_metric_source::ObjectMetricSource;
 
 mod object_metric_status;
-pub use self::object_metric_status::{
-    ObjectMetricStatus,
-};
+pub use self::object_metric_status::ObjectMetricStatus;
 
 mod pods_metric_source;
-pub use self::pods_metric_source::{
-    PodsMetricSource,
-};
+pub use self::pods_metric_source::PodsMetricSource;
 
 mod pods_metric_status;
-pub use self::pods_metric_status::{
-    PodsMetricStatus,
-};
+pub use self::pods_metric_status::PodsMetricStatus;
 
 mod resource_metric_source;
-pub use self::resource_metric_source::{
-    ResourceMetricSource,
-};
+pub use self::resource_metric_source::ResourceMetricSource;
 
 mod resource_metric_status;
-pub use self::resource_metric_status::{
-    ResourceMetricStatus,
-};
+pub use self::resource_metric_status::ResourceMetricStatus;

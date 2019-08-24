@@ -1,56 +1,40 @@
 
 mod storage_class;
-pub use self::storage_class::{
-    StorageClass,
-    CreateStorageClassOptional, CreateStorageClassResponse,
-    DeleteCollectionStorageClassResponse,
-    DeleteStorageClassResponse,
-    ListStorageClassResponse,
-    PatchStorageClassResponse,
-    ReadStorageClassOptional, ReadStorageClassResponse,
-    ReplaceStorageClassOptional, ReplaceStorageClassResponse,
-    WatchStorageClassResponse,
-};
+pub use self::storage_class::StorageClass;
+#[cfg(feature = "api")] pub use self::storage_class::{CreateStorageClassOptional, CreateStorageClassResponse};
+#[cfg(feature = "api")] pub use self::storage_class::DeleteCollectionStorageClassResponse;
+#[cfg(feature = "api")] pub use self::storage_class::DeleteStorageClassResponse;
+#[cfg(feature = "api")] pub use self::storage_class::ListStorageClassResponse;
+#[cfg(feature = "api")] pub use self::storage_class::PatchStorageClassResponse;
+#[cfg(feature = "api")] pub use self::storage_class::{ReadStorageClassOptional, ReadStorageClassResponse};
+#[cfg(feature = "api")] pub use self::storage_class::{ReplaceStorageClassOptional, ReplaceStorageClassResponse};
+#[cfg(feature = "api")] pub use self::storage_class::WatchStorageClassResponse;
 
 mod storage_class_list;
-pub use self::storage_class_list::{
-    StorageClassList,
-};
+pub use self::storage_class_list::StorageClassList;
 
 mod volume_attachment;
-pub use self::volume_attachment::{
-    VolumeAttachment,
-    CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse,
-    DeleteCollectionVolumeAttachmentResponse,
-    DeleteVolumeAttachmentResponse,
-    ListVolumeAttachmentResponse,
-    PatchVolumeAttachmentResponse,
-    ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,
-    ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse,
-    WatchVolumeAttachmentResponse,
-};
+pub use self::volume_attachment::VolumeAttachment;
+#[cfg(feature = "api")] pub use self::volume_attachment::{CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse};
+#[cfg(feature = "api")] pub use self::volume_attachment::DeleteCollectionVolumeAttachmentResponse;
+#[cfg(feature = "api")] pub use self::volume_attachment::DeleteVolumeAttachmentResponse;
+#[cfg(feature = "api")] pub use self::volume_attachment::ListVolumeAttachmentResponse;
+#[cfg(feature = "api")] pub use self::volume_attachment::PatchVolumeAttachmentResponse;
+#[cfg(feature = "api")] pub use self::volume_attachment::{ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse};
+#[cfg(feature = "api")] pub use self::volume_attachment::{ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse};
+#[cfg(feature = "api")] pub use self::volume_attachment::WatchVolumeAttachmentResponse;
 
 mod volume_attachment_list;
-pub use self::volume_attachment_list::{
-    VolumeAttachmentList,
-};
+pub use self::volume_attachment_list::VolumeAttachmentList;
 
 mod volume_attachment_source;
-pub use self::volume_attachment_source::{
-    VolumeAttachmentSource,
-};
+pub use self::volume_attachment_source::VolumeAttachmentSource;
 
 mod volume_attachment_spec;
-pub use self::volume_attachment_spec::{
-    VolumeAttachmentSpec,
-};
+pub use self::volume_attachment_spec::VolumeAttachmentSpec;
 
 mod volume_attachment_status;
-pub use self::volume_attachment_status::{
-    VolumeAttachmentStatus,
-};
+pub use self::volume_attachment_status::VolumeAttachmentStatus;
 
 mod volume_error;
-pub use self::volume_error::{
-    VolumeError,
-};
+pub use self::volume_error::VolumeError;

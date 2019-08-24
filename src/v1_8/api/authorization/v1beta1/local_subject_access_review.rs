@@ -32,6 +32,7 @@ impl LocalSubjectAccessReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_local_subject_access_review(
         namespace: &str,
         body: &crate::v1_8::api::authorization::v1beta1::LocalSubjectAccessReview,
@@ -60,6 +61,7 @@ impl LocalSubjectAccessReview {
 }
 
 /// Optional parameters of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -67,12 +69,14 @@ pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
 }
 
 /// Use `<CreateNamespacedLocalSubjectAccessReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLocalSubjectAccessReviewResponse {
     Ok(crate::v1_8::api::authorization::v1beta1::LocalSubjectAccessReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedLocalSubjectAccessReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

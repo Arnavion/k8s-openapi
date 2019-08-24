@@ -28,6 +28,7 @@ impl TokenReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_token_review(
         body: &crate::v1_9::api::authentication::v1beta1::TokenReview,
         optional: CreateTokenReviewOptional<'_>,
@@ -53,6 +54,7 @@ impl TokenReview {
 }
 
 /// Optional parameters of [`TokenReview::create_token_review`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateTokenReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -60,6 +62,7 @@ pub struct CreateTokenReviewOptional<'a> {
 }
 
 /// Use `<CreateTokenReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`TokenReview::create_token_review`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateTokenReviewResponse {
     Ok(crate::v1_9::api::authentication::v1beta1::TokenReview),
@@ -68,6 +71,7 @@ pub enum CreateTokenReviewResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateTokenReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

@@ -1,5 +1,3 @@
 
 mod info;
-pub use self::info::{
-    Info,
-};
+pub use self::info::Info;

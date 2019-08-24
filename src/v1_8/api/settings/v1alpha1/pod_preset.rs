@@ -28,6 +28,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_pod_preset(
         namespace: &str,
         body: &crate::v1_8::api::settings::v1alpha1::PodPreset,
@@ -56,6 +57,7 @@ impl PodPreset {
 }
 
 /// Optional parameters of [`PodPreset::create_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodPresetOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -63,12 +65,14 @@ pub struct CreateNamespacedPodPresetOptional<'a> {
 }
 
 /// Use `<CreateNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::create_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -118,6 +122,7 @@ impl PodPreset {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_pod_preset(
         namespace: &str,
         delete_optional: crate::v1_8::DeleteOptional<'_>,
@@ -141,6 +146,7 @@ impl PodPreset {
 }
 
 /// Use `<DeleteCollectionNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::delete_collection_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodPresetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -148,6 +154,7 @@ pub enum DeleteCollectionNamespacedPodPresetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -210,6 +217,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_pod_preset(
         name: &str,
         namespace: &str,
@@ -231,6 +239,7 @@ impl PodPreset {
 }
 
 /// Use `<DeleteNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::delete_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodPresetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,6 +247,7 @@ pub enum DeleteNamespacedPodPresetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -298,6 +308,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_pod_preset(
         namespace: &str,
         optional: crate::v1_8::ListOptional<'_>,
@@ -319,12 +330,14 @@ impl PodPreset {
 }
 
 /// Use `<ListNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::list_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPresetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -368,6 +381,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_pod_preset_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodPresetForAllNamespacesResponse>), crate::RequestError> {
@@ -386,12 +400,14 @@ impl PodPreset {
 }
 
 /// Use `<ListPodPresetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::list_pod_preset_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodPresetForAllNamespacesResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPresetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListPodPresetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -443,6 +459,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_pod_preset(
         name: &str,
         namespace: &str,
@@ -472,12 +489,14 @@ impl PodPreset {
 }
 
 /// Use `<PatchNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::patch_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -527,6 +546,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_pod_preset(
         name: &str,
         namespace: &str,
@@ -563,6 +583,7 @@ impl PodPreset {
 }
 
 /// Optional parameters of [`PodPreset::read_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodPresetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -574,12 +595,14 @@ pub struct ReadNamespacedPodPresetOptional<'a> {
 }
 
 /// Use `<ReadNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::read_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -631,6 +654,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_pod_preset(
         name: &str,
         namespace: &str,
@@ -661,6 +685,7 @@ impl PodPreset {
 }
 
 /// Optional parameters of [`PodPreset::replace_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodPresetOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -668,12 +693,14 @@ pub struct ReplaceNamespacedPodPresetOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::replace_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -721,6 +748,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_pod_preset(
         namespace: &str,
         optional: crate::v1_8::WatchOptional<'_>,
@@ -742,12 +770,14 @@ impl PodPreset {
 }
 
 /// Use `<WatchNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_namespaced_pod_preset`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPodPresetResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -793,6 +823,7 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_pod_preset_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodPresetForAllNamespacesResponse>), crate::RequestError> {
@@ -811,12 +842,14 @@ impl PodPreset {
 }
 
 /// Use `<WatchPodPresetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_pod_preset_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodPresetForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchPodPresetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

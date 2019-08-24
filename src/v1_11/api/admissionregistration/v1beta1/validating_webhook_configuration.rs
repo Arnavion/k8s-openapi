@@ -26,6 +26,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_validating_webhook_configuration(
         body: &crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         optional: CreateValidatingWebhookConfigurationOptional<'_>,
@@ -51,6 +52,7 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateValidatingWebhookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -58,6 +60,7 @@ pub struct CreateValidatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<CreateValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -66,6 +69,7 @@ pub enum CreateValidatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -127,6 +131,7 @@ impl ValidatingWebhookConfiguration {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_validating_webhook_configuration(
         delete_optional: crate::v1_11::DeleteOptional<'_>,
         list_optional: crate::v1_11::ListOptional<'_>,
@@ -147,6 +152,7 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Use `<DeleteCollectionValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -154,6 +160,7 @@ pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -212,6 +219,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_validating_webhook_configuration(
         name: &str,
         optional: crate::v1_11::DeleteOptional<'_>,
@@ -231,6 +239,7 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Use `<DeleteValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,6 +247,7 @@ pub enum DeleteValidatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -294,6 +304,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_validating_webhook_configuration(
         optional: crate::v1_11::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListValidatingWebhookConfigurationResponse>), crate::RequestError> {
@@ -312,12 +323,14 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Use `<ListValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -365,6 +378,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_validating_webhook_configuration(
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
@@ -392,12 +406,14 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Use `<PatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -443,6 +459,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_validating_webhook_configuration(
         name: &str,
         optional: ReadValidatingWebhookConfigurationOptional<'_>,
@@ -477,6 +494,7 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadValidatingWebhookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -488,12 +506,14 @@ pub struct ReadValidatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<ReadValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -541,6 +561,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_validating_webhook_configuration(
         name: &str,
         body: &crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
@@ -569,6 +590,7 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Optional parameters of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceValidatingWebhookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -576,6 +598,7 @@ pub struct ReplaceValidatingWebhookConfigurationOptional<'a> {
 }
 
 /// Use `<ReplaceValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -583,6 +606,7 @@ pub enum ReplaceValidatingWebhookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -634,6 +658,7 @@ impl ValidatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_validating_webhook_configuration(
         optional: crate::v1_11::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
@@ -652,12 +677,14 @@ impl ValidatingWebhookConfiguration {
 }
 
 /// Use `<WatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchValidatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

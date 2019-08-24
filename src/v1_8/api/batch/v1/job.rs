@@ -33,6 +33,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_job(
         namespace: &str,
         body: &crate::v1_8::api::batch::v1::Job,
@@ -61,6 +62,7 @@ impl Job {
 }
 
 /// Optional parameters of [`Job::create_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -68,12 +70,14 @@ pub struct CreateNamespacedJobOptional<'a> {
 }
 
 /// Use `<CreateNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::create_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedJobResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -123,6 +127,7 @@ impl Job {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_job(
         namespace: &str,
         delete_optional: crate::v1_8::DeleteOptional<'_>,
@@ -146,6 +151,7 @@ impl Job {
 }
 
 /// Use `<DeleteCollectionNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_collection_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -153,6 +159,7 @@ pub enum DeleteCollectionNamespacedJobResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -215,6 +222,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_job(
         name: &str,
         namespace: &str,
@@ -236,6 +244,7 @@ impl Job {
 }
 
 /// Use `<DeleteNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -243,6 +252,7 @@ pub enum DeleteNamespacedJobResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -299,6 +309,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_job_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListJobForAllNamespacesResponse>), crate::RequestError> {
@@ -317,12 +328,14 @@ impl Job {
 }
 
 /// Use `<ListJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::list_job_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListJobForAllNamespacesResponse {
     Ok(crate::v1_8::api::batch::v1::JobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListJobForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -370,6 +383,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_job(
         namespace: &str,
         optional: crate::v1_8::ListOptional<'_>,
@@ -391,12 +405,14 @@ impl Job {
 }
 
 /// Use `<ListNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::list_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedJobResponse {
     Ok(crate::v1_8::api::batch::v1::JobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -448,6 +464,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_job(
         name: &str,
         namespace: &str,
@@ -477,12 +494,14 @@ impl Job {
 }
 
 /// Use `<PatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedJobResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -534,6 +553,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_job_status(
         name: &str,
         namespace: &str,
@@ -563,12 +583,14 @@ impl Job {
 }
 
 /// Use `<PatchNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -618,6 +640,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_job(
         name: &str,
         namespace: &str,
@@ -654,6 +677,7 @@ impl Job {
 }
 
 /// Optional parameters of [`Job::read_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedJobOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -665,12 +689,14 @@ pub struct ReadNamespacedJobOptional<'a> {
 }
 
 /// Use `<ReadNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedJobResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -720,6 +746,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_job_status(
         name: &str,
         namespace: &str,
@@ -748,6 +775,7 @@ impl Job {
 }
 
 /// Optional parameters of [`Job::read_namespaced_job_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -755,12 +783,14 @@ pub struct ReadNamespacedJobStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -812,6 +842,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_job(
         name: &str,
         namespace: &str,
@@ -842,6 +873,7 @@ impl Job {
 }
 
 /// Optional parameters of [`Job::replace_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -849,12 +881,14 @@ pub struct ReplaceNamespacedJobOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::replace_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -906,6 +940,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_job_status(
         name: &str,
         namespace: &str,
@@ -936,6 +971,7 @@ impl Job {
 }
 
 /// Optional parameters of [`Job::replace_namespaced_job_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -943,12 +979,14 @@ pub struct ReplaceNamespacedJobStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::replace_namespaced_job_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobStatusResponse {
     Ok(crate::v1_8::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -992,6 +1030,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_job_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchJobForAllNamespacesResponse>), crate::RequestError> {
@@ -1010,12 +1049,14 @@ impl Job {
 }
 
 /// Use `<WatchJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_job_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchJobForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchJobForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1065,6 +1106,7 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_job(
         namespace: &str,
         optional: crate::v1_8::WatchOptional<'_>,
@@ -1086,12 +1128,14 @@ impl Job {
 }
 
 /// Use `<WatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_namespaced_job`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedJobResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

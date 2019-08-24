@@ -30,6 +30,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_limit_range(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::LimitRange,
@@ -58,6 +59,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::create_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -65,12 +67,14 @@ pub struct CreateNamespacedLimitRangeOptional<'a> {
 }
 
 /// Use `<CreateNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::create_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -120,6 +124,7 @@ impl LimitRange {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_limit_range(
         namespace: &str,
         delete_optional: crate::v1_8::DeleteOptional<'_>,
@@ -143,6 +148,7 @@ impl LimitRange {
 }
 
 /// Use `<DeleteCollectionNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::delete_collection_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLimitRangeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -150,6 +156,7 @@ pub enum DeleteCollectionNamespacedLimitRangeResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -212,6 +219,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_limit_range(
         name: &str,
         namespace: &str,
@@ -233,6 +241,7 @@ impl LimitRange {
 }
 
 /// Use `<DeleteNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::delete_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedLimitRangeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -240,6 +249,7 @@ pub enum DeleteNamespacedLimitRangeResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -296,6 +306,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_limit_range_for_all_namespaces(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLimitRangeForAllNamespacesResponse>), crate::RequestError> {
@@ -314,12 +325,14 @@ impl LimitRange {
 }
 
 /// Use `<ListLimitRangeForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::list_limit_range_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::LimitRangeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListLimitRangeForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -367,6 +380,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_limit_range(
         namespace: &str,
         optional: crate::v1_8::ListOptional<'_>,
@@ -388,12 +402,14 @@ impl LimitRange {
 }
 
 /// Use `<ListNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::list_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRangeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -445,6 +461,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_limit_range(
         name: &str,
         namespace: &str,
@@ -474,12 +491,14 @@ impl LimitRange {
 }
 
 /// Use `<PatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::patch_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -529,6 +548,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_limit_range(
         name: &str,
         namespace: &str,
@@ -565,6 +585,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::read_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedLimitRangeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -576,12 +597,14 @@ pub struct ReadNamespacedLimitRangeOptional<'a> {
 }
 
 /// Use `<ReadNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::read_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -633,6 +656,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_limit_range(
         name: &str,
         namespace: &str,
@@ -663,6 +687,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::replace_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -670,12 +695,14 @@ pub struct ReplaceNamespacedLimitRangeOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::replace_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -719,6 +746,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_limit_range_for_all_namespaces(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLimitRangeForAllNamespacesResponse>), crate::RequestError> {
@@ -737,12 +765,14 @@ impl LimitRange {
 }
 
 /// Use `<WatchLimitRangeForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_limit_range_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchLimitRangeForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -792,6 +822,7 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_limit_range(
         namespace: &str,
         optional: crate::v1_8::WatchOptional<'_>,
@@ -813,12 +844,14 @@ impl LimitRange {
 }
 
 /// Use `<WatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_namespaced_limit_range`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

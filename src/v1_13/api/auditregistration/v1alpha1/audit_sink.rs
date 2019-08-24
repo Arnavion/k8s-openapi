@@ -25,6 +25,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_audit_sink(
         body: &crate::v1_13::api::auditregistration::v1alpha1::AuditSink,
         optional: CreateAuditSinkOptional<'_>,
@@ -58,6 +59,7 @@ impl AuditSink {
 }
 
 /// Optional parameters of [`AuditSink::create_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -69,6 +71,7 @@ pub struct CreateAuditSinkOptional<'a> {
 }
 
 /// Use `<CreateAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::create_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -77,6 +80,7 @@ pub enum CreateAuditSinkResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -138,6 +142,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_audit_sink(
         name: &str,
         optional: crate::v1_13::DeleteOptional<'_>,
@@ -157,6 +162,7 @@ impl AuditSink {
 }
 
 /// Use `<DeleteAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::delete_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -165,6 +171,7 @@ pub enum DeleteAuditSinkResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -231,6 +238,7 @@ impl AuditSink {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_audit_sink(
         delete_optional: crate::v1_13::DeleteOptional<'_>,
         list_optional: crate::v1_13::ListOptional<'_>,
@@ -251,6 +259,7 @@ impl AuditSink {
 }
 
 /// Use `<DeleteCollectionAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::delete_collection_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -258,6 +267,7 @@ pub enum DeleteCollectionAuditSinkResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -314,6 +324,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_audit_sink(
         optional: crate::v1_13::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAuditSinkResponse>), crate::RequestError> {
@@ -332,12 +343,14 @@ impl AuditSink {
 }
 
 /// Use `<ListAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::list_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSinkList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -385,6 +398,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_audit_sink(
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
@@ -412,12 +426,14 @@ impl AuditSink {
 }
 
 /// Use `<PatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::patch_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -463,6 +479,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_audit_sink(
         name: &str,
         optional: ReadAuditSinkOptional<'_>,
@@ -497,6 +514,7 @@ impl AuditSink {
 }
 
 /// Optional parameters of [`AuditSink::read_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadAuditSinkOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -508,12 +526,14 @@ pub struct ReadAuditSinkOptional<'a> {
 }
 
 /// Use `<ReadAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::read_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -561,6 +581,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_audit_sink(
         name: &str,
         body: &crate::v1_13::api::auditregistration::v1alpha1::AuditSink,
@@ -593,6 +614,7 @@ impl AuditSink {
 }
 
 /// Optional parameters of [`AuditSink::replace_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -602,6 +624,7 @@ pub struct ReplaceAuditSinkOptional<'a> {
 }
 
 /// Use `<ReplaceAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::replace_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -609,6 +632,7 @@ pub enum ReplaceAuditSinkResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -660,6 +684,7 @@ impl AuditSink {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_audit_sink(
         optional: crate::v1_13::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkResponse>), crate::RequestError> {
@@ -678,12 +703,14 @@ impl AuditSink {
 }
 
 /// Use `<WatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchAuditSinkResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<AuditSink>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchAuditSinkResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

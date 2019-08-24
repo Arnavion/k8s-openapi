@@ -1,5 +1,3 @@
 
 mod quantity;
-pub use self::quantity::{
-    Quantity,
-};
+pub use self::quantity::Quantity;

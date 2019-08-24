@@ -33,6 +33,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_replica_set(
         namespace: &str,
         body: &crate::v1_13::api::extensions::v1beta1::ReplicaSet,
@@ -69,6 +70,7 @@ impl ReplicaSet {
 }
 
 /// Optional parameters of [`ReplicaSet::create_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -80,6 +82,7 @@ pub struct CreateNamespacedReplicaSetOptional<'a> {
 }
 
 /// Use `<CreateNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::create_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
@@ -88,6 +91,7 @@ pub enum CreateNamespacedReplicaSetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -153,6 +157,7 @@ impl ReplicaSet {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_replica_set(
         namespace: &str,
         delete_optional: crate::v1_13::DeleteOptional<'_>,
@@ -176,6 +181,7 @@ impl ReplicaSet {
 }
 
 /// Use `<DeleteCollectionNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_collection_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicaSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -183,6 +189,7 @@ pub enum DeleteCollectionNamespacedReplicaSetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -245,6 +252,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_replica_set(
         name: &str,
         namespace: &str,
@@ -266,6 +274,7 @@ impl ReplicaSet {
 }
 
 /// Use `<DeleteNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedReplicaSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -274,6 +283,7 @@ pub enum DeleteNamespacedReplicaSetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -342,6 +352,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_replica_set(
         namespace: &str,
         optional: crate::v1_13::ListOptional<'_>,
@@ -363,12 +374,14 @@ impl ReplicaSet {
 }
 
 /// Use `<ListNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -412,6 +425,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_replica_set_for_all_namespaces(
         optional: crate::v1_13::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicaSetForAllNamespacesResponse>), crate::RequestError> {
@@ -430,12 +444,14 @@ impl ReplicaSet {
 }
 
 /// Use `<ListReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_replica_set_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListReplicaSetForAllNamespacesResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListReplicaSetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -487,6 +503,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_replica_set(
         name: &str,
         namespace: &str,
@@ -516,12 +533,14 @@ impl ReplicaSet {
 }
 
 /// Use `<PatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -573,6 +592,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
@@ -602,12 +622,14 @@ impl ReplicaSet {
 }
 
 /// Use `<PatchNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -657,6 +679,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_replica_set(
         name: &str,
         namespace: &str,
@@ -693,6 +716,7 @@ impl ReplicaSet {
 }
 
 /// Optional parameters of [`ReplicaSet::read_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicaSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -704,12 +728,14 @@ pub struct ReadNamespacedReplicaSetOptional<'a> {
 }
 
 /// Use `<ReadNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -759,6 +785,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
@@ -787,6 +814,7 @@ impl ReplicaSet {
 }
 
 /// Optional parameters of [`ReplicaSet::read_namespaced_replica_set_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -794,12 +822,14 @@ pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -851,6 +881,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_replica_set(
         name: &str,
         namespace: &str,
@@ -885,6 +916,7 @@ impl ReplicaSet {
 }
 
 /// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -894,6 +926,7 @@ pub struct ReplaceNamespacedReplicaSetOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
@@ -901,6 +934,7 @@ pub enum ReplaceNamespacedReplicaSetResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -960,6 +994,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
@@ -994,6 +1029,7 @@ impl ReplicaSet {
 }
 
 /// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1003,6 +1039,7 @@ pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::ReplicaSet),
@@ -1010,6 +1047,7 @@ pub enum ReplaceNamespacedReplicaSetStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1065,6 +1103,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_replica_set(
         namespace: &str,
         optional: crate::v1_13::WatchOptional<'_>,
@@ -1086,12 +1125,14 @@ impl ReplicaSet {
 }
 
 /// Use `<WatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_namespaced_replica_set`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicaSetResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1137,6 +1178,7 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_replica_set_for_all_namespaces(
         optional: crate::v1_13::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicaSetForAllNamespacesResponse>), crate::RequestError> {
@@ -1155,12 +1197,14 @@ impl ReplicaSet {
 }
 
 /// Use `<WatchReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_replica_set_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchReplicaSetForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchReplicaSetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

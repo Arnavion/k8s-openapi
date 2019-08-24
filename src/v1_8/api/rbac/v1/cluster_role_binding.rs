@@ -29,6 +29,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_cluster_role_binding(
         body: &crate::v1_8::api::rbac::v1::ClusterRoleBinding,
         optional: CreateClusterRoleBindingOptional<'_>,
@@ -54,6 +55,7 @@ impl ClusterRoleBinding {
 }
 
 /// Optional parameters of [`ClusterRoleBinding::create_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -61,12 +63,14 @@ pub struct CreateClusterRoleBindingOptional<'a> {
 }
 
 /// Use `<CreateClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::create_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -112,6 +116,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_cluster_role_binding(
         name: &str,
         optional: crate::v1_8::DeleteOptional<'_>,
@@ -131,6 +136,7 @@ impl ClusterRoleBinding {
 }
 
 /// Use `<DeleteClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::delete_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteClusterRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -138,6 +144,7 @@ pub enum DeleteClusterRoleBindingResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -196,6 +203,7 @@ impl ClusterRoleBinding {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_cluster_role_binding(
         delete_optional: crate::v1_8::DeleteOptional<'_>,
         list_optional: crate::v1_8::ListOptional<'_>,
@@ -216,6 +224,7 @@ impl ClusterRoleBinding {
 }
 
 /// Use `<DeleteCollectionClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::delete_collection_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -223,6 +232,7 @@ pub enum DeleteCollectionClusterRoleBindingResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -279,6 +289,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_cluster_role_binding(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleBindingResponse>), crate::RequestError> {
@@ -297,12 +308,14 @@ impl ClusterRoleBinding {
 }
 
 /// Use `<ListClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::list_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1::ClusterRoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -350,6 +363,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_cluster_role_binding(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
@@ -377,12 +391,14 @@ impl ClusterRoleBinding {
 }
 
 /// Use `<PatchClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::patch_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -428,6 +444,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_cluster_role_binding(
         name: &str,
         optional: ReadClusterRoleBindingOptional<'_>,
@@ -454,6 +471,7 @@ impl ClusterRoleBinding {
 }
 
 /// Optional parameters of [`ClusterRoleBinding::read_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -461,12 +479,14 @@ pub struct ReadClusterRoleBindingOptional<'a> {
 }
 
 /// Use `<ReadClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::read_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -514,6 +534,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_cluster_role_binding(
         name: &str,
         body: &crate::v1_8::api::rbac::v1::ClusterRoleBinding,
@@ -542,6 +563,7 @@ impl ClusterRoleBinding {
 }
 
 /// Optional parameters of [`ClusterRoleBinding::replace_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -549,12 +571,14 @@ pub struct ReplaceClusterRoleBindingOptional<'a> {
 }
 
 /// Use `<ReplaceClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::replace_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -598,6 +622,7 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_cluster_role_binding(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleBindingResponse>), crate::RequestError> {
@@ -616,12 +641,14 @@ impl ClusterRoleBinding {
 }
 
 /// Use `<WatchClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::watch_cluster_role_binding`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchClusterRoleBindingResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

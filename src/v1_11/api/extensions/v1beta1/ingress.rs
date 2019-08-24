@@ -33,6 +33,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_namespaced_ingress(
         namespace: &str,
         body: &crate::v1_11::api::extensions::v1beta1::Ingress,
@@ -61,6 +62,7 @@ impl Ingress {
 }
 
 /// Optional parameters of [`Ingress::create_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedIngressOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -68,6 +70,7 @@ pub struct CreateNamespacedIngressOptional<'a> {
 }
 
 /// Use `<CreateNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::create_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedIngressResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
@@ -76,6 +79,7 @@ pub enum CreateNamespacedIngressResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -141,6 +145,7 @@ impl Ingress {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_ingress(
         namespace: &str,
         delete_optional: crate::v1_11::DeleteOptional<'_>,
@@ -164,6 +169,7 @@ impl Ingress {
 }
 
 /// Use `<DeleteCollectionNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::delete_collection_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedIngressResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -171,6 +177,7 @@ pub enum DeleteCollectionNamespacedIngressResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -233,6 +240,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_namespaced_ingress(
         name: &str,
         namespace: &str,
@@ -254,6 +262,7 @@ impl Ingress {
 }
 
 /// Use `<DeleteNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::delete_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedIngressResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -261,6 +270,7 @@ pub enum DeleteNamespacedIngressResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -317,6 +327,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_ingress_for_all_namespaces(
         optional: crate::v1_11::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListIngressForAllNamespacesResponse>), crate::RequestError> {
@@ -335,12 +346,14 @@ impl Ingress {
 }
 
 /// Use `<ListIngressForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::list_ingress_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListIngressForAllNamespacesResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::IngressList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListIngressForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -388,6 +401,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_namespaced_ingress(
         namespace: &str,
         optional: crate::v1_11::ListOptional<'_>,
@@ -409,12 +423,14 @@ impl Ingress {
 }
 
 /// Use `<ListNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::list_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedIngressResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::IngressList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -466,6 +482,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_ingress(
         name: &str,
         namespace: &str,
@@ -495,12 +512,14 @@ impl Ingress {
 }
 
 /// Use `<PatchNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::patch_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -552,6 +571,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_ingress_status(
         name: &str,
         namespace: &str,
@@ -581,12 +601,14 @@ impl Ingress {
 }
 
 /// Use `<PatchNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::patch_namespaced_ingress_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressStatusResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -636,6 +658,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_ingress(
         name: &str,
         namespace: &str,
@@ -672,6 +695,7 @@ impl Ingress {
 }
 
 /// Optional parameters of [`Ingress::read_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedIngressOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -683,12 +707,14 @@ pub struct ReadNamespacedIngressOptional<'a> {
 }
 
 /// Use `<ReadNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::read_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -738,6 +764,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_ingress_status(
         name: &str,
         namespace: &str,
@@ -766,6 +793,7 @@ impl Ingress {
 }
 
 /// Optional parameters of [`Ingress::read_namespaced_ingress_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -773,12 +801,14 @@ pub struct ReadNamespacedIngressStatusOptional<'a> {
 }
 
 /// Use `<ReadNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::read_namespaced_ingress_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressStatusResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -830,6 +860,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_ingress(
         name: &str,
         namespace: &str,
@@ -860,6 +891,7 @@ impl Ingress {
 }
 
 /// Optional parameters of [`Ingress::replace_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedIngressOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -867,6 +899,7 @@ pub struct ReplaceNamespacedIngressOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::replace_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
@@ -874,6 +907,7 @@ pub enum ReplaceNamespacedIngressResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -933,6 +967,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_ingress_status(
         name: &str,
         namespace: &str,
@@ -963,6 +998,7 @@ impl Ingress {
 }
 
 /// Optional parameters of [`Ingress::replace_namespaced_ingress_status`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -970,6 +1006,7 @@ pub struct ReplaceNamespacedIngressStatusOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::replace_namespaced_ingress_status`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressStatusResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::Ingress),
@@ -977,6 +1014,7 @@ pub enum ReplaceNamespacedIngressStatusResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1028,6 +1066,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_ingress_for_all_namespaces(
         optional: crate::v1_11::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchIngressForAllNamespacesResponse>), crate::RequestError> {
@@ -1046,12 +1085,14 @@ impl Ingress {
 }
 
 /// Use `<WatchIngressForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_ingress_for_all_namespaces`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchIngressForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchIngressForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -1101,6 +1142,7 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_namespaced_ingress(
         namespace: &str,
         optional: crate::v1_11::WatchOptional<'_>,
@@ -1122,12 +1164,14 @@ impl Ingress {
 }
 
 /// Use `<WatchNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_namespaced_ingress`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedIngressResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

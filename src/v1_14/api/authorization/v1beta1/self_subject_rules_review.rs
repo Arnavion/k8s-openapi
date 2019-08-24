@@ -28,6 +28,7 @@ impl SelfSubjectRulesReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_self_subject_rules_review(
         body: &crate::v1_14::api::authorization::v1beta1::SelfSubjectRulesReview,
         optional: CreateSelfSubjectRulesReviewOptional<'_>,
@@ -61,6 +62,7 @@ impl SelfSubjectRulesReview {
 }
 
 /// Optional parameters of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSelfSubjectRulesReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -72,6 +74,7 @@ pub struct CreateSelfSubjectRulesReviewOptional<'a> {
 }
 
 /// Use `<CreateSelfSubjectRulesReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateSelfSubjectRulesReviewResponse {
     Ok(crate::v1_14::api::authorization::v1beta1::SelfSubjectRulesReview),
@@ -80,6 +83,7 @@ pub enum CreateSelfSubjectRulesReviewResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateSelfSubjectRulesReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

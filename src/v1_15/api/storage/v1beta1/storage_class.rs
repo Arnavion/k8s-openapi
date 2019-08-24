@@ -46,6 +46,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_storage_class(
         body: &crate::v1_15::api::storage::v1beta1::StorageClass,
         optional: CreateStorageClassOptional<'_>,
@@ -79,6 +80,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::create_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateStorageClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -90,6 +92,7 @@ pub struct CreateStorageClassOptional<'a> {
 }
 
 /// Use `<CreateStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::create_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateStorageClassResponse {
     Ok(crate::v1_15::api::storage::v1beta1::StorageClass),
@@ -98,6 +101,7 @@ pub enum CreateStorageClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -159,6 +163,7 @@ impl StorageClass {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_storage_class(
         delete_optional: crate::v1_15::DeleteOptional<'_>,
         list_optional: crate::v1_15::ListOptional<'_>,
@@ -179,6 +184,7 @@ impl StorageClass {
 }
 
 /// Use `<DeleteCollectionStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::delete_collection_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionStorageClassResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -186,6 +192,7 @@ pub enum DeleteCollectionStorageClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -244,6 +251,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_storage_class(
         name: &str,
         optional: crate::v1_15::DeleteOptional<'_>,
@@ -263,6 +271,7 @@ impl StorageClass {
 }
 
 /// Use `<DeleteStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::delete_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteStorageClassResponse {
     OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
@@ -271,6 +280,7 @@ pub enum DeleteStorageClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -335,6 +345,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_storage_class(
         optional: crate::v1_15::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStorageClassResponse>), crate::RequestError> {
@@ -353,12 +364,14 @@ impl StorageClass {
 }
 
 /// Use `<ListStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::list_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListStorageClassResponse {
     Ok(crate::v1_15::api::storage::v1beta1::StorageClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -406,6 +419,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_storage_class(
         name: &str,
         body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
@@ -433,12 +447,14 @@ impl StorageClass {
 }
 
 /// Use `<PatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::patch_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchStorageClassResponse {
     Ok(crate::v1_15::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -484,6 +500,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_storage_class(
         name: &str,
         optional: ReadStorageClassOptional<'_>,
@@ -518,6 +535,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::read_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadStorageClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
@@ -529,12 +547,14 @@ pub struct ReadStorageClassOptional<'a> {
 }
 
 /// Use `<ReadStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::read_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadStorageClassResponse {
     Ok(crate::v1_15::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -582,6 +602,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_storage_class(
         name: &str,
         body: &crate::v1_15::api::storage::v1beta1::StorageClass,
@@ -618,6 +639,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::replace_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceStorageClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -629,6 +651,7 @@ pub struct ReplaceStorageClassOptional<'a> {
 }
 
 /// Use `<ReplaceStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::replace_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceStorageClassResponse {
     Ok(crate::v1_15::api::storage::v1beta1::StorageClass),
@@ -636,6 +659,7 @@ pub enum ReplaceStorageClassResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -687,6 +711,7 @@ impl StorageClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_storage_class(
         optional: crate::v1_15::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassResponse>), crate::RequestError> {
@@ -705,12 +730,14 @@ impl StorageClass {
 }
 
 /// Use `<WatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchStorageClassResponse {
     Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<StorageClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchStorageClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

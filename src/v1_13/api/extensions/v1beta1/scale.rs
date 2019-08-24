@@ -37,6 +37,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
@@ -66,12 +67,14 @@ impl Scale {
 }
 
 /// Use `<PatchNamespacedDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::patch_namespaced_deployment_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedDeploymentScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -123,6 +126,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
@@ -152,12 +156,14 @@ impl Scale {
 }
 
 /// Use `<PatchNamespacedReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::patch_namespaced_replica_set_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedReplicaSetScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -209,6 +215,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_namespaced_replication_controller_dummy_scale(
         name: &str,
         namespace: &str,
@@ -238,12 +245,14 @@ impl Scale {
 }
 
 /// Use `<PatchNamespacedReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::patch_namespaced_replication_controller_dummy_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerDummyScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchNamespacedReplicationControllerDummyScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -293,6 +302,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
@@ -321,6 +331,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::read_namespaced_deployment_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDeploymentScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -328,12 +339,14 @@ pub struct ReadNamespacedDeploymentScaleOptional<'a> {
 }
 
 /// Use `<ReadNamespacedDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_deployment_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedDeploymentScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -383,6 +396,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
@@ -411,6 +425,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::read_namespaced_replica_set_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicaSetScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -418,12 +433,14 @@ pub struct ReadNamespacedReplicaSetScaleOptional<'a> {
 }
 
 /// Use `<ReadNamespacedReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_replica_set_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -473,6 +490,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_namespaced_replication_controller_dummy_scale(
         name: &str,
         namespace: &str,
@@ -501,6 +519,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::read_namespaced_replication_controller_dummy_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicationControllerDummyScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -508,12 +527,14 @@ pub struct ReadNamespacedReplicationControllerDummyScaleOptional<'a> {
 }
 
 /// Use `<ReadNamespacedReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_replication_controller_dummy_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerDummyScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -565,6 +586,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
@@ -599,6 +621,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::replace_namespaced_deployment_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDeploymentScaleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -608,6 +631,7 @@ pub struct ReplaceNamespacedDeploymentScaleOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_deployment_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
@@ -615,6 +639,7 @@ pub enum ReplaceNamespacedDeploymentScaleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedDeploymentScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -674,6 +699,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
@@ -708,6 +734,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::replace_namespaced_replica_set_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicaSetScaleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -717,6 +744,7 @@ pub struct ReplaceNamespacedReplicaSetScaleOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_replica_set_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
@@ -724,6 +752,7 @@ pub enum ReplaceNamespacedReplicaSetScaleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedReplicaSetScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -783,6 +812,7 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_namespaced_replication_controller_dummy_scale(
         name: &str,
         namespace: &str,
@@ -817,6 +847,7 @@ impl Scale {
 }
 
 /// Optional parameters of [`Scale::replace_namespaced_replication_controller_dummy_scale`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicationControllerDummyScaleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -826,6 +857,7 @@ pub struct ReplaceNamespacedReplicationControllerDummyScaleOptional<'a> {
 }
 
 /// Use `<ReplaceNamespacedReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_replication_controller_dummy_scale`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerDummyScaleResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::Scale),
@@ -833,6 +865,7 @@ pub enum ReplaceNamespacedReplicationControllerDummyScaleResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceNamespacedReplicationControllerDummyScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

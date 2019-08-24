@@ -26,6 +26,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn create_external_admission_hook_configuration(
         body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         optional: CreateExternalAdmissionHookConfigurationOptional<'_>,
@@ -51,6 +52,7 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Optional parameters of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -58,12 +60,14 @@ pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
 }
 
 /// Use `<CreateExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for CreateExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -109,6 +113,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `list_optional`
     ///
     ///     List options. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_collection_external_admission_hook_configuration(
         delete_optional: crate::v1_8::DeleteOptional<'_>,
         list_optional: crate::v1_8::ListOptional<'_>,
@@ -129,6 +134,7 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Use `<DeleteCollectionExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::delete_collection_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -136,6 +142,7 @@ pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteCollectionExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -194,6 +201,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn delete_external_admission_hook_configuration(
         name: &str,
         optional: crate::v1_8::DeleteOptional<'_>,
@@ -213,6 +221,7 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Use `<DeleteExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::delete_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -220,6 +229,7 @@ pub enum DeleteExternalAdmissionHookConfigurationResponse {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for DeleteExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -276,6 +286,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn list_external_admission_hook_configuration(
         optional: crate::v1_8::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
@@ -294,12 +305,14 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Use `<ListExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::list_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ListExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -347,6 +360,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn patch_external_admission_hook_configuration(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
@@ -374,12 +388,14 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Use `<PatchExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::patch_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for PatchExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -425,6 +441,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn read_external_admission_hook_configuration(
         name: &str,
         optional: ReadExternalAdmissionHookConfigurationOptional<'_>,
@@ -459,6 +476,7 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Optional parameters of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -470,12 +488,14 @@ pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
 }
 
 /// Use `<ReadExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReadExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -523,6 +543,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn replace_external_admission_hook_configuration(
         name: &str,
         body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
@@ -551,6 +572,7 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Optional parameters of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
@@ -558,12 +580,14 @@ pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
 }
 
 /// Use `<ReplaceExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for ReplaceExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
@@ -607,6 +631,7 @@ impl ExternalAdmissionHookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
+    #[cfg(feature = "api")]
     pub fn watch_external_admission_hook_configuration(
         optional: crate::v1_8::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
@@ -625,12 +650,14 @@ impl ExternalAdmissionHookConfiguration {
 }
 
 /// Use `<WatchExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`]
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ExternalAdmissionHookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl crate::Response for WatchExternalAdmissionHookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
