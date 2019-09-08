@@ -1,3 +1,20 @@
+# v0.5.1 (2019-09-08)
+
+- FEATURE: The `k8s-openapi` crate now has a default-enabled feature named `api`. If the library will only contain the resource types like [`api::core::v1::Pod`] and not the associated operation functions like [`api::core::v1::Pod::read_namespaced_pod`]. The corresponding `Response` and `Optional` types will also not be accessible. If your crate does not need the operation functions, you can disable this feature to save on compile time and resources.
+
+Corresponding Kubernetes API server versions:
+
+- v1.8.15
+- v1.9.11
+- v1.10.13
+- v1.11.10
+- v1.12.10
+- v1.13.10
+- v1.14.6
+- v1.15.3
+
+---
+
 # v0.5.0 (2019-08-04)
 
 - BREAKING CHANGE: The optional parameters of delete, list, patch and watch operations are now emitted as a single common type - `k8s_openapi::DeleteOptional`, `k8s_openapi::ListOptional`, `k8s_openapi::PatchOptional` and `k8s_openapi::WatchOptional` respectively. For example, where an operation like `k8s_openapi::api::core::v1::Pod::list_namespaced_pod` used to have an `optional: k8s_openapi::api::core::v1::ListNamespacedPodOptional<'_>`, it now has an `optional: k8s_openapi::ListOptional<'_>` parameter instead.
