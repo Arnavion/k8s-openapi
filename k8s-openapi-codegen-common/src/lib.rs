@@ -168,6 +168,11 @@ pub fn run<W>(
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
 								"not",
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+							) |
+							(
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaProps",
+								"not",
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaProps",
 							) => write!(field_type_name, "Box<{}>", type_name)?,
 
 							_ => write!(field_type_name, "{}", type_name)?,
@@ -1223,6 +1228,8 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	match name {
 		"externalIPs" => return "external_ips".into(),
 		"nonResourceURLs" => return "non_resource_urls".into(),
+		"podCIDRs" => return "pod_cidrs".into(),
+		"podIPs" => return "pod_ips".into(),
 		"serverAddressByClientCIDRs" => return "server_address_by_client_cidrs".into(),
 		"targetWWNs" => return "target_wwns".into(),
 		_ => (),

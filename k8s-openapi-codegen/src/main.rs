@@ -1,4 +1,4 @@
-#![deny(rust_2018_idioms, warnings)]
+// #![deny(rust_2018_idioms, warnings)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
 	clippy::cognitive_complexity,

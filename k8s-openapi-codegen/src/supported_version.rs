@@ -7,6 +7,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_13,
 	SupportedVersion::V1_14,
 	SupportedVersion::V1_15,
+	SupportedVersion::V1_16,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -19,6 +20,7 @@ pub(crate) enum SupportedVersion {
 	V1_13,
 	V1_14,
 	V1_15,
+	V1_16,
 }
 
 impl SupportedVersion {
@@ -32,6 +34,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_13 => "v1_13",
 			SupportedVersion::V1_14 => "v1_14",
 			SupportedVersion::V1_15 => "v1_15",
+			SupportedVersion::V1_16 => "v1_16",
 		}
 	}
 
@@ -45,6 +48,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_13 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.13.10/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_14 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.14.6/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_15 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.15.3/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_16 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.16.0/api/openapi-spec/swagger.json",
 		}
 	}
 
@@ -203,6 +207,20 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::crdstatus,
 				crate::fixups::patch,
 				crate::fixups::raw_extension_ty,
+				crate::fixups::remove_delete_collection_operations_query_parameters,
+				crate::fixups::remove_delete_operations_query_parameters,
+				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
+			],
+
+			SupportedVersion::V1_16 => &[
+				crate::fixups::connect_options_gvk,
+				crate::fixups::create_delete_optional,
+				crate::fixups::create_patch_optional,
+				crate::fixups::json_ty::json_schema_props_or_array,
+				crate::fixups::json_ty::json_schema_props_or_bool,
+				crate::fixups::json_ty::json_schema_props_or_string_array,
+				crate::fixups::patch,
 				crate::fixups::remove_delete_collection_operations_query_parameters,
 				crate::fixups::remove_delete_operations_query_parameters,
 				crate::fixups::separate_watch_from_list_operations,

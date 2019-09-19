@@ -189,17 +189,17 @@ impl super::CustomDerive for CustomResourceDefinition {
 					description: Some(format!("Custom resource for {}", cr_spec_name)),
 					kind: swagger20::SchemaKind::Properties(vec![
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
-							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources".to_owned()),
+							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
 						}, false)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
-							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds".to_owned()),
+							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
-							description: Some("Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata".to_owned()),
+							description: Some("Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta".to_owned(),
 								relative_to: swagger20::RefPathRelativeTo::Crate,
@@ -230,12 +230,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 					description: Some(format!("{} is a list of {}", cr_list_name, cr_name)),
 					kind: swagger20::SchemaKind::Properties(vec![
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
-							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources".to_owned()),
+							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
 						}, false)),
 						(swagger20::PropertyName("items".to_owned()), (swagger20::Schema {
-							description: Some(format!("List of objects of kind {}. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md", cr_name)),
+							description: Some(format!("List of objects of kind {}. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md", cr_name)),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::Array {
 								items: Box::new(swagger20::Schema {
 									description: None,
@@ -250,12 +250,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 							kubernetes_group_kind_versions: None,
 						}, true)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
-							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds".to_owned()),
+							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
-							description: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds".to_owned()),
+							description: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: "io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta".to_owned(),
 								relative_to: swagger20::RefPathRelativeTo::Crate,
