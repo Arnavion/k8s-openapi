@@ -43,7 +43,7 @@ To generate these test files:
 		<tr><td>1.11.10</td><td>0.28.2</td></tr>
 		<tr><td>1.12.10</td><td>0.30.0</td></tr>
 		<tr><td>1.13.11</td><td>1.3.1</td></tr>
-		<tr><td>1.14.6</td><td>1.1.1</td></tr>
+		<tr><td>1.14.7</td><td>1.3.1</td></tr>
 		<tr><td>1.15.3</td><td>1.3.1</td></tr>
 		<tr><td>1.16.0</td><td>1.3.1</td></tr>
 	</tbody>
