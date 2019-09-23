@@ -7,7 +7,7 @@
     clippy::large_enum_variant,
     clippy::single_match_else,
     clippy::type_complexity,
-    clippy::use_self,
+    clippy::use_self
 )]
 
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
@@ -161,7 +161,7 @@
 //!
 //! 1. The response types are enums with variants corresponding to HTTP status codes. For example, the `ListNamespacedPodResponse::Ok` variant corresponds to the
 //!    HTTP 200 response of the list-namespaced-pod API.
-//! 
+//!
 //!    Each response enum also has an `Other` variant, that is yielded when the response status code does not match any of the other variants.
 //!    This variant has a `Result<Option<`[`serde_json::Value`]`>, `[`serde_json::Error`]`>` value.
 //!
@@ -295,7 +295,10 @@ pub use url;
 pub struct ByteString(pub Vec<u8>);
 
 impl<'de> serde::Deserialize<'de> for ByteString {
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
         struct Visitor;
 
         impl<'de> serde::de::Visitor<'de> for Visitor {
@@ -305,8 +308,13 @@ impl<'de> serde::Deserialize<'de> for ByteString {
                 write!(formatter, "a base64-encoded string")
             }
 
-            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
-                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))
+            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(ByteString(
+                    base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?,
+                ))
             }
         }
 
@@ -315,7 +323,10 @@ impl<'de> serde::Deserialize<'de> for ByteString {
 }
 
 impl serde::Serialize for ByteString {
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
         base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)
     }
 }
@@ -326,18 +337,26 @@ pub trait Resource {
     /// or just the version for resources without a group (eg `"v1"`).
     ///
     /// This is the string used in the `apiVersion` field of the resource's serialized form.
-    fn api_version() -> &'static str where Self: Sized;
+    fn api_version() -> &'static str
+    where
+        Self: Sized;
 
     /// The group of the resource, or the empty string if the resource doesn't have a group.
-    fn group() -> &'static str where Self: Sized;
+    fn group() -> &'static str
+    where
+        Self: Sized;
 
     /// The kind of the resource.
     ///
     /// This is the string used in the `kind` field of the resource's serialized form.
-    fn kind() -> &'static str where Self: Sized;
+    fn kind() -> &'static str
+    where
+        Self: Sized;
 
     /// The version of the resource.
-    fn version() -> &'static str where Self: Sized;
+    fn version() -> &'static str
+    where
+        Self: Sized;
 }
 
 /// A trait applied to all Kubernetes resources that have metadata.
@@ -353,7 +372,10 @@ pub trait Metadata: Resource {
 ///
 /// This just forwards to the value's impl of [`Resource::api_version`] but is useful when you already have a value
 /// and don't want to explicitly write its type.
-pub fn api_version<T>(_: &T) -> &'static str where T: Resource {
+pub fn api_version<T>(_: &T) -> &'static str
+where
+    T: Resource,
+{
     <T as Resource>::api_version()
 }
 
@@ -361,7 +383,10 @@ pub fn api_version<T>(_: &T) -> &'static str where T: Resource {
 ///
 /// This just forwards to the value's impl of [`Resource::group`] but is useful when you already have a value
 /// and don't want to explicitly write its type.
-pub fn group<T>(_: &T) -> &'static str where T: Resource {
+pub fn group<T>(_: &T) -> &'static str
+where
+    T: Resource,
+{
     <T as Resource>::group()
 }
 
@@ -369,7 +394,10 @@ pub fn group<T>(_: &T) -> &'static str where T: Resource {
 ///
 /// This just forwards to the value's impl of [`Resource::kind`] but is useful when you already have a value
 /// and don't want to explicitly write its type.
-pub fn kind<T>(_: &T) -> &'static str where T: Resource {
+pub fn kind<T>(_: &T) -> &'static str
+where
+    T: Resource,
+{
     <T as Resource>::kind()
 }
 
@@ -377,7 +405,10 @@ pub fn kind<T>(_: &T) -> &'static str where T: Resource {
 ///
 /// This just forwards to the value's impl of [`Resource::version`] but is useful when you already have a value
 /// and don't want to explicitly write its type.
-pub fn version<T>(_: &T) -> &'static str where T: Resource {
+pub fn version<T>(_: &T) -> &'static str
+where
+    T: Resource,
+{
     <T as Resource>::version()
 }
 
@@ -428,7 +459,10 @@ pub trait Response: Sized {
     /// `Err(ResponseError::NeedMoreData)`. Append more bytes into the buffer, then call this function again.
     ///
     /// Also see the [`ResponseBody`] type.
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
+    fn try_from_parts(
+        status_code: http::StatusCode,
+        buf: &[u8],
+    ) -> Result<(Self, usize), ResponseError>;
 }
 
 /// This struct provides an easy way to parse a byte buffer into a Kubernetes API function's response.
@@ -452,7 +486,10 @@ pub struct ResponseBody<T> {
     _response: std::marker::PhantomData<fn() -> T>,
 }
 
-impl<T> ResponseBody<T> where T: Response {
+impl<T> ResponseBody<T>
+where
+    T: Response,
+{
     /// Construct a value for a response that has the specified HTTP status code.
     pub fn new(status_code: http::StatusCode) -> Self {
         ResponseBody {
@@ -473,7 +510,7 @@ impl<T> ResponseBody<T> where T: Response {
             Ok((result, read)) => {
                 self.buf.advance(read);
                 Ok(result)
-            },
+            }
 
             Err(err) => Err(err),
         }
@@ -562,4 +599,7 @@ mods! {
     v1_16 "v1_16"
 }
 
-include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
+include!(concat!(
+    env!("OUT_DIR"),
+    "/conditional_compilation_macros.rs"
+));
