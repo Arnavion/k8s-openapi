@@ -1,6 +1,6 @@
 # v0.5.1 (2019-09-08)
 
-- FEATURE: The `k8s-openapi` crate now has a default-enabled feature named `api`. If the library will only contain the resource types like [`api::core::v1::Pod`] and not the associated operation functions like [`api::core::v1::Pod::read_namespaced_pod`]. The corresponding `Response` and `Optional` types will also not be accessible. If your crate does not need the operation functions, you can disable this feature to save on compile time and resources.
+- FEATURE: The `k8s-openapi` crate now has a default-enabled feature named `api`. If the feature is disabled, the library will only contain the resource types like `api::core::v1::Pod` and not the associated operation functions like `api::core::v1::Pod::read_namespaced_pod`. The corresponding `Response` and `Optional` types will also not be accessible. If your crate does not need the operation functions, you can disable this feature to save on compile time and resources.
 
 Corresponding Kubernetes API server versions:
 
