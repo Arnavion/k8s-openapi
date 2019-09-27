@@ -541,25 +541,31 @@ impl std::error::Error for ResponseError {
     }
 }
 
-macro_rules! mods {
-    ($($name:ident $name_str:literal)*) => {
-        $(
-            #[cfg(feature = $name_str)] mod $name;
-            #[cfg(feature = $name_str)] pub use self::$name::*;
-        )*
-    };
-}
+#[cfg(feature = "v1_8")] mod v1_8;
+#[cfg(feature = "v1_8")] pub use self::v1_8::*;
 
-mods! {
-    v1_8 "v1_8"
-    v1_9 "v1_9"
-    v1_10 "v1_10"
-    v1_11 "v1_11"
-    v1_12 "v1_12"
-    v1_13 "v1_13"
-    v1_14 "v1_14"
-    v1_15 "v1_15"
-    v1_16 "v1_16"
-}
+#[cfg(feature = "v1_9")] mod v1_9;
+#[cfg(feature = "v1_9")] pub use self::v1_9::*;
+
+#[cfg(feature = "v1_10")] mod v1_10;
+#[cfg(feature = "v1_10")] pub use self::v1_10::*;
+
+#[cfg(feature = "v1_11")] mod v1_11;
+#[cfg(feature = "v1_11")] pub use self::v1_11::*;
+
+#[cfg(feature = "v1_12")] mod v1_12;
+#[cfg(feature = "v1_12")] pub use self::v1_12::*;
+
+#[cfg(feature = "v1_13")] mod v1_13;
+#[cfg(feature = "v1_13")] pub use self::v1_13::*;
+
+#[cfg(feature = "v1_14")] mod v1_14;
+#[cfg(feature = "v1_14")] pub use self::v1_14::*;
+
+#[cfg(feature = "v1_15")] mod v1_15;
+#[cfg(feature = "v1_15")] pub use self::v1_15::*;
+
+#[cfg(feature = "v1_16")] mod v1_16;
+#[cfg(feature = "v1_16")] pub use self::v1_16::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
