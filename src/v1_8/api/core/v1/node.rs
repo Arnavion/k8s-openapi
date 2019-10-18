@@ -38,7 +38,7 @@ impl Node {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -88,8 +88,8 @@ impl Node {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -134,7 +134,7 @@ impl Node {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -184,8 +184,8 @@ impl Node {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -230,7 +230,7 @@ impl Node {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -280,8 +280,8 @@ impl Node {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -326,7 +326,7 @@ impl Node {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -376,8 +376,8 @@ impl Node {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -422,7 +422,7 @@ impl Node {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -472,8 +472,8 @@ impl Node {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -690,7 +690,7 @@ impl Node {
         optional: crate::v1_8::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -850,7 +850,7 @@ impl Node {
         optional: crate::v1_8::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -933,7 +933,7 @@ impl Node {
         optional: crate::v1_8::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -1008,7 +1008,7 @@ impl Node {
         name: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyDELETENodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -1090,8 +1090,8 @@ impl Node {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyDELETENodeWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -1168,7 +1168,7 @@ impl Node {
         name: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyGETNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::get(__url);
@@ -1250,8 +1250,8 @@ impl Node {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyGETNodeWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::get(__url);
@@ -1328,7 +1328,7 @@ impl Node {
         name: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPATCHNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::patch(__url);
@@ -1410,8 +1410,8 @@ impl Node {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPATCHNodeWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::patch(__url);
@@ -1488,7 +1488,7 @@ impl Node {
         name: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPOSTNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::post(__url);
@@ -1570,8 +1570,8 @@ impl Node {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPOSTNodeWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::post(__url);
@@ -1648,7 +1648,7 @@ impl Node {
         name: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPUTNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::put(__url);
@@ -1730,8 +1730,8 @@ impl Node {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPUTNodeWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::put(__url);
@@ -1818,7 +1818,7 @@ impl Node {
             pretty,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -1916,7 +1916,7 @@ impl Node {
             pretty,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2007,7 +2007,7 @@ impl Node {
             pretty,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2099,7 +2099,7 @@ impl Node {
             pretty,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {

@@ -43,8 +43,8 @@ impl Pod {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -99,9 +99,9 @@ impl Pod {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -155,8 +155,8 @@ impl Pod {
             tty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -231,8 +231,8 @@ impl Pod {
             tty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
@@ -307,8 +307,8 @@ impl Pod {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
@@ -358,8 +358,8 @@ impl Pod {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -414,9 +414,9 @@ impl Pod {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -466,8 +466,8 @@ impl Pod {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -522,9 +522,9 @@ impl Pod {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -578,8 +578,8 @@ impl Pod {
             tty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -654,8 +654,8 @@ impl Pod {
             tty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
@@ -730,8 +730,8 @@ impl Pod {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
@@ -781,8 +781,8 @@ impl Pod {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -837,9 +837,9 @@ impl Pod {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -889,8 +889,8 @@ impl Pod {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -945,9 +945,9 @@ impl Pod {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -997,7 +997,7 @@ impl Pod {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1106,7 +1106,7 @@ impl Pod {
         list_optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
@@ -1201,8 +1201,8 @@ impl Pod {
         optional: crate::v1_9::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -1291,7 +1291,7 @@ impl Pod {
         optional: crate::v1_9::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -1444,8 +1444,8 @@ impl Pod {
         optional: crate::v1_9::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -1533,8 +1533,8 @@ impl Pod {
         optional: crate::v1_9::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -1614,8 +1614,8 @@ impl Pod {
         namespace: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyDELETENamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -1702,9 +1702,9 @@ impl Pod {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyDELETENamespacedPodWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::delete(__url);
@@ -1786,8 +1786,8 @@ impl Pod {
         namespace: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyGETNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::get(__url);
@@ -1874,9 +1874,9 @@ impl Pod {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyGETNamespacedPodWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::get(__url);
@@ -1958,8 +1958,8 @@ impl Pod {
         namespace: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPATCHNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::patch(__url);
@@ -2046,9 +2046,9 @@ impl Pod {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPATCHNamespacedPodWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::patch(__url);
@@ -2130,8 +2130,8 @@ impl Pod {
         namespace: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPOSTNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::post(__url);
@@ -2218,9 +2218,9 @@ impl Pod {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPOSTNamespacedPodWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::post(__url);
@@ -2302,8 +2302,8 @@ impl Pod {
         namespace: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPUTNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::put(__url);
@@ -2390,9 +2390,9 @@ impl Pod {
         path: &str,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ProxyPUTNamespacedPodWithPathResponse>), crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            path = crate::url::percent_encoding::percent_encode(path.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            path = crate::percent_encoding::percent_encode(path.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
         let mut __request = http::Request::put(__url);
@@ -2484,8 +2484,8 @@ impl Pod {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -2595,8 +2595,8 @@ impl Pod {
             timestamps,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -2734,8 +2734,8 @@ impl Pod {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2831,8 +2831,8 @@ impl Pod {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2938,8 +2938,8 @@ impl Pod {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
-            name = crate::url::percent_encoding::percent_encode(name.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -3036,7 +3036,7 @@ impl Pod {
         optional: crate::v1_9::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);

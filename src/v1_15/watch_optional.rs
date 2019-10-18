@@ -31,7 +31,7 @@ impl WatchOptional<'_> {
     /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.
     pub fn __serialize<T>(
         self,
-        __query_pairs: &mut crate::url::form_urlencoded::Serializer<T>,
+        __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
         if let Some(allow_watch_bookmarks) = self.allow_watch_bookmarks {
             __query_pairs.append_pair("allowWatchBookmarks", &allow_watch_bookmarks.to_string());

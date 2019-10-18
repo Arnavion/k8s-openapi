@@ -42,7 +42,7 @@ impl LocalSubjectAccessReview {
             pretty,
         } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?",
-            namespace = crate::url::percent_encoding::percent_encode(namespace.as_bytes(), crate::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),
+            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {

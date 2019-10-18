@@ -1046,7 +1046,7 @@ pub fn run<W>(
 					writeln!(out, "    /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.")?;
 					writeln!(out, "    {}fn __serialize<T>(", vis)?;
 					writeln!(out, "        self,")?;
-					writeln!(out, "        __query_pairs: &mut crate::url::form_urlencoded::Serializer<T>,")?;
+					writeln!(out, "        __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,")?;
 					writeln!(out, "    ) where T: crate::url::form_urlencoded::Target {{")?;
 					for Property { name, schema, field_name, .. } in properties {
 						writeln!(out, "        if let Some({}) = self.{} {{", field_name, field_name)?;
@@ -1658,7 +1658,7 @@ pub fn write_operation(
 
 					writeln!(
 						out,
-						"{}        {} = {}::url::percent_encoding::percent_encode({}.as_bytes(), {}::url::percent_encoding::PATH_SEGMENT_ENCODE_SET),",
+						"{}        {} = {}::percent_encoding::percent_encode({}.as_bytes(), {}::percent_encoding2::PATH_SEGMENT_ENCODE_SET),",
 						indent,
 						parameter_name,
 						crate_root,

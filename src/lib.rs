@@ -285,6 +285,7 @@
 
 pub use chrono;
 pub use http;
+pub use percent_encoding;
 pub use serde_json;
 pub use url;
 
@@ -539,6 +540,15 @@ impl std::error::Error for ResponseError {
             ResponseError::Utf8(err) => Some(err),
         }
     }
+}
+
+/// Extensions to the percent-encoding crate
+pub mod percent_encoding2 {
+    /// Ref <https://url.spec.whatwg.org/#path-percent-encode-set>
+    pub const PATH_SEGMENT_ENCODE_SET: &percent_encoding::AsciiSet =
+        &percent_encoding::CONTROLS
+        .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
+        .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
 
 #[cfg(feature = "v1_8")] mod v1_8;
