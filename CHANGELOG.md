@@ -1,3 +1,25 @@
+# v0.6.0 (2019-10-18)
+
+- BREAKING CHANGE: Updated `url` dependency, and thus the re-export, to v2. The re-export is only used internally by code-generated API functions and is not part of any public signatures, so it is only a breaking change for you if you were also using it for your own code.
+
+- FEATURE: Added support for Kubernetes 1.16 under the `v1_16` feature.
+
+- FEATURE: The `k8s-openapi-derive` crate is now out of beta.
+
+Corresponding Kubernetes API server versions:
+
+- v1.8.15
+- v1.9.11
+- v1.10.13
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.8
+- v1.15.5
+- v1.16.2
+
+---
+
 # v0.5.1 (2019-09-08)
 
 - FEATURE: The `k8s-openapi` crate now has a default-enabled feature named `api`. If the feature is disabled, the library will only contain the resource types like `api::core::v1::Pod` and not the associated operation functions like `api::core::v1::Pod::read_namespaced_pod`. The corresponding `Response` and `Optional` types will also not be accessible. If your crate does not need the operation functions, you can disable this feature to save on compile time and resources.

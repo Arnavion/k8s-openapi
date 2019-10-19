@@ -1,6 +1,6 @@
 [package]
 name = "k8s-openapi-derive"
-version = "0.5.1-beta.1"
+version = "0.6.0"
 license = "Apache-2.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
 categories = ["api-bindings", "web-programming::http-client"]
@@ -19,7 +19,7 @@ include = [
 
 [dependencies]
 http = "0.1"
-k8s-openapi-codegen-common = { version = "=0.5.1", path = "../k8s-openapi-codegen-common" }
+k8s-openapi-codegen-common = { version = "=0.6.0", path = "../k8s-openapi-codegen-common" }
 proc-macro2 = "1"
 quote = "1"
 syn = { version = "1", features = ["extra-traits"] }
