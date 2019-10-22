@@ -8,6 +8,8 @@ See crate docs for details.
 
 [Documentation](https://docs.rs/k8s-openapi-derive)
 
+[Changelog](https://github.com/Arnavion/k8s-openapi/blob/master/CHANGELOG.md)
+
 
 # License
 
