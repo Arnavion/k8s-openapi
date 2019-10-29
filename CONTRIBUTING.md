@@ -32,7 +32,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-codegen/`: Use `cargo run` to generate the bindings for the new version.
 
-   A helpful trick here is to set the `mod_root` to that of the previous version, so that the generator ends up overwriting the previous version's files instead. Then you can use `git diff` to see precisely what changed between the last version and this one. This is useful to discover new fixups that could be backported to older versions. Make sure the set the `mod_root` to the proper value before continuing.
+   A helpful trick here is to set the `mod_root` to that of the previous version, so that the generator ends up overwriting the previous version's files instead. Then you can use `git diff` to see precisely what changed between the last version and this one. This is useful to discover new fixups that could be backported to older versions. Make sure to set the `mod_root` to the proper value before continuing.
 
 1. `/Cargo.toml`: Add a new feature for the new version.
 
@@ -61,7 +61,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 1. `/azure-pipelines.yml`: Add a new `strategy` for the new version.
 
 
-# To make a new crate release:
+# To make a new crate release
 
 1. `/k8s-openapi/Cargo.toml`: Update crate version
 1. `/k8s-openapi-codegen-common/Cargo.toml`: Update crate version
