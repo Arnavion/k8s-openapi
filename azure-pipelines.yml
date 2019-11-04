@@ -1,7 +1,7 @@
 jobs:
 - job: k8s_openapi
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
 
   strategy:
     matrix:
@@ -32,7 +32,7 @@ jobs:
 
 - job: k8s_openapi_codegen
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
 
   steps:
   - bash: bash ./ci/k8s-openapi-codegen.sh
