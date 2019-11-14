@@ -6,6 +6,7 @@
     clippy::doc_markdown,
     clippy::large_enum_variant,
     clippy::single_match_else,
+    clippy::too_many_lines,
     clippy::type_complexity,
     clippy::use_self,
 )]
