@@ -952,21 +952,10 @@ impl crate::Response for WatchNamespacedEventResponse {
 // End /v1/Event
 
 impl crate::Resource for Event {
-    fn api_version() -> &'static str {
-        "v1"
-    }
-
-    fn group() -> &'static str {
-        ""
-    }
-
-    fn kind() -> &'static str {
-        "Event"
-    }
-
-    fn version() -> &'static str {
-        "v1"
-    }
+    const API_VERSION: &'static str = "v1";
+    const GROUP: &'static str = "";
+    const KIND: &'static str = "Event";
+    const VERSION: &'static str = "v1";
 }
 
 impl crate::Metadata for Event {
@@ -1070,14 +1059,14 @@ impl<'de> serde::Deserialize<'de> for Event {
                     match key {
                         Field::Key_api_version => {
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as crate::Resource>::kind() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            if value_kind != <Self::Value as crate::Resource>::KIND {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
                         Field::Key_action => value_action = serde::de::MapAccess::next_value(&mut map)?,
@@ -1164,8 +1153,8 @@ impl serde::Serialize for Event {
             self.source.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.action {
             serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;
         }

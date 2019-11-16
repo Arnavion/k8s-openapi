@@ -132,21 +132,10 @@ impl crate::Response for CreateTokenReviewResponse {
 // End authentication.k8s.io/v1beta1/TokenReview
 
 impl crate::Resource for TokenReview {
-    fn api_version() -> &'static str {
-        "authentication.k8s.io/v1beta1"
-    }
-
-    fn group() -> &'static str {
-        "authentication.k8s.io"
-    }
-
-    fn kind() -> &'static str {
-        "TokenReview"
-    }
-
-    fn version() -> &'static str {
-        "v1beta1"
-    }
+    const API_VERSION: &'static str = "authentication.k8s.io/v1beta1";
+    const GROUP: &'static str = "authentication.k8s.io";
+    const KIND: &'static str = "TokenReview";
+    const VERSION: &'static str = "v1beta1";
 }
 
 impl crate::Metadata for TokenReview {
@@ -214,14 +203,14 @@ impl<'de> serde::Deserialize<'de> for TokenReview {
                     match key {
                         Field::Key_api_version => {
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as crate::Resource>::kind() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            if value_kind != <Self::Value as crate::Resource>::KIND {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
                         Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
@@ -261,8 +250,8 @@ impl serde::Serialize for TokenReview {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.metadata {
             serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }

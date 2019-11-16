@@ -324,22 +324,22 @@ impl serde::Serialize for ByteString {
 
 /// A trait applied to all Kubernetes resources.
 pub trait Resource {
-    /// The API version of the resource. This is a composite of [`Resource::group`] and [`Resource::version`] (eg `"apiextensions.k8s.io/v1beta1"`)
+    /// The API version of the resource. This is a composite of [`Resource::GROUP`] and [`Resource::VERSION`] (eg `"apiextensions.k8s.io/v1beta1"`)
     /// or just the version for resources without a group (eg `"v1"`).
     ///
     /// This is the string used in the `apiVersion` field of the resource's serialized form.
-    fn api_version() -> &'static str where Self: Sized;
+    const API_VERSION: &'static str;
 
     /// The group of the resource, or the empty string if the resource doesn't have a group.
-    fn group() -> &'static str where Self: Sized;
+    const GROUP: &'static str;
 
     /// The kind of the resource.
     ///
     /// This is the string used in the `kind` field of the resource's serialized form.
-    fn kind() -> &'static str where Self: Sized;
+    const KIND: &'static str;
 
     /// The version of the resource.
-    fn version() -> &'static str where Self: Sized;
+    const VERSION: &'static str;
 }
 
 /// A trait applied to all Kubernetes resources that have metadata.
@@ -353,34 +353,34 @@ pub trait Metadata: Resource {
 
 /// Extracts the API version of the given resource value.
 ///
-/// This just forwards to the value's impl of [`Resource::api_version`] but is useful when you already have a value
+/// This just returns the [`Resource::API_VERSION`] value for the argument's type, but is useful when you already have a value
 /// and don't want to explicitly write its type.
 pub fn api_version<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::api_version()
+    <T as Resource>::API_VERSION
 }
 
 /// Extracts the group of the given resource value.
 ///
-/// This just forwards to the value's impl of [`Resource::group`] but is useful when you already have a value
+/// This just returns the [`Resource::GROUP`] value for the argument's type, but is useful when you already have a value
 /// and don't want to explicitly write its type.
 pub fn group<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::group()
+    <T as Resource>::GROUP
 }
 
 /// Extracts the kind of the given resource value.
 ///
-/// This just forwards to the value's impl of [`Resource::kind`] but is useful when you already have a value
+/// This just returns the [`Resource::KIND`] value for the argument's type, but is useful when you already have a value
 /// and don't want to explicitly write its type.
 pub fn kind<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::kind()
+    <T as Resource>::KIND
 }
 
 /// Extracts the version of the given resource value.
 ///
-/// This just forwards to the value's impl of [`Resource::version`] but is useful when you already have a value
+/// This just returns the [`Resource::VERSION`] value for the argument's type, but is useful when you already have a value
 /// and don't want to explicitly write its type.
 pub fn version<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::version()
+    <T as Resource>::VERSION
 }
 
 /// The type of errors returned by the Kubernetes API functions that prepare the HTTP request.

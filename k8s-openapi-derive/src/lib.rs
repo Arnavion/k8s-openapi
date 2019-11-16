@@ -105,22 +105,22 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// let plural = "foobars";
 ///
 /// let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-///     group: <FooBar as k8s_openapi::Resource>::group().to_owned(),
+///     group: <FooBar as k8s_openapi::Resource>::GROUP.to_owned(),
 ///     names: apiextensions::CustomResourceDefinitionNames {
-///         kind: <FooBar as k8s_openapi::Resource>::kind().to_owned(),
+///         kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
 ///         plural: plural.to_owned(),
 ///         short_names: Some(vec!["fb".to_owned()]),
 ///         singular: Some("foobar".to_owned()),
 ///         ..Default::default()
 ///     },
 ///     scope: "Namespaced".to_owned(),
-///     version: <FooBar as k8s_openapi::Resource>::version().to_owned().into(),
+///     version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
 ///     ..Default::default()
 /// };
 ///
 /// let custom_resource_definition = apiextensions::CustomResourceDefinition {
 ///     metadata: Some(meta::ObjectMeta {
-///         name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group())),
+///         name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
 ///         ..Default::default()
 ///     }),
 ///     spec: custom_resource_definition_spec.into(),

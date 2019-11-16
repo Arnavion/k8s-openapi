@@ -23,20 +23,30 @@ fn test() {
 		prop3: Option<i32>,
 	}
 
+	assert_eq!(<FooBar as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
+	assert_eq!(<FooBar as k8s_openapi::Resource>::GROUP, "k8s-openapi-tests-custom-resource-definition.com");
+	assert_eq!(<FooBar as k8s_openapi::Resource>::KIND, "FooBar");
+	assert_eq!(<FooBar as k8s_openapi::Resource>::VERSION, "v1");
+
+	assert_eq!(<FooBarList as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
+	assert_eq!(<FooBarList as k8s_openapi::Resource>::GROUP, "k8s-openapi-tests-custom-resource-definition.com");
+	assert_eq!(<FooBarList as k8s_openapi::Resource>::KIND, "FooBarList");
+	assert_eq!(<FooBarList as k8s_openapi::Resource>::VERSION, "v1");
+
 	crate::Client::with("custom_resource_definition-test", |client| {
 		let plural = "foobars";
 
 		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-			group: <FooBar as k8s_openapi::Resource>::group().to_owned(),
+			group: <FooBar as k8s_openapi::Resource>::GROUP.to_owned(),
 			names: apiextensions::CustomResourceDefinitionNames {
-				kind: <FooBar as k8s_openapi::Resource>::kind().to_owned(),
+				kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
 				plural: plural.to_owned(),
 				short_names: Some(vec!["fb".to_owned()]),
 				singular: Some("foobar".to_owned()),
 				..Default::default()
 			},
 			scope: "Namespaced".to_owned(),
-			version: <FooBar as k8s_openapi::Resource>::version().to_owned().into(),
+			version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
 			..Default::default()
 		};
 
@@ -82,7 +92,7 @@ fn test() {
 
 		let custom_resource_definition = apiextensions::CustomResourceDefinition {
 			metadata: Some(meta::ObjectMeta {
-				name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group())),
+				name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
 				..Default::default()
 			}),
 			spec: custom_resource_definition_spec.into(),
@@ -127,7 +137,7 @@ fn test() {
 		loop {
 			let (request, response_body) =
 				apiextensions::CustomResourceDefinition::read_custom_resource_definition(
-					&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group().to_owned()), Default::default())
+					&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP.to_owned()), Default::default())
 				.expect("couldn't get custom resource definition");
 			let custom_resource_definition = {
 				let response = client.execute(request).expect("couldn't get custom resource definition");
@@ -250,8 +260,8 @@ fn test() {
 		// Create invalid CR
 		k8s_if_ge_1_9! {
 			let fb2 = serde_json::Value::Object(vec![
-				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::api_version().to_owned())),
-				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::kind().to_owned())),
+				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
+				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
 				("metadata".to_string(), serde_json::Value::Object(vec![
 					("name".to_string(), serde_json::Value::String("fb2".to_string())),
 				].into_iter().collect())),
@@ -261,7 +271,7 @@ fn test() {
 			].into_iter().collect());
 			let request =
 				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
-					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
+					<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION, plural))
 				.header(http::header::CONTENT_TYPE, "application/json")
 				.body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
@@ -274,8 +284,8 @@ fn test() {
 			}
 
 			let fb3 = serde_json::Value::Object(vec![
-				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::api_version().to_owned())),
-				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::kind().to_owned())),
+				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
+				("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
 				("metadata".to_string(), serde_json::Value::Object(vec![
 					("name".to_string(), serde_json::Value::String("fb3".to_string())),
 				].into_iter().collect())),
@@ -286,7 +296,7 @@ fn test() {
 			].into_iter().collect());
 			let request =
 				http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
-					<FooBar as k8s_openapi::Resource>::group(), <FooBar as k8s_openapi::Resource>::version(), plural))
+					<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION, plural))
 				.header(http::header::CONTENT_TYPE, "application/json")
 				.body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
 				.expect("couldn't create custom resource");
@@ -303,7 +313,7 @@ fn test() {
 		// Delete CRD
 		let (request, response_body) =
 			apiextensions::CustomResourceDefinition::delete_custom_resource_definition(
-				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::group()),
+				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP),
 				Default::default())
 			.expect("couldn't delete custom resource definition");
 		let response = client.execute(request).expect("couldn't delete custom resource definition");

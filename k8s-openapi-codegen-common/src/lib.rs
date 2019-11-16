@@ -298,21 +298,10 @@ pub fn run<W>(
 			if let Some(resource_metadata) = &resource_metadata {
 				writeln!(out)?;
 				writeln!(out, "impl {}::Resource for {} {{", crate_root, type_name)?;
-				writeln!(out, "    fn api_version() -> &'static str {{")?;
-				writeln!(out, r#"        "{}""#, resource_metadata.0)?;
-				writeln!(out, "    }}")?;
-				writeln!(out)?;
-				writeln!(out, "    fn group() -> &'static str {{")?;
-				writeln!(out, r#"        "{}""#, resource_metadata.1)?;
-				writeln!(out, "    }}")?;
-				writeln!(out)?;
-				writeln!(out, "    fn kind() -> &'static str {{")?;
-				writeln!(out, r#"        "{}""#, resource_metadata.2)?;
-				writeln!(out, "    }}")?;
-				writeln!(out)?;
-				writeln!(out, "    fn version() -> &'static str {{")?;
-				writeln!(out, r#"        "{}""#, resource_metadata.3)?;
-				writeln!(out, "    }}")?;
+				writeln!(out, r#"    const API_VERSION: &'static str = "{}";"#, resource_metadata.0)?;
+				writeln!(out, r#"    const GROUP: &'static str = "{}";"#, resource_metadata.1)?;
+				writeln!(out, r#"    const KIND: &'static str = "{}";"#, resource_metadata.2)?;
+				writeln!(out, r#"    const VERSION: &'static str = "{}";"#, resource_metadata.3)?;
 				writeln!(out, "}}")?;
 
 				if let Some((required, ty)) = metadata_property_ty {
@@ -400,15 +389,15 @@ pub fn run<W>(
 			if resource_metadata.is_some() {
 					writeln!(out, r#"                        Field::Key_api_version => {{"#)?;
 					writeln!(out, r#"                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
-					writeln!(out, r#"                            if value_api_version != <Self::Value as {}::Resource>::api_version() {{"#, crate_root)?;
-					writeln!(out, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {}::Resource>::api_version()));"#, crate_root)?;
+					writeln!(out, r#"                            if value_api_version != <Self::Value as {}::Resource>::API_VERSION {{"#, crate_root)?;
+					writeln!(out, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {}::Resource>::API_VERSION));"#, crate_root)?;
 					writeln!(out, r#"                            }}"#)?;
 					writeln!(out, r#"                        }},"#)?;
 
 					writeln!(out, r#"                        Field::Key_kind => {{"#)?;
 					writeln!(out, r#"                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
-					writeln!(out, r#"                            if value_kind != <Self::Value as {}::Resource>::kind() {{"#, crate_root)?;
-					writeln!(out, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}::Resource>::kind()));"#, crate_root)?;
+					writeln!(out, r#"                            if value_kind != <Self::Value as {}::Resource>::KIND {{"#, crate_root)?;
+					writeln!(out, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}::Resource>::KIND));"#, crate_root)?;
 					writeln!(out, r#"                            }}"#)?;
 					writeln!(out, r#"                        }},"#)?;
 			}
@@ -503,8 +492,8 @@ pub fn run<W>(
 
 			writeln!(out, "        )?;")?;
 			if resource_metadata.is_some() {
-				writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {}::Resource>::api_version())?;"#, crate_root)?;
-				writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {}::Resource>::kind())?;"#, crate_root)?;
+				writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {}::Resource>::API_VERSION)?;"#, crate_root)?;
+				writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {}::Resource>::KIND)?;"#, crate_root)?;
 			}
 			for Property { name, required, field_name, .. } in &properties {
 				if *required {

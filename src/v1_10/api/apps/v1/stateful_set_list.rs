@@ -9,21 +9,10 @@ pub struct StatefulSetList {
 }
 
 impl crate::Resource for StatefulSetList {
-    fn api_version() -> &'static str {
-        "apps/v1"
-    }
-
-    fn group() -> &'static str {
-        "apps"
-    }
-
-    fn kind() -> &'static str {
-        "StatefulSetList"
-    }
-
-    fn version() -> &'static str {
-        "v1"
-    }
+    const API_VERSION: &'static str = "apps/v1";
+    const GROUP: &'static str = "apps";
+    const KIND: &'static str = "StatefulSetList";
+    const VERSION: &'static str = "v1";
 }
 
 impl crate::Metadata for StatefulSetList {
@@ -88,14 +77,14 @@ impl<'de> serde::Deserialize<'de> for StatefulSetList {
                     match key {
                         Field::Key_api_version => {
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as crate::Resource>::kind() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            if value_kind != <Self::Value as crate::Resource>::KIND {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
                         Field::Key_items => value_items = Some(serde::de::MapAccess::next_value(&mut map)?),
@@ -131,8 +120,8 @@ impl serde::Serialize for StatefulSetList {
             3 +
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
         if let Some(value) = &self.metadata {
             serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

@@ -752,21 +752,10 @@ impl crate::Response for WatchPriorityClassResponse {
 // End scheduling.k8s.io/v1alpha1/PriorityClass
 
 impl crate::Resource for PriorityClass {
-    fn api_version() -> &'static str {
-        "scheduling.k8s.io/v1alpha1"
-    }
-
-    fn group() -> &'static str {
-        "scheduling.k8s.io"
-    }
-
-    fn kind() -> &'static str {
-        "PriorityClass"
-    }
-
-    fn version() -> &'static str {
-        "v1alpha1"
-    }
+    const API_VERSION: &'static str = "scheduling.k8s.io/v1alpha1";
+    const GROUP: &'static str = "scheduling.k8s.io";
+    const KIND: &'static str = "PriorityClass";
+    const VERSION: &'static str = "v1alpha1";
 }
 
 impl crate::Metadata for PriorityClass {
@@ -837,14 +826,14 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
                     match key {
                         Field::Key_api_version => {
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as crate::Resource>::kind() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            if value_kind != <Self::Value as crate::Resource>::KIND {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
                         Field::Key_description => value_description = serde::de::MapAccess::next_value(&mut map)?,
@@ -888,8 +877,8 @@ impl serde::Serialize for PriorityClass {
             self.global_default.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.description {
             serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }

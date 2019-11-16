@@ -952,21 +952,10 @@ impl crate::Response for WatchNamespacedEndpointSliceResponse {
 // End discovery.k8s.io/v1alpha1/EndpointSlice
 
 impl crate::Resource for EndpointSlice {
-    fn api_version() -> &'static str {
-        "discovery.k8s.io/v1alpha1"
-    }
-
-    fn group() -> &'static str {
-        "discovery.k8s.io"
-    }
-
-    fn kind() -> &'static str {
-        "EndpointSlice"
-    }
-
-    fn version() -> &'static str {
-        "v1alpha1"
-    }
+    const API_VERSION: &'static str = "discovery.k8s.io/v1alpha1";
+    const GROUP: &'static str = "discovery.k8s.io";
+    const KIND: &'static str = "EndpointSlice";
+    const VERSION: &'static str = "v1alpha1";
 }
 
 impl crate::Metadata for EndpointSlice {
@@ -1037,14 +1026,14 @@ impl<'de> serde::Deserialize<'de> for EndpointSlice {
                     match key {
                         Field::Key_api_version => {
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
+                            if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as crate::Resource>::kind() {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
+                            if value_kind != <Self::Value as crate::Resource>::KIND {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
                         Field::Key_address_type => value_address_type = serde::de::MapAccess::next_value(&mut map)?,
@@ -1088,8 +1077,8 @@ impl serde::Serialize for EndpointSlice {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.ports.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.address_type {
             serde::ser::SerializeStruct::serialize_field(&mut state, "addressType", value)?;
         }
