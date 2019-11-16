@@ -11,9 +11,9 @@ if [ ! -d ~/.cargo/bin ]; then
 	export PATH="$PATH:$(realpath ~/.cargo/bin)"
 fi
 
-rustup install stable
+rustup set profile minimal
+rustup install --no-self-update stable
 rustup default stable
-
 rustup component add clippy
 
 # Saves a few seconds for large crates
