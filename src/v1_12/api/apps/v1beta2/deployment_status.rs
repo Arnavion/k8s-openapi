@@ -10,7 +10,7 @@ pub struct DeploymentStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a deployment's current state.
-    pub conditions: Option<Vec<crate::v1_12::api::apps::v1beta2::DeploymentCondition>>,
+    pub conditions: Option<Vec<crate::api::apps::v1beta2::DeploymentCondition>>,
 
     /// The generation observed by the deployment controller.
     pub observed_generation: Option<i64>,
@@ -85,7 +85,7 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_available_replicas: Option<i32> = None;
                 let mut value_collision_count: Option<i32> = None;
-                let mut value_conditions: Option<Vec<crate::v1_12::api::apps::v1beta2::DeploymentCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::apps::v1beta2::DeploymentCondition>> = None;
                 let mut value_observed_generation: Option<i64> = None;
                 let mut value_ready_replicas: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;

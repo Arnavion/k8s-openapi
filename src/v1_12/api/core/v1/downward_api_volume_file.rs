@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIVolumeFile {
     /// Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
-    pub field_ref: Option<crate::v1_12::api::core::v1::ObjectFieldSelector>,
+    pub field_ref: Option<crate::api::core::v1::ObjectFieldSelector>,
 
     /// Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     pub mode: Option<i32>,
@@ -13,7 +13,7 @@ pub struct DownwardAPIVolumeFile {
     pub path: String,
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
-    pub resource_field_ref: Option<crate::v1_12::api::core::v1::ResourceFieldSelector>,
+    pub resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeFile {
@@ -63,10 +63,10 @@ impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeFile {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_field_ref: Option<crate::v1_12::api::core::v1::ObjectFieldSelector> = None;
+                let mut value_field_ref: Option<crate::api::core::v1::ObjectFieldSelector> = None;
                 let mut value_mode: Option<i32> = None;
                 let mut value_path: Option<String> = None;
-                let mut value_resource_field_ref: Option<crate::v1_12::api::core::v1::ResourceFieldSelector> = None;
+                let mut value_resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -3,13 +3,13 @@
 /// CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format \<.spec.name\>.\<.spec.group\>.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinition {
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec describes how the user wants the resources to appear
-    pub spec: Option<crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec>,
+    pub spec: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec>,
 
     /// Status indicates the actual state of the CustomResourceDefinition
-    pub status: Option<crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus>,
+    pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus>,
 }
 
 // Begin apiextensions.k8s.io/v1beta1/CustomResourceDefinition
@@ -30,7 +30,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_custom_resource_definition(
-        body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: CreateCustomResourceDefinitionOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCustomResourceDefinitionResponse>), crate::RequestError> {
         let CreateCustomResourceDefinitionOptional {
@@ -65,9 +65,9 @@ pub struct CreateCustomResourceDefinitionOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Accepted(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Accepted(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -135,8 +135,8 @@ impl CustomResourceDefinition {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_custom_resource_definition(
-        delete_optional: crate::v1_9::DeleteOptional<'_>,
-        list_optional: crate::v1_9::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -157,8 +157,8 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionCustomResourceDefinitionResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -224,7 +224,7 @@ impl CustomResourceDefinition {
     #[cfg(feature = "api")]
     pub fn delete_custom_resource_definition(
         name: &str,
-        optional: crate::v1_9::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -244,8 +244,8 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCustomResourceDefinitionResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -308,7 +308,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_custom_resource_definition(
-        optional: crate::v1_9::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -328,7 +328,7 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -383,8 +383,8 @@ impl CustomResourceDefinition {
     #[cfg(feature = "api")]
     pub fn patch_custom_resource_definition(
         name: &str,
-        body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_9::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -396,9 +396,9 @@ impl CustomResourceDefinition {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -411,7 +411,7 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -511,7 +511,7 @@ pub struct ReadCustomResourceDefinitionOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -566,7 +566,7 @@ impl CustomResourceDefinition {
     #[cfg(feature = "api")]
     pub fn replace_custom_resource_definition(
         name: &str,
-        body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: ReplaceCustomResourceDefinitionOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCustomResourceDefinitionResponse>), crate::RequestError> {
         let ReplaceCustomResourceDefinitionOptional {
@@ -603,8 +603,8 @@ pub struct ReplaceCustomResourceDefinitionOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -667,7 +667,7 @@ impl CustomResourceDefinition {
     #[cfg(feature = "api")]
     pub fn replace_custom_resource_definition_status(
         name: &str,
-        body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: ReplaceCustomResourceDefinitionStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCustomResourceDefinitionStatusResponse>), crate::RequestError> {
         let ReplaceCustomResourceDefinitionStatusOptional {
@@ -704,8 +704,8 @@ pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionStatusResponse {
-    Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -763,7 +763,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_custom_resource_definition(
-        optional: crate::v1_9::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -783,7 +783,7 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<CustomResourceDefinition>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CustomResourceDefinition>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -840,7 +840,7 @@ impl crate::Resource for CustomResourceDefinition {
 }
 
 impl crate::Metadata for CustomResourceDefinition {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -896,9 +896,9 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinition {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec> = None;
-                let mut value_status: Option<crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec> = None;
+                let mut value_status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

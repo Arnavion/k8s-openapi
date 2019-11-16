@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerStateRunning {
     /// Time at which the container was last (re-)started
-    pub started_at: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time>,
+    pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
 impl<'de> serde::Deserialize<'de> for ContainerStateRunning {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for ContainerStateRunning {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_started_at: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

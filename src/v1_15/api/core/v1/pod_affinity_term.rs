@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodAffinityTerm {
     /// A label query over a set of resources, in this case pods.
-    pub label_selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
     pub namespaces: Option<Vec<String>>,
@@ -58,7 +58,7 @@ impl<'de> serde::Deserialize<'de> for PodAffinityTerm {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_label_selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_namespaces: Option<Vec<String>> = None;
                 let mut value_topology_key: Option<String> = None;
 

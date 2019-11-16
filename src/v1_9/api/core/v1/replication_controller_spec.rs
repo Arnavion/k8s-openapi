@@ -13,7 +13,7 @@ pub struct ReplicationControllerSpec {
     pub selector: Option<std::collections::BTreeMap<String, String>>,
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
-    pub template: Option<crate::v1_9::api::core::v1::PodTemplateSpec>,
+    pub template: Option<crate::api::core::v1::PodTemplateSpec>,
 }
 
 impl<'de> serde::Deserialize<'de> for ReplicationControllerSpec {
@@ -66,7 +66,7 @@ impl<'de> serde::Deserialize<'de> for ReplicationControllerSpec {
                 let mut value_min_ready_seconds: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_selector: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_template: Option<crate::v1_9::api::core::v1::PodTemplateSpec> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

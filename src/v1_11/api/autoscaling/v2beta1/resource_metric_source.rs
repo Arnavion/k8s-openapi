@@ -10,7 +10,7 @@ pub struct ResourceMetricSource {
     pub target_average_utilization: Option<i32>,
 
     /// targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
-    pub target_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity>,
+    pub target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
 impl<'de> serde::Deserialize<'de> for ResourceMetricSource {
@@ -60,7 +60,7 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricSource {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
                 let mut value_target_average_utilization: Option<i32> = None;
-                let mut value_target_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

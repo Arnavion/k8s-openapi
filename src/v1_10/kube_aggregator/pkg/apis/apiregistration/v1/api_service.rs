@@ -3,13 +3,13 @@
 /// APIService represents a server for a particular GroupVersion. Name must be "version.group".
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIService {
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec contains information for locating and communicating with a server
-    pub spec: Option<crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec>,
+    pub spec: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec>,
 
     /// Status contains derived information about an API server
-    pub status: Option<crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
+    pub status: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
 }
 
 // Begin apiregistration.k8s.io/v1/APIService
@@ -30,7 +30,7 @@ impl APIService {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_api_service(
-        body: &crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: CreateAPIServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateAPIServiceResponse>), crate::RequestError> {
         let CreateAPIServiceOptional {
@@ -65,9 +65,9 @@ pub struct CreateAPIServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateAPIServiceResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Accepted(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Accepted(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -136,7 +136,7 @@ impl APIService {
     #[cfg(feature = "api")]
     pub fn delete_api_service(
         name: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteAPIServiceResponse>), crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -156,8 +156,8 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteAPIServiceResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -222,8 +222,8 @@ impl APIService {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_api_service(
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionAPIServiceResponse>), crate::RequestError> {
         let __url = "/apis/apiregistration.k8s.io/v1/apiservices?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -244,8 +244,8 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionAPIServiceResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -308,7 +308,7 @@ impl APIService {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_api_service(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAPIServiceResponse>), crate::RequestError> {
         let __url = "/apis/apiregistration.k8s.io/v1/apiservices?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -328,7 +328,7 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListAPIServiceResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -383,8 +383,8 @@ impl APIService {
     #[cfg(feature = "api")]
     pub fn patch_api_service(
         name: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchAPIServiceResponse>), crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -396,9 +396,9 @@ impl APIService {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -411,7 +411,7 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchAPIServiceResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -511,7 +511,7 @@ pub struct ReadAPIServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAPIServiceResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -566,7 +566,7 @@ impl APIService {
     #[cfg(feature = "api")]
     pub fn replace_api_service(
         name: &str,
-        body: &crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: ReplaceAPIServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceAPIServiceResponse>), crate::RequestError> {
         let ReplaceAPIServiceOptional {
@@ -603,8 +603,8 @@ pub struct ReplaceAPIServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceAPIServiceResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -667,7 +667,7 @@ impl APIService {
     #[cfg(feature = "api")]
     pub fn replace_api_service_status(
         name: &str,
-        body: &crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: ReplaceAPIServiceStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceAPIServiceStatusResponse>), crate::RequestError> {
         let ReplaceAPIServiceStatusOptional {
@@ -704,8 +704,8 @@ pub struct ReplaceAPIServiceStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceAPIServiceStatusResponse {
-    Ok(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -763,7 +763,7 @@ impl APIService {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_api_service(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAPIServiceResponse>), crate::RequestError> {
         let __url = "/apis/apiregistration.k8s.io/v1/apiservices?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -783,7 +783,7 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchAPIServiceResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<APIService>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<APIService>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -840,7 +840,7 @@ impl crate::Resource for APIService {
 }
 
 impl crate::Metadata for APIService {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -896,9 +896,9 @@ impl<'de> serde::Deserialize<'de> for APIService {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec> = None;
-                let mut value_status: Option<crate::v1_10::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec> = None;
+                let mut value_status: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

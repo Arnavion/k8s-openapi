@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceSubresources {
     /// scale indicates the custom resource should serve a `/scale` subresource that returns an `autoscaling/v1` Scale object.
-    pub scale: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale>,
+    pub scale: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale>,
 
     /// status indicates the custom resource should serve a `/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.
-    pub status: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus>,
+    pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceSubresources {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for CustomResourceSubresources {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_scale: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale> = None;
-                let mut value_status: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus> = None;
+                let mut value_scale: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale> = None;
+                let mut value_status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

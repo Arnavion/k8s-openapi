@@ -3,9 +3,9 @@
 /// PodPreset is a policy resource that defines additional runtime requirements for a Pod.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPreset {
-    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
-    pub spec: Option<crate::v1_12::api::settings::v1alpha1::PodPresetSpec>,
+    pub spec: Option<crate::api::settings::v1alpha1::PodPresetSpec>,
 }
 
 // Begin settings.k8s.io/v1alpha1/PodPreset
@@ -31,7 +31,7 @@ impl PodPreset {
     #[cfg(feature = "api")]
     pub fn create_namespaced_pod_preset(
         namespace: &str,
-        body: &crate::v1_12::api::settings::v1alpha1::PodPreset,
+        body: &crate::api::settings::v1alpha1::PodPreset,
         optional: CreateNamespacedPodPresetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodPresetResponse>), crate::RequestError> {
         let CreateNamespacedPodPresetOptional {
@@ -80,9 +80,9 @@ pub struct CreateNamespacedPodPresetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodPresetResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
-    Created(crate::v1_12::api::settings::v1alpha1::PodPreset),
-    Accepted(crate::v1_12::api::settings::v1alpha1::PodPreset),
+    Ok(crate::api::settings::v1alpha1::PodPreset),
+    Created(crate::api::settings::v1alpha1::PodPreset),
+    Accepted(crate::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -155,8 +155,8 @@ impl PodPreset {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_pod_preset(
         namespace: &str,
-        delete_optional: crate::v1_12::DeleteOptional<'_>,
-        list_optional: crate::v1_12::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -179,8 +179,8 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodPresetResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::settings::v1alpha1::PodPresetList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::settings::v1alpha1::PodPresetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -251,7 +251,7 @@ impl PodPreset {
     pub fn delete_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        optional: crate::v1_12::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -272,9 +272,9 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodPresetResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::settings::v1alpha1::PodPreset),
-    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::settings::v1alpha1::PodPreset),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -350,7 +350,7 @@ impl PodPreset {
     #[cfg(feature = "api")]
     pub fn list_namespaced_pod_preset(
         namespace: &str,
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -372,7 +372,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodPresetResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::api::settings::v1alpha1::PodPresetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -422,7 +422,7 @@ impl PodPreset {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_pod_preset_for_all_namespaces(
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodPresetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/settings.k8s.io/v1alpha1/podpresets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -442,7 +442,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodPresetForAllNamespacesResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::api::settings::v1alpha1::PodPresetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -502,8 +502,8 @@ impl PodPreset {
     pub fn patch_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_12::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -516,9 +516,9 @@ impl PodPreset {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -531,7 +531,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodPresetResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
+    Ok(crate::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -637,7 +637,7 @@ pub struct ReadNamespacedPodPresetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodPresetResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
+    Ok(crate::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -697,7 +697,7 @@ impl PodPreset {
     pub fn replace_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::api::settings::v1alpha1::PodPreset,
+        body: &crate::api::settings::v1alpha1::PodPreset,
         optional: ReplaceNamespacedPodPresetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodPresetResponse>), crate::RequestError> {
         let ReplaceNamespacedPodPresetOptional {
@@ -741,8 +741,8 @@ pub struct ReplaceNamespacedPodPresetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodPresetResponse {
-    Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
-    Created(crate::v1_12::api::settings::v1alpha1::PodPreset),
+    Ok(crate::api::settings::v1alpha1::PodPreset),
+    Created(crate::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -805,7 +805,7 @@ impl PodPreset {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_pod_preset(
         namespace: &str,
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -827,7 +827,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPodPresetResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -879,7 +879,7 @@ impl PodPreset {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_pod_preset_for_all_namespaces(
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodPresetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/settings.k8s.io/v1alpha1/podpresets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -899,7 +899,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodPresetForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -956,7 +956,7 @@ impl crate::Resource for PodPreset {
 }
 
 impl crate::Metadata for PodPreset {
-    type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1010,8 +1010,8 @@ impl<'de> serde::Deserialize<'de> for PodPreset {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_12::api::settings::v1alpha1::PodPresetSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::settings::v1alpha1::PodPresetSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionVersion {
     /// additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.
-    pub additional_printer_columns: Option<Vec<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>>,
+    pub additional_printer_columns: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>>,
 
     /// name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at `/apis/\<group\>/\<version\>/...` if `served` is true.
     pub name: String,
 
     /// schema describes the schema used for validation, pruning, and defaulting of this version of the custom resource.
-    pub schema: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceValidation>,
+    pub schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceValidation>,
 
     /// served is a flag enabling/disabling this version from being served via REST APIs
     pub served: bool,
@@ -19,7 +19,7 @@ pub struct CustomResourceDefinitionVersion {
     pub storage: bool,
 
     /// subresources specify what subresources this version of the defined custom resource have.
-    pub subresources: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources>,
+    pub subresources: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionVersion {
@@ -73,12 +73,12 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionVersion {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_additional_printer_columns: Option<Vec<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>> = None;
+                let mut value_additional_printer_columns: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_schema: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceValidation> = None;
+                let mut value_schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceValidation> = None;
                 let mut value_served: Option<bool> = None;
                 let mut value_storage: Option<bool> = None;
-                let mut value_subresources: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources> = None;
+                let mut value_subresources: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

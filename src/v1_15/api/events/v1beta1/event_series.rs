@@ -7,7 +7,7 @@ pub struct EventSeries {
     pub count: i32,
 
     /// Time when last Event from the series was seen before last heartbeat.
-    pub last_observed_time: crate::v1_15::apimachinery::pkg::apis::meta::v1::MicroTime,
+    pub last_observed_time: crate::apimachinery::pkg::apis::meta::v1::MicroTime,
 
     /// Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18
     pub state: String,
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for EventSeries {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_count: Option<i32> = None;
-                let mut value_last_observed_time: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
+                let mut value_last_observed_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
                 let mut value_state: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -7,13 +7,13 @@ pub struct ExternalMetricSource {
     pub metric_name: String,
 
     /// metricSelector is used to identify a specific time series within a given metric.
-    pub metric_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
-    pub target_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity>,
+    pub target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
-    pub target_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity>,
+    pub target_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
 impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
@@ -64,9 +64,9 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_metric_name: Option<String> = None;
-                let mut value_metric_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_target_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity> = None;
-                let mut value_target_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_target_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

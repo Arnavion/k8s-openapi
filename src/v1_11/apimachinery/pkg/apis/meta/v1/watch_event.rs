@@ -12,8 +12,8 @@ pub enum WatchEvent<T> {
     Added(T),
     Deleted(T),
     Modified(T),
-    ErrorStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    ErrorOther(crate::v1_11::apimachinery::pkg::runtime::RawExtension),
+    ErrorStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    ErrorOther(crate::apimachinery::pkg::runtime::RawExtension),
 }
 
 impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deserialize<'de> {

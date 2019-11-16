@@ -11,7 +11,7 @@ pub struct IngressRule {
     /// Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
     pub host: Option<String>,
 
-    pub http: Option<crate::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue>,
+    pub http: Option<crate::api::extensions::v1beta1::HTTPIngressRuleValue>,
 }
 
 impl<'de> serde::Deserialize<'de> for IngressRule {
@@ -58,7 +58,7 @@ impl<'de> serde::Deserialize<'de> for IngressRule {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_host: Option<String> = None;
-                let mut value_http: Option<crate::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue> = None;
+                let mut value_http: Option<crate::api::extensions::v1beta1::HTTPIngressRuleValue> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

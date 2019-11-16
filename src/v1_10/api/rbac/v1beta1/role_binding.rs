@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RoleBinding {
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
-    pub role_ref: crate::v1_10::api::rbac::v1beta1::RoleRef,
+    pub role_ref: crate::api::rbac::v1beta1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
-    pub subjects: Vec<crate::v1_10::api::rbac::v1beta1::Subject>,
+    pub subjects: Vec<crate::api::rbac::v1beta1::Subject>,
 }
 
 // Begin rbac.authorization.k8s.io/v1beta1/RoleBinding
@@ -36,7 +36,7 @@ impl RoleBinding {
     #[cfg(feature = "api")]
     pub fn create_namespaced_role_binding(
         namespace: &str,
-        body: &crate::v1_10::api::rbac::v1beta1::RoleBinding,
+        body: &crate::api::rbac::v1beta1::RoleBinding,
         optional: CreateNamespacedRoleBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedRoleBindingResponse>), crate::RequestError> {
         let CreateNamespacedRoleBindingOptional {
@@ -73,9 +73,9 @@ pub struct CreateNamespacedRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBinding),
-    Created(crate::v1_10::api::rbac::v1beta1::RoleBinding),
-    Accepted(crate::v1_10::api::rbac::v1beta1::RoleBinding),
+    Ok(crate::api::rbac::v1beta1::RoleBinding),
+    Created(crate::api::rbac::v1beta1::RoleBinding),
+    Accepted(crate::api::rbac::v1beta1::RoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,8 +148,8 @@ impl RoleBinding {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_role_binding(
         namespace: &str,
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -172,8 +172,8 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedRoleBindingResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::rbac::v1beta1::RoleBindingList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1beta1::RoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,7 +244,7 @@ impl RoleBinding {
     pub fn delete_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -265,8 +265,8 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedRoleBindingResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::rbac::v1beta1::RoleBinding),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1beta1::RoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -334,7 +334,7 @@ impl RoleBinding {
     #[cfg(feature = "api")]
     pub fn list_namespaced_role_binding(
         namespace: &str,
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -356,7 +356,7 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBindingList),
+    Ok(crate::api::rbac::v1beta1::RoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -406,7 +406,7 @@ impl RoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_role_binding_for_all_namespaces(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRoleBindingForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1beta1/rolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -426,7 +426,7 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRoleBindingForAllNamespacesResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBindingList),
+    Ok(crate::api::rbac::v1beta1::RoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -486,8 +486,8 @@ impl RoleBinding {
     pub fn patch_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl RoleBinding {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBinding),
+    Ok(crate::api::rbac::v1beta1::RoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -609,7 +609,7 @@ pub struct ReadNamespacedRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBinding),
+    Ok(crate::api::rbac::v1beta1::RoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -669,7 +669,7 @@ impl RoleBinding {
     pub fn replace_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::rbac::v1beta1::RoleBinding,
+        body: &crate::api::rbac::v1beta1::RoleBinding,
         optional: ReplaceNamespacedRoleBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedRoleBindingResponse>), crate::RequestError> {
         let ReplaceNamespacedRoleBindingOptional {
@@ -707,8 +707,8 @@ pub struct ReplaceNamespacedRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::api::rbac::v1beta1::RoleBinding),
-    Created(crate::v1_10::api::rbac::v1beta1::RoleBinding),
+    Ok(crate::api::rbac::v1beta1::RoleBinding),
+    Created(crate::api::rbac::v1beta1::RoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -771,7 +771,7 @@ impl RoleBinding {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_role_binding(
         namespace: &str,
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -793,7 +793,7 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleBindingResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -845,7 +845,7 @@ impl RoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_role_binding_for_all_namespaces(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRoleBindingForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1beta1/rolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -865,7 +865,7 @@ impl RoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchRoleBindingForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -922,7 +922,7 @@ impl crate::Resource for RoleBinding {
 }
 
 impl crate::Metadata for RoleBinding {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -978,9 +978,9 @@ impl<'de> serde::Deserialize<'de> for RoleBinding {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_role_ref: Option<crate::v1_10::api::rbac::v1beta1::RoleRef> = None;
-                let mut value_subjects: Option<Vec<crate::v1_10::api::rbac::v1beta1::Subject>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_role_ref: Option<crate::api::rbac::v1beta1::RoleRef> = None;
+                let mut value_subjects: Option<Vec<crate::api::rbac::v1beta1::Subject>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -7,7 +7,7 @@ pub struct Scheduling {
     pub node_selector: Option<std::collections::BTreeMap<String, String>>,
 
     /// tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
-    pub tolerations: Option<Vec<crate::v1_16::api::core::v1::Toleration>>,
+    pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
 }
 
 impl<'de> serde::Deserialize<'de> for Scheduling {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for Scheduling {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_node_selector: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_tolerations: Option<Vec<crate::v1_16::api::core::v1::Toleration>> = None;
+                let mut value_tolerations: Option<Vec<crate::api::core::v1::Toleration>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

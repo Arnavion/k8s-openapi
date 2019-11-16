@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeDaemonEndpoints {
     /// Endpoint on which Kubelet is listening.
-    pub kubelet_endpoint: Option<crate::v1_8::api::core::v1::DaemonEndpoint>,
+    pub kubelet_endpoint: Option<crate::api::core::v1::DaemonEndpoint>,
 }
 
 impl<'de> serde::Deserialize<'de> for NodeDaemonEndpoints {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for NodeDaemonEndpoints {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_kubelet_endpoint: Option<crate::v1_8::api::core::v1::DaemonEndpoint> = None;
+                let mut value_kubelet_endpoint: Option<crate::api::core::v1::DaemonEndpoint> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

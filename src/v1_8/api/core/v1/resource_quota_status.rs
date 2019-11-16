@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaStatus {
     /// Hard is the set of enforced hard limits for each named resource. More info: https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md
-    pub hard: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>>,
+    pub hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Used is the current observed total usage of the resource in the namespace.
-    pub used: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>>,
+    pub used: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
 impl<'de> serde::Deserialize<'de> for ResourceQuotaStatus {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for ResourceQuotaStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_hard: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_used: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_used: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

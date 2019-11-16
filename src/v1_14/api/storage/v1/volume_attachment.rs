@@ -6,13 +6,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachment {
     /// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system.
-    pub spec: crate::v1_14::api::storage::v1::VolumeAttachmentSpec,
+    pub spec: crate::api::storage::v1::VolumeAttachmentSpec,
 
     /// Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.
-    pub status: Option<crate::v1_14::api::storage::v1::VolumeAttachmentStatus>,
+    pub status: Option<crate::api::storage::v1::VolumeAttachmentStatus>,
 }
 
 // Begin storage.k8s.io/v1/VolumeAttachment
@@ -33,7 +33,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_volume_attachment(
-        body: &crate::v1_14::api::storage::v1::VolumeAttachment,
+        body: &crate::api::storage::v1::VolumeAttachment,
         optional: CreateVolumeAttachmentOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateVolumeAttachmentResponse>), crate::RequestError> {
         let CreateVolumeAttachmentOptional {
@@ -80,9 +80,9 @@ pub struct CreateVolumeAttachmentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateVolumeAttachmentResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Created(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Accepted(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
+    Created(crate::api::storage::v1::VolumeAttachment),
+    Accepted(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -150,8 +150,8 @@ impl VolumeAttachment {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_volume_attachment(
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionVolumeAttachmentResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1/volumeattachments?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -172,8 +172,8 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionVolumeAttachmentResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1::VolumeAttachmentList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1::VolumeAttachmentList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -239,7 +239,7 @@ impl VolumeAttachment {
     #[cfg(feature = "api")]
     pub fn delete_volume_attachment(
         name: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteVolumeAttachmentResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/volumeattachments/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -259,9 +259,9 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteVolumeAttachmentResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1::VolumeAttachment),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -332,7 +332,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_volume_attachment(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListVolumeAttachmentResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1/volumeattachments?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -352,7 +352,7 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListVolumeAttachmentResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachmentList),
+    Ok(crate::api::storage::v1::VolumeAttachmentList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -407,8 +407,8 @@ impl VolumeAttachment {
     #[cfg(feature = "api")]
     pub fn patch_volume_attachment(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchVolumeAttachmentResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/volumeattachments/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -420,9 +420,9 @@ impl VolumeAttachment {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -435,7 +435,7 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchVolumeAttachmentResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -490,8 +490,8 @@ impl VolumeAttachment {
     #[cfg(feature = "api")]
     pub fn patch_volume_attachment_status(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchVolumeAttachmentStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/volumeattachments/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -503,9 +503,9 @@ impl VolumeAttachment {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -518,7 +518,7 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchVolumeAttachmentStatusResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -618,7 +618,7 @@ pub struct ReadVolumeAttachmentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -706,7 +706,7 @@ pub struct ReadVolumeAttachmentStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentStatusResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -761,7 +761,7 @@ impl VolumeAttachment {
     #[cfg(feature = "api")]
     pub fn replace_volume_attachment(
         name: &str,
-        body: &crate::v1_14::api::storage::v1::VolumeAttachment,
+        body: &crate::api::storage::v1::VolumeAttachment,
         optional: ReplaceVolumeAttachmentOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceVolumeAttachmentResponse>), crate::RequestError> {
         let ReplaceVolumeAttachmentOptional {
@@ -810,8 +810,8 @@ pub struct ReplaceVolumeAttachmentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceVolumeAttachmentResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Created(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
+    Created(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -874,7 +874,7 @@ impl VolumeAttachment {
     #[cfg(feature = "api")]
     pub fn replace_volume_attachment_status(
         name: &str,
-        body: &crate::v1_14::api::storage::v1::VolumeAttachment,
+        body: &crate::api::storage::v1::VolumeAttachment,
         optional: ReplaceVolumeAttachmentStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceVolumeAttachmentStatusResponse>), crate::RequestError> {
         let ReplaceVolumeAttachmentStatusOptional {
@@ -923,8 +923,8 @@ pub struct ReplaceVolumeAttachmentStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceVolumeAttachmentStatusResponse {
-    Ok(crate::v1_14::api::storage::v1::VolumeAttachment),
-    Created(crate::v1_14::api::storage::v1::VolumeAttachment),
+    Ok(crate::api::storage::v1::VolumeAttachment),
+    Created(crate::api::storage::v1::VolumeAttachment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -982,7 +982,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_volume_attachment(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchVolumeAttachmentResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1/volumeattachments?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1002,7 +1002,7 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchVolumeAttachmentResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<VolumeAttachment>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<VolumeAttachment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1059,7 +1059,7 @@ impl crate::Resource for VolumeAttachment {
 }
 
 impl crate::Metadata for VolumeAttachment {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1115,9 +1115,9 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachment {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::storage::v1::VolumeAttachmentSpec> = None;
-                let mut value_status: Option<crate::v1_14::api::storage::v1::VolumeAttachmentStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::storage::v1::VolumeAttachmentSpec> = None;
+                let mut value_status: Option<crate::api::storage::v1::VolumeAttachmentStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeList {
     /// List of nodes
-    pub items: Vec<crate::v1_9::api::core::v1::Node>,
+    pub items: Vec<crate::api::core::v1::Node>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for NodeList {
@@ -29,7 +29,7 @@ impl crate::Resource for NodeList {
 }
 
 impl crate::Metadata for NodeList {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for NodeList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_9::api::core::v1::Node>> = None;
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::Node>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

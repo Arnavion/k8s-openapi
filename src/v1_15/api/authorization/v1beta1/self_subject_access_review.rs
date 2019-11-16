@@ -3,13 +3,13 @@
 /// SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SelfSubjectAccessReview {
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec holds information about the request being evaluated.  user and groups must be empty
-    pub spec: crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReviewSpec,
+    pub spec: crate::api::authorization::v1beta1::SelfSubjectAccessReviewSpec,
 
     /// Status is filled in by the server and indicates whether the request is allowed or not
-    pub status: Option<crate::v1_15::api::authorization::v1beta1::SubjectAccessReviewStatus>,
+    pub status: Option<crate::api::authorization::v1beta1::SubjectAccessReviewStatus>,
 }
 
 // Begin authorization.k8s.io/v1beta1/SelfSubjectAccessReview
@@ -30,7 +30,7 @@ impl SelfSubjectAccessReview {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_self_subject_access_review(
-        body: &crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReview,
+        body: &crate::api::authorization::v1beta1::SelfSubjectAccessReview,
         optional: CreateSelfSubjectAccessReviewOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateSelfSubjectAccessReviewOptional {
@@ -77,9 +77,9 @@ pub struct CreateSelfSubjectAccessReviewOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateSelfSubjectAccessReviewResponse {
-    Ok(crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReview),
-    Created(crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReview),
-    Accepted(crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReview),
+    Ok(crate::api::authorization::v1beta1::SelfSubjectAccessReview),
+    Created(crate::api::authorization::v1beta1::SelfSubjectAccessReview),
+    Accepted(crate::api::authorization::v1beta1::SelfSubjectAccessReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -150,7 +150,7 @@ impl crate::Resource for SelfSubjectAccessReview {
 }
 
 impl crate::Metadata for SelfSubjectAccessReview {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -206,9 +206,9 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReview {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_15::api::authorization::v1beta1::SelfSubjectAccessReviewSpec> = None;
-                let mut value_status: Option<crate::v1_15::api::authorization::v1beta1::SubjectAccessReviewStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authorization::v1beta1::SelfSubjectAccessReviewSpec> = None;
+                let mut value_status: Option<crate::api::authorization::v1beta1::SubjectAccessReviewStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

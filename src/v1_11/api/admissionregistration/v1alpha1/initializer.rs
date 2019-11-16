@@ -7,7 +7,7 @@ pub struct Initializer {
     pub name: String,
 
     /// Rules describes what resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.
-    pub rules: Option<Vec<crate::v1_11::api::admissionregistration::v1alpha1::Rule>>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1alpha1::Rule>>,
 }
 
 impl<'de> serde::Deserialize<'de> for Initializer {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for Initializer {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
-                let mut value_rules: Option<Vec<crate::v1_11::api::admissionregistration::v1alpha1::Rule>> = None;
+                let mut value_rules: Option<Vec<crate::api::admissionregistration::v1alpha1::Rule>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

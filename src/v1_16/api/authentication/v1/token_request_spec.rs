@@ -7,7 +7,7 @@ pub struct TokenRequestSpec {
     pub audiences: Vec<String>,
 
     /// BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.
-    pub bound_object_ref: Option<crate::v1_16::api::authentication::v1::BoundObjectReference>,
+    pub bound_object_ref: Option<crate::api::authentication::v1::BoundObjectReference>,
 
     /// ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.
     pub expiration_seconds: Option<i64>,
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_audiences: Option<Vec<String>> = None;
-                let mut value_bound_object_ref: Option<crate::v1_16::api::authentication::v1::BoundObjectReference> = None;
+                let mut value_bound_object_ref: Option<crate::api::authentication::v1::BoundObjectReference> = None;
                 let mut value_expiration_seconds: Option<i64> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

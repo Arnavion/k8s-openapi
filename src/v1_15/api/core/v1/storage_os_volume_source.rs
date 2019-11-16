@@ -10,7 +10,7 @@ pub struct StorageOSVolumeSource {
     pub read_only: Option<bool>,
 
     /// SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted.
-    pub secret_ref: Option<crate::v1_15::api::core::v1::LocalObjectReference>,
+    pub secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
 
     /// VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
     pub volume_name: Option<String>,
@@ -70,7 +70,7 @@ impl<'de> serde::Deserialize<'de> for StorageOSVolumeSource {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<crate::v1_15::api::core::v1::LocalObjectReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_volume_name: Option<String> = None;
                 let mut value_volume_namespace: Option<String> = None;
 

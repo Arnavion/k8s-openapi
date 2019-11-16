@@ -4,31 +4,31 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeStatus {
     /// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses
-    pub addresses: Option<Vec<crate::v1_8::api::core::v1::NodeAddress>>,
+    pub addresses: Option<Vec<crate::api::core::v1::NodeAddress>>,
 
     /// Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
-    pub allocatable: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>>,
+    pub allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-    pub capacity: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition
-    pub conditions: Option<Vec<crate::v1_8::api::core::v1::NodeCondition>>,
+    pub conditions: Option<Vec<crate::api::core::v1::NodeCondition>>,
 
     /// Endpoints of daemons running on the Node.
-    pub daemon_endpoints: Option<crate::v1_8::api::core::v1::NodeDaemonEndpoints>,
+    pub daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints>,
 
     /// List of container images on this node
-    pub images: Option<Vec<crate::v1_8::api::core::v1::ContainerImage>>,
+    pub images: Option<Vec<crate::api::core::v1::ContainerImage>>,
 
     /// Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info
-    pub node_info: Option<crate::v1_8::api::core::v1::NodeSystemInfo>,
+    pub node_info: Option<crate::api::core::v1::NodeSystemInfo>,
 
     /// NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.
     pub phase: Option<String>,
 
     /// List of volumes that are attached to the node.
-    pub volumes_attached: Option<Vec<crate::v1_8::api::core::v1::AttachedVolume>>,
+    pub volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>>,
 
     /// List of attachable volumes in use (mounted) by the node.
     pub volumes_in_use: Option<Vec<String>>,
@@ -93,15 +93,15 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_addresses: Option<Vec<crate::v1_8::api::core::v1::NodeAddress>> = None;
-                let mut value_allocatable: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_conditions: Option<Vec<crate::v1_8::api::core::v1::NodeCondition>> = None;
-                let mut value_daemon_endpoints: Option<crate::v1_8::api::core::v1::NodeDaemonEndpoints> = None;
-                let mut value_images: Option<Vec<crate::v1_8::api::core::v1::ContainerImage>> = None;
-                let mut value_node_info: Option<crate::v1_8::api::core::v1::NodeSystemInfo> = None;
+                let mut value_addresses: Option<Vec<crate::api::core::v1::NodeAddress>> = None;
+                let mut value_allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_conditions: Option<Vec<crate::api::core::v1::NodeCondition>> = None;
+                let mut value_daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints> = None;
+                let mut value_images: Option<Vec<crate::api::core::v1::ContainerImage>> = None;
+                let mut value_node_info: Option<crate::api::core::v1::NodeSystemInfo> = None;
                 let mut value_phase: Option<String> = None;
-                let mut value_volumes_attached: Option<Vec<crate::v1_8::api::core::v1::AttachedVolume>> = None;
+                let mut value_volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>> = None;
                 let mut value_volumes_in_use: Option<Vec<String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

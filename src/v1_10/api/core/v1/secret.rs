@@ -7,7 +7,7 @@ pub struct Secret {
     pub data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API.
     pub string_data: Option<std::collections::BTreeMap<String, String>>,
@@ -39,7 +39,7 @@ impl Secret {
     #[cfg(feature = "api")]
     pub fn create_namespaced_secret(
         namespace: &str,
-        body: &crate::v1_10::api::core::v1::Secret,
+        body: &crate::api::core::v1::Secret,
         optional: CreateNamespacedSecretOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedSecretResponse>), crate::RequestError> {
         let CreateNamespacedSecretOptional {
@@ -76,9 +76,9 @@ pub struct CreateNamespacedSecretOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedSecretResponse {
-    Ok(crate::v1_10::api::core::v1::Secret),
-    Created(crate::v1_10::api::core::v1::Secret),
-    Accepted(crate::v1_10::api::core::v1::Secret),
+    Ok(crate::api::core::v1::Secret),
+    Created(crate::api::core::v1::Secret),
+    Accepted(crate::api::core::v1::Secret),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -151,8 +151,8 @@ impl Secret {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_secret(
         namespace: &str,
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedSecretResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -175,8 +175,8 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedSecretResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::core::v1::SecretList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::SecretList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -247,7 +247,7 @@ impl Secret {
     pub fn delete_namespaced_secret(
         name: &str,
         namespace: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedSecretResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -268,8 +268,8 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedSecretResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::core::v1::Secret),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Secret),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -337,7 +337,7 @@ impl Secret {
     #[cfg(feature = "api")]
     pub fn list_namespaced_secret(
         namespace: &str,
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedSecretResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -359,7 +359,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedSecretResponse {
-    Ok(crate::v1_10::api::core::v1::SecretList),
+    Ok(crate::api::core::v1::SecretList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -409,7 +409,7 @@ impl Secret {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_secret_for_all_namespaces(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListSecretForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/secrets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -429,7 +429,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListSecretForAllNamespacesResponse {
-    Ok(crate::v1_10::api::core::v1::SecretList),
+    Ok(crate::api::core::v1::SecretList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -489,8 +489,8 @@ impl Secret {
     pub fn patch_namespaced_secret(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedSecretResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -503,9 +503,9 @@ impl Secret {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -518,7 +518,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedSecretResponse {
-    Ok(crate::v1_10::api::core::v1::Secret),
+    Ok(crate::api::core::v1::Secret),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -624,7 +624,7 @@ pub struct ReadNamespacedSecretOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedSecretResponse {
-    Ok(crate::v1_10::api::core::v1::Secret),
+    Ok(crate::api::core::v1::Secret),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -684,7 +684,7 @@ impl Secret {
     pub fn replace_namespaced_secret(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::core::v1::Secret,
+        body: &crate::api::core::v1::Secret,
         optional: ReplaceNamespacedSecretOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedSecretResponse>), crate::RequestError> {
         let ReplaceNamespacedSecretOptional {
@@ -722,8 +722,8 @@ pub struct ReplaceNamespacedSecretOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedSecretResponse {
-    Ok(crate::v1_10::api::core::v1::Secret),
-    Created(crate::v1_10::api::core::v1::Secret),
+    Ok(crate::api::core::v1::Secret),
+    Created(crate::api::core::v1::Secret),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -786,7 +786,7 @@ impl Secret {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_secret(
         namespace: &str,
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedSecretResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -808,7 +808,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedSecretResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -860,7 +860,7 @@ impl Secret {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_secret_for_all_namespaces(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchSecretForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/secrets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -880,7 +880,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchSecretForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -937,7 +937,7 @@ impl crate::Resource for Secret {
 }
 
 impl crate::Metadata for Secret {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -996,7 +996,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_data: Option<std::collections::BTreeMap<String, crate::ByteString>> = None;
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_string_data: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_type_: Option<String> = None;
 

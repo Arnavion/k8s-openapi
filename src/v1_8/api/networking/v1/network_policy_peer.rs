@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock
-    pub ip_block: Option<crate::v1_8::api::networking::v1::IPBlock>,
+    pub ip_block: Option<crate::api::networking::v1::IPBlock>,
 
     /// Selects Namespaces using cluster scoped-labels. This matches all pods in all namespaces selected by this label selector. This field follows standard label selector semantics. If present but empty, this selector selects all namespaces.
-    pub namespace_selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// This is a label selector which selects Pods in this namespace. This field follows standard label selector semantics. If present but empty, this selector selects all pods in this namespace.
-    pub pod_selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ip_block: Option<crate::v1_8::api::networking::v1::IPBlock> = None;
-                let mut value_namespace_selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_pod_selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_ip_block: Option<crate::api::networking::v1::IPBlock> = None;
+                let mut value_namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

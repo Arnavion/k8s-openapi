@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIGroupList {
     /// groups is a list of APIGroup.
-    pub groups: Vec<crate::v1_9::apimachinery::pkg::apis::meta::v1::APIGroup>,
+    pub groups: Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>,
 }
 
 impl crate::Resource for APIGroupList {
@@ -70,7 +70,7 @@ impl<'de> serde::Deserialize<'de> for APIGroupList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_groups: Option<Vec<crate::v1_9::apimachinery::pkg::apis::meta::v1::APIGroup>> = None;
+                let mut value_groups: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

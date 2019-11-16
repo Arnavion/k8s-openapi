@@ -3,13 +3,13 @@
 /// SelfSubjectRulesReview enumerates the set of actions the current user can perform within a namespace. The returned list of actions may be incomplete depending on the server's authorization mode, and any errors experienced during the evaluation. SelfSubjectRulesReview should be used by UIs to show/hide actions, or to quickly let an end user reason about their permissions. It should NOT Be used by external systems to drive authorization decisions as this raises confused deputy, cache lifetime/revocation, and correctness concerns. SubjectAccessReview, and LocalAccessReview are the correct way to defer authorization decisions to the API server.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SelfSubjectRulesReview {
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec holds information about the request being evaluated.
-    pub spec: crate::v1_8::api::authorization::v1::SelfSubjectRulesReviewSpec,
+    pub spec: crate::api::authorization::v1::SelfSubjectRulesReviewSpec,
 
     /// Status is filled in by the server and indicates the set of actions a user can perform.
-    pub status: Option<crate::v1_8::api::authorization::v1::SubjectRulesReviewStatus>,
+    pub status: Option<crate::api::authorization::v1::SubjectRulesReviewStatus>,
 }
 
 // Begin authorization.k8s.io/v1/SelfSubjectRulesReview
@@ -30,7 +30,7 @@ impl SelfSubjectRulesReview {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_self_subject_rules_review(
-        body: &crate::v1_8::api::authorization::v1::SelfSubjectRulesReview,
+        body: &crate::api::authorization::v1::SelfSubjectRulesReview,
         optional: CreateSelfSubjectRulesReviewOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectRulesReviewResponse>), crate::RequestError> {
         let CreateSelfSubjectRulesReviewOptional {
@@ -65,7 +65,7 @@ pub struct CreateSelfSubjectRulesReviewOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateSelfSubjectRulesReviewResponse {
-    Ok(crate::v1_8::api::authorization::v1::SelfSubjectRulesReview),
+    Ok(crate::api::authorization::v1::SelfSubjectRulesReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -120,7 +120,7 @@ impl crate::Resource for SelfSubjectRulesReview {
 }
 
 impl crate::Metadata for SelfSubjectRulesReview {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -176,9 +176,9 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectRulesReview {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::authorization::v1::SelfSubjectRulesReviewSpec> = None;
-                let mut value_status: Option<crate::v1_8::api::authorization::v1::SubjectRulesReviewStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authorization::v1::SelfSubjectRulesReviewSpec> = None;
+                let mut value_status: Option<crate::api::authorization::v1::SubjectRulesReviewStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

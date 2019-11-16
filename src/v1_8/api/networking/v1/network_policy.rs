@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicy {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior for this NetworkPolicy.
-    pub spec: Option<crate::v1_8::api::networking::v1::NetworkPolicySpec>,
+    pub spec: Option<crate::api::networking::v1::NetworkPolicySpec>,
 }
 
 // Begin networking.k8s.io/v1/NetworkPolicy
@@ -33,7 +33,7 @@ impl NetworkPolicy {
     #[cfg(feature = "api")]
     pub fn create_namespaced_network_policy(
         namespace: &str,
-        body: &crate::v1_8::api::networking::v1::NetworkPolicy,
+        body: &crate::api::networking::v1::NetworkPolicy,
         optional: CreateNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let CreateNamespacedNetworkPolicyOptional {
@@ -70,7 +70,7 @@ pub struct CreateNamespacedNetworkPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicy),
+    Ok(crate::api::networking::v1::NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -127,8 +127,8 @@ impl NetworkPolicy {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_network_policy(
         namespace: &str,
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -151,8 +151,8 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::networking::v1::NetworkPolicyList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::networking::v1::NetworkPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -223,7 +223,7 @@ impl NetworkPolicy {
     pub fn delete_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -244,8 +244,8 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedNetworkPolicyResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::networking::v1::NetworkPolicy),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::networking::v1::NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -313,7 +313,7 @@ impl NetworkPolicy {
     #[cfg(feature = "api")]
     pub fn list_namespaced_network_policy(
         namespace: &str,
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -335,7 +335,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicyList),
+    Ok(crate::api::networking::v1::NetworkPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -385,7 +385,7 @@ impl NetworkPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_network_policy_for_all_namespaces(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/networking.k8s.io/v1/networkpolicies?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -405,7 +405,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNetworkPolicyForAllNamespacesResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicyList),
+    Ok(crate::api::networking::v1::NetworkPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -465,8 +465,8 @@ impl NetworkPolicy {
     pub fn patch_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -479,9 +479,9 @@ impl NetworkPolicy {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -494,7 +494,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicy),
+    Ok(crate::api::networking::v1::NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -600,7 +600,7 @@ pub struct ReadNamespacedNetworkPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicy),
+    Ok(crate::api::networking::v1::NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -660,7 +660,7 @@ impl NetworkPolicy {
     pub fn replace_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::networking::v1::NetworkPolicy,
+        body: &crate::api::networking::v1::NetworkPolicy,
         optional: ReplaceNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let ReplaceNamespacedNetworkPolicyOptional {
@@ -698,7 +698,7 @@ pub struct ReplaceNamespacedNetworkPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::api::networking::v1::NetworkPolicy),
+    Ok(crate::api::networking::v1::NetworkPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -753,7 +753,7 @@ impl NetworkPolicy {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_network_policy(
         namespace: &str,
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -775,7 +775,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -827,7 +827,7 @@ impl NetworkPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_network_policy_for_all_namespaces(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/networking.k8s.io/v1/networkpolicies?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -847,7 +847,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNetworkPolicyForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -904,7 +904,7 @@ impl crate::Resource for NetworkPolicy {
 }
 
 impl crate::Metadata for NetworkPolicy {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -958,8 +958,8 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicy {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::networking::v1::NetworkPolicySpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::networking::v1::NetworkPolicySpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

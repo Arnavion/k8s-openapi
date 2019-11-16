@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RuntimeClass {
     /// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the RuntimeClass More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: crate::v1_14::api::node::v1alpha1::RuntimeClassSpec,
+    pub spec: crate::api::node::v1alpha1::RuntimeClassSpec,
 }
 
 // Begin node.k8s.io/v1alpha1/RuntimeClass
@@ -28,7 +28,7 @@ impl RuntimeClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_runtime_class(
-        body: &crate::v1_14::api::node::v1alpha1::RuntimeClass,
+        body: &crate::api::node::v1alpha1::RuntimeClass,
         optional: CreateRuntimeClassOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateRuntimeClassResponse>), crate::RequestError> {
         let CreateRuntimeClassOptional {
@@ -75,9 +75,9 @@ pub struct CreateRuntimeClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateRuntimeClassResponse {
-    Ok(crate::v1_14::api::node::v1alpha1::RuntimeClass),
-    Created(crate::v1_14::api::node::v1alpha1::RuntimeClass),
-    Accepted(crate::v1_14::api::node::v1alpha1::RuntimeClass),
+    Ok(crate::api::node::v1alpha1::RuntimeClass),
+    Created(crate::api::node::v1alpha1::RuntimeClass),
+    Accepted(crate::api::node::v1alpha1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -145,8 +145,8 @@ impl RuntimeClass {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_runtime_class(
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionRuntimeClassResponse>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1alpha1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -167,8 +167,8 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionRuntimeClassResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::node::v1alpha1::RuntimeClassList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::node::v1alpha1::RuntimeClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -234,7 +234,7 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn delete_runtime_class(
         name: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteRuntimeClassResponse>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1alpha1/runtimeclasses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -254,9 +254,9 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteRuntimeClassResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::node::v1alpha1::RuntimeClass),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::node::v1alpha1::RuntimeClass),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -327,7 +327,7 @@ impl RuntimeClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_runtime_class(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRuntimeClassResponse>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1alpha1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -347,7 +347,7 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRuntimeClassResponse {
-    Ok(crate::v1_14::api::node::v1alpha1::RuntimeClassList),
+    Ok(crate::api::node::v1alpha1::RuntimeClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -402,8 +402,8 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn patch_runtime_class(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchRuntimeClassResponse>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1alpha1/runtimeclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -415,9 +415,9 @@ impl RuntimeClass {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -430,7 +430,7 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchRuntimeClassResponse {
-    Ok(crate::v1_14::api::node::v1alpha1::RuntimeClass),
+    Ok(crate::api::node::v1alpha1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -530,7 +530,7 @@ pub struct ReadRuntimeClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadRuntimeClassResponse {
-    Ok(crate::v1_14::api::node::v1alpha1::RuntimeClass),
+    Ok(crate::api::node::v1alpha1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -585,7 +585,7 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn replace_runtime_class(
         name: &str,
-        body: &crate::v1_14::api::node::v1alpha1::RuntimeClass,
+        body: &crate::api::node::v1alpha1::RuntimeClass,
         optional: ReplaceRuntimeClassOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceRuntimeClassResponse>), crate::RequestError> {
         let ReplaceRuntimeClassOptional {
@@ -634,8 +634,8 @@ pub struct ReplaceRuntimeClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceRuntimeClassResponse {
-    Ok(crate::v1_14::api::node::v1alpha1::RuntimeClass),
-    Created(crate::v1_14::api::node::v1alpha1::RuntimeClass),
+    Ok(crate::api::node::v1alpha1::RuntimeClass),
+    Created(crate::api::node::v1alpha1::RuntimeClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -693,7 +693,7 @@ impl RuntimeClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_runtime_class(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRuntimeClassResponse>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1alpha1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -713,7 +713,7 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchRuntimeClassResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -770,7 +770,7 @@ impl crate::Resource for RuntimeClass {
 }
 
 impl crate::Metadata for RuntimeClass {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -824,8 +824,8 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::node::v1alpha1::RuntimeClassSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::node::v1alpha1::RuntimeClassSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DeploymentStrategy {
     /// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
-    pub rolling_update: Option<crate::v1_13::api::apps::v1::RollingUpdateDeployment>,
+    pub rolling_update: Option<crate::api::apps::v1::RollingUpdateDeployment>,
 
     /// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
     pub type_: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for DeploymentStrategy {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_rolling_update: Option<crate::v1_13::api::apps::v1::RollingUpdateDeployment> = None;
+                let mut value_rolling_update: Option<crate::api::apps::v1::RollingUpdateDeployment> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

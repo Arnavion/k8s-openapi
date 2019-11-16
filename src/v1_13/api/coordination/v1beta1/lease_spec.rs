@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LeaseSpec {
     /// acquireTime is a time when the current lease was acquired.
-    pub acquire_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::MicroTime>,
+    pub acquire_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
 
     /// holderIdentity contains the identity of the holder of a current lease.
     pub holder_identity: Option<String>,
@@ -16,7 +16,7 @@ pub struct LeaseSpec {
     pub lease_transitions: Option<i32>,
 
     /// renewTime is a time when the current holder of a lease has last updated the lease.
-    pub renew_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::MicroTime>,
+    pub renew_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
 }
 
 impl<'de> serde::Deserialize<'de> for LeaseSpec {
@@ -68,11 +68,11 @@ impl<'de> serde::Deserialize<'de> for LeaseSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_acquire_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
+                let mut value_acquire_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
                 let mut value_holder_identity: Option<String> = None;
                 let mut value_lease_duration_seconds: Option<i32> = None;
                 let mut value_lease_transitions: Option<i32> = None;
-                let mut value_renew_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
+                let mut value_renew_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

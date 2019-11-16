@@ -7,10 +7,10 @@ pub struct PersistentVolumeClaimStatus {
     pub access_modes: Option<Vec<String>>,
 
     /// Represents the actual resources of the underlying volume.
-    pub capacity: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
-    pub conditions: Option<Vec<crate::v1_8::api::core::v1::PersistentVolumeClaimCondition>>,
+    pub conditions: Option<Vec<crate::api::core::v1::PersistentVolumeClaimCondition>>,
 
     /// Phase represents the current phase of PersistentVolumeClaim.
     pub phase: Option<String>,
@@ -64,8 +64,8 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_access_modes: Option<Vec<String>> = None;
-                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::v1_8::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_conditions: Option<Vec<crate::v1_8::api::core::v1::PersistentVolumeClaimCondition>> = None;
+                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_conditions: Option<Vec<crate::api::core::v1::PersistentVolumeClaimCondition>> = None;
                 let mut value_phase: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

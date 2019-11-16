@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HorizontalPodAutoscalerStatus {
     /// conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
-    pub conditions: Vec<crate::v1_15::api::autoscaling::v2beta2::HorizontalPodAutoscalerCondition>,
+    pub conditions: Vec<crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerCondition>,
 
     /// currentMetrics is the last read state of the metrics used by this autoscaler.
-    pub current_metrics: Option<Vec<crate::v1_15::api::autoscaling::v2beta2::MetricStatus>>,
+    pub current_metrics: Option<Vec<crate::api::autoscaling::v2beta2::MetricStatus>>,
 
     /// currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
     pub current_replicas: i32,
@@ -16,7 +16,7 @@ pub struct HorizontalPodAutoscalerStatus {
     pub desired_replicas: i32,
 
     /// lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.
-    pub last_scale_time: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_scale_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// observedGeneration is the most recent generation observed by this autoscaler.
     pub observed_generation: Option<i64>,
@@ -73,11 +73,11 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::v1_15::api::autoscaling::v2beta2::HorizontalPodAutoscalerCondition>> = None;
-                let mut value_current_metrics: Option<Vec<crate::v1_15::api::autoscaling::v2beta2::MetricStatus>> = None;
+                let mut value_conditions: Option<Vec<crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerCondition>> = None;
+                let mut value_current_metrics: Option<Vec<crate::api::autoscaling::v2beta2::MetricStatus>> = None;
                 let mut value_current_replicas: Option<i32> = None;
                 let mut value_desired_replicas: Option<i32> = None;
-                let mut value_last_scale_time: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_scale_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_observed_generation: Option<i64> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -7,13 +7,13 @@ pub struct Status {
     pub code: Option<i32>,
 
     /// Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.
-    pub details: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::StatusDetails>,
+    pub details: Option<crate::apimachinery::pkg::apis::meta::v1::StatusDetails>,
 
     /// A human-readable description of the status of this operation.
     pub message: Option<String>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 
     /// A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.
     pub reason: Option<String>,
@@ -41,7 +41,7 @@ impl crate::Resource for Status {
 }
 
 impl crate::Metadata for Status {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -104,9 +104,9 @@ impl<'de> serde::Deserialize<'de> for Status {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_code: Option<i32> = None;
-                let mut value_details: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::StatusDetails> = None;
+                let mut value_details: Option<crate::apimachinery::pkg::apis::meta::v1::StatusDetails> = None;
                 let mut value_message: Option<String> = None;
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;
 

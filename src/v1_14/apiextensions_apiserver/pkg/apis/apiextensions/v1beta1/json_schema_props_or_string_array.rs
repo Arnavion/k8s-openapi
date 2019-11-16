@@ -3,7 +3,7 @@
 /// JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
 #[derive(Clone, Debug, PartialEq)]
 pub enum JSONSchemaPropsOrStringArray {
-    Schema(Box<crate::v1_14::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
+    Schema(Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
     Strings(Vec<String>),
 }
 

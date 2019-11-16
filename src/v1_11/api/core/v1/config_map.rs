@@ -10,7 +10,7 @@ pub struct ConfigMap {
     pub data: Option<std::collections::BTreeMap<String, String>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin /v1/ConfigMap
@@ -36,7 +36,7 @@ impl ConfigMap {
     #[cfg(feature = "api")]
     pub fn create_namespaced_config_map(
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::ConfigMap,
+        body: &crate::api::core::v1::ConfigMap,
         optional: CreateNamespacedConfigMapOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedConfigMapResponse>), crate::RequestError> {
         let CreateNamespacedConfigMapOptional {
@@ -73,9 +73,9 @@ pub struct CreateNamespacedConfigMapOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedConfigMapResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMap),
-    Created(crate::v1_11::api::core::v1::ConfigMap),
-    Accepted(crate::v1_11::api::core::v1::ConfigMap),
+    Ok(crate::api::core::v1::ConfigMap),
+    Created(crate::api::core::v1::ConfigMap),
+    Accepted(crate::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,8 +148,8 @@ impl ConfigMap {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_config_map(
         namespace: &str,
-        delete_optional: crate::v1_11::DeleteOptional<'_>,
-        list_optional: crate::v1_11::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -172,8 +172,8 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedConfigMapResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::core::v1::ConfigMapList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ConfigMapList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,7 +244,7 @@ impl ConfigMap {
     pub fn delete_namespaced_config_map(
         name: &str,
         namespace: &str,
-        optional: crate::v1_11::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -265,8 +265,8 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedConfigMapResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::core::v1::ConfigMap),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl ConfigMap {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_config_map_for_all_namespaces(
-        optional: crate::v1_11::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListConfigMapForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/configmaps?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -349,7 +349,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListConfigMapForAllNamespacesResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMapList),
+    Ok(crate::api::core::v1::ConfigMapList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -404,7 +404,7 @@ impl ConfigMap {
     #[cfg(feature = "api")]
     pub fn list_namespaced_config_map(
         namespace: &str,
-        optional: crate::v1_11::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -426,7 +426,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedConfigMapResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMapList),
+    Ok(crate::api::core::v1::ConfigMapList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -486,8 +486,8 @@ impl ConfigMap {
     pub fn patch_namespaced_config_map(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_11::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl ConfigMap {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedConfigMapResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMap),
+    Ok(crate::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -621,7 +621,7 @@ pub struct ReadNamespacedConfigMapOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedConfigMapResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMap),
+    Ok(crate::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -681,7 +681,7 @@ impl ConfigMap {
     pub fn replace_namespaced_config_map(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::ConfigMap,
+        body: &crate::api::core::v1::ConfigMap,
         optional: ReplaceNamespacedConfigMapOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedConfigMapResponse>), crate::RequestError> {
         let ReplaceNamespacedConfigMapOptional {
@@ -719,8 +719,8 @@ pub struct ReplaceNamespacedConfigMapOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedConfigMapResponse {
-    Ok(crate::v1_11::api::core::v1::ConfigMap),
-    Created(crate::v1_11::api::core::v1::ConfigMap),
+    Ok(crate::api::core::v1::ConfigMap),
+    Created(crate::api::core::v1::ConfigMap),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -778,7 +778,7 @@ impl ConfigMap {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_config_map_for_all_namespaces(
-        optional: crate::v1_11::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchConfigMapForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/configmaps?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -798,7 +798,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchConfigMapForAllNamespacesResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -855,7 +855,7 @@ impl ConfigMap {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_config_map(
         namespace: &str,
-        optional: crate::v1_11::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -877,7 +877,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -934,7 +934,7 @@ impl crate::Resource for ConfigMap {
 }
 
 impl crate::Metadata for ConfigMap {
-    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -992,7 +992,7 @@ impl<'de> serde::Deserialize<'de> for ConfigMap {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_binary_data: Option<std::collections::BTreeMap<String, crate::ByteString>> = None;
                 let mut value_data: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

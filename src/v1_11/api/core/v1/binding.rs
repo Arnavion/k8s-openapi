@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Binding {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The target object that you want to bind to the standard object.
-    pub target: crate::v1_11::api::core::v1::ObjectReference,
+    pub target: crate::api::core::v1::ObjectReference,
 }
 
 // Begin /v1/Binding
@@ -33,7 +33,7 @@ impl Binding {
     #[cfg(feature = "api")]
     pub fn create_namespaced_binding(
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::Binding,
+        body: &crate::api::core::v1::Binding,
         optional: CreateNamespacedBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedBindingResponse>), crate::RequestError> {
         let CreateNamespacedBindingOptional {
@@ -70,9 +70,9 @@ pub struct CreateNamespacedBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedBindingResponse {
-    Ok(crate::v1_11::api::core::v1::Binding),
-    Created(crate::v1_11::api::core::v1::Binding),
-    Accepted(crate::v1_11::api::core::v1::Binding),
+    Ok(crate::api::core::v1::Binding),
+    Created(crate::api::core::v1::Binding),
+    Accepted(crate::api::core::v1::Binding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,7 +148,7 @@ impl Binding {
     pub fn create_namespaced_pod_binding(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::Binding,
+        body: &crate::api::core::v1::Binding,
         optional: CreateNamespacedPodBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodBindingResponse>), crate::RequestError> {
         let CreateNamespacedPodBindingOptional {
@@ -186,9 +186,9 @@ pub struct CreateNamespacedPodBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodBindingResponse {
-    Ok(crate::v1_11::api::core::v1::Binding),
-    Created(crate::v1_11::api::core::v1::Binding),
-    Accepted(crate::v1_11::api::core::v1::Binding),
+    Ok(crate::api::core::v1::Binding),
+    Created(crate::api::core::v1::Binding),
+    Accepted(crate::api::core::v1::Binding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -259,7 +259,7 @@ impl crate::Resource for Binding {
 }
 
 impl crate::Metadata for Binding {
-    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -313,8 +313,8 @@ impl<'de> serde::Deserialize<'de> for Binding {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_target: Option<crate::v1_11::api::core::v1::ObjectReference> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_target: Option<crate::api::core::v1::ObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

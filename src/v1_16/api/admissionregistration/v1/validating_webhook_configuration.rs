@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ValidatingWebhookConfiguration {
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
-    pub metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
-    pub webhooks: Option<Vec<crate::v1_16::api::admissionregistration::v1::ValidatingWebhook>>,
+    pub webhooks: Option<Vec<crate::api::admissionregistration::v1::ValidatingWebhook>>,
 }
 
 // Begin admissionregistration.k8s.io/v1/ValidatingWebhookConfiguration
@@ -28,7 +28,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_validating_webhook_configuration(
-        body: &crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration,
+        body: &crate::api::admissionregistration::v1::ValidatingWebhookConfiguration,
         optional: CreateValidatingWebhookConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let CreateValidatingWebhookConfigurationOptional {
@@ -75,9 +75,9 @@ pub struct CreateValidatingWebhookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
-    Created(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
-    Accepted(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Ok(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Created(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Accepted(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -145,8 +145,8 @@ impl ValidatingWebhookConfiguration {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_validating_webhook_configuration(
-        delete_optional: crate::v1_16::DeleteOptional<'_>,
-        list_optional: crate::v1_16::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -167,8 +167,8 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfigurationList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1::ValidatingWebhookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -234,7 +234,7 @@ impl ValidatingWebhookConfiguration {
     #[cfg(feature = "api")]
     pub fn delete_validating_webhook_configuration(
         name: &str,
-        optional: crate::v1_16::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -254,9 +254,9 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteValidatingWebhookConfigurationResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
-    Accepted(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -327,7 +327,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_validating_webhook_configuration(
-        optional: crate::v1_16::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -347,7 +347,7 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfigurationList),
+    Ok(crate::api::admissionregistration::v1::ValidatingWebhookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -402,8 +402,8 @@ impl ValidatingWebhookConfiguration {
     #[cfg(feature = "api")]
     pub fn patch_validating_webhook_configuration(
         name: &str,
-        body: &crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_16::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -415,9 +415,9 @@ impl ValidatingWebhookConfiguration {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -430,7 +430,7 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Ok(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -530,7 +530,7 @@ pub struct ReadValidatingWebhookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Ok(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -585,7 +585,7 @@ impl ValidatingWebhookConfiguration {
     #[cfg(feature = "api")]
     pub fn replace_validating_webhook_configuration(
         name: &str,
-        body: &crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration,
+        body: &crate::api::admissionregistration::v1::ValidatingWebhookConfiguration,
         optional: ReplaceValidatingWebhookConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let ReplaceValidatingWebhookConfigurationOptional {
@@ -634,8 +634,8 @@ pub struct ReplaceValidatingWebhookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
-    Created(crate::v1_16::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Ok(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
+    Created(crate::api::admissionregistration::v1::ValidatingWebhookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -693,7 +693,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_validating_webhook_configuration(
-        optional: crate::v1_16::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -713,7 +713,7 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_16::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -770,7 +770,7 @@ impl crate::Resource for ValidatingWebhookConfiguration {
 }
 
 impl crate::Metadata for ValidatingWebhookConfiguration {
-    type Ty = crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -824,8 +824,8 @@ impl<'de> serde::Deserialize<'de> for ValidatingWebhookConfiguration {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_webhooks: Option<Vec<crate::v1_16::api::admissionregistration::v1::ValidatingWebhook>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_webhooks: Option<Vec<crate::api::admissionregistration::v1::ValidatingWebhook>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

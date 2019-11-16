@@ -3,7 +3,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestCondition {
     /// timestamp for the last update to this condition
-    pub last_update_time: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_update_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// human readable message with details about the request state
     pub message: Option<String>,
@@ -62,7 +62,7 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_last_update_time: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_update_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_type_: Option<String> = None;

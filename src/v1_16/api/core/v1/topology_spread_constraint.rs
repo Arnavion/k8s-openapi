@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TopologySpreadConstraint {
     /// LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
-    pub label_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
     pub max_skew: i32,
@@ -63,7 +63,7 @@ impl<'de> serde::Deserialize<'de> for TopologySpreadConstraint {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_label_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_max_skew: Option<i32> = None;
                 let mut value_topology_key: Option<String> = None;
                 let mut value_when_unsatisfiable: Option<String> = None;

@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Service {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_15::api::core::v1::ServiceSpec>,
+    pub spec: Option<crate::api::core::v1::ServiceSpec>,
 
     /// Most recently observed status of the service. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_15::api::core::v1::ServiceStatus>,
+    pub status: Option<crate::api::core::v1::ServiceStatus>,
 }
 
 // Begin /v1/Service
@@ -576,7 +576,7 @@ impl Service {
     #[cfg(feature = "api")]
     pub fn create_namespaced_service(
         namespace: &str,
-        body: &crate::v1_15::api::core::v1::Service,
+        body: &crate::api::core::v1::Service,
         optional: CreateNamespacedServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceResponse>), crate::RequestError> {
         let CreateNamespacedServiceOptional {
@@ -625,9 +625,9 @@ pub struct CreateNamespacedServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
-    Created(crate::v1_15::api::core::v1::Service),
-    Accepted(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
+    Created(crate::api::core::v1::Service),
+    Accepted(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -701,7 +701,7 @@ impl Service {
     pub fn delete_namespaced_service(
         name: &str,
         namespace: &str,
-        optional: crate::v1_15::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedServiceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -722,9 +722,9 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceResponse {
-    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_15::api::core::v1::Service),
-    Accepted(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Service),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -800,7 +800,7 @@ impl Service {
     #[cfg(feature = "api")]
     pub fn list_namespaced_service(
         namespace: &str,
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedServiceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -822,7 +822,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceResponse {
-    Ok(crate::v1_15::api::core::v1::ServiceList),
+    Ok(crate::api::core::v1::ServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -872,7 +872,7 @@ impl Service {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_service_for_all_namespaces(
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/services?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -892,7 +892,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceForAllNamespacesResponse {
-    Ok(crate::v1_15::api::core::v1::ServiceList),
+    Ok(crate::api::core::v1::ServiceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -952,8 +952,8 @@ impl Service {
     pub fn patch_namespaced_service(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_15::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -966,9 +966,9 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -981,7 +981,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1041,8 +1041,8 @@ impl Service {
     pub fn patch_namespaced_service_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_15::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1055,9 +1055,9 @@ impl Service {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1070,7 +1070,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceStatusResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1176,7 +1176,7 @@ pub struct ReadNamespacedServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1270,7 +1270,7 @@ pub struct ReadNamespacedServiceStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceStatusResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1330,7 +1330,7 @@ impl Service {
     pub fn replace_namespaced_service(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::api::core::v1::Service,
+        body: &crate::api::core::v1::Service,
         optional: ReplaceNamespacedServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceOptional {
@@ -1380,8 +1380,8 @@ pub struct ReplaceNamespacedServiceOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
-    Created(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
+    Created(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1449,7 +1449,7 @@ impl Service {
     pub fn replace_namespaced_service_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::api::core::v1::Service,
+        body: &crate::api::core::v1::Service,
         optional: ReplaceNamespacedServiceStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceStatusOptional {
@@ -1499,8 +1499,8 @@ pub struct ReplaceNamespacedServiceStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceStatusResponse {
-    Ok(crate::v1_15::api::core::v1::Service),
-    Created(crate::v1_15::api::core::v1::Service),
+    Ok(crate::api::core::v1::Service),
+    Created(crate::api::core::v1::Service),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1563,7 +1563,7 @@ impl Service {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_service(
         namespace: &str,
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1585,7 +1585,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1637,7 +1637,7 @@ impl Service {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_service_for_all_namespaces(
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/services?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1657,7 +1657,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchServiceForAllNamespacesResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1714,7 +1714,7 @@ impl crate::Resource for Service {
 }
 
 impl crate::Metadata for Service {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1770,9 +1770,9 @@ impl<'de> serde::Deserialize<'de> for Service {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_15::api::core::v1::ServiceSpec> = None;
-                let mut value_status: Option<crate::v1_15::api::core::v1::ServiceStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::ServiceSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::ServiceStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

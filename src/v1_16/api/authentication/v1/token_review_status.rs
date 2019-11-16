@@ -13,7 +13,7 @@ pub struct TokenReviewStatus {
     pub error: Option<String>,
 
     /// User is the UserInfo associated with the provided token.
-    pub user: Option<crate::v1_16::api::authentication::v1::UserInfo>,
+    pub user: Option<crate::api::authentication::v1::UserInfo>,
 }
 
 impl<'de> serde::Deserialize<'de> for TokenReviewStatus {
@@ -66,7 +66,7 @@ impl<'de> serde::Deserialize<'de> for TokenReviewStatus {
                 let mut value_audiences: Option<Vec<String>> = None;
                 let mut value_authenticated: Option<bool> = None;
                 let mut value_error: Option<String> = None;
-                let mut value_user: Option<crate::v1_16::api::authentication::v1::UserInfo> = None;
+                let mut value_user: Option<crate::api::authentication::v1::UserInfo> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

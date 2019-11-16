@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Webhook {
     /// ClientConfig holds the connection parameters for the webhook required
-    pub client_config: crate::v1_16::api::auditregistration::v1alpha1::WebhookClientConfig,
+    pub client_config: crate::api::auditregistration::v1alpha1::WebhookClientConfig,
 
     /// Throttle holds the options for throttling the webhook
-    pub throttle: Option<crate::v1_16::api::auditregistration::v1alpha1::WebhookThrottleConfig>,
+    pub throttle: Option<crate::api::auditregistration::v1alpha1::WebhookThrottleConfig>,
 }
 
 impl<'de> serde::Deserialize<'de> for Webhook {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for Webhook {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_client_config: Option<crate::v1_16::api::auditregistration::v1alpha1::WebhookClientConfig> = None;
-                let mut value_throttle: Option<crate::v1_16::api::auditregistration::v1alpha1::WebhookThrottleConfig> = None;
+                let mut value_client_config: Option<crate::api::auditregistration::v1alpha1::WebhookClientConfig> = None;
+                let mut value_throttle: Option<crate::api::auditregistration::v1alpha1::WebhookThrottleConfig> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

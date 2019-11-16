@@ -7,7 +7,7 @@ pub struct EmptyDirVolumeSource {
     pub medium: Option<String>,
 
     /// Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
-    pub size_limit: Option<crate::v1_8::apimachinery::pkg::api::resource::Quantity>,
+    pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
 impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_medium: Option<String> = None;
-                let mut value_size_limit: Option<crate::v1_8::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

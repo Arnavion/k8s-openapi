@@ -19,7 +19,7 @@ pub struct DeleteOptions {
     pub orphan_dependents: Option<bool>,
 
     /// Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
-    pub preconditions: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::Preconditions>,
+    pub preconditions: Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions>,
 
     /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub propagation_policy: Option<String>,
@@ -83,7 +83,7 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
                 let mut value_grace_period_seconds: Option<i64> = None;
                 let mut value_kind: Option<String> = None;
                 let mut value_orphan_dependents: Option<bool> = None;
-                let mut value_preconditions: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
+                let mut value_preconditions: Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
                 let mut value_propagation_policy: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

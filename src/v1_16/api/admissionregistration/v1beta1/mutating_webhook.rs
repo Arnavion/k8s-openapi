@@ -7,7 +7,7 @@ pub struct MutatingWebhook {
     pub admission_review_versions: Option<Vec<String>>,
 
     /// ClientConfig defines how to communicate with the hook. Required
-    pub client_config: crate::v1_16::api::admissionregistration::v1beta1::WebhookClientConfig,
+    pub client_config: crate::api::admissionregistration::v1beta1::WebhookClientConfig,
 
     /// FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.
     pub failure_policy: Option<String>,
@@ -55,10 +55,10 @@ pub struct MutatingWebhook {
     /// See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
     ///
     /// Default to the empty LabelSelector, which matches everything.
-    pub namespace_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
-    pub object_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub object_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
     ///
@@ -70,7 +70,7 @@ pub struct MutatingWebhook {
     pub reinvocation_policy: Option<String>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
-    pub rules: Option<Vec<crate::v1_16::api::admissionregistration::v1beta1::RuleWithOperations>>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1beta1::RuleWithOperations>>,
 
     /// SideEffects states whether this webhookk has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.
     pub side_effects: Option<String>,
@@ -141,14 +141,14 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_admission_review_versions: Option<Vec<String>> = None;
-                let mut value_client_config: Option<crate::v1_16::api::admissionregistration::v1beta1::WebhookClientConfig> = None;
+                let mut value_client_config: Option<crate::api::admissionregistration::v1beta1::WebhookClientConfig> = None;
                 let mut value_failure_policy: Option<String> = None;
                 let mut value_match_policy: Option<String> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_namespace_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_object_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_object_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_reinvocation_policy: Option<String> = None;
-                let mut value_rules: Option<Vec<crate::v1_16::api::admissionregistration::v1beta1::RuleWithOperations>> = None;
+                let mut value_rules: Option<Vec<crate::api::admissionregistration::v1beta1::RuleWithOperations>> = None;
                 let mut value_side_effects: Option<String> = None;
                 let mut value_timeout_seconds: Option<i32> = None;
 

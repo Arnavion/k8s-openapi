@@ -7,13 +7,13 @@ pub struct Endpoint {
     pub addresses: Vec<String>,
 
     /// conditions contains information about the current status of the endpoint.
-    pub conditions: Option<crate::v1_16::api::discovery::v1alpha1::EndpointConditions>,
+    pub conditions: Option<crate::api::discovery::v1alpha1::EndpointConditions>,
 
     /// hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must pass DNS Label (RFC 1123) validation.
     pub hostname: Option<String>,
 
     /// targetRef is a reference to a Kubernetes object that represents this endpoint.
-    pub target_ref: Option<crate::v1_16::api::core::v1::ObjectReference>,
+    pub target_ref: Option<crate::api::core::v1::ObjectReference>,
 
     /// topology contains arbitrary topology information associated with the endpoint. These key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node
     ///   where the endpoint is located. This should match the corresponding
@@ -75,9 +75,9 @@ impl<'de> serde::Deserialize<'de> for Endpoint {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_addresses: Option<Vec<String>> = None;
-                let mut value_conditions: Option<crate::v1_16::api::discovery::v1alpha1::EndpointConditions> = None;
+                let mut value_conditions: Option<crate::api::discovery::v1alpha1::EndpointConditions> = None;
                 let mut value_hostname: Option<String> = None;
-                let mut value_target_ref: Option<crate::v1_16::api::core::v1::ObjectReference> = None;
+                let mut value_target_ref: Option<crate::api::core::v1::ObjectReference> = None;
                 let mut value_topology: Option<std::collections::BTreeMap<String, String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -7,13 +7,13 @@ pub struct HTTPGetAction {
     pub host: Option<String>,
 
     /// Custom headers to set in the request. HTTP allows repeated headers.
-    pub http_headers: Option<Vec<crate::v1_9::api::core::v1::HTTPHeader>>,
+    pub http_headers: Option<Vec<crate::api::core::v1::HTTPHeader>>,
 
     /// Path to access on the HTTP server.
     pub path: Option<String>,
 
     /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    pub port: crate::v1_9::apimachinery::pkg::util::intstr::IntOrString,
+    pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
 
     /// Scheme to use for connecting to the host. Defaults to HTTP.
     pub scheme: Option<String>,
@@ -69,9 +69,9 @@ impl<'de> serde::Deserialize<'de> for HTTPGetAction {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_host: Option<String> = None;
-                let mut value_http_headers: Option<Vec<crate::v1_9::api::core::v1::HTTPHeader>> = None;
+                let mut value_http_headers: Option<Vec<crate::api::core::v1::HTTPHeader>> = None;
                 let mut value_path: Option<String> = None;
-                let mut value_port: Option<crate::v1_9::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
                 let mut value_scheme: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

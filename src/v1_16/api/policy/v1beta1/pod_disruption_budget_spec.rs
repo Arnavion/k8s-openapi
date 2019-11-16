@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDisruptionBudgetSpec {
     /// An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable".
-    pub max_unavailable: Option<crate::v1_16::apimachinery::pkg::util::intstr::IntOrString>,
+    pub max_unavailable: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
-    pub min_available: Option<crate::v1_16::apimachinery::pkg::util::intstr::IntOrString>,
+    pub min_available: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// Label query over pods whose evictions are managed by the disruption budget.
-    pub selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetSpec {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_max_unavailable: Option<crate::v1_16::apimachinery::pkg::util::intstr::IntOrString> = None;
-                let mut value_min_available: Option<crate::v1_16::apimachinery::pkg::util::intstr::IntOrString> = None;
-                let mut value_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_max_unavailable: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_min_available: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

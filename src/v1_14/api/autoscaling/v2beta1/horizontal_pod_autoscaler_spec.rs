@@ -7,13 +7,13 @@ pub struct HorizontalPodAutoscalerSpec {
     pub max_replicas: i32,
 
     /// metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond.
-    pub metrics: Option<Vec<crate::v1_14::api::autoscaling::v2beta1::MetricSpec>>,
+    pub metrics: Option<Vec<crate::api::autoscaling::v2beta1::MetricSpec>>,
 
     /// minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod.
     pub min_replicas: Option<i32>,
 
     /// scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.
-    pub scale_target_ref: crate::v1_14::api::autoscaling::v2beta1::CrossVersionObjectReference,
+    pub scale_target_ref: crate::api::autoscaling::v2beta1::CrossVersionObjectReference,
 }
 
 impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
@@ -64,9 +64,9 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_max_replicas: Option<i32> = None;
-                let mut value_metrics: Option<Vec<crate::v1_14::api::autoscaling::v2beta1::MetricSpec>> = None;
+                let mut value_metrics: Option<Vec<crate::api::autoscaling::v2beta1::MetricSpec>> = None;
                 let mut value_min_replicas: Option<i32> = None;
-                let mut value_scale_target_ref: Option<crate::v1_14::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
+                let mut value_scale_target_ref: Option<crate::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

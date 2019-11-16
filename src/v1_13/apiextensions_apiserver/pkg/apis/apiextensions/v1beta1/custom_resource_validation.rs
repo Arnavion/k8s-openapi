@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceValidation {
     /// OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.
-    pub open_api_v3_schema: Option<crate::v1_13::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub open_api_v3_schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceValidation {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for CustomResourceValidation {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_open_api_v3_schema: Option<crate::v1_13::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps> = None;
+                let mut value_open_api_v3_schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

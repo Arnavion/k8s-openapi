@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionSpec {
     /// conversion defines conversion settings for the CRD.
-    pub conversion: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion>,
+    pub conversion: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion>,
 
     /// group is the API group of the defined custom resource. The custom resources are served under `/apis/\<group\>/...`. Must match the name of the CustomResourceDefinition (in the form `\<names.plural\>.\<group\>`).
     pub group: String,
 
     /// names specify the resource and kind names for the custom resource.
-    pub names: crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames,
+    pub names: crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames,
 
     /// preserveUnknownFields indicates that object fields which are not specified in the OpenAPI schema should be preserved when persisting to storage. apiVersion, kind, metadata and known fields inside metadata are always preserved. This field is deprecated in favor of setting `x-preserve-unknown-fields` to true in `spec.versions\[*\].schema.openAPIV3Schema`. See https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields for details.
     pub preserve_unknown_fields: Option<bool>,
@@ -19,7 +19,7 @@ pub struct CustomResourceDefinitionSpec {
     pub scope: String,
 
     /// versions is the list of all API versions of the defined custom resource. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
-    pub versions: Vec<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>,
+    pub versions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
@@ -73,12 +73,12 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conversion: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion> = None;
+                let mut value_conversion: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion> = None;
                 let mut value_group: Option<String> = None;
-                let mut value_names: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames> = None;
+                let mut value_names: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames> = None;
                 let mut value_preserve_unknown_fields: Option<bool> = None;
                 let mut value_scope: Option<String> = None;
-                let mut value_versions: Option<Vec<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>> = None;
+                let mut value_versions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,88 +4,88 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Volume {
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-    pub aws_elastic_block_store: Option<crate::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource>,
+    pub aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource>,
 
     /// AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
-    pub azure_disk: Option<crate::v1_9::api::core::v1::AzureDiskVolumeSource>,
+    pub azure_disk: Option<crate::api::core::v1::AzureDiskVolumeSource>,
 
     /// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-    pub azure_file: Option<crate::v1_9::api::core::v1::AzureFileVolumeSource>,
+    pub azure_file: Option<crate::api::core::v1::AzureFileVolumeSource>,
 
     /// CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
-    pub cephfs: Option<crate::v1_9::api::core::v1::CephFSVolumeSource>,
+    pub cephfs: Option<crate::api::core::v1::CephFSVolumeSource>,
 
     /// Cinder represents a cinder volume attached and mounted on kubelets host machine More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md
-    pub cinder: Option<crate::v1_9::api::core::v1::CinderVolumeSource>,
+    pub cinder: Option<crate::api::core::v1::CinderVolumeSource>,
 
     /// ConfigMap represents a configMap that should populate this volume
-    pub config_map: Option<crate::v1_9::api::core::v1::ConfigMapVolumeSource>,
+    pub config_map: Option<crate::api::core::v1::ConfigMapVolumeSource>,
 
     /// DownwardAPI represents downward API about the pod that should populate this volume
-    pub downward_api: Option<crate::v1_9::api::core::v1::DownwardAPIVolumeSource>,
+    pub downward_api: Option<crate::api::core::v1::DownwardAPIVolumeSource>,
 
     /// EmptyDir represents a temporary directory that shares a pod's lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
-    pub empty_dir: Option<crate::v1_9::api::core::v1::EmptyDirVolumeSource>,
+    pub empty_dir: Option<crate::api::core::v1::EmptyDirVolumeSource>,
 
     /// FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-    pub fc: Option<crate::v1_9::api::core::v1::FCVolumeSource>,
+    pub fc: Option<crate::api::core::v1::FCVolumeSource>,
 
     /// FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
-    pub flex_volume: Option<crate::v1_9::api::core::v1::FlexVolumeSource>,
+    pub flex_volume: Option<crate::api::core::v1::FlexVolumeSource>,
 
     /// Flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running
-    pub flocker: Option<crate::v1_9::api::core::v1::FlockerVolumeSource>,
+    pub flocker: Option<crate::api::core::v1::FlockerVolumeSource>,
 
     /// GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-    pub gce_persistent_disk: Option<crate::v1_9::api::core::v1::GCEPersistentDiskVolumeSource>,
+    pub gce_persistent_disk: Option<crate::api::core::v1::GCEPersistentDiskVolumeSource>,
 
     /// GitRepo represents a git repository at a particular revision.
-    pub git_repo: Option<crate::v1_9::api::core::v1::GitRepoVolumeSource>,
+    pub git_repo: Option<crate::api::core::v1::GitRepoVolumeSource>,
 
     /// Glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md
-    pub glusterfs: Option<crate::v1_9::api::core::v1::GlusterfsVolumeSource>,
+    pub glusterfs: Option<crate::api::core::v1::GlusterfsVolumeSource>,
 
     /// HostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container. This is generally used for system agents or other privileged things that are allowed to see the host machine. Most containers will NOT need this. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-    pub host_path: Option<crate::v1_9::api::core::v1::HostPathVolumeSource>,
+    pub host_path: Option<crate::api::core::v1::HostPathVolumeSource>,
 
     /// ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://releases.k8s.io/HEAD/examples/volumes/iscsi/README.md
-    pub iscsi: Option<crate::v1_9::api::core::v1::ISCSIVolumeSource>,
+    pub iscsi: Option<crate::api::core::v1::ISCSIVolumeSource>,
 
     /// Volume's name. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
     pub name: String,
 
     /// NFS represents an NFS mount on the host that shares a pod's lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-    pub nfs: Option<crate::v1_9::api::core::v1::NFSVolumeSource>,
+    pub nfs: Option<crate::api::core::v1::NFSVolumeSource>,
 
     /// PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub persistent_volume_claim: Option<crate::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource>,
+    pub persistent_volume_claim: Option<crate::api::core::v1::PersistentVolumeClaimVolumeSource>,
 
     /// PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine
-    pub photon_persistent_disk: Option<crate::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource>,
+    pub photon_persistent_disk: Option<crate::api::core::v1::PhotonPersistentDiskVolumeSource>,
 
     /// PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
-    pub portworx_volume: Option<crate::v1_9::api::core::v1::PortworxVolumeSource>,
+    pub portworx_volume: Option<crate::api::core::v1::PortworxVolumeSource>,
 
     /// Items for all in one resources secrets, configmaps, and downward API
-    pub projected: Option<crate::v1_9::api::core::v1::ProjectedVolumeSource>,
+    pub projected: Option<crate::api::core::v1::ProjectedVolumeSource>,
 
     /// Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
-    pub quobyte: Option<crate::v1_9::api::core::v1::QuobyteVolumeSource>,
+    pub quobyte: Option<crate::api::core::v1::QuobyteVolumeSource>,
 
     /// RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md
-    pub rbd: Option<crate::v1_9::api::core::v1::RBDVolumeSource>,
+    pub rbd: Option<crate::api::core::v1::RBDVolumeSource>,
 
     /// ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
-    pub scale_io: Option<crate::v1_9::api::core::v1::ScaleIOVolumeSource>,
+    pub scale_io: Option<crate::api::core::v1::ScaleIOVolumeSource>,
 
     /// Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
-    pub secret: Option<crate::v1_9::api::core::v1::SecretVolumeSource>,
+    pub secret: Option<crate::api::core::v1::SecretVolumeSource>,
 
     /// StorageOS represents a StorageOS volume attached and mounted on Kubernetes nodes.
-    pub storageos: Option<crate::v1_9::api::core::v1::StorageOSVolumeSource>,
+    pub storageos: Option<crate::api::core::v1::StorageOSVolumeSource>,
 
     /// VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
-    pub vsphere_volume: Option<crate::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource>,
+    pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
 }
 
 impl<'de> serde::Deserialize<'de> for Volume {
@@ -183,34 +183,34 @@ impl<'de> serde::Deserialize<'de> for Volume {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_aws_elastic_block_store: Option<crate::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
-                let mut value_azure_disk: Option<crate::v1_9::api::core::v1::AzureDiskVolumeSource> = None;
-                let mut value_azure_file: Option<crate::v1_9::api::core::v1::AzureFileVolumeSource> = None;
-                let mut value_cephfs: Option<crate::v1_9::api::core::v1::CephFSVolumeSource> = None;
-                let mut value_cinder: Option<crate::v1_9::api::core::v1::CinderVolumeSource> = None;
-                let mut value_config_map: Option<crate::v1_9::api::core::v1::ConfigMapVolumeSource> = None;
-                let mut value_downward_api: Option<crate::v1_9::api::core::v1::DownwardAPIVolumeSource> = None;
-                let mut value_empty_dir: Option<crate::v1_9::api::core::v1::EmptyDirVolumeSource> = None;
-                let mut value_fc: Option<crate::v1_9::api::core::v1::FCVolumeSource> = None;
-                let mut value_flex_volume: Option<crate::v1_9::api::core::v1::FlexVolumeSource> = None;
-                let mut value_flocker: Option<crate::v1_9::api::core::v1::FlockerVolumeSource> = None;
-                let mut value_gce_persistent_disk: Option<crate::v1_9::api::core::v1::GCEPersistentDiskVolumeSource> = None;
-                let mut value_git_repo: Option<crate::v1_9::api::core::v1::GitRepoVolumeSource> = None;
-                let mut value_glusterfs: Option<crate::v1_9::api::core::v1::GlusterfsVolumeSource> = None;
-                let mut value_host_path: Option<crate::v1_9::api::core::v1::HostPathVolumeSource> = None;
-                let mut value_iscsi: Option<crate::v1_9::api::core::v1::ISCSIVolumeSource> = None;
+                let mut value_aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
+                let mut value_azure_disk: Option<crate::api::core::v1::AzureDiskVolumeSource> = None;
+                let mut value_azure_file: Option<crate::api::core::v1::AzureFileVolumeSource> = None;
+                let mut value_cephfs: Option<crate::api::core::v1::CephFSVolumeSource> = None;
+                let mut value_cinder: Option<crate::api::core::v1::CinderVolumeSource> = None;
+                let mut value_config_map: Option<crate::api::core::v1::ConfigMapVolumeSource> = None;
+                let mut value_downward_api: Option<crate::api::core::v1::DownwardAPIVolumeSource> = None;
+                let mut value_empty_dir: Option<crate::api::core::v1::EmptyDirVolumeSource> = None;
+                let mut value_fc: Option<crate::api::core::v1::FCVolumeSource> = None;
+                let mut value_flex_volume: Option<crate::api::core::v1::FlexVolumeSource> = None;
+                let mut value_flocker: Option<crate::api::core::v1::FlockerVolumeSource> = None;
+                let mut value_gce_persistent_disk: Option<crate::api::core::v1::GCEPersistentDiskVolumeSource> = None;
+                let mut value_git_repo: Option<crate::api::core::v1::GitRepoVolumeSource> = None;
+                let mut value_glusterfs: Option<crate::api::core::v1::GlusterfsVolumeSource> = None;
+                let mut value_host_path: Option<crate::api::core::v1::HostPathVolumeSource> = None;
+                let mut value_iscsi: Option<crate::api::core::v1::ISCSIVolumeSource> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_nfs: Option<crate::v1_9::api::core::v1::NFSVolumeSource> = None;
-                let mut value_persistent_volume_claim: Option<crate::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource> = None;
-                let mut value_photon_persistent_disk: Option<crate::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
-                let mut value_portworx_volume: Option<crate::v1_9::api::core::v1::PortworxVolumeSource> = None;
-                let mut value_projected: Option<crate::v1_9::api::core::v1::ProjectedVolumeSource> = None;
-                let mut value_quobyte: Option<crate::v1_9::api::core::v1::QuobyteVolumeSource> = None;
-                let mut value_rbd: Option<crate::v1_9::api::core::v1::RBDVolumeSource> = None;
-                let mut value_scale_io: Option<crate::v1_9::api::core::v1::ScaleIOVolumeSource> = None;
-                let mut value_secret: Option<crate::v1_9::api::core::v1::SecretVolumeSource> = None;
-                let mut value_storageos: Option<crate::v1_9::api::core::v1::StorageOSVolumeSource> = None;
-                let mut value_vsphere_volume: Option<crate::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
+                let mut value_nfs: Option<crate::api::core::v1::NFSVolumeSource> = None;
+                let mut value_persistent_volume_claim: Option<crate::api::core::v1::PersistentVolumeClaimVolumeSource> = None;
+                let mut value_photon_persistent_disk: Option<crate::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
+                let mut value_portworx_volume: Option<crate::api::core::v1::PortworxVolumeSource> = None;
+                let mut value_projected: Option<crate::api::core::v1::ProjectedVolumeSource> = None;
+                let mut value_quobyte: Option<crate::api::core::v1::QuobyteVolumeSource> = None;
+                let mut value_rbd: Option<crate::api::core::v1::RBDVolumeSource> = None;
+                let mut value_scale_io: Option<crate::api::core::v1::ScaleIOVolumeSource> = None;
+                let mut value_secret: Option<crate::api::core::v1::SecretVolumeSource> = None;
+                let mut value_storageos: Option<crate::api::core::v1::StorageOSVolumeSource> = None;
+                let mut value_vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

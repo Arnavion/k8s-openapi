@@ -10,10 +10,10 @@ pub struct EphemeralContainer {
     pub command: Option<Vec<String>>,
 
     /// List of environment variables to set in the container. Cannot be updated.
-    pub env: Option<Vec<crate::v1_16::api::core::v1::EnvVar>>,
+    pub env: Option<Vec<crate::api::core::v1::EnvVar>>,
 
     /// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-    pub env_from: Option<Vec<crate::v1_16::api::core::v1::EnvFromSource>>,
+    pub env_from: Option<Vec<crate::api::core::v1::EnvFromSource>>,
 
     /// Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
     pub image: Option<String>,
@@ -22,28 +22,28 @@ pub struct EphemeralContainer {
     pub image_pull_policy: Option<String>,
 
     /// Lifecycle is not allowed for ephemeral containers.
-    pub lifecycle: Option<crate::v1_16::api::core::v1::Lifecycle>,
+    pub lifecycle: Option<crate::api::core::v1::Lifecycle>,
 
     /// Probes are not allowed for ephemeral containers.
-    pub liveness_probe: Option<crate::v1_16::api::core::v1::Probe>,
+    pub liveness_probe: Option<crate::api::core::v1::Probe>,
 
     /// Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among all containers, init containers and ephemeral containers.
     pub name: String,
 
     /// Ports are not allowed for ephemeral containers.
-    pub ports: Option<Vec<crate::v1_16::api::core::v1::ContainerPort>>,
+    pub ports: Option<Vec<crate::api::core::v1::ContainerPort>>,
 
     /// Probes are not allowed for ephemeral containers.
-    pub readiness_probe: Option<crate::v1_16::api::core::v1::Probe>,
+    pub readiness_probe: Option<crate::api::core::v1::Probe>,
 
     /// Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
-    pub resources: Option<crate::v1_16::api::core::v1::ResourceRequirements>,
+    pub resources: Option<crate::api::core::v1::ResourceRequirements>,
 
     /// SecurityContext is not allowed for ephemeral containers.
-    pub security_context: Option<crate::v1_16::api::core::v1::SecurityContext>,
+    pub security_context: Option<crate::api::core::v1::SecurityContext>,
 
     /// Probes are not allowed for ephemeral containers.
-    pub startup_probe: Option<crate::v1_16::api::core::v1::Probe>,
+    pub startup_probe: Option<crate::api::core::v1::Probe>,
 
     /// Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
     pub stdin: Option<bool>,
@@ -64,10 +64,10 @@ pub struct EphemeralContainer {
     pub tty: Option<bool>,
 
     /// volumeDevices is the list of block devices to be used by the container. This is a beta feature.
-    pub volume_devices: Option<Vec<crate::v1_16::api::core::v1::VolumeDevice>>,
+    pub volume_devices: Option<Vec<crate::api::core::v1::VolumeDevice>>,
 
     /// Pod volumes to mount into the container's filesystem. Cannot be updated.
-    pub volume_mounts: Option<Vec<crate::v1_16::api::core::v1::VolumeMount>>,
+    pub volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>>,
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
     pub working_dir: Option<String>,
@@ -160,26 +160,26 @@ impl<'de> serde::Deserialize<'de> for EphemeralContainer {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_args: Option<Vec<String>> = None;
                 let mut value_command: Option<Vec<String>> = None;
-                let mut value_env: Option<Vec<crate::v1_16::api::core::v1::EnvVar>> = None;
-                let mut value_env_from: Option<Vec<crate::v1_16::api::core::v1::EnvFromSource>> = None;
+                let mut value_env: Option<Vec<crate::api::core::v1::EnvVar>> = None;
+                let mut value_env_from: Option<Vec<crate::api::core::v1::EnvFromSource>> = None;
                 let mut value_image: Option<String> = None;
                 let mut value_image_pull_policy: Option<String> = None;
-                let mut value_lifecycle: Option<crate::v1_16::api::core::v1::Lifecycle> = None;
-                let mut value_liveness_probe: Option<crate::v1_16::api::core::v1::Probe> = None;
+                let mut value_lifecycle: Option<crate::api::core::v1::Lifecycle> = None;
+                let mut value_liveness_probe: Option<crate::api::core::v1::Probe> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_ports: Option<Vec<crate::v1_16::api::core::v1::ContainerPort>> = None;
-                let mut value_readiness_probe: Option<crate::v1_16::api::core::v1::Probe> = None;
-                let mut value_resources: Option<crate::v1_16::api::core::v1::ResourceRequirements> = None;
-                let mut value_security_context: Option<crate::v1_16::api::core::v1::SecurityContext> = None;
-                let mut value_startup_probe: Option<crate::v1_16::api::core::v1::Probe> = None;
+                let mut value_ports: Option<Vec<crate::api::core::v1::ContainerPort>> = None;
+                let mut value_readiness_probe: Option<crate::api::core::v1::Probe> = None;
+                let mut value_resources: Option<crate::api::core::v1::ResourceRequirements> = None;
+                let mut value_security_context: Option<crate::api::core::v1::SecurityContext> = None;
+                let mut value_startup_probe: Option<crate::api::core::v1::Probe> = None;
                 let mut value_stdin: Option<bool> = None;
                 let mut value_stdin_once: Option<bool> = None;
                 let mut value_target_container_name: Option<String> = None;
                 let mut value_termination_message_path: Option<String> = None;
                 let mut value_termination_message_policy: Option<String> = None;
                 let mut value_tty: Option<bool> = None;
-                let mut value_volume_devices: Option<Vec<crate::v1_16::api::core::v1::VolumeDevice>> = None;
-                let mut value_volume_mounts: Option<Vec<crate::v1_16::api::core::v1::VolumeMount>> = None;
+                let mut value_volume_devices: Option<Vec<crate::api::core::v1::VolumeDevice>> = None;
+                let mut value_volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>> = None;
                 let mut value_working_dir: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct AuditSinkSpec {
     /// Policy defines the policy for selecting which events should be sent to the webhook required
-    pub policy: crate::v1_16::api::auditregistration::v1alpha1::Policy,
+    pub policy: crate::api::auditregistration::v1alpha1::Policy,
 
     /// Webhook to send events required
-    pub webhook: crate::v1_16::api::auditregistration::v1alpha1::Webhook,
+    pub webhook: crate::api::auditregistration::v1alpha1::Webhook,
 }
 
 impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_policy: Option<crate::v1_16::api::auditregistration::v1alpha1::Policy> = None;
-                let mut value_webhook: Option<crate::v1_16::api::auditregistration::v1alpha1::Webhook> = None;
+                let mut value_policy: Option<crate::api::auditregistration::v1alpha1::Policy> = None;
+                let mut value_webhook: Option<crate::api::auditregistration::v1alpha1::Webhook> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

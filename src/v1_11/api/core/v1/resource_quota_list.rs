@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaList {
     /// Items is a list of ResourceQuota objects. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
-    pub items: Vec<crate::v1_11::api::core::v1::ResourceQuota>,
+    pub items: Vec<crate::api::core::v1::ResourceQuota>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for ResourceQuotaList {
@@ -29,7 +29,7 @@ impl crate::Resource for ResourceQuotaList {
 }
 
 impl crate::Metadata for ResourceQuotaList {
-    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for ResourceQuotaList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_11::api::core::v1::ResourceQuota>> = None;
-                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::ResourceQuota>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

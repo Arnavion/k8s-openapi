@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LimitRange {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the limits enforced. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_11::api::core::v1::LimitRangeSpec>,
+    pub spec: Option<crate::api::core::v1::LimitRangeSpec>,
 }
 
 // Begin /v1/LimitRange
@@ -33,7 +33,7 @@ impl LimitRange {
     #[cfg(feature = "api")]
     pub fn create_namespaced_limit_range(
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::LimitRange,
+        body: &crate::api::core::v1::LimitRange,
         optional: CreateNamespacedLimitRangeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLimitRangeResponse>), crate::RequestError> {
         let CreateNamespacedLimitRangeOptional {
@@ -70,9 +70,9 @@ pub struct CreateNamespacedLimitRangeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRange),
-    Created(crate::v1_11::api::core::v1::LimitRange),
-    Accepted(crate::v1_11::api::core::v1::LimitRange),
+    Ok(crate::api::core::v1::LimitRange),
+    Created(crate::api::core::v1::LimitRange),
+    Accepted(crate::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -145,8 +145,8 @@ impl LimitRange {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_limit_range(
         namespace: &str,
-        delete_optional: crate::v1_11::DeleteOptional<'_>,
-        list_optional: crate::v1_11::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -169,8 +169,8 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLimitRangeResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::core::v1::LimitRangeList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::LimitRangeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -241,7 +241,7 @@ impl LimitRange {
     pub fn delete_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        optional: crate::v1_11::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -262,8 +262,8 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedLimitRangeResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::core::v1::LimitRange),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -326,7 +326,7 @@ impl LimitRange {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_limit_range_for_all_namespaces(
-        optional: crate::v1_11::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLimitRangeForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/limitranges?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -346,7 +346,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLimitRangeForAllNamespacesResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRangeList),
+    Ok(crate::api::core::v1::LimitRangeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -401,7 +401,7 @@ impl LimitRange {
     #[cfg(feature = "api")]
     pub fn list_namespaced_limit_range(
         namespace: &str,
-        optional: crate::v1_11::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -423,7 +423,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRangeList),
+    Ok(crate::api::core::v1::LimitRangeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -483,8 +483,8 @@ impl LimitRange {
     pub fn patch_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_11::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -497,9 +497,9 @@ impl LimitRange {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -512,7 +512,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRange),
+    Ok(crate::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -618,7 +618,7 @@ pub struct ReadNamespacedLimitRangeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRange),
+    Ok(crate::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -678,7 +678,7 @@ impl LimitRange {
     pub fn replace_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::api::core::v1::LimitRange,
+        body: &crate::api::core::v1::LimitRange,
         optional: ReplaceNamespacedLimitRangeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedLimitRangeResponse>), crate::RequestError> {
         let ReplaceNamespacedLimitRangeOptional {
@@ -716,8 +716,8 @@ pub struct ReplaceNamespacedLimitRangeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::api::core::v1::LimitRange),
-    Created(crate::v1_11::api::core::v1::LimitRange),
+    Ok(crate::api::core::v1::LimitRange),
+    Created(crate::api::core::v1::LimitRange),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -775,7 +775,7 @@ impl LimitRange {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_limit_range_for_all_namespaces(
-        optional: crate::v1_11::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLimitRangeForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/limitranges?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -795,7 +795,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchLimitRangeForAllNamespacesResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -852,7 +852,7 @@ impl LimitRange {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_limit_range(
         namespace: &str,
-        optional: crate::v1_11::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -874,7 +874,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -931,7 +931,7 @@ impl crate::Resource for LimitRange {
 }
 
 impl crate::Metadata for LimitRange {
-    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -985,8 +985,8 @@ impl<'de> serde::Deserialize<'de> for LimitRange {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_11::api::core::v1::LimitRangeSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::LimitRangeSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

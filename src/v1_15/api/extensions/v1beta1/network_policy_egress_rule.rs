@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyEgressRule {
     /// List of destination ports for outgoing traffic. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
-    pub ports: Option<Vec<crate::v1_15::api::extensions::v1beta1::NetworkPolicyPort>>,
+    pub ports: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPort>>,
 
     /// List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
-    pub to: Option<Vec<crate::v1_15::api::extensions::v1beta1::NetworkPolicyPeer>>,
+    pub to: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPeer>>,
 }
 
 impl<'de> serde::Deserialize<'de> for NetworkPolicyEgressRule {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyEgressRule {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ports: Option<Vec<crate::v1_15::api::extensions::v1beta1::NetworkPolicyPort>> = None;
-                let mut value_to: Option<Vec<crate::v1_15::api::extensions::v1beta1::NetworkPolicyPeer>> = None;
+                let mut value_ports: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPort>> = None;
+                let mut value_to: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPeer>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

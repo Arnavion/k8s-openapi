@@ -7,7 +7,7 @@ pub struct DownwardAPIVolumeSource {
     pub default_mode: Option<i32>,
 
     /// Items is a list of downward API volume file
-    pub items: Option<Vec<crate::v1_12::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
 impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeSource {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_default_mode: Option<i32> = None;
-                let mut value_items: Option<Vec<crate::v1_12::api::core::v1::DownwardAPIVolumeFile>> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

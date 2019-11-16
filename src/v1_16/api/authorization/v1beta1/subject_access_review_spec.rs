@@ -10,10 +10,10 @@ pub struct SubjectAccessReviewSpec {
     pub group: Option<Vec<String>>,
 
     /// NonResourceAttributes describes information for a non-resource access request
-    pub non_resource_attributes: Option<crate::v1_16::api::authorization::v1beta1::NonResourceAttributes>,
+    pub non_resource_attributes: Option<crate::api::authorization::v1beta1::NonResourceAttributes>,
 
     /// ResourceAuthorizationAttributes describes information for a resource access request
-    pub resource_attributes: Option<crate::v1_16::api::authorization::v1beta1::ResourceAttributes>,
+    pub resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes>,
 
     /// UID information about the requesting user.
     pub uid: Option<String>,
@@ -75,8 +75,8 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_extra: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut value_group: Option<Vec<String>> = None;
-                let mut value_non_resource_attributes: Option<crate::v1_16::api::authorization::v1beta1::NonResourceAttributes> = None;
-                let mut value_resource_attributes: Option<crate::v1_16::api::authorization::v1beta1::ResourceAttributes> = None;
+                let mut value_non_resource_attributes: Option<crate::api::authorization::v1beta1::NonResourceAttributes> = None;
+                let mut value_resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes> = None;
                 let mut value_uid: Option<String> = None;
                 let mut value_user: Option<String> = None;
 

@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressSpec {
     /// A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.
-    pub backend: Option<crate::v1_11::api::extensions::v1beta1::IngressBackend>,
+    pub backend: Option<crate::api::extensions::v1beta1::IngressBackend>,
 
     /// A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.
-    pub rules: Option<Vec<crate::v1_11::api::extensions::v1beta1::IngressRule>>,
+    pub rules: Option<Vec<crate::api::extensions::v1beta1::IngressRule>>,
 
     /// TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
-    pub tls: Option<Vec<crate::v1_11::api::extensions::v1beta1::IngressTLS>>,
+    pub tls: Option<Vec<crate::api::extensions::v1beta1::IngressTLS>>,
 }
 
 impl<'de> serde::Deserialize<'de> for IngressSpec {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for IngressSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_backend: Option<crate::v1_11::api::extensions::v1beta1::IngressBackend> = None;
-                let mut value_rules: Option<Vec<crate::v1_11::api::extensions::v1beta1::IngressRule>> = None;
-                let mut value_tls: Option<Vec<crate::v1_11::api::extensions::v1beta1::IngressTLS>> = None;
+                let mut value_backend: Option<crate::api::extensions::v1beta1::IngressBackend> = None;
+                let mut value_rules: Option<Vec<crate::api::extensions::v1beta1::IngressRule>> = None;
+                let mut value_tls: Option<Vec<crate::api::extensions::v1beta1::IngressTLS>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

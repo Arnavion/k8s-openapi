@@ -10,7 +10,7 @@ pub struct ContainerStateTerminated {
     pub exit_code: i32,
 
     /// Time at which the container last terminated
-    pub finished_at: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
+    pub finished_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Message regarding the last termination of the container
     pub message: Option<String>,
@@ -22,7 +22,7 @@ pub struct ContainerStateTerminated {
     pub signal: Option<i32>,
 
     /// Time at which previous execution of the container started
-    pub started_at: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
+    pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
 impl<'de> serde::Deserialize<'de> for ContainerStateTerminated {
@@ -80,11 +80,11 @@ impl<'de> serde::Deserialize<'de> for ContainerStateTerminated {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_container_id: Option<String> = None;
                 let mut value_exit_code: Option<i32> = None;
-                let mut value_finished_at: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_finished_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_signal: Option<i32> = None;
-                let mut value_started_at: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

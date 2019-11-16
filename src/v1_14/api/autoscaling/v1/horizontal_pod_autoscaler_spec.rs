@@ -10,7 +10,7 @@ pub struct HorizontalPodAutoscalerSpec {
     pub min_replicas: Option<i32>,
 
     /// reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource.
-    pub scale_target_ref: crate::v1_14::api::autoscaling::v1::CrossVersionObjectReference,
+    pub scale_target_ref: crate::api::autoscaling::v1::CrossVersionObjectReference,
 
     /// target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.
     pub target_cpu_utilization_percentage: Option<i32>,
@@ -65,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_max_replicas: Option<i32> = None;
                 let mut value_min_replicas: Option<i32> = None;
-                let mut value_scale_target_ref: Option<crate::v1_14::api::autoscaling::v1::CrossVersionObjectReference> = None;
+                let mut value_scale_target_ref: Option<crate::api::autoscaling::v1::CrossVersionObjectReference> = None;
                 let mut value_target_cpu_utilization_percentage: Option<i32> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

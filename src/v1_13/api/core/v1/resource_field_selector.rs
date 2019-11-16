@@ -7,7 +7,7 @@ pub struct ResourceFieldSelector {
     pub container_name: Option<String>,
 
     /// Specifies the output format of the exposed resources, defaults to "1"
-    pub divisor: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity>,
+    pub divisor: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// Required: resource to select
     pub resource: String,
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_container_name: Option<String> = None;
-                let mut value_divisor: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_divisor: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_resource: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

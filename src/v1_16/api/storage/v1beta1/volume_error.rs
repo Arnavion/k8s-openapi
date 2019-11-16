@@ -7,7 +7,7 @@ pub struct VolumeError {
     pub message: Option<String>,
 
     /// Time the error was encountered.
-    pub time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
 impl<'de> serde::Deserialize<'de> for VolumeError {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for VolumeError {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_message: Option<String> = None;
-                let mut value_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

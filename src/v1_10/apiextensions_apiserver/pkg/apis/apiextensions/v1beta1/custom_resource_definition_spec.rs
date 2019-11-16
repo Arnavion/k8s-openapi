@@ -7,16 +7,16 @@ pub struct CustomResourceDefinitionSpec {
     pub group: String,
 
     /// Names are the names used to describe this custom resource
-    pub names: crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames,
+    pub names: crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames,
 
     /// Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced
     pub scope: String,
 
     /// Subresources describes the subresources for CustomResources This field is alpha-level and should only be sent to servers that enable subresources via the CustomResourceSubresources feature gate.
-    pub subresources: Option<crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources>,
+    pub subresources: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources>,
 
     /// Validation describes the validation methods for CustomResources
-    pub validation: Option<crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation>,
+    pub validation: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation>,
 
     /// Version is the version this resource belongs in
     pub version: String,
@@ -74,10 +74,10 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_group: Option<String> = None;
-                let mut value_names: Option<crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames> = None;
+                let mut value_names: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames> = None;
                 let mut value_scope: Option<String> = None;
-                let mut value_subresources: Option<crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources> = None;
-                let mut value_validation: Option<crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation> = None;
+                let mut value_subresources: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources> = None;
+                let mut value_validation: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation> = None;
                 let mut value_version: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

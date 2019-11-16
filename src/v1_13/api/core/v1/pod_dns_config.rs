@@ -7,7 +7,7 @@ pub struct PodDNSConfig {
     pub nameservers: Option<Vec<String>>,
 
     /// A list of DNS resolver options. This will be merged with the base options generated from DNSPolicy. Duplicated entries will be removed. Resolution options given in Options will override those that appear in the base DNSPolicy.
-    pub options: Option<Vec<crate::v1_13::api::core::v1::PodDNSConfigOption>>,
+    pub options: Option<Vec<crate::api::core::v1::PodDNSConfigOption>>,
 
     /// A list of DNS search domains for host-name lookup. This will be appended to the base search paths generated from DNSPolicy. Duplicated search paths will be removed.
     pub searches: Option<Vec<String>>,
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for PodDNSConfig {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_nameservers: Option<Vec<String>> = None;
-                let mut value_options: Option<Vec<crate::v1_13::api::core::v1::PodDNSConfigOption>> = None;
+                let mut value_options: Option<Vec<crate::api::core::v1::PodDNSConfigOption>> = None;
                 let mut value_searches: Option<Vec<String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Handler {
     /// One and only one of the following should be specified. Exec specifies the action to take.
-    pub exec: Option<crate::v1_15::api::core::v1::ExecAction>,
+    pub exec: Option<crate::api::core::v1::ExecAction>,
 
     /// HTTPGet specifies the http request to perform.
-    pub http_get: Option<crate::v1_15::api::core::v1::HTTPGetAction>,
+    pub http_get: Option<crate::api::core::v1::HTTPGetAction>,
 
     /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
-    pub tcp_socket: Option<crate::v1_15::api::core::v1::TCPSocketAction>,
+    pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
 }
 
 impl<'de> serde::Deserialize<'de> for Handler {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for Handler {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_exec: Option<crate::v1_15::api::core::v1::ExecAction> = None;
-                let mut value_http_get: Option<crate::v1_15::api::core::v1::HTTPGetAction> = None;
-                let mut value_tcp_socket: Option<crate::v1_15::api::core::v1::TCPSocketAction> = None;
+                let mut value_exec: Option<crate::api::core::v1::ExecAction> = None;
+                let mut value_http_get: Option<crate::api::core::v1::HTTPGetAction> = None;
+                let mut value_tcp_socket: Option<crate::api::core::v1::TCPSocketAction> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

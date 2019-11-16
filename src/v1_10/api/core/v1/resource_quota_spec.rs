@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaSpec {
     /// Hard is the set of desired hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
-    pub hard: Option<std::collections::BTreeMap<String, crate::v1_10::apimachinery::pkg::api::resource::Quantity>>,
+    pub hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// A collection of filters that must match each object tracked by a quota. If not specified, the quota matches all objects.
     pub scopes: Option<Vec<String>>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for ResourceQuotaSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_hard: Option<std::collections::BTreeMap<String, crate::v1_10::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
                 let mut value_scopes: Option<Vec<String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

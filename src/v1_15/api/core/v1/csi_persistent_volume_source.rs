@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSIPersistentVolumeSource {
     /// ControllerExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerExpandVolume call. This is an alpha field and requires enabling ExpandCSIVolumes feature gate. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    pub controller_expand_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference>,
+    pub controller_expand_secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    pub controller_publish_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference>,
+    pub controller_publish_secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// Driver is the name of the driver to use for this volume. Required.
     pub driver: String,
@@ -16,10 +16,10 @@ pub struct CSIPersistentVolumeSource {
     pub fs_type: Option<String>,
 
     /// NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    pub node_publish_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference>,
+    pub node_publish_secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    pub node_stage_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference>,
+    pub node_stage_secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).
     pub read_only: Option<bool>,
@@ -88,12 +88,12 @@ impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_controller_expand_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference> = None;
-                let mut value_controller_publish_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference> = None;
+                let mut value_controller_expand_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
+                let mut value_controller_publish_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_driver: Option<String> = None;
                 let mut value_fs_type: Option<String> = None;
-                let mut value_node_publish_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference> = None;
-                let mut value_node_stage_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference> = None;
+                let mut value_node_publish_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
+                let mut value_node_stage_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_volume_attributes: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_volume_handle: Option<String> = None;

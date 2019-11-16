@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodsMetricStatus {
     /// current contains the current value for the given metric
-    pub current: crate::v1_14::api::autoscaling::v2beta2::MetricValueStatus,
+    pub current: crate::api::autoscaling::v2beta2::MetricValueStatus,
 
     /// metric identifies the target metric by name and selector
-    pub metric: crate::v1_14::api::autoscaling::v2beta2::MetricIdentifier,
+    pub metric: crate::api::autoscaling::v2beta2::MetricIdentifier,
 }
 
 impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current: Option<crate::v1_14::api::autoscaling::v2beta2::MetricValueStatus> = None;
-                let mut value_metric: Option<crate::v1_14::api::autoscaling::v2beta2::MetricIdentifier> = None;
+                let mut value_current: Option<crate::api::autoscaling::v2beta2::MetricValueStatus> = None;
+                let mut value_metric: Option<crate::api::autoscaling::v2beta2::MetricIdentifier> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

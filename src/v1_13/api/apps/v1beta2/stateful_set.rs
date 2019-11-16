@@ -6,13 +6,13 @@
 /// The StatefulSet guarantees that a given network identity will always map to the same storage identity.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSet {
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the desired identities of pods in this set.
-    pub spec: Option<crate::v1_13::api::apps::v1beta2::StatefulSetSpec>,
+    pub spec: Option<crate::api::apps::v1beta2::StatefulSetSpec>,
 
     /// Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.
-    pub status: Option<crate::v1_13::api::apps::v1beta2::StatefulSetStatus>,
+    pub status: Option<crate::api::apps::v1beta2::StatefulSetStatus>,
 }
 
 // Begin apps/v1beta2/StatefulSet
@@ -38,7 +38,7 @@ impl StatefulSet {
     #[cfg(feature = "api")]
     pub fn create_namespaced_stateful_set(
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1beta2::StatefulSet,
+        body: &crate::api::apps::v1beta2::StatefulSet,
         optional: CreateNamespacedStatefulSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedStatefulSetResponse>), crate::RequestError> {
         let CreateNamespacedStatefulSetOptional {
@@ -87,9 +87,9 @@ pub struct CreateNamespacedStatefulSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
-    Created(crate::v1_13::api::apps::v1beta2::StatefulSet),
-    Accepted(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
+    Created(crate::api::apps::v1beta2::StatefulSet),
+    Accepted(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -162,8 +162,8 @@ impl StatefulSet {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_stateful_set(
         namespace: &str,
-        delete_optional: crate::v1_13::DeleteOptional<'_>,
-        list_optional: crate::v1_13::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -186,8 +186,8 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedStatefulSetResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::apps::v1beta2::StatefulSetList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1beta2::StatefulSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -258,7 +258,7 @@ impl StatefulSet {
     pub fn delete_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        optional: crate::v1_13::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -279,9 +279,9 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedStatefulSetResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::apps::v1beta2::StatefulSet),
-    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1beta2::StatefulSet),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -357,7 +357,7 @@ impl StatefulSet {
     #[cfg(feature = "api")]
     pub fn list_namespaced_stateful_set(
         namespace: &str,
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -379,7 +379,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSetList),
+    Ok(crate::api::apps::v1beta2::StatefulSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -429,7 +429,7 @@ impl StatefulSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_stateful_set_for_all_namespaces(
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStatefulSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/statefulsets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -449,7 +449,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListStatefulSetForAllNamespacesResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSetList),
+    Ok(crate::api::apps::v1beta2::StatefulSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -509,8 +509,8 @@ impl StatefulSet {
     pub fn patch_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -523,9 +523,9 @@ impl StatefulSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -538,7 +538,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -598,8 +598,8 @@ impl StatefulSet {
     pub fn patch_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -612,9 +612,9 @@ impl StatefulSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -627,7 +627,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetStatusResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -733,7 +733,7 @@ pub struct ReadNamespacedStatefulSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -827,7 +827,7 @@ pub struct ReadNamespacedStatefulSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetStatusResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -887,7 +887,7 @@ impl StatefulSet {
     pub fn replace_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1beta2::StatefulSet,
+        body: &crate::api::apps::v1beta2::StatefulSet,
         optional: ReplaceNamespacedStatefulSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetResponse>), crate::RequestError> {
         let ReplaceNamespacedStatefulSetOptional {
@@ -931,8 +931,8 @@ pub struct ReplaceNamespacedStatefulSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
-    Created(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
+    Created(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1000,7 +1000,7 @@ impl StatefulSet {
     pub fn replace_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1beta2::StatefulSet,
+        body: &crate::api::apps::v1beta2::StatefulSet,
         optional: ReplaceNamespacedStatefulSetStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedStatefulSetStatusOptional {
@@ -1044,8 +1044,8 @@ pub struct ReplaceNamespacedStatefulSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedStatefulSetStatusResponse {
-    Ok(crate::v1_13::api::apps::v1beta2::StatefulSet),
-    Created(crate::v1_13::api::apps::v1beta2::StatefulSet),
+    Ok(crate::api::apps::v1beta2::StatefulSet),
+    Created(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1108,7 +1108,7 @@ impl StatefulSet {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_stateful_set(
         namespace: &str,
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1130,7 +1130,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedStatefulSetResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1182,7 +1182,7 @@ impl StatefulSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_stateful_set_for_all_namespaces(
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStatefulSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/statefulsets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1202,7 +1202,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchStatefulSetForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1259,7 +1259,7 @@ impl crate::Resource for StatefulSet {
 }
 
 impl crate::Metadata for StatefulSet {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1315,9 +1315,9 @@ impl<'de> serde::Deserialize<'de> for StatefulSet {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_13::api::apps::v1beta2::StatefulSetSpec> = None;
-                let mut value_status: Option<crate::v1_13::api::apps::v1beta2::StatefulSetStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::apps::v1beta2::StatefulSetSpec> = None;
+                let mut value_status: Option<crate::api::apps::v1beta2::StatefulSetStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

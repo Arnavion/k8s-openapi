@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicaSet {
     /// If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_10::api::extensions::v1beta1::ReplicaSetSpec>,
+    pub spec: Option<crate::api::extensions::v1beta1::ReplicaSetSpec>,
 
     /// Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_10::api::extensions::v1beta1::ReplicaSetStatus>,
+    pub status: Option<crate::api::extensions::v1beta1::ReplicaSetStatus>,
 }
 
 // Begin extensions/v1beta1/ReplicaSet
@@ -36,7 +36,7 @@ impl ReplicaSet {
     #[cfg(feature = "api")]
     pub fn create_namespaced_replica_set(
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::ReplicaSet,
+        body: &crate::api::extensions::v1beta1::ReplicaSet,
         optional: CreateNamespacedReplicaSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedReplicaSetResponse>), crate::RequestError> {
         let CreateNamespacedReplicaSetOptional {
@@ -73,9 +73,9 @@ pub struct CreateNamespacedReplicaSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
-    Created(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
-    Accepted(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
+    Created(crate::api::extensions::v1beta1::ReplicaSet),
+    Accepted(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,8 +148,8 @@ impl ReplicaSet {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_replica_set(
         namespace: &str,
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -172,8 +172,8 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicaSetResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::extensions::v1beta1::ReplicaSetList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::ReplicaSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,7 +244,7 @@ impl ReplicaSet {
     pub fn delete_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -265,8 +265,8 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedReplicaSetResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -334,7 +334,7 @@ impl ReplicaSet {
     #[cfg(feature = "api")]
     pub fn list_namespaced_replica_set(
         namespace: &str,
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -356,7 +356,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSetList),
+    Ok(crate::api::extensions::v1beta1::ReplicaSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -406,7 +406,7 @@ impl ReplicaSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_replica_set_for_all_namespaces(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicaSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/replicasets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -426,7 +426,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListReplicaSetForAllNamespacesResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSetList),
+    Ok(crate::api::extensions::v1beta1::ReplicaSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -486,8 +486,8 @@ impl ReplicaSet {
     pub fn patch_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl ReplicaSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -575,8 +575,8 @@ impl ReplicaSet {
     pub fn patch_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -589,9 +589,9 @@ impl ReplicaSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -604,7 +604,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ pub struct ReadNamespacedReplicaSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -804,7 +804,7 @@ pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -864,7 +864,7 @@ impl ReplicaSet {
     pub fn replace_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::ReplicaSet,
+        body: &crate::api::extensions::v1beta1::ReplicaSet,
         optional: ReplaceNamespacedReplicaSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicaSetOptional {
@@ -902,8 +902,8 @@ pub struct ReplaceNamespacedReplicaSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
-    Created(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
+    Created(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -971,7 +971,7 @@ impl ReplicaSet {
     pub fn replace_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::ReplicaSet,
+        body: &crate::api::extensions::v1beta1::ReplicaSet,
         optional: ReplaceNamespacedReplicaSetStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicaSetStatusOptional {
@@ -1009,8 +1009,8 @@ pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
-    Created(crate::v1_10::api::extensions::v1beta1::ReplicaSet),
+    Ok(crate::api::extensions::v1beta1::ReplicaSet),
+    Created(crate::api::extensions::v1beta1::ReplicaSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1073,7 +1073,7 @@ impl ReplicaSet {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_replica_set(
         namespace: &str,
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1095,7 +1095,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicaSetResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1147,7 +1147,7 @@ impl ReplicaSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_replica_set_for_all_namespaces(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicaSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/replicasets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1167,7 +1167,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchReplicaSetForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1224,7 +1224,7 @@ impl crate::Resource for ReplicaSet {
 }
 
 impl crate::Metadata for ReplicaSet {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1280,9 +1280,9 @@ impl<'de> serde::Deserialize<'de> for ReplicaSet {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_10::api::extensions::v1beta1::ReplicaSetSpec> = None;
-                let mut value_status: Option<crate::v1_10::api::extensions::v1beta1::ReplicaSetStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::extensions::v1beta1::ReplicaSetSpec> = None;
+                let mut value_status: Option<crate::api::extensions::v1beta1::ReplicaSetStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

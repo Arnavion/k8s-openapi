@@ -4,17 +4,17 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
-    pub ip_block: Option<crate::v1_12::api::extensions::v1beta1::IPBlock>,
+    pub ip_block: Option<crate::api::extensions::v1beta1::IPBlock>,
 
     /// Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
     ///
     /// If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.
-    pub namespace_selector: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
     ///
     /// If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.
-    pub pod_selector: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
@@ -62,9 +62,9 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ip_block: Option<crate::v1_12::api::extensions::v1beta1::IPBlock> = None;
-                let mut value_namespace_selector: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_pod_selector: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_ip_block: Option<crate::api::extensions::v1beta1::IPBlock> = None;
+                let mut value_namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

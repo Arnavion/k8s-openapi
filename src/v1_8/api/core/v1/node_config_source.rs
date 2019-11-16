@@ -3,7 +3,7 @@
 /// NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeConfigSource {
-    pub config_map_ref: Option<crate::v1_8::api::core::v1::ObjectReference>,
+    pub config_map_ref: Option<crate::api::core::v1::ObjectReference>,
 }
 
 impl crate::Resource for NodeConfigSource {
@@ -69,7 +69,7 @@ impl<'de> serde::Deserialize<'de> for NodeConfigSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_map_ref: Option<crate::v1_8::api::core::v1::ObjectReference> = None;
+                let mut value_config_map_ref: Option<crate::api::core::v1::ObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LimitRangeItem {
     /// Default resource requirement limit value by resource name if resource limit is omitted.
-    pub default: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>>,
+    pub default: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
-    pub default_request: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>>,
+    pub default_request: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Max usage constraints on this kind by resource name.
-    pub max: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>>,
+    pub max: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
-    pub max_limit_request_ratio: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>>,
+    pub max_limit_request_ratio: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Min usage constraints on this kind by resource name.
-    pub min: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>>,
+    pub min: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Type of resource that this limit applies to.
     pub type_: Option<String>,
@@ -73,11 +73,11 @@ impl<'de> serde::Deserialize<'de> for LimitRangeItem {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_default: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_default_request: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_max: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_max_limit_request_ratio: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_min: Option<std::collections::BTreeMap<String, crate::v1_11::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_default: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_default_request: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_max: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_max_limit_request_ratio: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_min: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

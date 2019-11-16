@@ -8,7 +8,7 @@ pub struct CustomResourceConversion {
     pub strategy: String,
 
     /// webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
-    pub webhook: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>,
+    pub webhook: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
@@ -55,7 +55,7 @@ impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_strategy: Option<String> = None;
-                let mut value_webhook: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion> = None;
+                let mut value_webhook: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

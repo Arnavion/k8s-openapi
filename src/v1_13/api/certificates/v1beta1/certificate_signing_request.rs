@@ -3,13 +3,13 @@
 /// Describes a certificate signing request
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequest {
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The certificate request itself and any additional information.
-    pub spec: Option<crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestSpec>,
+    pub spec: Option<crate::api::certificates::v1beta1::CertificateSigningRequestSpec>,
 
     /// Derived information about the request.
-    pub status: Option<crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestStatus>,
+    pub status: Option<crate::api::certificates::v1beta1::CertificateSigningRequestStatus>,
 }
 
 // Begin certificates.k8s.io/v1beta1/CertificateSigningRequest
@@ -30,7 +30,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_certificate_signing_request(
-        body: &crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest,
+        body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
         optional: CreateCertificateSigningRequestOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCertificateSigningRequestResponse>), crate::RequestError> {
         let CreateCertificateSigningRequestOptional {
@@ -77,9 +77,9 @@ pub struct CreateCertificateSigningRequestOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateCertificateSigningRequestResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Accepted(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Accepted(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,7 +148,7 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn delete_certificate_signing_request(
         name: &str,
-        optional: crate::v1_13::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -168,9 +168,9 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCertificateSigningRequestResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -243,8 +243,8 @@ impl CertificateSigningRequest {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_certificate_signing_request(
-        delete_optional: crate::v1_13::DeleteOptional<'_>,
-        list_optional: crate::v1_13::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -265,8 +265,8 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionCertificateSigningRequestResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::certificates::v1beta1::CertificateSigningRequestList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_certificate_signing_request(
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -349,7 +349,7 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCertificateSigningRequestResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestList),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequestList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -404,8 +404,8 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn patch_certificate_signing_request(
         name: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -417,9 +417,9 @@ impl CertificateSigningRequest {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -432,7 +432,7 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCertificateSigningRequestResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -487,8 +487,8 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn patch_certificate_signing_request_status(
         name: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCertificateSigningRequestStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl CertificateSigningRequest {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCertificateSigningRequestStatusResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -615,7 +615,7 @@ pub struct ReadCertificateSigningRequestOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -703,7 +703,7 @@ pub struct ReadCertificateSigningRequestStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestStatusResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -758,7 +758,7 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn replace_certificate_signing_request(
         name: &str,
-        body: &crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest,
+        body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestOptional {
@@ -801,8 +801,8 @@ pub struct ReplaceCertificateSigningRequestOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -865,7 +865,7 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn replace_certificate_signing_request_approval(
         name: &str,
-        body: &crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest,
+        body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestApprovalOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestApprovalResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestApprovalOptional {
@@ -908,8 +908,8 @@ pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestApprovalResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -972,7 +972,7 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn replace_certificate_signing_request_status(
         name: &str,
-        body: &crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest,
+        body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestStatusResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestStatusOptional {
@@ -1015,8 +1015,8 @@ pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestStatusResponse {
-    Ok(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::v1_13::api::certificates::v1beta1::CertificateSigningRequest),
+    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
+    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1074,7 +1074,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_certificate_signing_request(
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1094,7 +1094,7 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCertificateSigningRequestResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<CertificateSigningRequest>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CertificateSigningRequest>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1151,7 +1151,7 @@ impl crate::Resource for CertificateSigningRequest {
 }
 
 impl crate::Metadata for CertificateSigningRequest {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1207,9 +1207,9 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequest {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestSpec> = None;
-                let mut value_status: Option<crate::v1_13::api::certificates::v1beta1::CertificateSigningRequestStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::certificates::v1beta1::CertificateSigningRequestSpec> = None;
+                let mut value_status: Option<crate::api::certificates::v1beta1::CertificateSigningRequestStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

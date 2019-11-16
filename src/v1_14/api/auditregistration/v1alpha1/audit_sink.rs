@@ -3,10 +3,10 @@
 /// AuditSink represents a cluster level audit sink
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct AuditSink {
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the audit configuration spec
-    pub spec: Option<crate::v1_14::api::auditregistration::v1alpha1::AuditSinkSpec>,
+    pub spec: Option<crate::api::auditregistration::v1alpha1::AuditSinkSpec>,
 }
 
 // Begin auditregistration.k8s.io/v1alpha1/AuditSink
@@ -27,7 +27,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_audit_sink(
-        body: &crate::v1_14::api::auditregistration::v1alpha1::AuditSink,
+        body: &crate::api::auditregistration::v1alpha1::AuditSink,
         optional: CreateAuditSinkOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateAuditSinkResponse>), crate::RequestError> {
         let CreateAuditSinkOptional {
@@ -74,9 +74,9 @@ pub struct CreateAuditSinkOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateAuditSinkResponse {
-    Ok(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
-    Created(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
-    Accepted(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
+    Ok(crate::api::auditregistration::v1alpha1::AuditSink),
+    Created(crate::api::auditregistration::v1alpha1::AuditSink),
+    Accepted(crate::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -145,7 +145,7 @@ impl AuditSink {
     #[cfg(feature = "api")]
     pub fn delete_audit_sink(
         name: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteAuditSinkResponse>), crate::RequestError> {
         let __url = format!("/apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -165,9 +165,9 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteAuditSinkResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::auditregistration::v1alpha1::AuditSink),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -240,8 +240,8 @@ impl AuditSink {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_audit_sink(
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionAuditSinkResponse>), crate::RequestError> {
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -262,8 +262,8 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionAuditSinkResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::auditregistration::v1alpha1::AuditSinkList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::auditregistration::v1alpha1::AuditSinkList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -326,7 +326,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_audit_sink(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAuditSinkResponse>), crate::RequestError> {
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -346,7 +346,7 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListAuditSinkResponse {
-    Ok(crate::v1_14::api::auditregistration::v1alpha1::AuditSinkList),
+    Ok(crate::api::auditregistration::v1alpha1::AuditSinkList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -401,8 +401,8 @@ impl AuditSink {
     #[cfg(feature = "api")]
     pub fn patch_audit_sink(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchAuditSinkResponse>), crate::RequestError> {
         let __url = format!("/apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -414,9 +414,9 @@ impl AuditSink {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -429,7 +429,7 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchAuditSinkResponse {
-    Ok(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
+    Ok(crate::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -529,7 +529,7 @@ pub struct ReadAuditSinkOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAuditSinkResponse {
-    Ok(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
+    Ok(crate::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -584,7 +584,7 @@ impl AuditSink {
     #[cfg(feature = "api")]
     pub fn replace_audit_sink(
         name: &str,
-        body: &crate::v1_14::api::auditregistration::v1alpha1::AuditSink,
+        body: &crate::api::auditregistration::v1alpha1::AuditSink,
         optional: ReplaceAuditSinkOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceAuditSinkResponse>), crate::RequestError> {
         let ReplaceAuditSinkOptional {
@@ -633,8 +633,8 @@ pub struct ReplaceAuditSinkOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceAuditSinkResponse {
-    Ok(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
-    Created(crate::v1_14::api::auditregistration::v1alpha1::AuditSink),
+    Ok(crate::api::auditregistration::v1alpha1::AuditSink),
+    Created(crate::api::auditregistration::v1alpha1::AuditSink),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -692,7 +692,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_audit_sink(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkResponse>), crate::RequestError> {
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -712,7 +712,7 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchAuditSinkResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<AuditSink>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<AuditSink>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -769,7 +769,7 @@ impl crate::Resource for AuditSink {
 }
 
 impl crate::Metadata for AuditSink {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -823,8 +823,8 @@ impl<'de> serde::Deserialize<'de> for AuditSink {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::auditregistration::v1alpha1::AuditSinkSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::auditregistration::v1alpha1::AuditSinkSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

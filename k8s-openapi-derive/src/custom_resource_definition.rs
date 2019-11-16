@@ -786,8 +786,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 					(&["io".into(), "k8s".into()], &[]),
 				],
 				"k8s_openapi",
-				None,
 				&vis,
+				false,
 				|_| Ok(&mut out),
 				|_, _| Ok(()),
 			)
@@ -805,8 +805,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 					(&["io".into(), "k8s".into()], &[]),
 				],
 				"k8s_openapi",
-				None,
 				&vis,
+				false,
 				|_| Ok(&mut out),
 				|_, _| Ok(()),
 			)

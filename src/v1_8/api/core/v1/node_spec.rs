@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSpec {
     /// If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field
-    pub config_source: Option<crate::v1_8::api::core::v1::NodeConfigSource>,
+    pub config_source: Option<crate::api::core::v1::NodeConfigSource>,
 
     /// External ID of the node assigned by some machine database (e.g. a cloud provider). Deprecated.
     pub external_id: Option<String>,
@@ -16,7 +16,7 @@ pub struct NodeSpec {
     pub provider_id: Option<String>,
 
     /// If specified, the node's taints.
-    pub taints: Option<Vec<crate::v1_8::api::core::v1::Taint>>,
+    pub taints: Option<Vec<crate::api::core::v1::Taint>>,
 
     /// Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration
     pub unschedulable: Option<bool>,
@@ -73,11 +73,11 @@ impl<'de> serde::Deserialize<'de> for NodeSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_source: Option<crate::v1_8::api::core::v1::NodeConfigSource> = None;
+                let mut value_config_source: Option<crate::api::core::v1::NodeConfigSource> = None;
                 let mut value_external_id: Option<String> = None;
                 let mut value_pod_cidr: Option<String> = None;
                 let mut value_provider_id: Option<String> = None;
-                let mut value_taints: Option<Vec<crate::v1_8::api::core::v1::Taint>> = None;
+                let mut value_taints: Option<Vec<crate::api::core::v1::Taint>> = None;
                 let mut value_unschedulable: Option<bool> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

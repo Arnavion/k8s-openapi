@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Scale {
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status.
-    pub spec: Option<crate::v1_14::api::autoscaling::v1::ScaleSpec>,
+    pub spec: Option<crate::api::autoscaling::v1::ScaleSpec>,
 
     /// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only.
-    pub status: Option<crate::v1_14::api::autoscaling::v1::ScaleStatus>,
+    pub status: Option<crate::api::autoscaling::v1::ScaleStatus>,
 }
 
 // Begin autoscaling/v1/Scale
@@ -41,8 +41,8 @@ impl Scale {
     pub fn patch_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDeploymentScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -55,9 +55,9 @@ impl Scale {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -70,7 +70,7 @@ impl Scale {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -130,8 +130,8 @@ impl Scale {
     pub fn patch_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -144,9 +144,9 @@ impl Scale {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -159,7 +159,7 @@ impl Scale {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -219,8 +219,8 @@ impl Scale {
     pub fn patch_namespaced_stateful_set_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -233,9 +233,9 @@ impl Scale {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -248,7 +248,7 @@ impl Scale {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -308,8 +308,8 @@ impl Scale {
     pub fn patch_namespaced_replication_controller_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerScaleResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -322,9 +322,9 @@ impl Scale {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -337,7 +337,7 @@ impl Scale {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -431,7 +431,7 @@ pub struct ReadNamespacedDeploymentScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -525,7 +525,7 @@ pub struct ReadNamespacedReplicaSetScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -619,7 +619,7 @@ pub struct ReadNamespacedStatefulSetScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -713,7 +713,7 @@ pub struct ReadNamespacedReplicationControllerScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -773,7 +773,7 @@ impl Scale {
     pub fn replace_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::api::autoscaling::v1::Scale,
+        body: &crate::api::autoscaling::v1::Scale,
         optional: ReplaceNamespacedDeploymentScaleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentScaleResponse>), crate::RequestError> {
         let ReplaceNamespacedDeploymentScaleOptional {
@@ -823,8 +823,8 @@ pub struct ReplaceNamespacedDeploymentScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
-    Created(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
+    Created(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -892,7 +892,7 @@ impl Scale {
     pub fn replace_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::api::autoscaling::v1::Scale,
+        body: &crate::api::autoscaling::v1::Scale,
         optional: ReplaceNamespacedReplicaSetScaleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetScaleResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicaSetScaleOptional {
@@ -942,8 +942,8 @@ pub struct ReplaceNamespacedReplicaSetScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
-    Created(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
+    Created(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1011,7 +1011,7 @@ impl Scale {
     pub fn replace_namespaced_stateful_set_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::api::autoscaling::v1::Scale,
+        body: &crate::api::autoscaling::v1::Scale,
         optional: ReplaceNamespacedStatefulSetScaleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetScaleResponse>), crate::RequestError> {
         let ReplaceNamespacedStatefulSetScaleOptional {
@@ -1061,8 +1061,8 @@ pub struct ReplaceNamespacedStatefulSetScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedStatefulSetScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
-    Created(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
+    Created(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1130,7 +1130,7 @@ impl Scale {
     pub fn replace_namespaced_replication_controller_scale(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::api::autoscaling::v1::Scale,
+        body: &crate::api::autoscaling::v1::Scale,
         optional: ReplaceNamespacedReplicationControllerScaleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerScaleResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerScaleOptional {
@@ -1180,8 +1180,8 @@ pub struct ReplaceNamespacedReplicationControllerScaleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerScaleResponse {
-    Ok(crate::v1_14::api::autoscaling::v1::Scale),
-    Created(crate::v1_14::api::autoscaling::v1::Scale),
+    Ok(crate::api::autoscaling::v1::Scale),
+    Created(crate::api::autoscaling::v1::Scale),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1244,7 +1244,7 @@ impl crate::Resource for Scale {
 }
 
 impl crate::Metadata for Scale {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1300,9 +1300,9 @@ impl<'de> serde::Deserialize<'de> for Scale {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::autoscaling::v1::ScaleSpec> = None;
-                let mut value_status: Option<crate::v1_14::api::autoscaling::v1::ScaleStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::autoscaling::v1::ScaleSpec> = None;
+                let mut value_status: Option<crate::api::autoscaling::v1::ScaleStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

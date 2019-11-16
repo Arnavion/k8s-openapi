@@ -15,10 +15,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Endpoints {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
-    pub subsets: Option<Vec<crate::v1_14::api::core::v1::EndpointSubset>>,
+    pub subsets: Option<Vec<crate::api::core::v1::EndpointSubset>>,
 }
 
 // Begin /v1/Endpoints
@@ -44,7 +44,7 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn create_namespaced_endpoints(
         namespace: &str,
-        body: &crate::v1_14::api::core::v1::Endpoints,
+        body: &crate::api::core::v1::Endpoints,
         optional: CreateNamespacedEndpointsOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedEndpointsResponse>), crate::RequestError> {
         let CreateNamespacedEndpointsOptional {
@@ -93,9 +93,9 @@ pub struct CreateNamespacedEndpointsOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedEndpointsResponse {
-    Ok(crate::v1_14::api::core::v1::Endpoints),
-    Created(crate::v1_14::api::core::v1::Endpoints),
-    Accepted(crate::v1_14::api::core::v1::Endpoints),
+    Ok(crate::api::core::v1::Endpoints),
+    Created(crate::api::core::v1::Endpoints),
+    Accepted(crate::api::core::v1::Endpoints),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -168,8 +168,8 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_endpoints(
         namespace: &str,
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -192,8 +192,8 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEndpointsResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::core::v1::EndpointsList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::EndpointsList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -264,7 +264,7 @@ impl Endpoints {
     pub fn delete_namespaced_endpoints(
         name: &str,
         namespace: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -285,9 +285,9 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedEndpointsResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::core::v1::Endpoints),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Endpoints),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -358,7 +358,7 @@ impl Endpoints {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_endpoints_for_all_namespaces(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEndpointsForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -378,7 +378,7 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListEndpointsForAllNamespacesResponse {
-    Ok(crate::v1_14::api::core::v1::EndpointsList),
+    Ok(crate::api::core::v1::EndpointsList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -433,7 +433,7 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn list_namespaced_endpoints(
         namespace: &str,
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -455,7 +455,7 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedEndpointsResponse {
-    Ok(crate::v1_14::api::core::v1::EndpointsList),
+    Ok(crate::api::core::v1::EndpointsList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -515,8 +515,8 @@ impl Endpoints {
     pub fn patch_namespaced_endpoints(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -529,9 +529,9 @@ impl Endpoints {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -544,7 +544,7 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedEndpointsResponse {
-    Ok(crate::v1_14::api::core::v1::Endpoints),
+    Ok(crate::api::core::v1::Endpoints),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -650,7 +650,7 @@ pub struct ReadNamespacedEndpointsOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedEndpointsResponse {
-    Ok(crate::v1_14::api::core::v1::Endpoints),
+    Ok(crate::api::core::v1::Endpoints),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ impl Endpoints {
     pub fn replace_namespaced_endpoints(
         name: &str,
         namespace: &str,
-        body: &crate::v1_14::api::core::v1::Endpoints,
+        body: &crate::api::core::v1::Endpoints,
         optional: ReplaceNamespacedEndpointsOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedEndpointsResponse>), crate::RequestError> {
         let ReplaceNamespacedEndpointsOptional {
@@ -760,8 +760,8 @@ pub struct ReplaceNamespacedEndpointsOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedEndpointsResponse {
-    Ok(crate::v1_14::api::core::v1::Endpoints),
-    Created(crate::v1_14::api::core::v1::Endpoints),
+    Ok(crate::api::core::v1::Endpoints),
+    Created(crate::api::core::v1::Endpoints),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -819,7 +819,7 @@ impl Endpoints {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_endpoints_for_all_namespaces(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEndpointsForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -839,7 +839,7 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchEndpointsForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -896,7 +896,7 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_endpoints(
         namespace: &str,
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -918,7 +918,7 @@ impl Endpoints {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedEndpointsResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -975,7 +975,7 @@ impl crate::Resource for Endpoints {
 }
 
 impl crate::Metadata for Endpoints {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1029,8 +1029,8 @@ impl<'de> serde::Deserialize<'de> for Endpoints {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_subsets: Option<Vec<crate::v1_14::api::core::v1::EndpointSubset>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_subsets: Option<Vec<crate::api::core::v1::EndpointSubset>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

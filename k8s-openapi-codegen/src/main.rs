@@ -158,8 +158,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			swagger20::RefPathRelativeTo::Crate,
 			replace_namespaces,
 			"crate",
-			Some(mod_root),
 			"pub ",
+			true,
 			|parts| {
 				let mut current = out_dir.to_owned();
 
@@ -257,9 +257,9 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				&operation,
 				replace_namespaces,
 				"crate",
-				Some(mod_root),
 				"pub ",
 				&mut None,
+				true,
 			)?;
 
 			num_generated_apis += 1;

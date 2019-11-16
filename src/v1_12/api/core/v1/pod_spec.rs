@@ -7,22 +7,22 @@ pub struct PodSpec {
     pub active_deadline_seconds: Option<i64>,
 
     /// If specified, the pod's scheduling constraints
-    pub affinity: Option<crate::v1_12::api::core::v1::Affinity>,
+    pub affinity: Option<crate::api::core::v1::Affinity>,
 
     /// AutomountServiceAccountToken indicates whether a service account token should be automatically mounted.
     pub automount_service_account_token: Option<bool>,
 
     /// List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.
-    pub containers: Vec<crate::v1_12::api::core::v1::Container>,
+    pub containers: Vec<crate::api::core::v1::Container>,
 
     /// Specifies the DNS parameters of a pod. Parameters specified here will be merged to the generated DNS configuration based on DNSPolicy.
-    pub dns_config: Option<crate::v1_12::api::core::v1::PodDNSConfig>,
+    pub dns_config: Option<crate::api::core::v1::PodDNSConfig>,
 
     /// Set DNS policy for the pod. Defaults to "ClusterFirst". Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'. DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy. To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.
     pub dns_policy: Option<String>,
 
     /// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
-    pub host_aliases: Option<Vec<crate::v1_12::api::core::v1::HostAlias>>,
+    pub host_aliases: Option<Vec<crate::api::core::v1::HostAlias>>,
 
     /// Use the host's ipc namespace. Optional: Default to false.
     pub host_ipc: Option<bool>,
@@ -37,10 +37,10 @@ pub struct PodSpec {
     pub hostname: Option<String>,
 
     /// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<crate::v1_12::api::core::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>>,
 
     /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-    pub init_containers: Option<Vec<crate::v1_12::api::core::v1::Container>>,
+    pub init_containers: Option<Vec<crate::api::core::v1::Container>>,
 
     /// NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
     pub node_name: Option<String>,
@@ -55,7 +55,7 @@ pub struct PodSpec {
     pub priority_class_name: Option<String>,
 
     /// If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://github.com/kubernetes/community/blob/master/keps/sig-network/0007-pod-ready%2B%2B.md
-    pub readiness_gates: Option<Vec<crate::v1_12::api::core::v1::PodReadinessGate>>,
+    pub readiness_gates: Option<Vec<crate::api::core::v1::PodReadinessGate>>,
 
     /// Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     pub restart_policy: Option<String>,
@@ -67,7 +67,7 @@ pub struct PodSpec {
     pub scheduler_name: Option<String>,
 
     /// SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.
-    pub security_context: Option<crate::v1_12::api::core::v1::PodSecurityContext>,
+    pub security_context: Option<crate::api::core::v1::PodSecurityContext>,
 
     /// DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.
     pub service_account: Option<String>,
@@ -85,10 +85,10 @@ pub struct PodSpec {
     pub termination_grace_period_seconds: Option<i64>,
 
     /// If specified, the pod's tolerations.
-    pub tolerations: Option<Vec<crate::v1_12::api::core::v1::Toleration>>,
+    pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
 
     /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
-    pub volumes: Option<Vec<crate::v1_12::api::core::v1::Volume>>,
+    pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodSpec {
@@ -189,34 +189,34 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_active_deadline_seconds: Option<i64> = None;
-                let mut value_affinity: Option<crate::v1_12::api::core::v1::Affinity> = None;
+                let mut value_affinity: Option<crate::api::core::v1::Affinity> = None;
                 let mut value_automount_service_account_token: Option<bool> = None;
-                let mut value_containers: Option<Vec<crate::v1_12::api::core::v1::Container>> = None;
-                let mut value_dns_config: Option<crate::v1_12::api::core::v1::PodDNSConfig> = None;
+                let mut value_containers: Option<Vec<crate::api::core::v1::Container>> = None;
+                let mut value_dns_config: Option<crate::api::core::v1::PodDNSConfig> = None;
                 let mut value_dns_policy: Option<String> = None;
-                let mut value_host_aliases: Option<Vec<crate::v1_12::api::core::v1::HostAlias>> = None;
+                let mut value_host_aliases: Option<Vec<crate::api::core::v1::HostAlias>> = None;
                 let mut value_host_ipc: Option<bool> = None;
                 let mut value_host_network: Option<bool> = None;
                 let mut value_host_pid: Option<bool> = None;
                 let mut value_hostname: Option<String> = None;
-                let mut value_image_pull_secrets: Option<Vec<crate::v1_12::api::core::v1::LocalObjectReference>> = None;
-                let mut value_init_containers: Option<Vec<crate::v1_12::api::core::v1::Container>> = None;
+                let mut value_image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>> = None;
+                let mut value_init_containers: Option<Vec<crate::api::core::v1::Container>> = None;
                 let mut value_node_name: Option<String> = None;
                 let mut value_node_selector: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_priority: Option<i32> = None;
                 let mut value_priority_class_name: Option<String> = None;
-                let mut value_readiness_gates: Option<Vec<crate::v1_12::api::core::v1::PodReadinessGate>> = None;
+                let mut value_readiness_gates: Option<Vec<crate::api::core::v1::PodReadinessGate>> = None;
                 let mut value_restart_policy: Option<String> = None;
                 let mut value_runtime_class_name: Option<String> = None;
                 let mut value_scheduler_name: Option<String> = None;
-                let mut value_security_context: Option<crate::v1_12::api::core::v1::PodSecurityContext> = None;
+                let mut value_security_context: Option<crate::api::core::v1::PodSecurityContext> = None;
                 let mut value_service_account: Option<String> = None;
                 let mut value_service_account_name: Option<String> = None;
                 let mut value_share_process_namespace: Option<bool> = None;
                 let mut value_subdomain: Option<String> = None;
                 let mut value_termination_grace_period_seconds: Option<i64> = None;
-                let mut value_tolerations: Option<Vec<crate::v1_12::api::core::v1::Toleration>> = None;
-                let mut value_volumes: Option<Vec<crate::v1_12::api::core::v1::Volume>> = None;
+                let mut value_tolerations: Option<Vec<crate::api::core::v1::Toleration>> = None;
+                let mut value_volumes: Option<Vec<crate::api::core::v1::Volume>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

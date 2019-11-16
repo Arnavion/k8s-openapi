@@ -72,8 +72,8 @@ pub fn run<W>(
 	ref_path_relative_to: swagger20::RefPathRelativeTo,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
-	mod_root: Option<&str>,
 	vis: &str,
+	use_api_feature: bool,
 	out: impl FnOnce(&[std::borrow::Cow<'_, str>]) -> std::io::Result<W>,
 	mut imports: impl FnMut(Option<String>, Option<String>) -> std::io::Result<()>,
 ) -> Result<RunResult, Error> where W: std::io::Write {
@@ -155,7 +155,7 @@ pub fn run<W>(
 						write!(field_type_name, "Option<")?;
 					}
 
-					let type_name = get_rust_type(&schema.kind, &replace_namespaces, crate_root, mod_root)?;
+					let type_name = get_rust_type(&schema.kind, &replace_namespaces, crate_root)?;
 
 					if name.0 == "metadata" {
 						metadata_property_ty = Some((*required, type_name.clone()));
@@ -279,9 +279,9 @@ pub fn run<W>(
 									&operation,
 									&replace_namespaces,
 									crate_root,
-									mod_root,
 									vis,
-									&mut Some((&type_name, &type_ref_path)))?;
+									&mut Some((&type_name, &type_ref_path)),
+									use_api_feature)?;
 							imports(operation_optional_parameters_name, operation_result_name)?;
 							run_result.num_generated_apis += 1;
 						}
@@ -610,8 +610,7 @@ pub fn run<W>(
 						can_be_default: None,
 					},
 					&replace_namespaces,
-					crate_root,
-					mod_root)?;
+					crate_root)?;
 
 			writeln!(out, "#[derive(Clone, Debug, PartialEq)]")?;
 			writeln!(out, "{}enum {} {{", vis, type_name)?;
@@ -739,9 +738,8 @@ pub fn run<W>(
 				}),
 				&replace_namespaces,
 				crate_root,
-				mod_root,
 			)?)?;
-			writeln!(out, "    ErrorOther({}),", get_rust_type(&swagger20::SchemaKind::Ref(raw_extension_ref_path.clone()), &replace_namespaces, crate_root, mod_root)?)?;
+			writeln!(out, "    ErrorOther({}),", get_rust_type(&swagger20::SchemaKind::Ref(raw_extension_ref_path.clone()), &replace_namespaces, crate_root)?)?;
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 			writeln!(out, "impl<'de, T> serde::Deserialize<'de> for {}<T> where T: serde::Deserialize<'de> {{", type_name)?;
@@ -968,7 +966,7 @@ pub fn run<W>(
 				for (name, schema) in properties {
 					let field_name = get_rust_ident(name);
 
-					let type_name = get_rust_borrow_type(&schema.kind, &replace_namespaces, crate_root, mod_root)?;
+					let type_name = get_rust_borrow_type(&schema.kind, &replace_namespaces, crate_root)?;
 
 					let field_type_name =
 						if type_name.starts_with('&') {
@@ -1083,7 +1081,7 @@ pub fn run<W>(
 			}
 			writeln!(out, "PartialEq)]")?;
 
-			writeln!(out, "{}struct {}({}{});", vis, type_name, vis, get_rust_type(&definition.kind, &replace_namespaces, crate_root, mod_root)?)?;
+			writeln!(out, "{}struct {}({}{});", vis, type_name, vis, get_rust_type(&definition.kind, &replace_namespaces, crate_root)?)?;
 			writeln!(out)?;
 			writeln!(out, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
 			writeln!(out, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
@@ -1178,19 +1176,12 @@ fn get_fully_qualified_type_name(
 	ref_path: &swagger20::RefPath,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
-	mod_root: Option<&str>,
 ) -> Result<String, Error> {
 	use std::fmt::Write;
 
 	match ref_path.relative_to {
 		swagger20::RefPathRelativeTo::Crate => {
-			let mut result =
-				if let Some(mod_root) = mod_root {
-					format!("{}::{}", crate_root, mod_root)
-				}
-				else {
-					crate_root.to_owned()
-				};
+			let mut result = crate_root.to_owned();
 
 			let parts = replace_namespace(ref_path.path.split('.'), replace_namespaces);
 
@@ -1267,50 +1258,29 @@ fn get_rust_borrow_type(
 	schema_kind: &swagger20::SchemaKind,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
-	mod_root: Option<&str>,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.DeleteOptional" =>
-			if let Some(mod_root) = mod_root {
-				Ok(format!("{}::{}::DeleteOptional<'_>", crate_root, mod_root).into())
-			}
-			else {
-				Ok(format!("{}::DeleteOptional<'_>", crate_root).into())
-			},
+			Ok(format!("{}::DeleteOptional<'_>", crate_root).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ListOptional" =>
-			if let Some(mod_root) = mod_root {
-				Ok(format!("{}::{}::ListOptional<'_>", crate_root, mod_root).into())
-			}
-			else {
-				Ok(format!("{}::ListOptional<'_>", crate_root).into())
-			},
+			Ok(format!("{}::ListOptional<'_>", crate_root).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.PatchOptional" =>
-			if let Some(mod_root) = mod_root {
-				Ok(format!("{}::{}::PatchOptional<'_>", crate_root, mod_root).into())
-			}
-			else {
-				Ok(format!("{}::PatchOptional<'_>", crate_root).into())
-			},
+			Ok(format!("{}::PatchOptional<'_>", crate_root).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.WatchOptional" =>
-			if let Some(mod_root) = mod_root {
-				Ok(format!("{}::{}::WatchOptional<'_>", crate_root, mod_root).into())
-			}
-			else {
-				Ok(format!("{}::WatchOptional<'_>", crate_root).into())
-			},
+			Ok(format!("{}::WatchOptional<'_>", crate_root).into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root, mod_root)?).into()),
+			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, crate_root, mod_root)?).into()),
+			Ok(format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1320,7 +1290,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root, mod_root)?).into()),
+			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("&{}::ByteString", crate_root).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&chrono::DateTime<chrono::Utc>".into()),
@@ -1345,18 +1315,17 @@ fn get_rust_type(
 	schema_kind: &swagger20::SchemaKind,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
-	mod_root: Option<&str>,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root, mod_root)?.into()),
+			Ok(get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root)?.into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, crate_root, mod_root)?).into()),
+			Ok(format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1366,7 +1335,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root, mod_root)?).into()),
+			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("{}::ByteString", crate_root).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("chrono::DateTime<chrono::Utc>".into()),
@@ -1412,9 +1381,9 @@ pub fn write_operation(
 	operation: &swagger20::Operation,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
-	mod_root: Option<&str>,
 	vis: &str,
 	type_name_and_ref_path: &mut Option<(&str, &swagger20::RefPath)>,
+	use_api_feature: bool,
 ) -> Result<(Option<String>, Option<String>), Error> {
 	writeln!(out)?;
 
@@ -1477,7 +1446,7 @@ pub fn write_operation(
 			}
 			previous_parameters.insert(parameter_name.clone());
 
-			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, crate_root, mod_root) {
+			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, crate_root) {
 				Ok(parameter_type) => parameter_type,
 				Err(err) => return Err(err),
 			};
@@ -1597,7 +1566,7 @@ pub fn write_operation(
 		}
 	}
 
-	if mod_root.is_some() {
+	if use_api_feature {
 		writeln!(out, r#"{}#[cfg(feature = "api")]"#, indent)?;
 	}
 
@@ -1758,7 +1727,7 @@ pub fn write_operation(
 				false
 			};
 		if is_patch {
-			let patch_type = get_rust_type(&parameter.schema.kind, replace_namespaces, crate_root, mod_root)?;
+			let patch_type = get_rust_type(&parameter.schema.kind, replace_namespaces, crate_root)?;
 			writeln!(out, "{}    __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
 			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
@@ -1798,7 +1767,7 @@ pub fn write_operation(
 			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
-		if mod_root.is_some() {
+		if use_api_feature {
 			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
@@ -1839,7 +1808,7 @@ pub fn write_operation(
 				operation_result_name, operation_fn_name)?;
 		}
 
-		if mod_root.is_some() {
+		if use_api_feature {
 			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 		}
 		writeln!(out, "#[derive(Debug)]")?;
@@ -1853,7 +1822,7 @@ pub fn write_operation(
 				//
 				// Ref https://github.com/kubernetes/kubernetes/issues/59501
 
-				writeln!(out, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root, mod_root)?)?;
+				writeln!(out, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root)?)?;
 
 				let associated_type =
 					get_fully_qualified_type_name(
@@ -1861,8 +1830,7 @@ pub fn write_operation(
 							.map(|(_, type_ref_path)| type_ref_path)
 							.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
 						&replace_namespaces,
-						crate_root,
-						mod_root)?;
+						crate_root)?;
 				if operation.kubernetes_action == Some(swagger20::KubernetesAction::DeleteCollection) {
 					writeln!(out, "    {}Value({}List),", variant_name, associated_type)?;
 				}
@@ -1877,12 +1845,12 @@ pub fn write_operation(
 							out,
 							"    {}({}<{}>),",
 							variant_name,
-							get_rust_type(&schema.kind, replace_namespaces, crate_root, mod_root)?,
+							get_rust_type(&schema.kind, replace_namespaces, crate_root)?,
 							type_name_and_ref_path.as_ref()
 								.map(|(type_name, _)| type_name)
 								.ok_or_else(|| "WatchEvent operation that isn't associated with a type")?)?,
 
-					_ => writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root, mod_root)?)?,
+					_ => writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root)?)?,
 				}
 			}
 		}
@@ -1891,7 +1859,7 @@ pub fn write_operation(
 		writeln!(out, "}}")?;
 		writeln!(out)?;
 
-		if mod_root.is_some() {
+		if use_api_feature {
 			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 		}
 		writeln!(out, "impl {}::Response for {} {{", crate_root, operation_result_name)?;

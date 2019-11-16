@@ -7,7 +7,7 @@ pub struct PodsMetricSource {
     pub metric_name: String,
 
     /// targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    pub target_average_value: crate::v1_8::apimachinery::pkg::api::resource::Quantity,
+    pub target_average_value: crate::apimachinery::pkg::api::resource::Quantity,
 }
 
 impl<'de> serde::Deserialize<'de> for PodsMetricSource {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for PodsMetricSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_metric_name: Option<String> = None;
-                let mut value_target_average_value: Option<crate::v1_8::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

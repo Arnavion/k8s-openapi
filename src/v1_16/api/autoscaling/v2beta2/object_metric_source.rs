@@ -3,13 +3,13 @@
 /// ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMetricSource {
-    pub described_object: crate::v1_16::api::autoscaling::v2beta2::CrossVersionObjectReference,
+    pub described_object: crate::api::autoscaling::v2beta2::CrossVersionObjectReference,
 
     /// metric identifies the target metric by name and selector
-    pub metric: crate::v1_16::api::autoscaling::v2beta2::MetricIdentifier,
+    pub metric: crate::api::autoscaling::v2beta2::MetricIdentifier,
 
     /// target specifies the target value for the given metric
-    pub target: crate::v1_16::api::autoscaling::v2beta2::MetricTarget,
+    pub target: crate::api::autoscaling::v2beta2::MetricTarget,
 }
 
 impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
@@ -57,9 +57,9 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_described_object: Option<crate::v1_16::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
-                let mut value_metric: Option<crate::v1_16::api::autoscaling::v2beta2::MetricIdentifier> = None;
-                let mut value_target: Option<crate::v1_16::api::autoscaling::v2beta2::MetricTarget> = None;
+                let mut value_described_object: Option<crate::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
+                let mut value_metric: Option<crate::api::autoscaling::v2beta2::MetricIdentifier> = None;
+                let mut value_target: Option<crate::api::autoscaling::v2beta2::MetricTarget> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

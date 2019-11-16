@@ -22,7 +22,7 @@ pub struct RBDVolumeSource {
     pub read_only: Option<bool>,
 
     /// SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it
-    pub secret_ref: Option<crate::v1_14::api::core::v1::LocalObjectReference>,
+    pub secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
 
     /// The rados user name. Default is admin. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it
     pub user: Option<String>,
@@ -89,7 +89,7 @@ impl<'de> serde::Deserialize<'de> for RBDVolumeSource {
                 let mut value_monitors: Option<Vec<String>> = None;
                 let mut value_pool: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<crate::v1_14::api::core::v1::LocalObjectReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_user: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

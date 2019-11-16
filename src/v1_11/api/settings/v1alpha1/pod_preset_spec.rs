@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPresetSpec {
     /// Env defines the collection of EnvVar to inject into containers.
-    pub env: Option<Vec<crate::v1_11::api::core::v1::EnvVar>>,
+    pub env: Option<Vec<crate::api::core::v1::EnvVar>>,
 
     /// EnvFrom defines the collection of EnvFromSource to inject into containers.
-    pub env_from: Option<Vec<crate::v1_11::api::core::v1::EnvFromSource>>,
+    pub env_from: Option<Vec<crate::api::core::v1::EnvFromSource>>,
 
     /// Selector is a label query over a set of resources, in this case pods. Required.
-    pub selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// VolumeMounts defines the collection of VolumeMount to inject into containers.
-    pub volume_mounts: Option<Vec<crate::v1_11::api::core::v1::VolumeMount>>,
+    pub volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>>,
 
     /// Volumes defines the collection of Volume to inject into the pod.
-    pub volumes: Option<Vec<crate::v1_11::api::core::v1::Volume>>,
+    pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodPresetSpec {
@@ -68,11 +68,11 @@ impl<'de> serde::Deserialize<'de> for PodPresetSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_env: Option<Vec<crate::v1_11::api::core::v1::EnvVar>> = None;
-                let mut value_env_from: Option<Vec<crate::v1_11::api::core::v1::EnvFromSource>> = None;
-                let mut value_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_volume_mounts: Option<Vec<crate::v1_11::api::core::v1::VolumeMount>> = None;
-                let mut value_volumes: Option<Vec<crate::v1_11::api::core::v1::Volume>> = None;
+                let mut value_env: Option<Vec<crate::api::core::v1::EnvVar>> = None;
+                let mut value_env_from: Option<Vec<crate::api::core::v1::EnvFromSource>> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>> = None;
+                let mut value_volumes: Option<Vec<crate::api::core::v1::Volume>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

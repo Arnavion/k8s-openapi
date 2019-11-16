@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPIngressRuleValue {
     /// A collection of paths that map requests to backends.
-    pub paths: Vec<crate::v1_11::api::extensions::v1beta1::HTTPIngressPath>,
+    pub paths: Vec<crate::api::extensions::v1beta1::HTTPIngressPath>,
 }
 
 impl<'de> serde::Deserialize<'de> for HTTPIngressRuleValue {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for HTTPIngressRuleValue {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_paths: Option<Vec<crate::v1_11::api::extensions::v1beta1::HTTPIngressPath>> = None;
+                let mut value_paths: Option<Vec<crate::api::extensions::v1beta1::HTTPIngressPath>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

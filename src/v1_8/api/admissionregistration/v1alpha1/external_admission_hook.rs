@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalAdmissionHook {
     /// ClientConfig defines how to communicate with the hook. Required
-    pub client_config: crate::v1_8::api::admissionregistration::v1alpha1::AdmissionHookClientConfig,
+    pub client_config: crate::api::admissionregistration::v1alpha1::AdmissionHookClientConfig,
 
     /// FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.
     pub failure_policy: Option<String>,
@@ -13,7 +13,7 @@ pub struct ExternalAdmissionHook {
     pub name: String,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule.
-    pub rules: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::RuleWithOperations>>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1alpha1::RuleWithOperations>>,
 }
 
 impl<'de> serde::Deserialize<'de> for ExternalAdmissionHook {
@@ -63,10 +63,10 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHook {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_client_config: Option<crate::v1_8::api::admissionregistration::v1alpha1::AdmissionHookClientConfig> = None;
+                let mut value_client_config: Option<crate::api::admissionregistration::v1alpha1::AdmissionHookClientConfig> = None;
                 let mut value_failure_policy: Option<String> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_rules: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::RuleWithOperations>> = None;
+                let mut value_rules: Option<Vec<crate::api::admissionregistration::v1alpha1::RuleWithOperations>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

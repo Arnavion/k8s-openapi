@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Node {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the behavior of a node. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_9::api::core::v1::NodeSpec>,
+    pub spec: Option<crate::api::core::v1::NodeSpec>,
 
     /// Most recently observed status of the node. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_9::api::core::v1::NodeStatus>,
+    pub status: Option<crate::api::core::v1::NodeStatus>,
 }
 
 // Begin /v1/Node
@@ -511,7 +511,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_node(
-        body: &crate::v1_9::api::core::v1::Node,
+        body: &crate::api::core::v1::Node,
         optional: CreateNodeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNodeResponse>), crate::RequestError> {
         let CreateNodeOptional {
@@ -546,9 +546,9 @@ pub struct CreateNodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNodeResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
-    Created(crate::v1_9::api::core::v1::Node),
-    Accepted(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
+    Created(crate::api::core::v1::Node),
+    Accepted(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -616,8 +616,8 @@ impl Node {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_node(
-        delete_optional: crate::v1_9::DeleteOptional<'_>,
-        list_optional: crate::v1_9::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNodeResponse>), crate::RequestError> {
         let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -638,8 +638,8 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNodeResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::api::core::v1::NodeList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::NodeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -705,7 +705,7 @@ impl Node {
     #[cfg(feature = "api")]
     pub fn delete_node(
         name: &str,
-        optional: crate::v1_9::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -725,8 +725,8 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNodeResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::api::core::v1::Node),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -789,7 +789,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_node(
-        optional: crate::v1_9::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNodeResponse>), crate::RequestError> {
         let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -809,7 +809,7 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNodeResponse {
-    Ok(crate::v1_9::api::core::v1::NodeList),
+    Ok(crate::api::core::v1::NodeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -864,8 +864,8 @@ impl Node {
     #[cfg(feature = "api")]
     pub fn patch_node(
         name: &str,
-        body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_9::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -877,9 +877,9 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -892,7 +892,7 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNodeResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -947,8 +947,8 @@ impl Node {
     #[cfg(feature = "api")]
     pub fn patch_node_status(
         name: &str,
-        body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_9::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -960,9 +960,9 @@ impl Node {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -975,7 +975,7 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNodeStatusResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1875,7 +1875,7 @@ pub struct ReadNodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNodeResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1963,7 +1963,7 @@ pub struct ReadNodeStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNodeStatusResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2018,7 +2018,7 @@ impl Node {
     #[cfg(feature = "api")]
     pub fn replace_node(
         name: &str,
-        body: &crate::v1_9::api::core::v1::Node,
+        body: &crate::api::core::v1::Node,
         optional: ReplaceNodeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNodeResponse>), crate::RequestError> {
         let ReplaceNodeOptional {
@@ -2055,8 +2055,8 @@ pub struct ReplaceNodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNodeResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
-    Created(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
+    Created(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2119,7 +2119,7 @@ impl Node {
     #[cfg(feature = "api")]
     pub fn replace_node_status(
         name: &str,
-        body: &crate::v1_9::api::core::v1::Node,
+        body: &crate::api::core::v1::Node,
         optional: ReplaceNodeStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNodeStatusResponse>), crate::RequestError> {
         let ReplaceNodeStatusOptional {
@@ -2156,8 +2156,8 @@ pub struct ReplaceNodeStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNodeStatusResponse {
-    Ok(crate::v1_9::api::core::v1::Node),
-    Created(crate::v1_9::api::core::v1::Node),
+    Ok(crate::api::core::v1::Node),
+    Created(crate::api::core::v1::Node),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2215,7 +2215,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_node(
-        optional: crate::v1_9::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNodeResponse>), crate::RequestError> {
         let __url = "/api/v1/nodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -2235,7 +2235,7 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNodeResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Node>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Node>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2292,7 +2292,7 @@ impl crate::Resource for Node {
 }
 
 impl crate::Metadata for Node {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -2348,9 +2348,9 @@ impl<'de> serde::Deserialize<'de> for Node {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_9::api::core::v1::NodeSpec> = None;
-                let mut value_status: Option<crate::v1_9::api::core::v1::NodeStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::NodeSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::NodeStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

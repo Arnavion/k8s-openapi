@@ -7,7 +7,7 @@ pub struct SELinuxStrategyOptions {
     pub rule: String,
 
     /// seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-    pub se_linux_options: Option<crate::v1_16::api::core::v1::SELinuxOptions>,
+    pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 }
 
 impl<'de> serde::Deserialize<'de> for SELinuxStrategyOptions {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for SELinuxStrategyOptions {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_rule: Option<String> = None;
-                let mut value_se_linux_options: Option<crate::v1_16::api::core::v1::SELinuxOptions> = None;
+                let mut value_se_linux_options: Option<crate::api::core::v1::SELinuxOptions> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

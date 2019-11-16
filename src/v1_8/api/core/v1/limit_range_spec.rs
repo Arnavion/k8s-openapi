@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LimitRangeSpec {
     /// Limits is the list of LimitRangeItem objects that are enforced.
-    pub limits: Vec<crate::v1_8::api::core::v1::LimitRangeItem>,
+    pub limits: Vec<crate::api::core::v1::LimitRangeItem>,
 }
 
 impl<'de> serde::Deserialize<'de> for LimitRangeSpec {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for LimitRangeSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_limits: Option<Vec<crate::v1_8::api::core::v1::LimitRangeItem>> = None;
+                let mut value_limits: Option<Vec<crate::api::core::v1::LimitRangeItem>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

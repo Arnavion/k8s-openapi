@@ -7,10 +7,10 @@ pub struct MetricValueStatus {
     pub average_utilization: Option<i32>,
 
     /// averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    pub average_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity>,
+    pub average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// value is the current value of the metric (as a quantity).
-    pub value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity>,
+    pub value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
 impl<'de> serde::Deserialize<'de> for MetricValueStatus {
@@ -59,8 +59,8 @@ impl<'de> serde::Deserialize<'de> for MetricValueStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_average_utilization: Option<i32> = None;
-                let mut value_average_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
-                let mut value_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

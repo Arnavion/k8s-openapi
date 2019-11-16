@@ -41,7 +41,7 @@ pub fn get_api_versions(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAPIVersionsResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroupList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroupList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -97,7 +97,7 @@ pub fn get_admissionregistration_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAdmissionregistrationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -153,7 +153,7 @@ pub fn get_admissionregistration_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAdmissionregistrationV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -209,7 +209,7 @@ pub fn get_admissionregistration_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAdmissionregistrationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -265,7 +265,7 @@ pub fn get_apiextensions_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetApiextensionsAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -321,7 +321,7 @@ pub fn get_apiextensions_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetApiextensionsV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -377,7 +377,7 @@ pub fn get_apiregistration_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetApiregistrationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -433,7 +433,7 @@ pub fn get_apiregistration_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetApiregistrationV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -489,7 +489,7 @@ pub fn get_apiregistration_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetApiregistrationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -545,7 +545,7 @@ pub fn get_apps_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAppsAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -601,7 +601,7 @@ pub fn get_apps_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAppsV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -657,7 +657,7 @@ pub fn get_apps_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAppsV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -713,7 +713,7 @@ pub fn get_apps_v1beta2_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAppsV1beta2APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -769,7 +769,7 @@ pub fn get_auditregistration_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuditregistrationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -825,7 +825,7 @@ pub fn get_auditregistration_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuditregistrationV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -881,7 +881,7 @@ pub fn get_authentication_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthenticationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -937,7 +937,7 @@ pub fn get_authentication_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthenticationV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -993,7 +993,7 @@ pub fn get_authentication_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthenticationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1049,7 +1049,7 @@ pub fn get_authorization_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthorizationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1105,7 +1105,7 @@ pub fn get_authorization_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthorizationV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1161,7 +1161,7 @@ pub fn get_authorization_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAuthorizationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1217,7 +1217,7 @@ pub fn get_autoscaling_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAutoscalingAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1273,7 +1273,7 @@ pub fn get_autoscaling_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAutoscalingV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1329,7 +1329,7 @@ pub fn get_autoscaling_v2beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAutoscalingV2beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1385,7 +1385,7 @@ pub fn get_autoscaling_v2beta2_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetAutoscalingV2beta2APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1441,7 +1441,7 @@ pub fn get_batch_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetBatchAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1497,7 +1497,7 @@ pub fn get_batch_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetBatchV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1553,7 +1553,7 @@ pub fn get_batch_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetBatchV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1609,7 +1609,7 @@ pub fn get_batch_v2alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetBatchV2alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1665,7 +1665,7 @@ pub fn get_certificates_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCertificatesAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1721,7 +1721,7 @@ pub fn get_certificates_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCertificatesV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1777,7 +1777,7 @@ pub fn get_code_version(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCodeVersionResponse {
-    Ok(crate::v1_13::apimachinery::pkg::version::Info),
+    Ok(crate::apimachinery::pkg::version::Info),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1833,7 +1833,7 @@ pub fn get_coordination_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCoordinationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1889,7 +1889,7 @@ pub fn get_coordination_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCoordinationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1945,7 +1945,7 @@ pub fn get_core_api_versions(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCoreAPIVersionsResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIVersions),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIVersions),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2001,7 +2001,7 @@ pub fn get_core_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetCoreV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2057,7 +2057,7 @@ pub fn get_events_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetEventsAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2113,7 +2113,7 @@ pub fn get_events_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetEventsV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2169,7 +2169,7 @@ pub fn get_extensions_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetExtensionsAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2225,7 +2225,7 @@ pub fn get_extensions_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetExtensionsV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2281,7 +2281,7 @@ pub fn get_networking_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetNetworkingAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2337,7 +2337,7 @@ pub fn get_networking_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetNetworkingV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2393,7 +2393,7 @@ pub fn get_policy_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetPolicyAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2449,7 +2449,7 @@ pub fn get_policy_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetPolicyV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2505,7 +2505,7 @@ pub fn get_rbac_authorization_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2561,7 +2561,7 @@ pub fn get_rbac_authorization_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2617,7 +2617,7 @@ pub fn get_rbac_authorization_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2673,7 +2673,7 @@ pub fn get_rbac_authorization_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2729,7 +2729,7 @@ pub fn get_scheduling_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetSchedulingAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2785,7 +2785,7 @@ pub fn get_scheduling_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetSchedulingV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2841,7 +2841,7 @@ pub fn get_scheduling_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetSchedulingV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2897,7 +2897,7 @@ pub fn get_settings_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetSettingsAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2953,7 +2953,7 @@ pub fn get_settings_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetSettingsV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3009,7 +3009,7 @@ pub fn get_storage_api_group(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetStorageAPIGroupResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIGroup),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIGroup),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3065,7 +3065,7 @@ pub fn get_storage_v1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetStorageV1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3121,7 +3121,7 @@ pub fn get_storage_v1alpha1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetStorageV1alpha1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3177,7 +3177,7 @@ pub fn get_storage_v1beta1_api_resources(
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum GetStorageV1beta1APIResourcesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::APIResourceList),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::APIResourceList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct WeightedPodAffinityTerm {
     /// Required. A pod affinity term, associated with the corresponding weight.
-    pub pod_affinity_term: crate::v1_14::api::core::v1::PodAffinityTerm,
+    pub pod_affinity_term: crate::api::core::v1::PodAffinityTerm,
 
     /// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
     pub weight: i32,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for WeightedPodAffinityTerm {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_pod_affinity_term: Option<crate::v1_14::api::core::v1::PodAffinityTerm> = None;
+                let mut value_pod_affinity_term: Option<crate::api::core::v1::PodAffinityTerm> = None;
                 let mut value_weight: Option<i32> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPIngressPath {
     /// Backend defines the referenced service endpoint to which the traffic will be forwarded to.
-    pub backend: crate::v1_10::api::extensions::v1beta1::IngressBackend,
+    pub backend: crate::api::extensions::v1beta1::IngressBackend,
 
     /// Path is an extended POSIX regex as defined by IEEE Std 1003.1, (i.e this follows the egrep/unix syntax, not the perl syntax) matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional "path" part of a URL as defined by RFC 3986. Paths must begin with a '/'. If unspecified, the path defaults to a catch all sending traffic to the backend.
     pub path: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for HTTPIngressPath {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_backend: Option<crate::v1_10::api::extensions::v1beta1::IngressBackend> = None;
+                let mut value_backend: Option<crate::api::extensions::v1beta1::IngressBackend> = None;
                 let mut value_path: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

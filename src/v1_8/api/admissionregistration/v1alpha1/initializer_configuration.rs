@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct InitializerConfiguration {
     /// Initializers is a list of resources and their default initializers Order-sensitive. When merging multiple InitializerConfigurations, we sort the initializers from different InitializerConfigurations by the name of the InitializerConfigurations; the order of the initializers from the same InitializerConfiguration is preserved.
-    pub initializers: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::Initializer>>,
+    pub initializers: Option<Vec<crate::api::admissionregistration::v1alpha1::Initializer>>,
 
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin admissionregistration.k8s.io/v1alpha1/InitializerConfiguration
@@ -28,7 +28,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_initializer_configuration(
-        body: &crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration,
+        body: &crate::api::admissionregistration::v1alpha1::InitializerConfiguration,
         optional: CreateInitializerConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateInitializerConfigurationResponse>), crate::RequestError> {
         let CreateInitializerConfigurationOptional {
@@ -63,7 +63,7 @@ pub struct CreateInitializerConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateInitializerConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -115,8 +115,8 @@ impl InitializerConfiguration {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_initializer_configuration(
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionInitializerConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -137,8 +137,8 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionInitializerConfigurationResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfigurationList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1alpha1::InitializerConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -204,7 +204,7 @@ impl InitializerConfiguration {
     #[cfg(feature = "api")]
     pub fn delete_initializer_configuration(
         name: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteInitializerConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -224,8 +224,8 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteInitializerConfigurationResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -288,7 +288,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_initializer_configuration(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListInitializerConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -308,7 +308,7 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListInitializerConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfigurationList),
+    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -363,8 +363,8 @@ impl InitializerConfiguration {
     #[cfg(feature = "api")]
     pub fn patch_initializer_configuration(
         name: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchInitializerConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -376,9 +376,9 @@ impl InitializerConfiguration {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -391,7 +391,7 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchInitializerConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -491,7 +491,7 @@ pub struct ReadInitializerConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadInitializerConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -546,7 +546,7 @@ impl InitializerConfiguration {
     #[cfg(feature = "api")]
     pub fn replace_initializer_configuration(
         name: &str,
-        body: &crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration,
+        body: &crate::api::admissionregistration::v1alpha1::InitializerConfiguration,
         optional: ReplaceInitializerConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceInitializerConfigurationResponse>), crate::RequestError> {
         let ReplaceInitializerConfigurationOptional {
@@ -583,7 +583,7 @@ pub struct ReplaceInitializerConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceInitializerConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -633,7 +633,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_initializer_configuration(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchInitializerConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -653,7 +653,7 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchInitializerConfigurationResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<InitializerConfiguration>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<InitializerConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ impl crate::Resource for InitializerConfiguration {
 }
 
 impl crate::Metadata for InitializerConfiguration {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -764,8 +764,8 @@ impl<'de> serde::Deserialize<'de> for InitializerConfiguration {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_initializers: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::Initializer>> = None;
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_initializers: Option<Vec<crate::api::admissionregistration::v1alpha1::Initializer>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

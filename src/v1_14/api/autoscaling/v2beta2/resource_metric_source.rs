@@ -7,7 +7,7 @@ pub struct ResourceMetricSource {
     pub name: String,
 
     /// target specifies the target value for the given metric
-    pub target: crate::v1_14::api::autoscaling::v2beta2::MetricTarget,
+    pub target: crate::api::autoscaling::v2beta2::MetricTarget,
 }
 
 impl<'de> serde::Deserialize<'de> for ResourceMetricSource {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
-                let mut value_target: Option<crate::v1_14::api::autoscaling::v2beta2::MetricTarget> = None;
+                let mut value_target: Option<crate::api::autoscaling::v2beta2::MetricTarget> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

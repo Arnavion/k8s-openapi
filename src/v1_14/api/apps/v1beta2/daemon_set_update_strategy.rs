@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSetUpdateStrategy {
     /// Rolling update config params. Present only if type = "RollingUpdate".
-    pub rolling_update: Option<crate::v1_14::api::apps::v1beta2::RollingUpdateDaemonSet>,
+    pub rolling_update: Option<crate::api::apps::v1beta2::RollingUpdateDaemonSet>,
 
     /// Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
     pub type_: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for DaemonSetUpdateStrategy {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_rolling_update: Option<crate::v1_14::api::apps::v1beta2::RollingUpdateDaemonSet> = None;
+                let mut value_rolling_update: Option<crate::api::apps::v1beta2::RollingUpdateDaemonSet> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

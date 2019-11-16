@@ -7,7 +7,7 @@ pub struct ResourceMetricStatus {
     pub current_average_utilization: Option<i32>,
 
     /// currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type. It will always be set, regardless of the corresponding metric specification.
-    pub current_average_value: crate::v1_12::apimachinery::pkg::api::resource::Quantity,
+    pub current_average_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// name is the name of the resource in question.
     pub name: String,
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_current_average_utilization: Option<i32> = None;
-                let mut value_current_average_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_name: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

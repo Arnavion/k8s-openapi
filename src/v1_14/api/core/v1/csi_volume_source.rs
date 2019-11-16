@@ -10,7 +10,7 @@ pub struct CSIVolumeSource {
     pub fs_type: Option<String>,
 
     /// NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.
-    pub node_publish_secret_ref: Option<crate::v1_14::api::core::v1::LocalObjectReference>,
+    pub node_publish_secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
 
     /// Specifies a read-only configuration for the volume. Defaults to false (read/write).
     pub read_only: Option<bool>,
@@ -70,7 +70,7 @@ impl<'de> serde::Deserialize<'de> for CSIVolumeSource {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_driver: Option<String> = None;
                 let mut value_fs_type: Option<String> = None;
-                let mut value_node_publish_secret_ref: Option<crate::v1_14::api::core::v1::LocalObjectReference> = None;
+                let mut value_node_publish_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_volume_attributes: Option<std::collections::BTreeMap<String, String>> = None;
 

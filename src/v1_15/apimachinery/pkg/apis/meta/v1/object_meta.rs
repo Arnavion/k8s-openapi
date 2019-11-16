@@ -12,7 +12,7 @@ pub struct ObjectMeta {
     /// CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
     ///
     /// Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub creation_timestamp: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time>,
+    pub creation_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
     pub deletion_grace_period_seconds: Option<i64>,
@@ -20,7 +20,7 @@ pub struct ObjectMeta {
     /// DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.
     ///
     /// Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub deletion_timestamp: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time>,
+    pub deletion_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed.
     pub finalizers: Option<Vec<String>>,
@@ -40,7 +40,7 @@ pub struct ObjectMeta {
     /// When an object is created, the system will populate this list with the current set of initializers. Only privileged users may set or modify this list. Once it is empty, it may not be modified further by any user.
     ///
     /// DEPRECATED - initializers are an alpha field and will be removed in v1.15.
-    pub initializers: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Initializers>,
+    pub initializers: Option<crate::apimachinery::pkg::apis::meta::v1::Initializers>,
 
     /// Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels
     pub labels: Option<std::collections::BTreeMap<String, String>>,
@@ -48,7 +48,7 @@ pub struct ObjectMeta {
     /// ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like "ci-cd". The set of fields is always in the version that the workflow used when modifying the object.
     ///
     /// This field is alpha and can be changed or removed without notice.
-    pub managed_fields: Option<Vec<crate::v1_15::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>>,
+    pub managed_fields: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>>,
 
     /// Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names
     pub name: Option<String>,
@@ -59,7 +59,7 @@ pub struct ObjectMeta {
     pub namespace: Option<String>,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
-    pub owner_references: Option<Vec<crate::v1_15::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
+    pub owner_references: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
 
     /// An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
     ///
@@ -150,18 +150,18 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_cluster_name: Option<String> = None;
-                let mut value_creation_timestamp: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_creation_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_deletion_grace_period_seconds: Option<i64> = None;
-                let mut value_deletion_timestamp: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_deletion_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_finalizers: Option<Vec<String>> = None;
                 let mut value_generate_name: Option<String> = None;
                 let mut value_generation: Option<i64> = None;
-                let mut value_initializers: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::Initializers> = None;
+                let mut value_initializers: Option<crate::apimachinery::pkg::apis::meta::v1::Initializers> = None;
                 let mut value_labels: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_managed_fields: Option<Vec<crate::v1_15::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>> = None;
+                let mut value_managed_fields: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_namespace: Option<String> = None;
-                let mut value_owner_references: Option<Vec<crate::v1_15::apimachinery::pkg::apis::meta::v1::OwnerReference>> = None;
+                let mut value_owner_references: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>> = None;
                 let mut value_resource_version: Option<String> = None;
                 let mut value_self_link: Option<String> = None;
                 let mut value_uid: Option<String> = None;

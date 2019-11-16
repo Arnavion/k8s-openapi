@@ -10,10 +10,10 @@ pub struct SubjectRulesReviewStatus {
     pub incomplete: bool,
 
     /// NonResourceRules is the list of actions the subject is allowed to perform on non-resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.
-    pub non_resource_rules: Vec<crate::v1_10::api::authorization::v1beta1::NonResourceRule>,
+    pub non_resource_rules: Vec<crate::api::authorization::v1beta1::NonResourceRule>,
 
     /// ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.
-    pub resource_rules: Vec<crate::v1_10::api::authorization::v1beta1::ResourceRule>,
+    pub resource_rules: Vec<crate::api::authorization::v1beta1::ResourceRule>,
 }
 
 impl<'de> serde::Deserialize<'de> for SubjectRulesReviewStatus {
@@ -65,8 +65,8 @@ impl<'de> serde::Deserialize<'de> for SubjectRulesReviewStatus {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_evaluation_error: Option<String> = None;
                 let mut value_incomplete: Option<bool> = None;
-                let mut value_non_resource_rules: Option<Vec<crate::v1_10::api::authorization::v1beta1::NonResourceRule>> = None;
-                let mut value_resource_rules: Option<Vec<crate::v1_10::api::authorization::v1beta1::ResourceRule>> = None;
+                let mut value_non_resource_rules: Option<Vec<crate::api::authorization::v1beta1::NonResourceRule>> = None;
+                let mut value_resource_rules: Option<Vec<crate::api::authorization::v1beta1::ResourceRule>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

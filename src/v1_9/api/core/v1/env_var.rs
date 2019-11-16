@@ -10,7 +10,7 @@ pub struct EnvVar {
     pub value: Option<String>,
 
     /// Source for the environment variable's value. Cannot be used if value is not empty.
-    pub value_from: Option<crate::v1_9::api::core::v1::EnvVarSource>,
+    pub value_from: Option<crate::api::core::v1::EnvVarSource>,
 }
 
 impl<'de> serde::Deserialize<'de> for EnvVar {
@@ -60,7 +60,7 @@ impl<'de> serde::Deserialize<'de> for EnvVar {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
                 let mut value_value: Option<String> = None;
-                let mut value_value_from: Option<crate::v1_9::api::core::v1::EnvVarSource> = None;
+                let mut value_value_from: Option<crate::api::core::v1::EnvVarSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -3,7 +3,7 @@
 /// NamespaceCondition contains details about state of namespace.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NamespaceCondition {
-    pub last_transition_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     pub message: Option<String>,
 
@@ -65,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for NamespaceCondition {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_last_transition_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;

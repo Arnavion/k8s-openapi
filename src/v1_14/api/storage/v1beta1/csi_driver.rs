@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSIDriver {
     /// Standard object metadata. metadata.Name indicates the name of the CSI driver that this object refers to; it MUST be the same name returned by the CSI GetPluginName() call for that driver. The driver name must be 63 characters or less, beginning and ending with an alphanumeric character (\[a-z0-9A-Z\]) with dashes (-), dots (.), and alphanumerics between. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the CSI Driver.
-    pub spec: crate::v1_14::api::storage::v1beta1::CSIDriverSpec,
+    pub spec: crate::api::storage::v1beta1::CSIDriverSpec,
 }
 
 // Begin storage.k8s.io/v1beta1/CSIDriver
@@ -28,7 +28,7 @@ impl CSIDriver {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_csi_driver(
-        body: &crate::v1_14::api::storage::v1beta1::CSIDriver,
+        body: &crate::api::storage::v1beta1::CSIDriver,
         optional: CreateCSIDriverOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCSIDriverResponse>), crate::RequestError> {
         let CreateCSIDriverOptional {
@@ -75,9 +75,9 @@ pub struct CreateCSIDriverOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateCSIDriverResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Created(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Accepted(crate::v1_14::api::storage::v1beta1::CSIDriver),
+    Ok(crate::api::storage::v1beta1::CSIDriver),
+    Created(crate::api::storage::v1beta1::CSIDriver),
+    Accepted(crate::api::storage::v1beta1::CSIDriver),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -146,7 +146,7 @@ impl CSIDriver {
     #[cfg(feature = "api")]
     pub fn delete_csi_driver(
         name: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCSIDriverResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -166,9 +166,9 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCSIDriverResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::CSIDriver),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -241,8 +241,8 @@ impl CSIDriver {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_csi_driver(
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCSIDriverResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csidrivers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -263,8 +263,8 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionCSIDriverResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1beta1::CSIDriverList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::CSIDriverList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -327,7 +327,7 @@ impl CSIDriver {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_csi_driver(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCSIDriverResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csidrivers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -347,7 +347,7 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCSIDriverResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::CSIDriverList),
+    Ok(crate::api::storage::v1beta1::CSIDriverList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -402,8 +402,8 @@ impl CSIDriver {
     #[cfg(feature = "api")]
     pub fn patch_csi_driver(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCSIDriverResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/csidrivers/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -415,9 +415,9 @@ impl CSIDriver {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -430,7 +430,7 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCSIDriverResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
+    Ok(crate::api::storage::v1beta1::CSIDriver),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -530,7 +530,7 @@ pub struct ReadCSIDriverOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCSIDriverResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
+    Ok(crate::api::storage::v1beta1::CSIDriver),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -585,7 +585,7 @@ impl CSIDriver {
     #[cfg(feature = "api")]
     pub fn replace_csi_driver(
         name: &str,
-        body: &crate::v1_14::api::storage::v1beta1::CSIDriver,
+        body: &crate::api::storage::v1beta1::CSIDriver,
         optional: ReplaceCSIDriverOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCSIDriverResponse>), crate::RequestError> {
         let ReplaceCSIDriverOptional {
@@ -634,8 +634,8 @@ pub struct ReplaceCSIDriverOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCSIDriverResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::CSIDriver),
-    Created(crate::v1_14::api::storage::v1beta1::CSIDriver),
+    Ok(crate::api::storage::v1beta1::CSIDriver),
+    Created(crate::api::storage::v1beta1::CSIDriver),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -693,7 +693,7 @@ impl CSIDriver {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_csi_driver(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCSIDriverResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csidrivers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -713,7 +713,7 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCSIDriverResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<CSIDriver>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CSIDriver>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -770,7 +770,7 @@ impl crate::Resource for CSIDriver {
 }
 
 impl crate::Metadata for CSIDriver {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -824,8 +824,8 @@ impl<'de> serde::Deserialize<'de> for CSIDriver {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::storage::v1beta1::CSIDriverSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::storage::v1beta1::CSIDriverSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

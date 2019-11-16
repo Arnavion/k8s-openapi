@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HorizontalPodAutoscaler {
     /// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// behaviour of autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status.
-    pub spec: Option<crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerSpec>,
+    pub spec: Option<crate::api::autoscaling::v1::HorizontalPodAutoscalerSpec>,
 
     /// current information about the autoscaler.
-    pub status: Option<crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerStatus>,
+    pub status: Option<crate::api::autoscaling::v1::HorizontalPodAutoscalerStatus>,
 }
 
 // Begin autoscaling/v1/HorizontalPodAutoscaler
@@ -36,7 +36,7 @@ impl HorizontalPodAutoscaler {
     #[cfg(feature = "api")]
     pub fn create_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        body: &crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler,
+        body: &crate::api::autoscaling::v1::HorizontalPodAutoscaler,
         optional: CreateNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let CreateNamespacedHorizontalPodAutoscalerOptional {
@@ -85,9 +85,9 @@ pub struct CreateNamespacedHorizontalPodAutoscalerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Accepted(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Accepted(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -160,8 +160,8 @@ impl HorizontalPodAutoscaler {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        delete_optional: crate::v1_15::DeleteOptional<'_>,
-        list_optional: crate::v1_15::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -184,8 +184,8 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
-    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -256,7 +256,7 @@ impl HorizontalPodAutoscaler {
     pub fn delete_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        optional: crate::v1_15::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -277,9 +277,9 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedHorizontalPodAutoscalerResponse {
-    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Accepted(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -350,7 +350,7 @@ impl HorizontalPodAutoscaler {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_horizontal_pod_autoscaler_for_all_namespaces(
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/autoscaling/v1/horizontalpodautoscalers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -370,7 +370,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListHorizontalPodAutoscalerForAllNamespacesResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerList),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -425,7 +425,7 @@ impl HorizontalPodAutoscaler {
     #[cfg(feature = "api")]
     pub fn list_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -447,7 +447,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerList),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -507,8 +507,8 @@ impl HorizontalPodAutoscaler {
     pub fn patch_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_15::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -521,9 +521,9 @@ impl HorizontalPodAutoscaler {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -536,7 +536,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -596,8 +596,8 @@ impl HorizontalPodAutoscaler {
     pub fn patch_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_15::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedHorizontalPodAutoscalerStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -610,9 +610,9 @@ impl HorizontalPodAutoscaler {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -625,7 +625,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedHorizontalPodAutoscalerStatusResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -731,7 +731,7 @@ pub struct ReadNamespacedHorizontalPodAutoscalerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -825,7 +825,7 @@ pub struct ReadNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedHorizontalPodAutoscalerStatusResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -885,7 +885,7 @@ impl HorizontalPodAutoscaler {
     pub fn replace_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler,
+        body: &crate::api::autoscaling::v1::HorizontalPodAutoscaler,
         optional: ReplaceNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let ReplaceNamespacedHorizontalPodAutoscalerOptional {
@@ -935,8 +935,8 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1004,7 +1004,7 @@ impl HorizontalPodAutoscaler {
     pub fn replace_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler,
+        body: &crate::api::autoscaling::v1::HorizontalPodAutoscaler,
         optional: ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedHorizontalPodAutoscalerStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedHorizontalPodAutoscalerStatusOptional {
@@ -1054,8 +1054,8 @@ pub struct ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
-    Ok(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Ok(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(crate::api::autoscaling::v1::HorizontalPodAutoscaler),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1113,7 +1113,7 @@ impl HorizontalPodAutoscaler {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_horizontal_pod_autoscaler_for_all_namespaces(
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/autoscaling/v1/horizontalpodautoscalers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1133,7 +1133,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchHorizontalPodAutoscalerForAllNamespacesResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1190,7 +1190,7 @@ impl HorizontalPodAutoscaler {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1212,7 +1212,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1269,7 +1269,7 @@ impl crate::Resource for HorizontalPodAutoscaler {
 }
 
 impl crate::Metadata for HorizontalPodAutoscaler {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1325,9 +1325,9 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscaler {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerSpec> = None;
-                let mut value_status: Option<crate::v1_15::api::autoscaling::v1::HorizontalPodAutoscalerStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::autoscaling::v1::HorizontalPodAutoscalerSpec> = None;
+                let mut value_status: Option<crate::api::autoscaling::v1::HorizontalPodAutoscalerStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

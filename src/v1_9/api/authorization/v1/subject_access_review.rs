@@ -3,13 +3,13 @@
 /// SubjectAccessReview checks whether or not a user or group can perform an action.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SubjectAccessReview {
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec holds information about the request being evaluated
-    pub spec: crate::v1_9::api::authorization::v1::SubjectAccessReviewSpec,
+    pub spec: crate::api::authorization::v1::SubjectAccessReviewSpec,
 
     /// Status is filled in by the server and indicates whether the request is allowed or not
-    pub status: Option<crate::v1_9::api::authorization::v1::SubjectAccessReviewStatus>,
+    pub status: Option<crate::api::authorization::v1::SubjectAccessReviewStatus>,
 }
 
 // Begin authorization.k8s.io/v1/SubjectAccessReview
@@ -30,7 +30,7 @@ impl SubjectAccessReview {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_subject_access_review(
-        body: &crate::v1_9::api::authorization::v1::SubjectAccessReview,
+        body: &crate::api::authorization::v1::SubjectAccessReview,
         optional: CreateSubjectAccessReviewOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateSubjectAccessReviewOptional {
@@ -65,9 +65,9 @@ pub struct CreateSubjectAccessReviewOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateSubjectAccessReviewResponse {
-    Ok(crate::v1_9::api::authorization::v1::SubjectAccessReview),
-    Created(crate::v1_9::api::authorization::v1::SubjectAccessReview),
-    Accepted(crate::v1_9::api::authorization::v1::SubjectAccessReview),
+    Ok(crate::api::authorization::v1::SubjectAccessReview),
+    Created(crate::api::authorization::v1::SubjectAccessReview),
+    Accepted(crate::api::authorization::v1::SubjectAccessReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -138,7 +138,7 @@ impl crate::Resource for SubjectAccessReview {
 }
 
 impl crate::Metadata for SubjectAccessReview {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -194,9 +194,9 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReview {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_9::api::authorization::v1::SubjectAccessReviewSpec> = None;
-                let mut value_status: Option<crate::v1_9::api::authorization::v1::SubjectAccessReviewStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authorization::v1::SubjectAccessReviewSpec> = None;
+                let mut value_status: Option<crate::api::authorization::v1::SubjectAccessReviewStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -11,13 +11,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointSubset {
     /// IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
-    pub addresses: Option<Vec<crate::v1_14::api::core::v1::EndpointAddress>>,
+    pub addresses: Option<Vec<crate::api::core::v1::EndpointAddress>>,
 
     /// IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
-    pub not_ready_addresses: Option<Vec<crate::v1_14::api::core::v1::EndpointAddress>>,
+    pub not_ready_addresses: Option<Vec<crate::api::core::v1::EndpointAddress>>,
 
     /// Port numbers available on the related IP addresses.
-    pub ports: Option<Vec<crate::v1_14::api::core::v1::EndpointPort>>,
+    pub ports: Option<Vec<crate::api::core::v1::EndpointPort>>,
 }
 
 impl<'de> serde::Deserialize<'de> for EndpointSubset {
@@ -65,9 +65,9 @@ impl<'de> serde::Deserialize<'de> for EndpointSubset {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_addresses: Option<Vec<crate::v1_14::api::core::v1::EndpointAddress>> = None;
-                let mut value_not_ready_addresses: Option<Vec<crate::v1_14::api::core::v1::EndpointAddress>> = None;
-                let mut value_ports: Option<Vec<crate::v1_14::api::core::v1::EndpointPort>> = None;
+                let mut value_addresses: Option<Vec<crate::api::core::v1::EndpointAddress>> = None;
+                let mut value_not_ready_addresses: Option<Vec<crate::api::core::v1::EndpointAddress>> = None;
+                let mut value_ports: Option<Vec<crate::api::core::v1::EndpointPort>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

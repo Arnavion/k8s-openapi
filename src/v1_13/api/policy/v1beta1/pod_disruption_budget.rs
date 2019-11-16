@@ -3,13 +3,13 @@
 /// PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDisruptionBudget {
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of the PodDisruptionBudget.
-    pub spec: Option<crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetSpec>,
+    pub spec: Option<crate::api::policy::v1beta1::PodDisruptionBudgetSpec>,
 
     /// Most recently observed status of the PodDisruptionBudget.
-    pub status: Option<crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetStatus>,
+    pub status: Option<crate::api::policy::v1beta1::PodDisruptionBudgetStatus>,
 }
 
 // Begin policy/v1beta1/PodDisruptionBudget
@@ -35,7 +35,7 @@ impl PodDisruptionBudget {
     #[cfg(feature = "api")]
     pub fn create_namespaced_pod_disruption_budget(
         namespace: &str,
-        body: &crate::v1_13::api::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::api::policy::v1beta1::PodDisruptionBudget,
         optional: CreateNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let CreateNamespacedPodDisruptionBudgetOptional {
@@ -84,9 +84,9 @@ pub struct CreateNamespacedPodDisruptionBudgetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
-    Created(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
-    Accepted(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
+    Created(crate::api::policy::v1beta1::PodDisruptionBudget),
+    Accepted(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -159,8 +159,8 @@ impl PodDisruptionBudget {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_pod_disruption_budget(
         namespace: &str,
-        delete_optional: crate::v1_13::DeleteOptional<'_>,
-        list_optional: crate::v1_13::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -183,8 +183,8 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodDisruptionBudgetResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::policy::v1beta1::PodDisruptionBudgetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -255,7 +255,7 @@ impl PodDisruptionBudget {
     pub fn delete_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        optional: crate::v1_13::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -276,9 +276,9 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodDisruptionBudgetResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
-    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::policy::v1beta1::PodDisruptionBudget),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -354,7 +354,7 @@ impl PodDisruptionBudget {
     #[cfg(feature = "api")]
     pub fn list_namespaced_pod_disruption_budget(
         namespace: &str,
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -376,7 +376,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudgetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl PodDisruptionBudget {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_pod_disruption_budget_for_all_namespaces(
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodDisruptionBudgetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/policy/v1beta1/poddisruptionbudgets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -446,7 +446,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodDisruptionBudgetForAllNamespacesResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudgetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -506,8 +506,8 @@ impl PodDisruptionBudget {
     pub fn patch_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -520,9 +520,9 @@ impl PodDisruptionBudget {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -535,7 +535,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -595,8 +595,8 @@ impl PodDisruptionBudget {
     pub fn patch_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -609,9 +609,9 @@ impl PodDisruptionBudget {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -624,7 +624,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetStatusResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -730,7 +730,7 @@ pub struct ReadNamespacedPodDisruptionBudgetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -824,7 +824,7 @@ pub struct ReadNamespacedPodDisruptionBudgetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetStatusResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -884,7 +884,7 @@ impl PodDisruptionBudget {
     pub fn replace_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::api::policy::v1beta1::PodDisruptionBudget,
         optional: ReplaceNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let ReplaceNamespacedPodDisruptionBudgetOptional {
@@ -928,8 +928,8 @@ pub struct ReplaceNamespacedPodDisruptionBudgetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
-    Created(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
+    Created(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -997,7 +997,7 @@ impl PodDisruptionBudget {
     pub fn replace_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::api::policy::v1beta1::PodDisruptionBudget,
         optional: ReplaceNamespacedPodDisruptionBudgetStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedPodDisruptionBudgetStatusOptional {
@@ -1041,8 +1041,8 @@ pub struct ReplaceNamespacedPodDisruptionBudgetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodDisruptionBudgetStatusResponse {
-    Ok(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
-    Created(crate::v1_13::api::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::api::policy::v1beta1::PodDisruptionBudget),
+    Created(crate::api::policy::v1beta1::PodDisruptionBudget),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1105,7 +1105,7 @@ impl PodDisruptionBudget {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_pod_disruption_budget(
         namespace: &str,
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1127,7 +1127,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1179,7 +1179,7 @@ impl PodDisruptionBudget {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_pod_disruption_budget_for_all_namespaces(
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodDisruptionBudgetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/policy/v1beta1/poddisruptionbudgets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1199,7 +1199,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodDisruptionBudgetForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1256,7 +1256,7 @@ impl crate::Resource for PodDisruptionBudget {
 }
 
 impl crate::Metadata for PodDisruptionBudget {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1312,9 +1312,9 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudget {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetSpec> = None;
-                let mut value_status: Option<crate::v1_13::api::policy::v1beta1::PodDisruptionBudgetStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::policy::v1beta1::PodDisruptionBudgetSpec> = None;
+                let mut value_status: Option<crate::api::policy::v1beta1::PodDisruptionBudgetStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

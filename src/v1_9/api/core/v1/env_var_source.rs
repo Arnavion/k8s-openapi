@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
-    pub config_map_key_ref: Option<crate::v1_9::api::core::v1::ConfigMapKeySelector>,
+    pub config_map_key_ref: Option<crate::api::core::v1::ConfigMapKeySelector>,
 
     /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
-    pub field_ref: Option<crate::v1_9::api::core::v1::ObjectFieldSelector>,
+    pub field_ref: Option<crate::api::core::v1::ObjectFieldSelector>,
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-    pub resource_field_ref: Option<crate::v1_9::api::core::v1::ResourceFieldSelector>,
+    pub resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector>,
 
     /// Selects a key of a secret in the pod's namespace
-    pub secret_key_ref: Option<crate::v1_9::api::core::v1::SecretKeySelector>,
+    pub secret_key_ref: Option<crate::api::core::v1::SecretKeySelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for EnvVarSource {
@@ -63,10 +63,10 @@ impl<'de> serde::Deserialize<'de> for EnvVarSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_map_key_ref: Option<crate::v1_9::api::core::v1::ConfigMapKeySelector> = None;
-                let mut value_field_ref: Option<crate::v1_9::api::core::v1::ObjectFieldSelector> = None;
-                let mut value_resource_field_ref: Option<crate::v1_9::api::core::v1::ResourceFieldSelector> = None;
-                let mut value_secret_key_ref: Option<crate::v1_9::api::core::v1::SecretKeySelector> = None;
+                let mut value_config_map_key_ref: Option<crate::api::core::v1::ConfigMapKeySelector> = None;
+                let mut value_field_ref: Option<crate::api::core::v1::ObjectFieldSelector> = None;
+                let mut value_resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector> = None;
+                let mut value_secret_key_ref: Option<crate::api::core::v1::SecretKeySelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

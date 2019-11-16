@@ -13,7 +13,7 @@ pub struct EndpointAddress {
     pub node_name: Option<String>,
 
     /// Reference to object providing the endpoint.
-    pub target_ref: Option<crate::v1_12::api::core::v1::ObjectReference>,
+    pub target_ref: Option<crate::api::core::v1::ObjectReference>,
 }
 
 impl<'de> serde::Deserialize<'de> for EndpointAddress {
@@ -66,7 +66,7 @@ impl<'de> serde::Deserialize<'de> for EndpointAddress {
                 let mut value_hostname: Option<String> = None;
                 let mut value_ip: Option<String> = None;
                 let mut value_node_name: Option<String> = None;
-                let mut value_target_ref: Option<crate::v1_12::api::core::v1::ObjectReference> = None;
+                let mut value_target_ref: Option<crate::api::core::v1::ObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

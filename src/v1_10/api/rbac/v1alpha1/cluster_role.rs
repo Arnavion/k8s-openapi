@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRole {
     /// AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
-    pub aggregation_rule: Option<crate::v1_10::api::rbac::v1alpha1::AggregationRule>,
+    pub aggregation_rule: Option<crate::api::rbac::v1alpha1::AggregationRule>,
 
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Rules holds all the PolicyRules for this ClusterRole
-    pub rules: Vec<crate::v1_10::api::rbac::v1alpha1::PolicyRule>,
+    pub rules: Vec<crate::api::rbac::v1alpha1::PolicyRule>,
 }
 
 // Begin rbac.authorization.k8s.io/v1alpha1/ClusterRole
@@ -31,7 +31,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_cluster_role(
-        body: &crate::v1_10::api::rbac::v1alpha1::ClusterRole,
+        body: &crate::api::rbac::v1alpha1::ClusterRole,
         optional: CreateClusterRoleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateClusterRoleResponse>), crate::RequestError> {
         let CreateClusterRoleOptional {
@@ -66,9 +66,9 @@ pub struct CreateClusterRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateClusterRoleResponse {
-    Ok(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
-    Created(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
-    Accepted(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
+    Ok(crate::api::rbac::v1alpha1::ClusterRole),
+    Created(crate::api::rbac::v1alpha1::ClusterRole),
+    Accepted(crate::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -137,7 +137,7 @@ impl ClusterRole {
     #[cfg(feature = "api")]
     pub fn delete_cluster_role(
         name: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteClusterRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -157,8 +157,8 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteClusterRoleResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -223,8 +223,8 @@ impl ClusterRole {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_cluster_role(
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionClusterRoleResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -245,8 +245,8 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::rbac::v1alpha1::ClusterRoleList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1alpha1::ClusterRoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -309,7 +309,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_cluster_role(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -329,7 +329,7 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleResponse {
-    Ok(crate::v1_10::api::rbac::v1alpha1::ClusterRoleList),
+    Ok(crate::api::rbac::v1alpha1::ClusterRoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -384,8 +384,8 @@ impl ClusterRole {
     #[cfg(feature = "api")]
     pub fn patch_cluster_role(
         name: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchClusterRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -397,9 +397,9 @@ impl ClusterRole {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -412,7 +412,7 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchClusterRoleResponse {
-    Ok(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
+    Ok(crate::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -500,7 +500,7 @@ pub struct ReadClusterRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadClusterRoleResponse {
-    Ok(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
+    Ok(crate::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -555,7 +555,7 @@ impl ClusterRole {
     #[cfg(feature = "api")]
     pub fn replace_cluster_role(
         name: &str,
-        body: &crate::v1_10::api::rbac::v1alpha1::ClusterRole,
+        body: &crate::api::rbac::v1alpha1::ClusterRole,
         optional: ReplaceClusterRoleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceClusterRoleResponse>), crate::RequestError> {
         let ReplaceClusterRoleOptional {
@@ -592,8 +592,8 @@ pub struct ReplaceClusterRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceClusterRoleResponse {
-    Ok(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
-    Created(crate::v1_10::api::rbac::v1alpha1::ClusterRole),
+    Ok(crate::api::rbac::v1alpha1::ClusterRole),
+    Created(crate::api::rbac::v1alpha1::ClusterRole),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -651,7 +651,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_cluster_role(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -671,7 +671,7 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchClusterRoleResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -728,7 +728,7 @@ impl crate::Resource for ClusterRole {
 }
 
 impl crate::Metadata for ClusterRole {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -784,9 +784,9 @@ impl<'de> serde::Deserialize<'de> for ClusterRole {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_aggregation_rule: Option<crate::v1_10::api::rbac::v1alpha1::AggregationRule> = None;
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_rules: Option<Vec<crate::v1_10::api::rbac::v1alpha1::PolicyRule>> = None;
+                let mut value_aggregation_rule: Option<crate::api::rbac::v1alpha1::AggregationRule> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_rules: Option<Vec<crate::api::rbac::v1alpha1::PolicyRule>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

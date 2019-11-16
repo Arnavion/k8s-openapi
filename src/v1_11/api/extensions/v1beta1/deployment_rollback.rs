@@ -7,7 +7,7 @@ pub struct DeploymentRollback {
     pub name: String,
 
     /// The config of this deployment rollback.
-    pub rollback_to: crate::v1_11::api::extensions::v1beta1::RollbackConfig,
+    pub rollback_to: crate::api::extensions::v1beta1::RollbackConfig,
 
     /// The annotations to be updated to a deployment
     pub updated_annotations: Option<std::collections::BTreeMap<String, String>>,
@@ -41,7 +41,7 @@ impl DeploymentRollback {
     pub fn create_namespaced_deployment_rollback(
         name: &str,
         namespace: &str,
-        body: &crate::v1_11::api::extensions::v1beta1::DeploymentRollback,
+        body: &crate::api::extensions::v1beta1::DeploymentRollback,
         optional: CreateNamespacedDeploymentRollbackOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDeploymentRollbackResponse>), crate::RequestError> {
         let CreateNamespacedDeploymentRollbackOptional {
@@ -79,9 +79,9 @@ pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentRollbackResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::DeploymentRollback),
-    Created(crate::v1_11::api::extensions::v1beta1::DeploymentRollback),
-    Accepted(crate::v1_11::api::extensions::v1beta1::DeploymentRollback),
+    Ok(crate::api::extensions::v1beta1::DeploymentRollback),
+    Created(crate::api::extensions::v1beta1::DeploymentRollback),
+    Accepted(crate::api::extensions::v1beta1::DeploymentRollback),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -201,7 +201,7 @@ impl<'de> serde::Deserialize<'de> for DeploymentRollback {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
-                let mut value_rollback_to: Option<crate::v1_11::api::extensions::v1beta1::RollbackConfig> = None;
+                let mut value_rollback_to: Option<crate::api::extensions::v1beta1::RollbackConfig> = None;
                 let mut value_updated_annotations: Option<std::collections::BTreeMap<String, String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

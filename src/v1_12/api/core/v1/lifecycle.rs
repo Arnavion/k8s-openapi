@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Lifecycle {
     /// PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-    pub post_start: Option<crate::v1_12::api::core::v1::Handler>,
+    pub post_start: Option<crate::api::core::v1::Handler>,
 
     /// PreStop is called immediately before a container is terminated. The container is terminated after the handler completes. The reason for termination is passed to the handler. Regardless of the outcome of the handler, the container is eventually terminated. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-    pub pre_stop: Option<crate::v1_12::api::core::v1::Handler>,
+    pub pre_stop: Option<crate::api::core::v1::Handler>,
 }
 
 impl<'de> serde::Deserialize<'de> for Lifecycle {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for Lifecycle {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_post_start: Option<crate::v1_12::api::core::v1::Handler> = None;
-                let mut value_pre_stop: Option<crate::v1_12::api::core::v1::Handler> = None;
+                let mut value_post_start: Option<crate::api::core::v1::Handler> = None;
+                let mut value_pre_stop: Option<crate::api::core::v1::Handler> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

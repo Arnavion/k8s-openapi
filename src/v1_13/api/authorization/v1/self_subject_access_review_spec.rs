@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SelfSubjectAccessReviewSpec {
     /// NonResourceAttributes describes information for a non-resource access request
-    pub non_resource_attributes: Option<crate::v1_13::api::authorization::v1::NonResourceAttributes>,
+    pub non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes>,
 
     /// ResourceAuthorizationAttributes describes information for a resource access request
-    pub resource_attributes: Option<crate::v1_13::api::authorization::v1::ResourceAttributes>,
+    pub resource_attributes: Option<crate::api::authorization::v1::ResourceAttributes>,
 }
 
 impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_non_resource_attributes: Option<crate::v1_13::api::authorization::v1::NonResourceAttributes> = None;
-                let mut value_resource_attributes: Option<crate::v1_13::api::authorization::v1::ResourceAttributes> = None;
+                let mut value_non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes> = None;
+                let mut value_resource_attributes: Option<crate::api::authorization::v1::ResourceAttributes> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -16,7 +16,7 @@ pub struct ScaleIOPersistentVolumeSource {
     pub read_only: Option<bool>,
 
     /// SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail.
-    pub secret_ref: crate::v1_12::api::core::v1::SecretReference,
+    pub secret_ref: crate::api::core::v1::SecretReference,
 
     /// Flag to enable/disable SSL communication with Gateway, default false
     pub ssl_enabled: Option<bool>,
@@ -97,7 +97,7 @@ impl<'de> serde::Deserialize<'de> for ScaleIOPersistentVolumeSource {
                 let mut value_gateway: Option<String> = None;
                 let mut value_protection_domain: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<crate::v1_12::api::core::v1::SecretReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_ssl_enabled: Option<bool> = None;
                 let mut value_storage_mode: Option<String> = None;
                 let mut value_storage_pool: Option<String> = None;

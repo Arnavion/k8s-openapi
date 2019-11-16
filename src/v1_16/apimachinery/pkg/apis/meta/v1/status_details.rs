@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatusDetails {
     /// The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
-    pub causes: Option<Vec<crate::v1_16::apimachinery::pkg::apis::meta::v1::StatusCause>>,
+    pub causes: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>>,
 
     /// The group attribute of the resource associated with the status StatusReason.
     pub group: Option<String>,
@@ -73,7 +73,7 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_causes: Option<Vec<crate::v1_16::apimachinery::pkg::apis::meta::v1::StatusCause>> = None;
+                let mut value_causes: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>> = None;
                 let mut value_group: Option<String> = None;
                 let mut value_kind: Option<String> = None;
                 let mut value_name: Option<String> = None;

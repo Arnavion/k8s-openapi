@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceMetricStatus {
     /// current contains the current value for the given metric
-    pub current: crate::v1_14::api::autoscaling::v2beta2::MetricValueStatus,
+    pub current: crate::api::autoscaling::v2beta2::MetricValueStatus,
 
     /// Name is the name of the resource in question.
     pub name: String,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current: Option<crate::v1_14::api::autoscaling::v2beta2::MetricValueStatus> = None;
+                let mut value_current: Option<crate::api::autoscaling::v2beta2::MetricValueStatus> = None;
                 let mut value_name: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

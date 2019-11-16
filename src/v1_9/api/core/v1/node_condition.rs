@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeCondition {
     /// Last time we got an update on a given condition.
-    pub last_heartbeat_time: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_heartbeat_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Last time the condition transit from one status to another.
-    pub last_transition_time: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Human readable message indicating details about last transition.
     pub message: Option<String>,
@@ -73,8 +73,8 @@ impl<'de> serde::Deserialize<'de> for NodeCondition {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_last_heartbeat_time: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_last_transition_time: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_heartbeat_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;

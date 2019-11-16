@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeProjection {
     /// information about the configMap data to project
-    pub config_map: Option<crate::v1_10::api::core::v1::ConfigMapProjection>,
+    pub config_map: Option<crate::api::core::v1::ConfigMapProjection>,
 
     /// information about the downwardAPI data to project
-    pub downward_api: Option<crate::v1_10::api::core::v1::DownwardAPIProjection>,
+    pub downward_api: Option<crate::api::core::v1::DownwardAPIProjection>,
 
     /// information about the secret data to project
-    pub secret: Option<crate::v1_10::api::core::v1::SecretProjection>,
+    pub secret: Option<crate::api::core::v1::SecretProjection>,
 }
 
 impl<'de> serde::Deserialize<'de> for VolumeProjection {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for VolumeProjection {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_map: Option<crate::v1_10::api::core::v1::ConfigMapProjection> = None;
-                let mut value_downward_api: Option<crate::v1_10::api::core::v1::DownwardAPIProjection> = None;
-                let mut value_secret: Option<crate::v1_10::api::core::v1::SecretProjection> = None;
+                let mut value_config_map: Option<crate::api::core::v1::ConfigMapProjection> = None;
+                let mut value_downward_api: Option<crate::api::core::v1::DownwardAPIProjection> = None;
+                let mut value_secret: Option<crate::api::core::v1::SecretProjection> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -10,10 +10,10 @@ pub struct ReplicaSetSpec {
     pub replicas: Option<i32>,
 
     /// Selector is a label query over pods that should match the replica count. Label keys and values that must match in order to be controlled by this replica set. It must match the pod template's labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
-    pub template: Option<crate::v1_11::api::core::v1::PodTemplateSpec>,
+    pub template: Option<crate::api::core::v1::PodTemplateSpec>,
 }
 
 impl<'de> serde::Deserialize<'de> for ReplicaSetSpec {
@@ -65,8 +65,8 @@ impl<'de> serde::Deserialize<'de> for ReplicaSetSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_min_ready_seconds: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;
-                let mut value_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_template: Option<crate::v1_11::api::core::v1::PodTemplateSpec> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

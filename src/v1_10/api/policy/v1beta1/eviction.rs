@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Eviction {
     /// DeleteOptions may be provided
-    pub delete_options: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::DeleteOptions>,
+    pub delete_options: Option<crate::apimachinery::pkg::apis::meta::v1::DeleteOptions>,
 
     /// ObjectMeta describes the pod that is being evicted.
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin policy/v1beta1/Eviction
@@ -38,7 +38,7 @@ impl Eviction {
     pub fn create_namespaced_pod_eviction(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::policy::v1beta1::Eviction,
+        body: &crate::api::policy::v1beta1::Eviction,
         optional: CreateNamespacedPodEvictionOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodEvictionResponse>), crate::RequestError> {
         let CreateNamespacedPodEvictionOptional {
@@ -76,9 +76,9 @@ pub struct CreateNamespacedPodEvictionOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodEvictionResponse {
-    Ok(crate::v1_10::api::policy::v1beta1::Eviction),
-    Created(crate::v1_10::api::policy::v1beta1::Eviction),
-    Accepted(crate::v1_10::api::policy::v1beta1::Eviction),
+    Ok(crate::api::policy::v1beta1::Eviction),
+    Created(crate::api::policy::v1beta1::Eviction),
+    Accepted(crate::api::policy::v1beta1::Eviction),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -149,7 +149,7 @@ impl crate::Resource for Eviction {
 }
 
 impl crate::Metadata for Eviction {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -203,8 +203,8 @@ impl<'de> serde::Deserialize<'de> for Eviction {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_delete_options: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::DeleteOptions> = None;
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_delete_options: Option<crate::apimachinery::pkg::apis::meta::v1::DeleteOptions> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

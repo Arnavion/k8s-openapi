@@ -3,7 +3,7 @@
 /// JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property.
 #[derive(Clone, Debug, PartialEq)]
 pub enum JSONSchemaPropsOrBool {
-    Schema(Box<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
+    Schema(Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
     Bool(bool),
 }
 

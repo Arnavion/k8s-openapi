@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FSGroupStrategyOptions {
     /// Ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end.
-    pub ranges: Option<Vec<crate::v1_8::api::extensions::v1beta1::IDRange>>,
+    pub ranges: Option<Vec<crate::api::extensions::v1beta1::IDRange>>,
 
     /// Rule is the strategy that will dictate what FSGroup is used in the SecurityContext.
     pub rule: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for FSGroupStrategyOptions {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ranges: Option<Vec<crate::v1_8::api::extensions::v1beta1::IDRange>> = None;
+                let mut value_ranges: Option<Vec<crate::api::extensions::v1beta1::IDRange>> = None;
                 let mut value_rule: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

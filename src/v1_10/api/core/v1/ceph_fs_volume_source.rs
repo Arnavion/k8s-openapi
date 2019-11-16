@@ -16,7 +16,7 @@ pub struct CephFSVolumeSource {
     pub secret_file: Option<String>,
 
     /// Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it
-    pub secret_ref: Option<crate::v1_10::api::core::v1::LocalObjectReference>,
+    pub secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
 
     /// Optional: User is the rados user name, default is admin More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it
     pub user: Option<String>,
@@ -77,7 +77,7 @@ impl<'de> serde::Deserialize<'de> for CephFSVolumeSource {
                 let mut value_path: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_secret_file: Option<String> = None;
-                let mut value_secret_ref: Option<crate::v1_10::api::core::v1::LocalObjectReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_user: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

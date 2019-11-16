@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaim {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub spec: Option<crate::v1_12::api::core::v1::PersistentVolumeClaimSpec>,
+    pub spec: Option<crate::api::core::v1::PersistentVolumeClaimSpec>,
 
     /// Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub status: Option<crate::v1_12::api::core::v1::PersistentVolumeClaimStatus>,
+    pub status: Option<crate::api::core::v1::PersistentVolumeClaimStatus>,
 }
 
 // Begin /v1/PersistentVolumeClaim
@@ -36,7 +36,7 @@ impl PersistentVolumeClaim {
     #[cfg(feature = "api")]
     pub fn create_namespaced_persistent_volume_claim(
         namespace: &str,
-        body: &crate::v1_12::api::core::v1::PersistentVolumeClaim,
+        body: &crate::api::core::v1::PersistentVolumeClaim,
         optional: CreateNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let CreateNamespacedPersistentVolumeClaimOptional {
@@ -85,9 +85,9 @@ pub struct CreateNamespacedPersistentVolumeClaimOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
-    Created(crate::v1_12::api::core::v1::PersistentVolumeClaim),
-    Accepted(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
+    Created(crate::api::core::v1::PersistentVolumeClaim),
+    Accepted(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -160,8 +160,8 @@ impl PersistentVolumeClaim {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_persistent_volume_claim(
         namespace: &str,
-        delete_optional: crate::v1_12::DeleteOptional<'_>,
-        list_optional: crate::v1_12::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -184,8 +184,8 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::core::v1::PersistentVolumeClaimList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::PersistentVolumeClaimList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -256,7 +256,7 @@ impl PersistentVolumeClaim {
     pub fn delete_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        optional: crate::v1_12::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -277,9 +277,9 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPersistentVolumeClaimResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::core::v1::PersistentVolumeClaim),
-    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::PersistentVolumeClaim),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -355,7 +355,7 @@ impl PersistentVolumeClaim {
     #[cfg(feature = "api")]
     pub fn list_namespaced_persistent_volume_claim(
         namespace: &str,
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -377,7 +377,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::api::core::v1::PersistentVolumeClaimList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -427,7 +427,7 @@ impl PersistentVolumeClaim {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_persistent_volume_claim_for_all_namespaces(
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPersistentVolumeClaimForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumeclaims?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -447,7 +447,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPersistentVolumeClaimForAllNamespacesResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::api::core::v1::PersistentVolumeClaimList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -507,8 +507,8 @@ impl PersistentVolumeClaim {
     pub fn patch_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_12::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -521,9 +521,9 @@ impl PersistentVolumeClaim {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -536,7 +536,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -596,8 +596,8 @@ impl PersistentVolumeClaim {
     pub fn patch_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_12::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPersistentVolumeClaimStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -610,9 +610,9 @@ impl PersistentVolumeClaim {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -625,7 +625,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPersistentVolumeClaimStatusResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -731,7 +731,7 @@ pub struct ReadNamespacedPersistentVolumeClaimOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -825,7 +825,7 @@ pub struct ReadNamespacedPersistentVolumeClaimStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPersistentVolumeClaimStatusResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -885,7 +885,7 @@ impl PersistentVolumeClaim {
     pub fn replace_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::api::core::v1::PersistentVolumeClaim,
+        body: &crate::api::core::v1::PersistentVolumeClaim,
         optional: ReplaceNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let ReplaceNamespacedPersistentVolumeClaimOptional {
@@ -929,8 +929,8 @@ pub struct ReplaceNamespacedPersistentVolumeClaimOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
-    Created(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
+    Created(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -998,7 +998,7 @@ impl PersistentVolumeClaim {
     pub fn replace_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::api::core::v1::PersistentVolumeClaim,
+        body: &crate::api::core::v1::PersistentVolumeClaim,
         optional: ReplaceNamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPersistentVolumeClaimStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedPersistentVolumeClaimStatusOptional {
@@ -1042,8 +1042,8 @@ pub struct ReplaceNamespacedPersistentVolumeClaimStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPersistentVolumeClaimStatusResponse {
-    Ok(crate::v1_12::api::core::v1::PersistentVolumeClaim),
-    Created(crate::v1_12::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::api::core::v1::PersistentVolumeClaim),
+    Created(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1106,7 +1106,7 @@ impl PersistentVolumeClaim {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_persistent_volume_claim(
         namespace: &str,
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1128,7 +1128,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1180,7 +1180,7 @@ impl PersistentVolumeClaim {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_persistent_volume_claim_for_all_namespaces(
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeClaimForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumeclaims?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1200,7 +1200,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeClaimForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1257,7 +1257,7 @@ impl crate::Resource for PersistentVolumeClaim {
 }
 
 impl crate::Metadata for PersistentVolumeClaim {
-    type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1313,9 +1313,9 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaim {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_12::api::core::v1::PersistentVolumeClaimSpec> = None;
-                let mut value_status: Option<crate::v1_12::api::core::v1::PersistentVolumeClaimStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::PersistentVolumeClaimSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::PersistentVolumeClaimStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

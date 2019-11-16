@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LoadBalancerStatus {
     /// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
-    pub ingress: Option<Vec<crate::v1_12::api::core::v1::LoadBalancerIngress>>,
+    pub ingress: Option<Vec<crate::api::core::v1::LoadBalancerIngress>>,
 }
 
 impl<'de> serde::Deserialize<'de> for LoadBalancerStatus {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for LoadBalancerStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ingress: Option<Vec<crate::v1_12::api::core::v1::LoadBalancerIngress>> = None;
+                let mut value_ingress: Option<Vec<crate::api::core::v1::LoadBalancerIngress>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

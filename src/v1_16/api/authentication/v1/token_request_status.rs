@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, PartialEq)]
 pub struct TokenRequestStatus {
     /// ExpirationTimestamp is the time of expiration of the returned token.
-    pub expiration_timestamp: crate::v1_16::apimachinery::pkg::apis::meta::v1::Time,
+    pub expiration_timestamp: crate::apimachinery::pkg::apis::meta::v1::Time,
 
     /// Token is the opaque bearer token.
     pub token: String,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_expiration_timestamp: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_expiration_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_token: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct AggregationRule {
     /// ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
-    pub cluster_role_selectors: Option<Vec<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
+    pub cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
 }
 
 impl<'de> serde::Deserialize<'de> for AggregationRule {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for AggregationRule {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_cluster_role_selectors: Option<Vec<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector>> = None;
+                let mut value_cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

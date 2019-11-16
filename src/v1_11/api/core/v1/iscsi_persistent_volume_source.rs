@@ -31,7 +31,7 @@ pub struct ISCSIPersistentVolumeSource {
     pub read_only: Option<bool>,
 
     /// CHAP Secret for iSCSI target and initiator authentication
-    pub secret_ref: Option<crate::v1_11::api::core::v1::SecretReference>,
+    pub secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
     pub target_portal: String,
@@ -107,7 +107,7 @@ impl<'de> serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
                 let mut value_lun: Option<i32> = None;
                 let mut value_portals: Option<Vec<String>> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<crate::v1_11::api::core::v1::SecretReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_target_portal: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

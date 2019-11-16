@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceRequirements {
     /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-    pub limits: Option<std::collections::BTreeMap<String, crate::v1_14::apimachinery::pkg::api::resource::Quantity>>,
+    pub limits: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-    pub requests: Option<std::collections::BTreeMap<String, crate::v1_14::apimachinery::pkg::api::resource::Quantity>>,
+    pub requests: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
 impl<'de> serde::Deserialize<'de> for ResourceRequirements {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for ResourceRequirements {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_limits: Option<std::collections::BTreeMap<String, crate::v1_14::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_requests: Option<std::collections::BTreeMap<String, crate::v1_14::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_limits: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_requests: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

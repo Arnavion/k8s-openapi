@@ -7,10 +7,10 @@ pub struct PersistentVolumeClaimSpec {
     pub access_modes: Option<Vec<String>>,
 
     /// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    pub resources: Option<crate::v1_8::api::core::v1::ResourceRequirements>,
+    pub resources: Option<crate::api::core::v1::ResourceRequirements>,
 
     /// A label query over volumes to consider for binding.
-    pub selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
     pub storage_class_name: Option<String>,
@@ -69,8 +69,8 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_access_modes: Option<Vec<String>> = None;
-                let mut value_resources: Option<crate::v1_8::api::core::v1::ResourceRequirements> = None;
-                let mut value_selector: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_resources: Option<crate::api::core::v1::ResourceRequirements> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_storage_class_name: Option<String> = None;
                 let mut value_volume_name: Option<String> = None;
 

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ScopeSelector {
     /// A list of scope selector requirements by scope of the resources.
-    pub match_expressions: Option<Vec<crate::v1_16::api::core::v1::ScopedResourceSelectorRequirement>>,
+    pub match_expressions: Option<Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>>,
 }
 
 impl<'de> serde::Deserialize<'de> for ScopeSelector {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for ScopeSelector {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_match_expressions: Option<Vec<crate::v1_16::api::core::v1::ScopedResourceSelectorRequirement>> = None;
+                let mut value_match_expressions: Option<Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

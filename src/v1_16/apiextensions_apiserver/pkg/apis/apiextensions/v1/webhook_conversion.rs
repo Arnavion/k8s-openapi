@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct WebhookConversion {
     /// clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
-    pub client_config: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig>,
+    pub client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig>,
 
     /// conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
     pub conversion_review_versions: Vec<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for WebhookConversion {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_client_config: Option<crate::v1_16::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig> = None;
+                let mut value_client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig> = None;
                 let mut value_conversion_review_versions: Option<Vec<String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

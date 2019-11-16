@@ -3,13 +3,13 @@
 /// LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LocalSubjectAccessReview {
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted.
-    pub spec: crate::v1_13::api::authorization::v1beta1::SubjectAccessReviewSpec,
+    pub spec: crate::api::authorization::v1beta1::SubjectAccessReviewSpec,
 
     /// Status is filled in by the server and indicates whether the request is allowed or not
-    pub status: Option<crate::v1_13::api::authorization::v1beta1::SubjectAccessReviewStatus>,
+    pub status: Option<crate::api::authorization::v1beta1::SubjectAccessReviewStatus>,
 }
 
 // Begin authorization.k8s.io/v1beta1/LocalSubjectAccessReview
@@ -35,7 +35,7 @@ impl LocalSubjectAccessReview {
     #[cfg(feature = "api")]
     pub fn create_namespaced_local_subject_access_review(
         namespace: &str,
-        body: &crate::v1_13::api::authorization::v1beta1::LocalSubjectAccessReview,
+        body: &crate::api::authorization::v1beta1::LocalSubjectAccessReview,
         optional: CreateNamespacedLocalSubjectAccessReviewOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLocalSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateNamespacedLocalSubjectAccessReviewOptional {
@@ -84,9 +84,9 @@ pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLocalSubjectAccessReviewResponse {
-    Ok(crate::v1_13::api::authorization::v1beta1::LocalSubjectAccessReview),
-    Created(crate::v1_13::api::authorization::v1beta1::LocalSubjectAccessReview),
-    Accepted(crate::v1_13::api::authorization::v1beta1::LocalSubjectAccessReview),
+    Ok(crate::api::authorization::v1beta1::LocalSubjectAccessReview),
+    Created(crate::api::authorization::v1beta1::LocalSubjectAccessReview),
+    Accepted(crate::api::authorization::v1beta1::LocalSubjectAccessReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -157,7 +157,7 @@ impl crate::Resource for LocalSubjectAccessReview {
 }
 
 impl crate::Metadata for LocalSubjectAccessReview {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -213,9 +213,9 @@ impl<'de> serde::Deserialize<'de> for LocalSubjectAccessReview {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_13::api::authorization::v1beta1::SubjectAccessReviewSpec> = None;
-                let mut value_status: Option<crate::v1_13::api::authorization::v1beta1::SubjectAccessReviewStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authorization::v1beta1::SubjectAccessReviewSpec> = None;
+                let mut value_status: Option<crate::api::authorization::v1beta1::SubjectAccessReviewStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

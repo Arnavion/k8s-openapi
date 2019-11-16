@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Probe {
     /// One and only one of the following should be specified. Exec specifies the action to take.
-    pub exec: Option<crate::v1_9::api::core::v1::ExecAction>,
+    pub exec: Option<crate::api::core::v1::ExecAction>,
 
     /// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
     pub failure_threshold: Option<i32>,
 
     /// HTTPGet specifies the http request to perform.
-    pub http_get: Option<crate::v1_9::api::core::v1::HTTPGetAction>,
+    pub http_get: Option<crate::api::core::v1::HTTPGetAction>,
 
     /// Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
     pub initial_delay_seconds: Option<i32>,
@@ -22,7 +22,7 @@ pub struct Probe {
     pub success_threshold: Option<i32>,
 
     /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
-    pub tcp_socket: Option<crate::v1_9::api::core::v1::TCPSocketAction>,
+    pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
 
     /// Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
     pub timeout_seconds: Option<i32>,
@@ -83,13 +83,13 @@ impl<'de> serde::Deserialize<'de> for Probe {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_exec: Option<crate::v1_9::api::core::v1::ExecAction> = None;
+                let mut value_exec: Option<crate::api::core::v1::ExecAction> = None;
                 let mut value_failure_threshold: Option<i32> = None;
-                let mut value_http_get: Option<crate::v1_9::api::core::v1::HTTPGetAction> = None;
+                let mut value_http_get: Option<crate::api::core::v1::HTTPGetAction> = None;
                 let mut value_initial_delay_seconds: Option<i32> = None;
                 let mut value_period_seconds: Option<i32> = None;
                 let mut value_success_threshold: Option<i32> = None;
-                let mut value_tcp_socket: Option<crate::v1_9::api::core::v1::TCPSocketAction> = None;
+                let mut value_tcp_socket: Option<crate::api::core::v1::TCPSocketAction> = None;
                 let mut value_timeout_seconds: Option<i32> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

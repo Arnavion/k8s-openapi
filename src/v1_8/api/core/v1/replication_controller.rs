@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicationController {
     /// If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the specification of the desired behavior of the replication controller. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_8::api::core::v1::ReplicationControllerSpec>,
+    pub spec: Option<crate::api::core::v1::ReplicationControllerSpec>,
 
     /// Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_8::api::core::v1::ReplicationControllerStatus>,
+    pub status: Option<crate::api::core::v1::ReplicationControllerStatus>,
 }
 
 // Begin /v1/ReplicationController
@@ -36,7 +36,7 @@ impl ReplicationController {
     #[cfg(feature = "api")]
     pub fn create_namespaced_replication_controller(
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::ReplicationController,
+        body: &crate::api::core::v1::ReplicationController,
         optional: CreateNamespacedReplicationControllerOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedReplicationControllerResponse>), crate::RequestError> {
         let CreateNamespacedReplicationControllerOptional {
@@ -73,7 +73,7 @@ pub struct CreateNamespacedReplicationControllerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -130,8 +130,8 @@ impl ReplicationController {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_replication_controller(
         namespace: &str,
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedReplicationControllerResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -154,8 +154,8 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicationControllerResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::ReplicationControllerList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ReplicationControllerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -226,7 +226,7 @@ impl ReplicationController {
     pub fn delete_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedReplicationControllerResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -247,8 +247,8 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedReplicationControllerResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::ReplicationController),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -316,7 +316,7 @@ impl ReplicationController {
     #[cfg(feature = "api")]
     pub fn list_namespaced_replication_controller(
         namespace: &str,
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedReplicationControllerResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -338,7 +338,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationControllerList),
+    Ok(crate::api::core::v1::ReplicationControllerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -388,7 +388,7 @@ impl ReplicationController {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_replication_controller_for_all_namespaces(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicationControllerForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/replicationcontrollers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -408,7 +408,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListReplicationControllerForAllNamespacesResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationControllerList),
+    Ok(crate::api::core::v1::ReplicationControllerList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -468,8 +468,8 @@ impl ReplicationController {
     pub fn patch_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -482,9 +482,9 @@ impl ReplicationController {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -497,7 +497,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -557,8 +557,8 @@ impl ReplicationController {
     pub fn patch_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -571,9 +571,9 @@ impl ReplicationController {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -586,7 +586,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerStatusResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -692,7 +692,7 @@ pub struct ReadNamespacedReplicationControllerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -786,7 +786,7 @@ pub struct ReadNamespacedReplicationControllerStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerStatusResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -846,7 +846,7 @@ impl ReplicationController {
     pub fn replace_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::ReplicationController,
+        body: &crate::api::core::v1::ReplicationController,
         optional: ReplaceNamespacedReplicationControllerOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerOptional {
@@ -884,7 +884,7 @@ pub struct ReplaceNamespacedReplicationControllerOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -944,7 +944,7 @@ impl ReplicationController {
     pub fn replace_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::ReplicationController,
+        body: &crate::api::core::v1::ReplicationController,
         optional: ReplaceNamespacedReplicationControllerStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerStatusOptional {
@@ -982,7 +982,7 @@ pub struct ReplaceNamespacedReplicationControllerStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerStatusResponse {
-    Ok(crate::v1_8::api::core::v1::ReplicationController),
+    Ok(crate::api::core::v1::ReplicationController),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1037,7 +1037,7 @@ impl ReplicationController {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_replication_controller(
         namespace: &str,
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicationControllerResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1059,7 +1059,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicationControllerResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1111,7 +1111,7 @@ impl ReplicationController {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_replication_controller_for_all_namespaces(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicationControllerForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/replicationcontrollers?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1131,7 +1131,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchReplicationControllerForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1188,7 +1188,7 @@ impl crate::Resource for ReplicationController {
 }
 
 impl crate::Metadata for ReplicationController {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1244,9 +1244,9 @@ impl<'de> serde::Deserialize<'de> for ReplicationController {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::core::v1::ReplicationControllerSpec> = None;
-                let mut value_status: Option<crate::v1_8::api::core::v1::ReplicationControllerStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::ReplicationControllerSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::ReplicationControllerStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

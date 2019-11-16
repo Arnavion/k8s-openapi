@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIVersions {
     /// a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
-    pub server_address_by_client_cidrs: Vec<crate::v1_13::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>,
+    pub server_address_by_client_cidrs: Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>,
 
     /// versions are the api versions that are available.
     pub versions: Vec<String>,
@@ -75,7 +75,7 @@ impl<'de> serde::Deserialize<'de> for APIVersions {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_server_address_by_client_cidrs: Option<Vec<crate::v1_13::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>> = None;
+                let mut value_server_address_by_client_cidrs: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>> = None;
                 let mut value_versions: Option<Vec<String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

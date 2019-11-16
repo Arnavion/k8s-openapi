@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ComponentStatus {
     /// List of component conditions observed
-    pub conditions: Option<Vec<crate::v1_15::api::core::v1::ComponentCondition>>,
+    pub conditions: Option<Vec<crate::api::core::v1::ComponentCondition>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin /v1/ComponentStatus
@@ -28,7 +28,7 @@ impl ComponentStatus {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_component_status(
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListComponentStatusResponse>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -48,7 +48,7 @@ impl ComponentStatus {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListComponentStatusResponse {
-    Ok(crate::v1_15::api::core::v1::ComponentStatusList),
+    Ok(crate::api::core::v1::ComponentStatusList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -136,7 +136,7 @@ pub struct ReadComponentStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadComponentStatusResponse {
-    Ok(crate::v1_15::api::core::v1::ComponentStatus),
+    Ok(crate::api::core::v1::ComponentStatus),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -186,7 +186,7 @@ impl ComponentStatus {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_component_status(
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchComponentStatusResponse>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -206,7 +206,7 @@ impl ComponentStatus {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchComponentStatusResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<ComponentStatus>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ComponentStatus>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -263,7 +263,7 @@ impl crate::Resource for ComponentStatus {
 }
 
 impl crate::Metadata for ComponentStatus {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -317,8 +317,8 @@ impl<'de> serde::Deserialize<'de> for ComponentStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::v1_15::api::core::v1::ComponentCondition>> = None;
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_conditions: Option<Vec<crate::api::core::v1::ComponentCondition>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

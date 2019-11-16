@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Pod {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_8::api::core::v1::PodSpec>,
+    pub spec: Option<crate::api::core::v1::PodSpec>,
 
     /// Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_8::api::core::v1::PodStatus>,
+    pub status: Option<crate::api::core::v1::PodStatus>,
 }
 
 // Begin /v1/Pod
@@ -990,7 +990,7 @@ impl Pod {
     #[cfg(feature = "api")]
     pub fn create_namespaced_pod(
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::Pod,
+        body: &crate::api::core::v1::Pod,
         optional: CreateNamespacedPodOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodResponse>), crate::RequestError> {
         let CreateNamespacedPodOptional {
@@ -1027,7 +1027,7 @@ pub struct CreateNamespacedPodOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedPodResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1084,8 +1084,8 @@ impl Pod {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_pod(
         namespace: &str,
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1108,8 +1108,8 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::PodList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::PodList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1180,7 +1180,7 @@ impl Pod {
     pub fn delete_namespaced_pod(
         name: &str,
         namespace: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1201,8 +1201,8 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::Pod),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1270,7 +1270,7 @@ impl Pod {
     #[cfg(feature = "api")]
     pub fn list_namespaced_pod(
         namespace: &str,
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1292,7 +1292,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodResponse {
-    Ok(crate::v1_8::api::core::v1::PodList),
+    Ok(crate::api::core::v1::PodList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1342,7 +1342,7 @@ impl Pod {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_pod_for_all_namespaces(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/pods?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1362,7 +1362,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodForAllNamespacesResponse {
-    Ok(crate::v1_8::api::core::v1::PodList),
+    Ok(crate::api::core::v1::PodList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1422,8 +1422,8 @@ impl Pod {
     pub fn patch_namespaced_pod(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1436,9 +1436,9 @@ impl Pod {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1451,7 +1451,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1511,8 +1511,8 @@ impl Pod {
     pub fn patch_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1525,9 +1525,9 @@ impl Pod {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1540,7 +1540,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedPodStatusResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2506,7 +2506,7 @@ pub struct ReadNamespacedPodOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2746,7 +2746,7 @@ pub struct ReadNamespacedPodStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedPodStatusResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2806,7 +2806,7 @@ impl Pod {
     pub fn replace_namespaced_pod(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::Pod,
+        body: &crate::api::core::v1::Pod,
         optional: ReplaceNamespacedPodOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodResponse>), crate::RequestError> {
         let ReplaceNamespacedPodOptional {
@@ -2844,7 +2844,7 @@ pub struct ReplaceNamespacedPodOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2904,7 +2904,7 @@ impl Pod {
     pub fn replace_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::core::v1::Pod,
+        body: &crate::api::core::v1::Pod,
         optional: ReplaceNamespacedPodStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedPodStatusOptional {
@@ -2942,7 +2942,7 @@ pub struct ReplaceNamespacedPodStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodStatusResponse {
-    Ok(crate::v1_8::api::core::v1::Pod),
+    Ok(crate::api::core::v1::Pod),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -2997,7 +2997,7 @@ impl Pod {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_pod(
         namespace: &str,
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -3019,7 +3019,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedPodResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3071,7 +3071,7 @@ impl Pod {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_pod_for_all_namespaces(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/pods?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -3091,7 +3091,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -3148,7 +3148,7 @@ impl crate::Resource for Pod {
 }
 
 impl crate::Metadata for Pod {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -3204,9 +3204,9 @@ impl<'de> serde::Deserialize<'de> for Pod {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::core::v1::PodSpec> = None;
-                let mut value_status: Option<crate::v1_8::api::core::v1::PodStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::PodSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::PodStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

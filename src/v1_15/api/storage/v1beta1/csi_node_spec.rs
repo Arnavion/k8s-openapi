@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSINodeSpec {
     /// drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
-    pub drivers: Vec<crate::v1_15::api::storage::v1beta1::CSINodeDriver>,
+    pub drivers: Vec<crate::api::storage::v1beta1::CSINodeDriver>,
 }
 
 impl<'de> serde::Deserialize<'de> for CSINodeSpec {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for CSINodeSpec {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_drivers: Option<Vec<crate::v1_15::api::storage::v1beta1::CSINodeDriver>> = None;
+                let mut value_drivers: Option<Vec<crate::api::storage::v1beta1::CSINodeDriver>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

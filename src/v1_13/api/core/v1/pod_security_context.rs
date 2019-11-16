@@ -20,13 +20,13 @@ pub struct PodSecurityContext {
     pub run_as_user: Option<i64>,
 
     /// The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    pub se_linux_options: Option<crate::v1_13::api::core::v1::SELinuxOptions>,
+    pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 
     /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
     pub supplemental_groups: Option<Vec<i64>>,
 
     /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    pub sysctls: Option<Vec<crate::v1_13::api::core::v1::Sysctl>>,
+    pub sysctls: Option<Vec<crate::api::core::v1::Sysctl>>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodSecurityContext {
@@ -86,9 +86,9 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
                 let mut value_run_as_group: Option<i64> = None;
                 let mut value_run_as_non_root: Option<bool> = None;
                 let mut value_run_as_user: Option<i64> = None;
-                let mut value_se_linux_options: Option<crate::v1_13::api::core::v1::SELinuxOptions> = None;
+                let mut value_se_linux_options: Option<crate::api::core::v1::SELinuxOptions> = None;
                 let mut value_supplemental_groups: Option<Vec<i64>> = None;
-                let mut value_sysctls: Option<Vec<crate::v1_13::api::core::v1::Sysctl>> = None;
+                let mut value_sysctls: Option<Vec<crate::api::core::v1::Sysctl>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

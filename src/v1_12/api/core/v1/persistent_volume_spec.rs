@@ -7,91 +7,91 @@ pub struct PersistentVolumeSpec {
     pub access_modes: Option<Vec<String>>,
 
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-    pub aws_elastic_block_store: Option<crate::v1_12::api::core::v1::AWSElasticBlockStoreVolumeSource>,
+    pub aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource>,
 
     /// AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
-    pub azure_disk: Option<crate::v1_12::api::core::v1::AzureDiskVolumeSource>,
+    pub azure_disk: Option<crate::api::core::v1::AzureDiskVolumeSource>,
 
     /// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-    pub azure_file: Option<crate::v1_12::api::core::v1::AzureFilePersistentVolumeSource>,
+    pub azure_file: Option<crate::api::core::v1::AzureFilePersistentVolumeSource>,
 
     /// A description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-    pub capacity: Option<std::collections::BTreeMap<String, crate::v1_12::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
-    pub cephfs: Option<crate::v1_12::api::core::v1::CephFSPersistentVolumeSource>,
+    pub cephfs: Option<crate::api::core::v1::CephFSPersistentVolumeSource>,
 
     /// Cinder represents a cinder volume attached and mounted on kubelets host machine More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md
-    pub cinder: Option<crate::v1_12::api::core::v1::CinderPersistentVolumeSource>,
+    pub cinder: Option<crate::api::core::v1::CinderPersistentVolumeSource>,
 
     /// ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
-    pub claim_ref: Option<crate::v1_12::api::core::v1::ObjectReference>,
+    pub claim_ref: Option<crate::api::core::v1::ObjectReference>,
 
     /// CSI represents storage that handled by an external CSI driver (Beta feature).
-    pub csi: Option<crate::v1_12::api::core::v1::CSIPersistentVolumeSource>,
+    pub csi: Option<crate::api::core::v1::CSIPersistentVolumeSource>,
 
     /// FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-    pub fc: Option<crate::v1_12::api::core::v1::FCVolumeSource>,
+    pub fc: Option<crate::api::core::v1::FCVolumeSource>,
 
     /// FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
-    pub flex_volume: Option<crate::v1_12::api::core::v1::FlexPersistentVolumeSource>,
+    pub flex_volume: Option<crate::api::core::v1::FlexPersistentVolumeSource>,
 
     /// Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running
-    pub flocker: Option<crate::v1_12::api::core::v1::FlockerVolumeSource>,
+    pub flocker: Option<crate::api::core::v1::FlockerVolumeSource>,
 
     /// GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-    pub gce_persistent_disk: Option<crate::v1_12::api::core::v1::GCEPersistentDiskVolumeSource>,
+    pub gce_persistent_disk: Option<crate::api::core::v1::GCEPersistentDiskVolumeSource>,
 
     /// Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md
-    pub glusterfs: Option<crate::v1_12::api::core::v1::GlusterfsVolumeSource>,
+    pub glusterfs: Option<crate::api::core::v1::GlusterfsVolumeSource>,
 
     /// HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-    pub host_path: Option<crate::v1_12::api::core::v1::HostPathVolumeSource>,
+    pub host_path: Option<crate::api::core::v1::HostPathVolumeSource>,
 
     /// ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.
-    pub iscsi: Option<crate::v1_12::api::core::v1::ISCSIPersistentVolumeSource>,
+    pub iscsi: Option<crate::api::core::v1::ISCSIPersistentVolumeSource>,
 
     /// Local represents directly-attached storage with node affinity
-    pub local: Option<crate::v1_12::api::core::v1::LocalVolumeSource>,
+    pub local: Option<crate::api::core::v1::LocalVolumeSource>,
 
     /// A list of mount options, e.g. \["ro", "soft"\]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
     pub mount_options: Option<Vec<String>>,
 
     /// NFS represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-    pub nfs: Option<crate::v1_12::api::core::v1::NFSVolumeSource>,
+    pub nfs: Option<crate::api::core::v1::NFSVolumeSource>,
 
     /// NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume.
-    pub node_affinity: Option<crate::v1_12::api::core::v1::VolumeNodeAffinity>,
+    pub node_affinity: Option<crate::api::core::v1::VolumeNodeAffinity>,
 
     /// What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
     pub persistent_volume_reclaim_policy: Option<String>,
 
     /// PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine
-    pub photon_persistent_disk: Option<crate::v1_12::api::core::v1::PhotonPersistentDiskVolumeSource>,
+    pub photon_persistent_disk: Option<crate::api::core::v1::PhotonPersistentDiskVolumeSource>,
 
     /// PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
-    pub portworx_volume: Option<crate::v1_12::api::core::v1::PortworxVolumeSource>,
+    pub portworx_volume: Option<crate::api::core::v1::PortworxVolumeSource>,
 
     /// Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
-    pub quobyte: Option<crate::v1_12::api::core::v1::QuobyteVolumeSource>,
+    pub quobyte: Option<crate::api::core::v1::QuobyteVolumeSource>,
 
     /// RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md
-    pub rbd: Option<crate::v1_12::api::core::v1::RBDPersistentVolumeSource>,
+    pub rbd: Option<crate::api::core::v1::RBDPersistentVolumeSource>,
 
     /// ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
-    pub scale_io: Option<crate::v1_12::api::core::v1::ScaleIOPersistentVolumeSource>,
+    pub scale_io: Option<crate::api::core::v1::ScaleIOPersistentVolumeSource>,
 
     /// Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.
     pub storage_class_name: Option<String>,
 
     /// StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md
-    pub storageos: Option<crate::v1_12::api::core::v1::StorageOSPersistentVolumeSource>,
+    pub storageos: Option<crate::api::core::v1::StorageOSPersistentVolumeSource>,
 
     /// volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is an alpha feature and may change in the future.
     pub volume_mode: Option<String>,
 
     /// VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
-    pub vsphere_volume: Option<crate::v1_12::api::core::v1::VsphereVirtualDiskVolumeSource>,
+    pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
 }
 
 impl<'de> serde::Deserialize<'de> for PersistentVolumeSpec {
@@ -194,35 +194,35 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_access_modes: Option<Vec<String>> = None;
-                let mut value_aws_elastic_block_store: Option<crate::v1_12::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
-                let mut value_azure_disk: Option<crate::v1_12::api::core::v1::AzureDiskVolumeSource> = None;
-                let mut value_azure_file: Option<crate::v1_12::api::core::v1::AzureFilePersistentVolumeSource> = None;
-                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::v1_12::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_cephfs: Option<crate::v1_12::api::core::v1::CephFSPersistentVolumeSource> = None;
-                let mut value_cinder: Option<crate::v1_12::api::core::v1::CinderPersistentVolumeSource> = None;
-                let mut value_claim_ref: Option<crate::v1_12::api::core::v1::ObjectReference> = None;
-                let mut value_csi: Option<crate::v1_12::api::core::v1::CSIPersistentVolumeSource> = None;
-                let mut value_fc: Option<crate::v1_12::api::core::v1::FCVolumeSource> = None;
-                let mut value_flex_volume: Option<crate::v1_12::api::core::v1::FlexPersistentVolumeSource> = None;
-                let mut value_flocker: Option<crate::v1_12::api::core::v1::FlockerVolumeSource> = None;
-                let mut value_gce_persistent_disk: Option<crate::v1_12::api::core::v1::GCEPersistentDiskVolumeSource> = None;
-                let mut value_glusterfs: Option<crate::v1_12::api::core::v1::GlusterfsVolumeSource> = None;
-                let mut value_host_path: Option<crate::v1_12::api::core::v1::HostPathVolumeSource> = None;
-                let mut value_iscsi: Option<crate::v1_12::api::core::v1::ISCSIPersistentVolumeSource> = None;
-                let mut value_local: Option<crate::v1_12::api::core::v1::LocalVolumeSource> = None;
+                let mut value_aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
+                let mut value_azure_disk: Option<crate::api::core::v1::AzureDiskVolumeSource> = None;
+                let mut value_azure_file: Option<crate::api::core::v1::AzureFilePersistentVolumeSource> = None;
+                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_cephfs: Option<crate::api::core::v1::CephFSPersistentVolumeSource> = None;
+                let mut value_cinder: Option<crate::api::core::v1::CinderPersistentVolumeSource> = None;
+                let mut value_claim_ref: Option<crate::api::core::v1::ObjectReference> = None;
+                let mut value_csi: Option<crate::api::core::v1::CSIPersistentVolumeSource> = None;
+                let mut value_fc: Option<crate::api::core::v1::FCVolumeSource> = None;
+                let mut value_flex_volume: Option<crate::api::core::v1::FlexPersistentVolumeSource> = None;
+                let mut value_flocker: Option<crate::api::core::v1::FlockerVolumeSource> = None;
+                let mut value_gce_persistent_disk: Option<crate::api::core::v1::GCEPersistentDiskVolumeSource> = None;
+                let mut value_glusterfs: Option<crate::api::core::v1::GlusterfsVolumeSource> = None;
+                let mut value_host_path: Option<crate::api::core::v1::HostPathVolumeSource> = None;
+                let mut value_iscsi: Option<crate::api::core::v1::ISCSIPersistentVolumeSource> = None;
+                let mut value_local: Option<crate::api::core::v1::LocalVolumeSource> = None;
                 let mut value_mount_options: Option<Vec<String>> = None;
-                let mut value_nfs: Option<crate::v1_12::api::core::v1::NFSVolumeSource> = None;
-                let mut value_node_affinity: Option<crate::v1_12::api::core::v1::VolumeNodeAffinity> = None;
+                let mut value_nfs: Option<crate::api::core::v1::NFSVolumeSource> = None;
+                let mut value_node_affinity: Option<crate::api::core::v1::VolumeNodeAffinity> = None;
                 let mut value_persistent_volume_reclaim_policy: Option<String> = None;
-                let mut value_photon_persistent_disk: Option<crate::v1_12::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
-                let mut value_portworx_volume: Option<crate::v1_12::api::core::v1::PortworxVolumeSource> = None;
-                let mut value_quobyte: Option<crate::v1_12::api::core::v1::QuobyteVolumeSource> = None;
-                let mut value_rbd: Option<crate::v1_12::api::core::v1::RBDPersistentVolumeSource> = None;
-                let mut value_scale_io: Option<crate::v1_12::api::core::v1::ScaleIOPersistentVolumeSource> = None;
+                let mut value_photon_persistent_disk: Option<crate::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
+                let mut value_portworx_volume: Option<crate::api::core::v1::PortworxVolumeSource> = None;
+                let mut value_quobyte: Option<crate::api::core::v1::QuobyteVolumeSource> = None;
+                let mut value_rbd: Option<crate::api::core::v1::RBDPersistentVolumeSource> = None;
+                let mut value_scale_io: Option<crate::api::core::v1::ScaleIOPersistentVolumeSource> = None;
                 let mut value_storage_class_name: Option<String> = None;
-                let mut value_storageos: Option<crate::v1_12::api::core::v1::StorageOSPersistentVolumeSource> = None;
+                let mut value_storageos: Option<crate::api::core::v1::StorageOSPersistentVolumeSource> = None;
                 let mut value_volume_mode: Option<String> = None;
-                let mut value_vsphere_volume: Option<crate::v1_12::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
+                let mut value_vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

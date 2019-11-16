@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressStatus {
     /// LoadBalancer contains the current status of the load-balancer.
-    pub load_balancer: Option<crate::v1_11::api::core::v1::LoadBalancerStatus>,
+    pub load_balancer: Option<crate::api::core::v1::LoadBalancerStatus>,
 }
 
 impl<'de> serde::Deserialize<'de> for IngressStatus {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for IngressStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_load_balancer: Option<crate::v1_11::api::core::v1::LoadBalancerStatus> = None;
+                let mut value_load_balancer: Option<crate::api::core::v1::LoadBalancerStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

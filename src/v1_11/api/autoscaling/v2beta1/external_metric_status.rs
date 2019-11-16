@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalMetricStatus {
     /// currentAverageValue is the current value of metric averaged over autoscaled pods.
-    pub current_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity>,
+    pub current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// currentValue is the current value of the metric (as a quantity)
-    pub current_value: crate::v1_11::apimachinery::pkg::api::resource::Quantity,
+    pub current_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// metricName is the name of a metric used for autoscaling in metric system.
     pub metric_name: String,
 
     /// metricSelector is used to identify a specific time series within a given metric.
-    pub metric_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
@@ -63,10 +63,10 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current_average_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity> = None;
-                let mut value_current_value: Option<crate::v1_11::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
-                let mut value_metric_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

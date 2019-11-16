@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachmentSource {
     /// inlineVolumeSpec contains all the information necessary to attach a persistent volume defined by a pod's inline VolumeSource. This field is populated only for the CSIMigration feature. It contains translated fields from a pod's inline VolumeSource to a PersistentVolumeSpec. This field is alpha-level and is only honored by servers that enabled the CSIMigration feature.
-    pub inline_volume_spec: Option<crate::v1_15::api::core::v1::PersistentVolumeSpec>,
+    pub inline_volume_spec: Option<crate::api::core::v1::PersistentVolumeSpec>,
 
     /// Name of the persistent volume to attach.
     pub persistent_volume_name: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachmentSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_inline_volume_spec: Option<crate::v1_15::api::core::v1::PersistentVolumeSpec> = None;
+                let mut value_inline_volume_spec: Option<crate::api::core::v1::PersistentVolumeSpec> = None;
                 let mut value_persistent_volume_name: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

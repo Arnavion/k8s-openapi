@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TopologySelectorTerm {
     /// A list of topology selector requirements by labels.
-    pub match_label_expressions: Option<Vec<crate::v1_12::api::core::v1::TopologySelectorLabelRequirement>>,
+    pub match_label_expressions: Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>>,
 }
 
 impl<'de> serde::Deserialize<'de> for TopologySelectorTerm {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for TopologySelectorTerm {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_match_label_expressions: Option<Vec<crate::v1_12::api::core::v1::TopologySelectorLabelRequirement>> = None;
+                let mut value_match_label_expressions: Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

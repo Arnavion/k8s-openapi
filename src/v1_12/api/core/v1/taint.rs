@@ -10,7 +10,7 @@ pub struct Taint {
     pub key: String,
 
     /// TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
-    pub time_added: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::Time>,
+    pub time_added: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Required. The taint value corresponding to the taint key.
     pub value: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for Taint {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_effect: Option<String> = None;
                 let mut value_key: Option<String> = None;
-                let mut value_time_added: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_time_added: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_value: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -10,13 +10,13 @@ pub struct DaemonSetSpec {
     pub revision_history_limit: Option<i32>,
 
     /// A label query over pods that are managed by the daemon set. Must match in order to be controlled. It must match the pod template's labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
-    pub template: crate::v1_10::api::core::v1::PodTemplateSpec,
+    pub template: crate::api::core::v1::PodTemplateSpec,
 
     /// An update strategy to replace existing DaemonSet pods with new pods.
-    pub update_strategy: Option<crate::v1_10::api::apps::v1::DaemonSetUpdateStrategy>,
+    pub update_strategy: Option<crate::api::apps::v1::DaemonSetUpdateStrategy>,
 }
 
 impl<'de> serde::Deserialize<'de> for DaemonSetSpec {
@@ -70,9 +70,9 @@ impl<'de> serde::Deserialize<'de> for DaemonSetSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_min_ready_seconds: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
-                let mut value_selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_template: Option<crate::v1_10::api::core::v1::PodTemplateSpec> = None;
-                let mut value_update_strategy: Option<crate::v1_10::api::apps::v1::DaemonSetUpdateStrategy> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
+                let mut value_update_strategy: Option<crate::api::apps::v1::DaemonSetUpdateStrategy> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

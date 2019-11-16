@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIServiceStatus {
     /// Current service state of apiService.
-    pub conditions: Option<Vec<crate::v1_11::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>>,
+    pub conditions: Option<Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>>,
 }
 
 impl<'de> serde::Deserialize<'de> for APIServiceStatus {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for APIServiceStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::v1_11::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

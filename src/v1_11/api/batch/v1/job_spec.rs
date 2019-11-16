@@ -19,10 +19,10 @@ pub struct JobSpec {
     pub parallelism: Option<i32>,
 
     /// A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Describes the pod that will be created when executing a job. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-    pub template: crate::v1_11::api::core::v1::PodTemplateSpec,
+    pub template: crate::api::core::v1::PodTemplateSpec,
 }
 
 impl<'de> serde::Deserialize<'de> for JobSpec {
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
                 let mut value_completions: Option<i32> = None;
                 let mut value_manual_selector: Option<bool> = None;
                 let mut value_parallelism: Option<i32> = None;
-                let mut value_selector: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_template: Option<crate::v1_11::api::core::v1::PodTemplateSpec> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

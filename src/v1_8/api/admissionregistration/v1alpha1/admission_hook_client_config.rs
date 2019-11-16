@@ -7,7 +7,7 @@ pub struct AdmissionHookClientConfig {
     pub ca_bundle: crate::ByteString,
 
     /// Service is a reference to the service for this webhook. If there is only one port open for the service, that port will be used. If there are multiple ports open, port 443 will be used if it is open, otherwise it is an error. Required
-    pub service: crate::v1_8::api::admissionregistration::v1alpha1::ServiceReference,
+    pub service: crate::api::admissionregistration::v1alpha1::ServiceReference,
 }
 
 impl<'de> serde::Deserialize<'de> for AdmissionHookClientConfig {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for AdmissionHookClientConfig {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_ca_bundle: Option<crate::ByteString> = None;
-                let mut value_service: Option<crate::v1_8::api::admissionregistration::v1alpha1::ServiceReference> = None;
+                let mut value_service: Option<crate::api::admissionregistration::v1alpha1::ServiceReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

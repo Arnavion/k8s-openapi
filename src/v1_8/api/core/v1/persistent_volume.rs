@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolume {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines a specification of a persistent volume owned by the cluster. Provisioned by an administrator. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
-    pub spec: Option<crate::v1_8::api::core::v1::PersistentVolumeSpec>,
+    pub spec: Option<crate::api::core::v1::PersistentVolumeSpec>,
 
     /// Status represents the current information/status for the persistent volume. Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
-    pub status: Option<crate::v1_8::api::core::v1::PersistentVolumeStatus>,
+    pub status: Option<crate::api::core::v1::PersistentVolumeStatus>,
 }
 
 // Begin /v1/PersistentVolume
@@ -31,7 +31,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_persistent_volume(
-        body: &crate::v1_8::api::core::v1::PersistentVolume,
+        body: &crate::api::core::v1::PersistentVolume,
         optional: CreatePersistentVolumeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreatePersistentVolumeResponse>), crate::RequestError> {
         let CreatePersistentVolumeOptional {
@@ -66,7 +66,7 @@ pub struct CreatePersistentVolumeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreatePersistentVolumeResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -118,8 +118,8 @@ impl PersistentVolume {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_persistent_volume(
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionPersistentVolumeResponse>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -140,8 +140,8 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionPersistentVolumeResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::PersistentVolumeList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::PersistentVolumeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -207,7 +207,7 @@ impl PersistentVolume {
     #[cfg(feature = "api")]
     pub fn delete_persistent_volume(
         name: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeletePersistentVolumeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumes/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -227,8 +227,8 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeletePersistentVolumeResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::core::v1::PersistentVolume),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -291,7 +291,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_persistent_volume(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPersistentVolumeResponse>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -311,7 +311,7 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPersistentVolumeResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolumeList),
+    Ok(crate::api::core::v1::PersistentVolumeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -366,8 +366,8 @@ impl PersistentVolume {
     #[cfg(feature = "api")]
     pub fn patch_persistent_volume(
         name: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPersistentVolumeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumes/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -379,9 +379,9 @@ impl PersistentVolume {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -394,7 +394,7 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchPersistentVolumeResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -449,8 +449,8 @@ impl PersistentVolume {
     #[cfg(feature = "api")]
     pub fn patch_persistent_volume_status(
         name: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPersistentVolumeStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumes/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -462,9 +462,9 @@ impl PersistentVolume {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -477,7 +477,7 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchPersistentVolumeStatusResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -577,7 +577,7 @@ pub struct ReadPersistentVolumeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -665,7 +665,7 @@ pub struct ReadPersistentVolumeStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeStatusResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -720,7 +720,7 @@ impl PersistentVolume {
     #[cfg(feature = "api")]
     pub fn replace_persistent_volume(
         name: &str,
-        body: &crate::v1_8::api::core::v1::PersistentVolume,
+        body: &crate::api::core::v1::PersistentVolume,
         optional: ReplacePersistentVolumeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePersistentVolumeResponse>), crate::RequestError> {
         let ReplacePersistentVolumeOptional {
@@ -757,7 +757,7 @@ pub struct ReplacePersistentVolumeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -812,7 +812,7 @@ impl PersistentVolume {
     #[cfg(feature = "api")]
     pub fn replace_persistent_volume_status(
         name: &str,
-        body: &crate::v1_8::api::core::v1::PersistentVolume,
+        body: &crate::api::core::v1::PersistentVolume,
         optional: ReplacePersistentVolumeStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePersistentVolumeStatusResponse>), crate::RequestError> {
         let ReplacePersistentVolumeStatusOptional {
@@ -849,7 +849,7 @@ pub struct ReplacePersistentVolumeStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeStatusResponse {
-    Ok(crate::v1_8::api::core::v1::PersistentVolume),
+    Ok(crate::api::core::v1::PersistentVolume),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -899,7 +899,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_persistent_volume(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeResponse>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -919,7 +919,7 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolume>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolume>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -976,7 +976,7 @@ impl crate::Resource for PersistentVolume {
 }
 
 impl crate::Metadata for PersistentVolume {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1032,9 +1032,9 @@ impl<'de> serde::Deserialize<'de> for PersistentVolume {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::core::v1::PersistentVolumeSpec> = None;
-                let mut value_status: Option<crate::v1_8::api::core::v1::PersistentVolumeStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::core::v1::PersistentVolumeSpec> = None;
+                let mut value_status: Option<crate::api::core::v1::PersistentVolumeStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

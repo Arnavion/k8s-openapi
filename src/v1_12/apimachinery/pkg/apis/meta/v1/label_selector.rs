@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LabelSelector {
     /// matchExpressions is a list of label selector requirements. The requirements are ANDed.
-    pub match_expressions: Option<Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>,
+    pub match_expressions: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>,
 
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
     pub match_labels: Option<std::collections::BTreeMap<String, String>>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for LabelSelector {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_match_expressions: Option<Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>> = None;
+                let mut value_match_expressions: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>> = None;
                 let mut value_match_labels: Option<std::collections::BTreeMap<String, String>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

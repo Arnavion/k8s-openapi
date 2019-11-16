@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NamespaceStatus {
     /// Represents the latest available observations of a namespace's current state.
-    pub conditions: Option<Vec<crate::v1_16::api::core::v1::NamespaceCondition>>,
+    pub conditions: Option<Vec<crate::api::core::v1::NamespaceCondition>>,
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub phase: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for NamespaceStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::v1_16::api::core::v1::NamespaceCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::core::v1::NamespaceCondition>> = None;
                 let mut value_phase: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

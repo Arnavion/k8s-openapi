@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ConfigMapList {
     /// Items is the list of ConfigMaps.
-    pub items: Vec<crate::v1_9::api::core::v1::ConfigMap>,
+    pub items: Vec<crate::api::core::v1::ConfigMap>,
 
     /// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for ConfigMapList {
@@ -29,7 +29,7 @@ impl crate::Resource for ConfigMapList {
 }
 
 impl crate::Metadata for ConfigMapList {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for ConfigMapList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_9::api::core::v1::ConfigMap>> = None;
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::ConfigMap>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

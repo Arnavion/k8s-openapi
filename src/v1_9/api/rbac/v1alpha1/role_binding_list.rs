@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RoleBindingList {
     /// Items is a list of RoleBindings
-    pub items: Vec<crate::v1_9::api::rbac::v1alpha1::RoleBinding>,
+    pub items: Vec<crate::api::rbac::v1alpha1::RoleBinding>,
 
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for RoleBindingList {
@@ -29,7 +29,7 @@ impl crate::Resource for RoleBindingList {
 }
 
 impl crate::Metadata for RoleBindingList {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for RoleBindingList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_9::api::rbac::v1alpha1::RoleBinding>> = None;
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::rbac::v1alpha1::RoleBinding>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

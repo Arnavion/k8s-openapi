@@ -13,7 +13,7 @@ pub struct ContainerStatus {
     pub image_id: String,
 
     /// Details about the container's last termination condition.
-    pub last_state: Option<crate::v1_13::api::core::v1::ContainerState>,
+    pub last_state: Option<crate::api::core::v1::ContainerState>,
 
     /// This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
     pub name: String,
@@ -25,7 +25,7 @@ pub struct ContainerStatus {
     pub restart_count: i32,
 
     /// Details about the container's current condition.
-    pub state: Option<crate::v1_13::api::core::v1::ContainerState>,
+    pub state: Option<crate::api::core::v1::ContainerState>,
 }
 
 impl<'de> serde::Deserialize<'de> for ContainerStatus {
@@ -86,11 +86,11 @@ impl<'de> serde::Deserialize<'de> for ContainerStatus {
                 let mut value_container_id: Option<String> = None;
                 let mut value_image: Option<String> = None;
                 let mut value_image_id: Option<String> = None;
-                let mut value_last_state: Option<crate::v1_13::api::core::v1::ContainerState> = None;
+                let mut value_last_state: Option<crate::api::core::v1::ContainerState> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_ready: Option<bool> = None;
                 let mut value_restart_count: Option<i32> = None;
-                let mut value_state: Option<crate::v1_13::api::core::v1::ContainerState> = None;
+                let mut value_state: Option<crate::api::core::v1::ContainerState> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

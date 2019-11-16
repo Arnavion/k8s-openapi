@@ -10,28 +10,28 @@ pub struct Event {
     pub count: Option<i32>,
 
     /// Time when this Event was first observed.
-    pub event_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::MicroTime>,
+    pub event_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
 
     /// The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
-    pub first_timestamp: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub first_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The object that this event is about.
-    pub involved_object: crate::v1_16::api::core::v1::ObjectReference,
+    pub involved_object: crate::api::core::v1::ObjectReference,
 
     /// The time at which the most recent occurrence of this event was recorded.
-    pub last_timestamp: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// A human-readable description of the status of this operation.
     pub message: Option<String>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-    pub metadata: crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// This should be a short, machine understandable string that gives the reason for the transition into the object's current status.
     pub reason: Option<String>,
 
     /// Optional secondary object for more complex actions.
-    pub related: Option<crate::v1_16::api::core::v1::ObjectReference>,
+    pub related: Option<crate::api::core::v1::ObjectReference>,
 
     /// Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.
     pub reporting_component: Option<String>,
@@ -40,10 +40,10 @@ pub struct Event {
     pub reporting_instance: Option<String>,
 
     /// Data about the Event series this event represents or nil if it's a singleton Event.
-    pub series: Option<crate::v1_16::api::core::v1::EventSeries>,
+    pub series: Option<crate::api::core::v1::EventSeries>,
 
     /// The component reporting this event. Should be a short machine understandable string.
-    pub source: Option<crate::v1_16::api::core::v1::EventSource>,
+    pub source: Option<crate::api::core::v1::EventSource>,
 
     /// Type of this event (Normal, Warning), new types could be added in the future
     pub type_: Option<String>,
@@ -72,7 +72,7 @@ impl Event {
     #[cfg(feature = "api")]
     pub fn create_namespaced_event(
         namespace: &str,
-        body: &crate::v1_16::api::core::v1::Event,
+        body: &crate::api::core::v1::Event,
         optional: CreateNamespacedEventOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedEventResponse>), crate::RequestError> {
         let CreateNamespacedEventOptional {
@@ -121,9 +121,9 @@ pub struct CreateNamespacedEventOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedEventResponse {
-    Ok(crate::v1_16::api::core::v1::Event),
-    Created(crate::v1_16::api::core::v1::Event),
-    Accepted(crate::v1_16::api::core::v1::Event),
+    Ok(crate::api::core::v1::Event),
+    Created(crate::api::core::v1::Event),
+    Accepted(crate::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -196,8 +196,8 @@ impl Event {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_event(
         namespace: &str,
-        delete_optional: crate::v1_16::DeleteOptional<'_>,
-        list_optional: crate::v1_16::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedEventResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -220,8 +220,8 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEventResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::core::v1::EventList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::EventList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -292,7 +292,7 @@ impl Event {
     pub fn delete_namespaced_event(
         name: &str,
         namespace: &str,
-        optional: crate::v1_16::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedEventResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -313,9 +313,9 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedEventResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::core::v1::Event),
-    Accepted(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::Event),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -386,7 +386,7 @@ impl Event {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_event_for_all_namespaces(
-        optional: crate::v1_16::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEventForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/events?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -406,7 +406,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListEventForAllNamespacesResponse {
-    Ok(crate::v1_16::api::core::v1::EventList),
+    Ok(crate::api::core::v1::EventList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -461,7 +461,7 @@ impl Event {
     #[cfg(feature = "api")]
     pub fn list_namespaced_event(
         namespace: &str,
-        optional: crate::v1_16::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedEventResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -483,7 +483,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedEventResponse {
-    Ok(crate::v1_16::api::core::v1::EventList),
+    Ok(crate::api::core::v1::EventList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -543,8 +543,8 @@ impl Event {
     pub fn patch_namespaced_event(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_16::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEventResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -557,9 +557,9 @@ impl Event {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -572,7 +572,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedEventResponse {
-    Ok(crate::v1_16::api::core::v1::Event),
+    Ok(crate::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -678,7 +678,7 @@ pub struct ReadNamespacedEventOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedEventResponse {
-    Ok(crate::v1_16::api::core::v1::Event),
+    Ok(crate::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -738,7 +738,7 @@ impl Event {
     pub fn replace_namespaced_event(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::api::core::v1::Event,
+        body: &crate::api::core::v1::Event,
         optional: ReplaceNamespacedEventOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedEventResponse>), crate::RequestError> {
         let ReplaceNamespacedEventOptional {
@@ -788,8 +788,8 @@ pub struct ReplaceNamespacedEventOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedEventResponse {
-    Ok(crate::v1_16::api::core::v1::Event),
-    Created(crate::v1_16::api::core::v1::Event),
+    Ok(crate::api::core::v1::Event),
+    Created(crate::api::core::v1::Event),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -847,7 +847,7 @@ impl Event {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_event_for_all_namespaces(
-        optional: crate::v1_16::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEventForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/events?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -867,7 +867,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchEventForAllNamespacesResponse {
-    Ok(crate::v1_16::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -924,7 +924,7 @@ impl Event {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_event(
         namespace: &str,
-        optional: crate::v1_16::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEventResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -946,7 +946,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedEventResponse {
-    Ok(crate::v1_16::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1003,7 +1003,7 @@ impl crate::Resource for Event {
 }
 
 impl crate::Metadata for Event {
-    type Ty = crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         Some(&self.metadata)
@@ -1085,18 +1085,18 @@ impl<'de> serde::Deserialize<'de> for Event {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_action: Option<String> = None;
                 let mut value_count: Option<i32> = None;
-                let mut value_event_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
-                let mut value_first_timestamp: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_involved_object: Option<crate::v1_16::api::core::v1::ObjectReference> = None;
-                let mut value_last_timestamp: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_event_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
+                let mut value_first_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_involved_object: Option<crate::api::core::v1::ObjectReference> = None;
+                let mut value_last_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
-                let mut value_metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_reason: Option<String> = None;
-                let mut value_related: Option<crate::v1_16::api::core::v1::ObjectReference> = None;
+                let mut value_related: Option<crate::api::core::v1::ObjectReference> = None;
                 let mut value_reporting_component: Option<String> = None;
                 let mut value_reporting_instance: Option<String> = None;
-                let mut value_series: Option<crate::v1_16::api::core::v1::EventSeries> = None;
-                let mut value_source: Option<crate::v1_16::api::core::v1::EventSource> = None;
+                let mut value_series: Option<crate::api::core::v1::EventSeries> = None;
+                let mut value_source: Option<crate::api::core::v1::EventSource> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

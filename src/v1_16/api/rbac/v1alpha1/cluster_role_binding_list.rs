@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRoleBindingList {
     /// Items is a list of ClusterRoleBindings
-    pub items: Vec<crate::v1_16::api::rbac::v1alpha1::ClusterRoleBinding>,
+    pub items: Vec<crate::api::rbac::v1alpha1::ClusterRoleBinding>,
 
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for ClusterRoleBindingList {
@@ -29,7 +29,7 @@ impl crate::Resource for ClusterRoleBindingList {
 }
 
 impl crate::Metadata for ClusterRoleBindingList {
-    type Ty = crate::v1_16::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -83,8 +83,8 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBindingList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_16::api::rbac::v1alpha1::ClusterRoleBinding>> = None;
-                let mut value_metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::rbac::v1alpha1::ClusterRoleBinding>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

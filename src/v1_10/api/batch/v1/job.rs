@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Job {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_10::api::batch::v1::JobSpec>,
+    pub spec: Option<crate::api::batch::v1::JobSpec>,
 
     /// Current status of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_10::api::batch::v1::JobStatus>,
+    pub status: Option<crate::api::batch::v1::JobStatus>,
 }
 
 // Begin batch/v1/Job
@@ -36,7 +36,7 @@ impl Job {
     #[cfg(feature = "api")]
     pub fn create_namespaced_job(
         namespace: &str,
-        body: &crate::v1_10::api::batch::v1::Job,
+        body: &crate::api::batch::v1::Job,
         optional: CreateNamespacedJobOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedJobResponse>), crate::RequestError> {
         let CreateNamespacedJobOptional {
@@ -73,9 +73,9 @@ pub struct CreateNamespacedJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedJobResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
-    Created(crate::v1_10::api::batch::v1::Job),
-    Accepted(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
+    Created(crate::api::batch::v1::Job),
+    Accepted(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,8 +148,8 @@ impl Job {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_job(
         namespace: &str,
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -172,8 +172,8 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedJobResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::batch::v1::JobList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::batch::v1::JobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,7 +244,7 @@ impl Job {
     pub fn delete_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -265,8 +265,8 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedJobResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::batch::v1::Job),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl Job {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_job_for_all_namespaces(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListJobForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/batch/v1/jobs?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -349,7 +349,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListJobForAllNamespacesResponse {
-    Ok(crate::v1_10::api::batch::v1::JobList),
+    Ok(crate::api::batch::v1::JobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -404,7 +404,7 @@ impl Job {
     #[cfg(feature = "api")]
     pub fn list_namespaced_job(
         namespace: &str,
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -426,7 +426,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedJobResponse {
-    Ok(crate::v1_10::api::batch::v1::JobList),
+    Ok(crate::api::batch::v1::JobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -486,8 +486,8 @@ impl Job {
     pub fn patch_namespaced_job(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl Job {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedJobResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -575,8 +575,8 @@ impl Job {
     pub fn patch_namespaced_job_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -589,9 +589,9 @@ impl Job {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -604,7 +604,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedJobStatusResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ pub struct ReadNamespacedJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedJobResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -804,7 +804,7 @@ pub struct ReadNamespacedJobStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedJobStatusResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -864,7 +864,7 @@ impl Job {
     pub fn replace_namespaced_job(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::batch::v1::Job,
+        body: &crate::api::batch::v1::Job,
         optional: ReplaceNamespacedJobOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedJobResponse>), crate::RequestError> {
         let ReplaceNamespacedJobOptional {
@@ -902,8 +902,8 @@ pub struct ReplaceNamespacedJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
-    Created(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
+    Created(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -971,7 +971,7 @@ impl Job {
     pub fn replace_namespaced_job_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::batch::v1::Job,
+        body: &crate::api::batch::v1::Job,
         optional: ReplaceNamespacedJobStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedJobStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedJobStatusOptional {
@@ -1009,8 +1009,8 @@ pub struct ReplaceNamespacedJobStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobStatusResponse {
-    Ok(crate::v1_10::api::batch::v1::Job),
-    Created(crate::v1_10::api::batch::v1::Job),
+    Ok(crate::api::batch::v1::Job),
+    Created(crate::api::batch::v1::Job),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1068,7 +1068,7 @@ impl Job {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_job_for_all_namespaces(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchJobForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/batch/v1/jobs?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1088,7 +1088,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchJobForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1145,7 +1145,7 @@ impl Job {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_job(
         namespace: &str,
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1167,7 +1167,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedJobResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1224,7 +1224,7 @@ impl crate::Resource for Job {
 }
 
 impl crate::Metadata for Job {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1280,9 +1280,9 @@ impl<'de> serde::Deserialize<'de> for Job {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_10::api::batch::v1::JobSpec> = None;
-                let mut value_status: Option<crate::v1_10::api::batch::v1::JobStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::batch::v1::JobSpec> = None;
+                let mut value_status: Option<crate::api::batch::v1::JobStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

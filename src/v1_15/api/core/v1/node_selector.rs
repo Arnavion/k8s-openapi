@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSelector {
     /// Required. A list of node selector terms. The terms are ORed.
-    pub node_selector_terms: Vec<crate::v1_15::api::core::v1::NodeSelectorTerm>,
+    pub node_selector_terms: Vec<crate::api::core::v1::NodeSelectorTerm>,
 }
 
 impl<'de> serde::Deserialize<'de> for NodeSelector {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for NodeSelector {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_node_selector_terms: Option<Vec<crate::v1_15::api::core::v1::NodeSelectorTerm>> = None;
+                let mut value_node_selector_terms: Option<Vec<crate::api::core::v1::NodeSelectorTerm>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSet {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_16::api::apps::v1beta2::DaemonSetSpec>,
+    pub spec: Option<crate::api::apps::v1beta2::DaemonSetSpec>,
 
     /// The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_16::api::apps::v1beta2::DaemonSetStatus>,
+    pub status: Option<crate::api::apps::v1beta2::DaemonSetStatus>,
 }
 
 // Begin apps/v1beta2/DaemonSet
@@ -36,7 +36,7 @@ impl DaemonSet {
     #[cfg(feature = "api")]
     pub fn create_namespaced_daemon_set(
         namespace: &str,
-        body: &crate::v1_16::api::apps::v1beta2::DaemonSet,
+        body: &crate::api::apps::v1beta2::DaemonSet,
         optional: CreateNamespacedDaemonSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDaemonSetResponse>), crate::RequestError> {
         let CreateNamespacedDaemonSetOptional {
@@ -85,9 +85,9 @@ pub struct CreateNamespacedDaemonSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
-    Created(crate::v1_16::api::apps::v1beta2::DaemonSet),
-    Accepted(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
+    Created(crate::api::apps::v1beta2::DaemonSet),
+    Accepted(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -160,8 +160,8 @@ impl DaemonSet {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_daemon_set(
         namespace: &str,
-        delete_optional: crate::v1_16::DeleteOptional<'_>,
-        list_optional: crate::v1_16::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -184,8 +184,8 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDaemonSetResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::apps::v1beta2::DaemonSetList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1beta2::DaemonSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -256,7 +256,7 @@ impl DaemonSet {
     pub fn delete_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        optional: crate::v1_16::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -277,9 +277,9 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedDaemonSetResponse {
-    OkStatus(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_16::api::apps::v1beta2::DaemonSet),
-    Accepted(crate::v1_16::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1beta2::DaemonSet),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -350,7 +350,7 @@ impl DaemonSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_daemon_set_for_all_namespaces(
-        optional: crate::v1_16::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListDaemonSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/daemonsets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -370,7 +370,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListDaemonSetForAllNamespacesResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSetList),
+    Ok(crate::api::apps::v1beta2::DaemonSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -425,7 +425,7 @@ impl DaemonSet {
     #[cfg(feature = "api")]
     pub fn list_namespaced_daemon_set(
         namespace: &str,
-        optional: crate::v1_16::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -447,7 +447,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSetList),
+    Ok(crate::api::apps::v1beta2::DaemonSetList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -507,8 +507,8 @@ impl DaemonSet {
     pub fn patch_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_16::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -521,9 +521,9 @@ impl DaemonSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -536,7 +536,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -596,8 +596,8 @@ impl DaemonSet {
     pub fn patch_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_16::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDaemonSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -610,9 +610,9 @@ impl DaemonSet {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_16::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -625,7 +625,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDaemonSetStatusResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -731,7 +731,7 @@ pub struct ReadNamespacedDaemonSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -825,7 +825,7 @@ pub struct ReadNamespacedDaemonSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDaemonSetStatusResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -885,7 +885,7 @@ impl DaemonSet {
     pub fn replace_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::api::apps::v1beta2::DaemonSet,
+        body: &crate::api::apps::v1beta2::DaemonSet,
         optional: ReplaceNamespacedDaemonSetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDaemonSetResponse>), crate::RequestError> {
         let ReplaceNamespacedDaemonSetOptional {
@@ -935,8 +935,8 @@ pub struct ReplaceNamespacedDaemonSetOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
-    Created(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
+    Created(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1004,7 +1004,7 @@ impl DaemonSet {
     pub fn replace_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::api::apps::v1beta2::DaemonSet,
+        body: &crate::api::apps::v1beta2::DaemonSet,
         optional: ReplaceNamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDaemonSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedDaemonSetStatusOptional {
@@ -1054,8 +1054,8 @@ pub struct ReplaceNamespacedDaemonSetStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDaemonSetStatusResponse {
-    Ok(crate::v1_16::api::apps::v1beta2::DaemonSet),
-    Created(crate::v1_16::api::apps::v1beta2::DaemonSet),
+    Ok(crate::api::apps::v1beta2::DaemonSet),
+    Created(crate::api::apps::v1beta2::DaemonSet),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1113,7 +1113,7 @@ impl DaemonSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_daemon_set_for_all_namespaces(
-        optional: crate::v1_16::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchDaemonSetForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/daemonsets?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1133,7 +1133,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchDaemonSetForAllNamespacesResponse {
-    Ok(crate::v1_16::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1190,7 +1190,7 @@ impl DaemonSet {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_daemon_set(
         namespace: &str,
-        optional: crate::v1_16::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1212,7 +1212,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedDaemonSetResponse {
-    Ok(crate::v1_16::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1269,7 +1269,7 @@ impl crate::Resource for DaemonSet {
 }
 
 impl crate::Metadata for DaemonSet {
-    type Ty = crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1325,9 +1325,9 @@ impl<'de> serde::Deserialize<'de> for DaemonSet {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_16::api::apps::v1beta2::DaemonSetSpec> = None;
-                let mut value_status: Option<crate::v1_16::api::apps::v1beta2::DaemonSetStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::apps::v1beta2::DaemonSetSpec> = None;
+                let mut value_status: Option<crate::api::apps::v1beta2::DaemonSetStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

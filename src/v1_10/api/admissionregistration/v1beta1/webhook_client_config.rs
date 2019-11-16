@@ -11,7 +11,7 @@ pub struct WebhookClientConfig {
     /// If the webhook is running within the cluster, then you should use `service`.
     ///
     /// If there is only one port open for the service, that port will be used. If there are multiple ports open, port 443 will be used if it is open, otherwise it is an error.
-    pub service: Option<crate::v1_10::api::admissionregistration::v1beta1::ServiceReference>,
+    pub service: Option<crate::api::admissionregistration::v1beta1::ServiceReference>,
 
     /// `url` gives the location of the webhook, in standard URL form (`\[scheme://\]host:port/path`). Exactly one of `url` or `service` must be specified.
     ///
@@ -73,7 +73,7 @@ impl<'de> serde::Deserialize<'de> for WebhookClientConfig {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_ca_bundle: Option<crate::ByteString> = None;
-                let mut value_service: Option<crate::v1_10::api::admissionregistration::v1beta1::ServiceReference> = None;
+                let mut value_service: Option<crate::api::admissionregistration::v1beta1::ServiceReference> = None;
                 let mut value_url: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

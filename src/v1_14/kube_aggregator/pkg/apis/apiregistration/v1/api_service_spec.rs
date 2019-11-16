@@ -16,7 +16,7 @@ pub struct APIServiceSpec {
     pub insecure_skip_tls_verify: Option<bool>,
 
     /// Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled.
-    pub service: crate::v1_14::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference,
+    pub service: crate::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference,
 
     /// Version is the API version this server hosts.  For example, "v1"
     pub version: Option<String>,
@@ -82,7 +82,7 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
                 let mut value_group: Option<String> = None;
                 let mut value_group_priority_minimum: Option<i32> = None;
                 let mut value_insecure_skip_tls_verify: Option<bool> = None;
-                let mut value_service: Option<crate::v1_14::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference> = None;
+                let mut value_service: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference> = None;
                 let mut value_version: Option<String> = None;
                 let mut value_version_priority: Option<i32> = None;
 

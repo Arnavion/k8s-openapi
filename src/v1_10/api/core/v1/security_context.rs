@@ -7,7 +7,7 @@ pub struct SecurityContext {
     pub allow_privilege_escalation: Option<bool>,
 
     /// The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-    pub capabilities: Option<crate::v1_10::api::core::v1::Capabilities>,
+    pub capabilities: Option<crate::api::core::v1::Capabilities>,
 
     /// Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
     pub privileged: Option<bool>,
@@ -25,7 +25,7 @@ pub struct SecurityContext {
     pub run_as_user: Option<i64>,
 
     /// The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    pub se_linux_options: Option<crate::v1_10::api::core::v1::SELinuxOptions>,
+    pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 }
 
 impl<'de> serde::Deserialize<'de> for SecurityContext {
@@ -84,13 +84,13 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_allow_privilege_escalation: Option<bool> = None;
-                let mut value_capabilities: Option<crate::v1_10::api::core::v1::Capabilities> = None;
+                let mut value_capabilities: Option<crate::api::core::v1::Capabilities> = None;
                 let mut value_privileged: Option<bool> = None;
                 let mut value_read_only_root_filesystem: Option<bool> = None;
                 let mut value_run_as_group: Option<i64> = None;
                 let mut value_run_as_non_root: Option<bool> = None;
                 let mut value_run_as_user: Option<i64> = None;
-                let mut value_se_linux_options: Option<crate::v1_10::api::core::v1::SELinuxOptions> = None;
+                let mut value_se_linux_options: Option<crate::api::core::v1::SELinuxOptions> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

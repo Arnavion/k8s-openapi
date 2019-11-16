@@ -7,7 +7,7 @@ pub struct ProjectedVolumeSource {
     pub default_mode: Option<i32>,
 
     /// list of volume projections
-    pub sources: Vec<crate::v1_10::api::core::v1::VolumeProjection>,
+    pub sources: Vec<crate::api::core::v1::VolumeProjection>,
 }
 
 impl<'de> serde::Deserialize<'de> for ProjectedVolumeSource {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for ProjectedVolumeSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_default_mode: Option<i32> = None;
-                let mut value_sources: Option<Vec<crate::v1_10::api::core::v1::VolumeProjection>> = None;
+                let mut value_sources: Option<Vec<crate::api::core::v1::VolumeProjection>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

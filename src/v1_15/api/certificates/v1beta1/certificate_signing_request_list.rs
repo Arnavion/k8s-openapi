@@ -2,9 +2,9 @@
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestList {
-    pub items: Vec<crate::v1_15::api::certificates::v1beta1::CertificateSigningRequest>,
+    pub items: Vec<crate::api::certificates::v1beta1::CertificateSigningRequest>,
 
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
 impl crate::Resource for CertificateSigningRequestList {
@@ -26,7 +26,7 @@ impl crate::Resource for CertificateSigningRequestList {
 }
 
 impl crate::Metadata for CertificateSigningRequestList {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ListMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -80,8 +80,8 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestList {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_15::api::certificates::v1beta1::CertificateSigningRequest>> = None;
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_items: Option<Vec<crate::api::certificates::v1beta1::CertificateSigningRequest>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

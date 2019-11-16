@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSecurityPolicy {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// spec defines the policy enforced.
-    pub spec: Option<crate::v1_11::api::extensions::v1beta1::PodSecurityPolicySpec>,
+    pub spec: Option<crate::api::extensions::v1beta1::PodSecurityPolicySpec>,
 }
 
 // Begin extensions/v1beta1/PodSecurityPolicy
@@ -28,7 +28,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_pod_security_policy(
-        body: &crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy,
+        body: &crate::api::extensions::v1beta1::PodSecurityPolicy,
         optional: CreatePodSecurityPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreatePodSecurityPolicyResponse>), crate::RequestError> {
         let CreatePodSecurityPolicyOptional {
@@ -63,9 +63,9 @@ pub struct CreatePodSecurityPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreatePodSecurityPolicyResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
-    Created(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
-    Accepted(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
+    Ok(crate::api::extensions::v1beta1::PodSecurityPolicy),
+    Created(crate::api::extensions::v1beta1::PodSecurityPolicy),
+    Accepted(crate::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -133,8 +133,8 @@ impl PodSecurityPolicy {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_pod_security_policy(
-        delete_optional: crate::v1_11::DeleteOptional<'_>,
-        list_optional: crate::v1_11::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionPodSecurityPolicyResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -155,8 +155,8 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionPodSecurityPolicyResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicyList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::PodSecurityPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -222,7 +222,7 @@ impl PodSecurityPolicy {
     #[cfg(feature = "api")]
     pub fn delete_pod_security_policy(
         name: &str,
-        optional: crate::v1_11::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeletePodSecurityPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -242,8 +242,8 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeletePodSecurityPolicyResponse {
-    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -306,7 +306,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_pod_security_policy(
-        optional: crate::v1_11::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodSecurityPolicyResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -326,7 +326,7 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodSecurityPolicyResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicyList),
+    Ok(crate::api::extensions::v1beta1::PodSecurityPolicyList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -381,8 +381,8 @@ impl PodSecurityPolicy {
     #[cfg(feature = "api")]
     pub fn patch_pod_security_policy(
         name: &str,
-        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_11::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPodSecurityPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -394,9 +394,9 @@ impl PodSecurityPolicy {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -409,7 +409,7 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchPodSecurityPolicyResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
+    Ok(crate::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -509,7 +509,7 @@ pub struct ReadPodSecurityPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPodSecurityPolicyResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
+    Ok(crate::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -564,7 +564,7 @@ impl PodSecurityPolicy {
     #[cfg(feature = "api")]
     pub fn replace_pod_security_policy(
         name: &str,
-        body: &crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy,
+        body: &crate::api::extensions::v1beta1::PodSecurityPolicy,
         optional: ReplacePodSecurityPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePodSecurityPolicyResponse>), crate::RequestError> {
         let ReplacePodSecurityPolicyOptional {
@@ -601,8 +601,8 @@ pub struct ReplacePodSecurityPolicyOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplacePodSecurityPolicyResponse {
-    Ok(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
-    Created(crate::v1_11::api::extensions::v1beta1::PodSecurityPolicy),
+    Ok(crate::api::extensions::v1beta1::PodSecurityPolicy),
+    Created(crate::api::extensions::v1beta1::PodSecurityPolicy),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -660,7 +660,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_pod_security_policy(
-        optional: crate::v1_11::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -680,7 +680,7 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<PodSecurityPolicy>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<PodSecurityPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -737,7 +737,7 @@ impl crate::Resource for PodSecurityPolicy {
 }
 
 impl crate::Metadata for PodSecurityPolicy {
-    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -791,8 +791,8 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_11::api::extensions::v1beta1::PodSecurityPolicySpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::extensions::v1beta1::PodSecurityPolicySpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

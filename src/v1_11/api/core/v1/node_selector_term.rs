@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSelectorTerm {
     /// A list of node selector requirements by node's labels.
-    pub match_expressions: Option<Vec<crate::v1_11::api::core::v1::NodeSelectorRequirement>>,
+    pub match_expressions: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
 
     /// A list of node selector requirements by node's fields.
-    pub match_fields: Option<Vec<crate::v1_11::api::core::v1::NodeSelectorRequirement>>,
+    pub match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
 }
 
 impl<'de> serde::Deserialize<'de> for NodeSelectorTerm {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for NodeSelectorTerm {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_match_expressions: Option<Vec<crate::v1_11::api::core::v1::NodeSelectorRequirement>> = None;
-                let mut value_match_fields: Option<Vec<crate::v1_11::api::core::v1::NodeSelectorRequirement>> = None;
+                let mut value_match_expressions: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>> = None;
+                let mut value_match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -7,16 +7,16 @@ pub struct JobStatus {
     pub active: Option<i32>,
 
     /// Represents time when the job was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    pub completion_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The latest available observations of an object's current state. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-    pub conditions: Option<Vec<crate::v1_16::api::batch::v1::JobCondition>>,
+    pub conditions: Option<Vec<crate::api::batch::v1::JobCondition>>,
 
     /// The number of pods which reached phase Failed.
     pub failed: Option<i32>,
 
     /// Represents time when the job was acknowledged by the job controller. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    pub start_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time>,
+    pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The number of pods which reached phase Succeeded.
     pub succeeded: Option<i32>,
@@ -74,10 +74,10 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_active: Option<i32> = None;
-                let mut value_completion_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_conditions: Option<Vec<crate::v1_16::api::batch::v1::JobCondition>> = None;
+                let mut value_completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_conditions: Option<Vec<crate::api::batch::v1::JobCondition>> = None;
                 let mut value_failed: Option<i32> = None;
-                let mut value_start_time: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_succeeded: Option<i32> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

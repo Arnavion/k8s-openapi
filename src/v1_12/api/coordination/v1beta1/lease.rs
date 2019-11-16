@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Lease {
     /// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_12::api::coordination::v1beta1::LeaseSpec>,
+    pub spec: Option<crate::api::coordination::v1beta1::LeaseSpec>,
 }
 
 // Begin coordination.k8s.io/v1beta1/Lease
@@ -33,7 +33,7 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn create_namespaced_lease(
         namespace: &str,
-        body: &crate::v1_12::api::coordination::v1beta1::Lease,
+        body: &crate::api::coordination::v1beta1::Lease,
         optional: CreateNamespacedLeaseOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLeaseResponse>), crate::RequestError> {
         let CreateNamespacedLeaseOptional {
@@ -82,9 +82,9 @@ pub struct CreateNamespacedLeaseOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedLeaseResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::Lease),
-    Created(crate::v1_12::api::coordination::v1beta1::Lease),
-    Accepted(crate::v1_12::api::coordination::v1beta1::Lease),
+    Ok(crate::api::coordination::v1beta1::Lease),
+    Created(crate::api::coordination::v1beta1::Lease),
+    Accepted(crate::api::coordination::v1beta1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -157,8 +157,8 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_lease(
         namespace: &str,
-        delete_optional: crate::v1_12::DeleteOptional<'_>,
-        list_optional: crate::v1_12::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -181,8 +181,8 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLeaseResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::coordination::v1beta1::LeaseList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::coordination::v1beta1::LeaseList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -253,7 +253,7 @@ impl Lease {
     pub fn delete_namespaced_lease(
         name: &str,
         namespace: &str,
-        optional: crate::v1_12::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -274,9 +274,9 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedLeaseResponse {
-    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_12::api::coordination::v1beta1::Lease),
-    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::coordination::v1beta1::Lease),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl Lease {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_lease_for_all_namespaces(
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLeaseForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -367,7 +367,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLeaseForAllNamespacesResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
+    Ok(crate::api::coordination::v1beta1::LeaseList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -422,7 +422,7 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn list_namespaced_lease(
         namespace: &str,
-        optional: crate::v1_12::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -444,7 +444,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLeaseResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
+    Ok(crate::api::coordination::v1beta1::LeaseList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -504,8 +504,8 @@ impl Lease {
     pub fn patch_namespaced_lease(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_12::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -518,9 +518,9 @@ impl Lease {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -533,7 +533,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedLeaseResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::Lease),
+    Ok(crate::api::coordination::v1beta1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -639,7 +639,7 @@ pub struct ReadNamespacedLeaseOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedLeaseResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::Lease),
+    Ok(crate::api::coordination::v1beta1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -699,7 +699,7 @@ impl Lease {
     pub fn replace_namespaced_lease(
         name: &str,
         namespace: &str,
-        body: &crate::v1_12::api::coordination::v1beta1::Lease,
+        body: &crate::api::coordination::v1beta1::Lease,
         optional: ReplaceNamespacedLeaseOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedLeaseResponse>), crate::RequestError> {
         let ReplaceNamespacedLeaseOptional {
@@ -743,8 +743,8 @@ pub struct ReplaceNamespacedLeaseOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLeaseResponse {
-    Ok(crate::v1_12::api::coordination::v1beta1::Lease),
-    Created(crate::v1_12::api::coordination::v1beta1::Lease),
+    Ok(crate::api::coordination::v1beta1::Lease),
+    Created(crate::api::coordination::v1beta1::Lease),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -802,7 +802,7 @@ impl Lease {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_lease_for_all_namespaces(
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLeaseForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -822,7 +822,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchLeaseForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -879,7 +879,7 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_lease(
         namespace: &str,
-        optional: crate::v1_12::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -901,7 +901,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -958,7 +958,7 @@ impl crate::Resource for Lease {
 }
 
 impl crate::Metadata for Lease {
-    type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1012,8 +1012,8 @@ impl<'de> serde::Deserialize<'de> for Lease {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_12::api::coordination::v1beta1::LeaseSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::coordination::v1beta1::LeaseSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

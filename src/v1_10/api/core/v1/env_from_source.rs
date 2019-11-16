@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvFromSource {
     /// The ConfigMap to select from
-    pub config_map_ref: Option<crate::v1_10::api::core::v1::ConfigMapEnvSource>,
+    pub config_map_ref: Option<crate::api::core::v1::ConfigMapEnvSource>,
 
     /// An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
     pub prefix: Option<String>,
 
     /// The Secret to select from
-    pub secret_ref: Option<crate::v1_10::api::core::v1::SecretEnvSource>,
+    pub secret_ref: Option<crate::api::core::v1::SecretEnvSource>,
 }
 
 impl<'de> serde::Deserialize<'de> for EnvFromSource {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for EnvFromSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_map_ref: Option<crate::v1_10::api::core::v1::ConfigMapEnvSource> = None;
+                let mut value_config_map_ref: Option<crate::api::core::v1::ConfigMapEnvSource> = None;
                 let mut value_prefix: Option<String> = None;
-                let mut value_secret_ref: Option<crate::v1_10::api::core::v1::SecretEnvSource> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::SecretEnvSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

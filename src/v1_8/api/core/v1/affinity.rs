@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Affinity {
     /// Describes node affinity scheduling rules for the pod.
-    pub node_affinity: Option<crate::v1_8::api::core::v1::NodeAffinity>,
+    pub node_affinity: Option<crate::api::core::v1::NodeAffinity>,
 
     /// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
-    pub pod_affinity: Option<crate::v1_8::api::core::v1::PodAffinity>,
+    pub pod_affinity: Option<crate::api::core::v1::PodAffinity>,
 
     /// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
-    pub pod_anti_affinity: Option<crate::v1_8::api::core::v1::PodAntiAffinity>,
+    pub pod_anti_affinity: Option<crate::api::core::v1::PodAntiAffinity>,
 }
 
 impl<'de> serde::Deserialize<'de> for Affinity {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for Affinity {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_node_affinity: Option<crate::v1_8::api::core::v1::NodeAffinity> = None;
-                let mut value_pod_affinity: Option<crate::v1_8::api::core::v1::PodAffinity> = None;
-                let mut value_pod_anti_affinity: Option<crate::v1_8::api::core::v1::PodAntiAffinity> = None;
+                let mut value_node_affinity: Option<crate::api::core::v1::NodeAffinity> = None;
+                let mut value_pod_affinity: Option<crate::api::core::v1::PodAffinity> = None;
+                let mut value_pod_anti_affinity: Option<crate::api::core::v1::PodAntiAffinity> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

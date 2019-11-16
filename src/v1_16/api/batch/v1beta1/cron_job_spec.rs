@@ -10,7 +10,7 @@ pub struct CronJobSpec {
     pub failed_jobs_history_limit: Option<i32>,
 
     /// Specifies the job that will be created when executing a CronJob.
-    pub job_template: crate::v1_16::api::batch::v1beta1::JobTemplateSpec,
+    pub job_template: crate::api::batch::v1beta1::JobTemplateSpec,
 
     /// The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
     pub schedule: String,
@@ -80,7 +80,7 @@ impl<'de> serde::Deserialize<'de> for CronJobSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_concurrency_policy: Option<String> = None;
                 let mut value_failed_jobs_history_limit: Option<i32> = None;
-                let mut value_job_template: Option<crate::v1_16::api::batch::v1beta1::JobTemplateSpec> = None;
+                let mut value_job_template: Option<crate::api::batch::v1beta1::JobTemplateSpec> = None;
                 let mut value_schedule: Option<String> = None;
                 let mut value_starting_deadline_seconds: Option<i64> = None;
                 let mut value_successful_jobs_history_limit: Option<i32> = None;

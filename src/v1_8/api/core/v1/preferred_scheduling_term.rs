@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PreferredSchedulingTerm {
     /// A node selector term, associated with the corresponding weight.
-    pub preference: crate::v1_8::api::core::v1::NodeSelectorTerm,
+    pub preference: crate::api::core::v1::NodeSelectorTerm,
 
     /// Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
     pub weight: i32,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for PreferredSchedulingTerm {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_preference: Option<crate::v1_8::api::core::v1::NodeSelectorTerm> = None;
+                let mut value_preference: Option<crate::api::core::v1::NodeSelectorTerm> = None;
                 let mut value_weight: Option<i32> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

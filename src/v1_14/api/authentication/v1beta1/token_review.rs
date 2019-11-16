@@ -3,13 +3,13 @@
 /// TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenReview {
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec holds information about the request being evaluated
-    pub spec: crate::v1_14::api::authentication::v1beta1::TokenReviewSpec,
+    pub spec: crate::api::authentication::v1beta1::TokenReviewSpec,
 
     /// Status is filled in by the server and indicates whether the request can be authenticated.
-    pub status: Option<crate::v1_14::api::authentication::v1beta1::TokenReviewStatus>,
+    pub status: Option<crate::api::authentication::v1beta1::TokenReviewStatus>,
 }
 
 // Begin authentication.k8s.io/v1beta1/TokenReview
@@ -30,7 +30,7 @@ impl TokenReview {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_token_review(
-        body: &crate::v1_14::api::authentication::v1beta1::TokenReview,
+        body: &crate::api::authentication::v1beta1::TokenReview,
         optional: CreateTokenReviewOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateTokenReviewResponse>), crate::RequestError> {
         let CreateTokenReviewOptional {
@@ -77,9 +77,9 @@ pub struct CreateTokenReviewOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateTokenReviewResponse {
-    Ok(crate::v1_14::api::authentication::v1beta1::TokenReview),
-    Created(crate::v1_14::api::authentication::v1beta1::TokenReview),
-    Accepted(crate::v1_14::api::authentication::v1beta1::TokenReview),
+    Ok(crate::api::authentication::v1beta1::TokenReview),
+    Created(crate::api::authentication::v1beta1::TokenReview),
+    Accepted(crate::api::authentication::v1beta1::TokenReview),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -150,7 +150,7 @@ impl crate::Resource for TokenReview {
 }
 
 impl crate::Metadata for TokenReview {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -206,9 +206,9 @@ impl<'de> serde::Deserialize<'de> for TokenReview {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_14::api::authentication::v1beta1::TokenReviewSpec> = None;
-                let mut value_status: Option<crate::v1_14::api::authentication::v1beta1::TokenReviewStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authentication::v1beta1::TokenReviewSpec> = None;
+                let mut value_status: Option<crate::api::authentication::v1beta1::TokenReviewStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

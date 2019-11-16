@@ -6,7 +6,7 @@ pub struct CertificateSigningRequestStatus {
     pub certificate: Option<crate::ByteString>,
 
     /// Conditions applied to the request, such as approval or denial.
-    pub conditions: Option<Vec<crate::v1_11::api::certificates::v1beta1::CertificateSigningRequestCondition>>,
+    pub conditions: Option<Vec<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>>,
 }
 
 impl<'de> serde::Deserialize<'de> for CertificateSigningRequestStatus {
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_certificate: Option<crate::ByteString> = None;
-                let mut value_conditions: Option<Vec<crate::v1_11::api::certificates::v1beta1::CertificateSigningRequestCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

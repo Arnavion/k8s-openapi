@@ -9,10 +9,10 @@ pub struct StorageClass {
     pub allow_volume_expansion: Option<bool>,
 
     /// Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
-    pub allowed_topologies: Option<Vec<crate::v1_14::api::core::v1::TopologySelectorTerm>>,
+    pub allowed_topologies: Option<Vec<crate::api::core::v1::TopologySelectorTerm>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
     pub mount_options: Option<Vec<String>>,
@@ -48,7 +48,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_storage_class(
-        body: &crate::v1_14::api::storage::v1beta1::StorageClass,
+        body: &crate::api::storage::v1beta1::StorageClass,
         optional: CreateStorageClassOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateStorageClassResponse>), crate::RequestError> {
         let CreateStorageClassOptional {
@@ -95,9 +95,9 @@ pub struct CreateStorageClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateStorageClassResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::StorageClass),
-    Created(crate::v1_14::api::storage::v1beta1::StorageClass),
-    Accepted(crate::v1_14::api::storage::v1beta1::StorageClass),
+    Ok(crate::api::storage::v1beta1::StorageClass),
+    Created(crate::api::storage::v1beta1::StorageClass),
+    Accepted(crate::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -165,8 +165,8 @@ impl StorageClass {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_storage_class(
-        delete_optional: crate::v1_14::DeleteOptional<'_>,
-        list_optional: crate::v1_14::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionStorageClassResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/storageclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -187,8 +187,8 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionStorageClassResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1beta1::StorageClassList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::StorageClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -254,7 +254,7 @@ impl StorageClass {
     #[cfg(feature = "api")]
     pub fn delete_storage_class(
         name: &str,
-        optional: crate::v1_14::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteStorageClassResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -274,9 +274,9 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteStorageClassResponse {
-    OkStatus(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_14::api::storage::v1beta1::StorageClass),
-    Accepted(crate::v1_14::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::StorageClass),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_storage_class(
-        optional: crate::v1_14::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStorageClassResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/storageclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -367,7 +367,7 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListStorageClassResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::StorageClassList),
+    Ok(crate::api::storage::v1beta1::StorageClassList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -422,8 +422,8 @@ impl StorageClass {
     #[cfg(feature = "api")]
     pub fn patch_storage_class(
         name: &str,
-        body: &crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_14::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchStorageClassResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -435,9 +435,9 @@ impl StorageClass {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_14::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -450,7 +450,7 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchStorageClassResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::StorageClass),
+    Ok(crate::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -550,7 +550,7 @@ pub struct ReadStorageClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadStorageClassResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::StorageClass),
+    Ok(crate::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -605,7 +605,7 @@ impl StorageClass {
     #[cfg(feature = "api")]
     pub fn replace_storage_class(
         name: &str,
-        body: &crate::v1_14::api::storage::v1beta1::StorageClass,
+        body: &crate::api::storage::v1beta1::StorageClass,
         optional: ReplaceStorageClassOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceStorageClassResponse>), crate::RequestError> {
         let ReplaceStorageClassOptional {
@@ -654,8 +654,8 @@ pub struct ReplaceStorageClassOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceStorageClassResponse {
-    Ok(crate::v1_14::api::storage::v1beta1::StorageClass),
-    Created(crate::v1_14::api::storage::v1beta1::StorageClass),
+    Ok(crate::api::storage::v1beta1::StorageClass),
+    Created(crate::api::storage::v1beta1::StorageClass),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -713,7 +713,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_storage_class(
-        optional: crate::v1_14::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/storageclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -733,7 +733,7 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchStorageClassResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<StorageClass>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<StorageClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -790,7 +790,7 @@ impl crate::Resource for StorageClass {
 }
 
 impl crate::Metadata for StorageClass {
-    type Ty = crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -857,8 +857,8 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_allow_volume_expansion: Option<bool> = None;
-                let mut value_allowed_topologies: Option<Vec<crate::v1_14::api::core::v1::TopologySelectorTerm>> = None;
-                let mut value_metadata: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_allowed_topologies: Option<Vec<crate::api::core::v1::TopologySelectorTerm>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_mount_options: Option<Vec<String>> = None;
                 let mut value_parameters: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_provisioner: Option<String> = None;

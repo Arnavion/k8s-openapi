@@ -19,13 +19,13 @@ pub struct DeploymentSpec {
     pub revision_history_limit: Option<i32>,
 
     /// Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels.
-    pub selector: crate::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// The deployment strategy to use to replace existing pods with new ones.
-    pub strategy: Option<crate::v1_9::api::apps::v1beta2::DeploymentStrategy>,
+    pub strategy: Option<crate::api::apps::v1beta2::DeploymentStrategy>,
 
     /// Template describes the pods that will be created.
-    pub template: crate::v1_9::api::core::v1::PodTemplateSpec,
+    pub template: crate::api::core::v1::PodTemplateSpec,
 }
 
 impl<'de> serde::Deserialize<'de> for DeploymentSpec {
@@ -88,9 +88,9 @@ impl<'de> serde::Deserialize<'de> for DeploymentSpec {
                 let mut value_progress_deadline_seconds: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
-                let mut value_selector: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_strategy: Option<crate::v1_9::api::apps::v1beta2::DeploymentStrategy> = None;
-                let mut value_template: Option<crate::v1_9::api::core::v1::PodTemplateSpec> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_strategy: Option<crate::api::apps::v1beta2::DeploymentStrategy> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -7,7 +7,7 @@ pub struct ManagedFieldsEntry {
     pub api_version: Option<String>,
 
     /// Fields identifies a set of fields.
-    pub fields: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Fields>,
+    pub fields: Option<crate::apimachinery::pkg::apis::meta::v1::Fields>,
 
     /// Manager is an identifier of the workflow managing these fields.
     pub manager: Option<String>,
@@ -16,7 +16,7 @@ pub struct ManagedFieldsEntry {
     pub operation: Option<String>,
 
     /// Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
-    pub time: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Time>,
+    pub time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
 impl<'de> serde::Deserialize<'de> for ManagedFieldsEntry {
@@ -69,10 +69,10 @@ impl<'de> serde::Deserialize<'de> for ManagedFieldsEntry {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
-                let mut value_fields: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Fields> = None;
+                let mut value_fields: Option<crate::apimachinery::pkg::apis::meta::v1::Fields> = None;
                 let mut value_manager: Option<String> = None;
                 let mut value_operation: Option<String> = None;
-                let mut value_time: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

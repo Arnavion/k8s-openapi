@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodsMetricStatus {
     /// currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    pub current_average_value: crate::v1_15::apimachinery::pkg::api::resource::Quantity,
+    pub current_average_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// metricName is the name of the metric in question
     pub metric_name: String,
 
     /// selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
-    pub selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current_average_value: Option<crate::v1_15::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
-                let mut value_selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

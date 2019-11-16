@@ -10,7 +10,7 @@ pub struct PodDisruptionBudgetStatus {
     pub desired_healthy: i32,
 
     /// DisruptedPods contains information about pods whose eviction was processed by the API server eviction subresource handler but has not yet been observed by the PodDisruptionBudget controller. A pod will be in this map from the time when the API server processed the eviction request to the time when the pod is seen by PDB controller as having been marked for deletion (or after a timeout). The key in the map is the name of the pod and the value is the time when the API server processed the eviction request. If the deletion didn't occur and a pod is still there it will be removed from the list automatically by PodDisruptionBudget controller after some time. If everything goes smooth this map should be empty for the most of the time. Large number of entries in the map may indicate problems with pod deletions.
-    pub disrupted_pods: Option<std::collections::BTreeMap<String, crate::v1_12::apimachinery::pkg::apis::meta::v1::Time>>,
+    pub disrupted_pods: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>>,
 
     /// Number of pod disruptions that are currently allowed.
     pub disruptions_allowed: i32,
@@ -75,7 +75,7 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_current_healthy: Option<i32> = None;
                 let mut value_desired_healthy: Option<i32> = None;
-                let mut value_disrupted_pods: Option<std::collections::BTreeMap<String, crate::v1_12::apimachinery::pkg::apis::meta::v1::Time>> = None;
+                let mut value_disrupted_pods: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>> = None;
                 let mut value_disruptions_allowed: Option<i32> = None;
                 let mut value_expected_pods: Option<i32> = None;
                 let mut value_observed_generation: Option<i64> = None;

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Initializers {
     /// Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.
-    pub pending: Vec<crate::v1_14::apimachinery::pkg::apis::meta::v1::Initializer>,
+    pub pending: Vec<crate::apimachinery::pkg::apis::meta::v1::Initializer>,
 
     /// If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.
-    pub result: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Status>,
+    pub result: Option<crate::apimachinery::pkg::apis::meta::v1::Status>,
 }
 
 impl<'de> serde::Deserialize<'de> for Initializers {
@@ -53,8 +53,8 @@ impl<'de> serde::Deserialize<'de> for Initializers {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_pending: Option<Vec<crate::v1_14::apimachinery::pkg::apis::meta::v1::Initializer>> = None;
-                let mut value_result: Option<crate::v1_14::apimachinery::pkg::apis::meta::v1::Status> = None;
+                let mut value_pending: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Initializer>> = None;
+                let mut value_result: Option<crate::apimachinery::pkg::apis::meta::v1::Status> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -3,7 +3,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPort {
     /// If specified, the port on the given protocol.  This can either be a numerical or named port on a pod.  If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
-    pub port: Option<crate::v1_8::apimachinery::pkg::util::intstr::IntOrString>,
+    pub port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// Optional.  The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.
     pub protocol: Option<String>,
@@ -52,7 +52,7 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPort {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_port: Option<crate::v1_8::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
                 let mut value_protocol: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

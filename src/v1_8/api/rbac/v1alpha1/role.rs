@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Role {
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Rules holds all the PolicyRules for this Role
-    pub rules: Vec<crate::v1_8::api::rbac::v1alpha1::PolicyRule>,
+    pub rules: Vec<crate::api::rbac::v1alpha1::PolicyRule>,
 }
 
 // Begin rbac.authorization.k8s.io/v1alpha1/Role
@@ -33,7 +33,7 @@ impl Role {
     #[cfg(feature = "api")]
     pub fn create_namespaced_role(
         namespace: &str,
-        body: &crate::v1_8::api::rbac::v1alpha1::Role,
+        body: &crate::api::rbac::v1alpha1::Role,
         optional: CreateNamespacedRoleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedRoleResponse>), crate::RequestError> {
         let CreateNamespacedRoleOptional {
@@ -70,7 +70,7 @@ pub struct CreateNamespacedRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedRoleResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::Role),
+    Ok(crate::api::rbac::v1alpha1::Role),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -127,8 +127,8 @@ impl Role {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_role(
         namespace: &str,
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -151,8 +151,8 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedRoleResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::rbac::v1alpha1::RoleList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1alpha1::RoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -223,7 +223,7 @@ impl Role {
     pub fn delete_namespaced_role(
         name: &str,
         namespace: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -244,8 +244,8 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedRoleResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::rbac::v1alpha1::Role),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1alpha1::Role),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -313,7 +313,7 @@ impl Role {
     #[cfg(feature = "api")]
     pub fn list_namespaced_role(
         namespace: &str,
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -335,7 +335,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedRoleResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::RoleList),
+    Ok(crate::api::rbac::v1alpha1::RoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -385,7 +385,7 @@ impl Role {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_role_for_all_namespaces(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRoleForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/roles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -405,7 +405,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRoleForAllNamespacesResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::RoleList),
+    Ok(crate::api::rbac::v1alpha1::RoleList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -465,8 +465,8 @@ impl Role {
     pub fn patch_namespaced_role(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -479,9 +479,9 @@ impl Role {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -494,7 +494,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedRoleResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::Role),
+    Ok(crate::api::rbac::v1alpha1::Role),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -588,7 +588,7 @@ pub struct ReadNamespacedRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedRoleResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::Role),
+    Ok(crate::api::rbac::v1alpha1::Role),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -648,7 +648,7 @@ impl Role {
     pub fn replace_namespaced_role(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::rbac::v1alpha1::Role,
+        body: &crate::api::rbac::v1alpha1::Role,
         optional: ReplaceNamespacedRoleOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedRoleResponse>), crate::RequestError> {
         let ReplaceNamespacedRoleOptional {
@@ -686,7 +686,7 @@ pub struct ReplaceNamespacedRoleOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedRoleResponse {
-    Ok(crate::v1_8::api::rbac::v1alpha1::Role),
+    Ok(crate::api::rbac::v1alpha1::Role),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -741,7 +741,7 @@ impl Role {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_role(
         namespace: &str,
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -763,7 +763,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -815,7 +815,7 @@ impl Role {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_role_for_all_namespaces(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRoleForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/roles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -835,7 +835,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchRoleForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -892,7 +892,7 @@ impl crate::Resource for Role {
 }
 
 impl crate::Metadata for Role {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -946,8 +946,8 @@ impl<'de> serde::Deserialize<'de> for Role {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_rules: Option<Vec<crate::v1_8::api::rbac::v1alpha1::PolicyRule>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_rules: Option<Vec<crate::api::rbac::v1alpha1::PolicyRule>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

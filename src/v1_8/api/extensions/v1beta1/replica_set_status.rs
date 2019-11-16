@@ -7,7 +7,7 @@ pub struct ReplicaSetStatus {
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replica set's current state.
-    pub conditions: Option<Vec<crate::v1_8::api::extensions::v1beta1::ReplicaSetCondition>>,
+    pub conditions: Option<Vec<crate::api::extensions::v1beta1::ReplicaSetCondition>>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replicaset.
     pub fully_labeled_replicas: Option<i32>,
@@ -74,7 +74,7 @@ impl<'de> serde::Deserialize<'de> for ReplicaSetStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_available_replicas: Option<i32> = None;
-                let mut value_conditions: Option<Vec<crate::v1_8::api::extensions::v1beta1::ReplicaSetCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::extensions::v1beta1::ReplicaSetCondition>> = None;
                 let mut value_fully_labeled_replicas: Option<i32> = None;
                 let mut value_observed_generation: Option<i64> = None;
                 let mut value_ready_replicas: Option<i32> = None;

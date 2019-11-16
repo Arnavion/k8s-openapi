@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CronJob {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of a cron job, including the schedule. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_8::api::batch::v1beta1::CronJobSpec>,
+    pub spec: Option<crate::api::batch::v1beta1::CronJobSpec>,
 
     /// Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_8::api::batch::v1beta1::CronJobStatus>,
+    pub status: Option<crate::api::batch::v1beta1::CronJobStatus>,
 }
 
 // Begin batch/v1beta1/CronJob
@@ -36,7 +36,7 @@ impl CronJob {
     #[cfg(feature = "api")]
     pub fn create_namespaced_cron_job(
         namespace: &str,
-        body: &crate::v1_8::api::batch::v1beta1::CronJob,
+        body: &crate::api::batch::v1beta1::CronJob,
         optional: CreateNamespacedCronJobOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedCronJobResponse>), crate::RequestError> {
         let CreateNamespacedCronJobOptional {
@@ -73,7 +73,7 @@ pub struct CreateNamespacedCronJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedCronJobResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -130,8 +130,8 @@ impl CronJob {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_cron_job(
         namespace: &str,
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -154,8 +154,8 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedCronJobResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::batch::v1beta1::CronJobList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::batch::v1beta1::CronJobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -226,7 +226,7 @@ impl CronJob {
     pub fn delete_namespaced_cron_job(
         name: &str,
         namespace: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -247,8 +247,8 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedCronJobResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::batch::v1beta1::CronJob),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -311,7 +311,7 @@ impl CronJob {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_cron_job_for_all_namespaces(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCronJobForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/batch/v1beta1/cronjobs?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -331,7 +331,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCronJobForAllNamespacesResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJobList),
+    Ok(crate::api::batch::v1beta1::CronJobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -386,7 +386,7 @@ impl CronJob {
     #[cfg(feature = "api")]
     pub fn list_namespaced_cron_job(
         namespace: &str,
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -408,7 +408,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedCronJobResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJobList),
+    Ok(crate::api::batch::v1beta1::CronJobList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -468,8 +468,8 @@ impl CronJob {
     pub fn patch_namespaced_cron_job(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -482,9 +482,9 @@ impl CronJob {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -497,7 +497,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -557,8 +557,8 @@ impl CronJob {
     pub fn patch_namespaced_cron_job_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedCronJobStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -571,9 +571,9 @@ impl CronJob {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -586,7 +586,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobStatusResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -692,7 +692,7 @@ pub struct ReadNamespacedCronJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -786,7 +786,7 @@ pub struct ReadNamespacedCronJobStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobStatusResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -846,7 +846,7 @@ impl CronJob {
     pub fn replace_namespaced_cron_job(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::batch::v1beta1::CronJob,
+        body: &crate::api::batch::v1beta1::CronJob,
         optional: ReplaceNamespacedCronJobOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedCronJobResponse>), crate::RequestError> {
         let ReplaceNamespacedCronJobOptional {
@@ -884,7 +884,7 @@ pub struct ReplaceNamespacedCronJobOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -944,7 +944,7 @@ impl CronJob {
     pub fn replace_namespaced_cron_job_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_8::api::batch::v1beta1::CronJob,
+        body: &crate::api::batch::v1beta1::CronJob,
         optional: ReplaceNamespacedCronJobStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedCronJobStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedCronJobStatusOptional {
@@ -982,7 +982,7 @@ pub struct ReplaceNamespacedCronJobStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobStatusResponse {
-    Ok(crate::v1_8::api::batch::v1beta1::CronJob),
+    Ok(crate::api::batch::v1beta1::CronJob),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1032,7 +1032,7 @@ impl CronJob {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_cron_job_for_all_namespaces(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCronJobForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/batch/v1beta1/cronjobs?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1052,7 +1052,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCronJobForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1109,7 +1109,7 @@ impl CronJob {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_cron_job(
         namespace: &str,
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v1beta1/namespaces/{namespace}/cronjobs?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1131,7 +1131,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedCronJobResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1188,7 +1188,7 @@ impl crate::Resource for CronJob {
 }
 
 impl crate::Metadata for CronJob {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1244,9 +1244,9 @@ impl<'de> serde::Deserialize<'de> for CronJob {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_8::api::batch::v1beta1::CronJobSpec> = None;
-                let mut value_status: Option<crate::v1_8::api::batch::v1beta1::CronJobStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::batch::v1beta1::CronJobSpec> = None;
+                let mut value_status: Option<crate::api::batch::v1beta1::CronJobStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

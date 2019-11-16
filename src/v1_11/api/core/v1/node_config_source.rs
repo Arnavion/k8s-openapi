@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeConfigSource {
     /// ConfigMap is a reference to a Node's ConfigMap
-    pub config_map: Option<crate::v1_11::api::core::v1::ConfigMapNodeConfigSource>,
+    pub config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource>,
 }
 
 impl<'de> serde::Deserialize<'de> for NodeConfigSource {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for NodeConfigSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_config_map: Option<crate::v1_11::api::core::v1::ConfigMapNodeConfigSource> = None;
+                let mut value_config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

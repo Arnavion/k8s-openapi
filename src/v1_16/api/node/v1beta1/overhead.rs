@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Overhead {
     /// PodFixed represents the fixed resource overhead associated with running a pod.
-    pub pod_fixed: Option<std::collections::BTreeMap<String, crate::v1_16::apimachinery::pkg::api::resource::Quantity>>,
+    pub pod_fixed: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
 impl<'de> serde::Deserialize<'de> for Overhead {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for Overhead {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_pod_fixed: Option<std::collections::BTreeMap<String, crate::v1_16::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_pod_fixed: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

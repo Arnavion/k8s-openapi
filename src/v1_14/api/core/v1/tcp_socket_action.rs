@@ -7,7 +7,7 @@ pub struct TCPSocketAction {
     pub host: Option<String>,
 
     /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    pub port: crate::v1_14::apimachinery::pkg::util::intstr::IntOrString,
+    pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
 }
 
 impl<'de> serde::Deserialize<'de> for TCPSocketAction {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for TCPSocketAction {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_host: Option<String> = None;
-                let mut value_port: Option<crate::v1_14::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

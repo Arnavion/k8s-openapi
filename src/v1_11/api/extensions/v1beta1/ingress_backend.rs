@@ -7,7 +7,7 @@ pub struct IngressBackend {
     pub service_name: String,
 
     /// Specifies the port of the referenced service.
-    pub service_port: crate::v1_11::apimachinery::pkg::util::intstr::IntOrString,
+    pub service_port: crate::apimachinery::pkg::util::intstr::IntOrString,
 }
 
 impl<'de> serde::Deserialize<'de> for IngressBackend {
@@ -54,7 +54,7 @@ impl<'de> serde::Deserialize<'de> for IngressBackend {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_service_name: Option<String> = None;
-                let mut value_service_port: Option<crate::v1_11::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_service_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

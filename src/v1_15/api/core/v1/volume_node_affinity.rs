@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeNodeAffinity {
     /// Required specifies hard node constraints that must be met.
-    pub required: Option<crate::v1_15::api::core::v1::NodeSelector>,
+    pub required: Option<crate::api::core::v1::NodeSelector>,
 }
 
 impl<'de> serde::Deserialize<'de> for VolumeNodeAffinity {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for VolumeNodeAffinity {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_required: Option<crate::v1_15::api::core::v1::NodeSelector> = None;
+                let mut value_required: Option<crate::api::core::v1::NodeSelector> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

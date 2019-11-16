@@ -13,19 +13,19 @@ pub struct StatefulSetSpec {
     pub revision_history_limit: Option<i32>,
 
     /// selector is a label query over pods that should match the replica count. It must match the pod template's labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.
     pub service_name: String,
 
     /// template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.
-    pub template: crate::v1_16::api::core::v1::PodTemplateSpec,
+    pub template: crate::api::core::v1::PodTemplateSpec,
 
     /// updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
-    pub update_strategy: Option<crate::v1_16::api::apps::v1::StatefulSetUpdateStrategy>,
+    pub update_strategy: Option<crate::api::apps::v1::StatefulSetUpdateStrategy>,
 
     /// volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
-    pub volume_claim_templates: Option<Vec<crate::v1_16::api::core::v1::PersistentVolumeClaim>>,
+    pub volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>,
 }
 
 impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
@@ -86,11 +86,11 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
                 let mut value_pod_management_policy: Option<String> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
-                let mut value_selector: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_service_name: Option<String> = None;
-                let mut value_template: Option<crate::v1_16::api::core::v1::PodTemplateSpec> = None;
-                let mut value_update_strategy: Option<crate::v1_16::api::apps::v1::StatefulSetUpdateStrategy> = None;
-                let mut value_volume_claim_templates: Option<Vec<crate::v1_16::api::core::v1::PersistentVolumeClaim>> = None;
+                let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
+                let mut value_update_strategy: Option<crate::api::apps::v1::StatefulSetUpdateStrategy> = None;
+                let mut value_volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

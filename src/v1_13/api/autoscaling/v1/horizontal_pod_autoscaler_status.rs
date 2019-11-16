@@ -13,7 +13,7 @@ pub struct HorizontalPodAutoscalerStatus {
     pub desired_replicas: i32,
 
     /// last time the HorizontalPodAutoscaler scaled the number of pods; used by the autoscaler to control how often the number of pods is changed.
-    pub last_scale_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_scale_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// most recent generation observed by this autoscaler.
     pub observed_generation: Option<i64>,
@@ -71,7 +71,7 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
                 let mut value_current_cpu_utilization_percentage: Option<i32> = None;
                 let mut value_current_replicas: Option<i32> = None;
                 let mut value_desired_replicas: Option<i32> = None;
-                let mut value_last_scale_time: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_scale_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_observed_generation: Option<i64> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -7,13 +7,13 @@ pub struct ServiceAccount {
     pub automount_service_account_token: Option<bool>,
 
     /// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<crate::v1_9::api::core::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
-    pub secrets: Option<Vec<crate::v1_9::api::core::v1::ObjectReference>>,
+    pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
 }
 
 // Begin /v1/ServiceAccount
@@ -39,7 +39,7 @@ impl ServiceAccount {
     #[cfg(feature = "api")]
     pub fn create_namespaced_service_account(
         namespace: &str,
-        body: &crate::v1_9::api::core::v1::ServiceAccount,
+        body: &crate::api::core::v1::ServiceAccount,
         optional: CreateNamespacedServiceAccountOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceAccountResponse>), crate::RequestError> {
         let CreateNamespacedServiceAccountOptional {
@@ -76,9 +76,9 @@ pub struct CreateNamespacedServiceAccountOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccount),
-    Created(crate::v1_9::api::core::v1::ServiceAccount),
-    Accepted(crate::v1_9::api::core::v1::ServiceAccount),
+    Ok(crate::api::core::v1::ServiceAccount),
+    Created(crate::api::core::v1::ServiceAccount),
+    Accepted(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -151,8 +151,8 @@ impl ServiceAccount {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_service_account(
         namespace: &str,
-        delete_optional: crate::v1_9::DeleteOptional<'_>,
-        list_optional: crate::v1_9::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -175,8 +175,8 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedServiceAccountResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::api::core::v1::ServiceAccountList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ServiceAccountList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -247,7 +247,7 @@ impl ServiceAccount {
     pub fn delete_namespaced_service_account(
         name: &str,
         namespace: &str,
-        optional: crate::v1_9::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -268,8 +268,8 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceAccountResponse {
-    OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_9::api::core::v1::ServiceAccount),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -337,7 +337,7 @@ impl ServiceAccount {
     #[cfg(feature = "api")]
     pub fn list_namespaced_service_account(
         namespace: &str,
-        optional: crate::v1_9::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -359,7 +359,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccountList),
+    Ok(crate::api::core::v1::ServiceAccountList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -409,7 +409,7 @@ impl ServiceAccount {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_service_account_for_all_namespaces(
-        optional: crate::v1_9::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceAccountForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/serviceaccounts?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -429,7 +429,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceAccountForAllNamespacesResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccountList),
+    Ok(crate::api::core::v1::ServiceAccountList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -489,8 +489,8 @@ impl ServiceAccount {
     pub fn patch_namespaced_service_account(
         name: &str,
         namespace: &str,
-        body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_9::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -503,9 +503,9 @@ impl ServiceAccount {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -518,7 +518,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccount),
+    Ok(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -624,7 +624,7 @@ pub struct ReadNamespacedServiceAccountOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccount),
+    Ok(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -684,7 +684,7 @@ impl ServiceAccount {
     pub fn replace_namespaced_service_account(
         name: &str,
         namespace: &str,
-        body: &crate::v1_9::api::core::v1::ServiceAccount,
+        body: &crate::api::core::v1::ServiceAccount,
         optional: ReplaceNamespacedServiceAccountOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceAccountResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceAccountOptional {
@@ -722,8 +722,8 @@ pub struct ReplaceNamespacedServiceAccountOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::api::core::v1::ServiceAccount),
-    Created(crate::v1_9::api::core::v1::ServiceAccount),
+    Ok(crate::api::core::v1::ServiceAccount),
+    Created(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -786,7 +786,7 @@ impl ServiceAccount {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_service_account(
         namespace: &str,
-        optional: crate::v1_9::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -808,7 +808,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceAccountResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -860,7 +860,7 @@ impl ServiceAccount {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_service_account_for_all_namespaces(
-        optional: crate::v1_9::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceAccountForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/api/v1/serviceaccounts?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -880,7 +880,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchServiceAccountForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -937,7 +937,7 @@ impl crate::Resource for ServiceAccount {
 }
 
 impl crate::Metadata for ServiceAccount {
-    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -996,9 +996,9 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_automount_service_account_token: Option<bool> = None;
-                let mut value_image_pull_secrets: Option<Vec<crate::v1_9::api::core::v1::LocalObjectReference>> = None;
-                let mut value_metadata: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_secrets: Option<Vec<crate::v1_9::api::core::v1::ObjectReference>> = None;
+                let mut value_image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_secrets: Option<Vec<crate::api::core::v1::ObjectReference>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

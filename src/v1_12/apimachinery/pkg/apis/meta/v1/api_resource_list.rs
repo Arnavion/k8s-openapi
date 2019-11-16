@@ -7,7 +7,7 @@ pub struct APIResourceList {
     pub group_version: String,
 
     /// resources contains the name of the resources and if they are namespaced.
-    pub resources: Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>,
+    pub resources: Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>,
 }
 
 impl crate::Resource for APIResourceList {
@@ -76,7 +76,7 @@ impl<'de> serde::Deserialize<'de> for APIResourceList {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_group_version: Option<String> = None;
-                let mut value_resources: Option<Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>> = None;
+                let mut value_resources: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

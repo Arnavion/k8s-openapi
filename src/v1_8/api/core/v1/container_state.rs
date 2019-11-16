@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerState {
     /// Details about a running container
-    pub running: Option<crate::v1_8::api::core::v1::ContainerStateRunning>,
+    pub running: Option<crate::api::core::v1::ContainerStateRunning>,
 
     /// Details about a terminated container
-    pub terminated: Option<crate::v1_8::api::core::v1::ContainerStateTerminated>,
+    pub terminated: Option<crate::api::core::v1::ContainerStateTerminated>,
 
     /// Details about a waiting container
-    pub waiting: Option<crate::v1_8::api::core::v1::ContainerStateWaiting>,
+    pub waiting: Option<crate::api::core::v1::ContainerStateWaiting>,
 }
 
 impl<'de> serde::Deserialize<'de> for ContainerState {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for ContainerState {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_running: Option<crate::v1_8::api::core::v1::ContainerStateRunning> = None;
-                let mut value_terminated: Option<crate::v1_8::api::core::v1::ContainerStateTerminated> = None;
-                let mut value_waiting: Option<crate::v1_8::api::core::v1::ContainerStateWaiting> = None;
+                let mut value_running: Option<crate::api::core::v1::ContainerStateRunning> = None;
+                let mut value_terminated: Option<crate::api::core::v1::ContainerStateTerminated> = None;
+                let mut value_waiting: Option<crate::api::core::v1::ContainerStateWaiting> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

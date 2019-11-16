@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetUpdateStrategy {
     /// RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
-    pub rolling_update: Option<crate::v1_8::api::apps::v1beta1::RollingUpdateStatefulSetStrategy>,
+    pub rolling_update: Option<crate::api::apps::v1beta1::RollingUpdateStatefulSetStrategy>,
 
     /// Type indicates the type of the StatefulSetUpdateStrategy.
     pub type_: Option<String>,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for StatefulSetUpdateStrategy {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_rolling_update: Option<crate::v1_8::api::apps::v1beta1::RollingUpdateStatefulSetStrategy> = None;
+                let mut value_rolling_update: Option<crate::api::apps::v1beta1::RollingUpdateStatefulSetStrategy> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

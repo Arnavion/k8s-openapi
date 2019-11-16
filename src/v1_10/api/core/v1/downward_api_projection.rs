@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
-    pub items: Option<Vec<crate::v1_10::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
 impl<'de> serde::Deserialize<'de> for DownwardAPIProjection {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for DownwardAPIProjection {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::v1_10::api::core::v1::DownwardAPIVolumeFile>> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

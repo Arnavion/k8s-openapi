@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachmentStatus {
     /// The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    pub attach_error: Option<crate::v1_9::api::storage::v1alpha1::VolumeError>,
+    pub attach_error: Option<crate::api::storage::v1alpha1::VolumeError>,
 
     /// Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     pub attached: bool,
@@ -13,7 +13,7 @@ pub struct VolumeAttachmentStatus {
     pub attachment_metadata: Option<std::collections::BTreeMap<String, String>>,
 
     /// The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
-    pub detach_error: Option<crate::v1_9::api::storage::v1alpha1::VolumeError>,
+    pub detach_error: Option<crate::api::storage::v1alpha1::VolumeError>,
 }
 
 impl<'de> serde::Deserialize<'de> for VolumeAttachmentStatus {
@@ -63,10 +63,10 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachmentStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_attach_error: Option<crate::v1_9::api::storage::v1alpha1::VolumeError> = None;
+                let mut value_attach_error: Option<crate::api::storage::v1alpha1::VolumeError> = None;
                 let mut value_attached: Option<bool> = None;
                 let mut value_attachment_metadata: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_detach_error: Option<crate::v1_9::api::storage::v1alpha1::VolumeError> = None;
+                let mut value_detach_error: Option<crate::api::storage::v1alpha1::VolumeError> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -9,7 +9,7 @@ pub struct SecretVolumeSource {
     pub default_mode: Option<i32>,
 
     /// If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-    pub items: Option<Vec<crate::v1_16::api::core::v1::KeyToPath>>,
+    pub items: Option<Vec<crate::api::core::v1::KeyToPath>>,
 
     /// Specify whether the Secret or its keys must be defined
     pub optional: Option<bool>,
@@ -66,7 +66,7 @@ impl<'de> serde::Deserialize<'de> for SecretVolumeSource {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_default_mode: Option<i32> = None;
-                let mut value_items: Option<Vec<crate::v1_16::api::core::v1::KeyToPath>> = None;
+                let mut value_items: Option<Vec<crate::api::core::v1::KeyToPath>> = None;
                 let mut value_optional: Option<bool> = None;
                 let mut value_secret_name: Option<String> = None;
 

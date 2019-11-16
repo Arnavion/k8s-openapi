@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRoleBinding {
     /// Standard object's metadata.
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
-    pub role_ref: crate::v1_13::api::rbac::v1::RoleRef,
+    pub role_ref: crate::api::rbac::v1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
-    pub subjects: Option<Vec<crate::v1_13::api::rbac::v1::Subject>>,
+    pub subjects: Option<Vec<crate::api::rbac::v1::Subject>>,
 }
 
 // Begin rbac.authorization.k8s.io/v1/ClusterRoleBinding
@@ -31,7 +31,7 @@ impl ClusterRoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_cluster_role_binding(
-        body: &crate::v1_13::api::rbac::v1::ClusterRoleBinding,
+        body: &crate::api::rbac::v1::ClusterRoleBinding,
         optional: CreateClusterRoleBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateClusterRoleBindingResponse>), crate::RequestError> {
         let CreateClusterRoleBindingOptional {
@@ -78,9 +78,9 @@ pub struct CreateClusterRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateClusterRoleBindingResponse {
-    Ok(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
-    Created(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
-    Accepted(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::api::rbac::v1::ClusterRoleBinding),
+    Created(crate::api::rbac::v1::ClusterRoleBinding),
+    Accepted(crate::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -149,7 +149,7 @@ impl ClusterRoleBinding {
     #[cfg(feature = "api")]
     pub fn delete_cluster_role_binding(
         name: &str,
-        optional: crate::v1_13::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteClusterRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -169,9 +169,9 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteClusterRoleBindingResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
-    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1::ClusterRoleBinding),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,8 +244,8 @@ impl ClusterRoleBinding {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_cluster_role_binding(
-        delete_optional: crate::v1_13::DeleteOptional<'_>,
-        list_optional: crate::v1_13::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionClusterRoleBindingResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -266,8 +266,8 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleBindingResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::rbac::v1::ClusterRoleBindingList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::rbac::v1::ClusterRoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -330,7 +330,7 @@ impl ClusterRoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_cluster_role_binding(
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleBindingResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -350,7 +350,7 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleBindingResponse {
-    Ok(crate::v1_13::api::rbac::v1::ClusterRoleBindingList),
+    Ok(crate::api::rbac::v1::ClusterRoleBindingList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -405,8 +405,8 @@ impl ClusterRoleBinding {
     #[cfg(feature = "api")]
     pub fn patch_cluster_role_binding(
         name: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchClusterRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -418,9 +418,9 @@ impl ClusterRoleBinding {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -433,7 +433,7 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchClusterRoleBindingResponse {
-    Ok(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -521,7 +521,7 @@ pub struct ReadClusterRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadClusterRoleBindingResponse {
-    Ok(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -576,7 +576,7 @@ impl ClusterRoleBinding {
     #[cfg(feature = "api")]
     pub fn replace_cluster_role_binding(
         name: &str,
-        body: &crate::v1_13::api::rbac::v1::ClusterRoleBinding,
+        body: &crate::api::rbac::v1::ClusterRoleBinding,
         optional: ReplaceClusterRoleBindingOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceClusterRoleBindingResponse>), crate::RequestError> {
         let ReplaceClusterRoleBindingOptional {
@@ -619,8 +619,8 @@ pub struct ReplaceClusterRoleBindingOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceClusterRoleBindingResponse {
-    Ok(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
-    Created(crate::v1_13::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::api::rbac::v1::ClusterRoleBinding),
+    Created(crate::api::rbac::v1::ClusterRoleBinding),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -678,7 +678,7 @@ impl ClusterRoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_cluster_role_binding(
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleBindingResponse>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -698,7 +698,7 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchClusterRoleBindingResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRoleBinding>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -755,7 +755,7 @@ impl crate::Resource for ClusterRoleBinding {
 }
 
 impl crate::Metadata for ClusterRoleBinding {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -811,9 +811,9 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_role_ref: Option<crate::v1_13::api::rbac::v1::RoleRef> = None;
-                let mut value_subjects: Option<Vec<crate::v1_13::api::rbac::v1::Subject>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_role_ref: Option<crate::api::rbac::v1::RoleRef> = None;
+                let mut value_subjects: Option<Vec<crate::api::rbac::v1::Subject>> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

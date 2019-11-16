@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMetricStatus {
     /// averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    pub average_value: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity>,
+    pub average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// currentValue is the current value of the metric (as a quantity).
-    pub current_value: crate::v1_13::apimachinery::pkg::api::resource::Quantity,
+    pub current_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// metricName is the name of the metric in question.
     pub metric_name: String,
 
     /// selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the ObjectMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
-    pub selector: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// target is the described Kubernetes object.
-    pub target: crate::v1_13::api::autoscaling::v2beta1::CrossVersionObjectReference,
+    pub target: crate::api::autoscaling::v2beta1::CrossVersionObjectReference,
 }
 
 impl<'de> serde::Deserialize<'de> for ObjectMetricStatus {
@@ -68,11 +68,11 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_average_value: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity> = None;
-                let mut value_current_value: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
-                let mut value_selector: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_target: Option<crate::v1_13::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_target: Option<crate::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

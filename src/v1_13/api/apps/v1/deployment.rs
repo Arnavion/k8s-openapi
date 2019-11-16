@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Deployment {
     /// Standard object metadata.
-    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of the Deployment.
-    pub spec: Option<crate::v1_13::api::apps::v1::DeploymentSpec>,
+    pub spec: Option<crate::api::apps::v1::DeploymentSpec>,
 
     /// Most recently observed status of the Deployment.
-    pub status: Option<crate::v1_13::api::apps::v1::DeploymentStatus>,
+    pub status: Option<crate::api::apps::v1::DeploymentStatus>,
 }
 
 // Begin apps/v1/Deployment
@@ -36,7 +36,7 @@ impl Deployment {
     #[cfg(feature = "api")]
     pub fn create_namespaced_deployment(
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1::Deployment,
+        body: &crate::api::apps::v1::Deployment,
         optional: CreateNamespacedDeploymentOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDeploymentResponse>), crate::RequestError> {
         let CreateNamespacedDeploymentOptional {
@@ -85,9 +85,9 @@ pub struct CreateNamespacedDeploymentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
-    Created(crate::v1_13::api::apps::v1::Deployment),
-    Accepted(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
+    Created(crate::api::apps::v1::Deployment),
+    Accepted(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -160,8 +160,8 @@ impl Deployment {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_deployment(
         namespace: &str,
-        delete_optional: crate::v1_13::DeleteOptional<'_>,
-        list_optional: crate::v1_13::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedDeploymentResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -184,8 +184,8 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDeploymentResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::apps::v1::DeploymentList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1::DeploymentList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -256,7 +256,7 @@ impl Deployment {
     pub fn delete_namespaced_deployment(
         name: &str,
         namespace: &str,
-        optional: crate::v1_13::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedDeploymentResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -277,9 +277,9 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedDeploymentResponse {
-    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_13::api::apps::v1::Deployment),
-    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::apps::v1::Deployment),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -350,7 +350,7 @@ impl Deployment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_deployment_for_all_namespaces(
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListDeploymentForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1/deployments?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -370,7 +370,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListDeploymentForAllNamespacesResponse {
-    Ok(crate::v1_13::api::apps::v1::DeploymentList),
+    Ok(crate::api::apps::v1::DeploymentList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -425,7 +425,7 @@ impl Deployment {
     #[cfg(feature = "api")]
     pub fn list_namespaced_deployment(
         namespace: &str,
-        optional: crate::v1_13::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedDeploymentResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -447,7 +447,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedDeploymentResponse {
-    Ok(crate::v1_13::api::apps::v1::DeploymentList),
+    Ok(crate::api::apps::v1::DeploymentList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -507,8 +507,8 @@ impl Deployment {
     pub fn patch_namespaced_deployment(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDeploymentResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -521,9 +521,9 @@ impl Deployment {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -536,7 +536,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -596,8 +596,8 @@ impl Deployment {
     pub fn patch_namespaced_deployment_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_13::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDeploymentStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -610,9 +610,9 @@ impl Deployment {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -625,7 +625,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentStatusResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -731,7 +731,7 @@ pub struct ReadNamespacedDeploymentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -825,7 +825,7 @@ pub struct ReadNamespacedDeploymentStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentStatusResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -885,7 +885,7 @@ impl Deployment {
     pub fn replace_namespaced_deployment(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1::Deployment,
+        body: &crate::api::apps::v1::Deployment,
         optional: ReplaceNamespacedDeploymentOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentResponse>), crate::RequestError> {
         let ReplaceNamespacedDeploymentOptional {
@@ -929,8 +929,8 @@ pub struct ReplaceNamespacedDeploymentOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
-    Created(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
+    Created(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -998,7 +998,7 @@ impl Deployment {
     pub fn replace_namespaced_deployment_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_13::api::apps::v1::Deployment,
+        body: &crate::api::apps::v1::Deployment,
         optional: ReplaceNamespacedDeploymentStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedDeploymentStatusOptional {
@@ -1042,8 +1042,8 @@ pub struct ReplaceNamespacedDeploymentStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentStatusResponse {
-    Ok(crate::v1_13::api::apps::v1::Deployment),
-    Created(crate::v1_13::api::apps::v1::Deployment),
+    Ok(crate::api::apps::v1::Deployment),
+    Created(crate::api::apps::v1::Deployment),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1101,7 +1101,7 @@ impl Deployment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_deployment_for_all_namespaces(
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchDeploymentForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/apps/v1/deployments?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1121,7 +1121,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchDeploymentForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1178,7 +1178,7 @@ impl Deployment {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_deployment(
         namespace: &str,
-        optional: crate::v1_13::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDeploymentResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1200,7 +1200,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedDeploymentResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1257,7 +1257,7 @@ impl crate::Resource for Deployment {
 }
 
 impl crate::Metadata for Deployment {
-    type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1313,9 +1313,9 @@ impl<'de> serde::Deserialize<'de> for Deployment {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_13::api::apps::v1::DeploymentSpec> = None;
-                let mut value_status: Option<crate::v1_13::api::apps::v1::DeploymentStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::apps::v1::DeploymentSpec> = None;
+                let mut value_status: Option<crate::api::apps::v1::DeploymentStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

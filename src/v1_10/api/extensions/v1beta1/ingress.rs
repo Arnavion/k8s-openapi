@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Ingress {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec is the desired state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<crate::v1_10::api::extensions::v1beta1::IngressSpec>,
+    pub spec: Option<crate::api::extensions::v1beta1::IngressSpec>,
 
     /// Status is the current state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<crate::v1_10::api::extensions::v1beta1::IngressStatus>,
+    pub status: Option<crate::api::extensions::v1beta1::IngressStatus>,
 }
 
 // Begin extensions/v1beta1/Ingress
@@ -36,7 +36,7 @@ impl Ingress {
     #[cfg(feature = "api")]
     pub fn create_namespaced_ingress(
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::Ingress,
+        body: &crate::api::extensions::v1beta1::Ingress,
         optional: CreateNamespacedIngressOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedIngressResponse>), crate::RequestError> {
         let CreateNamespacedIngressOptional {
@@ -73,9 +73,9 @@ pub struct CreateNamespacedIngressOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedIngressResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
-    Created(crate::v1_10::api::extensions::v1beta1::Ingress),
-    Accepted(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
+    Created(crate::api::extensions::v1beta1::Ingress),
+    Accepted(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -148,8 +148,8 @@ impl Ingress {
     #[cfg(feature = "api")]
     pub fn delete_collection_namespaced_ingress(
         namespace: &str,
-        delete_optional: crate::v1_10::DeleteOptional<'_>,
-        list_optional: crate::v1_10::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedIngressResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -172,8 +172,8 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedIngressResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::extensions::v1beta1::IngressList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::IngressList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -244,7 +244,7 @@ impl Ingress {
     pub fn delete_namespaced_ingress(
         name: &str,
         namespace: &str,
-        optional: crate::v1_10::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedIngressResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -265,8 +265,8 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteNamespacedIngressResponse {
-    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_10::api::extensions::v1beta1::Ingress),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl Ingress {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_ingress_for_all_namespaces(
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListIngressForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/ingresses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -349,7 +349,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListIngressForAllNamespacesResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::IngressList),
+    Ok(crate::api::extensions::v1beta1::IngressList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -404,7 +404,7 @@ impl Ingress {
     #[cfg(feature = "api")]
     pub fn list_namespaced_ingress(
         namespace: &str,
-        optional: crate::v1_10::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedIngressResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -426,7 +426,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedIngressResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::IngressList),
+    Ok(crate::api::extensions::v1beta1::IngressList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -486,8 +486,8 @@ impl Ingress {
     pub fn patch_namespaced_ingress(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedIngressResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -500,9 +500,9 @@ impl Ingress {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -515,7 +515,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -575,8 +575,8 @@ impl Ingress {
     pub fn patch_namespaced_ingress_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_10::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedIngressStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -589,9 +589,9 @@ impl Ingress {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -604,7 +604,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ pub struct ReadNamespacedIngressOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -804,7 +804,7 @@ pub struct ReadNamespacedIngressStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -864,7 +864,7 @@ impl Ingress {
     pub fn replace_namespaced_ingress(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::Ingress,
+        body: &crate::api::extensions::v1beta1::Ingress,
         optional: ReplaceNamespacedIngressOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedIngressResponse>), crate::RequestError> {
         let ReplaceNamespacedIngressOptional {
@@ -902,8 +902,8 @@ pub struct ReplaceNamespacedIngressOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
-    Created(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
+    Created(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -971,7 +971,7 @@ impl Ingress {
     pub fn replace_namespaced_ingress_status(
         name: &str,
         namespace: &str,
-        body: &crate::v1_10::api::extensions::v1beta1::Ingress,
+        body: &crate::api::extensions::v1beta1::Ingress,
         optional: ReplaceNamespacedIngressStatusOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedIngressStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedIngressStatusOptional {
@@ -1009,8 +1009,8 @@ pub struct ReplaceNamespacedIngressStatusOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressStatusResponse {
-    Ok(crate::v1_10::api::extensions::v1beta1::Ingress),
-    Created(crate::v1_10::api::extensions::v1beta1::Ingress),
+    Ok(crate::api::extensions::v1beta1::Ingress),
+    Created(crate::api::extensions::v1beta1::Ingress),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1068,7 +1068,7 @@ impl Ingress {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_ingress_for_all_namespaces(
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchIngressForAllNamespacesResponse>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/ingresses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -1088,7 +1088,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchIngressForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1145,7 +1145,7 @@ impl Ingress {
     #[cfg(feature = "api")]
     pub fn watch_namespaced_ingress(
         namespace: &str,
-        optional: crate::v1_10::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedIngressResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1167,7 +1167,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchNamespacedIngressResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1224,7 +1224,7 @@ impl crate::Resource for Ingress {
 }
 
 impl crate::Metadata for Ingress {
-    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -1280,9 +1280,9 @@ impl<'de> serde::Deserialize<'de> for Ingress {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_10::api::extensions::v1beta1::IngressSpec> = None;
-                let mut value_status: Option<crate::v1_10::api::extensions::v1beta1::IngressStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::extensions::v1beta1::IngressSpec> = None;
+                let mut value_status: Option<crate::api::extensions::v1beta1::IngressStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

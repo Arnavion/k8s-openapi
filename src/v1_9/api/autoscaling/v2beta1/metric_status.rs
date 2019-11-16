@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct MetricStatus {
     /// object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
-    pub object: Option<crate::v1_9::api::autoscaling::v2beta1::ObjectMetricStatus>,
+    pub object: Option<crate::api::autoscaling::v2beta1::ObjectMetricStatus>,
 
     /// pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
-    pub pods: Option<crate::v1_9::api::autoscaling::v2beta1::PodsMetricStatus>,
+    pub pods: Option<crate::api::autoscaling::v2beta1::PodsMetricStatus>,
 
     /// resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
-    pub resource: Option<crate::v1_9::api::autoscaling::v2beta1::ResourceMetricStatus>,
+    pub resource: Option<crate::api::autoscaling::v2beta1::ResourceMetricStatus>,
 
     /// type is the type of metric source.  It will match one of the fields below.
     pub type_: String,
@@ -63,9 +63,9 @@ impl<'de> serde::Deserialize<'de> for MetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_object: Option<crate::v1_9::api::autoscaling::v2beta1::ObjectMetricStatus> = None;
-                let mut value_pods: Option<crate::v1_9::api::autoscaling::v2beta1::PodsMetricStatus> = None;
-                let mut value_resource: Option<crate::v1_9::api::autoscaling::v2beta1::ResourceMetricStatus> = None;
+                let mut value_object: Option<crate::api::autoscaling::v2beta1::ObjectMetricStatus> = None;
+                let mut value_pods: Option<crate::api::autoscaling::v2beta1::PodsMetricStatus> = None;
+                let mut value_resource: Option<crate::api::autoscaling::v2beta1::ResourceMetricStatus> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

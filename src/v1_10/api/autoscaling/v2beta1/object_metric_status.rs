@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMetricStatus {
     /// currentValue is the current value of the metric (as a quantity).
-    pub current_value: crate::v1_10::apimachinery::pkg::api::resource::Quantity,
+    pub current_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// metricName is the name of the metric in question.
     pub metric_name: String,
 
     /// target is the described Kubernetes object.
-    pub target: crate::v1_10::api::autoscaling::v2beta1::CrossVersionObjectReference,
+    pub target: crate::api::autoscaling::v2beta1::CrossVersionObjectReference,
 }
 
 impl<'de> serde::Deserialize<'de> for ObjectMetricStatus {
@@ -58,9 +58,9 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current_value: Option<crate::v1_10::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
-                let mut value_target: Option<crate::v1_10::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
+                let mut value_target: Option<crate::api::autoscaling::v2beta1::CrossVersionObjectReference> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -10,7 +10,7 @@ pub struct CinderPersistentVolumeSource {
     pub read_only: Option<bool>,
 
     /// Optional: points to a secret object containing parameters used to connect to OpenStack.
-    pub secret_ref: Option<crate::v1_15::api::core::v1::SecretReference>,
+    pub secret_ref: Option<crate::api::core::v1::SecretReference>,
 
     /// volume id used to identify the volume in cinder More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md
     pub volume_id: String,
@@ -65,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for CinderPersistentVolumeSource {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<crate::v1_15::api::core::v1::SecretReference> = None;
+                let mut value_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_volume_id: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -10,7 +10,7 @@ pub struct VolumeAttachmentSpec {
     pub node_name: String,
 
     /// Source represents the volume that should be attached.
-    pub source: crate::v1_12::api::storage::v1beta1::VolumeAttachmentSource,
+    pub source: crate::api::storage::v1beta1::VolumeAttachmentSource,
 }
 
 impl<'de> serde::Deserialize<'de> for VolumeAttachmentSpec {
@@ -60,7 +60,7 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachmentSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_attacher: Option<String> = None;
                 let mut value_node_name: Option<String> = None;
-                let mut value_source: Option<crate::v1_12::api::storage::v1beta1::VolumeAttachmentSource> = None;
+                let mut value_source: Option<crate::api::storage::v1beta1::VolumeAttachmentSource> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

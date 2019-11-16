@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSINodeDriver {
     /// allocatable represents the volume resources of a node that are available for scheduling.
-    pub allocatable: Option<crate::v1_16::api::storage::v1beta1::VolumeNodeResources>,
+    pub allocatable: Option<crate::api::storage::v1beta1::VolumeNodeResources>,
 
     /// This is the name of the CSI driver that this object refers to. This MUST be the same name returned by the CSI GetPluginName() call for that driver.
     pub name: String,
@@ -63,7 +63,7 @@ impl<'de> serde::Deserialize<'de> for CSINodeDriver {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_allocatable: Option<crate::v1_16::api::storage::v1beta1::VolumeNodeResources> = None;
+                let mut value_allocatable: Option<crate::api::storage::v1beta1::VolumeNodeResources> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_node_id: Option<String> = None;
                 let mut value_topology_keys: Option<Vec<String>> = None;

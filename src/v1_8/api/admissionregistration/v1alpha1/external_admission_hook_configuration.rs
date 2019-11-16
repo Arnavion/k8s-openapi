@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalAdmissionHookConfiguration {
     /// ExternalAdmissionHooks is a list of external admission webhooks and the affected resources and operations.
-    pub external_admission_hooks: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHook>>,
+    pub external_admission_hooks: Option<Vec<crate::api::admissionregistration::v1alpha1::ExternalAdmissionHook>>,
 
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
-    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin admissionregistration.k8s.io/v1alpha1/ExternalAdmissionHookConfiguration
@@ -28,7 +28,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_external_admission_hook_configuration(
-        body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
+        body: &crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         optional: CreateExternalAdmissionHookConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let CreateExternalAdmissionHookConfigurationOptional {
@@ -63,7 +63,7 @@ pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -115,8 +115,8 @@ impl ExternalAdmissionHookConfiguration {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_external_admission_hook_configuration(
-        delete_optional: crate::v1_8::DeleteOptional<'_>,
-        list_optional: crate::v1_8::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -137,8 +137,8 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -204,7 +204,7 @@ impl ExternalAdmissionHookConfiguration {
     #[cfg(feature = "api")]
     pub fn delete_external_admission_hook_configuration(
         name: &str,
-        optional: crate::v1_8::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -224,8 +224,8 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteExternalAdmissionHookConfigurationResponse {
-    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -288,7 +288,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_external_admission_hook_configuration(
-        optional: crate::v1_8::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -308,7 +308,7 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -363,8 +363,8 @@ impl ExternalAdmissionHookConfiguration {
     #[cfg(feature = "api")]
     pub fn patch_external_admission_hook_configuration(
         name: &str,
-        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_8::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -376,9 +376,9 @@ impl ExternalAdmissionHookConfiguration {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -391,7 +391,7 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -491,7 +491,7 @@ pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -546,7 +546,7 @@ impl ExternalAdmissionHookConfiguration {
     #[cfg(feature = "api")]
     pub fn replace_external_admission_hook_configuration(
         name: &str,
-        body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
+        body: &crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         optional: ReplaceExternalAdmissionHookConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let ReplaceExternalAdmissionHookConfigurationOptional {
@@ -583,7 +583,7 @@ pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -633,7 +633,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_external_admission_hook_configuration(
-        optional: crate::v1_8::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -653,7 +653,7 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ExternalAdmissionHookConfiguration>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ExternalAdmissionHookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -710,7 +710,7 @@ impl crate::Resource for ExternalAdmissionHookConfiguration {
 }
 
 impl crate::Metadata for ExternalAdmissionHookConfiguration {
-    type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -764,8 +764,8 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_external_admission_hooks: Option<Vec<crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHook>> = None;
-                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_external_admission_hooks: Option<Vec<crate::api::admissionregistration::v1alpha1::ExternalAdmissionHook>> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

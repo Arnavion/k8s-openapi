@@ -7,7 +7,7 @@ pub struct DaemonSetStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a DaemonSet's current state.
-    pub conditions: Option<Vec<crate::v1_15::api::apps::v1beta2::DaemonSetCondition>>,
+    pub conditions: Option<Vec<crate::api::apps::v1beta2::DaemonSetCondition>>,
 
     /// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
     pub current_number_scheduled: i32,
@@ -94,7 +94,7 @@ impl<'de> serde::Deserialize<'de> for DaemonSetStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_collision_count: Option<i32> = None;
-                let mut value_conditions: Option<Vec<crate::v1_15::api::apps::v1beta2::DaemonSetCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::apps::v1beta2::DaemonSetCondition>> = None;
                 let mut value_current_number_scheduled: Option<i32> = None;
                 let mut value_desired_number_scheduled: Option<i32> = None;
                 let mut value_number_available: Option<i32> = None;

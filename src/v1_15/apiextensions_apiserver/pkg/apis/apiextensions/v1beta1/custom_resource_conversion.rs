@@ -11,7 +11,7 @@ pub struct CustomResourceConversion {
     pub strategy: String,
 
     /// `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.
-    pub webhook_client_config: Option<crate::v1_15::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig>,
+    pub webhook_client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig>,
 }
 
 impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
@@ -61,7 +61,7 @@ impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_conversion_review_versions: Option<Vec<String>> = None;
                 let mut value_strategy: Option<String> = None;
-                let mut value_webhook_client_config: Option<crate::v1_15::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig> = None;
+                let mut value_webhook_client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

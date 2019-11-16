@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodStatus {
     /// Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
-    pub conditions: Option<Vec<crate::v1_8::api::core::v1::PodCondition>>,
+    pub conditions: Option<Vec<crate::api::core::v1::PodCondition>>,
 
     /// The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-    pub container_statuses: Option<Vec<crate::v1_8::api::core::v1::ContainerStatus>>,
+    pub container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>>,
 
     /// IP address of the host to which the pod is assigned. Empty if not yet scheduled.
     pub host_ip: Option<String>,
 
     /// The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-    pub init_container_statuses: Option<Vec<crate::v1_8::api::core::v1::ContainerStatus>>,
+    pub init_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>>,
 
     /// A human readable message indicating details about why the pod is in this condition.
     pub message: Option<String>,
@@ -31,7 +31,7 @@ pub struct PodStatus {
     pub reason: Option<String>,
 
     /// RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
-    pub start_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
+    pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
 impl<'de> serde::Deserialize<'de> for PodStatus {
@@ -93,16 +93,16 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::v1_8::api::core::v1::PodCondition>> = None;
-                let mut value_container_statuses: Option<Vec<crate::v1_8::api::core::v1::ContainerStatus>> = None;
+                let mut value_conditions: Option<Vec<crate::api::core::v1::PodCondition>> = None;
+                let mut value_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>> = None;
                 let mut value_host_ip: Option<String> = None;
-                let mut value_init_container_statuses: Option<Vec<crate::v1_8::api::core::v1::ContainerStatus>> = None;
+                let mut value_init_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_phase: Option<String> = None;
                 let mut value_pod_ip: Option<String> = None;
                 let mut value_qos_class: Option<String> = None;
                 let mut value_reason: Option<String> = None;
-                let mut value_start_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

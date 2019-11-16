@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RunAsUserStrategyOptions {
     /// Ranges are the allowed ranges of uids that may be used.
-    pub ranges: Option<Vec<crate::v1_8::api::extensions::v1beta1::IDRange>>,
+    pub ranges: Option<Vec<crate::api::extensions::v1beta1::IDRange>>,
 
     /// Rule is the strategy that will dictate the allowable RunAsUser values that may be set.
     pub rule: String,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for RunAsUserStrategyOptions {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ranges: Option<Vec<crate::v1_8::api::extensions::v1beta1::IDRange>> = None;
+                let mut value_ranges: Option<Vec<crate::api::extensions::v1beta1::IDRange>> = None;
                 let mut value_rule: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

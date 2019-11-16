@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSINode {
     /// metadata.name must be the Kubernetes node name.
-    pub metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// spec is the specification of CSINode
-    pub spec: crate::v1_15::api::storage::v1beta1::CSINodeSpec,
+    pub spec: crate::api::storage::v1beta1::CSINodeSpec,
 }
 
 // Begin storage.k8s.io/v1beta1/CSINode
@@ -28,7 +28,7 @@ impl CSINode {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn create_csi_node(
-        body: &crate::v1_15::api::storage::v1beta1::CSINode,
+        body: &crate::api::storage::v1beta1::CSINode,
         optional: CreateCSINodeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCSINodeResponse>), crate::RequestError> {
         let CreateCSINodeOptional {
@@ -75,9 +75,9 @@ pub struct CreateCSINodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateCSINodeResponse {
-    Ok(crate::v1_15::api::storage::v1beta1::CSINode),
-    Created(crate::v1_15::api::storage::v1beta1::CSINode),
-    Accepted(crate::v1_15::api::storage::v1beta1::CSINode),
+    Ok(crate::api::storage::v1beta1::CSINode),
+    Created(crate::api::storage::v1beta1::CSINode),
+    Accepted(crate::api::storage::v1beta1::CSINode),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -146,7 +146,7 @@ impl CSINode {
     #[cfg(feature = "api")]
     pub fn delete_csi_node(
         name: &str,
-        optional: crate::v1_15::DeleteOptional<'_>,
+        optional: crate::DeleteOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCSINodeResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/csinodes/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -166,9 +166,9 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCSINodeResponse {
-    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_15::api::storage::v1beta1::CSINode),
-    Accepted(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::CSINode),
+    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -241,8 +241,8 @@ impl CSINode {
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn delete_collection_csi_node(
-        delete_optional: crate::v1_15::DeleteOptional<'_>,
-        list_optional: crate::v1_15::ListOptional<'_>,
+        delete_optional: crate::DeleteOptional<'_>,
+        list_optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCSINodeResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csinodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -263,8 +263,8 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteCollectionCSINodeResponse {
-    OkStatus(crate::v1_15::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::v1_15::api::storage::v1beta1::CSINodeList),
+    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::api::storage::v1beta1::CSINodeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -327,7 +327,7 @@ impl CSINode {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn list_csi_node(
-        optional: crate::v1_15::ListOptional<'_>,
+        optional: crate::ListOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCSINodeResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csinodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -347,7 +347,7 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCSINodeResponse {
-    Ok(crate::v1_15::api::storage::v1beta1::CSINodeList),
+    Ok(crate::api::storage::v1beta1::CSINodeList),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -402,8 +402,8 @@ impl CSINode {
     #[cfg(feature = "api")]
     pub fn patch_csi_node(
         name: &str,
-        body: &crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: crate::v1_15::PatchOptional<'_>,
+        body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
+        optional: crate::PatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCSINodeResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/csinodes/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -415,9 +415,9 @@ impl CSINode {
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
         __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
-            crate::v1_15::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
+            crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
         }));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -430,7 +430,7 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum PatchCSINodeResponse {
-    Ok(crate::v1_15::api::storage::v1beta1::CSINode),
+    Ok(crate::api::storage::v1beta1::CSINode),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -530,7 +530,7 @@ pub struct ReadCSINodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCSINodeResponse {
-    Ok(crate::v1_15::api::storage::v1beta1::CSINode),
+    Ok(crate::api::storage::v1beta1::CSINode),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -585,7 +585,7 @@ impl CSINode {
     #[cfg(feature = "api")]
     pub fn replace_csi_node(
         name: &str,
-        body: &crate::v1_15::api::storage::v1beta1::CSINode,
+        body: &crate::api::storage::v1beta1::CSINode,
         optional: ReplaceCSINodeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCSINodeResponse>), crate::RequestError> {
         let ReplaceCSINodeOptional {
@@ -634,8 +634,8 @@ pub struct ReplaceCSINodeOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReplaceCSINodeResponse {
-    Ok(crate::v1_15::api::storage::v1beta1::CSINode),
-    Created(crate::v1_15::api::storage::v1beta1::CSINode),
+    Ok(crate::api::storage::v1beta1::CSINode),
+    Created(crate::api::storage::v1beta1::CSINode),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -693,7 +693,7 @@ impl CSINode {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn watch_csi_node(
-        optional: crate::v1_15::WatchOptional<'_>,
+        optional: crate::WatchOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCSINodeResponse>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/csinodes?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
@@ -713,7 +713,7 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchCSINodeResponse {
-    Ok(crate::v1_15::apimachinery::pkg::apis::meta::v1::WatchEvent<CSINode>),
+    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<CSINode>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -770,7 +770,7 @@ impl crate::Resource for CSINode {
 }
 
 impl crate::Metadata for CSINode {
-    type Ty = crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -824,8 +824,8 @@ impl<'de> serde::Deserialize<'de> for CSINode {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_15::api::storage::v1beta1::CSINodeSpec> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::storage::v1beta1::CSINodeSpec> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodsMetricStatus {
     /// currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    pub current_average_value: crate::v1_10::apimachinery::pkg::api::resource::Quantity,
+    pub current_average_value: crate::apimachinery::pkg::api::resource::Quantity,
 
     /// metricName is the name of the metric in question
     pub metric_name: String,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_current_average_value: Option<crate::v1_10::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

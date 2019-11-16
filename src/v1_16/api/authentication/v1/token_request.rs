@@ -3,11 +3,11 @@
 /// TokenRequest requests a token for a given service account.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenRequest {
-    pub metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
-    pub spec: crate::v1_16::api::authentication::v1::TokenRequestSpec,
+    pub spec: crate::api::authentication::v1::TokenRequestSpec,
 
-    pub status: Option<crate::v1_16::api::authentication::v1::TokenRequestStatus>,
+    pub status: Option<crate::api::authentication::v1::TokenRequestStatus>,
 }
 
 // Begin authentication.k8s.io/v1/TokenRequest
@@ -38,7 +38,7 @@ impl TokenRequest {
     pub fn create_namespaced_service_account_token(
         name: &str,
         namespace: &str,
-        body: &crate::v1_16::api::authentication::v1::TokenRequest,
+        body: &crate::api::authentication::v1::TokenRequest,
         optional: CreateNamespacedServiceAccountTokenOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceAccountTokenResponse>), crate::RequestError> {
         let CreateNamespacedServiceAccountTokenOptional {
@@ -88,9 +88,9 @@ pub struct CreateNamespacedServiceAccountTokenOptional<'a> {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceAccountTokenResponse {
-    Ok(crate::v1_16::api::authentication::v1::TokenRequest),
-    Created(crate::v1_16::api::authentication::v1::TokenRequest),
-    Accepted(crate::v1_16::api::authentication::v1::TokenRequest),
+    Ok(crate::api::authentication::v1::TokenRequest),
+    Created(crate::api::authentication::v1::TokenRequest),
+    Accepted(crate::api::authentication::v1::TokenRequest),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -161,7 +161,7 @@ impl crate::Resource for TokenRequest {
 }
 
 impl crate::Metadata for TokenRequest {
-    type Ty = crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
@@ -217,9 +217,9 @@ impl<'de> serde::Deserialize<'de> for TokenRequest {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<crate::v1_16::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<crate::v1_16::api::authentication::v1::TokenRequestSpec> = None;
-                let mut value_status: Option<crate::v1_16::api::authentication::v1::TokenRequestStatus> = None;
+                let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::api::authentication::v1::TokenRequestSpec> = None;
+                let mut value_status: Option<crate::api::authentication::v1::TokenRequestStatus> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

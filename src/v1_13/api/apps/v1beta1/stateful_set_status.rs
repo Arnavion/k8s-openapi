@@ -7,7 +7,7 @@ pub struct StatefulSetStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a statefulset's current state.
-    pub conditions: Option<Vec<crate::v1_13::api::apps::v1beta1::StatefulSetCondition>>,
+    pub conditions: Option<Vec<crate::api::apps::v1beta1::StatefulSetCondition>>,
 
     /// currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision.
     pub current_replicas: Option<i32>,
@@ -89,7 +89,7 @@ impl<'de> serde::Deserialize<'de> for StatefulSetStatus {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_collision_count: Option<i32> = None;
-                let mut value_conditions: Option<Vec<crate::v1_13::api::apps::v1beta1::StatefulSetCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::api::apps::v1beta1::StatefulSetCondition>> = None;
                 let mut value_current_replicas: Option<i32> = None;
                 let mut value_current_revision: Option<String> = None;
                 let mut value_observed_generation: Option<i64> = None;

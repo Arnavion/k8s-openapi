@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RunAsGroupStrategyOptions {
     /// ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
-    pub ranges: Option<Vec<crate::v1_16::api::policy::v1beta1::IDRange>>,
+    pub ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>>,
 
     /// rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
     pub rule: String,
@@ -53,7 +53,7 @@ impl<'de> serde::Deserialize<'de> for RunAsGroupStrategyOptions {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_ranges: Option<Vec<crate::v1_16::api::policy::v1beta1::IDRange>> = None;
+                let mut value_ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>> = None;
                 let mut value_rule: Option<String> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SessionAffinityConfig {
     /// clientIP contains the configurations of Client IP based session affinity.
-    pub client_ip: Option<crate::v1_16::api::core::v1::ClientIPConfig>,
+    pub client_ip: Option<crate::api::core::v1::ClientIPConfig>,
 }
 
 impl<'de> serde::Deserialize<'de> for SessionAffinityConfig {
@@ -48,7 +48,7 @@ impl<'de> serde::Deserialize<'de> for SessionAffinityConfig {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
-                let mut value_client_ip: Option<crate::v1_16::api::core::v1::ClientIPConfig> = None;
+                let mut value_client_ip: Option<crate::api::core::v1::ClientIPConfig> = None;
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {

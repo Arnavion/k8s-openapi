@@ -7,13 +7,13 @@ pub struct PersistentVolumeClaimSpec {
     pub access_modes: Option<Vec<String>>,
 
     /// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
-    pub data_source: Option<crate::v1_15::api::core::v1::TypedLocalObjectReference>,
+    pub data_source: Option<crate::api::core::v1::TypedLocalObjectReference>,
 
     /// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    pub resources: Option<crate::v1_15::api::core::v1::ResourceRequirements>,
+    pub resources: Option<crate::api::core::v1::ResourceRequirements>,
 
     /// A label query over volumes to consider for binding.
-    pub selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
     pub storage_class_name: Option<String>,
@@ -79,9 +79,9 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_access_modes: Option<Vec<String>> = None;
-                let mut value_data_source: Option<crate::v1_15::api::core::v1::TypedLocalObjectReference> = None;
-                let mut value_resources: Option<crate::v1_15::api::core::v1::ResourceRequirements> = None;
-                let mut value_selector: Option<crate::v1_15::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_data_source: Option<crate::api::core::v1::TypedLocalObjectReference> = None;
+                let mut value_resources: Option<crate::api::core::v1::ResourceRequirements> = None;
+                let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_storage_class_name: Option<String> = None;
                 let mut value_volume_mode: Option<String> = None;
                 let mut value_volume_name: Option<String> = None;
