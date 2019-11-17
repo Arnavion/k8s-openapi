@@ -1,5 +1,3 @@
-[![Build Status](https://dev.azure.com/arnavion/k8s-openapi/_apis/build/status/Arnavion.k8s-openapi?branchName=master)](https://dev.azure.com/arnavion/k8s-openapi/_build/latest?definitionId=1)
-
 This crate is a Rust Kubernetes API client. It contains bindings for the resources and operations in the Kubernetes client API, auto-generated from the OpenAPI spec.
 
 [crates.io](https://crates.io/crates/k8s-openapi)
