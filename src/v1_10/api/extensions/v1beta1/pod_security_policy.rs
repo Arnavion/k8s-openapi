@@ -725,6 +725,10 @@ impl crate::Resource for PodSecurityPolicy {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for PodSecurityPolicy {
+    const LIST_KIND: &'static str = "PodSecurityPolicyList";
+}
+
 impl crate::Metadata for PodSecurityPolicy {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

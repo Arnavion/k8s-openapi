@@ -1247,6 +1247,10 @@ impl crate::Resource for StatefulSet {
     const VERSION: &'static str = "v1beta2";
 }
 
+impl crate::ListableResource for StatefulSet {
+    const LIST_KIND: &'static str = "StatefulSetList";
+}
+
 impl crate::Metadata for StatefulSet {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

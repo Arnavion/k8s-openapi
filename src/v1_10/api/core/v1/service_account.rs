@@ -925,6 +925,10 @@ impl crate::Resource for ServiceAccount {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ServiceAccount {
+    const LIST_KIND: &'static str = "ServiceAccountList";
+}
+
 impl crate::Metadata for ServiceAccount {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

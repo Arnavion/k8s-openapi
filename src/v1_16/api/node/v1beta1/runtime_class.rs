@@ -764,6 +764,10 @@ impl crate::Resource for RuntimeClass {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for RuntimeClass {
+    const LIST_KIND: &'static str = "RuntimeClassList";
+}
+
 impl crate::Metadata for RuntimeClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -1212,6 +1212,10 @@ impl crate::Resource for ReplicationController {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ReplicationController {
+    const LIST_KIND: &'static str = "ReplicationControllerList";
+}
+
 impl crate::Metadata for ReplicationController {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

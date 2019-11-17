@@ -963,6 +963,10 @@ impl crate::Resource for Endpoints {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Endpoints {
+    const LIST_KIND: &'static str = "EndpointsList";
+}
+
 impl crate::Metadata for Endpoints {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -946,6 +946,10 @@ impl crate::Resource for Lease {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for Lease {
+    const LIST_KIND: &'static str = "LeaseList";
+}
+
 impl crate::Metadata for Lease {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -1176,6 +1176,10 @@ impl crate::Resource for CronJob {
     const VERSION: &'static str = "v2alpha1";
 }
 
+impl crate::ListableResource for CronJob {
+    const LIST_KIND: &'static str = "CronJobList";
+}
+
 impl crate::Metadata for CronJob {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

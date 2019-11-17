@@ -1013,6 +1013,10 @@ impl crate::Resource for Namespace {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Namespace {
+    const LIST_KIND: &'static str = "NamespaceList";
+}
+
 impl crate::Metadata for Namespace {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

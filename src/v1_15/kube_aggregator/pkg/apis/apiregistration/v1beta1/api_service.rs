@@ -1044,6 +1044,10 @@ impl crate::Resource for APIService {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for APIService {
+    const LIST_KIND: &'static str = "APIServiceList";
+}
+
 impl crate::Metadata for APIService {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

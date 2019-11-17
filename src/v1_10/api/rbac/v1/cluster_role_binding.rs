@@ -716,6 +716,10 @@ impl crate::Resource for ClusterRoleBinding {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ClusterRoleBinding {
+    const LIST_KIND: &'static str = "ClusterRoleBindingList";
+}
+
 impl crate::Metadata for ClusterRoleBinding {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

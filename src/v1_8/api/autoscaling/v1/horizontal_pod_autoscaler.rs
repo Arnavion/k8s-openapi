@@ -1176,6 +1176,10 @@ impl crate::Resource for HorizontalPodAutoscaler {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for HorizontalPodAutoscaler {
+    const LIST_KIND: &'static str = "HorizontalPodAutoscalerList";
+}
+
 impl crate::Metadata for HorizontalPodAutoscaler {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

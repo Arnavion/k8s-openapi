@@ -984,6 +984,10 @@ impl crate::Resource for Event {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for Event {
+    const LIST_KIND: &'static str = "EventList";
+}
+
 impl crate::Metadata for Event {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

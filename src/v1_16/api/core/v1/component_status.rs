@@ -251,6 +251,10 @@ impl crate::Resource for ComponentStatus {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ComponentStatus {
+    const LIST_KIND: &'static str = "ComponentStatusList";
+}
+
 impl crate::Metadata for ComponentStatus {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -742,6 +742,10 @@ impl crate::Resource for StorageClass {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for StorageClass {
+    const LIST_KIND: &'static str = "StorageClassList";
+}
+
 impl crate::Metadata for StorageClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

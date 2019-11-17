@@ -892,6 +892,10 @@ impl crate::Resource for ConfigMap {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ConfigMap {
+    const LIST_KIND: &'static str = "ConfigMapList";
+}
+
 impl crate::Metadata for ConfigMap {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

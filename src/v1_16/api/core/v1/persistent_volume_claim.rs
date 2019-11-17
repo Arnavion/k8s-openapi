@@ -1257,6 +1257,10 @@ impl crate::Resource for PersistentVolumeClaim {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for PersistentVolumeClaim {
+    const LIST_KIND: &'static str = "PersistentVolumeClaimList";
+}
+
 impl crate::Metadata for PersistentVolumeClaim {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

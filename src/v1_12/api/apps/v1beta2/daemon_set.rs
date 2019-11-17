@@ -1245,6 +1245,10 @@ impl crate::Resource for DaemonSet {
     const VERSION: &'static str = "v1beta2";
 }
 
+impl crate::ListableResource for DaemonSet {
+    const LIST_KIND: &'static str = "DaemonSetList";
+}
+
 impl crate::Metadata for DaemonSet {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

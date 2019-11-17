@@ -952,6 +952,10 @@ impl crate::Resource for PodTemplate {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for PodTemplate {
+    const LIST_KIND: &'static str = "PodTemplateList";
+}
+
 impl crate::Metadata for PodTemplate {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

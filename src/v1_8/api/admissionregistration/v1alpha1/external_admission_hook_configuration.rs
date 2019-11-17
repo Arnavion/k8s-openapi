@@ -698,6 +698,10 @@ impl crate::Resource for ExternalAdmissionHookConfiguration {
     const VERSION: &'static str = "v1alpha1";
 }
 
+impl crate::ListableResource for ExternalAdmissionHookConfiguration {
+    const LIST_KIND: &'static str = "ExternalAdmissionHookConfigurationList";
+}
+
 impl crate::Metadata for ExternalAdmissionHookConfiguration {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

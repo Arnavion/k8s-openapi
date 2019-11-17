@@ -892,6 +892,10 @@ impl crate::Resource for LimitRange {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for LimitRange {
+    const LIST_KIND: &'static str = "LimitRangeList";
+}
+
 impl crate::Metadata for LimitRange {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

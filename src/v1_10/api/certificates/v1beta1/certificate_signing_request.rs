@@ -929,6 +929,10 @@ impl crate::Resource for CertificateSigningRequest {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for CertificateSigningRequest {
+    const LIST_KIND: &'static str = "CertificateSigningRequestList";
+}
+
 impl crate::Metadata for CertificateSigningRequest {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

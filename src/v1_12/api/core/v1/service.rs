@@ -1690,6 +1690,10 @@ impl crate::Resource for Service {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Service {
+    const LIST_KIND: &'static str = "ServiceList";
+}
+
 impl crate::Metadata for Service {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

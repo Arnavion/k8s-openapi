@@ -1033,6 +1033,10 @@ impl crate::Resource for PersistentVolume {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for PersistentVolume {
+    const LIST_KIND: &'static str = "PersistentVolumeList";
+}
+
 impl crate::Metadata for PersistentVolume {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

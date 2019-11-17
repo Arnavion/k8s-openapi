@@ -96,6 +96,9 @@ pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
 	pub kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
+
+	/// Used to store whether a definition with this schema has a corresponding list type.
+	pub has_corresponding_list_type: bool,
 }
 
 #[cfg(feature = "serde")]
@@ -165,6 +168,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			description: value.description,
 			kind,
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
+			has_corresponding_list_type: false,
 		})
 	}
 }
@@ -199,6 +203,10 @@ pub enum Type {
 	JSONSchemaPropsOrStringArray,
 	Patch,
 	WatchEvent(RefPath),
+
+	// Special type for lists
+	ListDef { metadata: Box<SchemaKind> }, // The definition of the List type
+	ListRef { items: Box<SchemaKind> }, // A reference to a specialization of the List type for a particular resource type, eg List<Pod> for PodList
 
 	// Special types for common parameters of delete, list, patch and watch operations respectively
 	DeleteOptional(std::collections::BTreeMap<PropertyName, Schema>),

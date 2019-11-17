@@ -958,6 +958,10 @@ impl crate::Resource for EndpointSlice {
     const VERSION: &'static str = "v1alpha1";
 }
 
+impl crate::ListableResource for EndpointSlice {
+    const LIST_KIND: &'static str = "EndpointSliceList";
+}
+
 impl crate::Metadata for EndpointSlice {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

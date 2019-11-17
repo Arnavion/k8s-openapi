@@ -1211,6 +1211,10 @@ impl crate::Resource for PodDisruptionBudget {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for PodDisruptionBudget {
+    const LIST_KIND: &'static str = "PodDisruptionBudgetList";
+}
+
 impl crate::Metadata for PodDisruptionBudget {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

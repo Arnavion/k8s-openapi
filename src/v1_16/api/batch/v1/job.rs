@@ -1257,6 +1257,10 @@ impl crate::Resource for Job {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Job {
+    const LIST_KIND: &'static str = "JobList";
+}
+
 impl crate::Metadata for Job {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

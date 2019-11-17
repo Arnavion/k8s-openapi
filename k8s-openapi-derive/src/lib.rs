@@ -78,6 +78,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///
 /// impl k8s_openapi::Resource for FooBar { ... }
 ///
+/// impl k8s_openapi::ListableResource for FooBar { ... }
+///
 /// impl k8s_openapi::Metadata for FooBar {
 ///     type Ty = k8s_openapi::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 ///
@@ -214,23 +216,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// }
 ///
 /// /// FooBarList is a list of FooBar
-/// #[derive(Clone, Debug, Default, PartialEq)]
-/// struct FooBarList {
-///     items: Vec<FooBarSpec>,
-///     metadata: Option<k8s_openapi::apimachinery::pkg::apis::meta::v1::ListMeta>,
-/// }
-///
-/// impl k8s_openapi::Resource for FooBarList { ... }
-///
-/// impl k8s_openapi::Metadata for FooBarList {
-///     type Ty = k8s_openapi::apimachinery::pkg::apis::meta::v1::ListMeta;
-///
-///     ...
-/// }
-///
-/// impl<'de> serde_derive::Deserialize<'de> for FooBarList { ... }
-///
-/// impl serde_derive::Serialize for FooBarList { ... }
+/// type FooBarList = k8s_openapi::List<FooBar>;
 /// ```
 ///
 /// (You may wish to generate your own crate's docs, or run it through `cargo-expand`, to be able to see the macro expansion.)

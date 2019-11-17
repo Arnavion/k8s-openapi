@@ -1257,6 +1257,10 @@ impl crate::Resource for ResourceQuota {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ResourceQuota {
+    const LIST_KIND: &'static str = "ResourceQuotaList";
+}
+
 impl crate::Metadata for ResourceQuota {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

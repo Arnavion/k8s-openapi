@@ -757,6 +757,10 @@ impl crate::Resource for AuditSink {
     const VERSION: &'static str = "v1alpha1";
 }
 
+impl crate::ListableResource for AuditSink {
+    const LIST_KIND: &'static str = "AuditSinkList";
+}
+
 impl crate::Metadata for AuditSink {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -1525,6 +1525,10 @@ impl crate::Resource for Node {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Node {
+    const LIST_KIND: &'static str = "NodeList";
+}
+
 impl crate::Metadata for Node {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

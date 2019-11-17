@@ -950,6 +950,10 @@ impl crate::Resource for PodPreset {
     const VERSION: &'static str = "v1alpha1";
 }
 
+impl crate::ListableResource for PodPreset {
+    const LIST_KIND: &'static str = "PodPresetList";
+}
+
 impl crate::Metadata for PodPreset {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

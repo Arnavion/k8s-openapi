@@ -173,6 +173,7 @@ impl SupportedVersion {
 			crate::fixups::special::remove_delete_operations_query_parameters,
 			crate::fixups::special::separate_watch_from_list_operations,
 			crate::fixups::special::watch_event,
+			crate::fixups::special::list,
 		];
 
 		for fixup in upstream_bugs_fixups.iter().chain(special_fixups) {

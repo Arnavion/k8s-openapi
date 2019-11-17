@@ -716,6 +716,10 @@ impl crate::Resource for ClusterRole {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ClusterRole {
+    const LIST_KIND: &'static str = "ClusterRoleList";
+}
+
 impl crate::Metadata for ClusterRole {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

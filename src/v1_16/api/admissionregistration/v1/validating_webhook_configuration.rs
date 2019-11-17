@@ -758,6 +758,10 @@ impl crate::Resource for ValidatingWebhookConfiguration {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ValidatingWebhookConfiguration {
+    const LIST_KIND: &'static str = "ValidatingWebhookConfigurationList";
+}
+
 impl crate::Metadata for ValidatingWebhookConfiguration {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

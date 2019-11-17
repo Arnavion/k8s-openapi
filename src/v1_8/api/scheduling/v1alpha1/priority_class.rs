@@ -704,6 +704,10 @@ impl crate::Resource for PriorityClass {
     const VERSION: &'static str = "v1alpha1";
 }
 
+impl crate::ListableResource for PriorityClass {
+    const LIST_KIND: &'static str = "PriorityClassList";
+}
+
 impl crate::Metadata for PriorityClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

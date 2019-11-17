@@ -147,6 +147,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						can_be_default: None,
 					}),
 					kubernetes_group_kind_versions: None,
+					has_corresponding_list_type: false,
 				},
 			});
 
@@ -159,6 +160,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					description: Some(format!("name of the {}", cr_name)),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 					kubernetes_group_kind_versions: None,
+					has_corresponding_list_type: false,
 				},
 			});
 
@@ -172,6 +174,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						description: Some("object name and auth scope, such as for teams and projects".to_owned()),
 						kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 						kubernetes_group_kind_versions: None,
+						has_corresponding_list_type: false,
 					},
 				})), "/namespaces/{namespace}")
 			}
@@ -192,11 +195,13 @@ impl super::CustomDerive for CustomResourceDefinition {
 							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}, false)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
 							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
 							description: Some("Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata".to_owned()),
@@ -206,6 +211,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}, false)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
 							description: Some(format!("Specification of the {} custom resource", cr_name)),
@@ -215,6 +221,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}, false)),
 					].into_iter().collect()),
 					kubernetes_group_kind_versions: Some(vec![
@@ -224,46 +231,18 @@ impl super::CustomDerive for CustomResourceDefinition {
 							version: version.clone(),
 						},
 					]),
+					has_corresponding_list_type: true,
 				}),
 
 				(swagger20::DefinitionPath(cr_list_name.clone()), swagger20::Schema {
 					description: Some(format!("{} is a list of {}", cr_list_name, cr_name)),
-					kind: swagger20::SchemaKind::Properties(vec![
-						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
-							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
-							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-							kubernetes_group_kind_versions: None,
-						}, false)),
-						(swagger20::PropertyName("items".to_owned()), (swagger20::Schema {
-							description: Some(format!("List of objects of kind {}. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md", cr_name)),
-							kind: swagger20::SchemaKind::Ty(swagger20::Type::Array {
-								items: Box::new(swagger20::Schema {
-									description: None,
-									kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-										path: cr_name.clone(),
-										relative_to: swagger20::RefPathRelativeTo::Scope,
-										can_be_default: Some(true),
-									}),
-									kubernetes_group_kind_versions: None,
-								}),
-							}),
-							kubernetes_group_kind_versions: None,
-						}, true)),
-						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
-							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
-							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-							kubernetes_group_kind_versions: None,
-						}, false)),
-						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
-							description: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-						}, false)),
-					].into_iter().collect()),
+					kind: swagger20::SchemaKind::Ty(swagger20::Type::ListRef {
+						items: Box::new(swagger20::SchemaKind::Ref(swagger20::RefPath {
+							path: cr_name.clone(),
+							relative_to: swagger20::RefPathRelativeTo::Scope,
+							can_be_default: Some(true),
+						})),
+					}),
 					kubernetes_group_kind_versions: Some(vec![
 						swagger20::KubernetesGroupKindVersion {
 							group: group.clone(),
@@ -271,6 +250,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							version: version.clone(),
 						},
 					]),
+					has_corresponding_list_type: false,
 				}),
 			].into_iter().collect(),
 			operations: vec![
@@ -298,6 +278,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::CREATED, swagger20::Schema {
 							description: Some("Created".to_owned()),
@@ -307,6 +288,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::ACCEPTED, swagger20::Schema {
 							description: Some("Accepted".to_owned()),
@@ -316,6 +298,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::UNPROCESSABLE_ENTITY, swagger20::Schema {
 							description: Some("Unprocessable Entity".to_owned()),
@@ -325,6 +308,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -355,6 +339,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -368,6 +353,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::ACCEPTED, swagger20::Schema {
 							description: Some("Accepted".to_owned()),
@@ -377,6 +363,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -406,6 +393,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 						Some(std::sync::Arc::new(swagger20::Parameter {
@@ -420,6 +408,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -433,6 +422,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -462,6 +452,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -475,6 +466,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -503,6 +495,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 						Some(name_parameter.clone()),
@@ -519,6 +512,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -532,6 +526,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -560,6 +555,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 						Some(name_parameter.clone()),
@@ -576,6 +572,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -589,6 +586,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -618,6 +616,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -647,6 +646,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -677,6 +677,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::ACCEPTED, swagger20::Schema {
 							description: Some("Accepted".to_owned()),
@@ -686,6 +687,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -716,6 +718,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 						(http::StatusCode::ACCEPTED, swagger20::Schema {
 							description: Some("Accepted".to_owned()),
@@ -725,6 +728,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),
@@ -754,6 +758,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -767,6 +772,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								can_be_default: None,
 							}),
 							kubernetes_group_kind_versions: None,
+							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect(),
 					tag: String::new(),

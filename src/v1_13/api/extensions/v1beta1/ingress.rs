@@ -1245,6 +1245,10 @@ impl crate::Resource for Ingress {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for Ingress {
+    const LIST_KIND: &'static str = "IngressList";
+}
+
 impl crate::Metadata for Ingress {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

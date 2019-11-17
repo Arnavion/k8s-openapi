@@ -304,6 +304,13 @@ pub fn run<W>(
 				writeln!(out, r#"    const VERSION: &'static str = "{}";"#, resource_metadata.3)?;
 				writeln!(out, "}}")?;
 
+				if definition.has_corresponding_list_type {
+					writeln!(out)?;
+					writeln!(out, "impl {}::ListableResource for {} {{", crate_root, type_name)?;
+					writeln!(out, r#"    const LIST_KIND: &'static str = "{}List";"#, resource_metadata.2)?;
+					writeln!(out, "}}")?;
+				}
+
 				if let Some((required, ty)) = metadata_property_ty {
 					writeln!(out)?;
 					writeln!(out, "impl {}::Metadata for {} {{", crate_root, type_name)?;
@@ -930,6 +937,153 @@ pub fn run<W>(
 			run_result.num_generated_structs += 1;
 		},
 
+		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { metadata }) => {
+			let metadata_rust_type = get_rust_type(metadata, &replace_namespaces, crate_root)?;
+
+			writeln!(out, "#[derive(Clone, Debug, Default, PartialEq)]")?;
+			writeln!(out, "{}struct {}<T> where T: {}::ListableResource {{", vis, type_name, crate_root)?;
+			writeln!(out, "    /// List of objects.")?;
+			writeln!(out, "    {}items: Vec<T>,", vis)?;
+			writeln!(out)?;
+			writeln!(out, "    /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds")?;
+			writeln!(out, "    {}metadata: Option<{}>,", vis, metadata_rust_type)?;
+			writeln!(out, "}}")?;
+			writeln!(out)?;
+			writeln!(out, "impl<T> {}::Resource for {}<T> where T: {}::ListableResource {{", crate_root, type_name, crate_root)?;
+			writeln!(out, "    const API_VERSION: &'static str = <T as {}::Resource>::API_VERSION;", crate_root)?;
+			writeln!(out, "    const GROUP: &'static str = <T as {}::Resource>::GROUP;", crate_root)?;
+			writeln!(out, "    const KIND: &'static str = <T as {}::ListableResource>::LIST_KIND;", crate_root)?;
+			writeln!(out, "    const VERSION: &'static str = <T as {}::Resource>::VERSION;", crate_root)?;
+			writeln!(out, "}}")?;
+			writeln!(out)?;
+			writeln!(out, "impl<T> {}::Metadata for {}<T> where T: {}::ListableResource {{", crate_root, type_name, crate_root)?;
+			writeln!(out, "    type Ty = {};", metadata_rust_type)?;
+			writeln!(out)?;
+			writeln!(out, "    fn metadata(&self) -> Option<&<Self as {}::Metadata>::Ty> {{", crate_root)?;
+			writeln!(out, "        self.metadata.as_ref()")?;
+			writeln!(out, "    }}")?;
+			writeln!(out, "}}")?;
+			writeln!(out)?;
+			writeln!(out, "impl<'de, T> serde::Deserialize<'de> for {}<T> where T: serde::Deserialize<'de> + {}::ListableResource {{", type_name, crate_root)?;
+			writeln!(out, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+			writeln!(out, "        #[allow(non_camel_case_types)]")?;
+			writeln!(out, "        enum Field {{")?;
+			writeln!(out, "            Key_api_version,")?;
+			writeln!(out, "            Key_kind,")?;
+			writeln!(out, "            Key_items,")?;
+			writeln!(out, "            Key_metadata,")?;
+			writeln!(out, "            Other,")?;
+			writeln!(out, "        }}")?;
+			writeln!(out)?;
+			writeln!(out, "        impl<'de> serde::Deserialize<'de> for Field {{")?;
+			writeln!(out, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+			writeln!(out, "                struct Visitor;")?;
+			writeln!(out)?;
+			writeln!(out, "                impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+			writeln!(out, "                    type Value = Field;")?;
+			writeln!(out)?;
+			writeln!(out, "                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+			writeln!(out, r#"                        write!(f, "field identifier")"#)?;
+			writeln!(out, "                    }}")?;
+			writeln!(out)?;
+			writeln!(out, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+			writeln!(out, "                        Ok(match v {{")?;
+			writeln!(out, r#"                            "apiVersion" => Field::Key_api_version,"#)?;
+			writeln!(out, r#"                            "kind" => Field::Key_kind,"#)?;
+			writeln!(out, r#"                            "items" => Field::Key_items,"#)?;
+			writeln!(out, r#"                            "metadata" => Field::Key_metadata,"#)?;
+			writeln!(out, "                            _ => Field::Other,")?;
+			writeln!(out, "                        }})")?;
+			writeln!(out, "                    }}")?;
+			writeln!(out, "                }}")?;
+			writeln!(out)?;
+			writeln!(out, "                deserializer.deserialize_identifier(Visitor)")?;
+			writeln!(out, "            }}")?;
+			writeln!(out, "        }}")?;
+			writeln!(out)?;
+			writeln!(out, "        struct Visitor<T>(std::marker::PhantomData<T>);")?;
+			writeln!(out)?;
+			writeln!(out,
+				"        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> + {}::ListableResource {{",
+				crate_root)?;
+			writeln!(out, "            type Value = {}<T>;", type_name)?;
+			writeln!(out)?;
+			writeln!(out, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+			writeln!(out, r#"                write!(f, "struct {{}}", <Self::Value as {}::Resource>::KIND)"#, crate_root)?;
+			writeln!(out, "            }}")?;
+			writeln!(out)?;
+			writeln!(out, "            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{")?;
+			writeln!(out, "                let mut value_items: Option<Vec<T>> = None;")?;
+			writeln!(out, "                let mut value_metadata: Option<{}> = None;", metadata_rust_type)?;
+			writeln!(out)?;
+			writeln!(out, "                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
+			writeln!(out, "                    match key {{")?;
+			writeln!(out, "                        Field::Key_api_version => {{")?;
+			writeln!(out, "                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;")?;
+			writeln!(out, "                            if value_api_version != <Self::Value as {}::Resource>::API_VERSION {{", crate_root)?;
+			writeln!(out, "                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));")?;
+			writeln!(out, "                            }}")?;
+			writeln!(out, "                        }},")?;
+			writeln!(out, "                        Field::Key_kind => {{")?;
+			writeln!(out, "                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;")?;
+			writeln!(out, "                            if value_kind != <Self::Value as {}::Resource>::KIND {{", crate_root)?;
+			writeln!(out, "                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));")?;
+			writeln!(out, "                            }}")?;
+			writeln!(out, "                        }},")?;
+			writeln!(out, "                        Field::Key_items => value_items = Some(serde::de::MapAccess::next_value(&mut map)?),")?;
+			writeln!(out, "                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,")?;
+			writeln!(out, "                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},")?;
+			writeln!(out, "                    }}")?;
+			writeln!(out, "                }}")?;
+			writeln!(out)?;
+			writeln!(out, "                Ok(List {{")?;
+			writeln!(out, r#"                    items: value_items.ok_or_else(|| serde::de::Error::missing_field("items"))?,"#)?;
+			writeln!(out, "                    metadata: value_metadata,")?;
+			writeln!(out, "                }})")?;
+			writeln!(out, "            }}")?;
+			writeln!(out, "        }}")?;
+			writeln!(out)?;
+			writeln!(out, "        deserializer.deserialize_struct(")?;
+			writeln!(out, r#"            <Self as {}::Resource>::KIND,"#, crate_root)?;
+			writeln!(out, "            &[")?;
+			writeln!(out, r#"                "apiVersion","#)?;
+			writeln!(out, r#"                "kind","#)?;
+			writeln!(out, r#"                "items","#)?;
+			writeln!(out, r#"                "metadata","#)?;
+			writeln!(out, "            ],")?;
+			writeln!(out, "            Visitor(Default::default()),")?;
+			writeln!(out, "        )")?;
+			writeln!(out, "    }}")?;
+			writeln!(out, "}}")?;
+			writeln!(out)?;
+			writeln!(out, "impl<T> serde::Serialize for {}<T> where T: serde::Serialize + {}::ListableResource {{", type_name, crate_root)?;
+			writeln!(out, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+			writeln!(out, "        let mut state = serializer.serialize_struct(")?;
+			writeln!(out, r#"            <Self as {}::Resource>::KIND,"#, crate_root)?;
+			writeln!(out, "            3 +")?;
+			writeln!(out, "            self.metadata.as_ref().map_or(0, |_| 1),")?;
+			writeln!(out, "        )?;")?;
+			writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {}::Resource>::API_VERSION)?;"#, crate_root)?;
+			writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {}::Resource>::KIND)?;"#, crate_root)?;
+			writeln!(out, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;"#)?;
+			writeln!(out, "        if let Some(value) = &self.metadata {{")?;
+			writeln!(out, r#"            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;"#)?;
+			writeln!(out, "        }}")?;
+			writeln!(out, "        serde::ser::SerializeStruct::end(state)")?;
+			writeln!(out, "    }}")?;
+			writeln!(out, "}}")?;
+
+			run_result.num_generated_structs += 1;
+		},
+
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
+			writeln!(out,
+				"{}type {} = {}::List<{}>;",
+				vis, type_name, crate_root, get_rust_type(items, &replace_namespaces, crate_root)?)?;
+
+			run_result.num_generated_structs += 1;
+		},
+
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::DeleteOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::ListOptional(_)) |
 		swagger20::SchemaKind::Ty(ty @ swagger20::Type::PatchOptional(_)) |
@@ -1291,8 +1445,11 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
-
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Err("ListRef type not supported".into()),
+
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) => Err("PatchOptional type not supported".into()),
@@ -1336,6 +1493,9 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Err("ListRef type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),

@@ -907,6 +907,10 @@ impl crate::Resource for Role {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for Role {
+    const LIST_KIND: &'static str = "RoleList";
+}
+
 impl crate::Metadata for Role {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

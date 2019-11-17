@@ -28,6 +28,8 @@ fn test() {
 	assert_eq!(<FooBar as k8s_openapi::Resource>::KIND, "FooBar");
 	assert_eq!(<FooBar as k8s_openapi::Resource>::VERSION, "v1");
 
+	assert_eq!(<FooBar as k8s_openapi::ListableResource>::LIST_KIND, "FooBarList");
+
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::GROUP, "k8s-openapi-tests-custom-resource-definition.com");
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::KIND, "FooBarList");

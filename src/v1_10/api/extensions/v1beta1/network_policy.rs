@@ -919,6 +919,10 @@ impl crate::Resource for NetworkPolicy {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for NetworkPolicy {
+    const LIST_KIND: &'static str = "NetworkPolicyList";
+}
+
 impl crate::Metadata for NetworkPolicy {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

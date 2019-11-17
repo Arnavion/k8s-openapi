@@ -1044,6 +1044,10 @@ impl crate::Resource for CustomResourceDefinition {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for CustomResourceDefinition {
+    const LIST_KIND: &'static str = "CustomResourceDefinitionList";
+}
+
 impl crate::Metadata for CustomResourceDefinition {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

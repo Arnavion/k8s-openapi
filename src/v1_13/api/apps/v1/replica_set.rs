@@ -1245,6 +1245,10 @@ impl crate::Resource for ReplicaSet {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for ReplicaSet {
+    const LIST_KIND: &'static str = "ReplicaSetList";
+}
+
 impl crate::Metadata for ReplicaSet {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

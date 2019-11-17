@@ -883,6 +883,10 @@ impl crate::Resource for RoleBinding {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for RoleBinding {
+    const LIST_KIND: &'static str = "RoleBindingList";
+}
+
 impl crate::Metadata for RoleBinding {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

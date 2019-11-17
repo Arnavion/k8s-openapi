@@ -752,6 +752,10 @@ impl crate::Resource for MutatingWebhookConfiguration {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for MutatingWebhookConfiguration {
+    const LIST_KIND: &'static str = "MutatingWebhookConfigurationList";
+}
+
 impl crate::Metadata for MutatingWebhookConfiguration {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

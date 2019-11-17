@@ -2345,6 +2345,10 @@ impl crate::Resource for Pod {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Pod {
+    const LIST_KIND: &'static str = "PodList";
+}
+
 impl crate::Metadata for Pod {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

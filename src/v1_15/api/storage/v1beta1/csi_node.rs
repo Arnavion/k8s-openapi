@@ -758,6 +758,10 @@ impl crate::Resource for CSINode {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for CSINode {
+    const LIST_KIND: &'static str = "CSINodeList";
+}
+
 impl crate::Metadata for CSINode {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

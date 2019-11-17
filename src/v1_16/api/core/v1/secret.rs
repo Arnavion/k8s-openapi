@@ -958,6 +958,10 @@ impl crate::Resource for Secret {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for Secret {
+    const LIST_KIND: &'static str = "SecretList";
+}
+
 impl crate::Metadata for Secret {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -342,6 +342,14 @@ pub trait Resource {
     const VERSION: &'static str;
 }
 
+/// A trait applied to all Kubernetes resources that can be part of a corresponding list.
+pub trait ListableResource: Resource {
+    /// The kind of the list type of the resource.
+    ///
+    /// This is the string used in the `kind` field of the list type's serialized form.
+    const LIST_KIND: &'static str;
+}
+
 /// A trait applied to all Kubernetes resources that have metadata.
 pub trait Metadata: Resource {
     /// The type of the metadata object.

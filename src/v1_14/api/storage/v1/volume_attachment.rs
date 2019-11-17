@@ -1047,6 +1047,10 @@ impl crate::Resource for VolumeAttachment {
     const VERSION: &'static str = "v1";
 }
 
+impl crate::ListableResource for VolumeAttachment {
+    const LIST_KIND: &'static str = "VolumeAttachmentList";
+}
+
 impl crate::Metadata for VolumeAttachment {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

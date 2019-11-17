@@ -758,6 +758,10 @@ impl crate::Resource for CSIDriver {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for CSIDriver {
+    const LIST_KIND: &'static str = "CSIDriverList";
+}
+
 impl crate::Metadata for CSIDriver {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

@@ -1212,6 +1212,10 @@ impl crate::Resource for Deployment {
     const VERSION: &'static str = "v1beta1";
 }
 
+impl crate::ListableResource for Deployment {
+    const LIST_KIND: &'static str = "DeploymentList";
+}
+
 impl crate::Metadata for Deployment {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 

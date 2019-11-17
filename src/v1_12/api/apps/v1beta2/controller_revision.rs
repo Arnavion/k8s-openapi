@@ -949,6 +949,10 @@ impl crate::Resource for ControllerRevision {
     const VERSION: &'static str = "v1beta2";
 }
 
+impl crate::ListableResource for ControllerRevision {
+    const LIST_KIND: &'static str = "ControllerRevisionList";
+}
+
 impl crate::Metadata for ControllerRevision {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
