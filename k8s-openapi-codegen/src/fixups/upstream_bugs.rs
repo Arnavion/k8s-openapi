@@ -183,65 +183,113 @@ pub(crate) mod json_ty {
 	//
 	// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
 	pub(crate) fn json(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON".to_owned());
-		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
-				return Ok(());
+		let mut found = false;
+
+		for &definition_path in &[
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON",
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSON",
+		] {
+			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
+					found = true;
+				}
 			}
 		}
 
-		Err("never applied JSON override".into())
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSON override".into())
+		}
 	}
 
 	// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
 	// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
 	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray".to_owned());
-		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
-			}
-			else {
-				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
-				return Ok(());
+		let mut found = false;
+
+		for &definition_path in &[
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray",
+		] {
+			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
+					found = true;
+				}
 			}
 		}
 
-		Err("never applied JSONSchemaPropsOrArray override".into())
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrArray override".into())
+		}
 	}
 
 	// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
 	// In fact this type is either a `JSONSchemaProps` or a `bool`.
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool".to_owned());
-		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
-			}
-			else {
-				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
-				return Ok(());
+		let mut found = false;
+
+		for &definition_path in &[
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool",
+		] {
+			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
+					found = true;
+				}
 			}
 		}
 
-		Err("never applied JSONSchemaPropsOrBool override".into())
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrBool override".into())
+		}
 	}
 
 	// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
 	// In fact this type is either a `JSONSchemaProps` or a `Vec<String>`.
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray".to_owned());
-		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
-			}
-			else {
-				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);
-				return Ok(());
+		let mut found = false;
+
+		for &definition_path in &[
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray",
+			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray",
+		] {
+			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);
+					found = true;
+				}
 			}
 		}
 
-		Err("never applied JSONSchemaPropsOrStringArray override".into())
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrStringArray override".into())
+		}
 	}
 }
 

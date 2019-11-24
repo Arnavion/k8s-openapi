@@ -15,7 +15,7 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaPropsOrBool {
             type Value = JSONSchemaPropsOrBool;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "enum JSONSchemaPropsOrBool")
+                f.write_str("JSONSchemaPropsOrBool")
             }
 
             fn visit_map<A>(self, map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

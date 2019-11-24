@@ -953,7 +953,7 @@ impl crate::Resource for NetworkPolicy {
 }
 
 impl crate::ListableResource for NetworkPolicy {
-    const LIST_KIND: &'static str = "NetworkPolicyList";
+    const LIST_KIND: &'static str = concat!("NetworkPolicy", "List");
 }
 
 impl crate::Metadata for NetworkPolicy {
@@ -983,7 +983,7 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicy {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -1007,7 +1007,7 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicy {
             type Value = NetworkPolicy;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct NetworkPolicy")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1042,7 +1042,7 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicy {
         }
 
         deserializer.deserialize_struct(
-            "NetworkPolicy",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1057,7 +1057,7 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicy {
 impl serde::Serialize for NetworkPolicy {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "NetworkPolicy",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),

@@ -1053,7 +1053,7 @@ impl crate::Resource for Namespace {
 }
 
 impl crate::ListableResource for Namespace {
-    const LIST_KIND: &'static str = "NamespaceList";
+    const LIST_KIND: &'static str = concat!("Namespace", "List");
 }
 
 impl crate::Metadata for Namespace {
@@ -1084,7 +1084,7 @@ impl<'de> serde::Deserialize<'de> for Namespace {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -1109,7 +1109,7 @@ impl<'de> serde::Deserialize<'de> for Namespace {
             type Value = Namespace;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Namespace")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1147,7 +1147,7 @@ impl<'de> serde::Deserialize<'de> for Namespace {
         }
 
         deserializer.deserialize_struct(
-            "Namespace",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1163,7 +1163,7 @@ impl<'de> serde::Deserialize<'de> for Namespace {
 impl serde::Serialize for Namespace {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Namespace",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

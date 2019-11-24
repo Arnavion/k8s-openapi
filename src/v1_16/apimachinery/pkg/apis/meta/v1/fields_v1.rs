@@ -16,7 +16,7 @@ impl<'de> serde::Deserialize<'de> for FieldsV1 {
             type Value = FieldsV1;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "FieldsV1")
+                f.write_str("FieldsV1")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

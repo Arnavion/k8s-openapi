@@ -699,7 +699,7 @@ impl crate::Resource for ExternalAdmissionHookConfiguration {
 }
 
 impl crate::ListableResource for ExternalAdmissionHookConfiguration {
-    const LIST_KIND: &'static str = "ExternalAdmissionHookConfigurationList";
+    const LIST_KIND: &'static str = concat!("ExternalAdmissionHookConfiguration", "List");
 }
 
 impl crate::Metadata for ExternalAdmissionHookConfiguration {
@@ -729,7 +729,7 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -753,7 +753,7 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
             type Value = ExternalAdmissionHookConfiguration;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ExternalAdmissionHookConfiguration")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -788,7 +788,7 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
         }
 
         deserializer.deserialize_struct(
-            "ExternalAdmissionHookConfiguration",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -803,7 +803,7 @@ impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
 impl serde::Serialize for ExternalAdmissionHookConfiguration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "ExternalAdmissionHookConfiguration",
+            <Self as crate::Resource>::KIND,
             2 +
             self.external_admission_hooks.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),

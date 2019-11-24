@@ -43,7 +43,7 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -69,7 +69,7 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
             type Value = SubjectAccessReviewSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct SubjectAccessReviewSpec")
+                f.write_str("SubjectAccessReviewSpec")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

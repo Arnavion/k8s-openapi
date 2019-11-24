@@ -9,8 +9,7 @@ pub struct PatchOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
-
-impl PatchOptional<'_> {
+impl<'a> PatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
     ///
@@ -19,11 +18,11 @@ impl PatchOptional<'_> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(dry_run) = self.dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
+        if let Some(value) = &self.dry_run {
+            __query_pairs.append_pair("dryRun", value);
         }
-        if let Some(pretty) = self.pretty {
-            __query_pairs.append_pair("pretty", pretty);
+        if let Some(value) = &self.pretty {
+            __query_pairs.append_pair("pretty", value);
         }
     }
 }

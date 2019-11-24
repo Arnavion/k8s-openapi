@@ -11,7 +11,7 @@ impl<'de> serde::Deserialize<'de> for MicroTime {
             type Value = MicroTime;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "MicroTime")
+                f.write_str("MicroTime")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

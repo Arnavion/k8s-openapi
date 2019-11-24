@@ -35,7 +35,7 @@ impl<'de> serde::Deserialize<'de> for Taint {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for Taint {
             type Value = Taint;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Taint")
+                f.write_str("Taint")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

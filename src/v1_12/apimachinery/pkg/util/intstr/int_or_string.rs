@@ -21,7 +21,7 @@ impl<'de> serde::Deserialize<'de> for IntOrString {
             type Value = IntOrString;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "enum IntOrString")
+                write!(formatter, "IntOrString")
             }
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: serde::de::Error {

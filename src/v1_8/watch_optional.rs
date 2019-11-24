@@ -21,8 +21,7 @@ pub struct WatchOptional<'a> {
     /// Timeout for the list/watch call.
     pub timeout_seconds: Option<i64>,
 }
-
-impl WatchOptional<'_> {
+impl<'a> WatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
     ///
@@ -31,23 +30,23 @@ impl WatchOptional<'_> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(field_selector) = self.field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
+        if let Some(value) = &self.field_selector {
+            __query_pairs.append_pair("fieldSelector", value);
         }
-        if let Some(include_uninitialized) = self.include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        if let Some(value) = &self.include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &value.to_string());
         }
-        if let Some(label_selector) = self.label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
+        if let Some(value) = &self.label_selector {
+            __query_pairs.append_pair("labelSelector", value);
         }
-        if let Some(pretty) = self.pretty {
-            __query_pairs.append_pair("pretty", pretty);
+        if let Some(value) = &self.pretty {
+            __query_pairs.append_pair("pretty", value);
         }
-        if let Some(resource_version) = self.resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
+        if let Some(value) = &self.resource_version {
+            __query_pairs.append_pair("resourceVersion", value);
         }
-        if let Some(timeout_seconds) = self.timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        if let Some(value) = &self.timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &value.to_string());
         }
         __query_pairs.append_pair("watch", "true");
     }

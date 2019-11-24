@@ -893,7 +893,7 @@ impl crate::Resource for PodTemplate {
 }
 
 impl crate::ListableResource for PodTemplate {
-    const LIST_KIND: &'static str = "PodTemplateList";
+    const LIST_KIND: &'static str = concat!("PodTemplate", "List");
 }
 
 impl crate::Metadata for PodTemplate {
@@ -923,7 +923,7 @@ impl<'de> serde::Deserialize<'de> for PodTemplate {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -947,7 +947,7 @@ impl<'de> serde::Deserialize<'de> for PodTemplate {
             type Value = PodTemplate;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct PodTemplate")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -982,7 +982,7 @@ impl<'de> serde::Deserialize<'de> for PodTemplate {
         }
 
         deserializer.deserialize_struct(
-            "PodTemplate",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -997,7 +997,7 @@ impl<'de> serde::Deserialize<'de> for PodTemplate {
 impl serde::Serialize for PodTemplate {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "PodTemplate",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.template.as_ref().map_or(0, |_| 1),

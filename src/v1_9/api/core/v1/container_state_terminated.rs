@@ -47,7 +47,7 @@ impl<'de> serde::Deserialize<'de> for ContainerStateTerminated {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -74,7 +74,7 @@ impl<'de> serde::Deserialize<'de> for ContainerStateTerminated {
             type Value = ContainerStateTerminated;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ContainerStateTerminated")
+                f.write_str("ContainerStateTerminated")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

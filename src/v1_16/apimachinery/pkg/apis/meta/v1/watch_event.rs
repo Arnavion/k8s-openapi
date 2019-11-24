@@ -34,7 +34,7 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -66,7 +66,7 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
                     type Value = WatchEventType;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("watch event type")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -94,7 +94,7 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
             type Value = WatchEvent<T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct WatchEvent")
+                f.write_str("WatchEvent")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

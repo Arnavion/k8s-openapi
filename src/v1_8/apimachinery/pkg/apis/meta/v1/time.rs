@@ -11,7 +11,7 @@ impl<'de> serde::Deserialize<'de> for Time {
             type Value = Time;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "Time")
+                f.write_str("Time")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

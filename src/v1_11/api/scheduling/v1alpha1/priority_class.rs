@@ -732,7 +732,7 @@ impl crate::Resource for PriorityClass {
 }
 
 impl crate::ListableResource for PriorityClass {
-    const LIST_KIND: &'static str = "PriorityClassList";
+    const LIST_KIND: &'static str = concat!("PriorityClass", "List");
 }
 
 impl crate::Metadata for PriorityClass {
@@ -764,7 +764,7 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -790,7 +790,7 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
             type Value = PriorityClass;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct PriorityClass")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -831,7 +831,7 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
         }
 
         deserializer.deserialize_struct(
-            "PriorityClass",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -848,7 +848,7 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
 impl serde::Serialize for PriorityClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "PriorityClass",
+            <Self as crate::Resource>::KIND,
             3 +
             self.description.as_ref().map_or(0, |_| 1) +
             self.global_default.as_ref().map_or(0, |_| 1) +

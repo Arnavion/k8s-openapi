@@ -958,7 +958,7 @@ impl crate::Resource for Event {
 }
 
 impl crate::ListableResource for Event {
-    const LIST_KIND: &'static str = "EventList";
+    const LIST_KIND: &'static str = concat!("Event", "List");
 }
 
 impl crate::Metadata for Event {
@@ -1001,7 +1001,7 @@ impl<'de> serde::Deserialize<'de> for Event {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -1038,7 +1038,7 @@ impl<'de> serde::Deserialize<'de> for Event {
             type Value = Event;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Event")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1112,7 +1112,7 @@ impl<'de> serde::Deserialize<'de> for Event {
         }
 
         deserializer.deserialize_struct(
-            "Event",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1140,7 +1140,7 @@ impl<'de> serde::Deserialize<'de> for Event {
 impl serde::Serialize for Event {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Event",
+            <Self as crate::Resource>::KIND,
             3 +
             self.action.as_ref().map_or(0, |_| 1) +
             self.deprecated_count.as_ref().map_or(0, |_| 1) +

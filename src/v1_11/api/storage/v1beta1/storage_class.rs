@@ -746,7 +746,7 @@ impl crate::Resource for StorageClass {
 }
 
 impl crate::ListableResource for StorageClass {
-    const LIST_KIND: &'static str = "StorageClassList";
+    const LIST_KIND: &'static str = concat!("StorageClass", "List");
 }
 
 impl crate::Metadata for StorageClass {
@@ -782,7 +782,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -812,7 +812,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
             type Value = StorageClass;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct StorageClass")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -865,7 +865,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
         }
 
         deserializer.deserialize_struct(
-            "StorageClass",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -886,7 +886,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
 impl serde::Serialize for StorageClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "StorageClass",
+            <Self as crate::Resource>::KIND,
             3 +
             self.allow_volume_expansion.as_ref().map_or(0, |_| 1) +
             self.allowed_topologies.as_ref().map_or(0, |_| 1) +

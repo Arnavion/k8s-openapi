@@ -15,8 +15,7 @@ pub struct PatchOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
-
-impl PatchOptional<'_> {
+impl<'a> PatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
     ///
@@ -25,17 +24,17 @@ impl PatchOptional<'_> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(dry_run) = self.dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
+        if let Some(value) = &self.dry_run {
+            __query_pairs.append_pair("dryRun", value);
         }
-        if let Some(field_manager) = self.field_manager {
-            __query_pairs.append_pair("fieldManager", field_manager);
+        if let Some(value) = &self.field_manager {
+            __query_pairs.append_pair("fieldManager", value);
         }
-        if let Some(force) = self.force {
-            __query_pairs.append_pair("force", &force.to_string());
+        if let Some(value) = &self.force {
+            __query_pairs.append_pair("force", &value.to_string());
         }
-        if let Some(pretty) = self.pretty {
-            __query_pairs.append_pair("pretty", pretty);
+        if let Some(value) = &self.pretty {
+            __query_pairs.append_pair("pretty", value);
         }
     }
 }

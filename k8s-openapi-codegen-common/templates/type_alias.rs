@@ -1,0 +1,1 @@
+type {type_name} = {alias_type_name};

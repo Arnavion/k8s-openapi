@@ -956,7 +956,7 @@ impl crate::Resource for ConfigMap {
 }
 
 impl crate::ListableResource for ConfigMap {
-    const LIST_KIND: &'static str = "ConfigMapList";
+    const LIST_KIND: &'static str = concat!("ConfigMap", "List");
 }
 
 impl crate::Metadata for ConfigMap {
@@ -987,7 +987,7 @@ impl<'de> serde::Deserialize<'de> for ConfigMap {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -1012,7 +1012,7 @@ impl<'de> serde::Deserialize<'de> for ConfigMap {
             type Value = ConfigMap;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ConfigMap")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1050,7 +1050,7 @@ impl<'de> serde::Deserialize<'de> for ConfigMap {
         }
 
         deserializer.deserialize_struct(
-            "ConfigMap",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1066,7 +1066,7 @@ impl<'de> serde::Deserialize<'de> for ConfigMap {
 impl serde::Serialize for ConfigMap {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "ConfigMap",
+            <Self as crate::Resource>::KIND,
             2 +
             self.binary_data.as_ref().map_or(0, |_| 1) +
             self.data.as_ref().map_or(0, |_| 1) +

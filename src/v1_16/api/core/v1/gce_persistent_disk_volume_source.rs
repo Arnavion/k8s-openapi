@@ -37,7 +37,7 @@ impl<'de> serde::Deserialize<'de> for GCEPersistentDiskVolumeSource {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -61,7 +61,7 @@ impl<'de> serde::Deserialize<'de> for GCEPersistentDiskVolumeSource {
             type Value = GCEPersistentDiskVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct GCEPersistentDiskVolumeSource")
+                f.write_str("GCEPersistentDiskVolumeSource")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

@@ -60,7 +60,7 @@ impl<'de> serde::Deserialize<'de> for Status {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -88,7 +88,7 @@ impl<'de> serde::Deserialize<'de> for Status {
             type Value = Status;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Status")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -135,7 +135,7 @@ impl<'de> serde::Deserialize<'de> for Status {
         }
 
         deserializer.deserialize_struct(
-            "Status",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -154,7 +154,7 @@ impl<'de> serde::Deserialize<'de> for Status {
 impl serde::Serialize for Status {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Status",
+            <Self as crate::Resource>::KIND,
             2 +
             self.code.as_ref().map_or(0, |_| 1) +
             self.details.as_ref().map_or(0, |_| 1) +

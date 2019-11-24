@@ -899,7 +899,7 @@ impl crate::Resource for ServiceAccount {
 }
 
 impl crate::ListableResource for ServiceAccount {
-    const LIST_KIND: &'static str = "ServiceAccountList";
+    const LIST_KIND: &'static str = concat!("ServiceAccount", "List");
 }
 
 impl crate::Metadata for ServiceAccount {
@@ -931,7 +931,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -957,7 +957,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
             type Value = ServiceAccount;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ServiceAccount")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -998,7 +998,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
         }
 
         deserializer.deserialize_struct(
-            "ServiceAccount",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1015,7 +1015,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
 impl serde::Serialize for ServiceAccount {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "ServiceAccount",
+            <Self as crate::Resource>::KIND,
             2 +
             self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
             self.image_pull_secrets.as_ref().map_or(0, |_| 1) +

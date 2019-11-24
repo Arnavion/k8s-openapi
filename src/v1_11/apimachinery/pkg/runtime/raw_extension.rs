@@ -39,7 +39,7 @@ impl<'de> serde::Deserialize<'de> for RawExtension {
             type Value = RawExtension;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "RawExtension")
+                f.write_str("RawExtension")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

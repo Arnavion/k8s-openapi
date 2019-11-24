@@ -717,7 +717,7 @@ impl crate::Resource for ClusterRoleBinding {
 }
 
 impl crate::ListableResource for ClusterRoleBinding {
-    const LIST_KIND: &'static str = "ClusterRoleBindingList";
+    const LIST_KIND: &'static str = concat!("ClusterRoleBinding", "List");
 }
 
 impl crate::Metadata for ClusterRoleBinding {
@@ -748,7 +748,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -773,7 +773,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
             type Value = ClusterRoleBinding;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ClusterRoleBinding")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -811,7 +811,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
         }
 
         deserializer.deserialize_struct(
-            "ClusterRoleBinding",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -827,7 +827,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
 impl serde::Serialize for ClusterRoleBinding {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "ClusterRoleBinding",
+            <Self as crate::Resource>::KIND,
             3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.subjects.as_ref().map_or(0, |_| 1),

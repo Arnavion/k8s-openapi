@@ -1213,7 +1213,7 @@ impl crate::Resource for Deployment {
 }
 
 impl crate::ListableResource for Deployment {
-    const LIST_KIND: &'static str = "DeploymentList";
+    const LIST_KIND: &'static str = concat!("Deployment", "List");
 }
 
 impl crate::Metadata for Deployment {
@@ -1244,7 +1244,7 @@ impl<'de> serde::Deserialize<'de> for Deployment {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -1269,7 +1269,7 @@ impl<'de> serde::Deserialize<'de> for Deployment {
             type Value = Deployment;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Deployment")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1307,7 +1307,7 @@ impl<'de> serde::Deserialize<'de> for Deployment {
         }
 
         deserializer.deserialize_struct(
-            "Deployment",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1323,7 +1323,7 @@ impl<'de> serde::Deserialize<'de> for Deployment {
 impl serde::Serialize for Deployment {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Deployment",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

@@ -759,7 +759,7 @@ impl crate::Resource for ValidatingWebhookConfiguration {
 }
 
 impl crate::ListableResource for ValidatingWebhookConfiguration {
-    const LIST_KIND: &'static str = "ValidatingWebhookConfigurationList";
+    const LIST_KIND: &'static str = concat!("ValidatingWebhookConfiguration", "List");
 }
 
 impl crate::Metadata for ValidatingWebhookConfiguration {
@@ -789,7 +789,7 @@ impl<'de> serde::Deserialize<'de> for ValidatingWebhookConfiguration {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -813,7 +813,7 @@ impl<'de> serde::Deserialize<'de> for ValidatingWebhookConfiguration {
             type Value = ValidatingWebhookConfiguration;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct ValidatingWebhookConfiguration")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -848,7 +848,7 @@ impl<'de> serde::Deserialize<'de> for ValidatingWebhookConfiguration {
         }
 
         deserializer.deserialize_struct(
-            "ValidatingWebhookConfiguration",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -863,7 +863,7 @@ impl<'de> serde::Deserialize<'de> for ValidatingWebhookConfiguration {
 impl serde::Serialize for ValidatingWebhookConfiguration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "ValidatingWebhookConfiguration",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.webhooks.as_ref().map_or(0, |_| 1),

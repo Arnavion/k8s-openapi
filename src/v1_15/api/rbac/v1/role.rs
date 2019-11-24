@@ -941,7 +941,7 @@ impl crate::Resource for Role {
 }
 
 impl crate::ListableResource for Role {
-    const LIST_KIND: &'static str = "RoleList";
+    const LIST_KIND: &'static str = concat!("Role", "List");
 }
 
 impl crate::Metadata for Role {
@@ -971,7 +971,7 @@ impl<'de> serde::Deserialize<'de> for Role {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -995,7 +995,7 @@ impl<'de> serde::Deserialize<'de> for Role {
             type Value = Role;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Role")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1030,7 +1030,7 @@ impl<'de> serde::Deserialize<'de> for Role {
         }
 
         deserializer.deserialize_struct(
-            "Role",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1045,7 +1045,7 @@ impl<'de> serde::Deserialize<'de> for Role {
 impl serde::Serialize for Role {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Role",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.rules.as_ref().map_or(0, |_| 1),

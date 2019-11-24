@@ -44,7 +44,7 @@ impl<'de, T> serde::Deserialize<'de> for List<T> where T: serde::Deserialize<'de
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -68,7 +68,7 @@ impl<'de, T> serde::Deserialize<'de> for List<T> where T: serde::Deserialize<'de
             type Value = List<T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct {}", <Self::Value as crate::Resource>::KIND)
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

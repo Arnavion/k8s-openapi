@@ -12,7 +12,7 @@ impl<'de> serde::Deserialize<'de> for JSON {
             type Value = JSON;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "JSON")
+                f.write_str("JSON")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

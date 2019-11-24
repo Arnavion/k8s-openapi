@@ -753,7 +753,7 @@ impl crate::Resource for PodSecurityPolicy {
 }
 
 impl crate::ListableResource for PodSecurityPolicy {
-    const LIST_KIND: &'static str = "PodSecurityPolicyList";
+    const LIST_KIND: &'static str = concat!("PodSecurityPolicy", "List");
 }
 
 impl crate::Metadata for PodSecurityPolicy {
@@ -783,7 +783,7 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -807,7 +807,7 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
             type Value = PodSecurityPolicy;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct PodSecurityPolicy")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -842,7 +842,7 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
         }
 
         deserializer.deserialize_struct(
-            "PodSecurityPolicy",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -857,7 +857,7 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
 impl serde::Serialize for PodSecurityPolicy {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "PodSecurityPolicy",
+            <Self as crate::Resource>::KIND,
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),

@@ -42,7 +42,7 @@ impl<'de> serde::Deserialize<'de> for Quantity {
             type Value = Quantity;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "Quantity")
+                f.write_str("Quantity")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

@@ -12,7 +12,7 @@ impl<'de> serde::Deserialize<'de> for CustomResourceSubresourceStatus {
             type Value = CustomResourceSubresourceStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "CustomResourceSubresourceStatus")
+                f.write_str("CustomResourceSubresourceStatus")
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {

@@ -765,7 +765,7 @@ impl crate::Resource for RuntimeClass {
 }
 
 impl crate::ListableResource for RuntimeClass {
-    const LIST_KIND: &'static str = "RuntimeClassList";
+    const LIST_KIND: &'static str = concat!("RuntimeClass", "List");
 }
 
 impl crate::Metadata for RuntimeClass {
@@ -797,7 +797,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -823,7 +823,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
             type Value = RuntimeClass;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct RuntimeClass")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -864,7 +864,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
         }
 
         deserializer.deserialize_struct(
-            "RuntimeClass",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -881,7 +881,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
 impl serde::Serialize for RuntimeClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "RuntimeClass",
+            <Self as crate::Resource>::KIND,
             3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.overhead.as_ref().map_or(0, |_| 1) +

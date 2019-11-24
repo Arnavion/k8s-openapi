@@ -926,7 +926,7 @@ impl crate::Resource for Secret {
 }
 
 impl crate::ListableResource for Secret {
-    const LIST_KIND: &'static str = "SecretList";
+    const LIST_KIND: &'static str = concat!("Secret", "List");
 }
 
 impl crate::Metadata for Secret {
@@ -958,7 +958,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -984,7 +984,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
             type Value = Secret;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct Secret")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -1025,7 +1025,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
         }
 
         deserializer.deserialize_struct(
-            "Secret",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -1042,7 +1042,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
 impl serde::Serialize for Secret {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "Secret",
+            <Self as crate::Resource>::KIND,
             2 +
             self.data.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +

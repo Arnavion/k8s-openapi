@@ -105,7 +105,7 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -136,7 +136,7 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
             type Value = MutatingWebhook;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct MutatingWebhook")
+                f.write_str("MutatingWebhook")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

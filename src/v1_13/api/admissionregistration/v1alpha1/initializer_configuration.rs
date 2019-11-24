@@ -753,7 +753,7 @@ impl crate::Resource for InitializerConfiguration {
 }
 
 impl crate::ListableResource for InitializerConfiguration {
-    const LIST_KIND: &'static str = "InitializerConfigurationList";
+    const LIST_KIND: &'static str = concat!("InitializerConfiguration", "List");
 }
 
 impl crate::Metadata for InitializerConfiguration {
@@ -783,7 +783,7 @@ impl<'de> serde::Deserialize<'de> for InitializerConfiguration {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -807,7 +807,7 @@ impl<'de> serde::Deserialize<'de> for InitializerConfiguration {
             type Value = InitializerConfiguration;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct InitializerConfiguration")
+                f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
@@ -842,7 +842,7 @@ impl<'de> serde::Deserialize<'de> for InitializerConfiguration {
         }
 
         deserializer.deserialize_struct(
-            "InitializerConfiguration",
+            <Self as crate::Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -857,7 +857,7 @@ impl<'de> serde::Deserialize<'de> for InitializerConfiguration {
 impl serde::Serialize for InitializerConfiguration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
-            "InitializerConfiguration",
+            <Self as crate::Resource>::KIND,
             2 +
             self.initializers.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),

@@ -35,7 +35,7 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimStatus {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -59,7 +59,7 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimStatus {
             type Value = PersistentVolumeClaimStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct PersistentVolumeClaimStatus")
+                f.write_str("PersistentVolumeClaimStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {

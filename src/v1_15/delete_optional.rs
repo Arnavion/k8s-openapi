@@ -25,7 +25,7 @@ pub struct DeleteOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-impl serde::Serialize for DeleteOptional<'_> {
+impl<'a> serde::Serialize for DeleteOptional<'a> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeleteOptional",

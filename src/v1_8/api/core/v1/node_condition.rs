@@ -43,7 +43,7 @@ impl<'de> serde::Deserialize<'de> for NodeCondition {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, "field identifier")
+                        f.write_str("field identifier")
                     }
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
@@ -69,7 +69,7 @@ impl<'de> serde::Deserialize<'de> for NodeCondition {
             type Value = NodeCondition;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "struct NodeCondition")
+                f.write_str("NodeCondition")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
