@@ -161,7 +161,7 @@ impl VolumeAttachment {
 #[derive(Debug)]
 pub enum DeleteCollectionVolumeAttachmentResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::storage::v1alpha1::VolumeAttachmentList),
+    OkValue(crate::List<crate::api::storage::v1alpha1::VolumeAttachment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -331,7 +331,7 @@ impl VolumeAttachment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListVolumeAttachmentResponse {
-    Ok(crate::api::storage::v1alpha1::VolumeAttachmentList),
+    Ok(crate::List<crate::api::storage::v1alpha1::VolumeAttachment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

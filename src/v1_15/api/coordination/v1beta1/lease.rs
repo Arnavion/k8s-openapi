@@ -182,7 +182,7 @@ impl Lease {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLeaseResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::coordination::v1beta1::LeaseList),
+    OkValue(crate::List<crate::api::coordination::v1beta1::Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -367,7 +367,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLeaseForAllNamespacesResponse {
-    Ok(crate::api::coordination::v1beta1::LeaseList),
+    Ok(crate::List<crate::api::coordination::v1beta1::Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -444,7 +444,7 @@ impl Lease {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLeaseResponse {
-    Ok(crate::api::coordination::v1beta1::LeaseList),
+    Ok(crate::List<crate::api::coordination::v1beta1::Lease>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -18,9 +18,6 @@ pub use self::daemon_set::DaemonSet;
 #[cfg(feature = "api")] pub use self::daemon_set::WatchDaemonSetForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::daemon_set::WatchNamespacedDaemonSetResponse;
 
-mod daemon_set_list;
-pub use self::daemon_set_list::DaemonSetList;
-
 mod daemon_set_spec;
 pub use self::daemon_set_spec::DaemonSetSpec;
 
@@ -48,9 +45,6 @@ pub use self::deployment::Deployment;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
-
-mod deployment_list;
-pub use self::deployment_list::DeploymentList;
 
 mod deployment_rollback;
 pub use self::deployment_rollback::DeploymentRollback;
@@ -102,9 +96,6 @@ pub use self::ingress::Ingress;
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;
 
-mod ingress_list;
-pub use self::ingress_list::IngressList;
-
 mod ingress_rule;
 pub use self::ingress_rule::IngressRule;
 
@@ -136,9 +127,6 @@ pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;
 mod network_policy_ingress_rule;
 pub use self::network_policy_ingress_rule::NetworkPolicyIngressRule;
 
-mod network_policy_list;
-pub use self::network_policy_list::NetworkPolicyList;
-
 mod network_policy_peer;
 pub use self::network_policy_peer::NetworkPolicyPeer;
 
@@ -158,9 +146,6 @@ pub use self::pod_security_policy::PodSecurityPolicy;
 #[cfg(feature = "api")] pub use self::pod_security_policy::{ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse};
 #[cfg(feature = "api")] pub use self::pod_security_policy::{ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse};
 #[cfg(feature = "api")] pub use self::pod_security_policy::WatchPodSecurityPolicyResponse;
-
-mod pod_security_policy_list;
-pub use self::pod_security_policy_list::PodSecurityPolicyList;
 
 mod pod_security_policy_spec;
 pub use self::pod_security_policy_spec::PodSecurityPolicySpec;
@@ -183,9 +168,6 @@ pub use self::replica_set::ReplicaSet;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
-
-mod replica_set_list;
-pub use self::replica_set_list::ReplicaSetList;
 
 mod replica_set_spec;
 pub use self::replica_set_spec::ReplicaSetSpec;

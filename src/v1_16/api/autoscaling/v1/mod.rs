@@ -18,9 +18,6 @@ pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
 #[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::WatchHorizontalPodAutoscalerForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::WatchNamespacedHorizontalPodAutoscalerResponse;
 
-mod horizontal_pod_autoscaler_list;
-pub use self::horizontal_pod_autoscaler_list::HorizontalPodAutoscalerList;
-
 mod horizontal_pod_autoscaler_spec;
 pub use self::horizontal_pod_autoscaler_spec::HorizontalPodAutoscalerSpec;
 

@@ -174,7 +174,7 @@ impl PriorityClass {
 #[derive(Debug)]
 pub enum DeleteCollectionPriorityClassResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::scheduling::v1::PriorityClassList),
+    OkValue(crate::List<crate::api::scheduling::v1::PriorityClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -353,7 +353,7 @@ impl PriorityClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPriorityClassResponse {
-    Ok(crate::api::scheduling::v1::PriorityClassList),
+    Ok(crate::List<crate::api::scheduling::v1::PriorityClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

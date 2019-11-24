@@ -173,7 +173,7 @@ impl CronJob {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedCronJobResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::batch::v1beta1::CronJobList),
+    OkValue(crate::List<crate::api::batch::v1beta1::CronJob>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -349,7 +349,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCronJobForAllNamespacesResponse {
-    Ok(crate::api::batch::v1beta1::CronJobList),
+    Ok(crate::List<crate::api::batch::v1beta1::CronJob>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl CronJob {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedCronJobResponse {
-    Ok(crate::api::batch::v1beta1::CronJobList),
+    Ok(crate::List<crate::api::batch::v1beta1::CronJob>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

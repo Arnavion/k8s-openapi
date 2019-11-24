@@ -173,7 +173,7 @@ impl ReplicationController {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicationControllerResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::ReplicationControllerList),
+    OkValue(crate::List<crate::api::core::v1::ReplicationController>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -356,7 +356,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedReplicationControllerResponse {
-    Ok(crate::api::core::v1::ReplicationControllerList),
+    Ok(crate::List<crate::api::core::v1::ReplicationController>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl ReplicationController {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListReplicationControllerForAllNamespacesResponse {
-    Ok(crate::api::core::v1::ReplicationControllerList),
+    Ok(crate::List<crate::api::core::v1::ReplicationController>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

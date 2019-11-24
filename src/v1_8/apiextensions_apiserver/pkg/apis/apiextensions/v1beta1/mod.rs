@@ -14,9 +14,6 @@ pub use self::custom_resource_definition::CustomResourceDefinition;
 mod custom_resource_definition_condition;
 pub use self::custom_resource_definition_condition::CustomResourceDefinitionCondition;
 
-mod custom_resource_definition_list;
-pub use self::custom_resource_definition_list::CustomResourceDefinitionList;
-
 mod custom_resource_definition_names;
 pub use self::custom_resource_definition_names::CustomResourceDefinitionNames;
 

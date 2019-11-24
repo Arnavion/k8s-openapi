@@ -223,7 +223,7 @@ impl Namespace {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespaceResponse {
-    Ok(crate::api::core::v1::NamespaceList),
+    Ok(crate::List<crate::api::core::v1::Namespace>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

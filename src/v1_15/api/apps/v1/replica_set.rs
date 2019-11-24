@@ -185,7 +185,7 @@ impl ReplicaSet {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicaSetResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::apps::v1::ReplicaSetList),
+    OkValue(crate::List<crate::api::apps::v1::ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -377,7 +377,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedReplicaSetResponse {
-    Ok(crate::api::apps::v1::ReplicaSetList),
+    Ok(crate::List<crate::api::apps::v1::ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -447,7 +447,7 @@ impl ReplicaSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListReplicaSetForAllNamespacesResponse {
-    Ok(crate::api::apps::v1::ReplicaSetList),
+    Ok(crate::List<crate::api::apps::v1::ReplicaSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

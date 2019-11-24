@@ -13,9 +13,6 @@ pub use self::mutating_webhook_configuration::MutatingWebhookConfiguration;
 #[cfg(feature = "api")] pub use self::mutating_webhook_configuration::{ReplaceMutatingWebhookConfigurationOptional, ReplaceMutatingWebhookConfigurationResponse};
 #[cfg(feature = "api")] pub use self::mutating_webhook_configuration::WatchMutatingWebhookConfigurationResponse;
 
-mod mutating_webhook_configuration_list;
-pub use self::mutating_webhook_configuration_list::MutatingWebhookConfigurationList;
-
 mod rule_with_operations;
 pub use self::rule_with_operations::RuleWithOperations;
 
@@ -35,9 +32,6 @@ pub use self::validating_webhook_configuration::ValidatingWebhookConfiguration;
 #[cfg(feature = "api")] pub use self::validating_webhook_configuration::{ReadValidatingWebhookConfigurationOptional, ReadValidatingWebhookConfigurationResponse};
 #[cfg(feature = "api")] pub use self::validating_webhook_configuration::{ReplaceValidatingWebhookConfigurationOptional, ReplaceValidatingWebhookConfigurationResponse};
 #[cfg(feature = "api")] pub use self::validating_webhook_configuration::WatchValidatingWebhookConfigurationResponse;
-
-mod validating_webhook_configuration_list;
-pub use self::validating_webhook_configuration_list::ValidatingWebhookConfigurationList;
 
 mod webhook_client_config;
 pub use self::webhook_client_config::WebhookClientConfig;

@@ -12,8 +12,5 @@ pub use self::event::Event;
 #[cfg(feature = "api")] pub use self::event::WatchEventForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::event::WatchNamespacedEventResponse;
 
-mod event_list;
-pub use self::event_list::EventList;
-
 mod event_series;
 pub use self::event_series::EventSeries;

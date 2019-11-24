@@ -12,9 +12,6 @@ pub use self::controller_revision::ControllerRevision;
 #[cfg(feature = "api")] pub use self::controller_revision::WatchControllerRevisionForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::controller_revision::WatchNamespacedControllerRevisionResponse;
 
-mod controller_revision_list;
-pub use self::controller_revision_list::ControllerRevisionList;
-
 mod daemon_set;
 pub use self::daemon_set::DaemonSet;
 #[cfg(feature = "api")] pub use self::daemon_set::{CreateNamespacedDaemonSetOptional, CreateNamespacedDaemonSetResponse};
@@ -30,9 +27,6 @@ pub use self::daemon_set::DaemonSet;
 #[cfg(feature = "api")] pub use self::daemon_set::{ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse};
 #[cfg(feature = "api")] pub use self::daemon_set::WatchDaemonSetForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::daemon_set::WatchNamespacedDaemonSetResponse;
-
-mod daemon_set_list;
-pub use self::daemon_set_list::DaemonSetList;
 
 mod daemon_set_spec;
 pub use self::daemon_set_spec::DaemonSetSpec;
@@ -62,9 +56,6 @@ pub use self::deployment::Deployment;
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
 
-mod deployment_list;
-pub use self::deployment_list::DeploymentList;
-
 mod deployment_spec;
 pub use self::deployment_spec::DeploymentSpec;
 
@@ -92,9 +83,6 @@ pub use self::replica_set::ReplicaSet;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
-
-mod replica_set_list;
-pub use self::replica_set_list::ReplicaSetList;
 
 mod replica_set_spec;
 pub use self::replica_set_spec::ReplicaSetSpec;
@@ -144,9 +132,6 @@ pub use self::stateful_set::StatefulSet;
 #[cfg(feature = "api")] pub use self::stateful_set::{ReplaceNamespacedStatefulSetStatusOptional, ReplaceNamespacedStatefulSetStatusResponse};
 #[cfg(feature = "api")] pub use self::stateful_set::WatchNamespacedStatefulSetResponse;
 #[cfg(feature = "api")] pub use self::stateful_set::WatchStatefulSetForAllNamespacesResponse;
-
-mod stateful_set_list;
-pub use self::stateful_set_list::StatefulSetList;
 
 mod stateful_set_spec;
 pub use self::stateful_set_spec::StatefulSetSpec;

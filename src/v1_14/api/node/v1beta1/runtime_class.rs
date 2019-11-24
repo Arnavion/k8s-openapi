@@ -168,7 +168,7 @@ impl RuntimeClass {
 #[derive(Debug)]
 pub enum DeleteCollectionRuntimeClassResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::node::v1beta1::RuntimeClassList),
+    OkValue(crate::List<crate::api::node::v1beta1::RuntimeClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl RuntimeClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRuntimeClassResponse {
-    Ok(crate::api::node::v1beta1::RuntimeClassList),
+    Ok(crate::List<crate::api::node::v1beta1::RuntimeClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

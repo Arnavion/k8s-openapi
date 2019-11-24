@@ -10,9 +10,6 @@ pub use self::csi_driver::CSIDriver;
 #[cfg(feature = "api")] pub use self::csi_driver::{ReplaceCSIDriverOptional, ReplaceCSIDriverResponse};
 #[cfg(feature = "api")] pub use self::csi_driver::WatchCSIDriverResponse;
 
-mod csi_driver_list;
-pub use self::csi_driver_list::CSIDriverList;
-
 mod csi_driver_spec;
 pub use self::csi_driver_spec::CSIDriverSpec;
 
@@ -30,9 +27,6 @@ pub use self::csi_node::CSINode;
 mod csi_node_driver;
 pub use self::csi_node_driver::CSINodeDriver;
 
-mod csi_node_list;
-pub use self::csi_node_list::CSINodeList;
-
 mod csi_node_spec;
 pub use self::csi_node_spec::CSINodeSpec;
 
@@ -47,9 +41,6 @@ pub use self::storage_class::StorageClass;
 #[cfg(feature = "api")] pub use self::storage_class::{ReplaceStorageClassOptional, ReplaceStorageClassResponse};
 #[cfg(feature = "api")] pub use self::storage_class::WatchStorageClassResponse;
 
-mod storage_class_list;
-pub use self::storage_class_list::StorageClassList;
-
 mod volume_attachment;
 pub use self::volume_attachment::VolumeAttachment;
 #[cfg(feature = "api")] pub use self::volume_attachment::{CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse};
@@ -60,9 +51,6 @@ pub use self::volume_attachment::VolumeAttachment;
 #[cfg(feature = "api")] pub use self::volume_attachment::{ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse};
 #[cfg(feature = "api")] pub use self::volume_attachment::{ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse};
 #[cfg(feature = "api")] pub use self::volume_attachment::WatchVolumeAttachmentResponse;
-
-mod volume_attachment_list;
-pub use self::volume_attachment_list::VolumeAttachmentList;
 
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;

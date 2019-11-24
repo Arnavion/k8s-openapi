@@ -185,7 +185,7 @@ impl Deployment {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDeploymentResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::extensions::v1beta1::DeploymentList),
+    OkValue(crate::List<crate::api::extensions::v1beta1::Deployment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -370,7 +370,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListDeploymentForAllNamespacesResponse {
-    Ok(crate::api::extensions::v1beta1::DeploymentList),
+    Ok(crate::List<crate::api::extensions::v1beta1::Deployment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -447,7 +447,7 @@ impl Deployment {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedDeploymentResponse {
-    Ok(crate::api::extensions::v1beta1::DeploymentList),
+    Ok(crate::List<crate::api::extensions::v1beta1::Deployment>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

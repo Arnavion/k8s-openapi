@@ -220,7 +220,7 @@ impl Event {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEventResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::events::v1beta1::EventList),
+    OkValue(crate::List<crate::api::events::v1beta1::Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -405,7 +405,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListEventForAllNamespacesResponse {
-    Ok(crate::api::events::v1beta1::EventList),
+    Ok(crate::List<crate::api::events::v1beta1::Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -482,7 +482,7 @@ impl Event {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedEventResponse {
-    Ok(crate::api::events::v1beta1::EventList),
+    Ok(crate::List<crate::api::events::v1beta1::Event>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

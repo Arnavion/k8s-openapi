@@ -9,6 +9,3 @@ pub use self::storage_class::StorageClass;
 #[cfg(feature = "api")] pub use self::storage_class::{ReadStorageClassOptional, ReadStorageClassResponse};
 #[cfg(feature = "api")] pub use self::storage_class::{ReplaceStorageClassOptional, ReplaceStorageClassResponse};
 #[cfg(feature = "api")] pub use self::storage_class::WatchStorageClassResponse;
-
-mod storage_class_list;
-pub use self::storage_class_list::StorageClassList;

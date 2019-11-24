@@ -182,7 +182,7 @@ impl LimitRange {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLimitRangeResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::LimitRangeList),
+    OkValue(crate::List<crate::api::core::v1::LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -367,7 +367,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListLimitRangeForAllNamespacesResponse {
-    Ok(crate::api::core::v1::LimitRangeList),
+    Ok(crate::List<crate::api::core::v1::LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -444,7 +444,7 @@ impl LimitRange {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedLimitRangeResponse {
-    Ok(crate::api::core::v1::LimitRangeList),
+    Ok(crate::List<crate::api::core::v1::LimitRange>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

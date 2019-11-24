@@ -173,7 +173,7 @@ impl PersistentVolumeClaim {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::PersistentVolumeClaimList),
+    OkValue(crate::List<crate::api::core::v1::PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -356,7 +356,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::List<crate::api::core::v1::PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl PersistentVolumeClaim {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPersistentVolumeClaimForAllNamespacesResponse {
-    Ok(crate::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::List<crate::api::core::v1::PersistentVolumeClaim>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

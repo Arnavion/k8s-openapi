@@ -246,7 +246,7 @@ impl ClusterRole {
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::rbac::v1alpha1::ClusterRoleList),
+    OkValue(crate::List<crate::api::rbac::v1alpha1::ClusterRole>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl ClusterRole {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleResponse {
-    Ok(crate::api::rbac::v1alpha1::ClusterRoleList),
+    Ok(crate::List<crate::api::rbac::v1alpha1::ClusterRole>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

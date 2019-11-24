@@ -182,7 +182,7 @@ impl Role {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedRoleResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::rbac::v1alpha1::RoleList),
+    OkValue(crate::List<crate::api::rbac::v1alpha1::Role>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -374,7 +374,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedRoleResponse {
-    Ok(crate::api::rbac::v1alpha1::RoleList),
+    Ok(crate::List<crate::api::rbac::v1alpha1::Role>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -444,7 +444,7 @@ impl Role {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListRoleForAllNamespacesResponse {
-    Ok(crate::api::rbac::v1alpha1::RoleList),
+    Ok(crate::List<crate::api::rbac::v1alpha1::Role>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -138,7 +138,7 @@ impl ExternalAdmissionHookConfiguration {
 #[derive(Debug)]
 pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    OkValue(crate::List<crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -308,7 +308,7 @@ impl ExternalAdmissionHookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListExternalAdmissionHookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    Ok(crate::List<crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

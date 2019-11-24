@@ -168,7 +168,7 @@ impl ValidatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
+    OkValue(crate::List<crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl ValidatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListValidatingWebhookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
+    Ok(crate::List<crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

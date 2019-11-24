@@ -24,9 +24,6 @@ pub use self::ingress::Ingress;
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;
 
-mod ingress_list;
-pub use self::ingress_list::IngressList;
-
 mod ingress_rule;
 pub use self::ingress_rule::IngressRule;
 

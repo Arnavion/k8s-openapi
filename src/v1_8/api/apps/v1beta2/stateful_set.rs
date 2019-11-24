@@ -157,7 +157,7 @@ impl StatefulSet {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedStatefulSetResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::apps::v1beta2::StatefulSetList),
+    OkValue(crate::List<crate::api::apps::v1beta2::StatefulSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -340,7 +340,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedStatefulSetResponse {
-    Ok(crate::api::apps::v1beta2::StatefulSetList),
+    Ok(crate::List<crate::api::apps::v1beta2::StatefulSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -410,7 +410,7 @@ impl StatefulSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListStatefulSetForAllNamespacesResponse {
-    Ok(crate::api::apps::v1beta2::StatefulSetList),
+    Ok(crate::List<crate::api::apps::v1beta2::StatefulSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

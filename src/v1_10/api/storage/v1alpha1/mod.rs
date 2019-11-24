@@ -10,9 +10,6 @@ pub use self::volume_attachment::VolumeAttachment;
 #[cfg(feature = "api")] pub use self::volume_attachment::{ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse};
 #[cfg(feature = "api")] pub use self::volume_attachment::WatchVolumeAttachmentResponse;
 
-mod volume_attachment_list;
-pub use self::volume_attachment_list::VolumeAttachmentList;
-
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;
 

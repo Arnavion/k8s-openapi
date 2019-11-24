@@ -21,9 +21,6 @@ pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;
 mod network_policy_ingress_rule;
 pub use self::network_policy_ingress_rule::NetworkPolicyIngressRule;
 
-mod network_policy_list;
-pub use self::network_policy_list::NetworkPolicyList;
-
 mod network_policy_peer;
 pub use self::network_policy_peer::NetworkPolicyPeer;
 

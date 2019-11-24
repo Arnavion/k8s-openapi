@@ -46,9 +46,6 @@ pub use self::component_status::ComponentStatus;
 #[cfg(feature = "api")] pub use self::component_status::{ReadComponentStatusOptional, ReadComponentStatusResponse};
 #[cfg(feature = "api")] pub use self::component_status::WatchComponentStatusResponse;
 
-mod component_status_list;
-pub use self::component_status_list::ComponentStatusList;
-
 mod config_map;
 pub use self::config_map::ConfigMap;
 #[cfg(feature = "api")] pub use self::config_map::{CreateNamespacedConfigMapOptional, CreateNamespacedConfigMapResponse};
@@ -67,9 +64,6 @@ pub use self::config_map_env_source::ConfigMapEnvSource;
 
 mod config_map_key_selector;
 pub use self::config_map_key_selector::ConfigMapKeySelector;
-
-mod config_map_list;
-pub use self::config_map_list::ConfigMapList;
 
 mod config_map_projection;
 pub use self::config_map_projection::ConfigMapProjection;
@@ -138,9 +132,6 @@ pub use self::endpoints::Endpoints;
 #[cfg(feature = "api")] pub use self::endpoints::WatchEndpointsForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::endpoints::WatchNamespacedEndpointsResponse;
 
-mod endpoints_list;
-pub use self::endpoints_list::EndpointsList;
-
 mod env_from_source;
 pub use self::env_from_source::EnvFromSource;
 
@@ -162,9 +153,6 @@ pub use self::event::Event;
 #[cfg(feature = "api")] pub use self::event::{ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse};
 #[cfg(feature = "api")] pub use self::event::WatchEventForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::event::WatchNamespacedEventResponse;
-
-mod event_list;
-pub use self::event_list::EventList;
 
 mod event_source;
 pub use self::event_source::EventSource;
@@ -230,9 +218,6 @@ pub use self::limit_range::LimitRange;
 mod limit_range_item;
 pub use self::limit_range_item::LimitRangeItem;
 
-mod limit_range_list;
-pub use self::limit_range_list::LimitRangeList;
-
 mod limit_range_spec;
 pub use self::limit_range_spec::LimitRangeSpec;
 
@@ -264,9 +249,6 @@ pub use self::namespace::Namespace;
 #[cfg(feature = "api")] pub use self::namespace::{ReplaceNamespaceFinalizeOptional, ReplaceNamespaceFinalizeResponse};
 #[cfg(feature = "api")] pub use self::namespace::{ReplaceNamespaceStatusOptional, ReplaceNamespaceStatusResponse};
 #[cfg(feature = "api")] pub use self::namespace::WatchNamespaceResponse;
-
-mod namespace_list;
-pub use self::namespace_list::NamespaceList;
 
 mod namespace_spec;
 pub use self::namespace_spec::NamespaceSpec;
@@ -322,9 +304,6 @@ pub use self::node_config_source::NodeConfigSource;
 
 mod node_daemon_endpoints;
 pub use self::node_daemon_endpoints::NodeDaemonEndpoints;
-
-mod node_list;
-pub use self::node_list::NodeList;
 
 mod node_selector;
 pub use self::node_selector::NodeSelector;
@@ -383,9 +362,6 @@ pub use self::persistent_volume_claim::PersistentVolumeClaim;
 mod persistent_volume_claim_condition;
 pub use self::persistent_volume_claim_condition::PersistentVolumeClaimCondition;
 
-mod persistent_volume_claim_list;
-pub use self::persistent_volume_claim_list::PersistentVolumeClaimList;
-
 mod persistent_volume_claim_spec;
 pub use self::persistent_volume_claim_spec::PersistentVolumeClaimSpec;
 
@@ -394,9 +370,6 @@ pub use self::persistent_volume_claim_status::PersistentVolumeClaimStatus;
 
 mod persistent_volume_claim_volume_source;
 pub use self::persistent_volume_claim_volume_source::PersistentVolumeClaimVolumeSource;
-
-mod persistent_volume_list;
-pub use self::persistent_volume_list::PersistentVolumeList;
 
 mod persistent_volume_spec;
 pub use self::persistent_volume_spec::PersistentVolumeSpec;
@@ -462,9 +435,6 @@ pub use self::pod_anti_affinity::PodAntiAffinity;
 mod pod_condition;
 pub use self::pod_condition::PodCondition;
 
-mod pod_list;
-pub use self::pod_list::PodList;
-
 mod pod_security_context;
 pub use self::pod_security_context::PodSecurityContext;
 
@@ -486,9 +456,6 @@ pub use self::pod_template::PodTemplate;
 #[cfg(feature = "api")] pub use self::pod_template::{ReplaceNamespacedPodTemplateOptional, ReplaceNamespacedPodTemplateResponse};
 #[cfg(feature = "api")] pub use self::pod_template::WatchNamespacedPodTemplateResponse;
 #[cfg(feature = "api")] pub use self::pod_template::WatchPodTemplateForAllNamespacesResponse;
-
-mod pod_template_list;
-pub use self::pod_template_list::PodTemplateList;
 
 mod pod_template_spec;
 pub use self::pod_template_spec::PodTemplateSpec;
@@ -530,9 +497,6 @@ pub use self::replication_controller::ReplicationController;
 mod replication_controller_condition;
 pub use self::replication_controller_condition::ReplicationControllerCondition;
 
-mod replication_controller_list;
-pub use self::replication_controller_list::ReplicationControllerList;
-
 mod replication_controller_spec;
 pub use self::replication_controller_spec::ReplicationControllerSpec;
 
@@ -557,9 +521,6 @@ pub use self::resource_quota::ResourceQuota;
 #[cfg(feature = "api")] pub use self::resource_quota::{ReplaceNamespacedResourceQuotaStatusOptional, ReplaceNamespacedResourceQuotaStatusResponse};
 #[cfg(feature = "api")] pub use self::resource_quota::WatchNamespacedResourceQuotaResponse;
 #[cfg(feature = "api")] pub use self::resource_quota::WatchResourceQuotaForAllNamespacesResponse;
-
-mod resource_quota_list;
-pub use self::resource_quota_list::ResourceQuotaList;
 
 mod resource_quota_spec;
 pub use self::resource_quota_spec::ResourceQuotaSpec;
@@ -597,9 +558,6 @@ pub use self::secret_env_source::SecretEnvSource;
 
 mod secret_key_selector;
 pub use self::secret_key_selector::SecretKeySelector;
-
-mod secret_list;
-pub use self::secret_list::SecretList;
 
 mod secret_projection;
 pub use self::secret_projection::SecretProjection;
@@ -660,12 +618,6 @@ pub use self::service_account::ServiceAccount;
 #[cfg(feature = "api")] pub use self::service_account::{ReplaceNamespacedServiceAccountOptional, ReplaceNamespacedServiceAccountResponse};
 #[cfg(feature = "api")] pub use self::service_account::WatchNamespacedServiceAccountResponse;
 #[cfg(feature = "api")] pub use self::service_account::WatchServiceAccountForAllNamespacesResponse;
-
-mod service_account_list;
-pub use self::service_account_list::ServiceAccountList;
-
-mod service_list;
-pub use self::service_list::ServiceList;
 
 mod service_port;
 pub use self::service_port::ServicePort;

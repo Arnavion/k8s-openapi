@@ -264,7 +264,7 @@ impl CSIDriver {
 #[derive(Debug)]
 pub enum DeleteCollectionCSIDriverResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::storage::v1beta1::CSIDriverList),
+    OkValue(crate::List<crate::api::storage::v1beta1::CSIDriver>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl CSIDriver {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCSIDriverResponse {
-    Ok(crate::api::storage::v1beta1::CSIDriverList),
+    Ok(crate::List<crate::api::storage::v1beta1::CSIDriver>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

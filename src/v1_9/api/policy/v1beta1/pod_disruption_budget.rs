@@ -172,7 +172,7 @@ impl PodDisruptionBudget {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::policy::v1beta1::PodDisruptionBudgetList),
+    OkValue(crate::List<crate::api::policy::v1beta1::PodDisruptionBudget>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -355,7 +355,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::api::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::List<crate::api::policy::v1beta1::PodDisruptionBudget>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -425,7 +425,7 @@ impl PodDisruptionBudget {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodDisruptionBudgetForAllNamespacesResponse {
-    Ok(crate::api::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::List<crate::api::policy::v1beta1::PodDisruptionBudget>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

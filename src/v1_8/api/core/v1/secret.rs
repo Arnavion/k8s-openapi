@@ -158,7 +158,7 @@ impl Secret {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedSecretResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::SecretList),
+    OkValue(crate::List<crate::api::core::v1::Secret>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -341,7 +341,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedSecretResponse {
-    Ok(crate::api::core::v1::SecretList),
+    Ok(crate::List<crate::api::core::v1::Secret>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -411,7 +411,7 @@ impl Secret {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListSecretForAllNamespacesResponse {
-    Ok(crate::api::core::v1::SecretList),
+    Ok(crate::List<crate::api::core::v1::Secret>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

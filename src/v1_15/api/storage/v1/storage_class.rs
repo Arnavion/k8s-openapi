@@ -188,7 +188,7 @@ impl StorageClass {
 #[derive(Debug)]
 pub enum DeleteCollectionStorageClassResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::storage::v1::StorageClassList),
+    OkValue(crate::List<crate::api::storage::v1::StorageClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -367,7 +367,7 @@ impl StorageClass {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListStorageClassResponse {
-    Ok(crate::api::storage::v1::StorageClassList),
+    Ok(crate::List<crate::api::storage::v1::StorageClass>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -138,7 +138,7 @@ impl InitializerConfiguration {
 #[derive(Debug)]
 pub enum DeleteCollectionInitializerConfigurationResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::admissionregistration::v1alpha1::InitializerConfigurationList),
+    OkValue(crate::List<crate::api::admissionregistration::v1alpha1::InitializerConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -308,7 +308,7 @@ impl InitializerConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListInitializerConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1alpha1::InitializerConfigurationList),
+    Ok(crate::List<crate::api::admissionregistration::v1alpha1::InitializerConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -266,7 +266,7 @@ impl CertificateSigningRequest {
 #[derive(Debug)]
 pub enum DeleteCollectionCertificateSigningRequestResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::certificates::v1beta1::CertificateSigningRequestList),
+    OkValue(crate::List<crate::api::certificates::v1beta1::CertificateSigningRequest>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -349,7 +349,7 @@ impl CertificateSigningRequest {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCertificateSigningRequestResponse {
-    Ok(crate::api::certificates::v1beta1::CertificateSigningRequestList),
+    Ok(crate::List<crate::api::certificates::v1beta1::CertificateSigningRequest>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

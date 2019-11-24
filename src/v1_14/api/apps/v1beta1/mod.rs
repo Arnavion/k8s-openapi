@@ -12,9 +12,6 @@ pub use self::controller_revision::ControllerRevision;
 #[cfg(feature = "api")] pub use self::controller_revision::WatchControllerRevisionForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::controller_revision::WatchNamespacedControllerRevisionResponse;
 
-mod controller_revision_list;
-pub use self::controller_revision_list::ControllerRevisionList;
-
 mod deployment;
 pub use self::deployment::Deployment;
 #[cfg(feature = "api")] pub use self::deployment::{CreateNamespacedDeploymentOptional, CreateNamespacedDeploymentResponse};
@@ -33,9 +30,6 @@ pub use self::deployment::Deployment;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
-
-mod deployment_list;
-pub use self::deployment_list::DeploymentList;
 
 mod deployment_rollback;
 pub use self::deployment_rollback::DeploymentRollback;
@@ -92,9 +86,6 @@ pub use self::stateful_set::StatefulSet;
 
 mod stateful_set_condition;
 pub use self::stateful_set_condition::StatefulSetCondition;
-
-mod stateful_set_list;
-pub use self::stateful_set_list::StatefulSetList;
 
 mod stateful_set_spec;
 pub use self::stateful_set_spec::StatefulSetSpec;

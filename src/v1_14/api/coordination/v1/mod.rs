@@ -12,8 +12,5 @@ pub use self::lease::Lease;
 #[cfg(feature = "api")] pub use self::lease::WatchLeaseForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::lease::WatchNamespacedLeaseResponse;
 
-mod lease_list;
-pub use self::lease_list::LeaseList;
-
 mod lease_spec;
 pub use self::lease_spec::LeaseSpec;

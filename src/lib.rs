@@ -139,7 +139,7 @@
 //! 1. For each API operation function, there is a corresponding response type. For `Pod::list_namespaced_pod` this is [`api::core::v1::ListNamespacedPodResponse`].
 //!    This is an enum with variants for each of the possible HTTP status codes that the operation can return, and contains the data that the API server would
 //!    return corresponding to that status code. For example, the list-namespaced-pod operation returns a pod list with HTTP 200 OK, so one of the variants of
-//!    `ListNamespacedPodResponse` is `Ok(`[`api::core::v1::PodList`]`)`
+//!    `ListNamespacedPodResponse` is `Ok(`[`List`]`<`[`api::core::v1::Pod`]`>)`
 //!
 //! 1. The response types impl the [`Response`] trait, which contains a single [`Response::try_from_parts`] function. This function takes an [`http::StatusCode`]
 //!    and a `&u8` byte buffer, and tries to parse the byte buffer as the response type. For example, if you executed the request and received an HTTP 200 OK response

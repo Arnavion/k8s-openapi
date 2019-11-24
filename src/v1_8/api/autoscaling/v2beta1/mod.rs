@@ -21,9 +21,6 @@ pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
 mod horizontal_pod_autoscaler_condition;
 pub use self::horizontal_pod_autoscaler_condition::HorizontalPodAutoscalerCondition;
 
-mod horizontal_pod_autoscaler_list;
-pub use self::horizontal_pod_autoscaler_list::HorizontalPodAutoscalerList;
-
 mod horizontal_pod_autoscaler_spec;
 pub use self::horizontal_pod_autoscaler_spec::HorizontalPodAutoscalerSpec;
 

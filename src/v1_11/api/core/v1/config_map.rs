@@ -173,7 +173,7 @@ impl ConfigMap {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedConfigMapResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::ConfigMapList),
+    OkValue(crate::List<crate::api::core::v1::ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -349,7 +349,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListConfigMapForAllNamespacesResponse {
-    Ok(crate::api::core::v1::ConfigMapList),
+    Ok(crate::List<crate::api::core::v1::ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl ConfigMap {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedConfigMapResponse {
-    Ok(crate::api::core::v1::ConfigMapList),
+    Ok(crate::List<crate::api::core::v1::ConfigMap>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

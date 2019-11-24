@@ -171,7 +171,7 @@ impl PersistentVolume {
 #[derive(Debug)]
 pub enum DeleteCollectionPersistentVolumeResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::PersistentVolumeList),
+    OkValue(crate::List<crate::api::core::v1::PersistentVolume>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -350,7 +350,7 @@ impl PersistentVolume {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPersistentVolumeResponse {
-    Ok(crate::api::core::v1::PersistentVolumeList),
+    Ok(crate::List<crate::api::core::v1::PersistentVolume>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

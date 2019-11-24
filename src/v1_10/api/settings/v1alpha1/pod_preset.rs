@@ -168,7 +168,7 @@ impl PodPreset {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodPresetResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::settings::v1alpha1::PodPresetList),
+    OkValue(crate::List<crate::api::settings::v1alpha1::PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -351,7 +351,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodPresetResponse {
-    Ok(crate::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::List<crate::api::settings::v1alpha1::PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -421,7 +421,7 @@ impl PodPreset {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodPresetForAllNamespacesResponse {
-    Ok(crate::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::List<crate::api::settings::v1alpha1::PodPreset>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

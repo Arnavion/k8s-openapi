@@ -246,7 +246,7 @@ impl ClusterRoleBinding {
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleBindingResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::rbac::v1beta1::ClusterRoleBindingList),
+    OkValue(crate::List<crate::api::rbac::v1beta1::ClusterRoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -329,7 +329,7 @@ impl ClusterRoleBinding {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListClusterRoleBindingResponse {
-    Ok(crate::api::rbac::v1beta1::ClusterRoleBindingList),
+    Ok(crate::List<crate::api::rbac::v1beta1::ClusterRoleBinding>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

@@ -884,7 +884,8 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Err("ListRef type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
+			Ok(format!("&{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
@@ -931,7 +932,8 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Err("ListRef type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
+			Ok(format!("{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1417,7 +1419,7 @@ pub fn write_operation(
 						&replace_namespaces,
 						crate_root)?;
 				if operation.kubernetes_action == Some(swagger20::KubernetesAction::DeleteCollection) {
-					writeln!(out, "    {}Value({}List),", variant_name, associated_type)?;
+					writeln!(out, "    {}Value({}::List<{}>),", variant_name, crate_root, associated_type)?;
 				}
 				else {
 					writeln!(out, "    {}Value({}),", variant_name, associated_type)?;
@@ -1479,7 +1481,7 @@ pub fn write_operation(
 					writeln!(out, "                Ok(({}::{}(result.to_owned()), len))", operation_result_name, variant_name)?;
 				},
 
-				swagger20::SchemaKind::Ref(_) => if is_watch {
+				swagger20::SchemaKind::Ref(_) if is_watch => {
 					writeln!(out, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
 					writeln!(out, "                let (result, byte_offset) = match deserializer.next() {{")?;
 					writeln!(out, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
@@ -1488,8 +1490,9 @@ pub fn write_operation(
 					writeln!(out, "                    None => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
 					writeln!(out, "                }};")?;
 					writeln!(out, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
-				}
-				else if is_delete_ok_status {
+				},
+
+				swagger20::SchemaKind::Ref(_) if is_delete_ok_status => {
 					writeln!(out, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
 					writeln!(out, "                    Ok(value) => value,")?;
 					writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
@@ -1509,8 +1512,10 @@ pub fn write_operation(
 					writeln!(out, "                    let result = result.map_err({}::ResponseError::Json)?;", crate_root)?;
 					writeln!(out, "                    Ok(({}::{}Value(result), buf.len()))", operation_result_name, variant_name)?;
 					writeln!(out, "                }}")?;
-				}
-				else {
+				},
+
+				swagger20::SchemaKind::Ref(_) |
+				swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => {
 					writeln!(out, "                let result = match serde_json::from_slice(buf) {{")?;
 					writeln!(out, "                    Ok(value) => value,")?;
 					writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;

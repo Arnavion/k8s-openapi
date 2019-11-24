@@ -48,7 +48,7 @@ impl ComponentStatus {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListComponentStatusResponse {
-    Ok(crate::api::core::v1::ComponentStatusList),
+    Ok(crate::List<crate::api::core::v1::ComponentStatus>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

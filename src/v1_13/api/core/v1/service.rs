@@ -822,7 +822,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceResponse {
-    Ok(crate::api::core::v1::ServiceList),
+    Ok(crate::List<crate::api::core::v1::Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -892,7 +892,7 @@ impl Service {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceForAllNamespacesResponse {
-    Ok(crate::api::core::v1::ServiceList),
+    Ok(crate::List<crate::api::core::v1::Service>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

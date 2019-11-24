@@ -140,7 +140,7 @@ impl CustomResourceDefinition {
 #[derive(Debug)]
 pub enum DeleteCollectionCustomResourceDefinitionResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
+    OkValue(crate::List<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -310,7 +310,7 @@ impl CustomResourceDefinition {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCustomResourceDefinitionResponse {
-    Ok(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
+    Ok(crate::List<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

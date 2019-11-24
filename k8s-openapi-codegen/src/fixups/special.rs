@@ -445,7 +445,7 @@ pub(crate) fn watch_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate
 	Err("never applied WatchEvent override".into())
 }
 
-// Define the `swagger20::Type::ListDef` list type, and annotate all list types in the spec as `swagger20::Type::ListRef` for special codegen.
+// Define the `swagger20::Type::ListDef` list type, and replace all list types in the spec with `swagger20::Type::ListRef` for special codegen.
 pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let items_property_name = crate::swagger20::PropertyName("items".to_owned());
 	let metadata_property_name = crate::swagger20::PropertyName("metadata".to_owned());
@@ -592,25 +592,60 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 
 	let (metadata_schema_kind, _) = list_properties.ok_or("did not find any types that looked like a list")?;
 
-	for (definition_path, item_ref_path) in list_definition_paths {
-		let item_definition = spec.definitions.get_mut(&crate::swagger20::DefinitionPath(item_ref_path.path.clone())).unwrap();
-		item_definition.has_corresponding_list_type = true;
 
-		let list_definition = spec.definitions.get_mut(&definition_path).unwrap();
-		list_definition.kind =
-			crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef {
-				items: Box::new(crate::swagger20::SchemaKind::Ref(item_ref_path)),
-			});
-	}
+	// Synthesize `k8s_openapi::List<T>`
 
 	spec.definitions.insert(
 		crate::swagger20::DefinitionPath("io.k8s.List".to_owned()),
 		crate::swagger20::Schema {
 			description: Some("List is a list of resources.".to_owned()),
-			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListDef { metadata: Box::new(metadata_schema_kind.clone()) }),
+			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListDef { metadata: Box::new(metadata_schema_kind) }),
 			kubernetes_group_kind_versions: None,
 			has_corresponding_list_type: false,
 		});
+
+
+	// Remove all list types
+
+	for (definition_path, item_ref_path) in &list_definition_paths {
+		let item_definition = spec.definitions.get_mut(&crate::swagger20::DefinitionPath(item_ref_path.path.clone())).unwrap();
+		item_definition.has_corresponding_list_type = true;
+
+		let _ = spec.definitions.remove(&definition_path);
+	}
+
+
+	// Replace references to all list types with refs to `k8s_openapi::List<T>`
+
+	for (definition_path, item_ref_path) in list_definition_paths {
+		for definition in spec.definitions.values_mut() {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				for (field_value_schema, _) in properties.values_mut() {
+					let field_value_schema_kind = &mut field_value_schema.kind;
+					if let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = field_value_schema_kind {
+						if path == &definition_path.0 {
+							*field_value_schema_kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef {
+								items: Box::new(crate::swagger20::SchemaKind::Ref(item_ref_path.clone())),
+							});
+						}
+					}
+				}
+			}
+		}
+
+		for operation in &mut spec.operations {
+			for response in operation.responses.values_mut() {
+				let response_schema_kind = &mut response.kind;
+				if let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = response_schema_kind {
+					if path == &definition_path.0 {
+						*response_schema_kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef {
+							items: Box::new(crate::swagger20::SchemaKind::Ref(item_ref_path.clone())),
+						});
+					}
+				}
+			}
+		}
+	}
 
 	Ok(())
 }

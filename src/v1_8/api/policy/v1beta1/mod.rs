@@ -19,9 +19,6 @@ pub use self::pod_disruption_budget::PodDisruptionBudget;
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::WatchNamespacedPodDisruptionBudgetResponse;
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::WatchPodDisruptionBudgetForAllNamespacesResponse;
 
-mod pod_disruption_budget_list;
-pub use self::pod_disruption_budget_list::PodDisruptionBudgetList;
-
 mod pod_disruption_budget_spec;
 pub use self::pod_disruption_budget_spec::PodDisruptionBudgetSpec;
 

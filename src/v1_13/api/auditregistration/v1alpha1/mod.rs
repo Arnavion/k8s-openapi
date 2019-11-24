@@ -10,9 +10,6 @@ pub use self::audit_sink::AuditSink;
 #[cfg(feature = "api")] pub use self::audit_sink::{ReplaceAuditSinkOptional, ReplaceAuditSinkResponse};
 #[cfg(feature = "api")] pub use self::audit_sink::WatchAuditSinkResponse;
 
-mod audit_sink_list;
-pub use self::audit_sink_list::AuditSinkList;
-
 mod audit_sink_spec;
 pub use self::audit_sink_spec::AuditSinkSpec;
 

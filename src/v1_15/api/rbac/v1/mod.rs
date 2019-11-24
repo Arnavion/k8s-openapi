@@ -24,12 +24,6 @@ pub use self::cluster_role_binding::ClusterRoleBinding;
 #[cfg(feature = "api")] pub use self::cluster_role_binding::{ReplaceClusterRoleBindingOptional, ReplaceClusterRoleBindingResponse};
 #[cfg(feature = "api")] pub use self::cluster_role_binding::WatchClusterRoleBindingResponse;
 
-mod cluster_role_binding_list;
-pub use self::cluster_role_binding_list::ClusterRoleBindingList;
-
-mod cluster_role_list;
-pub use self::cluster_role_list::ClusterRoleList;
-
 mod policy_rule;
 pub use self::policy_rule::PolicyRule;
 
@@ -58,12 +52,6 @@ pub use self::role_binding::RoleBinding;
 #[cfg(feature = "api")] pub use self::role_binding::{ReplaceNamespacedRoleBindingOptional, ReplaceNamespacedRoleBindingResponse};
 #[cfg(feature = "api")] pub use self::role_binding::WatchNamespacedRoleBindingResponse;
 #[cfg(feature = "api")] pub use self::role_binding::WatchRoleBindingForAllNamespacesResponse;
-
-mod role_binding_list;
-pub use self::role_binding_list::RoleBindingList;
-
-mod role_list;
-pub use self::role_list::RoleList;
 
 mod role_ref;
 pub use self::role_ref::RoleRef;

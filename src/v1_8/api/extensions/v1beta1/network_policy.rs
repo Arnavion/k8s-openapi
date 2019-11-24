@@ -152,7 +152,7 @@ impl NetworkPolicy {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::extensions::v1beta1::NetworkPolicyList),
+    OkValue(crate::List<crate::api::extensions::v1beta1::NetworkPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -335,7 +335,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedNetworkPolicyResponse {
-    Ok(crate::api::extensions::v1beta1::NetworkPolicyList),
+    Ok(crate::List<crate::api::extensions::v1beta1::NetworkPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -405,7 +405,7 @@ impl NetworkPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNetworkPolicyForAllNamespacesResponse {
-    Ok(crate::api::extensions::v1beta1::NetworkPolicyList),
+    Ok(crate::List<crate::api::extensions::v1beta1::NetworkPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

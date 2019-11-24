@@ -158,7 +158,7 @@ impl ServiceAccount {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedServiceAccountResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::ServiceAccountList),
+    OkValue(crate::List<crate::api::core::v1::ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -341,7 +341,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedServiceAccountResponse {
-    Ok(crate::api::core::v1::ServiceAccountList),
+    Ok(crate::List<crate::api::core::v1::ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -411,7 +411,7 @@ impl ServiceAccount {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListServiceAccountForAllNamespacesResponse {
-    Ok(crate::api::core::v1::ServiceAccountList),
+    Ok(crate::List<crate::api::core::v1::ServiceAccount>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

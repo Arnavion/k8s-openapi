@@ -155,7 +155,7 @@ impl DaemonSet {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDaemonSetResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::extensions::v1beta1::DaemonSetList),
+    OkValue(crate::List<crate::api::extensions::v1beta1::DaemonSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -331,7 +331,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListDaemonSetForAllNamespacesResponse {
-    Ok(crate::api::extensions::v1beta1::DaemonSetList),
+    Ok(crate::List<crate::api::extensions::v1beta1::DaemonSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -408,7 +408,7 @@ impl DaemonSet {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedDaemonSetResponse {
-    Ok(crate::api::extensions::v1beta1::DaemonSetList),
+    Ok(crate::List<crate::api::extensions::v1beta1::DaemonSet>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

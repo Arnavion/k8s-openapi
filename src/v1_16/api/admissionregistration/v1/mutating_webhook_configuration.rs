@@ -168,7 +168,7 @@ impl MutatingWebhookConfiguration {
 #[derive(Debug)]
 pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::admissionregistration::v1::MutatingWebhookConfigurationList),
+    OkValue(crate::List<crate::api::admissionregistration::v1::MutatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl MutatingWebhookConfiguration {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListMutatingWebhookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1::MutatingWebhookConfigurationList),
+    Ok(crate::List<crate::api::admissionregistration::v1::MutatingWebhookConfiguration>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

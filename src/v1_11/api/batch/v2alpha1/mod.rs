@@ -15,9 +15,6 @@ pub use self::cron_job::CronJob;
 #[cfg(feature = "api")] pub use self::cron_job::WatchCronJobForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::cron_job::WatchNamespacedCronJobResponse;
 
-mod cron_job_list;
-pub use self::cron_job_list::CronJobList;
-
 mod cron_job_spec;
 pub use self::cron_job_spec::CronJobSpec;
 

@@ -266,7 +266,7 @@ impl APIService {
 #[derive(Debug)]
 pub enum DeleteCollectionAPIServiceResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
+    OkValue(crate::List<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -349,7 +349,7 @@ impl APIService {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListAPIServiceResponse {
-    Ok(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
+    Ok(crate::List<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

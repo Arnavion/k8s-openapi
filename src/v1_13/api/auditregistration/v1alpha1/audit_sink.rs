@@ -263,7 +263,7 @@ impl AuditSink {
 #[derive(Debug)]
 pub enum DeleteCollectionAuditSinkResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::auditregistration::v1alpha1::AuditSinkList),
+    OkValue(crate::List<crate::api::auditregistration::v1alpha1::AuditSink>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -346,7 +346,7 @@ impl AuditSink {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListAuditSinkResponse {
-    Ok(crate::api::auditregistration::v1alpha1::AuditSinkList),
+    Ok(crate::List<crate::api::auditregistration::v1alpha1::AuditSink>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

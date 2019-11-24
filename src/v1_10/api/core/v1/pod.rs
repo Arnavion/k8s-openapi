@@ -1127,7 +1127,7 @@ impl Pod {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::PodList),
+    OkValue(crate::List<crate::api::core::v1::Pod>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1310,7 +1310,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedPodResponse {
-    Ok(crate::api::core::v1::PodList),
+    Ok(crate::List<crate::api::core::v1::Pod>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -1380,7 +1380,7 @@ impl Pod {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodForAllNamespacesResponse {
-    Ok(crate::api::core::v1::PodList),
+    Ok(crate::List<crate::api::core::v1::Pod>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

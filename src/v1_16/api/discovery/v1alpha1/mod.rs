@@ -20,6 +20,3 @@ pub use self::endpoint_slice::EndpointSlice;
 #[cfg(feature = "api")] pub use self::endpoint_slice::{ReplaceNamespacedEndpointSliceOptional, ReplaceNamespacedEndpointSliceResponse};
 #[cfg(feature = "api")] pub use self::endpoint_slice::WatchEndpointSliceForAllNamespacesResponse;
 #[cfg(feature = "api")] pub use self::endpoint_slice::WatchNamespacedEndpointSliceResponse;
-
-mod endpoint_slice_list;
-pub use self::endpoint_slice_list::EndpointSliceList;

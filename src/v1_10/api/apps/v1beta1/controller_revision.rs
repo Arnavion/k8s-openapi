@@ -173,7 +173,7 @@ impl ControllerRevision {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::apps::v1beta1::ControllerRevisionList),
+    OkValue(crate::List<crate::api::apps::v1beta1::ControllerRevision>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -349,7 +349,7 @@ impl ControllerRevision {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListControllerRevisionForAllNamespacesResponse {
-    Ok(crate::api::apps::v1beta1::ControllerRevisionList),
+    Ok(crate::List<crate::api::apps::v1beta1::ControllerRevision>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -426,7 +426,7 @@ impl ControllerRevision {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedControllerRevisionResponse {
-    Ok(crate::api::apps::v1beta1::ControllerRevisionList),
+    Ok(crate::List<crate::api::apps::v1beta1::ControllerRevision>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

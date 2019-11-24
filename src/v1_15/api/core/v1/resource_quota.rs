@@ -185,7 +185,7 @@ impl ResourceQuota {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedResourceQuotaResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::ResourceQuotaList),
+    OkValue(crate::List<crate::api::core::v1::ResourceQuota>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -377,7 +377,7 @@ impl ResourceQuota {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedResourceQuotaResponse {
-    Ok(crate::api::core::v1::ResourceQuotaList),
+    Ok(crate::List<crate::api::core::v1::ResourceQuota>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -447,7 +447,7 @@ impl ResourceQuota {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListResourceQuotaForAllNamespacesResponse {
-    Ok(crate::api::core::v1::ResourceQuotaList),
+    Ok(crate::List<crate::api::core::v1::ResourceQuota>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

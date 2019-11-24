@@ -34,9 +34,6 @@ pub use self::pod_disruption_budget::PodDisruptionBudget;
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::WatchNamespacedPodDisruptionBudgetResponse;
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::WatchPodDisruptionBudgetForAllNamespacesResponse;
 
-mod pod_disruption_budget_list;
-pub use self::pod_disruption_budget_list::PodDisruptionBudgetList;
-
 mod pod_disruption_budget_spec;
 pub use self::pod_disruption_budget_spec::PodDisruptionBudgetSpec;
 
@@ -53,9 +50,6 @@ pub use self::pod_security_policy::PodSecurityPolicy;
 #[cfg(feature = "api")] pub use self::pod_security_policy::{ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse};
 #[cfg(feature = "api")] pub use self::pod_security_policy::{ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse};
 #[cfg(feature = "api")] pub use self::pod_security_policy::WatchPodSecurityPolicyResponse;
-
-mod pod_security_policy_list;
-pub use self::pod_security_policy_list::PodSecurityPolicyList;
 
 mod pod_security_policy_spec;
 pub use self::pod_security_policy_spec::PodSecurityPolicySpec;

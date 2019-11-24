@@ -651,7 +651,7 @@ impl Node {
 #[derive(Debug)]
 pub enum DeleteCollectionNodeResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::NodeList),
+    OkValue(crate::List<crate::api::core::v1::Node>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -830,7 +830,7 @@ impl Node {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNodeResponse {
-    Ok(crate::api::core::v1::NodeList),
+    Ok(crate::List<crate::api::core::v1::Node>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

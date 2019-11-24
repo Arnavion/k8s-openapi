@@ -155,7 +155,7 @@ impl Ingress {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedIngressResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::extensions::v1beta1::IngressList),
+    OkValue(crate::List<crate::api::extensions::v1beta1::Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -331,7 +331,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListIngressForAllNamespacesResponse {
-    Ok(crate::api::extensions::v1beta1::IngressList),
+    Ok(crate::List<crate::api::extensions::v1beta1::Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -408,7 +408,7 @@ impl Ingress {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedIngressResponse {
-    Ok(crate::api::extensions::v1beta1::IngressList),
+    Ok(crate::List<crate::api::extensions::v1beta1::Ingress>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

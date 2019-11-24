@@ -185,7 +185,7 @@ impl HorizontalPodAutoscaler {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerList),
+    OkValue(crate::List<crate::api::autoscaling::v2beta1::HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -370,7 +370,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListHorizontalPodAutoscalerForAllNamespacesResponse {
-    Ok(crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerList),
+    Ok(crate::List<crate::api::autoscaling::v2beta1::HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -447,7 +447,7 @@ impl HorizontalPodAutoscaler {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerList),
+    Ok(crate::List<crate::api::autoscaling::v2beta1::HorizontalPodAutoscaler>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

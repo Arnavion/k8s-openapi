@@ -188,7 +188,7 @@ impl EndpointSlice {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEndpointSliceResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::discovery::v1alpha1::EndpointSliceList),
+    OkValue(crate::List<crate::api::discovery::v1alpha1::EndpointSlice>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -373,7 +373,7 @@ impl EndpointSlice {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListEndpointSliceForAllNamespacesResponse {
-    Ok(crate::api::discovery::v1alpha1::EndpointSliceList),
+    Ok(crate::List<crate::api::discovery::v1alpha1::EndpointSlice>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -450,7 +450,7 @@ impl EndpointSlice {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedEndpointSliceResponse {
-    Ok(crate::api::discovery::v1alpha1::EndpointSliceList),
+    Ok(crate::List<crate::api::discovery::v1alpha1::EndpointSlice>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

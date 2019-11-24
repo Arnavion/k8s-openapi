@@ -168,7 +168,7 @@ impl PodSecurityPolicy {
 #[derive(Debug)]
 pub enum DeleteCollectionPodSecurityPolicyResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::policy::v1beta1::PodSecurityPolicyList),
+    OkValue(crate::List<crate::api::policy::v1beta1::PodSecurityPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl PodSecurityPolicy {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListPodSecurityPolicyResponse {
-    Ok(crate::api::policy::v1beta1::PodSecurityPolicyList),
+    Ok(crate::List<crate::api::policy::v1beta1::PodSecurityPolicy>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

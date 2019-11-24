@@ -264,7 +264,7 @@ impl CSINode {
 #[derive(Debug)]
 pub enum DeleteCollectionCSINodeResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::storage::v1beta1::CSINodeList),
+    OkValue(crate::List<crate::api::storage::v1beta1::CSINode>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -347,7 +347,7 @@ impl CSINode {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListCSINodeResponse {
-    Ok(crate::api::storage::v1beta1::CSINodeList),
+    Ok(crate::List<crate::api::storage::v1beta1::CSINode>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

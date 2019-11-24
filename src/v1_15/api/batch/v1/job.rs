@@ -185,7 +185,7 @@ impl Job {
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedJobResponse {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::batch::v1::JobList),
+    OkValue(crate::List<crate::api::batch::v1::Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -370,7 +370,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListJobForAllNamespacesResponse {
-    Ok(crate::api::batch::v1::JobList),
+    Ok(crate::List<crate::api::batch::v1::Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
@@ -447,7 +447,7 @@ impl Job {
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ListNamespacedJobResponse {
-    Ok(crate::api::batch::v1::JobList),
+    Ok(crate::List<crate::api::batch::v1::Job>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 

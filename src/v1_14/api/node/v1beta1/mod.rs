@@ -9,6 +9,3 @@ pub use self::runtime_class::RuntimeClass;
 #[cfg(feature = "api")] pub use self::runtime_class::{ReadRuntimeClassOptional, ReadRuntimeClassResponse};
 #[cfg(feature = "api")] pub use self::runtime_class::{ReplaceRuntimeClassOptional, ReplaceRuntimeClassResponse};
 #[cfg(feature = "api")] pub use self::runtime_class::WatchRuntimeClassResponse;
-
-mod runtime_class_list;
-pub use self::runtime_class_list::RuntimeClassList;
