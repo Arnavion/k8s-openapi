@@ -138,7 +138,7 @@ impl crate::Response for CreateRuntimeClassResponse {
 impl RuntimeClass {
     /// delete collection of RuntimeClass
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionRuntimeClassResponse`]`>` constructor, or [`DeleteCollectionRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -153,7 +153,7 @@ impl RuntimeClass {
     pub fn delete_collection_runtime_class(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionRuntimeClassResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1beta1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
@@ -169,64 +169,12 @@ impl RuntimeClass {
     }
 }
 
-/// Use `<DeleteCollectionRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::delete_collection_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionRuntimeClassResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::node::v1beta1::RuntimeClass>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionRuntimeClassResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionRuntimeClassResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionRuntimeClassResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteNodeV1beta1RuntimeClass
 
 impl RuntimeClass {
     /// delete a RuntimeClass
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteRuntimeClassResponse`]`>` constructor, or [`DeleteRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -241,7 +189,7 @@ impl RuntimeClass {
     pub fn delete_runtime_class(
         name: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteRuntimeClassResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -256,67 +204,6 @@ impl RuntimeClass {
     }
 }
 
-/// Use `<DeleteRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::delete_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteRuntimeClassResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::node::v1beta1::RuntimeClass),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRuntimeClassResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRuntimeClassResponse::OkValue(result), buf.len()))
-                }
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((DeleteRuntimeClassResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteRuntimeClassResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listNodeV1beta1RuntimeClass
 
 impl RuntimeClass {
@@ -324,7 +211,7 @@ impl RuntimeClass {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListRuntimeClassResponse`]`>` constructor, or [`ListRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -334,7 +221,7 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn list_runtime_class(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRuntimeClassResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1beta1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -349,50 +236,12 @@ impl RuntimeClass {
     }
 }
 
-/// Use `<ListRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::list_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListRuntimeClassResponse {
-    Ok(crate::List<crate::api::node::v1beta1::RuntimeClass>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListRuntimeClassResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListRuntimeClassResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchNodeV1beta1RuntimeClass
 
 impl RuntimeClass {
     /// partially update the specified RuntimeClass
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchRuntimeClassResponse`]`>` constructor, or [`PatchRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -410,7 +259,7 @@ impl RuntimeClass {
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchRuntimeClassResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -428,44 +277,6 @@ impl RuntimeClass {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::patch_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchRuntimeClassResponse {
-    Ok(crate::api::node::v1beta1::RuntimeClass),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchRuntimeClassResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchRuntimeClassResponse::Other(result), read))
-            },
         }
     }
 }
@@ -690,7 +501,7 @@ impl RuntimeClass {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchRuntimeClassResponse`]`>` constructor, or [`WatchRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -700,7 +511,7 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn watch_runtime_class(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRuntimeClassResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1beta1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -711,46 +522,6 @@ impl RuntimeClass {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::watch_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchRuntimeClassResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchRuntimeClassResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchRuntimeClassResponse::Other(result), read))
-            },
         }
     }
 }

@@ -19,7 +19,7 @@ impl ComponentStatus {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListComponentStatusResponse`]`>` constructor, or [`ListComponentStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl ComponentStatus {
     #[cfg(feature = "api")]
     pub fn list_component_status(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListComponentStatusResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -40,44 +40,6 @@ impl ComponentStatus {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<ListComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::list_component_status`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListComponentStatusResponse {
-    Ok(crate::List<crate::api::core::v1::ComponentStatus>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListComponentStatusResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListComponentStatusResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListComponentStatusResponse::Other(result), read))
-            },
         }
     }
 }
@@ -177,7 +139,7 @@ impl ComponentStatus {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchComponentStatusResponse`]`>` constructor, or [`WatchComponentStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -187,7 +149,7 @@ impl ComponentStatus {
     #[cfg(feature = "api")]
     pub fn watch_component_status(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchComponentStatusResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -198,46 +160,6 @@ impl ComponentStatus {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::watch_component_status`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchComponentStatusResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ComponentStatus>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchComponentStatusResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchComponentStatusResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchComponentStatusResponse::Other(result), read))
-            },
         }
     }
 }

@@ -151,20 +151,44 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         name: &str,
 ///         namespace: &str,
 ///         optional: k8s_openapi::DeleteOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<DeleteNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<Self>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 ///
 ///     /// Delete a collection of objects of kind FooBar
-///     fn delete_namespaced_foo_bar(
+///     fn delete_collection_namespaced_foo_bar(
 ///         namespace: &str,
 ///         delete_optional: k8s_openapi::DeleteOptional<'_>,
 ///         list_optional: k8s_openapi::ListOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<DeleteNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<k8s_openapi::List<Self>>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 ///
 ///     /// List objects of kind FooBar
 ///     fn list_namespaced_foo_bar(
 ///         namespace: &str,
 ///         optional: k8s_openapi::ListOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<ListNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ListResponse<Self>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 ///
 ///     /// Partially update the specified FooBar
 ///     fn patch_namespaced_foo_bar(
@@ -172,7 +196,15 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
 ///         optional: k8s_openapi::PatchOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<PatchNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 ///
 ///     /// Partially update the state of the specified FooBar
 ///     fn patch_namespaced_foo_bar_status(
@@ -180,7 +212,15 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
 ///         optional: k8s_openapi::PatchOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<PatchNamespacedFooBarStatusResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 ///
 ///     /// Read the specified FooBar
 ///     fn read_namespaced_foo_bar(
@@ -212,7 +252,15 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     fn watch_namespaced_foo_bar(
 ///         namespace: &str,
 ///         optional: k8s_openapi::WatchOptional<'_>,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<WatchNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) ->
+///         Result<
+///             (
+///                 http::Request<Vec<u8>>,
+///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::WatchResponse<Self>>
+///             ),
+///             k8s_openapi::RequestError
+///         >
+///     { ... }
 /// }
 ///
 /// /// FooBarList is a list of FooBar

@@ -139,7 +139,7 @@ impl crate::Response for CreateNamespacedLeaseResponse {
 impl Lease {
     /// delete collection of Lease
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedLeaseResponse`]`>` constructor, or [`DeleteCollectionNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -159,7 +159,7 @@ impl Lease {
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -177,64 +177,12 @@ impl Lease {
     }
 }
 
-/// Use `<DeleteCollectionNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_collection_namespaced_lease`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionNamespacedLeaseResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::coordination::v1beta1::Lease>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedLeaseResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedLeaseResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionNamespacedLeaseResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteCoordinationV1beta1NamespacedLease
 
 impl Lease {
     /// delete a Lease
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedLeaseResponse`]`>` constructor, or [`DeleteNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -254,7 +202,7 @@ impl Lease {
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -270,67 +218,6 @@ impl Lease {
     }
 }
 
-/// Use `<DeleteNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_namespaced_lease`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteNamespacedLeaseResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::coordination::v1beta1::Lease),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteNamespacedLeaseResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedLeaseResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedLeaseResponse::OkValue(result), buf.len()))
-                }
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((DeleteNamespacedLeaseResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteNamespacedLeaseResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listCoordinationV1beta1LeaseForAllNamespaces
 
 impl Lease {
@@ -338,7 +225,7 @@ impl Lease {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListLeaseForAllNamespacesResponse`]`>` constructor, or [`ListLeaseForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -348,7 +235,7 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn list_lease_for_all_namespaces(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLeaseForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -363,44 +250,6 @@ impl Lease {
     }
 }
 
-/// Use `<ListLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_lease_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListLeaseForAllNamespacesResponse {
-    Ok(crate::List<crate::api::coordination::v1beta1::Lease>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListLeaseForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListLeaseForAllNamespacesResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListLeaseForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listCoordinationV1beta1NamespacedLease
 
 impl Lease {
@@ -408,7 +257,7 @@ impl Lease {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedLeaseResponse`]`>` constructor, or [`ListNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -423,7 +272,7 @@ impl Lease {
     pub fn list_namespaced_lease(
         namespace: &str,
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -440,50 +289,12 @@ impl Lease {
     }
 }
 
-/// Use `<ListNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_namespaced_lease`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListNamespacedLeaseResponse {
-    Ok(crate::List<crate::api::coordination::v1beta1::Lease>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListNamespacedLeaseResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListNamespacedLeaseResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListNamespacedLeaseResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchCoordinationV1beta1NamespacedLease
 
 impl Lease {
     /// partially update the specified Lease
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedLeaseResponse`]`>` constructor, or [`PatchNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -506,7 +317,7 @@ impl Lease {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -525,44 +336,6 @@ impl Lease {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::patch_namespaced_lease`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchNamespacedLeaseResponse {
-    Ok(crate::api::coordination::v1beta1::Lease),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchNamespacedLeaseResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchNamespacedLeaseResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchNamespacedLeaseResponse::Other(result), read))
-            },
         }
     }
 }
@@ -799,7 +572,7 @@ impl Lease {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchLeaseForAllNamespacesResponse`]`>` constructor, or [`WatchLeaseForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -809,7 +582,7 @@ impl Lease {
     #[cfg(feature = "api")]
     pub fn watch_lease_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLeaseForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -824,46 +597,6 @@ impl Lease {
     }
 }
 
-/// Use `<WatchLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_lease_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchLeaseForAllNamespacesResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchLeaseForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchLeaseForAllNamespacesResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchLeaseForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation watchCoordinationV1beta1NamespacedLease
 
 impl Lease {
@@ -871,7 +604,7 @@ impl Lease {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedLeaseResponse`]`>` constructor, or [`WatchNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -886,7 +619,7 @@ impl Lease {
     pub fn watch_namespaced_lease(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -899,46 +632,6 @@ impl Lease {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_namespaced_lease`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchNamespacedLeaseResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchNamespacedLeaseResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchNamespacedLeaseResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchNamespacedLeaseResponse::Other(result), read))
-            },
         }
     }
 }

@@ -635,6 +635,48 @@ pub fn run<W>(
 			run_result.num_generated_structs += 1;
 		},
 
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) => {
+			templates::operation_response_delete::generate(
+				&mut out,
+				&type_name,
+				crate_root,
+			)?;
+
+			run_result.num_generated_structs += 1;
+		},
+
+		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) => {
+			templates::operation_response_other::generate(
+				&mut out,
+				&type_name,
+				crate_root,
+				true,
+			)?;
+
+			run_result.num_generated_structs += 1;
+		},
+
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) => {
+			templates::operation_response_other::generate(
+				&mut out,
+				&type_name,
+				crate_root,
+				false,
+			)?;
+
+			run_result.num_generated_structs += 1;
+		},
+
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => {
+			templates::operation_response_watch::generate(
+				&mut out,
+				&type_name,
+				crate_root,
+			)?;
+
+			run_result.num_generated_structs += 1;
+		},
+
 		swagger20::SchemaKind::Ty(_) => {
 			let inner_type_name = get_rust_type(&definition.kind, &replace_namespaces, crate_root)?;
 
@@ -696,7 +738,11 @@ fn get_derives(
 			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) |
 			swagger20::SchemaKind::Ty(swagger20::Type::Patch) |
-			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Ok(false),
+			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) |
+			swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
+			swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
+			swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
+			swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Ok(false),
 
 			swagger20::SchemaKind::Ty(_) => Ok(true),
 		}
@@ -705,7 +751,15 @@ fn get_derives(
 	match kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Ok(None),
 		kind => {
-			let copy = match kind {
+			let clone = match kind {
+				swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => false,
+				_ => true,
+			};
+
+			let copy = clone && match kind {
 				swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
 				swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
 				swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) |
@@ -720,15 +774,25 @@ fn get_derives(
 				kind => can_be_default(kind, definitions)?
 			};
 
-			let eq = match kind {
+			let partial_eq = match kind {
+				swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
+				swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => false,
+				_ => true,
+			};
+
+			let eq = partial_eq && match kind {
 				swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => true,
 				_ => false,
 			};
 
 			Ok(Some(templates::type_header::Derives {
+				clone,
 				copy,
 				default,
 				eq,
+				partial_eq,
 			}))
 		},
 	}
@@ -891,6 +955,11 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) => Err("PatchOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) => Err("DeleteResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) => Err("ListResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) => Err("PatchResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Err("WatchResponse type not supported".into()),
 	}
 }
 
@@ -940,6 +1009,11 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) => Err("PatchOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) => Err("DeleteResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) => Err("ListResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) => Err("PatchResponse type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Err("WatchResponse type not supported".into()),
 	}
 }
 
@@ -1108,6 +1182,27 @@ pub fn write_operation(
 			indent, crate_root, operation_result_name, operation_result_name)?;
 		need_empty_line = true;
 	}
+	else {
+		let common_response_type_link = match operation.kubernetes_action {
+			Some(swagger20::KubernetesAction::Delete) => Some(format!("[`{}::DeleteResponse`]`<Self>", crate_root)),
+			Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root, crate_root)),
+			Some(swagger20::KubernetesAction::List) => Some(format!("[`{}::ListResponse`]`<Self>`", crate_root)),
+			Some(swagger20::KubernetesAction::Patch) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root)),
+			Some(swagger20::KubernetesAction::Watch) => Some(format!("[`{}::WatchResponse`]`<Self>", crate_root)),
+			_ => None,
+		};
+
+		if let Some(common_response_type_link) = common_response_type_link {
+			if need_empty_line {
+				writeln!(out, "{}///", indent)?;
+			}
+
+			writeln!(out,
+				"{}/// Use the returned [`{}::ResponseBody`]`<`{}>` constructor, or {}` directly, to parse the HTTP response.",
+				indent, crate_root, common_response_type_link, common_response_type_link)?;
+			need_empty_line = true;
+		}
+	}
 
 	if !parameters.is_empty() || delete_optional_parameter.is_some() || list_or_patch_or_watch_optional_parameter.is_some() {
 		if need_empty_line {
@@ -1180,7 +1275,23 @@ pub fn write_operation(
 			indent, crate_root, operation_result_name, crate_root)?;
 	}
 	else {
-		writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}::RequestError> {{", indent, crate_root)?;
+		let common_response_type = match operation.kubernetes_action {
+			Some(swagger20::KubernetesAction::Delete) => Some(format!("{}::DeleteResponse<Self>", crate_root)),
+			Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("{}::DeleteResponse<{}::List<Self>>", crate_root, crate_root)),
+			Some(swagger20::KubernetesAction::List) => Some(format!("{}::ListResponse<Self>", crate_root)),
+			Some(swagger20::KubernetesAction::Patch) => Some(format!("{}::PatchResponse<Self>", crate_root)),
+			Some(swagger20::KubernetesAction::Watch) => Some(format!("{}::WatchResponse<Self>", crate_root)),
+			_ => None,
+		};
+
+		if let Some(common_response_type) = common_response_type {
+			writeln!(out,
+				"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
+				indent, crate_root, common_response_type, crate_root)?;
+		}
+		else {
+			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}::RequestError> {{", indent, crate_root)?;
+		}
 	}
 
 	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
@@ -1336,7 +1447,24 @@ pub fn write_operation(
 		writeln!(out, "{}    }}", indent)?;
 	}
 	else {
-		writeln!(out, "{}    __request.body(__body).map_err({}::RequestError::Http)", indent, crate_root)?;
+		let is_common_response_type = match operation.kubernetes_action {
+			Some(swagger20::KubernetesAction::Delete) |
+			Some(swagger20::KubernetesAction::DeleteCollection) |
+			Some(swagger20::KubernetesAction::List) |
+			Some(swagger20::KubernetesAction::Patch) |
+			Some(swagger20::KubernetesAction::Watch) => true,
+			_ => false,
+		};
+
+		if is_common_response_type {
+			writeln!(out, "{}    match __request.body(__body) {{", indent)?;
+			writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
+			writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
+			writeln!(out, "{}    }}", indent)?;
+		}
+		else {
+			writeln!(out, "{}    __request.body(__body).map_err({}::RequestError::Http)", indent, crate_root)?;
+		}
 	}
 	writeln!(out, "{}}}", indent)?;
 
@@ -1590,13 +1718,15 @@ fn get_operation_names(
 	let mut chars = operation_id.chars();
 	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
 	let rest_chars = chars.as_str();
-	let operation_result_name =
-		if operation.kubernetes_action == Some(swagger20::KubernetesAction::Connect) {
-			None
-		}
-		else {
-			Some(format!("{}{}Response", first_char, rest_chars))
-		};
+	let operation_result_name = match operation.kubernetes_action {
+		Some(swagger20::KubernetesAction::Connect) |
+		Some(swagger20::KubernetesAction::Delete) |
+		Some(swagger20::KubernetesAction::DeleteCollection) |
+		Some(swagger20::KubernetesAction::List) |
+		Some(swagger20::KubernetesAction::Patch) |
+		Some(swagger20::KubernetesAction::Watch) => None,
+		_ => Some(format!("{}{}Response", first_char, rest_chars)),
+	};
 	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))

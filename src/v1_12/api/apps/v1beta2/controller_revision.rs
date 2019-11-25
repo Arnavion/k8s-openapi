@@ -142,7 +142,7 @@ impl crate::Response for CreateNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// delete collection of ControllerRevision
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedControllerRevisionResponse`]`>` constructor, or [`DeleteCollectionNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -162,7 +162,7 @@ impl ControllerRevision {
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedControllerRevisionResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -180,64 +180,12 @@ impl ControllerRevision {
     }
 }
 
-/// Use `<DeleteCollectionNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_collection_namespaced_controller_revision`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionNamespacedControllerRevisionResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::apps::v1beta2::ControllerRevision>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionNamespacedControllerRevisionResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteAppsV1beta2NamespacedControllerRevision
 
 impl ControllerRevision {
     /// delete a ControllerRevision
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedControllerRevisionResponse`]`>` constructor, or [`DeleteNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -257,7 +205,7 @@ impl ControllerRevision {
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedControllerRevisionResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -273,67 +221,6 @@ impl ControllerRevision {
     }
 }
 
-/// Use `<DeleteNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_namespaced_controller_revision`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteNamespacedControllerRevisionResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::apps::v1beta2::ControllerRevision),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteNamespacedControllerRevisionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
-                }
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((DeleteNamespacedControllerRevisionResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteNamespacedControllerRevisionResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listAppsV1beta2ControllerRevisionForAllNamespaces
 
 impl ControllerRevision {
@@ -341,7 +228,7 @@ impl ControllerRevision {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListControllerRevisionForAllNamespacesResponse`]`>` constructor, or [`ListControllerRevisionForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -351,7 +238,7 @@ impl ControllerRevision {
     #[cfg(feature = "api")]
     pub fn list_controller_revision_for_all_namespaces(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListControllerRevisionForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/controllerrevisions?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -366,44 +253,6 @@ impl ControllerRevision {
     }
 }
 
-/// Use `<ListControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_controller_revision_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListControllerRevisionForAllNamespacesResponse {
-    Ok(crate::List<crate::api::apps::v1beta2::ControllerRevision>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListControllerRevisionForAllNamespacesResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListControllerRevisionForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listAppsV1beta2NamespacedControllerRevision
 
 impl ControllerRevision {
@@ -411,7 +260,7 @@ impl ControllerRevision {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedControllerRevisionResponse`]`>` constructor, or [`ListNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -426,7 +275,7 @@ impl ControllerRevision {
     pub fn list_namespaced_controller_revision(
         namespace: &str,
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedControllerRevisionResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -443,50 +292,12 @@ impl ControllerRevision {
     }
 }
 
-/// Use `<ListNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_namespaced_controller_revision`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListNamespacedControllerRevisionResponse {
-    Ok(crate::List<crate::api::apps::v1beta2::ControllerRevision>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListNamespacedControllerRevisionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListNamespacedControllerRevisionResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListNamespacedControllerRevisionResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchAppsV1beta2NamespacedControllerRevision
 
 impl ControllerRevision {
     /// partially update the specified ControllerRevision
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedControllerRevisionResponse`]`>` constructor, or [`PatchNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -509,7 +320,7 @@ impl ControllerRevision {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedControllerRevisionResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -528,44 +339,6 @@ impl ControllerRevision {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::patch_namespaced_controller_revision`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchNamespacedControllerRevisionResponse {
-    Ok(crate::api::apps::v1beta2::ControllerRevision),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchNamespacedControllerRevisionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchNamespacedControllerRevisionResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchNamespacedControllerRevisionResponse::Other(result), read))
-            },
         }
     }
 }
@@ -796,7 +569,7 @@ impl ControllerRevision {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchControllerRevisionForAllNamespacesResponse`]`>` constructor, or [`WatchControllerRevisionForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -806,7 +579,7 @@ impl ControllerRevision {
     #[cfg(feature = "api")]
     pub fn watch_controller_revision_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchControllerRevisionForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/controllerrevisions?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -821,46 +594,6 @@ impl ControllerRevision {
     }
 }
 
-/// Use `<WatchControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_controller_revision_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchControllerRevisionForAllNamespacesResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchControllerRevisionForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchControllerRevisionForAllNamespacesResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchControllerRevisionForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation watchAppsV1beta2NamespacedControllerRevision
 
 impl ControllerRevision {
@@ -868,7 +601,7 @@ impl ControllerRevision {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedControllerRevisionResponse`]`>` constructor, or [`WatchNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -883,7 +616,7 @@ impl ControllerRevision {
     pub fn watch_namespaced_controller_revision(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedControllerRevisionResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -896,46 +629,6 @@ impl ControllerRevision {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_namespaced_controller_revision`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchNamespacedControllerRevisionResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchNamespacedControllerRevisionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchNamespacedControllerRevisionResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchNamespacedControllerRevisionResponse::Other(result), read))
-            },
         }
     }
 }

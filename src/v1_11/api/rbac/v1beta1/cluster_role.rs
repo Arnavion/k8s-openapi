@@ -123,7 +123,7 @@ impl crate::Response for CreateClusterRoleResponse {
 impl ClusterRole {
     /// delete a ClusterRole
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteClusterRoleResponse`]`>` constructor, or [`DeleteClusterRoleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -138,7 +138,7 @@ impl ClusterRole {
     pub fn delete_cluster_role(
         name: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteClusterRoleResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -153,64 +153,12 @@ impl ClusterRole {
     }
 }
 
-/// Use `<DeleteClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteClusterRoleResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::rbac::v1beta1::ClusterRole),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteClusterRoleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteClusterRoleResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteClusterRoleResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteClusterRoleResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteRbacAuthorizationV1beta1CollectionClusterRole
 
 impl ClusterRole {
     /// delete collection of ClusterRole
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionClusterRoleResponse`]`>` constructor, or [`DeleteCollectionClusterRoleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -225,7 +173,7 @@ impl ClusterRole {
     pub fn delete_collection_cluster_role(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionClusterRoleResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
@@ -241,58 +189,6 @@ impl ClusterRole {
     }
 }
 
-/// Use `<DeleteCollectionClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_collection_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionClusterRoleResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::rbac::v1beta1::ClusterRole>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionClusterRoleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionClusterRoleResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionClusterRoleResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionClusterRoleResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listRbacAuthorizationV1beta1ClusterRole
 
 impl ClusterRole {
@@ -300,7 +196,7 @@ impl ClusterRole {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListClusterRoleResponse`]`>` constructor, or [`ListClusterRoleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -310,7 +206,7 @@ impl ClusterRole {
     #[cfg(feature = "api")]
     pub fn list_cluster_role(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -325,50 +221,12 @@ impl ClusterRole {
     }
 }
 
-/// Use `<ListClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::list_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListClusterRoleResponse {
-    Ok(crate::List<crate::api::rbac::v1beta1::ClusterRole>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListClusterRoleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListClusterRoleResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListClusterRoleResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchRbacAuthorizationV1beta1ClusterRole
 
 impl ClusterRole {
     /// partially update the specified ClusterRole
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchClusterRoleResponse`]`>` constructor, or [`PatchClusterRoleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -386,7 +244,7 @@ impl ClusterRole {
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchClusterRoleResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -404,44 +262,6 @@ impl ClusterRole {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::patch_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchClusterRoleResponse {
-    Ok(crate::api::rbac::v1beta1::ClusterRole),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchClusterRoleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchClusterRoleResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchClusterRoleResponse::Other(result), read))
-            },
         }
     }
 }
@@ -642,7 +462,7 @@ impl ClusterRole {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchClusterRoleResponse`]`>` constructor, or [`WatchClusterRoleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -652,7 +472,7 @@ impl ClusterRole {
     #[cfg(feature = "api")]
     pub fn watch_cluster_role(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -663,46 +483,6 @@ impl ClusterRole {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::watch_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchClusterRoleResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchClusterRoleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchClusterRoleResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchClusterRoleResponse::Other(result), read))
-            },
         }
     }
 }

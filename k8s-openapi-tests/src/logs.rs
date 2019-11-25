@@ -7,7 +7,7 @@ fn get() {
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+				k8s_openapi::ListResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods")
 		};

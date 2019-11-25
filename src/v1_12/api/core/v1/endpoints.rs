@@ -150,7 +150,7 @@ impl crate::Response for CreateNamespacedEndpointsResponse {
 impl Endpoints {
     /// delete collection of Endpoints
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedEndpointsResponse`]`>` constructor, or [`DeleteCollectionNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -170,7 +170,7 @@ impl Endpoints {
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -188,64 +188,12 @@ impl Endpoints {
     }
 }
 
-/// Use `<DeleteCollectionNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::delete_collection_namespaced_endpoints`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionNamespacedEndpointsResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::core::v1::Endpoints>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionNamespacedEndpointsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedEndpointsResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionNamespacedEndpointsResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionNamespacedEndpointsResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteCoreV1NamespacedEndpoints
 
 impl Endpoints {
     /// delete Endpoints
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedEndpointsResponse`]`>` constructor, or [`DeleteNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -265,7 +213,7 @@ impl Endpoints {
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -281,67 +229,6 @@ impl Endpoints {
     }
 }
 
-/// Use `<DeleteNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::delete_namespaced_endpoints`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteNamespacedEndpointsResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::core::v1::Endpoints),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteNamespacedEndpointsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedEndpointsResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteNamespacedEndpointsResponse::OkValue(result), buf.len()))
-                }
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((DeleteNamespacedEndpointsResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteNamespacedEndpointsResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listCoreV1EndpointsForAllNamespaces
 
 impl Endpoints {
@@ -349,7 +236,7 @@ impl Endpoints {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListEndpointsForAllNamespacesResponse`]`>` constructor, or [`ListEndpointsForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -359,7 +246,7 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn list_endpoints_for_all_namespaces(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEndpointsForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -374,44 +261,6 @@ impl Endpoints {
     }
 }
 
-/// Use `<ListEndpointsForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::list_endpoints_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListEndpointsForAllNamespacesResponse {
-    Ok(crate::List<crate::api::core::v1::Endpoints>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListEndpointsForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListEndpointsForAllNamespacesResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListEndpointsForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listCoreV1NamespacedEndpoints
 
 impl Endpoints {
@@ -419,7 +268,7 @@ impl Endpoints {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedEndpointsResponse`]`>` constructor, or [`ListNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -434,7 +283,7 @@ impl Endpoints {
     pub fn list_namespaced_endpoints(
         namespace: &str,
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -451,50 +300,12 @@ impl Endpoints {
     }
 }
 
-/// Use `<ListNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::list_namespaced_endpoints`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListNamespacedEndpointsResponse {
-    Ok(crate::List<crate::api::core::v1::Endpoints>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListNamespacedEndpointsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListNamespacedEndpointsResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListNamespacedEndpointsResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchCoreV1NamespacedEndpoints
 
 impl Endpoints {
     /// partially update the specified Endpoints
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedEndpointsResponse`]`>` constructor, or [`PatchNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -517,7 +328,7 @@ impl Endpoints {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -536,44 +347,6 @@ impl Endpoints {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::patch_namespaced_endpoints`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchNamespacedEndpointsResponse {
-    Ok(crate::api::core::v1::Endpoints),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchNamespacedEndpointsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchNamespacedEndpointsResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchNamespacedEndpointsResponse::Other(result), read))
-            },
         }
     }
 }
@@ -804,7 +577,7 @@ impl Endpoints {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchEndpointsForAllNamespacesResponse`]`>` constructor, or [`WatchEndpointsForAllNamespacesResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -814,7 +587,7 @@ impl Endpoints {
     #[cfg(feature = "api")]
     pub fn watch_endpoints_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEndpointsForAllNamespacesResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -829,46 +602,6 @@ impl Endpoints {
     }
 }
 
-/// Use `<WatchEndpointsForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_endpoints_for_all_namespaces`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchEndpointsForAllNamespacesResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchEndpointsForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchEndpointsForAllNamespacesResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchEndpointsForAllNamespacesResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation watchCoreV1NamespacedEndpoints
 
 impl Endpoints {
@@ -876,7 +609,7 @@ impl Endpoints {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedEndpointsResponse`]`>` constructor, or [`WatchNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -891,7 +624,7 @@ impl Endpoints {
     pub fn watch_namespaced_endpoints(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -904,46 +637,6 @@ impl Endpoints {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_namespaced_endpoints`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchNamespacedEndpointsResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchNamespacedEndpointsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchNamespacedEndpointsResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchNamespacedEndpointsResponse::Other(result), read))
-            },
         }
     }
 }

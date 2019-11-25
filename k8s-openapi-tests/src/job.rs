@@ -110,7 +110,7 @@ fn create() {
 			let pod_list = {
 				let response = client.execute(request).expect("couldn't list pods");
 				crate::get_single_value(response, response_body, |response, status_code| match response {
-					api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+					k8s_openapi::ListResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("couldn't list pods")
 			};
@@ -145,8 +145,9 @@ fn create() {
 		let request = http::Request::delete(&job_self_link).body(vec![]).expect("couldn't delete job");
 		{
 			let response = client.execute(request).expect("couldn't delete job");
-			crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-				batch::DeleteNamespacedJobResponse::OkStatus(_) | batch::DeleteNamespacedJobResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+			crate::get_single_value(response, k8s_openapi::ResponseBody::<k8s_openapi::DeleteResponse<batch::Job>>::new, |response, status_code| match response {
+				k8s_openapi::DeleteResponse::OkStatus(_) |
+				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete job");
 		}
@@ -165,7 +166,8 @@ fn create() {
 		{
 			let response = client.execute(request).expect("couldn't delete pods collection");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				api::DeleteCollectionNamespacedPodResponse::OkStatus(_) | api::DeleteCollectionNamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+				k8s_openapi::DeleteResponse::OkStatus(_) |
+				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete pods collection");
 		}

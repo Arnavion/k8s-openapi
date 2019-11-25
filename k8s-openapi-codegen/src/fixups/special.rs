@@ -649,3 +649,105 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 
 	Ok(())
 }
+
+// Define the common types for API responses as `swagger20::Type::<>Def`, and replace all references to the original types with `swagger20::Type::<>Ref` for special codegen.
+pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	const TYPES: &[(&str, fn() -> crate::swagger20::Type, fn(&crate::swagger20::Spec) -> Result<(), crate::Error>)] = &[
+		("io.k8s.DeleteResponse", || crate::swagger20::Type::DeleteResponse, verify_delete_and_delete_collection_operations),
+		("io.k8s.ListResponse", || crate::swagger20::Type::ListResponse, verify_list_operations),
+		("io.k8s.PatchResponse", || crate::swagger20::Type::PatchResponse, verify_patch_operations),
+		("io.k8s.WatchResponse", || crate::swagger20::Type::WatchResponse, verify_watch_operations),
+	];
+
+	fn verify_delete_and_delete_collection_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+		for operation in &spec.operations {
+			match operation.kubernetes_action {
+				Some(crate::swagger20::KubernetesAction::Delete) => {
+					let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
+					response_status_codes.sort();
+					if
+						response_status_codes != [http::StatusCode::OK, http::StatusCode::ACCEPTED] &&
+						response_status_codes != [http::StatusCode::OK] // 1.11 and earlier did not have 202
+					{
+						return Err(format!("operation {} does not have the expected response status codes of a delete operation: {:?}",
+							operation.id, response_status_codes).into());
+					}
+				},
+
+				Some(crate::swagger20::KubernetesAction::DeleteCollection) => {
+					let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
+					response_status_codes.sort();
+					if response_status_codes != [http::StatusCode::OK] // delete-collection does not have 202, but we'll synthesize it anyway
+					{
+						return Err(format!("operation {} does not have the expected response status codes of a delete-collection operation: {:?}",
+							operation.id, response_status_codes).into());
+					}
+				},
+
+				_ => (),
+			}
+		}
+
+		Ok(())
+	}
+
+	fn verify_list_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+		for operation in &spec.operations {
+			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::List) {
+				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
+				response_status_codes.sort();
+				if response_status_codes != [http::StatusCode::OK] {
+					return Err(format!("operation {} does not have the expected response status codes of a list operation: {:?}",
+						operation.id, response_status_codes).into());
+				}
+			}
+		}
+
+		Ok(())
+	}
+
+	fn verify_patch_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+		for operation in &spec.operations {
+			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Patch) {
+				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
+				response_status_codes.sort();
+				if response_status_codes != [http::StatusCode::OK] {
+					return Err(format!("operation {} does not have the expected response status codes of a patch operation: {:?}",
+						operation.id, response_status_codes).into());
+				}
+			}
+		}
+
+		Ok(())
+	}
+
+	fn verify_watch_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+		for operation in &spec.operations {
+			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Watch) {
+				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
+				response_status_codes.sort();
+				if response_status_codes != [http::StatusCode::OK] {
+					return Err(format!("operation {} does not have the expected response status codes of a watch operation: {:?}",
+						operation.id, response_status_codes).into());
+				}
+			}
+		}
+
+		Ok(())
+	}
+
+	for &(definition_path, def_fn, verify_fn) in TYPES {
+		verify_fn(spec)?;
+
+		spec.definitions.insert(
+			crate::swagger20::DefinitionPath(definition_path.to_owned()),
+			crate::swagger20::Schema {
+				description: Some("The common response type for all delete API operations and delete-collection API operations.".to_owned()),
+				kind: crate::swagger20::SchemaKind::Ty(def_fn()),
+				kubernetes_group_kind_versions: None,
+				has_corresponding_list_type: false,
+			});
+	}
+
+	Ok(())
+}

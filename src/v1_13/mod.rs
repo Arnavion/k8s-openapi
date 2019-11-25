@@ -2,17 +2,29 @@
 mod delete_optional;
 pub use self::delete_optional::DeleteOptional;
 
+mod delete_response;
+pub use self::delete_response::DeleteResponse;
+
 mod list;
 pub use self::list::List;
 
 mod list_optional;
 pub use self::list_optional::ListOptional;
 
+mod list_response;
+pub use self::list_response::ListResponse;
+
 mod patch_optional;
 pub use self::patch_optional::PatchOptional;
 
+mod patch_response;
+pub use self::patch_response::PatchResponse;
+
 mod watch_optional;
 pub use self::watch_optional::WatchOptional;
+
+mod watch_response;
+pub use self::watch_response::WatchResponse;
 
 pub mod api;
 

@@ -189,7 +189,7 @@ fn test() {
 		let response = client.execute(request).expect("couldn't list FooBars");
 		let foo_bar_list =
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				ListNamespacedFooBarResponse::Ok(foo_bar_list) => Ok(crate::ValueResult::GotValue(foo_bar_list)),
+				k8s_openapi::ListResponse::Ok(foo_bar_list) => Ok(crate::ValueResult::GotValue(foo_bar_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list FooBars");
 		assert_eq!(k8s_openapi::kind(&foo_bar_list), "FooBarList");
@@ -216,7 +216,7 @@ fn test() {
 		let response = client.execute(request).expect("couldn't watch FooBars");
 		let foo_bar_watch_events =
 			crate::get_multiple_values(response, response_body, |response, status_code| match response {
-				WatchNamespacedFooBarResponse::Ok(foo_bar_watch_event) =>
+				k8s_openapi::WatchResponse::Ok(foo_bar_watch_event) =>
 					Ok(crate::ValueResult::GotValue(foo_bar_watch_event)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't watch FooBars");
@@ -250,8 +250,8 @@ fn test() {
 		let () = {
 			let response = client.execute(request).expect("couldn't delete FooBar");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				DeleteNamespacedFooBarResponse::OkStatus(_) |
-				DeleteNamespacedFooBarResponse::OkValue(_) =>
+				k8s_openapi::DeleteResponse::OkStatus(_) |
+				k8s_openapi::DeleteResponse::OkValue(_) =>
 					Ok(crate::ValueResult::GotValue(())),
 
 				other => Err(format!("{:?} {}", other, status_code).into()),
@@ -320,8 +320,8 @@ fn test() {
 			.expect("couldn't delete custom resource definition");
 		let response = client.execute(request).expect("couldn't delete custom resource definition");
 		crate::get_single_value(response, response_body, |response, status_code| match response {
-			apiextensions::DeleteCustomResourceDefinitionResponse::OkStatus(_) |
-			apiextensions::DeleteCustomResourceDefinitionResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+			k8s_openapi::DeleteResponse::OkStatus(_) |
+			k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 			other => Err(format!("{:?} {}", other, status_code).into()),
 		}).expect("couldn't delete custom resource definition");
 	});

@@ -344,28 +344,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::ACCEPTED, swagger20::Schema {
-							description: Some("Accepted".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: Default::default(), // Overridden to `k8s_openapi::DeleteResponse<Self>`
 					tag: String::new(),
 				},
 
@@ -413,18 +392,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: Default::default(), // Overridden to `k8s_openapi::DeleteResponse<k8s_openapi::List<Self>>`
 					tag: String::new(),
 				},
 

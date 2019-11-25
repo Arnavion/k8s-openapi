@@ -132,7 +132,7 @@ impl crate::Response for CreateValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// delete collection of ValidatingWebhookConfiguration
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionValidatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteCollectionValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>>` constructor, or [`crate::DeleteResponse`]`<`[`crate::List`]`<Self>>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -147,7 +147,7 @@ impl ValidatingWebhookConfiguration {
     pub fn delete_collection_validating_webhook_configuration(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionValidatingWebhookConfigurationResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
@@ -163,64 +163,12 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
-/// Use `<DeleteCollectionValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::List<crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteCollectionValidatingWebhookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionValidatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCollectionValidatingWebhookConfigurationResponse::OkValue(result), buf.len()))
-                }
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteCollectionValidatingWebhookConfigurationResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation deleteAdmissionregistrationV1beta1ValidatingWebhookConfiguration
 
 impl ValidatingWebhookConfiguration {
     /// delete a ValidatingWebhookConfiguration
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteValidatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::DeleteResponse`]`<Self>>` constructor, or [`crate::DeleteResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -235,7 +183,7 @@ impl ValidatingWebhookConfiguration {
     pub fn delete_validating_webhook_configuration(
         name: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteValidatingWebhookConfigurationResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -250,67 +198,6 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
-/// Use `<DeleteValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum DeleteValidatingWebhookConfigurationResponse {
-    OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for DeleteValidatingWebhookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
-                if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteValidatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
-                }
-                else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
-                    let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteValidatingWebhookConfigurationResponse::OkValue(result), buf.len()))
-                }
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((DeleteValidatingWebhookConfigurationResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((DeleteValidatingWebhookConfigurationResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation listAdmissionregistrationV1beta1ValidatingWebhookConfiguration
 
 impl ValidatingWebhookConfiguration {
@@ -318,7 +205,7 @@ impl ValidatingWebhookConfiguration {
     ///
     /// This operation only supports listing all items of this type.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ListValidatingWebhookConfigurationResponse`]`>` constructor, or [`ListValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ListResponse`]`<Self>`>` constructor, or [`crate::ListResponse`]`<Self>`` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -328,7 +215,7 @@ impl ValidatingWebhookConfiguration {
     #[cfg(feature = "api")]
     pub fn list_validating_webhook_configuration(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListValidatingWebhookConfigurationResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -343,50 +230,12 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
-/// Use `<ListValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ListValidatingWebhookConfigurationResponse {
-    Ok(crate::List<crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ListValidatingWebhookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ListValidatingWebhookConfigurationResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ListValidatingWebhookConfigurationResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation patchAdmissionregistrationV1beta1ValidatingWebhookConfiguration
 
 impl ValidatingWebhookConfiguration {
     /// partially update the specified ValidatingWebhookConfiguration
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`PatchValidatingWebhookConfigurationResponse`]`>` constructor, or [`PatchValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::PatchResponse`]`<Self>>` constructor, or [`crate::PatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -404,7 +253,7 @@ impl ValidatingWebhookConfiguration {
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -422,44 +271,6 @@ impl ValidatingWebhookConfiguration {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<PatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum PatchValidatingWebhookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for PatchValidatingWebhookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((PatchValidatingWebhookConfigurationResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((PatchValidatingWebhookConfigurationResponse::Other(result), read))
-            },
         }
     }
 }
@@ -678,7 +489,7 @@ impl ValidatingWebhookConfiguration {
     ///
     /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchValidatingWebhookConfigurationResponse`]`>` constructor, or [`WatchValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::WatchResponse`]`<Self>>` constructor, or [`crate::WatchResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -688,7 +499,7 @@ impl ValidatingWebhookConfiguration {
     #[cfg(feature = "api")]
     pub fn watch_validating_webhook_configuration(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
@@ -699,46 +510,6 @@ impl ValidatingWebhookConfiguration {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Use `<WatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum WatchValidatingWebhookConfigurationResponse {
-    Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for WatchValidatingWebhookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchValidatingWebhookConfigurationResponse::Ok(result), byte_offset))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((WatchValidatingWebhookConfigurationResponse::Other(result), read))
-            },
         }
     }
 }

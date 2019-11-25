@@ -213,6 +213,12 @@ pub enum Type {
 	ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	PatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
 	WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
+
+	// Special types for responses of delete, list, patch and watch operations respectively
+	DeleteResponse,
+	ListResponse,
+	PatchResponse,
+	WatchResponse,
 }
 
 impl Type {

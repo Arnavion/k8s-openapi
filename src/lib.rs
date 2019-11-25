@@ -136,31 +136,31 @@
 //!    It does not matter whether you use a synchronous client like `reqwest`, or an asynchronous client like `hyper`, or a mock client that returns bytes
 //!    read from a test file.
 //!
-//! 1. For each API operation function, there is a corresponding response type. For `Pod::list_namespaced_pod` this is [`api::core::v1::ListNamespacedPodResponse`].
+//! 1. For each API operation function, there is a corresponding response type. For `Pod::list_namespaced_pod` this is [`ListResponse`]`<`[`api::core::v1::Pod`]`>`.
 //!    This is an enum with variants for each of the possible HTTP status codes that the operation can return, and contains the data that the API server would
 //!    return corresponding to that status code. For example, the list-namespaced-pod operation returns a pod list with HTTP 200 OK, so one of the variants of
-//!    `ListNamespacedPodResponse` is `Ok(`[`List`]`<`[`api::core::v1::Pod`]`>)`
+//!    that type is `Ok(`[`List`]`<`[`api::core::v1::Pod`]`>)`
 //!
 //! 1. The response types impl the [`Response`] trait, which contains a single [`Response::try_from_parts`] function. This function takes an [`http::StatusCode`]
 //!    and a `&u8` byte buffer, and tries to parse the byte buffer as the response type. For example, if you executed the request and received an HTTP 200 OK response
-//!    with some bytes, you could call `<ListNamespacedPodResponse as Response>::try_from_parts(status_code, buf)` and expect to get
-//!    `Ok(ListNamespacedPodResponse::Ok(pod_list))` from it.
+//!    with some bytes, you could call `<ListResponse<Pod> as Response>::try_from_parts(status_code, buf)` and expect to get
+//!    `Ok(ListResponse::<Pod>::Ok(pod_list))` from it.
 //!
 //!    Once again, this design ensures that the crate is not tied to a specific HTTP client library or interface. It does not matter how you execute the HTTP request,
 //!    nor whether your library is synchronous or asynchronous, since every HTTP client library gives you a way to get the HTTP response status code and the bytes
 //!    of the response body.
 //!
 //! 1. The API operation function also returns another value next to the `http::Request`. This value is a function that takes an [`http::StatusCode`] and returns
-//!    a [`ResponseBody`]`<ListNamespacedPodResponse>`. As mentioned above, `Response::try_from_parts` requires you to maintain a byte buffer for the response body.
+//!    a [`ResponseBody`]`<ListResponse<Pod>>`. As mentioned above, `Response::try_from_parts` requires you to maintain a byte buffer for the response body.
 //!    `ResponseBody` is a helper that maintains such a buffer internally. It provides an `append_slice()` function to append slices to this internal buffer,
-//!    and a `parse()` function to parse the buffer as the expected type (`ListNamespacedPodResponse` in this case).
+//!    and a `parse()` function to parse the buffer as the expected type (`ListResponse<Pod>` in this case).
 //!
 //!    It is not *necessary* to use the `ResponseBody` returned by the API operation function to parse the response. The `ResponseBody::parse` function is
 //!    only a wrapper around the underlying `Response::try_from_parts` function, and handles growing and shrinking its inner buffer as necessary. It also
-//!    helps ensure that the response body is parsed as the *correct* type for the operation, `ListNamespacedPodResponse` in this case, and not some other type.
-//!    However, you can instead use your own byte buffer instead of the `ResponseBody` value and call `ListNamespacedPodResponse::try_from_parts` yourself.
+//!    helps ensure that the response body is parsed as the *correct* type for the operation, `ListResponse<Pod>` in this case, and not some other type.
+//!    However, you can instead use your own byte buffer instead of the `ResponseBody` value and call `ListResponse<Pod>::try_from_parts` yourself.
 //!
-//! 1. The response types are enums with variants corresponding to HTTP status codes. For example, the `ListNamespacedPodResponse::Ok` variant corresponds to the
+//! 1. The response types are enums with variants corresponding to HTTP status codes. For example, the `ListResponse<Pod>::Ok` variant corresponds to the
 //!    HTTP 200 response of the list-namespaced-pod API.
 //! 
 //!    Each response enum also has an `Other` variant, that is yielded when the response status code does not match any of the other variants.
@@ -219,7 +219,7 @@
 //!     // Got a status code from executing the request.
 //!     let status_code: http::StatusCode = response.status_code();
 //!
-//!     // Construct the `ResponseBody<ListNamespacedPodResponse>` using the
+//!     // Construct the `ResponseBody<ListResponse<Pod>>` using the
 //!     // constructor returned by the API function.
 //!     let mut response_body = response_body(status_code);
 //!
@@ -239,7 +239,7 @@
 //!         let response = response_body.parse();
 //!         match response {
 //!             // Successful response (HTTP 200 and parsed successfully)
-//!             Ok(api::ListNamespacedPodResponse::Ok(pod_list)) =>
+//!             Ok(k8s_openapi::ListResponse::Ok(pod_list)) =>
 //!                 break pod_list,
 //!
 //!             // Some unexpected response

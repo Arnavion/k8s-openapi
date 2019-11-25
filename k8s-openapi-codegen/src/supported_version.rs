@@ -174,6 +174,7 @@ impl SupportedVersion {
 			crate::fixups::special::separate_watch_from_list_operations,
 			crate::fixups::special::watch_event,
 			crate::fixups::special::list,
+			crate::fixups::special::response_types,
 		];
 
 		for fixup in upstream_bugs_fixups.iter().chain(special_fixups) {

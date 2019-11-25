@@ -141,7 +141,8 @@ fn deployment() {
 		{
 			let response = client.execute(request).expect("couldn't delete deployment");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				apps::DeleteNamespacedDeploymentResponse::OkStatus(_) | apps::DeleteNamespacedDeploymentResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+				k8s_openapi::DeleteResponse::OkStatus(_) |
+				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete deployment");
 		}
@@ -160,7 +161,8 @@ fn deployment() {
 		{
 			let response = client.execute(request).expect("couldn't delete pods collection");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				api::DeleteCollectionNamespacedPodResponse::OkStatus(_) | api::DeleteCollectionNamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+				k8s_openapi::DeleteResponse::OkStatus(_) |
+				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete pods collection");
 		}
@@ -178,7 +180,7 @@ fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta
 
 	let deployment =
 		crate::get_single_value(response, response_body, |response, status_code| match response {
-			apps::PatchNamespacedDeploymentResponse::Ok(deployment) => Ok(crate::ValueResult::GotValue(deployment)),
+			k8s_openapi::PatchResponse::Ok(deployment) => Ok(crate::ValueResult::GotValue(deployment)),
 			other => {
 				// Err(format!("{:?} {}", other, status_code).into())
 				println!("{:?} {}", other, status_code);
