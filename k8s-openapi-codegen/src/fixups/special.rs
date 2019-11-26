@@ -652,14 +652,14 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 
 // Define the common types for API responses as `swagger20::Type::<>Def`, and replace all references to the original types with `swagger20::Type::<>Ref` for special codegen.
 pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-	const TYPES: &[(&str, fn() -> crate::swagger20::Type, fn(&crate::swagger20::Spec) -> Result<(), crate::Error>)] = &[
-		("io.k8s.DeleteResponse", || crate::swagger20::Type::DeleteResponse, verify_delete_and_delete_collection_operations),
-		("io.k8s.ListResponse", || crate::swagger20::Type::ListResponse, verify_list_operations),
-		("io.k8s.PatchResponse", || crate::swagger20::Type::PatchResponse, verify_patch_operations),
-		("io.k8s.WatchResponse", || crate::swagger20::Type::WatchResponse, verify_watch_operations),
+	const TYPES: &[(&str, fn(&crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error>)] = &[
+		("io.k8s.DeleteResponse", delete_and_delete_collection_response),
+		("io.k8s.ListResponse", list_response),
+		("io.k8s.PatchResponse", patch_response),
+		("io.k8s.WatchResponse", watch_response),
 	];
 
-	fn verify_delete_and_delete_collection_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+	fn delete_and_delete_collection_response(spec: &crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error> {
 		for operation in &spec.operations {
 			match operation.kubernetes_action {
 				Some(crate::swagger20::KubernetesAction::Delete) => {
@@ -672,6 +672,20 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 						return Err(format!("operation {} does not have the expected response status codes of a delete operation: {:?}",
 							operation.id, response_status_codes).into());
 					}
+
+					for (status_code, crate::swagger20::Schema { kind, .. }) in &operation.responses {
+						let is_status =
+							if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
+								ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status"
+							}
+							else {
+								false
+							};
+						if !is_status {
+							return Err(format!("operation {} does not have the expected response schema of a delete operation for status code {}: {:?}",
+								operation.id, status_code, kind).into());
+						}
+					}
 				},
 
 				Some(crate::swagger20::KubernetesAction::DeleteCollection) => {
@@ -682,16 +696,33 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 						return Err(format!("operation {} does not have the expected response status codes of a delete-collection operation: {:?}",
 							operation.id, response_status_codes).into());
 					}
+
+					for (status_code, crate::swagger20::Schema { kind, .. }) in &operation.responses {
+						let is_status =
+							if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
+								ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status"
+							}
+							else {
+								false
+							};
+						if !is_status {
+							return Err(format!("operation {} does not have the expected response schema of a delete-collection operation for status code {}: {:?}",
+								operation.id, status_code, kind).into());
+						}
+					}
 				},
 
 				_ => (),
 			}
 		}
 
-		Ok(())
+		Ok((
+			"The common response type for all delete API operations and delete-collection API operations.",
+			crate::swagger20::Type::DeleteResponse,
+		))
 	}
 
-	fn verify_list_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+	fn list_response(spec: &crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error> {
 		for operation in &spec.operations {
 			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::List) {
 				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
@@ -700,13 +731,40 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					return Err(format!("operation {} does not have the expected response status codes of a list operation: {:?}",
 						operation.id, response_status_codes).into());
 				}
+
+				let group_version_kind =
+					operation.kubernetes_group_kind_version.as_ref()
+					.ok_or_else(|| format!("operation {} looks like a list but doesn't have a group-version-kind", operation.id))?;
+				let expected_ref_path_suffix = format!(".{}", group_version_kind.kind);
+
+				for (status_code, crate::swagger20::Schema { kind, .. }) in &operation.responses {
+					let is_status =
+						if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef { items }) = kind {
+							if let crate::swagger20::SchemaKind::Ref(ref_path) = &**items {
+								ref_path.path.ends_with(&expected_ref_path_suffix)
+							}
+							else {
+								false
+							}
+						}
+						else {
+							false
+						};
+					if !is_status {
+						return Err(format!("operation {} does not have the expected response schema of a list operation for status code {}: {:?}",
+							operation.id, status_code, kind).into());
+					}
+				}
 			}
 		}
 
-		Ok(())
+		Ok((
+			"The common response type for all list API operations.",
+			crate::swagger20::Type::ListResponse,
+		))
 	}
 
-	fn verify_patch_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+	fn patch_response(spec: &crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error> {
 		for operation in &spec.operations {
 			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Patch) {
 				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
@@ -715,13 +773,35 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					return Err(format!("operation {} does not have the expected response status codes of a patch operation: {:?}",
 						operation.id, response_status_codes).into());
 				}
+
+				let group_version_kind =
+					operation.kubernetes_group_kind_version.as_ref()
+					.ok_or_else(|| format!("operation {} looks like a list but doesn't have a group-version-kind", operation.id))?;
+				let expected_ref_path_suffix = format!(".{}", group_version_kind.kind);
+
+				for (status_code, crate::swagger20::Schema { kind, .. }) in &operation.responses {
+					let is_status =
+						if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
+							ref_path.path.ends_with(&expected_ref_path_suffix)
+						}
+						else {
+							false
+						};
+					if !is_status {
+						return Err(format!("operation {} does not have the expected response schema of a patch operation for status code {}: {:?}",
+							operation.id, status_code, kind).into());
+					}
+				}
 			}
 		}
 
-		Ok(())
+		Ok((
+			"The common response type for all patch API operations.",
+			crate::swagger20::Type::PatchResponse,
+		))
 	}
 
-	fn verify_watch_operations(spec: &crate::swagger20::Spec) -> Result<(), crate::Error> {
+	fn watch_response(spec: &crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error> {
 		for operation in &spec.operations {
 			if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Watch) {
 				let mut response_status_codes: Vec<_> = operation.responses.keys().copied().collect();
@@ -730,20 +810,37 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					return Err(format!("operation {} does not have the expected response status codes of a watch operation: {:?}",
 						operation.id, response_status_codes).into());
 				}
+
+				for (status_code, crate::swagger20::Schema { kind, .. }) in &operation.responses {
+					let is_status =
+						if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
+							ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent"
+						}
+						else {
+							false
+						};
+					if !is_status {
+						return Err(format!("operation {} does not have the expected response schema of a watch operation for status code {}: {:?}",
+							operation.id, status_code, kind).into());
+					}
+				}
 			}
 		}
 
-		Ok(())
+		Ok((
+			"The common response type for all watch API operations.",
+			crate::swagger20::Type::WatchResponse,
+		))
 	}
 
-	for &(definition_path, def_fn, verify_fn) in TYPES {
-		verify_fn(spec)?;
+	for &(definition_path, run) in TYPES {
+		let (description, ty) = run(spec)?;
 
 		spec.definitions.insert(
 			crate::swagger20::DefinitionPath(definition_path.to_owned()),
 			crate::swagger20::Schema {
-				description: Some("The common response type for all delete API operations and delete-collection API operations.".to_owned()),
-				kind: crate::swagger20::SchemaKind::Ty(def_fn()),
+				description: Some(description.to_owned()),
+				kind: crate::swagger20::SchemaKind::Ty(ty),
 				kubernetes_group_kind_versions: None,
 				has_corresponding_list_type: false,
 			});

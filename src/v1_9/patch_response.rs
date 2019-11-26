@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.PatchResponse
 
-/// The common response type for all delete API operations and delete-collection API operations.
+/// The common response type for all patch API operations.
 #[derive(Debug)]
 pub enum PatchResponse<T> {
     Ok(T),

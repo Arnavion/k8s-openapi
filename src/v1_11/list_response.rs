@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.ListResponse
 
-/// The common response type for all delete API operations and delete-collection API operations.
+/// The common response type for all list API operations.
 #[derive(Debug)]
 pub enum ListResponse<T> where T: crate::ListableResource {
     Ok(crate::List<T>),
