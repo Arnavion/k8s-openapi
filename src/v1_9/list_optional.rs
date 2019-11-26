@@ -29,6 +29,7 @@ pub struct ListOptional<'a> {
     /// Timeout for the list/watch call.
     pub timeout_seconds: Option<i64>,
 }
+
 impl<'a> ListOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
