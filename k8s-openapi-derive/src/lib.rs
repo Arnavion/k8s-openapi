@@ -269,7 +269,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///
 /// (You may wish to generate your own crate's docs, or run it through `cargo-expand`, to be able to see the macro expansion.)
 ///
-/// Refer to [the `k8s-openapi` crate docs](https://docs.rs/k8s-openapi) to learn more about how to use the return values of these functions.
+/// Refer to [the `k8s-openapi` crate docs](https://arnavion.github.io/k8s-openapi/) to learn more about how to use the return values of these functions.
 ///
 /// See the [`custom_resource_definition` test in the repository](https://github.com/Arnavion/k8s-openapi/blob/master/k8s-openapi-tests/src/custom_resource_definition.rs)
 /// for a full example of using this custom derive.

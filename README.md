@@ -2,7 +2,7 @@ This crate is a Rust Kubernetes API client. It contains bindings for the resourc
 
 [crates.io](https://crates.io/crates/k8s-openapi)
 
-[Documentation](https://docs.rs/k8s-openapi)
+[Documentation](https://arnavion.github.io/k8s-openapi/)
 
 [Changelog](https://github.com/Arnavion/k8s-openapi/blob/master/CHANGELOG.md)
 

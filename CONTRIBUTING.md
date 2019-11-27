@@ -63,7 +63,20 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 # To make a new crate release
 
-1. `/k8s-openapi/Cargo.toml`: Update crate version
+1. `/Cargo.toml`: Update crate version
+1. `/Cargo.toml`: Update docs URL
 1. `/k8s-openapi-codegen-common/Cargo.toml`: Update crate version
 1. `/k8s-openapi-derive/Cargo.toml`: Update crate version
 1. `/k8s-openapi-derive/Cargo.toml`: Update version req of `k8s-openapi-codegen-common` dependency
+1. `/k8s-openapi-derive/Cargo.toml`: Update docs URL
+1. Generate docs (change feature and directory name as appropriate).
+
+    ```sh
+    rm -rf ./target/doc/ &&
+    cargo rustdoc --features 'v1_16' -- -Z unstable-options --disable-per-crate-search --enable-index-page &&
+    CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --disable-per-crate-search --enable-index-page &&
+    rm -rf ../k8s-openapi-gh-pages/v0.6.x &&
+    cp -R ./target/doc ../k8s-openapi-gh-pages/v0.6.x
+    ```
+
+1. `../k8s-openapi-gh-pages/index.html`: Add new anchor if this is a new major release
