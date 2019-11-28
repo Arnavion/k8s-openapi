@@ -22,7 +22,7 @@ pub struct StatefulSet {
 impl StatefulSet {
     /// create a StatefulSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedStatefulSetResponse`]`>` constructor, or [`CreateNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -39,26 +39,13 @@ impl StatefulSet {
     pub fn create_namespaced_stateful_set(
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
-        optional: CreateNamespacedStatefulSetOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedStatefulSetResponse>), crate::RequestError> {
-        let CreateNamespacedStatefulSetOptional {
-            dry_run,
-            include_uninitialized,
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -67,74 +54,6 @@ impl StatefulSet {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`StatefulSet::create_namespaced_stateful_set`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateNamespacedStatefulSetOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// If true, partially initialized resources are included in the response.
-    pub include_uninitialized: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::create_namespaced_stateful_set`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateNamespacedStatefulSetResponse {
-    Ok(crate::api::apps::v1beta2::StatefulSet),
-    Created(crate::api::apps::v1beta2::StatefulSet),
-    Accepted(crate::api::apps::v1beta2::StatefulSet),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateNamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedStatefulSetResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedStatefulSetResponse::Created(result), buf.len()))
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedStatefulSetResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateNamespacedStatefulSetResponse::Other(result), read))
-            },
         }
     }
 }
@@ -601,7 +520,7 @@ impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// replace the specified StatefulSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedStatefulSetResponse`]`>` constructor, or [`ReplaceNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -623,23 +542,14 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
-        optional: ReplaceNamespacedStatefulSetOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetResponse>), crate::RequestError> {
-        let ReplaceNamespacedStatefulSetOptional {
-            dry_run,
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -652,69 +562,12 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedStatefulSetOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::replace_namespaced_stateful_set`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedStatefulSetResponse {
-    Ok(crate::api::apps::v1beta2::StatefulSet),
-    Created(crate::api::apps::v1beta2::StatefulSet),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedStatefulSetResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedStatefulSetResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedStatefulSetResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation replaceAppsV1beta2NamespacedStatefulSetStatus
 
 impl StatefulSet {
     /// replace status of the specified StatefulSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedStatefulSetStatusResponse`]`>` constructor, or [`ReplaceNamespacedStatefulSetStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -736,23 +589,14 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
-        optional: ReplaceNamespacedStatefulSetStatusOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetStatusResponse>), crate::RequestError> {
-        let ReplaceNamespacedStatefulSetStatusOptional {
-            dry_run,
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -761,63 +605,6 @@ impl StatefulSet {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedStatefulSetStatusOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::replace_namespaced_stateful_set_status`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedStatefulSetStatusResponse {
-    Ok(crate::api::apps::v1beta2::StatefulSet),
-    Created(crate::api::apps::v1beta2::StatefulSet),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedStatefulSetStatusResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedStatefulSetStatusResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedStatefulSetStatusResponse::Other(result), read))
-            },
         }
     }
 }

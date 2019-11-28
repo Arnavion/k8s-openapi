@@ -17,7 +17,7 @@ pub struct Eviction {
 impl Eviction {
     /// create eviction of a Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodEvictionResponse`]`>` constructor, or [`CreateNamespacedPodEvictionResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -39,19 +39,14 @@ impl Eviction {
         name: &str,
         namespace: &str,
         body: &crate::api::policy::v1beta1::Eviction,
-        optional: CreateNamespacedPodEvictionOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodEvictionResponse>), crate::RequestError> {
-        let CreateNamespacedPodEvictionOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -60,70 +55,6 @@ impl Eviction {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`Eviction::create_namespaced_pod_eviction`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateNamespacedPodEvictionOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateNamespacedPodEvictionResponse as Response>::try_from_parts` to parse the HTTP response body of [`Eviction::create_namespaced_pod_eviction`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateNamespacedPodEvictionResponse {
-    Ok(crate::api::policy::v1beta1::Eviction),
-    Created(crate::api::policy::v1beta1::Eviction),
-    Accepted(crate::api::policy::v1beta1::Eviction),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateNamespacedPodEvictionResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedPodEvictionResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedPodEvictionResponse::Created(result), buf.len()))
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedPodEvictionResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateNamespacedPodEvictionResponse::Other(result), read))
-            },
         }
     }
 }

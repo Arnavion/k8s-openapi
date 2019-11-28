@@ -455,7 +455,7 @@ impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
 impl Scale {
     /// replace scale of the specified Deployment
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedDeploymentScaleResponse`]`>` constructor, or [`ReplaceNamespacedDeploymentScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -477,19 +477,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
-        optional: ReplaceNamespacedDeploymentScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentScaleResponse>), crate::RequestError> {
-        let ReplaceNamespacedDeploymentScaleOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -502,67 +497,12 @@ impl Scale {
     }
 }
 
-/// Optional parameters of [`Scale::replace_namespaced_deployment_scale`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedDeploymentScaleOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_deployment_scale`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedDeploymentScaleResponse {
-    Ok(crate::api::extensions::v1beta1::Scale),
-    Created(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedDeploymentScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedDeploymentScaleResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedDeploymentScaleResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedDeploymentScaleResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicaSetScale
 
 impl Scale {
     /// replace scale of the specified ReplicaSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicaSetScaleResponse`]`>` constructor, or [`ReplaceNamespacedReplicaSetScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -584,19 +524,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
-        optional: ReplaceNamespacedReplicaSetScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetScaleResponse>), crate::RequestError> {
-        let ReplaceNamespacedReplicaSetScaleOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -609,67 +544,12 @@ impl Scale {
     }
 }
 
-/// Optional parameters of [`Scale::replace_namespaced_replica_set_scale`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedReplicaSetScaleOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_replica_set_scale`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedReplicaSetScaleResponse {
-    Ok(crate::api::extensions::v1beta1::Scale),
-    Created(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedReplicaSetScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedReplicaSetScaleResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedReplicaSetScaleResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedReplicaSetScaleResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicationControllerDummyScale
 
 impl Scale {
     /// replace scale of the specified ReplicationControllerDummy
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicationControllerDummyScaleResponse`]`>` constructor, or [`ReplaceNamespacedReplicationControllerDummyScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -691,19 +571,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
-        optional: ReplaceNamespacedReplicationControllerDummyScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerDummyScaleResponse>), crate::RequestError> {
-        let ReplaceNamespacedReplicationControllerDummyScaleOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -712,61 +587,6 @@ impl Scale {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`Scale::replace_namespaced_replication_controller_dummy_scale`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedReplicationControllerDummyScaleOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_replication_controller_dummy_scale`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedReplicationControllerDummyScaleResponse {
-    Ok(crate::api::extensions::v1beta1::Scale),
-    Created(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedReplicationControllerDummyScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedReplicationControllerDummyScaleResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedReplicationControllerDummyScaleResponse::Other(result), read))
-            },
         }
     }
 }

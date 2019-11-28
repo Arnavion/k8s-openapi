@@ -269,48 +269,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::CREATED, swagger20::Schema {
-							description: Some("Created".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::ACCEPTED, swagger20::Schema {
-							description: Some("Accepted".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::UNPROCESSABLE_ENTITY, swagger20::Schema {
-							description: Some("Unprocessable Entity".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::CreateResponse),
 					tag: String::new(),
 				},
 
@@ -344,7 +303,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
-					responses: Default::default(), // Overridden to `k8s_openapi::DeleteResponse<Self>`
+					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
 					tag: String::new(),
 				},
 
@@ -392,7 +351,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
-					responses: Default::default(), // Overridden to `k8s_openapi::DeleteResponse<k8s_openapi::List<Self>>`
+					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
 					tag: String::new(),
 				},
 
@@ -425,18 +384,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_list_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::ListResponse),
 					tag: String::new(),
 				},
 
@@ -485,18 +433,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
 					tag: String::new(),
 				},
 
@@ -545,18 +482,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
 					tag: String::new(),
 				},
 
@@ -575,7 +501,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
-					responses: vec![
+					responses: swagger20::OperationResponses::Map(vec![
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
@@ -586,7 +512,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							kubernetes_group_kind_versions: None,
 							has_corresponding_list_type: false,
 						}),
-					].into_iter().collect(),
+					].into_iter().collect()),
 					tag: String::new(),
 				},
 
@@ -605,7 +531,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
-					responses: vec![
+					responses: swagger20::OperationResponses::Map(vec![
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
@@ -616,7 +542,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							kubernetes_group_kind_versions: None,
 							has_corresponding_list_type: false,
 						}),
-					].into_iter().collect(),
+					].into_iter().collect()),
 					tag: String::new(),
 				},
 
@@ -634,30 +560,24 @@ impl super::CustomDerive for CustomResourceDefinition {
 						Some(body_parameter.clone()),
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
+						Some(std::sync::Arc::new(swagger20::Parameter {
+							location: swagger20::ParameterLocation::Body,
+							name: "optional".to_owned(),
+							required: true,
+							schema: swagger20::Schema {
+								description: None,
+								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+									path: "io.k8s.ReplaceOptional".to_owned(),
+									relative_to: swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
+							},
+						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::ACCEPTED, swagger20::Schema {
-							description: Some("Accepted".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
 					tag: String::new(),
 				},
 
@@ -675,30 +595,24 @@ impl super::CustomDerive for CustomResourceDefinition {
 						Some(body_parameter.clone()),
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
+						Some(std::sync::Arc::new(swagger20::Parameter {
+							location: swagger20::ParameterLocation::Body,
+							name: "optional".to_owned(),
+							required: true,
+							schema: swagger20::Schema {
+								description: None,
+								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
+									path: "io.k8s.ReplaceOptional".to_owned(),
+									relative_to: swagger20::RefPathRelativeTo::Crate,
+									can_be_default: None,
+								}),
+								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
+							},
+						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-						(http::StatusCode::ACCEPTED, swagger20::Schema {
-							description: Some("Accepted".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
 					tag: String::new(),
 				},
 
@@ -731,18 +645,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						})),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
-					responses: vec![
-						(http::StatusCode::OK, swagger20::Schema {
-							description: Some("OK".to_owned()),
-							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
-								can_be_default: None,
-							}),
-							kubernetes_group_kind_versions: None,
-							has_corresponding_list_type: false,
-						}),
-					].into_iter().collect(),
+					responses: swagger20::OperationResponses::Common(swagger20::Type::WatchResponse),
 					tag: String::new(),
 				},
 			],

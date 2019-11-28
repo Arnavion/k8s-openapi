@@ -23,7 +23,7 @@ pub struct ServiceAccount {
 impl ServiceAccount {
     /// create a ServiceAccount
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedServiceAccountResponse`]`>` constructor, or [`CreateNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -40,18 +40,13 @@ impl ServiceAccount {
     pub fn create_namespaced_service_account(
         namespace: &str,
         body: &crate::api::core::v1::ServiceAccount,
-        optional: CreateNamespacedServiceAccountOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceAccountResponse>), crate::RequestError> {
-        let CreateNamespacedServiceAccountOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?",
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -60,52 +55,6 @@ impl ServiceAccount {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`ServiceAccount::create_namespaced_service_account`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateNamespacedServiceAccountOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::create_namespaced_service_account`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateNamespacedServiceAccountResponse {
-    Ok(crate::api::core::v1::ServiceAccount),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateNamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateNamespacedServiceAccountResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateNamespacedServiceAccountResponse::Other(result), read))
-            },
         }
     }
 }
@@ -427,7 +376,7 @@ impl crate::Response for ReadNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// replace the specified ServiceAccount
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedServiceAccountResponse`]`>` constructor, or [`ReplaceNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -449,19 +398,14 @@ impl ServiceAccount {
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::ServiceAccount,
-        optional: ReplaceNamespacedServiceAccountOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceAccountResponse>), crate::RequestError> {
-        let ReplaceNamespacedServiceAccountOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -470,52 +414,6 @@ impl ServiceAccount {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceNamespacedServiceAccountOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::replace_namespaced_service_account`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceNamespacedServiceAccountResponse {
-    Ok(crate::api::core::v1::ServiceAccount),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceNamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceNamespacedServiceAccountResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceNamespacedServiceAccountResponse::Other(result), read))
-            },
         }
     }
 }

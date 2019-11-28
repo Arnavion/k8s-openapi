@@ -19,8 +19,6 @@ pub use self::azure_file_volume_source::AzureFileVolumeSource;
 
 mod binding;
 pub use self::binding::Binding;
-#[cfg(feature = "api")] pub use self::binding::{CreateNamespacedBindingOptional, CreateNamespacedBindingResponse};
-#[cfg(feature = "api")] pub use self::binding::{CreateNamespacedPodBindingOptional, CreateNamespacedPodBindingResponse};
 
 mod csi_persistent_volume_source;
 pub use self::csi_persistent_volume_source::CSIPersistentVolumeSource;
@@ -49,9 +47,7 @@ pub use self::component_status::ComponentStatus;
 
 mod config_map;
 pub use self::config_map::ConfigMap;
-#[cfg(feature = "api")] pub use self::config_map::{CreateNamespacedConfigMapOptional, CreateNamespacedConfigMapResponse};
 #[cfg(feature = "api")] pub use self::config_map::{ReadNamespacedConfigMapOptional, ReadNamespacedConfigMapResponse};
-#[cfg(feature = "api")] pub use self::config_map::{ReplaceNamespacedConfigMapOptional, ReplaceNamespacedConfigMapResponse};
 
 mod config_map_env_source;
 pub use self::config_map_env_source::ConfigMapEnvSource;
@@ -115,9 +111,7 @@ pub use self::endpoint_subset::EndpointSubset;
 
 mod endpoints;
 pub use self::endpoints::Endpoints;
-#[cfg(feature = "api")] pub use self::endpoints::{CreateNamespacedEndpointsOptional, CreateNamespacedEndpointsResponse};
 #[cfg(feature = "api")] pub use self::endpoints::{ReadNamespacedEndpointsOptional, ReadNamespacedEndpointsResponse};
-#[cfg(feature = "api")] pub use self::endpoints::{ReplaceNamespacedEndpointsOptional, ReplaceNamespacedEndpointsResponse};
 
 mod env_from_source;
 pub use self::env_from_source::EnvFromSource;
@@ -130,9 +124,7 @@ pub use self::env_var_source::EnvVarSource;
 
 mod event;
 pub use self::event::Event;
-#[cfg(feature = "api")] pub use self::event::{CreateNamespacedEventOptional, CreateNamespacedEventResponse};
 #[cfg(feature = "api")] pub use self::event::{ReadNamespacedEventOptional, ReadNamespacedEventResponse};
-#[cfg(feature = "api")] pub use self::event::{ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse};
 
 mod event_series;
 pub use self::event_series::EventSeries;
@@ -190,9 +182,7 @@ pub use self::lifecycle::Lifecycle;
 
 mod limit_range;
 pub use self::limit_range::LimitRange;
-#[cfg(feature = "api")] pub use self::limit_range::{CreateNamespacedLimitRangeOptional, CreateNamespacedLimitRangeResponse};
 #[cfg(feature = "api")] pub use self::limit_range::{ReadNamespacedLimitRangeOptional, ReadNamespacedLimitRangeResponse};
-#[cfg(feature = "api")] pub use self::limit_range::{ReplaceNamespacedLimitRangeOptional, ReplaceNamespacedLimitRangeResponse};
 
 mod limit_range_item;
 pub use self::limit_range_item::LimitRangeItem;
@@ -217,12 +207,8 @@ pub use self::nfs_volume_source::NFSVolumeSource;
 
 mod namespace;
 pub use self::namespace::Namespace;
-#[cfg(feature = "api")] pub use self::namespace::{CreateNamespaceOptional, CreateNamespaceResponse};
 #[cfg(feature = "api")] pub use self::namespace::{ReadNamespaceOptional, ReadNamespaceResponse};
 #[cfg(feature = "api")] pub use self::namespace::{ReadNamespaceStatusOptional, ReadNamespaceStatusResponse};
-#[cfg(feature = "api")] pub use self::namespace::{ReplaceNamespaceOptional, ReplaceNamespaceResponse};
-#[cfg(feature = "api")] pub use self::namespace::{ReplaceNamespaceFinalizeOptional, ReplaceNamespaceFinalizeResponse};
-#[cfg(feature = "api")] pub use self::namespace::{ReplaceNamespaceStatusOptional, ReplaceNamespaceStatusResponse};
 
 mod namespace_spec;
 pub use self::namespace_spec::NamespaceSpec;
@@ -242,7 +228,6 @@ pub use self::node::Node;
 #[cfg(feature = "api")] pub use self::node::ConnectPostNodeProxyWithPathOptional;
 #[cfg(feature = "api")] pub use self::node::ConnectPutNodeProxyOptional;
 #[cfg(feature = "api")] pub use self::node::ConnectPutNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::{CreateNodeOptional, CreateNodeResponse};
 #[cfg(feature = "api")] pub use self::node::ProxyDELETENodeResponse;
 #[cfg(feature = "api")] pub use self::node::ProxyDELETENodeWithPathResponse;
 #[cfg(feature = "api")] pub use self::node::ProxyGETNodeResponse;
@@ -255,8 +240,6 @@ pub use self::node::Node;
 #[cfg(feature = "api")] pub use self::node::ProxyPUTNodeWithPathResponse;
 #[cfg(feature = "api")] pub use self::node::{ReadNodeOptional, ReadNodeResponse};
 #[cfg(feature = "api")] pub use self::node::{ReadNodeStatusOptional, ReadNodeStatusResponse};
-#[cfg(feature = "api")] pub use self::node::{ReplaceNodeOptional, ReplaceNodeResponse};
-#[cfg(feature = "api")] pub use self::node::{ReplaceNodeStatusOptional, ReplaceNodeStatusResponse};
 
 mod node_address;
 pub use self::node_address::NodeAddress;
@@ -299,19 +282,13 @@ pub use self::object_reference::ObjectReference;
 
 mod persistent_volume;
 pub use self::persistent_volume::PersistentVolume;
-#[cfg(feature = "api")] pub use self::persistent_volume::{CreatePersistentVolumeOptional, CreatePersistentVolumeResponse};
 #[cfg(feature = "api")] pub use self::persistent_volume::{ReadPersistentVolumeOptional, ReadPersistentVolumeResponse};
 #[cfg(feature = "api")] pub use self::persistent_volume::{ReadPersistentVolumeStatusOptional, ReadPersistentVolumeStatusResponse};
-#[cfg(feature = "api")] pub use self::persistent_volume::{ReplacePersistentVolumeOptional, ReplacePersistentVolumeResponse};
-#[cfg(feature = "api")] pub use self::persistent_volume::{ReplacePersistentVolumeStatusOptional, ReplacePersistentVolumeStatusResponse};
 
 mod persistent_volume_claim;
 pub use self::persistent_volume_claim::PersistentVolumeClaim;
-#[cfg(feature = "api")] pub use self::persistent_volume_claim::{CreateNamespacedPersistentVolumeClaimOptional, CreateNamespacedPersistentVolumeClaimResponse};
 #[cfg(feature = "api")] pub use self::persistent_volume_claim::{ReadNamespacedPersistentVolumeClaimOptional, ReadNamespacedPersistentVolumeClaimResponse};
 #[cfg(feature = "api")] pub use self::persistent_volume_claim::{ReadNamespacedPersistentVolumeClaimStatusOptional, ReadNamespacedPersistentVolumeClaimStatusResponse};
-#[cfg(feature = "api")] pub use self::persistent_volume_claim::{ReplaceNamespacedPersistentVolumeClaimOptional, ReplaceNamespacedPersistentVolumeClaimResponse};
-#[cfg(feature = "api")] pub use self::persistent_volume_claim::{ReplaceNamespacedPersistentVolumeClaimStatusOptional, ReplaceNamespacedPersistentVolumeClaimStatusResponse};
 
 mod persistent_volume_claim_condition;
 pub use self::persistent_volume_claim_condition::PersistentVolumeClaimCondition;
@@ -352,7 +329,6 @@ pub use self::pod::Pod;
 #[cfg(feature = "api")] pub use self::pod::ConnectPostNamespacedPodProxyWithPathOptional;
 #[cfg(feature = "api")] pub use self::pod::ConnectPutNamespacedPodProxyOptional;
 #[cfg(feature = "api")] pub use self::pod::ConnectPutNamespacedPodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::{CreateNamespacedPodOptional, CreateNamespacedPodResponse};
 #[cfg(feature = "api")] pub use self::pod::ProxyDELETENamespacedPodResponse;
 #[cfg(feature = "api")] pub use self::pod::ProxyDELETENamespacedPodWithPathResponse;
 #[cfg(feature = "api")] pub use self::pod::ProxyGETNamespacedPodResponse;
@@ -366,8 +342,6 @@ pub use self::pod::Pod;
 #[cfg(feature = "api")] pub use self::pod::{ReadNamespacedPodOptional, ReadNamespacedPodResponse};
 #[cfg(feature = "api")] pub use self::pod::{ReadNamespacedPodLogOptional, ReadNamespacedPodLogResponse};
 #[cfg(feature = "api")] pub use self::pod::{ReadNamespacedPodStatusOptional, ReadNamespacedPodStatusResponse};
-#[cfg(feature = "api")] pub use self::pod::{ReplaceNamespacedPodOptional, ReplaceNamespacedPodResponse};
-#[cfg(feature = "api")] pub use self::pod::{ReplaceNamespacedPodStatusOptional, ReplaceNamespacedPodStatusResponse};
 
 mod pod_affinity;
 pub use self::pod_affinity::PodAffinity;
@@ -398,9 +372,7 @@ pub use self::pod_status::PodStatus;
 
 mod pod_template;
 pub use self::pod_template::PodTemplate;
-#[cfg(feature = "api")] pub use self::pod_template::{CreateNamespacedPodTemplateOptional, CreateNamespacedPodTemplateResponse};
 #[cfg(feature = "api")] pub use self::pod_template::{ReadNamespacedPodTemplateOptional, ReadNamespacedPodTemplateResponse};
-#[cfg(feature = "api")] pub use self::pod_template::{ReplaceNamespacedPodTemplateOptional, ReplaceNamespacedPodTemplateResponse};
 
 mod pod_template_spec;
 pub use self::pod_template_spec::PodTemplateSpec;
@@ -428,11 +400,8 @@ pub use self::rbd_volume_source::RBDVolumeSource;
 
 mod replication_controller;
 pub use self::replication_controller::ReplicationController;
-#[cfg(feature = "api")] pub use self::replication_controller::{CreateNamespacedReplicationControllerOptional, CreateNamespacedReplicationControllerResponse};
 #[cfg(feature = "api")] pub use self::replication_controller::{ReadNamespacedReplicationControllerOptional, ReadNamespacedReplicationControllerResponse};
 #[cfg(feature = "api")] pub use self::replication_controller::{ReadNamespacedReplicationControllerStatusOptional, ReadNamespacedReplicationControllerStatusResponse};
-#[cfg(feature = "api")] pub use self::replication_controller::{ReplaceNamespacedReplicationControllerOptional, ReplaceNamespacedReplicationControllerResponse};
-#[cfg(feature = "api")] pub use self::replication_controller::{ReplaceNamespacedReplicationControllerStatusOptional, ReplaceNamespacedReplicationControllerStatusResponse};
 
 mod replication_controller_condition;
 pub use self::replication_controller_condition::ReplicationControllerCondition;
@@ -448,11 +417,8 @@ pub use self::resource_field_selector::ResourceFieldSelector;
 
 mod resource_quota;
 pub use self::resource_quota::ResourceQuota;
-#[cfg(feature = "api")] pub use self::resource_quota::{CreateNamespacedResourceQuotaOptional, CreateNamespacedResourceQuotaResponse};
 #[cfg(feature = "api")] pub use self::resource_quota::{ReadNamespacedResourceQuotaOptional, ReadNamespacedResourceQuotaResponse};
 #[cfg(feature = "api")] pub use self::resource_quota::{ReadNamespacedResourceQuotaStatusOptional, ReadNamespacedResourceQuotaStatusResponse};
-#[cfg(feature = "api")] pub use self::resource_quota::{ReplaceNamespacedResourceQuotaOptional, ReplaceNamespacedResourceQuotaResponse};
-#[cfg(feature = "api")] pub use self::resource_quota::{ReplaceNamespacedResourceQuotaStatusOptional, ReplaceNamespacedResourceQuotaStatusResponse};
 
 mod resource_quota_spec;
 pub use self::resource_quota_spec::ResourceQuotaSpec;
@@ -474,9 +440,7 @@ pub use self::scale_io_volume_source::ScaleIOVolumeSource;
 
 mod secret;
 pub use self::secret::Secret;
-#[cfg(feature = "api")] pub use self::secret::{CreateNamespacedSecretOptional, CreateNamespacedSecretResponse};
 #[cfg(feature = "api")] pub use self::secret::{ReadNamespacedSecretOptional, ReadNamespacedSecretResponse};
-#[cfg(feature = "api")] pub use self::secret::{ReplaceNamespacedSecretOptional, ReplaceNamespacedSecretResponse};
 
 mod secret_env_source;
 pub use self::secret_env_source::SecretEnvSource;
@@ -508,7 +472,6 @@ pub use self::service::Service;
 #[cfg(feature = "api")] pub use self::service::ConnectPostNamespacedServiceProxyWithPathOptional;
 #[cfg(feature = "api")] pub use self::service::ConnectPutNamespacedServiceProxyOptional;
 #[cfg(feature = "api")] pub use self::service::ConnectPutNamespacedServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::{CreateNamespacedServiceOptional, CreateNamespacedServiceResponse};
 #[cfg(feature = "api")] pub use self::service::DeleteNamespacedServiceOptional;
 #[cfg(feature = "api")] pub use self::service::ProxyDELETENamespacedServiceResponse;
 #[cfg(feature = "api")] pub use self::service::ProxyDELETENamespacedServiceWithPathResponse;
@@ -522,14 +485,10 @@ pub use self::service::Service;
 #[cfg(feature = "api")] pub use self::service::ProxyPUTNamespacedServiceWithPathResponse;
 #[cfg(feature = "api")] pub use self::service::{ReadNamespacedServiceOptional, ReadNamespacedServiceResponse};
 #[cfg(feature = "api")] pub use self::service::{ReadNamespacedServiceStatusOptional, ReadNamespacedServiceStatusResponse};
-#[cfg(feature = "api")] pub use self::service::{ReplaceNamespacedServiceOptional, ReplaceNamespacedServiceResponse};
-#[cfg(feature = "api")] pub use self::service::{ReplaceNamespacedServiceStatusOptional, ReplaceNamespacedServiceStatusResponse};
 
 mod service_account;
 pub use self::service_account::ServiceAccount;
-#[cfg(feature = "api")] pub use self::service_account::{CreateNamespacedServiceAccountOptional, CreateNamespacedServiceAccountResponse};
 #[cfg(feature = "api")] pub use self::service_account::{ReadNamespacedServiceAccountOptional, ReadNamespacedServiceAccountResponse};
-#[cfg(feature = "api")] pub use self::service_account::{ReplaceNamespacedServiceAccountOptional, ReplaceNamespacedServiceAccountResponse};
 
 mod service_port;
 pub use self::service_port::ServicePort;

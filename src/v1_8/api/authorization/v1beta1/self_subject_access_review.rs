@@ -19,7 +19,7 @@ pub struct SelfSubjectAccessReview {
 impl SelfSubjectAccessReview {
     /// create a SelfSubjectAccessReview
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateSelfSubjectAccessReviewResponse`]`>` constructor, or [`CreateSelfSubjectAccessReviewResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,16 +31,11 @@ impl SelfSubjectAccessReview {
     #[cfg(feature = "api")]
     pub fn create_self_subject_access_review(
         body: &crate::api::authorization::v1beta1::SelfSubjectAccessReview,
-        optional: CreateSelfSubjectAccessReviewOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectAccessReviewResponse>), crate::RequestError> {
-        let CreateSelfSubjectAccessReviewOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/authorization.k8s.io/v1beta1/selfsubjectaccessreviews?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -49,52 +44,6 @@ impl SelfSubjectAccessReview {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`SelfSubjectAccessReview::create_self_subject_access_review`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateSelfSubjectAccessReviewOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateSelfSubjectAccessReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SelfSubjectAccessReview::create_self_subject_access_review`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateSelfSubjectAccessReviewResponse {
-    Ok(crate::api::authorization::v1beta1::SelfSubjectAccessReview),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateSelfSubjectAccessReviewResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateSelfSubjectAccessReviewResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateSelfSubjectAccessReviewResponse::Other(result), read))
-            },
         }
     }
 }

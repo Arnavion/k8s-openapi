@@ -124,7 +124,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 				kubernetes_group_kind_version: value.kubernetes_group_kind_version,
 				method,
 				parameters,
-				responses: responses?,
+				responses: OperationResponses::Map(responses?),
 				tag: value.tags.0,
 			})
 		}

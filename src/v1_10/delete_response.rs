@@ -2,14 +2,14 @@
 
 /// The common response type for all delete API operations and delete-collection API operations.
 #[derive(Debug)]
-pub enum DeleteResponse<T> {
+pub enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(T),
-    Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
+    Accepted(T),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
-impl<'de, T> crate::Response for DeleteResponse<T> where T: serde::Deserialize<'de> {
+impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwned {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {

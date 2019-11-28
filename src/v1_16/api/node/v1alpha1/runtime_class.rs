@@ -17,7 +17,7 @@ pub struct RuntimeClass {
 impl RuntimeClass {
     /// create a RuntimeClass
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateRuntimeClassResponse`]`>` constructor, or [`CreateRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,24 +29,11 @@ impl RuntimeClass {
     #[cfg(feature = "api")]
     pub fn create_runtime_class(
         body: &crate::api::node::v1alpha1::RuntimeClass,
-        optional: CreateRuntimeClassOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateRuntimeClassResponse>), crate::RequestError> {
-        let CreateRuntimeClassOptional {
-            dry_run,
-            field_manager,
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1alpha1/runtimeclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(field_manager) = field_manager {
-            __query_pairs.append_pair("fieldManager", field_manager);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -55,74 +42,6 @@ impl RuntimeClass {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`RuntimeClass::create_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateRuntimeClassOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
-    pub field_manager: Option<&'a str>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::create_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateRuntimeClassResponse {
-    Ok(crate::api::node::v1alpha1::RuntimeClass),
-    Created(crate::api::node::v1alpha1::RuntimeClass),
-    Accepted(crate::api::node::v1alpha1::RuntimeClass),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateRuntimeClassResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateRuntimeClassResponse::Created(result), buf.len()))
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateRuntimeClassResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateRuntimeClassResponse::Other(result), read))
-            },
         }
     }
 }
@@ -380,7 +299,7 @@ impl crate::Response for ReadRuntimeClassResponse {
 impl RuntimeClass {
     /// replace the specified RuntimeClass
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceRuntimeClassResponse`]`>` constructor, or [`ReplaceRuntimeClassResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -397,26 +316,13 @@ impl RuntimeClass {
     pub fn replace_runtime_class(
         name: &str,
         body: &crate::api::node::v1alpha1::RuntimeClass,
-        optional: ReplaceRuntimeClassOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceRuntimeClassResponse>), crate::RequestError> {
-        let ReplaceRuntimeClassOptional {
-            dry_run,
-            field_manager,
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1alpha1/runtimeclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(dry_run) = dry_run {
-            __query_pairs.append_pair("dryRun", dry_run);
-        }
-        if let Some(field_manager) = field_manager {
-            __query_pairs.append_pair("fieldManager", field_manager);
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -425,65 +331,6 @@ impl RuntimeClass {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`RuntimeClass::replace_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceRuntimeClassOptional<'a> {
-    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<&'a str>,
-    /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
-    pub field_manager: Option<&'a str>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::replace_runtime_class`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceRuntimeClassResponse {
-    Ok(crate::api::node::v1alpha1::RuntimeClass),
-    Created(crate::api::node::v1alpha1::RuntimeClass),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceRuntimeClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceRuntimeClassResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceRuntimeClassResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceRuntimeClassResponse::Other(result), read))
-            },
         }
     }
 }

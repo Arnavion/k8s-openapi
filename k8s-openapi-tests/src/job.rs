@@ -52,20 +52,10 @@ fn create() {
 			.expect("couldn't create job");
 		let job: batch::Job = {
 			let response = client.execute(request).expect("couldn't create job");
-			crate::get_single_value(response, response_body, |response, status_code| k8s_match!((response, status_code), {
-				k8s_if_1_8!((batch::CreateNamespacedJobResponse::Other(value), http::StatusCode::CREATED) => {
-					let value = match value? {
-						Some(value) => value,
-						None => return Ok(crate::ValueResult::NeedMoreData),
-					};
-					Ok(crate::ValueResult::GotValue(serde::Deserialize::deserialize(value)?))
-				}),
-
-				k8s_if_ge_1_9!((batch::CreateNamespacedJobResponse::Created(job), _) =>
-					Ok(crate::ValueResult::GotValue(job))),
-
-				(other, status_code) => Err(format!("{:?} {}", other, status_code).into()),
-			})).expect("couldn't create job")
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				k8s_openapi::CreateResponse::Created(job) => Ok(crate::ValueResult::GotValue(job)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't create job")
 		};
 
 		let job_image =

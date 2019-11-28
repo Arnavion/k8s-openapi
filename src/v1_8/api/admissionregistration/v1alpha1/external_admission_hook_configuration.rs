@@ -17,7 +17,7 @@ pub struct ExternalAdmissionHookConfiguration {
 impl ExternalAdmissionHookConfiguration {
     /// create an ExternalAdmissionHookConfiguration
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`CreateExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,16 +29,11 @@ impl ExternalAdmissionHookConfiguration {
     #[cfg(feature = "api")]
     pub fn create_external_admission_hook_configuration(
         body: &crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
-        optional: CreateExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
-        let CreateExternalAdmissionHookConfigurationOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -47,52 +42,6 @@ impl ExternalAdmissionHookConfiguration {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateExternalAdmissionHookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateExternalAdmissionHookConfigurationResponse::Other(result), read))
-            },
         }
     }
 }
@@ -350,7 +299,7 @@ impl crate::Response for ReadExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// replace the specified ExternalAdmissionHookConfiguration
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`ReplaceExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -367,18 +316,13 @@ impl ExternalAdmissionHookConfiguration {
     pub fn replace_external_admission_hook_configuration(
         name: &str,
         body: &crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
-        optional: ReplaceExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
-        let ReplaceExternalAdmissionHookConfigurationOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -387,52 +331,6 @@ impl ExternalAdmissionHookConfiguration {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceExternalAdmissionHookConfigurationResponse {
-    Ok(crate::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceExternalAdmissionHookConfigurationResponse::Other(result), read))
-            },
         }
     }
 }

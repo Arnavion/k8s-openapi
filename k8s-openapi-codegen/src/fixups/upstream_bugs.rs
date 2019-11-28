@@ -53,11 +53,13 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 	let mut found = false;
 
 	if let Some(operation) = spec.operations.iter_mut().find(|o| o.id == "createAppsV1beta1NamespacedDeploymentRollback") {
-		for response in operation.responses.values_mut() {
-			if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }), .. } = response {
-				if path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-					std::mem::replace(path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
-					found = true;
+		if let crate::swagger20::OperationResponses::Map(responses) = &mut operation.responses {
+			for response in responses.values_mut() {
+				if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }), .. } = response {
+					if path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
+						std::mem::replace(path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
+						found = true;
+					}
 				}
 			}
 		}

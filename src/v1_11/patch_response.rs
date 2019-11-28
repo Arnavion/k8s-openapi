@@ -2,7 +2,7 @@
 
 /// The common response type for all patch API operations.
 #[derive(Debug)]
-pub enum PatchResponse<T> {
+pub enum PatchResponse<T> where T: serde::de::DeserializeOwned {
     Ok(T),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }

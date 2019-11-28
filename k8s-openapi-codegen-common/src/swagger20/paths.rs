@@ -66,8 +66,14 @@ pub struct Operation {
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 	pub parameters: Vec<std::sync::Arc<Parameter>>,
 	pub path: Path,
-	pub responses: std::collections::BTreeMap<http::StatusCode, super::Schema>,
+	pub responses: OperationResponses,
 	pub tag: String,
+}
+
+#[derive(Clone, Debug)]
+pub enum OperationResponses {
+	Common(super::Type),
+	Map(std::collections::BTreeMap<http::StatusCode, super::Schema>),
 }
 
 #[derive(Clone, Debug)]

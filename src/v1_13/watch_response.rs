@@ -2,7 +2,7 @@
 
 /// The common response type for all watch API operations.
 #[derive(Debug)]
-pub enum WatchResponse<T> {
+pub enum WatchResponse<T> where T: serde::de::DeserializeOwned {
     Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<T>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }

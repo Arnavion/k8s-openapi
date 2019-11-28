@@ -2,7 +2,7 @@
 
 /// The common response type for all list API operations.
 #[derive(Debug)]
-pub enum ListResponse<T> where T: crate::ListableResource {
+pub enum ListResponse<T> where T: serde::de::DeserializeOwned + crate::ListableResource {
     Ok(crate::List<T>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }

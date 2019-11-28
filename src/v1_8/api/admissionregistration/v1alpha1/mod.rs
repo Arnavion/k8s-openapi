@@ -7,18 +7,14 @@ pub use self::external_admission_hook::ExternalAdmissionHook;
 
 mod external_admission_hook_configuration;
 pub use self::external_admission_hook_configuration::ExternalAdmissionHookConfiguration;
-#[cfg(feature = "api")] pub use self::external_admission_hook_configuration::{CreateExternalAdmissionHookConfigurationOptional, CreateExternalAdmissionHookConfigurationResponse};
 #[cfg(feature = "api")] pub use self::external_admission_hook_configuration::{ReadExternalAdmissionHookConfigurationOptional, ReadExternalAdmissionHookConfigurationResponse};
-#[cfg(feature = "api")] pub use self::external_admission_hook_configuration::{ReplaceExternalAdmissionHookConfigurationOptional, ReplaceExternalAdmissionHookConfigurationResponse};
 
 mod initializer;
 pub use self::initializer::Initializer;
 
 mod initializer_configuration;
 pub use self::initializer_configuration::InitializerConfiguration;
-#[cfg(feature = "api")] pub use self::initializer_configuration::{CreateInitializerConfigurationOptional, CreateInitializerConfigurationResponse};
 #[cfg(feature = "api")] pub use self::initializer_configuration::{ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse};
-#[cfg(feature = "api")] pub use self::initializer_configuration::{ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse};
 
 mod rule;
 pub use self::rule::Rule;

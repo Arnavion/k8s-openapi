@@ -4,11 +4,8 @@ pub use self::custom_resource_column_definition::CustomResourceColumnDefinition;
 
 mod custom_resource_definition;
 pub use self::custom_resource_definition::CustomResourceDefinition;
-#[cfg(feature = "api")] pub use self::custom_resource_definition::{CreateCustomResourceDefinitionOptional, CreateCustomResourceDefinitionResponse};
 #[cfg(feature = "api")] pub use self::custom_resource_definition::{ReadCustomResourceDefinitionOptional, ReadCustomResourceDefinitionResponse};
 #[cfg(feature = "api")] pub use self::custom_resource_definition::{ReadCustomResourceDefinitionStatusOptional, ReadCustomResourceDefinitionStatusResponse};
-#[cfg(feature = "api")] pub use self::custom_resource_definition::{ReplaceCustomResourceDefinitionOptional, ReplaceCustomResourceDefinitionResponse};
-#[cfg(feature = "api")] pub use self::custom_resource_definition::{ReplaceCustomResourceDefinitionStatusOptional, ReplaceCustomResourceDefinitionStatusResponse};
 
 mod custom_resource_definition_condition;
 pub use self::custom_resource_definition_condition::CustomResourceDefinitionCondition;

@@ -1,9 +1,7 @@
 
 mod audit_sink;
 pub use self::audit_sink::AuditSink;
-#[cfg(feature = "api")] pub use self::audit_sink::{CreateAuditSinkOptional, CreateAuditSinkResponse};
 #[cfg(feature = "api")] pub use self::audit_sink::{ReadAuditSinkOptional, ReadAuditSinkResponse};
-#[cfg(feature = "api")] pub use self::audit_sink::{ReplaceAuditSinkOptional, ReplaceAuditSinkResponse};
 
 mod audit_sink_spec;
 pub use self::audit_sink_spec::AuditSinkSpec;

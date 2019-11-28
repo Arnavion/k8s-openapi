@@ -19,7 +19,7 @@ pub struct CertificateSigningRequest {
 impl CertificateSigningRequest {
     /// create a CertificateSigningRequest
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateCertificateSigningRequestResponse`]`>` constructor, or [`CreateCertificateSigningRequestResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,16 +31,11 @@ impl CertificateSigningRequest {
     #[cfg(feature = "api")]
     pub fn create_certificate_signing_request(
         body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: CreateCertificateSigningRequestOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCertificateSigningRequestResponse>), crate::RequestError> {
-        let CreateCertificateSigningRequestOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -49,70 +44,6 @@ impl CertificateSigningRequest {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`CertificateSigningRequest::create_certificate_signing_request`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateCertificateSigningRequestOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::create_certificate_signing_request`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateCertificateSigningRequestResponse {
-    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Accepted(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateCertificateSigningRequestResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateCertificateSigningRequestResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateCertificateSigningRequestResponse::Created(result), buf.len()))
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateCertificateSigningRequestResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateCertificateSigningRequestResponse::Other(result), read))
-            },
         }
     }
 }
@@ -370,7 +301,7 @@ impl crate::Response for ReadCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// replace the specified CertificateSigningRequest
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -387,18 +318,13 @@ impl CertificateSigningRequest {
     pub fn replace_certificate_signing_request(
         name: &str,
         body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificateSigningRequestOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestResponse>), crate::RequestError> {
-        let ReplaceCertificateSigningRequestOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -411,67 +337,12 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceCertificateSigningRequestOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceCertificateSigningRequestResponse {
-    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceCertificateSigningRequestResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceCertificateSigningRequestResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation replaceCertificatesV1beta1CertificateSigningRequestApproval
 
 impl CertificateSigningRequest {
     /// replace approval of the specified CertificateSigningRequest
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestApprovalResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestApprovalResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -488,18 +359,13 @@ impl CertificateSigningRequest {
     pub fn replace_certificate_signing_request_approval(
         name: &str,
         body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificateSigningRequestApprovalOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestApprovalResponse>), crate::RequestError> {
-        let ReplaceCertificateSigningRequestApprovalOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/approval?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -512,67 +378,12 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_approval`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceCertificateSigningRequestApprovalResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request_approval`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceCertificateSigningRequestApprovalResponse {
-    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceCertificateSigningRequestApprovalResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestApprovalResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestApprovalResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceCertificateSigningRequestApprovalResponse::Other(result), read))
-            },
-        }
-    }
-}
-
 // Generated from operation replaceCertificatesV1beta1CertificateSigningRequestStatus
 
 impl CertificateSigningRequest {
     /// replace status of the specified CertificateSigningRequest
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestStatusResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::ReplaceResponse`]`<Self>>` constructor, or [`crate::ReplaceResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -589,18 +400,13 @@ impl CertificateSigningRequest {
     pub fn replace_certificate_signing_request_status(
         name: &str,
         body: &crate::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificateSigningRequestStatusOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestStatusResponse>), crate::RequestError> {
-        let ReplaceCertificateSigningRequestStatusOptional {
-            pretty,
-        } = optional;
+        optional: crate::ReplaceOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::put(__url);
@@ -609,61 +415,6 @@ impl CertificateSigningRequest {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<ReplaceCertificateSigningRequestStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request_status`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ReplaceCertificateSigningRequestStatusResponse {
-    Ok(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Created(crate::api::certificates::v1beta1::CertificateSigningRequest),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for ReplaceCertificateSigningRequestStatusResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestStatusResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((ReplaceCertificateSigningRequestStatusResponse::Created(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((ReplaceCertificateSigningRequestStatusResponse::Other(result), read))
-            },
         }
     }
 }

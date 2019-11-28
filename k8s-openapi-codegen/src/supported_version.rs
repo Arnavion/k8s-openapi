@@ -167,13 +167,13 @@ impl SupportedVersion {
 
 		let special_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = &[
 			crate::fixups::special::create_delete_optional,
-			crate::fixups::special::create_patch_optional,
+			crate::fixups::special::create_optionals,
 			crate::fixups::special::patch,
 			crate::fixups::special::remove_delete_collection_operations_query_parameters,
 			crate::fixups::special::remove_delete_operations_query_parameters,
 			crate::fixups::special::separate_watch_from_list_operations,
 			crate::fixups::special::watch_event,
-			crate::fixups::special::list,
+			crate::fixups::special::list, // Must run after separate_watch_from_list_operations
 			crate::fixups::special::response_types,
 		];
 

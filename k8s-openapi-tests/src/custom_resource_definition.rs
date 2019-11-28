@@ -108,18 +108,9 @@ fn test() {
 			let response = client.execute(request).expect("couldn't create custom resource definition");
 
 			let success =
-				crate::get_single_value(response, response_body, |response, status_code| k8s_match!((response, status_code), {
-					k8s_if_1_8!((apiextensions::CreateCustomResourceDefinitionResponse::Other(value), http::StatusCode::CREATED) => {
-						let value = match value? {
-							Some(value) => value,
-							None => return Ok(crate::ValueResult::NeedMoreData),
-						};
-						let _: apiextensions::CustomResourceDefinition = serde::Deserialize::deserialize(value)?;
-						Ok(crate::ValueResult::GotValue(true))
-					}),
-
-					k8s_if_ge_1_9!((apiextensions::CreateCustomResourceDefinitionResponse::Created(_), _) =>
-						Ok(crate::ValueResult::GotValue(true))),
+				crate::get_single_value(response, response_body, |response, status_code| match (response, status_code) {
+					(k8s_openapi::CreateResponse::Created(_), _) =>
+						Ok(crate::ValueResult::GotValue(true)),
 
 					(_, http::StatusCode::CONFLICT) =>
 						Ok(crate::ValueResult::GotValue(true)),
@@ -128,7 +119,7 @@ fn test() {
 						Ok(crate::ValueResult::GotValue(false)),
 
 					(other, status_code) => Err(format!("{:?} {}", other, status_code).into()),
-				})).expect("couldn't create custom resource definition");
+				}).expect("couldn't create custom resource definition");
 
 			if success {
 				break;
@@ -175,8 +166,8 @@ fn test() {
 		let fb1 = {
 			let response = client.execute(request).expect("couldn't create FooBar");
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				CreateNamespacedFooBarResponse::Ok(fb) |
-				CreateNamespacedFooBarResponse::Created(fb) =>
+				k8s_openapi::CreateResponse::Ok(fb) |
+				k8s_openapi::CreateResponse::Created(fb) =>
 					Ok(crate::ValueResult::GotValue(fb)),
 
 				other => Err(format!("{:?} {}", other, status_code).into()),
@@ -279,8 +270,8 @@ fn test() {
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
-				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-					CreateNamespacedFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
+				crate::get_single_value(response, k8s_openapi::ResponseBody::<k8s_openapi::CreateResponse<FooBar>>::new, |response, status_code| match response {
+					_ if status_code == http::StatusCode::UNPROCESSABLE_ENTITY => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
 			}
@@ -304,8 +295,8 @@ fn test() {
 				.expect("couldn't create custom resource");
 			{
 				let response = client.execute(request).expect("couldn't create custom resource");
-				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
-					CreateNamespacedFooBarResponse::UnprocessableEntity(_) => Ok(crate::ValueResult::GotValue(())),
+				crate::get_single_value(response, k8s_openapi::ResponseBody::<k8s_openapi::CreateResponse<FooBar>>::new, |response, status_code| match response {
+					_ if status_code == http::StatusCode::UNPROCESSABLE_ENTITY => Ok(crate::ValueResult::GotValue(())),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("expected custom resource creation to fail validation");
 			}

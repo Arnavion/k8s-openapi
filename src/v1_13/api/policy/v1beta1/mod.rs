@@ -7,7 +7,6 @@ pub use self::allowed_host_path::AllowedHostPath;
 
 mod eviction;
 pub use self::eviction::Eviction;
-#[cfg(feature = "api")] pub use self::eviction::{CreateNamespacedPodEvictionOptional, CreateNamespacedPodEvictionResponse};
 
 mod fs_group_strategy_options;
 pub use self::fs_group_strategy_options::FSGroupStrategyOptions;
@@ -20,11 +19,8 @@ pub use self::id_range::IDRange;
 
 mod pod_disruption_budget;
 pub use self::pod_disruption_budget::PodDisruptionBudget;
-#[cfg(feature = "api")] pub use self::pod_disruption_budget::{CreateNamespacedPodDisruptionBudgetOptional, CreateNamespacedPodDisruptionBudgetResponse};
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::{ReadNamespacedPodDisruptionBudgetOptional, ReadNamespacedPodDisruptionBudgetResponse};
 #[cfg(feature = "api")] pub use self::pod_disruption_budget::{ReadNamespacedPodDisruptionBudgetStatusOptional, ReadNamespacedPodDisruptionBudgetStatusResponse};
-#[cfg(feature = "api")] pub use self::pod_disruption_budget::{ReplaceNamespacedPodDisruptionBudgetOptional, ReplaceNamespacedPodDisruptionBudgetResponse};
-#[cfg(feature = "api")] pub use self::pod_disruption_budget::{ReplaceNamespacedPodDisruptionBudgetStatusOptional, ReplaceNamespacedPodDisruptionBudgetStatusResponse};
 
 mod pod_disruption_budget_spec;
 pub use self::pod_disruption_budget_spec::PodDisruptionBudgetSpec;
@@ -34,9 +30,7 @@ pub use self::pod_disruption_budget_status::PodDisruptionBudgetStatus;
 
 mod pod_security_policy;
 pub use self::pod_security_policy::PodSecurityPolicy;
-#[cfg(feature = "api")] pub use self::pod_security_policy::{CreatePodSecurityPolicyOptional, CreatePodSecurityPolicyResponse};
 #[cfg(feature = "api")] pub use self::pod_security_policy::{ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse};
-#[cfg(feature = "api")] pub use self::pod_security_policy::{ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse};
 
 mod pod_security_policy_spec;
 pub use self::pod_security_policy_spec::PodSecurityPolicySpec;

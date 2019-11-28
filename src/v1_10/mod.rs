@@ -1,4 +1,10 @@
 
+mod create_optional;
+pub use self::create_optional::CreateOptional;
+
+mod create_response;
+pub use self::create_response::CreateResponse;
+
 mod delete_optional;
 pub use self::delete_optional::DeleteOptional;
 
@@ -19,6 +25,12 @@ pub use self::patch_optional::PatchOptional;
 
 mod patch_response;
 pub use self::patch_response::PatchResponse;
+
+mod replace_optional;
+pub use self::replace_optional::ReplaceOptional;
+
+mod replace_response;
+pub use self::replace_response::ReplaceResponse;
 
 mod watch_optional;
 pub use self::watch_optional::WatchOptional;

@@ -122,9 +122,11 @@
 //!
 //!    Some API operations have a single common type for optional parameters:
 //!
+//!    - All create API take optional parameters using the [`CreateOptional`] struct.
 //!    - All delete API take optional parameters using the [`DeleteOptional`] struct.
 //!    - All list API take optional parameters using the [`ListOptional`] struct.
 //!    - All patch API take optional parameters using the [`PatchOptional`] struct.
+//!    - All replace API take optional parameters using the [`ReplaceOptional`] struct.
 //!    - All watch API take optional parameters using the [`WatchOptional`] struct.
 //!    - All delete-collection API take optional parameters using the [`DeleteOptional`] struct for delete options and the [`ListOptional`] struct for list options.
 //!

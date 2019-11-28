@@ -14,11 +14,7 @@ pub(crate) mod json_schema_props_or;
 
 pub(crate) mod newtype;
 
-pub(crate) mod operation_response_delete;
-
-pub(crate) mod operation_response_other;
-
-pub(crate) mod operation_response_watch;
+pub(crate) mod operation_response_common;
 
 pub(crate) mod patch;
 

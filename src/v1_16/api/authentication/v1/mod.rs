@@ -4,7 +4,6 @@ pub use self::bound_object_reference::BoundObjectReference;
 
 mod token_request;
 pub use self::token_request::TokenRequest;
-#[cfg(feature = "api")] pub use self::token_request::{CreateNamespacedServiceAccountTokenOptional, CreateNamespacedServiceAccountTokenResponse};
 
 mod token_request_spec;
 pub use self::token_request_spec::TokenRequestSpec;
@@ -14,7 +13,6 @@ pub use self::token_request_status::TokenRequestStatus;
 
 mod token_review;
 pub use self::token_review::TokenReview;
-#[cfg(feature = "api")] pub use self::token_review::{CreateTokenReviewOptional, CreateTokenReviewResponse};
 
 mod token_review_spec;
 pub use self::token_review_spec::TokenReviewSpec;

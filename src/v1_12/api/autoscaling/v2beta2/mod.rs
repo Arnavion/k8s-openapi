@@ -10,11 +10,8 @@ pub use self::external_metric_status::ExternalMetricStatus;
 
 mod horizontal_pod_autoscaler;
 pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{CreateNamespacedHorizontalPodAutoscalerOptional, CreateNamespacedHorizontalPodAutoscalerResponse};
 #[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReadNamespacedHorizontalPodAutoscalerOptional, ReadNamespacedHorizontalPodAutoscalerResponse};
 #[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReadNamespacedHorizontalPodAutoscalerStatusOptional, ReadNamespacedHorizontalPodAutoscalerStatusResponse};
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse};
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::{ReplaceNamespacedHorizontalPodAutoscalerStatusOptional, ReplaceNamespacedHorizontalPodAutoscalerStatusResponse};
 
 mod horizontal_pod_autoscaler_condition;
 pub use self::horizontal_pod_autoscaler_condition::HorizontalPodAutoscalerCondition;

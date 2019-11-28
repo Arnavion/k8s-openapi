@@ -4,9 +4,7 @@ pub use self::ip_block::IPBlock;
 
 mod network_policy;
 pub use self::network_policy::NetworkPolicy;
-#[cfg(feature = "api")] pub use self::network_policy::{CreateNamespacedNetworkPolicyOptional, CreateNamespacedNetworkPolicyResponse};
 #[cfg(feature = "api")] pub use self::network_policy::{ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse};
-#[cfg(feature = "api")] pub use self::network_policy::{ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse};
 
 mod network_policy_egress_rule;
 pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;

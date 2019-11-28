@@ -1,6 +1,3 @@
-k8s_if_1_8! {
-	use k8s_openapi::http;
-}
 use k8s_openapi::serde_json;
 
 use k8s_openapi::api::core::v1 as api;
@@ -58,15 +55,10 @@ fn deployment() {
 			.expect("couldn't create deployment");
 		{
 			let response = client.execute(request).expect("couldn't create deployment");
-			crate::get_single_value(response, response_body, |response, status_code| k8s_match!((response, status_code), {
-				k8s_if_le_1_8!((apps::CreateNamespacedDeploymentResponse::Other(_), http::StatusCode::CREATED) =>
-					Ok(crate::ValueResult::GotValue(()))),
-
-				k8s_if_ge_1_9!((apps::CreateNamespacedDeploymentResponse::Created(_), _) =>
-					Ok(crate::ValueResult::GotValue(()))),
-
-				(other, status_code) => Err(format!("{:?} {}", other, status_code).into()),
-			})).expect("couldn't create deployment");
+			crate::get_single_value(response, response_body, |response, status_code| match response {
+				k8s_openapi::CreateResponse::Created(_) => Ok(crate::ValueResult::GotValue(())),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't create deployment");
 		};
 
 

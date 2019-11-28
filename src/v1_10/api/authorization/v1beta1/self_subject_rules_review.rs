@@ -19,7 +19,7 @@ pub struct SelfSubjectRulesReview {
 impl SelfSubjectRulesReview {
     /// create a SelfSubjectRulesReview
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateSelfSubjectRulesReviewResponse`]`>` constructor, or [`CreateSelfSubjectRulesReviewResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,16 +31,11 @@ impl SelfSubjectRulesReview {
     #[cfg(feature = "api")]
     pub fn create_self_subject_rules_review(
         body: &crate::api::authorization::v1beta1::SelfSubjectRulesReview,
-        optional: CreateSelfSubjectRulesReviewOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectRulesReviewResponse>), crate::RequestError> {
-        let CreateSelfSubjectRulesReviewOptional {
-            pretty,
-        } = optional;
+        optional: crate::CreateOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/authorization.k8s.io/v1beta1/selfsubjectrulesreviews?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
+        optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::post(__url);
@@ -49,70 +44,6 @@ impl SelfSubjectRulesReview {
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct CreateSelfSubjectRulesReviewOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-}
-
-/// Use `<CreateSelfSubjectRulesReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum CreateSelfSubjectRulesReviewResponse {
-    Ok(crate::api::authorization::v1beta1::SelfSubjectRulesReview),
-    Created(crate::api::authorization::v1beta1::SelfSubjectRulesReview),
-    Accepted(crate::api::authorization::v1beta1::SelfSubjectRulesReview),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
-}
-
-#[cfg(feature = "api")]
-impl crate::Response for CreateSelfSubjectRulesReviewResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateSelfSubjectRulesReviewResponse::Ok(result), buf.len()))
-            },
-            http::StatusCode::CREATED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateSelfSubjectRulesReviewResponse::Created(result), buf.len()))
-            },
-            http::StatusCode::ACCEPTED => {
-                let result = match serde_json::from_slice(buf) {
-                    Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Err(err) => return Err(crate::ResponseError::Json(err)),
-                };
-                Ok((CreateSelfSubjectRulesReviewResponse::Accepted(result), buf.len()))
-            },
-            _ => {
-                let (result, read) =
-                    if buf.is_empty() {
-                        (Ok(None), 0)
-                    }
-                    else {
-                        match serde_json::from_slice(buf) {
-                            Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                            Err(err) => (Err(err), 0),
-                        }
-                    };
-                Ok((CreateSelfSubjectRulesReviewResponse::Other(result), read))
-            },
         }
     }
 }
