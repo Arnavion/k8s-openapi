@@ -29,9 +29,10 @@ pub(crate) mod type_header;
 pub(crate) mod watch_event;
 
 fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
-	s.lines().map(move |line|
+	s.lines().scan(true, move |previous_line_was_empty, line|
 		if line.is_empty() {
-			"".into()
+			*previous_line_was_empty = true;
+			Some("".into())
 		}
 		else {
 			let line =
@@ -41,7 +42,19 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 				.replace("]", r"\]")
 				.replace("<", r"\<")
 				.replace(">", r"\>");
-			format!("{} {}", indent, line).into()
+
+			let line =
+				if *previous_line_was_empty && line.starts_with("    ") {
+					// Collapse this line's spaces into two. Otherwise rustdoc will think this is the start of a code block containing a Rust test.
+					format!("  {}", line.trim_start())
+				}
+				else {
+					line
+				};
+
+			*previous_line_was_empty = false;
+
+			Some(format!("{} {}", indent, line).into())
 		})
 }
 
