@@ -38,6 +38,8 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/Cargo.toml`: Update `package.metadata.docs.rs.features` to the new feature.
 
+1. Update feature name in the `rustdoc` command in the "To make a new crate release" section below.
+
 1. `/build.rs`: Update the value of `MAX`
 
 1. `/src/lib.rs`: Add a new doc header attribute for the new version.
