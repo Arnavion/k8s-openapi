@@ -8,6 +8,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_14,
 	SupportedVersion::V1_15,
 	SupportedVersion::V1_16,
+	SupportedVersion::V1_17,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -21,6 +22,7 @@ pub(crate) enum SupportedVersion {
 	V1_14,
 	V1_15,
 	V1_16,
+	V1_17,
 }
 
 impl SupportedVersion {
@@ -35,6 +37,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_14 => "v1_14",
 			SupportedVersion::V1_15 => "v1_15",
 			SupportedVersion::V1_16 => "v1_16",
+			SupportedVersion::V1_17 => "v1_17",
 		}
 	}
 
@@ -49,6 +52,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_14 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.14.10/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_15 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.15.7/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_16 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.16.4/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_17 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.17.0/api/openapi-spec/swagger.json",
 		}
 	}
 
@@ -158,6 +162,13 @@ impl SupportedVersion {
 			],
 
 			SupportedVersion::V1_16 => &[
+				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
+				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
+				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
+			],
+
+			SupportedVersion::V1_17 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
 				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
