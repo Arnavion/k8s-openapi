@@ -5,6 +5,7 @@
     clippy::default_trait_access,
     clippy::doc_markdown,
     clippy::large_enum_variant,
+    clippy::must_use_candidate,
     clippy::single_match_else,
     clippy::too_many_lines,
     clippy::type_complexity,

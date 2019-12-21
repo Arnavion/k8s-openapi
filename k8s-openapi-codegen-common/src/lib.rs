@@ -3,6 +3,7 @@
 #![allow(
 	clippy::cognitive_complexity,
 	clippy::default_trait_access,
+	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::too_many_arguments,
 	clippy::too_many_lines,

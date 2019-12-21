@@ -5,6 +5,7 @@
 #![allow(
 	clippy::default_trait_access,
 	clippy::indexing_slicing,
+	clippy::must_use_candidate,
 	clippy::unseparated_literal_suffix,
 )]
 
