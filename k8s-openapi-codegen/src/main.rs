@@ -46,7 +46,7 @@ fn main() -> Result<(), Error> {
 		log::set_max_level(logger.filter());
 	}
 
-	let client = std::sync::Arc::new(reqwest::Client::new());
+	let client = std::sync::Arc::new(reqwest::blocking::Client::new());
 
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
@@ -54,26 +54,28 @@ fn main() -> Result<(), Error> {
 	let threads: Vec<_> =
 		supported_version::ALL.iter()
 		.map(|&supported_version| {
-			let client = client.clone();
-			let out_dir_base = out_dir_base.clone();
-
 			let mod_root = supported_version.mod_root().to_owned();
 
-			std::thread::Builder::new().name(mod_root.clone()).spawn(move || -> Result<(), Error> {
-				{
-					let mut builder = env_logger::Builder::new();
-					builder.format(move |buf, record| {
-						use std::io::Write;
-						writeln!(buf, "[{}] {} {}:{} {}", mod_root, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
-					});
-					let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
-					builder.parse_filters(&rust_log);
-					logger::register_thread_local_logger(builder.build());
+			std::thread::Builder::new().name(mod_root.clone()).spawn({
+				let out_dir_base = out_dir_base.clone();
+				let client = client.clone();
+
+				move || -> Result<(), Error> {
+					{
+						let mut builder = env_logger::Builder::new();
+						builder.format(move |buf, record| {
+							use std::io::Write;
+							writeln!(buf, "[{}] {} {}:{} {}", mod_root, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
+						});
+						let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
+						builder.parse_filters(&rust_log);
+						logger::register_thread_local_logger(builder.build());
+					}
+
+					run(supported_version, &out_dir_base, &client)?;
+
+					Ok(())
 				}
-
-				run(supported_version, &out_dir_base, &client)?;
-
-				Ok(())
 			}).unwrap()
 		})
 		.collect();
@@ -90,7 +92,7 @@ fn main() -> Result<(), Error> {
 	result
 }
 
-fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::Client) -> Result<(), Error> {
+fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client) -> Result<(), Error> {
 	use std::io::Write;
 
 	let mod_root = supported_version.mod_root();
@@ -109,7 +111,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let mut spec: swagger20::Spec = {
 		let spec_url = supported_version.spec_url();
 		log::info!("Parsing spec file at {} ...", spec_url);
-		let mut response = client.get(spec_url).send()?;
+		let response = client.get(spec_url).send()?;
 		let status = response.status();
 		if status != reqwest::StatusCode::OK {
 			return Err(status.to_string().into());

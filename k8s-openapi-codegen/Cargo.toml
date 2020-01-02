@@ -8,9 +8,9 @@ edition = "2018"
 [dependencies]
 backtrace = "0.3"
 env_logger = "0.7"
-http = "0.1"
+http = "0.2"
 k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features = ["serde"] }
 log = "0.4"
-reqwest = "0.9"
+reqwest = { version = "0.10", features = ["blocking", "json"] }
 serde = "1"
 serde_derive = "1"

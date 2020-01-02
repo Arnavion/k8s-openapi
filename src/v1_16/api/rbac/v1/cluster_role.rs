@@ -39,9 +39,9 @@ impl ClusterRole {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::post(__url);
+        let __request = http::Request::post(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -74,9 +74,9 @@ impl ClusterRole {
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
-        let mut __request = http::Request::delete(__url);
+        let __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
-        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -110,9 +110,9 @@ impl ClusterRole {
         list_optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::delete(__url);
+        let __request = http::Request::delete(__url);
         let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
-        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -143,7 +143,7 @@ impl ClusterRole {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -183,9 +183,9 @@ impl ClusterRole {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::patch(__url);
+        let __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
             crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
@@ -230,7 +230,7 @@ impl ClusterRole {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -316,9 +316,9 @@ impl ClusterRole {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::put(__url);
+        let __request = http::Request::put(__url);
         let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -349,7 +349,7 @@ impl ClusterRole {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),

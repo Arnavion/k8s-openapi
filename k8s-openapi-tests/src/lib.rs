@@ -36,7 +36,7 @@ impl std::fmt::Debug for Error {
 #[derive(Debug)]
 enum Client {
 	Recording {
-		inner: reqwest::Client,
+		inner: reqwest::blocking::Client,
 		server: http::Uri,
 		replays: Vec<Replay>,
 		recorder: std::io::BufWriter<std::fs::File>,
@@ -101,7 +101,7 @@ impl Client {
 
 				let certificate_authority = client::x509_from_pem(&certificate_authority).expect("couldn't parse CA cert");
 
-				let server: http::Uri = http::HttpTryFrom::try_from(server).expect("couldn't parse server URL");
+				let server: http::Uri = server.parse().expect("couldn't parse server URL");
 				if let Some(path_and_query) = server.path_and_query() {
 					if path_and_query != "/" {
 						panic!("server URL {} has path and query {}", server, path_and_query);
@@ -116,7 +116,7 @@ impl Client {
 				let client_key = client::pkcs12(&client_certificate, &client_key).expect("couldn't parse client key");
 
 				let inner =
-					reqwest::Client::builder()
+					reqwest::blocking::Client::builder()
 					.danger_accept_invalid_hostnames(true)
 					.add_root_certificate(reqwest::Certificate::from_der(&certificate_authority).expect("couldn't parse CA cert"))
 					.identity(reqwest::Identity::from_pkcs12_der(&client_key, "").expect("couldn't parse client key"))
@@ -235,7 +235,7 @@ struct ClientResponse<'a> {
 
 #[derive(Debug)]
 enum ClientResponseBody<'a> {
-	Recording(reqwest::Response, &'a mut Vec<u8>),
+	Recording(reqwest::blocking::Response, &'a mut Vec<u8>),
 	Replaying(std::io::Cursor<Vec<u8>>),
 }
 

@@ -35,7 +35,7 @@ impl ComponentStatus {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -77,7 +77,7 @@ impl ComponentStatus {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -155,7 +155,7 @@ impl ComponentStatus {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let mut __request = http::Request::get(__url);
+        let __request = http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),

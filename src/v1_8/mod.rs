@@ -56,7 +56,7 @@ pub fn get_api_versions(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAPIVersionsResponse>), crate::RequestError> {
     let __url = "/apis/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -112,7 +112,7 @@ pub fn get_admissionregistration_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAdmissionregistrationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/admissionregistration.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -168,7 +168,7 @@ pub fn get_admissionregistration_v1alpha1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAdmissionregistrationV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/admissionregistration.k8s.io/v1alpha1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -224,7 +224,7 @@ pub fn get_apiextensions_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiextensionsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apiextensions.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -280,7 +280,7 @@ pub fn get_apiextensions_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiextensionsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apiextensions.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -336,7 +336,7 @@ pub fn get_apiregistration_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiregistrationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apiregistration.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -392,7 +392,7 @@ pub fn get_apiregistration_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiregistrationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apiregistration.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -448,7 +448,7 @@ pub fn get_apps_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apps/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -504,7 +504,7 @@ pub fn get_apps_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apps/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -560,7 +560,7 @@ pub fn get_apps_v1beta2_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsV1beta2APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apps/v1beta2/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -616,7 +616,7 @@ pub fn get_authentication_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -672,7 +672,7 @@ pub fn get_authentication_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -728,7 +728,7 @@ pub fn get_authentication_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -784,7 +784,7 @@ pub fn get_authorization_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -840,7 +840,7 @@ pub fn get_authorization_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -896,7 +896,7 @@ pub fn get_authorization_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -952,7 +952,7 @@ pub fn get_autoscaling_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1008,7 +1008,7 @@ pub fn get_autoscaling_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1064,7 +1064,7 @@ pub fn get_autoscaling_v2beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingV2beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/v2beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1120,7 +1120,7 @@ pub fn get_batch_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/batch/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1176,7 +1176,7 @@ pub fn get_batch_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1232,7 +1232,7 @@ pub fn get_batch_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1288,7 +1288,7 @@ pub fn get_batch_v2alpha1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV2alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v2alpha1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1344,7 +1344,7 @@ pub fn get_certificates_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCertificatesAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/certificates.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1400,7 +1400,7 @@ pub fn get_certificates_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCertificatesV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/certificates.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1456,7 +1456,7 @@ pub fn get_code_version(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCodeVersionResponse>), crate::RequestError> {
     let __url = "/version/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1512,7 +1512,7 @@ pub fn get_core_api_versions(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCoreAPIVersionsResponse>), crate::RequestError> {
     let __url = "/api/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1568,7 +1568,7 @@ pub fn get_core_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCoreV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/api/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1624,7 +1624,7 @@ pub fn get_extensions_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetExtensionsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/extensions/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1680,7 +1680,7 @@ pub fn get_extensions_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetExtensionsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/extensions/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1736,7 +1736,7 @@ pub fn get_networking_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetNetworkingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/networking.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1792,7 +1792,7 @@ pub fn get_networking_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetNetworkingV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/networking.k8s.io/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1848,7 +1848,7 @@ pub fn get_policy_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetPolicyAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/policy/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1904,7 +1904,7 @@ pub fn get_policy_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetPolicyV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/policy/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -1960,7 +1960,7 @@ pub fn get_rbac_authorization_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2016,7 +2016,7 @@ pub fn get_rbac_authorization_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2072,7 +2072,7 @@ pub fn get_rbac_authorization_v1alpha1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2128,7 +2128,7 @@ pub fn get_rbac_authorization_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2184,7 +2184,7 @@ pub fn get_scheduling_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSchedulingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/scheduling.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2240,7 +2240,7 @@ pub fn get_scheduling_v1alpha1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSchedulingV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/scheduling.k8s.io/v1alpha1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2296,7 +2296,7 @@ pub fn get_settings_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSettingsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/settings.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2352,7 +2352,7 @@ pub fn get_settings_v1alpha1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSettingsV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/settings.k8s.io/v1alpha1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2408,7 +2408,7 @@ pub fn get_storage_api_group(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2464,7 +2464,7 @@ pub fn get_storage_v1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/v1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2520,7 +2520,7 @@ pub fn get_storage_v1beta1_api_resources(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/v1beta1/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2583,7 +2583,7 @@ pub fn log_file_handler(
         logpath = crate::percent_encoding::percent_encode(logpath.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
     );
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -2628,7 +2628,7 @@ pub fn log_file_list_handler(
 ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<LogFileListHandlerResponse>), crate::RequestError> {
     let __url = "/logs/".to_owned();
 
-    let mut __request = http::Request::get(__url);
+    let __request = http::Request::get(__url);
     let __body = vec![];
     match __request.body(__body) {
         Ok(request) => Ok((request, crate::ResponseBody::new)),

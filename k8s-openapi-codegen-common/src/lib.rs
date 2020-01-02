@@ -1428,7 +1428,7 @@ pub fn write_operation(
 		swagger20::Method::Put => "put",
 	};
 
-	writeln!(out, "{}    let mut __request = http::Request::{}(__url);", indent, method)?;
+	writeln!(out, "{}    let __request = http::Request::{}(__url);", indent, method)?;
 
 	let body_parameter =
 		delete_optional_parameter.as_ref()
@@ -1458,14 +1458,14 @@ pub fn write_operation(
 			};
 		if is_patch {
 			let patch_type = get_rust_type(&parameter.schema.kind, replace_namespaces, crate_root)?;
-			writeln!(out, "{}    __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
+			writeln!(out, "{}    let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
 			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::StrategicMerge(_) => "application/strategic-merge-patch+json","#, indent, patch_type)?;
 			writeln!(out, "{}    }}));", indent)?;
 		}
 		else {
-			writeln!(out, r#"{}    __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));"#, indent)?;
+			writeln!(out, r#"{}    let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));"#, indent)?;
 		}
 	}
 	else {

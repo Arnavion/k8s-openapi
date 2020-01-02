@@ -59,7 +59,7 @@ The second example uses struct update syntax to explicitly set one field of the 
 
 ### Not restricted to a single HTTP client implementation, and works with both synchronous and asynchronous HTTP clients
 
-Auto-generated clients have to choose between providing a synchronous or asynchronous API, and have to choose what kind of HTTP client they want to use internally (`hyper::Client`, `reqwest::Client`, `reqwest::r#async::Client`, etc). If you want to use a different HTTP client, you cannot use the crate.
+Auto-generated clients have to choose between providing a synchronous or asynchronous API, and have to choose what kind of HTTP client they want to use internally (`hyper::Client`, `reqwest::Client`, `reqwest::blocking::Client`, etc). If you want to use a different HTTP client, you cannot use the crate.
 
 This crate is instead based on the [sans-io approach](https://sans-io.readthedocs.io/) popularized by Python for network protocols and applications.
 

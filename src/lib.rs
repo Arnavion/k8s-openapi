@@ -485,7 +485,7 @@ impl<T> ResponseBody<T> where T: Response {
     pub fn parse(&mut self) -> Result<T, ResponseError> {
         match T::try_from_parts(self.status_code, &*self.buf) {
             Ok((result, read)) => {
-                self.buf.advance(read);
+                self.advance(read);
                 Ok(result)
             },
 
@@ -502,7 +502,7 @@ impl<T> ResponseBody<T> where T: Response {
     ///
     /// This function panics if `cnt > self.len()`
     pub fn advance(&mut self, cnt: usize) {
-        self.buf.advance(cnt)
+        bytes::Buf::advance(&mut self.buf, cnt)
     }
 }
 
