@@ -415,13 +415,6 @@ impl std::fmt::Display for RequestError {
 }
 
 impl std::error::Error for RequestError {
-    fn description(&self) -> &str {
-        match self {
-            RequestError::Http(err) => err.description(),
-            RequestError::Json(err) => err.description(),
-        }
-    }
-
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             RequestError::Http(err) => Some(err),
@@ -538,14 +531,6 @@ impl std::fmt::Display for ResponseError {
 }
 
 impl std::error::Error for ResponseError {
-    fn description(&self) -> &str {
-        match self {
-            ResponseError::NeedMoreData => "need more response data",
-            ResponseError::Json(err) => err.description(),
-            ResponseError::Utf8(err) => err.description(),
-        }
-    }
-
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             ResponseError::NeedMoreData => None,
