@@ -60,7 +60,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// Note:
 ///
 /// - The spec type must impl the following traits (either manually or via `#[derive]`): `Clone`, `Debug`, `PartialEq`,
-///   `serde_derive::Deserialize` and `serde_derive::Serialize`
+///   `serde::Deserialize` and `serde::Serialize`
 ///
 /// - The name of the spec type must end with `Spec`. This suffix is trimmed to generate the names of the other types.
 ///
