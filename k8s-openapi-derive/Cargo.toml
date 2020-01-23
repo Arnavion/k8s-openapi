@@ -1,11 +1,11 @@
 [package]
 name = "k8s-openapi-derive"
-version = "0.7.0"
+version = "0.7.1"
 license = "Apache-2.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Custom derives for the Kubernetes client API"
-documentation = "https://arnavion.github.io/k8s-openapi/v0.7.x/k8s-openapi-derive/"
+documentation = "https://arnavion.github.io/k8s-openapi/v0.7.x/k8s_openapi_derive/"
 edition = "2018"
 keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"

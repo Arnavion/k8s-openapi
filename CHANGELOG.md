@@ -1,3 +1,9 @@
+# v0.7.1 (2020-01-23)
+
+Fixed docs URLs. No other changes since v0.7.0.
+
+---
+
 # v0.7.0 (2020-01-23)
 
 - BREAKING CHANGE: The `http` and `bytes` dependencies have been updated. They now match the `tokio` 0.2 ecosystem.
