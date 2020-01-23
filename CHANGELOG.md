@@ -1,3 +1,44 @@
+# v0.7.0 (2020-01-23)
+
+- BREAKING CHANGE: The `http` and `bytes` dependencies have been updated. They now match the `tokio` 0.2 ecosystem.
+
+- BREAKING CHANGE: The `Resource` trait's `api_version`, `group`, `kind` and `version` methods are now `API_VERSION`, `GROUP`, `KIND` and `VERSION` associated consts of `&'static str` type.
+
+- BREAKING CHANGE: The `*List` resource types like `PodList` and `NodeList` have now been combined into a single generic `k8s_openapi::List<T>` type. The API response types that contained these list types have been updated accordingly.
+
+- BREAKING CHANGE: The optional parameters of create and replace operations are now emitted as a single common type - `k8s_openapi::CreateOptional` and `k8s_openapi::ReplaceOptional` respectively.
+
+- BREAKING CHANGE: The response types of create, delete, delete-collection, list, patch, replace and watch operations have now been combined into generic `CreateResponse<T>`, `DeleteResponse<T>`, `DeleteResponse<List<T>>`, `ListResponse<T>`, `PatchResponse<T>`, `ReplaceResponse<T>` and `WatchResponse<T>` types respectively.
+
+- BUGFIX: v1.16's `k8s_openapi::apliextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrArray`, `JSONSchemaPropsOrBool` and `JSONSchemaPropsOrStringArray` types are now generated correctly, just like their `v1beta` cousins.
+
+- FEATURE: Added support for Kubernetes 1.17 under the `v1_17` feature.
+
+- FEATURE: A new `k8s_openapi::ListableResource` trait has been added to connect a resource type like `Pod` to its corresponding list type like `PodList`. Currently the trait only has one member - an associated const `LIST_KIND` that is the same as the list type's `Resource::KIND`.
+
+Here are some demonstrative examples of the API changes:
+
+- `Pod::delete_namespaced_pod` used to return `DeleteNamespacedPodResponse`. It now returns `DeleteResponse<Self>`.
+- `Pod::delete_collection_namespaced_pod` used to return `DeleteCollectionNamespacedPodResponse`. It now returns `DeleteResponse<List<Self>>`.
+- `Pod::list_namespaced_pod` used to return `ListNamespacedPodResponse` which had an `Ok(PodList)` variant. It now returns `ListResponse<Self>`, which has an `Ok(List<Self>)` variant.
+
+Combining these response types has reduced the compile time and memory usage of the Rust compiler when compiling this crate. Notably, the compiler's memory usage now peaks at ~3 GiB from its earlier ~5 GiB, making it easier to use with environments limited to 4 GiB RAM, like CI VMs and Raspberry Pi's.
+
+Corresponding Kubernetes API server versions:
+
+- v1.8.15
+- v1.9.11
+- v1.10.13
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.9
+- v1.16.6
+- v1.17.2
+
+---
+
 # v0.6.0 (2019-10-18)
 
 - BREAKING CHANGE: Updated `url` dependency, and thus the re-export, to v2. The re-export is only used internally by code-generated API functions and is not part of any public signatures, so it is only a breaking change for you if you were also using it for your own code.
