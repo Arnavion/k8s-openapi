@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `CustomResourceDefinition` derive in crate `k8s_openapi_derive`."><meta name="keywords" content="rust, rustlang, rust-lang, CustomResourceDefinition"><title>k8s_openapi_derive::CustomResourceDefinition - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc derive"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../k8s_openapi_derive/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><div class="sidebar-elems"><p class='location'><a href='index.html'>k8s_openapi_derive</a></p><script>window.sidebarCurrent = {name: 'CustomResourceDefinition', ty: 'derive', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/k8s_openapi_derive/lib.rs.html#304-306' title='goto source code'>[src]</a></span><span class='in-band'>Derive Macro <a href='index.html'>k8s_openapi_derive</a>::<wbr><a class="derive" href=''>CustomResourceDefinition</a></span></h1><pre class='rust derive'>#[derive(CustomResourceDefinition)]
+{
+    // Attributes available to this derive:
+    #[custom_resource_definition]
+}</pre><div class='docblock'><p>This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object
+and associated API functions.</p>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="attribute">#[<span class="ident">derive</span>(
+    <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>,
+    <span class="ident">k8s_openapi_derive</span>::<span class="ident">CustomResourceDefinition</span>,
+    <span class="ident">serde_derive</span>::<span class="ident">Deserialize</span>, <span class="ident">serde_derive</span>::<span class="ident">Serialize</span>,
+)]</span>
+<span class="attribute">#[<span class="ident">custom_resource_definition</span>(
+    <span class="ident">group</span> <span class="op">=</span> <span class="string">&quot;k8s-openapi-tests-custom-resource-definition.com&quot;</span>,
+    <span class="ident">version</span> <span class="op">=</span> <span class="string">&quot;v1&quot;</span>,
+    <span class="ident">plural</span> <span class="op">=</span> <span class="string">&quot;foobars&quot;</span>,
+    <span class="ident">namespaced</span>,
+)]</span>
+<span class="kw">struct</span> <span class="ident">FooBarSpec</span> {
+    <span class="ident">prop1</span>: <span class="ident">String</span>,
+    <span class="ident">prop2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">skip_serializing_if</span> <span class="op">=</span> <span class="string">&quot;Option::is_none&quot;</span>)]</span>
+    <span class="ident">prop3</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
+}</pre></div>
+<p>Note:</p>
+<ul>
+<li>
+<p>The spec type must impl the following traits (either manually or via <code>#[derive]</code>): <code>Clone</code>, <code>Debug</code>, <code>PartialEq</code>,
+<code>serde::Deserialize</code> and <code>serde::Serialize</code></p>
+</li>
+<li>
+<p>The name of the spec type must end with <code>Spec</code>. This suffix is trimmed to generate the names of the other types.</p>
+</li>
+<li>
+<p>The <code>k8s_openapi</code> crate must have been added as a dependency, since the macro expansion refers to types from it.</p>
+</li>
+</ul>
+<p>The custom derive then generates a <code>FooBar</code> type that represents a custom resource corresponding to this definition:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="doccomment">/// Custom resource for FooBarSpec</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">struct</span> <span class="ident">FooBar</span> {
+    <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">apimachinery</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">meta</span>::<span class="ident">v1</span>::<span class="ident">ObjectMeta</span><span class="op">&gt;</span>,
+    <span class="ident">spec</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FooBarSpec</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">k8s_openapi</span>::<span class="ident">Resource</span> <span class="kw">for</span> <span class="ident">FooBar</span> { ... }
+
+<span class="kw">impl</span> <span class="ident">k8s_openapi</span>::<span class="ident">ListableResource</span> <span class="kw">for</span> <span class="ident">FooBar</span> { ... }
+
+<span class="kw">impl</span> <span class="ident">k8s_openapi</span>::<span class="ident">Metadata</span> <span class="kw">for</span> <span class="ident">FooBar</span> {
+    <span class="kw">type</span> <span class="ident">Ty</span> <span class="op">=</span> <span class="ident">k8s_openapi</span>::<span class="ident">apimachinery</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">meta</span>::<span class="ident">v1</span>::<span class="ident">ObjectMeta</span>;
+
+    ...
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">serde_derive</span>::<span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FooBar</span> { ... }
+
+<span class="kw">impl</span> <span class="ident">serde_derive</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">FooBar</span> { ... }</pre></div>
+<p>The name of this type is automatically derived from the name of the spec type by truncating the <code>Spec</code> suffix.</p>
+<p>The <code>group</code> and <code>version</code> meta items of the <code>#[custom_resource_definition]</code> attribute of the macro are used to set
+the &quot;group&quot; and &quot;API version&quot; in the <code>k8s_openapi::Resource</code> impl respectively. The &quot;kind&quot; is automatically set to be the same as the resource type name,
+ie <code>&quot;FooBar&quot;</code> in this example. The <code>plural</code> meta item is used to construct the URLs of API operations for this custom resource.</p>
+<p>You would then register this custom resource definition with Kubernetes, with code like this:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">use</span> <span class="ident">k8s_openapi</span>::<span class="ident">apiextensions_apiserver</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">apiextensions</span>::<span class="ident">v1beta1</span> <span class="kw">as</span> <span class="ident">apiextensions</span>;
+<span class="kw">use</span> <span class="ident">k8s_openapi</span>::<span class="ident">apimachinery</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">meta</span>::<span class="ident">v1</span> <span class="kw">as</span> <span class="ident">meta</span>;
+
+<span class="comment">// Same as the `plurals` meta item in the `#[custom_resource_definition]` attribute</span>
+<span class="kw">let</span> <span class="ident">plural</span> <span class="op">=</span> <span class="string">&quot;foobars&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">custom_resource_definition_spec</span> <span class="op">=</span> <span class="ident">apiextensions</span>::<span class="ident">CustomResourceDefinitionSpec</span> {
+    <span class="ident">group</span>: <span class="op">&lt;</span><span class="ident">FooBar</span> <span class="kw">as</span> <span class="ident">k8s_openapi</span>::<span class="ident">Resource</span><span class="op">&gt;</span>::<span class="ident">GROUP</span>.<span class="ident">to_owned</span>(),
+    <span class="ident">names</span>: <span class="ident">apiextensions</span>::<span class="ident">CustomResourceDefinitionNames</span> {
+        <span class="ident">kind</span>: <span class="op">&lt;</span><span class="ident">FooBar</span> <span class="kw">as</span> <span class="ident">k8s_openapi</span>::<span class="ident">Resource</span><span class="op">&gt;</span>::<span class="ident">KIND</span>.<span class="ident">to_owned</span>(),
+        <span class="ident">plural</span>: <span class="ident">plural</span>.<span class="ident">to_owned</span>(),
+        <span class="ident">short_names</span>: <span class="prelude-val">Some</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;fb&quot;</span>.<span class="ident">to_owned</span>()]),
+        <span class="ident">singular</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;foobar&quot;</span>.<span class="ident">to_owned</span>()),
+        ..<span class="ident">Default</span>::<span class="ident">default</span>()
+    },
+    <span class="ident">scope</span>: <span class="string">&quot;Namespaced&quot;</span>.<span class="ident">to_owned</span>(),
+    <span class="ident">version</span>: <span class="op">&lt;</span><span class="ident">FooBar</span> <span class="kw">as</span> <span class="ident">k8s_openapi</span>::<span class="ident">Resource</span><span class="op">&gt;</span>::<span class="ident">VERSION</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>(),
+    ..<span class="ident">Default</span>::<span class="ident">default</span>()
+};
+
+<span class="kw">let</span> <span class="ident">custom_resource_definition</span> <span class="op">=</span> <span class="ident">apiextensions</span>::<span class="ident">CustomResourceDefinition</span> {
+    <span class="ident">metadata</span>: <span class="prelude-val">Some</span>(<span class="ident">meta</span>::<span class="ident">ObjectMeta</span> {
+        <span class="ident">name</span>: <span class="prelude-val">Some</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}.{}&quot;</span>, <span class="ident">plural</span>, <span class="op">&lt;</span><span class="ident">FooBar</span> <span class="kw">as</span> <span class="ident">k8s_openapi</span>::<span class="ident">Resource</span><span class="op">&gt;</span>::<span class="ident">GROUP</span>)),
+        ..<span class="ident">Default</span>::<span class="ident">default</span>()
+    }),
+    <span class="ident">spec</span>: <span class="ident">custom_resource_definition_spec</span>.<span class="ident">into</span>(),
+    ..<span class="ident">Default</span>::<span class="ident">default</span>()
+};
+
+<span class="kw">let</span> (<span class="ident">request</span>, <span class="ident">response_body</span>) <span class="op">=</span>
+    <span class="ident">apiextensions</span>::<span class="ident">CustomResourceDefinition</span>::<span class="ident">create_custom_resource_definition</span>(<span class="kw-2">&amp;</span><span class="ident">custom_resource_definition</span>, <span class="ident">Default</span>::<span class="ident">default</span>())
+    .<span class="ident">expect</span>(<span class="string">&quot;couldn&#39;t create custom resource definition&quot;</span>);
+<span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">execute</span>(<span class="ident">request</span>).<span class="ident">expect</span>(<span class="string">&quot;couldn&#39;t create custom resource definition&quot;</span>);</pre></div>
+<p>The macro also generates clientset functions associated with the custom resource type to create, get, update, etc.
+This is just like a regular Kubernetes resource type like <code>Pod</code>.</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">impl</span> <span class="ident">FooBar</span> {
+    <span class="doccomment">/// Create a FooBar</span>
+    <span class="kw">fn</span> <span class="ident">create_namespaced_foo_bar</span>(
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">FooBar</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">DeleteOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">CreateResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Delete a FooBar</span>
+    <span class="kw">fn</span> <span class="ident">delete_namespaced_foo_bar</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">DeleteOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">DeleteResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Delete a collection of objects of kind FooBar</span>
+    <span class="kw">fn</span> <span class="ident">delete_collection_namespaced_foo_bar</span>(
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">delete_optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">DeleteOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">list_optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">ListOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">DeleteResponse</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">List</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// List objects of kind FooBar</span>
+    <span class="kw">fn</span> <span class="ident">list_namespaced_foo_bar</span>(
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">ListOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">ListResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Partially update the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">patch_namespaced_foo_bar</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">k8s_openapi</span>::<span class="ident">apimachinery</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">meta</span>::<span class="ident">v1</span>::<span class="ident">Patch</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">PatchOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">PatchResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Partially update the state of the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">patch_namespaced_foo_bar_status</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">k8s_openapi</span>::<span class="ident">apimachinery</span>::<span class="ident">pkg</span>::<span class="ident">apis</span>::<span class="ident">meta</span>::<span class="ident">v1</span>::<span class="ident">Patch</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">PatchOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">PatchResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Read the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">read_namespaced_foo_bar</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">ReadNamespacedFooBarResponse</span><span class="op">&gt;</span>), <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span><span class="op">&gt;</span> { ... }
+
+    <span class="doccomment">/// Read status of the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">read_namespaced_foo_bar_status</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">ReadNamespacedFooBarStatusResponse</span><span class="op">&gt;</span>), <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span><span class="op">&gt;</span> { ... }
+
+    <span class="doccomment">/// Replace the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">replace_namespaced_foo_bar</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">FooBar</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">ReplaceOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">ReplaceResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Replace status of the specified FooBar</span>
+    <span class="kw">fn</span> <span class="ident">replace_namespaced_foo_bar_status</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">FooBar</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">ReplaceOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">ReplaceResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+
+    <span class="doccomment">/// Watch objects of kind FooBar</span>
+    <span class="kw">fn</span> <span class="ident">watch_namespaced_foo_bar</span>(
+        <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">optional</span>: <span class="ident">k8s_openapi</span>::<span class="ident">WatchOptional</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span>
+        <span class="prelude-ty">Result</span><span class="op">&lt;</span>
+            (
+                <span class="ident">http</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+                <span class="kw">fn</span>(<span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">k8s_openapi</span>::<span class="ident">ResponseBody</span><span class="op">&lt;</span><span class="ident">k8s_openapi</span>::<span class="ident">WatchResponse</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            ),
+            <span class="ident">k8s_openapi</span>::<span class="ident">RequestError</span>,
+        <span class="op">&gt;</span>
+    { ... }
+}
+
+<span class="doccomment">/// FooBarList is a list of FooBar</span>
+<span class="kw">type</span> <span class="ident">FooBarList</span> <span class="op">=</span> <span class="ident">k8s_openapi</span>::<span class="ident">List</span><span class="op">&lt;</span><span class="ident">FooBar</span><span class="op">&gt;</span>;</pre></div>
+<p>(You may wish to generate your own crate's docs, or run it through <code>cargo-expand</code>, to be able to see the macro expansion.)</p>
+<p>Refer to <a href="https://arnavion.github.io/k8s-openapi/">the <code>k8s-openapi</code> crate docs</a> to learn more about how to use the return values of these functions.</p>
+<p>See the <a href="https://github.com/Arnavion/k8s-openapi/blob/master/k8s-openapi-tests/src/custom_resource_definition.rs"><code>custom_resource_definition</code> test in the repository</a>
+for a full example of using this custom derive.</p>
+</div></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "k8s_openapi_derive";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

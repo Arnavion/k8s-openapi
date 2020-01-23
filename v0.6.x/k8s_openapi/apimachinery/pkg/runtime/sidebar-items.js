@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["RawExtension","RawExtension is used to hold extensions in external versions."]]});
