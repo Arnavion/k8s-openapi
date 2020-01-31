@@ -38,3 +38,10 @@ jobs:
 
   steps:
   - bash: bash ./ci/k8s-openapi-codegen.sh
+
+- job: k8s_openapi_derive
+  pool:
+    vmImage: 'ubuntu-18.04'
+
+  steps:
+  - bash: bash ./ci/k8s-openapi-derive.sh

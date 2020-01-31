@@ -1,0 +1,21 @@
+set -euo pipefail
+
+if [ ! -d ~/.cargo/bin ]; then
+	mkdir -p ~/.cargo/bin
+	curl -Lo ~/.cargo/bin/rustup 'https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init'
+	chmod +x ~/.cargo/bin/rustup
+	ln -s ~/.cargo/bin/rustup ~/.cargo/bin/cargo
+	ln -s ~/.cargo/bin/rustup ~/.cargo/bin/cargo-clippy
+	ln -s ~/.cargo/bin/rustup ~/.cargo/bin/rustc
+	ln -s ~/.cargo/bin/rustup ~/.cargo/bin/rustdoc
+	export PATH="$PATH:$(realpath ~/.cargo/bin)"
+fi
+
+rustup set profile minimal
+rustup install --no-self-update stable
+rustup default stable
+rustup component add clippy
+
+pushd k8s-openapi-derive
+cargo clippy
+popd

@@ -121,7 +121,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 
 		let vis: std::borrow::Cow<'_, str> = match vis {
 			syn::Visibility::Inherited => "".into(),
-			vis => format!("{} ", quote::ToTokens::into_token_stream(vis.clone())).into(),
+			vis => format!("{} ", quote::ToTokens::into_token_stream(vis)).into(),
 		};
 
 		let (cr_spec_name, cr_name) = {
@@ -216,7 +216,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
 							description: Some(format!("Specification of the {} custom resource", cr_name)),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
-								path: cr_spec_name.clone(),
+								path: cr_spec_name,
 								relative_to: swagger20::RefPathRelativeTo::Scope,
 								can_be_default: None,
 							}),
@@ -592,8 +592,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 						version: version.clone(),
 					}),
 					parameters: vec![
-						Some(body_parameter.clone()),
-						Some(name_parameter.clone()),
+						Some(body_parameter),
+						Some(name_parameter),
 						namespace_parameter.clone(),
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Body,
@@ -627,7 +627,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						version: version.clone(),
 					}),
 					parameters: vec![
-						namespace_parameter.clone(),
+						namespace_parameter,
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Query,
 							name: "optional".to_owned(),
@@ -657,7 +657,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			k8s_openapi_codegen_common::run(
 				&spec.definitions,
 				&mut spec.operations,
-				&swagger20::DefinitionPath(cr_name.clone()),
+				&swagger20::DefinitionPath(cr_name),
 				swagger20::RefPathRelativeTo::Scope,
 				&[
 					(&["io".into(), "k8s".into()], &[]),
@@ -676,7 +676,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			k8s_openapi_codegen_common::run(
 				&spec.definitions,
 				&mut spec.operations,
-				&swagger20::DefinitionPath(cr_list_name.clone()),
+				&swagger20::DefinitionPath(cr_list_name),
 				swagger20::RefPathRelativeTo::Scope,
 				&[
 					(&["io".into(), "k8s".into()], &[]),
