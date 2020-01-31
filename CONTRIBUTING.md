@@ -60,7 +60,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. Destroy the cluster, and re-run the tests in replay mode.
 
-1. `/azure-pipelines.yml`: Add a new `strategy` for the new version.
+1. `/.github/workflows/ci.yml`: Add a new `strategy` for the new version.
 
 
 # To make a new crate release

@@ -1,5 +1,3 @@
-[![Build Status](https://dev.azure.com/arnavion/k8s-openapi/_apis/build/status/Arnavion.k8s-openapi?branchName=master)](https://dev.azure.com/arnavion/k8s-openapi/_build/latest?definitionId=2)
-
 A custom derive for Kubernetes custom resource definition (CRD) specs.
 
 See crate docs for details.
