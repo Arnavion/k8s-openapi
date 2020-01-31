@@ -63,11 +63,11 @@ Auto-generated clients have to choose between providing a synchronous or asynchr
 
 This crate is instead based on the [sans-io approach](https://sans-io.readthedocs.io/) popularized by Python for network protocols and applications.
 
-For example, the `list_namespaced_pod` does not return `Result<ListNamespacedPodResponse>` or `impl Future<Output = ListNamespacedPodResponse>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
+For example, the `Pod::list_namespaced_pod` does not return `Result<ListResponse<Pod>>` or `impl Future<Output = ListResponse<Pod>>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string, request headers and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
 
-The `ListNamespacedPodResponse` type has an `fn try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function which knows how to parse a combination of HTTP status code and response bytes into the appropriate result. No matter how you executed the request, you would have a status code and some response bytes. The function returns either a successful response, or an error that the response could not be parsed, or an error that more response bytes are needed (ie you need to call the function again after reading more bytes from your HTTP response).
+After you've executed the request, your HTTP client will give you the response's `http::StatusCode` and some `[u8]` bytes of the response body. To parse these into a `ListResponse<Pod>`, you use that type's `fn try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function. The result is either a successful `ListResponse<Pod>` value, or an error that the response is incomplete and you need to get more bytes of the response body and try again, or a fatal error because the response is invalid JSON.
 
-There is also a top-level `ResponseBody` type that contains its own internal growable byte buffer, if you don't want to manage a byte buffer yourself. See the crate docs for details.
+To make this easier, the `Pod::list_namespaced_pod` function also returns a callback `fn(http::StatusCode) -> ResponseBody<ListResponse<Pod>>`. `ResponseBody` is a type that contains its own internal growable byte buffer, so you can use it if you don't want to manage a byte buffer yourself. It also ensures that you deserialize the response to the appropriate type corresponding to the request, ie `ListResponse<Pod>`, and not any other. See the crate docs for more details about this type.
 
 
 ### Supports more versions of Kubernetes
