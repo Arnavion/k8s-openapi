@@ -2,7 +2,7 @@
 name = "k8s-openapi"
 version = "0.7.1"
 license = "Apache-2.0"
-authors = ["Arnavion <arnavion@gmail.com>"]
+authors = ["Arnavion <me@arnavion.dev>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Bindings for the Kubernetes client API"
 documentation = "https://arnavion.github.io/k8s-openapi/v0.7.x/k8s_openapi/"
