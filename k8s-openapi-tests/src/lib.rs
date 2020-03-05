@@ -430,4 +430,6 @@ mod pod;
 
 mod special_idents;
 
+mod time;
+
 mod watch_event;

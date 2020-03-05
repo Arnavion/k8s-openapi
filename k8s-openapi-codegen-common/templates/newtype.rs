@@ -22,6 +22,6 @@ impl<'de> serde::Deserialize<'de> for {type_name} {{
 
 impl serde::Serialize for {type_name} {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{
-        serializer.serialize_newtype_struct({type_name:?}, &self.0)
+        serializer.serialize_newtype_struct({type_name:?}, {inner_value})
     }}
 }}

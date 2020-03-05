@@ -26,6 +26,6 @@ impl<'de> serde::Deserialize<'de> for MicroTime {
 
 impl serde::Serialize for MicroTime {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
-        serializer.serialize_newtype_struct("MicroTime", &self.0)
+        serializer.serialize_newtype_struct("MicroTime", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Micros, true))
     }
 }

@@ -711,11 +711,37 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(_) => {
 			let inner_type_name = get_rust_type(&definition.kind, &replace_namespaces, crate_root)?;
 
+			// Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `chrono::DateTime`
+			// that uses a variable number up to nine.
+			//
+			// Furthermore, while Kubernetes does deserialize a Time from a string with one or more decimal digits,
+			// the format string it uses to *serialize* datetimes does not contain any decimal digits. So match that behavior just to be safe, and to have
+			// the same behavior as the golang client.
+			//
+			// Refs:
+			// - https://github.com/Arnavion/k8s-openapi/issues/63
+			// - https://github.com/deislabs/krustlet/issues/5
+			// - https://github.com/kubernetes/apimachinery/issues/88
+			let datetime_serialization_format = match (&**definition_path, &definition.kind) {
+				(
+					"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime",
+					swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }),
+				) => templates::DateTimeSerializationFormat::SixDecimalDigits,
+
+				(
+					"io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+					swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }),
+				) => templates::DateTimeSerializationFormat::ZeroDecimalDigits,
+
+				_ => templates::DateTimeSerializationFormat::Default,
+			};
+
 			templates::newtype::generate(
 				&mut out,
 				vis,
 				&type_name,
 				&inner_type_name,
+				datetime_serialization_format,
 			)?;
 
 			run_result.num_generated_type_aliases += 1;

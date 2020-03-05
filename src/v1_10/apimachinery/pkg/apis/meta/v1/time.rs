@@ -25,6 +25,6 @@ impl<'de> serde::Deserialize<'de> for Time {
 
 impl serde::Serialize for Time {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
-        serializer.serialize_newtype_struct("Time", &self.0)
+        serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
     }
 }

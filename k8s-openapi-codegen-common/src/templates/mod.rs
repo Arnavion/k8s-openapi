@@ -82,3 +82,10 @@ pub(crate) struct ResourceMetadata<'a> {
 	pub(crate) is_listable: bool,
 	pub(crate) metadata_ty: Option<(&'a str, bool)>,
 }
+
+#[derive(Clone, Copy)]
+pub(crate) enum DateTimeSerializationFormat {
+	Default,
+	SixDecimalDigits,
+	ZeroDecimalDigits,
+}
