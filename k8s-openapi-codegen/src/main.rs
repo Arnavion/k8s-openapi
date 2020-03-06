@@ -29,6 +29,13 @@ impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error + Send + Sync>
 impl std::fmt::Debug for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		writeln!(f, "{}", self.0)?;
+
+		let mut source = self.0.source();
+		while let Some(err) = source {
+			writeln!(f, "caused by: {}", err)?;
+			source = err.source();
+		}
+
 		write!(f, "{:?}", self.1)?;
 		Ok(())
 	}
