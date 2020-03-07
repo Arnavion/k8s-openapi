@@ -307,6 +307,11 @@ impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where
 	type Item = Result<T, Error>;
 
 	fn next(&mut self) -> Option<Self::Item> {
+		match std::io::Read::read(&mut self.response, &mut *self.buf) {
+			Ok(read) => self.response_body.append_slice(&self.buf[..read]),
+			Err(err) => return Some(Err(err.into())),
+		}
+
 		loop {
 			match self.response_body.parse() {
 				Ok(value) => match (self.f)(value, self.response_body.status_code) {

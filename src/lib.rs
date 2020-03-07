@@ -293,6 +293,7 @@ pub use chrono;
 pub use http;
 pub use percent_encoding;
 pub use serde_json;
+pub use serde_value;
 pub use url;
 
 /// A wrapper around a list of bytes.

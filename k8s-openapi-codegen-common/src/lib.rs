@@ -180,12 +180,21 @@ pub fn run<W>(
 						write!(field_type_name, ">")?;
 					}
 
+					let is_flattened =
+						if let swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)) = &schema.kind {
+							true
+						}
+						else {
+							false
+						};
+
 					result.push(templates::Property {
 						name,
 						comment: schema.description.as_ref().map(AsRef::as_ref),
 						field_name,
 						field_type_name,
 						required: *required,
+						is_flattened,
 					});
 				}
 
@@ -445,6 +454,7 @@ pub fn run<W>(
 					field_name: "items".into(),
 					field_type_name: "Vec<T>".to_owned(),
 					required: true,
+					is_flattened: false,
 				},
 
 				templates::Property {
@@ -453,6 +463,7 @@ pub fn run<W>(
 					field_name: "metadata".into(),
 					field_type_name: format!("Option<{}>", metadata_rust_type),
 					required: false,
+					is_flattened: false,
 				},
 			];
 
@@ -585,6 +596,7 @@ pub fn run<W>(
 						field_name,
 						field_type_name,
 						required: false,
+						is_flattened: false,
 					});
 				}
 
@@ -1012,6 +1024,9 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
+		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
+			Ok(format!("&{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
+
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray(_)) |
@@ -1069,6 +1084,9 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("{}::ByteString", crate_root).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
+			Ok(format!("{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 

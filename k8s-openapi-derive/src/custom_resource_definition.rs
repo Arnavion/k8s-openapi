@@ -12,6 +12,7 @@ pub(super) struct CustomResourceDefinition {
 	version: String,
 	plural: String,
 	namespaced: bool,
+	has_subresources: Option<String>,
 }
 
 impl super::CustomDerive for CustomResourceDefinition {
@@ -22,6 +23,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let mut group = None;
 		let mut plural = None;
 		let mut version = None;
+		let mut has_subresources = None;
 
 		let mut namespaced = false;
 
@@ -69,6 +71,15 @@ impl super::CustomDerive for CustomResourceDefinition {
 								return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
 							}
 						}
+						else if meta.path.is_ident("has_subresources") {
+							if let syn::Lit::Str(lit) = &meta.lit {
+								has_subresources = Some(lit.value());
+								continue;
+							}
+							else {
+								return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
+							}
+						}
 						else {
 							meta
 						},
@@ -86,7 +97,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 				};
 
 				return
-					Err(r#"#[derive(CustomResourceDefinition)] found unexpected meta. Expected `group = "..."`, `namespaced`, `plural = "..."` or `version = "..."`"#)
+					Err(r#"\
+						#[derive(CustomResourceDefinition)] found unexpected meta. \
+						Expected `group = "..."`, `namespaced`, `plural = "..."`, `version = "..." or `has_subresources` = "..."`"#)
 					.spanning(meta);
 			}
 		}
@@ -113,11 +126,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 			version,
 			namespaced,
 			plural,
+			has_subresources,
 		})
 	}
 
 	fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error> {
-		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, namespaced } = self;
+		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, namespaced, has_subresources } = self;
 
 		let vis: std::borrow::Cow<'_, str> = match vis {
 			syn::Visibility::Inherited => "".into(),
@@ -223,7 +237,19 @@ impl super::CustomDerive for CustomResourceDefinition {
 							kubernetes_group_kind_versions: None,
 							has_corresponding_list_type: false,
 						}, false)),
-					].into_iter().collect()),
+					].into_iter().chain(
+						if let Some(has_subresources) = has_subresources {
+							Some((swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
+								description: Some(format!("Subresources of the {} custom resource", cr_name)),
+								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
+								kubernetes_group_kind_versions: None,
+								has_corresponding_list_type: false,
+							}, true)))
+						}
+						else {
+							None
+						}
+					).collect()),
 					kubernetes_group_kind_versions: Some(vec![
 						swagger20::KubernetesGroupKindVersion {
 							group: group.clone(),

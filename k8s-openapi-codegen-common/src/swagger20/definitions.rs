@@ -196,6 +196,9 @@ pub enum Type {
 	Object { additional_properties: Box<Schema> },
 	String { format: Option<StringFormat> },
 
+	// Special type for the `subresources` field of custom resources.
+	CustomResourceSubresources(String),
+
 	// Special types that need alterative codegen
 	IntOrString,
 	JSONSchemaPropsOrArray(&'static str),

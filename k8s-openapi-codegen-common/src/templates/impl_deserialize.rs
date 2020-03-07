@@ -6,6 +6,8 @@ pub(crate) fn generate(
 	crate_root: &str,
 	resource_metadata: Option<&super::ResourceMetadata<'_>>,
 ) -> Result<(), crate::Error> {
+	use std::fmt::Write;
+
 	let type_generics_impl: std::borrow::Cow<'_, str> = match generics.type_part {
 		Some(part) => format!("<'de, {}>", part).into(),
 		None => "<'de>".into(),
@@ -28,9 +30,9 @@ pub(crate) fn generate(
 	let mut field_name_list = String::new();
 	let mut field_value_assignment = String::new();
 
-	if resource_metadata.is_some() {
-		use std::fmt::Write;
+	let mut flattened_field = None;
 
+	if resource_metadata.is_some() {
 		writeln!(fields_string, "            Key_api_version,")?;
 		writeln!(fields_string, "            Key_kind,")?;
 
@@ -54,29 +56,78 @@ pub(crate) fn generate(
 		writeln!(field_name_list, r#"                "apiVersion","#)?;
 		writeln!(field_name_list, r#"                "kind","#)?;
 	}
-	for super::Property { name, field_name, field_type_name, required, .. } in fields {
-		use std::fmt::Write;
+	for super::Property { name, field_name, field_type_name, required, is_flattened, .. } in fields {
+		if *is_flattened {
+			if flattened_field.is_some() {
+				return Err(format!("{} has two flattened fields", type_name).into());
+			}
 
-		writeln!(fields_string, "            Key_{},", field_name)?;
+			flattened_field = Some((field_name, field_type_name));
 
-		writeln!(str_to_field_match_arms, r#"                            {:?} => Field::Key_{},"#, name, field_name)?;
-
-		if *required {
-			writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
-
-			writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = Some(serde::de::MapAccess::next_value(&mut map)?),"#, field_name, field_name)?;
-
-			writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field({:?}))?,", field_name, field_name, name)?;
+			writeln!(field_value_defs,
+				r#"                let mut value_{}: std::collections::BTreeMap<{}::serde_value::Value, {}::serde_value::Value> = Default::default();"#,
+				field_name, crate_root, crate_root)?;
 		}
 		else {
-			writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+			writeln!(fields_string, "            Key_{},", field_name)?;
 
-			writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
+			writeln!(str_to_field_match_arms, r#"                            {:?} => Field::Key_{},"#, name, field_name)?;
 
-			writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
+			if *required {
+				writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+
+				writeln!(field_value_match_arms,
+					r#"                        Field::Key_{} => value_{} = Some(serde::de::MapAccess::next_value(&mut map)?),"#,
+					field_name, field_name)?;
+
+				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field({:?}))?,", field_name, field_name, name)?;
+			}
+			else {
+				writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+
+				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
+
+				writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
+			}
+
+			writeln!(field_name_list, r#"                {:?},"#, name)?;
 		}
+	}
 
-		writeln!(field_name_list, r#"                {:?},"#, name)?;
+	if let Some((field_name, _)) = flattened_field {
+		writeln!(fields_string, "            Other(String),")?;
+
+		writeln!(str_to_field_match_arms, "                            v => Field::Other(v.to_owned()),")?;
+
+		writeln!(field_value_match_arms,
+			"                        Field::Other(key) => {{ value_{}.insert({}::serde_value::Value::String(key), serde::de::MapAccess::next_value(&mut map)?); }},",
+			field_name, crate_root)?;
+
+		writeln!(field_value_assignment,
+			"                    {}: {{",
+			field_name)?;
+		writeln!(field_value_assignment,
+			"                        let value_{} = {}::serde_value::Value::Map(value_{});",
+			field_name, crate_root, field_name)?;
+		writeln!(field_value_assignment,
+			"                        let value_{} = {}::serde_value::ValueDeserializer::new(value_{});",
+			field_name, crate_root, field_name)?;
+		writeln!(field_value_assignment,
+			"                        let value_{} = serde::Deserialize::deserialize(value_{})?;",
+			field_name, field_name)?;
+		writeln!(field_value_assignment,
+			"                        value_{}",
+			field_name)?;
+		writeln!(field_value_assignment,
+			"                    }},")?;
+	}
+	else {
+		writeln!(fields_string, "            Other,")?;
+
+		writeln!(str_to_field_match_arms, "                            _ => Field::Other,")?;
+
+		writeln!(field_value_match_arms,
+			"                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},")?;
 	}
 
 	let deserialize_type_name =

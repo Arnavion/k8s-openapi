@@ -1,26 +1,98 @@
 use k8s_openapi::{http, serde_json};
 
+// CRD support based on the spec:
+//
+//       | spec.validation | spec.subresources | spec.versions | spec.versions[].schema | spec.versions[].subresources
+// ------+-----------------+-------------------+---------------+------------------------+------------------------------
+// 1.8   | v1beta1         | No                | No            | N/A                    | N/A
+// 1.9   | v1beta1         | No                | No            | N/A                    | N/A
+// 1.10  | v1beta1         | v1beta1           | No            | N/A                    | N/A
+// 1.11  | v1beta1         | v1beta1           | v1beta1       | No                     | No
+// 1.12  | v1beta1         | v1beta1           | v1beta1       | No                     | No
+// 1.13  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
+// 1.14  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
+// 1.15  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
+// 1.16+ | v1beta1         | v1beta1           | v1beta1, v1   | v1beta1, v1            | v1beta1, v1
+//
+// However, despite the presence of spec.versions in v1beta1 on 1.11+, it causes problems like
+// https://github.com/kubernetes/kubernetes/issues/82443
+//
+// Thus this test uses:
+//
+// -         v <= 1.9  : v1beta1, spec.version,  spec.validation
+// - 1.10 <= v <= 1.15 : v1beta1, spec.version,  spec.validation,      , spec.subresources
+// - 1.16 <= v         : v1,      spec.versions, spec.versions[].schema, spec.versions[].subresources
+
 #[test]
 fn test() {
-	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+	k8s_if_le_1_15! {
+		use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+	}
+	k8s_if_ge_1_16! {
+		use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
+	}
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-	#[derive(
-		Clone, Debug, PartialEq,
-		k8s_openapi_derive::CustomResourceDefinition,
-		serde_derive::Deserialize, serde_derive::Serialize,
-	)]
-	#[custom_resource_definition(
-		group = "k8s-openapi-tests-custom-resource-definition.com",
-		version = "v1",
-		plural = "foobars",
-		namespaced,
-	)]
-	struct FooBarSpec {
-		prop1: String,
-		prop2: Vec<bool>,
-		#[serde(skip_serializing_if = "Option::is_none")]
-		prop3: Option<i32>,
+	k8s_if_le_1_9! {
+		#[derive(
+			Clone, Debug, PartialEq,
+			k8s_openapi_derive::CustomResourceDefinition,
+			serde_derive::Deserialize, serde_derive::Serialize,
+		)]
+		#[custom_resource_definition(
+			group = "k8s-openapi-tests-custom-resource-definition.com",
+			version = "v1",
+			plural = "foobars",
+			namespaced,
+		)]
+		struct FooBarSpec {
+			prop1: String,
+			prop2: Vec<bool>,
+			#[serde(skip_serializing_if = "Option::is_none")]
+			prop3: Option<i32>,
+		}
+	}
+	k8s_if_ge_1_10! {
+		k8s_if_le_1_15! {
+			#[derive(
+				Clone, Debug, PartialEq,
+				k8s_openapi_derive::CustomResourceDefinition,
+				serde_derive::Deserialize, serde_derive::Serialize,
+			)]
+			#[custom_resource_definition(
+				group = "k8s-openapi-tests-custom-resource-definition.com",
+				version = "v1",
+				plural = "foobars",
+				namespaced,
+				has_subresources = "v1beta1",
+			)]
+			struct FooBarSpec {
+				prop1: String,
+				prop2: Vec<bool>,
+				#[serde(skip_serializing_if = "Option::is_none")]
+				prop3: Option<i32>,
+			}
+		}
+		k8s_if_ge_1_16! {
+			#[derive(
+				Clone, Debug, PartialEq,
+				k8s_openapi_derive::CustomResourceDefinition,
+				serde_derive::Deserialize, serde_derive::Serialize,
+			)]
+			#[custom_resource_definition(
+				group = "k8s-openapi-tests-custom-resource-definition.com",
+				version = "v1",
+				plural = "foobars",
+				namespaced,
+				has_subresources = "v1",
+			)]
+			struct FooBarSpec {
+				prop1: String,
+				prop2: Vec<bool>,
+				#[serde(skip_serializing_if = "Option::is_none")]
+				prop3: Option<i32>,
+			}
+		}
 	}
 
 	assert_eq!(<FooBar as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
@@ -35,8 +107,99 @@ fn test() {
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::KIND, "FooBarList");
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::VERSION, "v1");
 
+	{
+		let fb: FooBar = serde_json::from_str(r#"{ "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 } }"#).unwrap();
+		k8s_if_le_1_9! {
+			assert_eq!(fb, FooBar {
+				spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
+				metadata: None,
+			});
+		}
+		k8s_if_ge_1_10! {
+			assert_eq!(fb, FooBar {
+				spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
+				metadata: None,
+				subresources: Default::default(),
+			});
+		}
+		let fb = serde_json::to_string(&fb).unwrap();
+		assert_eq!(fb, "\
+			{\
+				\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
+				\"kind\":\"FooBar\",\
+				\"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5}\
+			}\
+		");
+
+		k8s_if_ge_1_10! {
+			let fb: FooBar = serde_json::from_str(r#"{ "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 }, "status": { "bar": "baz" } }"#).unwrap();
+			assert_eq!(fb, FooBar {
+				spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
+				metadata: None,
+				subresources: apiextensions::CustomResourceSubresources {
+					status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
+					..Default::default()
+				},
+			});
+			let fb = serde_json::to_string(&fb).unwrap();
+			assert_eq!(fb, "\
+				{\
+					\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
+					\"kind\":\"FooBar\",\
+					\"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5},\
+					\"status\":{\"bar\":\"baz\"}\
+				}\
+			");
+		}
+	}
+
 	crate::Client::with("custom_resource_definition-test", |client| {
 		let plural = "foobars";
+
+
+		let open_api_v3_schema = apiextensions::JSONSchemaProps {
+			properties: Some(vec![
+				("spec".to_string(), apiextensions::JSONSchemaProps {
+					type_: Some("object".to_owned()),
+					properties: Some(vec![
+						("prop1".to_string(), apiextensions::JSONSchemaProps {
+							type_: Some("string".to_string()),
+							..Default::default()
+						}),
+						("prop2".to_string(), apiextensions::JSONSchemaProps {
+							type_: Some("array".to_string()),
+							items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
+								type_: Some("boolean".to_string()),
+								..Default::default()
+							}))),
+							..Default::default()
+						}),
+						("prop3".to_string(), apiextensions::JSONSchemaProps {
+							format: Some("int32".to_string()),
+							type_: Some("integer".to_string()),
+							..Default::default()
+						}),
+					].into_iter().collect()),
+					required: Some(vec![
+						"prop1".to_string(),
+						"prop2".to_string(),
+					]),
+					..Default::default()
+				}),
+			].into_iter().collect()),
+			..Default::default()
+		};
+		// v1 (1.16+) requires "type" to be set. But with v1beta1 on 1.11 and below, creating the CRD fails because
+		// only "description", "properties" and "required" can be set if the status subresource is also enabled. Thus "type" cannot be set.
+		k8s_if_ge_1_12! {
+			let open_api_v3_schema = apiextensions::JSONSchemaProps {
+				type_: Some("object".to_owned()),
+				..open_api_v3_schema
+			};
+		}
+		let custom_resource_validation = apiextensions::CustomResourceValidation {
+			open_api_v3_schema: Some(open_api_v3_schema),
+		};
 
 		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
 			group: <FooBar as k8s_openapi::Resource>::GROUP.to_owned(),
@@ -48,46 +211,40 @@ fn test() {
 				..Default::default()
 			},
 			scope: "Namespaced".to_owned(),
-			version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
 			..Default::default()
 		};
 
-		k8s_if_ge_1_9! {
-			// CRD validation entered beta in v1.9
+		k8s_if_le_1_15! {
 			let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-				validation: Some(apiextensions::CustomResourceValidation {
-					open_api_v3_schema: Some(apiextensions::JSONSchemaProps {
-						properties: Some(vec![
-							("spec".to_string(), apiextensions::JSONSchemaProps {
-								properties: Some(vec![
-									("prop1".to_string(), apiextensions::JSONSchemaProps {
-										type_: Some("string".to_string()),
-										..Default::default()
-									}),
-									("prop2".to_string(), apiextensions::JSONSchemaProps {
-										type_: Some("array".to_string()),
-										items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
-											type_: Some("boolean".to_string()),
-											..Default::default()
-										}))),
-										..Default::default()
-									}),
-									("prop3".to_string(), apiextensions::JSONSchemaProps {
-										format: Some("int32".to_string()),
-										type_: Some("integer".to_string()),
-										..Default::default()
-									}),
-								].into_iter().collect()),
-								required: Some(vec![
-									"prop1".to_string(),
-									"prop2".to_string(),
-								]),
-								..Default::default()
-							}),
-						].into_iter().collect()),
+				version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
+				validation: Some(custom_resource_validation),
+				..custom_resource_definition_spec
+			};
+			k8s_if_ge_1_10! {
+				let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+					subresources: Some(apiextensions::CustomResourceSubresources {
+						status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
 						..Default::default()
 					}),
-				}),
+					..custom_resource_definition_spec
+				};
+			}
+		}
+		k8s_if_ge_1_16! {
+			let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+				versions: vec![
+					apiextensions::CustomResourceDefinitionVersion {
+						name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+						schema: Some(custom_resource_validation),
+						served: true,
+						storage: true,
+						subresources: Some(apiextensions::CustomResourceSubresources {
+							status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
+							..Default::default()
+						}),
+						..Default::default()
+					},
+				].into(),
 				..custom_resource_definition_spec
 			};
 		}
@@ -149,17 +306,33 @@ fn test() {
 
 
 		// Create CR
-		let fb1 = FooBar {
-			metadata: Some(meta::ObjectMeta {
-				name: Some("fb1".to_string()),
-				..Default::default()
-			}),
-			spec: Some(FooBarSpec {
-				prop1: "value1".to_string(),
-				prop2: vec![true, false, true],
-				prop3: None,
-			}),
-		};
+		k8s_if_le_1_9! {
+			let fb1 = FooBar {
+				metadata: Some(meta::ObjectMeta {
+					name: Some("fb1".to_string()),
+					..Default::default()
+				}),
+				spec: Some(FooBarSpec {
+					prop1: "value1".to_string(),
+					prop2: vec![true, false, true],
+					prop3: None,
+				}),
+			};
+		}
+		k8s_if_ge_1_10! {
+			let fb1 = FooBar {
+				metadata: Some(meta::ObjectMeta {
+					name: Some("fb1".to_string()),
+					..Default::default()
+				}),
+				spec: Some(FooBarSpec {
+					prop1: "value1".to_string(),
+					prop2: vec![true, false, true],
+					prop3: None,
+				}),
+				subresources: Default::default(),
+			};
+		}
 		let (request, response_body) =
 			FooBar::create_namespaced_foo_bar("default", &fb1)
 			.expect("couldn't create FooBar");
@@ -250,7 +423,9 @@ fn test() {
 		};
 
 
-		// Create invalid CR
+		// Create invalid CR.
+		//
+		// While the spec supports it for 1.8, the API server ignores it by default.
 		k8s_if_ge_1_9! {
 			let fb2 = serde_json::Value::Object(vec![
 				("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),

@@ -3,8 +3,7 @@ impl{type_generics_impl} serde::Deserialize<'de> for {type_name}{type_generics_t
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{
         #[allow(non_camel_case_types)]
         enum Field {{
-{fields}            Other,
-        }}
+{fields}        }}
 
         impl<'de> serde::Deserialize<'de> for Field {{
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{
@@ -19,8 +18,7 @@ impl{type_generics_impl} serde::Deserialize<'de> for {type_name}{type_generics_t
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{
                         Ok(match v {{
-{str_to_field_match_arms}                            _ => Field::Other,
-                        }})
+{str_to_field_match_arms}                        }})
                     }}
                 }}
 
@@ -41,8 +39,7 @@ impl{type_generics_impl} serde::Deserialize<'de> for {type_name}{type_generics_t
 {field_value_defs}
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {{
                     match key {{
-{field_value_match_arms}                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},
-                    }}
+{field_value_match_arms}                    }}
                 }}
 
                 Ok({type_name} {{
