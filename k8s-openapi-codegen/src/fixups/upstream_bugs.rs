@@ -215,16 +215,14 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &definition_path in &[
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrArray",
-		] {
-			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrArray", namespace));
+
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray(_)) = definition.kind {
 				}
 				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray(namespace));
 					found = true;
 				}
 			}
@@ -243,16 +241,14 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &definition_path in &[
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool",
-		] {
-			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrBool", namespace));
+
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool(_)) = definition.kind {
 				}
 				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool(namespace));
 					found = true;
 				}
 			}
@@ -271,16 +267,14 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &definition_path in &[
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray",
-			"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray",
-		] {
-			let definition_path = crate::swagger20::DefinitionPath(definition_path.to_owned());
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrStringArray", namespace));
+
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray(_)) = definition.kind {
 				}
 				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray(namespace));
 					found = true;
 				}
 			}
