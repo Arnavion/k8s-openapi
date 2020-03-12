@@ -156,7 +156,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 				SchemaKind::Ty(Type::parse::<D>(
 					&ty,
 					value.additional_properties,
-					value.format.as_ref().map(String::as_str),
+					value.format.as_deref(),
 					value.items,
 				)?)
 			}

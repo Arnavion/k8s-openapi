@@ -7,8 +7,6 @@
 
 //! This crate contains custom derives related to the [`k8s-openapi`](https://crates.io/crates/k8s-openapi) crate.
 
-extern crate proc_macro;
-
 mod custom_resource_definition;
 
 trait CustomDerive: Sized {
