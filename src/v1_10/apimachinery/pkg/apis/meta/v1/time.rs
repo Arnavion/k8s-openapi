@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.Time
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Time(pub chrono::DateTime<chrono::Utc>);
 
 impl<'de> serde::Deserialize<'de> for Time {

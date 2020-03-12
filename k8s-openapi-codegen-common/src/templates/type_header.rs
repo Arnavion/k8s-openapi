@@ -16,14 +16,16 @@ pub(crate) fn generate(
 		};
 
 	let derives: std::borrow::Cow<'_, str> =
-		if let Some(Derives { clone, copy, default, eq, partial_eq }) = derives {
+		if let Some(Derives { clone, copy, default, eq, ord, partial_eq, partial_ord }) = derives {
 			format!(
-				"#[derive({clone}{copy}Debug{default}{eq}{partial_eq})]\n",
+				"#[derive({clone}{copy}Debug{default}{eq}{ord}{partial_eq}{partial_ord})]\n",
 				clone = if clone { "Clone, " } else { "" },
 				copy = if copy { "Copy, " } else { "" },
 				default = if default { ", Default" } else { "" },
 				eq = if eq { ", Eq" } else { "" },
+				ord = if ord { ", Ord" } else { "" },
 				partial_eq = if partial_eq { ", PartialEq" } else { "" },
+				partial_ord = if partial_ord { ", PartialOrd" } else { "" },
 			).into()
 		}
 		else {
@@ -48,5 +50,7 @@ pub(crate) struct Derives {
 	pub(crate) copy: bool,
 	pub(crate) default: bool,
 	pub(crate) eq: bool,
+	pub(crate) ord: bool,
 	pub(crate) partial_eq: bool,
+	pub(crate) partial_ord: bool,
 }

@@ -16,18 +16,18 @@ impl std::fmt::Display for DefinitionPath {
 	}
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum IntegerFormat {
 	Int32,
 	Int64,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum NumberFormat {
 	Double,
 }
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct PropertyName(pub String);
 
@@ -45,14 +45,14 @@ impl std::fmt::Display for PropertyName {
 	}
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct RefPath {
 	pub path: String,
 	pub relative_to: RefPathRelativeTo,
 	pub can_be_default: Option<bool>,
 }
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum RefPathRelativeTo {
 	Crate,
 	Scope,
@@ -91,7 +91,7 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 	}
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
@@ -146,7 +146,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 					}
 				}
 
-				let required: std::collections::HashSet<_> = value.required.into_iter().collect();
+				let required: std::collections::BTreeSet<_> = value.required.into_iter().collect();
 				SchemaKind::Properties(properties.into_iter().map(|(name, schema)| {
 					let required = required.contains(&name);
 					(name, (schema, required))
@@ -173,20 +173,20 @@ impl<'de> serde::Deserialize<'de> for Schema {
 	}
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum SchemaKind {
 	Properties(std::collections::BTreeMap<PropertyName, (Schema, bool)>),
 	Ref(RefPath),
 	Ty(Type),
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum StringFormat {
 	Byte,
 	DateTime,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Type {
 	Any,
 	Array { items: Box<Schema> },
