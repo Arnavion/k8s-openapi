@@ -11,17 +11,14 @@ jobs:
       fail-fast: false
 
       matrix:
-        feature:
-        - 'v1_8'
-        - 'v1_9'
-        - 'v1_10'
-        - 'v1_11'
-        - 'v1_12'
-        - 'v1_13'
-        - 'v1_14'
-        - 'v1_15'
-        - 'v1_16'
-        - 'v1_17'
+        version:
+        - '1.11'
+        - '1.12'
+        - '1.13'
+        - '1.14'
+        - '1.15'
+        - '1.16'
+        - '1.17'
 
         op:
         - 'clippy'
@@ -32,9 +29,9 @@ jobs:
     steps:
     - uses: 'actions/checkout@v2'
     - name: 'Run'
-      run: bash ./ci/k8s-openapi.sh
+      run: ./ci/k8s-openapi.sh
       env:
-        FEATURE: "${{ matrix.feature }}"
+        VERSION: "${{ matrix.version }}"
         OP: "${{ matrix.op }}"
 
 
@@ -52,7 +49,7 @@ jobs:
     steps:
     - uses: 'actions/checkout@v2'
     - name: 'Run'
-      run: bash ./ci/k8s-openapi-codegen.sh
+      run: ./ci/k8s-openapi-codegen.sh
       env:
         OP: "${{ matrix.op }}"
 
@@ -70,6 +67,6 @@ jobs:
     steps:
     - uses: 'actions/checkout@v2'
     - name: 'Run'
-      run: bash ./ci/k8s-openapi-derive.sh
+      run: ./ci/k8s-openapi-derive.sh
       env:
         OP: "${{ matrix.op }}"

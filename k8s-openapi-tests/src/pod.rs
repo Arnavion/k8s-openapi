@@ -4,29 +4,39 @@ fn list() {
 
 	crate::Client::with("pod-list", |client| {
 		let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-		let response = client.execute(request).expect("couldn't list pods");
+		let response = client.execute(request);
 		let pod_list =
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				k8s_openapi::ListResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't list pods");
+				k8s_openapi::ListResponse::Ok(pod_list) => crate::ValueResult::GotValue(pod_list),
+				other => panic!("{:?} {}", other, status_code),
+			});
 
 		assert_eq!(k8s_openapi::kind(&pod_list), "PodList");
 
-		let addon_manager_pod =
+		let apiserver_pod =
 			pod_list
 			.items.into_iter()
-			.find(|pod| pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")))
-			.expect("couldn't find addon-manager pod");
+			.filter_map(|pod| {
+				let metadata = pod.metadata.as_ref()?;
+				let name = metadata.name.as_ref()?;
+				if name.starts_with("kube-apiserver-") {
+					Some(pod)
+				}
+				else {
+					None
+				}
+			})
+			.next().expect("couldn't find apiserver pod");
 
-		let addon_manager_container_spec =
-			addon_manager_pod
-			.spec.expect("couldn't get addon-manager pod spec")
+		let apiserver_container_spec =
+			apiserver_pod
+			.spec.expect("couldn't get apiserver pod spec")
 			.containers
-			.into_iter().next().expect("couldn't get addon-manager container spec");
-		assert_eq!(addon_manager_container_spec.name, "kube-addon-manager");
+			.into_iter()
+			.next().expect("couldn't get apiserver container spec");
+		assert_eq!(apiserver_container_spec.name, "kube-apiserver");
 
-		let addon_manager_pod_status = addon_manager_pod.status.expect("couldn't get addon-manager pod status");
-		assert_eq!(addon_manager_pod_status.phase, Some("Running".to_string()));
+		let apiserver_pod_status = apiserver_pod.status.expect("couldn't get apiserver pod status");
+		assert_eq!(apiserver_pod_status.phase, Some("Running".to_string()));
 	});
 }

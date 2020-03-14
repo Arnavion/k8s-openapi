@@ -1,12 +1,7 @@
 use k8s_openapi::serde_json;
 
 use k8s_openapi::api::core::v1 as api;
-k8s_if_1_8! {
-	use k8s_openapi::api::apps::v1beta2 as apps;
-}
-k8s_if_ge_1_9! {
-	use k8s_openapi::api::apps::v1 as apps;
-}
+use k8s_openapi::api::apps::v1 as apps;
 use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
 #[test]
@@ -54,11 +49,11 @@ fn deployment() {
 			apps::Deployment::create_namespaced_deployment("default", &deployment, Default::default())
 			.expect("couldn't create deployment");
 		{
-			let response = client.execute(request).expect("couldn't create deployment");
+			let response = client.execute(request);
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				k8s_openapi::CreateResponse::Created(_) => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't create deployment");
+				k8s_openapi::CreateResponse::Created(_) => crate::ValueResult::GotValue(()),
+				other => panic!("{:?} {}", other, status_code),
+			})
 		};
 
 
@@ -131,12 +126,12 @@ fn deployment() {
 			apps::Deployment::delete_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", Default::default())
 			.expect("couldn't delete deployment");
 		{
-			let response = client.execute(request).expect("couldn't delete deployment");
+			let response = client.execute(request);
 			crate::get_single_value(response, response_body, |response, status_code| match response {
 				k8s_openapi::DeleteResponse::OkStatus(_) |
-				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't delete deployment");
+				k8s_openapi::DeleteResponse::OkValue(_) => crate::ValueResult::GotValue(()),
+				other => panic!("{:?} {}", other, status_code),
+			});
 		}
 
 		// Delete all pods of the deployment using label selector
@@ -151,12 +146,12 @@ fn deployment() {
 			)
 			.expect("couldn't delete pods collection");
 		{
-			let response = client.execute(request).expect("couldn't delete pods collection");
+			let response = client.execute(request);
 			crate::get_single_value(response, response_body, |response, status_code| match response {
 				k8s_openapi::DeleteResponse::OkStatus(_) |
-				k8s_openapi::DeleteResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't delete pods collection");
+				k8s_openapi::DeleteResponse::OkValue(_) => crate::ValueResult::GotValue(()),
+				other => panic!("{:?} {}", other, status_code),
+			});
 		}
 	});
 }
@@ -168,17 +163,13 @@ fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta
 		.expect("couldn't create patch");
 	println!("{:?}", request);
 
-	let response = client.execute(request).expect("couldn't patch deployment");
+	let response = client.execute(request);
 
 	let deployment =
 		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::PatchResponse::Ok(deployment) => Ok(crate::ValueResult::GotValue(deployment)),
-			other => {
-				// Err(format!("{:?} {}", other, status_code).into())
-				println!("{:?} {}", other, status_code);
-				Ok(crate::ValueResult::NeedMoreData)
-			},
-		}).expect("couldn't patch deployment");
+			k8s_openapi::PatchResponse::Ok(deployment) => crate::ValueResult::GotValue(deployment),
+			other => panic!("{:?} {}", other, status_code),
+		});
 
 	let image =
 		deployment

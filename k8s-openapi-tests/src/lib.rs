@@ -13,26 +13,6 @@
 
 use k8s_openapi::{http, serde_json};
 
-#[cfg_attr(windows, path = "client_winapi.rs")]
-#[cfg_attr(not(windows), path = "client_openssl.rs")]
-mod client;
-
-struct Error(Box<dyn std::error::Error>, backtrace::Backtrace);
-
-impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
-	fn from(value: E) -> Self {
-		Error(value.into(), backtrace::Backtrace::new())
-	}
-}
-
-impl std::fmt::Debug for Error {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		writeln!(f, "{}", self.0)?;
-		write!(f, "{:?}", self.1)?;
-		Ok(())
-	}
-}
-
 #[derive(Debug)]
 enum Client {
 	Recording {
@@ -60,9 +40,6 @@ struct Replay {
 
 impl Client {
 	fn with<F>(test_name: &'static str, f: F) where F: FnOnce(&mut Self) {
-		#[cfg(feature = "test_v1_8")] let replays_directory = "v1-8";
-		#[cfg(feature = "test_v1_9")] let replays_directory = "v1-9";
-		#[cfg(feature = "test_v1_10")] let replays_directory = "v1-10";
 		#[cfg(feature = "test_v1_11")] let replays_directory = "v1-11";
 		#[cfg(feature = "test_v1_12")] let replays_directory = "v1-12";
 		#[cfg(feature = "test_v1_13")] let replays_directory = "v1-13";
@@ -99,7 +76,14 @@ impl Client {
 					.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {}", cluster))
 					.cluster;
 
-				let certificate_authority = client::x509_from_pem(&certificate_authority).expect("couldn't parse CA cert");
+				let ca_certificate = {
+					let ca_cert_pem = match certificate_authority {
+						CertificateAuthority::File(path) => std::fs::read(path).expect("couldn't read CA certificate file"),
+						CertificateAuthority::Inline(data) => base64::decode(&data).expect("couldn't parse CA certificate data"),
+					};
+					let ca_cert = reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate");
+					ca_cert
+				};
 
 				let server: http::Uri = server.parse().expect("couldn't parse server URL");
 				if let Some(path_and_query) = server.path_and_query() {
@@ -113,13 +97,41 @@ impl Client {
 					.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {}", user))
 					.user;
 
-				let client_key = client::pkcs12(&client_certificate, &client_key).expect("couldn't parse client key");
+				let client_tls_identity = {
+					// reqwest::Identity supports from_pem, which is implemented using rustls to parse the PEM.
+					// This also requires the reqwest::blocking::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
+					//
+					// However, the client then fails to connect to kind clusters anyway, because kind clusters listen on 127.0.0.1
+					// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/ctz/hyper-rustls/issues/84
+					//
+					// So we need to use the native-tls backend, and thus Identity::from_pkcs12_der
+
+					let public_key_pem = match client_certificate {
+						ClientCertificate::File(path) => std::fs::read(path).expect("couldn't read client certificate file"),
+						ClientCertificate::Inline(data) => base64::decode(&data).expect("couldn't parse client certificate data"),
+					};
+					let public_key = openssl::x509::X509::from_pem(&public_key_pem).expect("couldn't parse client certificate data");
+
+					let private_key_pem = match client_key {
+						ClientKey::File(path) => std::fs::read(path).expect("couldn't read client key file"),
+						ClientKey::Inline(data) => base64::decode(&data).expect("couldn't parse client key data"),
+					};
+					let private_key = openssl::pkey::PKey::private_key_from_pem(&private_key_pem).expect("couldn't parse client key data");
+
+					let pkcs12 =
+						openssl::pkcs12::Pkcs12::builder()
+						.build("", "admin", &private_key, &public_key).expect("couldn't construct client identity")
+						.to_der().expect("couldn't construct client identity");
+
+					let tls_identity = reqwest::Identity::from_pkcs12_der(&pkcs12, "").expect("couldn't construct client identity");
+					tls_identity
+				};
 
 				let inner =
 					reqwest::blocking::Client::builder()
-					.danger_accept_invalid_hostnames(true)
-					.add_root_certificate(reqwest::Certificate::from_der(&certificate_authority).expect("couldn't parse CA cert"))
-					.identity(reqwest::Identity::from_pkcs12_der(&client_key, "").expect("couldn't parse client key"))
+					.use_native_tls()
+					.add_root_certificate(ca_certificate)
+					.identity(client_tls_identity)
 					.build().expect("couldn't create client");
 
 				let replay_file = std::fs::OpenOptions::new().create(true).truncate(true).write(true).open(replay_filename).expect("couldn't open replay file");
@@ -154,7 +166,7 @@ impl Client {
 		}
 	}
 
-	fn execute<'a>(&'a mut self, request: http::Request<Vec<u8>>) -> Result<ClientResponse<'a>, Error> {
+	fn execute<'a>(&'a mut self, request: http::Request<Vec<u8>>) -> ClientResponse<'a> {
 		let (path, method, body, content_type) = {
 			let content_type =
 				request.headers()
@@ -186,9 +198,9 @@ impl Client {
 
 				let mut url: http::uri::Parts = server.clone().into();
 				url.path_and_query = Some(path);
-				let url = http::Uri::from_parts(url)?.to_string();
+				let url = http::Uri::from_parts(url).expect("couldn't parse URL from parts");
 
-				let request = inner.request(method, &url);
+				let request = inner.request(method, &url.to_string());
 				let request =
 					if let Some(content_type) = content_type {
 						request.header(http::header::CONTENT_TYPE, content_type)
@@ -196,13 +208,13 @@ impl Client {
 					else {
 						request
 					};
-				let response = request.body(body).send()?;
+				let response = request.body(body).send().expect("couldn't send HTTP request");
 				replay.response_status_code = response.status().as_u16();
 
-				Ok(ClientResponse {
+				ClientResponse {
 					status_code: response.status(),
 					body: ClientResponseBody::Recording(response, &mut replay.response_body),
-				})
+				}
 			},
 
 			Client::Replaying(replays) => {
@@ -211,10 +223,10 @@ impl Client {
 				assert_eq!(method, replay.request_method);
 				assert_eq!(body, replay.request_body);
 				assert_eq!(content_type, replay.request_content_type);
-				Ok(ClientResponse {
+				ClientResponse {
 					status_code: http::StatusCode::from_u16(replay.response_status_code).unwrap(),
 					body: ClientResponseBody::Replaying(std::io::Cursor::new(replay.response_body)),
-				})
+				}
 			},
 		}
 	}
@@ -264,32 +276,33 @@ fn get_single_value<'a, R, F, T>(
 	response: ClientResponse<'a>,
 	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
 	f: F,
-) -> Result<T, Error> where
+) -> T where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
+	T: std::fmt::Debug,
 {
-	get_multiple_values(response, response_body, f)?.next().unwrap_or_else(|| Err("unexpected EOF".into()))
+	get_multiple_values(response, response_body, f).next().expect("unexpected EOF")
 }
 
 fn get_multiple_values<'a, R, F, T>(
 	response: ClientResponse<'a>,
 	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
 	f: F,
-) -> Result<MultipleValuesIterator<'a, R, F, T>, Error> where
+) -> MultipleValuesIterator<'a, R, F, T> where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
 {
 	let response_body = response_body(response.status_code);
 
 	let buf = Box::new([0u8; 4096]);
 
-	Ok(MultipleValuesIterator {
+	MultipleValuesIterator {
 		response,
 		f,
 		response_body,
 		buf,
 		_pd: Default::default(),
-	})
+	}
 }
 
 struct MultipleValuesIterator<'a, R, F, T> {
@@ -302,32 +315,30 @@ struct MultipleValuesIterator<'a, R, F, T> {
 
 impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where
 	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> Result<ValueResult<T>, Error>,
+	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
 {
-	type Item = Result<T, Error>;
+	type Item = T;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		match std::io::Read::read(&mut self.response, &mut *self.buf) {
-			Ok(read) => self.response_body.append_slice(&self.buf[..read]),
-			Err(err) => return Some(Err(err.into())),
+		{
+			let read = std::io::Read::read(&mut self.response, &mut *self.buf).unwrap();
+			self.response_body.append_slice(&self.buf[..read]);
 		}
 
 		loop {
 			match self.response_body.parse() {
 				Ok(value) => match (self.f)(value, self.response_body.status_code) {
-					Ok(ValueResult::GotValue(result)) => return Some(Ok(result)),
-					Ok(ValueResult::NeedMoreData) => (),
-					Err(err) => return Some(Err(err)),
+					ValueResult::GotValue(result) => return Some(result),
+					ValueResult::NeedMoreData => (),
 				},
 				Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-				Err(err) => return Some(Err(err.into())),
+				Err(err) => panic!("{}", err),
 			}
 
-			match std::io::Read::read(&mut self.response, &mut *self.buf) {
-				Ok(0) if self.response_body.is_empty() => return None,
-				Ok(0) => return Some(Err("unexpected EOF".into())),
-				Ok(read) => self.response_body.append_slice(&self.buf[..read]),
-				Err(err) => return Some(Err(err.into())),
+			match std::io::Read::read(&mut self.response, &mut *self.buf).unwrap() {
+				0 if self.response_body.is_empty() => return None,
+				0 => panic!("unexpected EOF"),
+				read => self.response_body.append_slice(&self.buf[..read]),
 			}
 		}
 	}
@@ -350,9 +361,17 @@ struct KubeConfigClusterEntry {
 
 #[derive(serde_derive::Deserialize)]
 struct KubeConfigCluster {
-	#[serde(rename = "certificate-authority")]
-	certificate_authority: std::path::PathBuf,
+	#[serde(flatten)]
+	certificate_authority: CertificateAuthority,
 	server: String,
+}
+
+#[derive(serde_derive::Deserialize)]
+enum CertificateAuthority {
+	#[serde(rename = "certificate-authority")]
+	File(std::path::PathBuf),
+	#[serde(rename = "certificate-authority-data")]
+	Inline(String),
 }
 
 #[derive(serde_derive::Deserialize)]
@@ -375,10 +394,26 @@ struct KubeConfigUserEntry {
 
 #[derive(serde_derive::Deserialize)]
 struct KubeConfigUser {
+	#[serde(flatten)]
+	client_certificate: ClientCertificate,
+	#[serde(flatten)]
+	client_key: ClientKey,
+}
+
+#[derive(serde_derive::Deserialize)]
+enum ClientCertificate {
 	#[serde(rename = "client-certificate")]
-	client_certificate: std::path::PathBuf,
+	File(std::path::PathBuf),
+	#[serde(rename = "client-certificate-data")]
+	Inline(String),
+}
+
+#[derive(serde_derive::Deserialize)]
+enum ClientKey {
 	#[serde(rename = "client-key")]
-	client_key: std::path::PathBuf,
+	File(std::path::PathBuf),
+	#[serde(rename = "client-key-data")]
+	Inline(String),
 }
 
 mod bytestring {
@@ -403,7 +438,7 @@ mod methodstring {
 			type Value = http::Method;
 
 			fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-				write!(formatter, "a base64-encoded string")
+				write!(formatter, "an HTTP method name")
 			}
 
 			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {

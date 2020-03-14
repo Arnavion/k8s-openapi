@@ -11,13 +11,11 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-codegen/`: Use `cargo run` to regenerate the bindings. Inspect the diff. This combined with the changelog may indicate new fixups that could be backported to older versions.
 
-1. `/k8s-openapi-tests/`: Use `cargo test --features 'test_v1_<>' --no-run` to build the lib crate and test crate with the new version's feature enabled.
+1. `/k8s-openapi-tests/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
-1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`. Make sure to use the same version of minikube listed in the table there. The latest version of minikube may not support deploying a cluster of an old release.
+1. `/k8s-openapi-tests/`: Use `./test.sh create-cluster '...'; K8S_RECORD=1 ./test.sh run-tests '...'` to create a cluster and run the tests against it in record mode.
 
-1. `/k8s-openapi-tests/test-replays/README.md`: Update the row corresponding to the Kubernetes version with the new Kubernetes version.
-
-1. Destroy the cluster, and re-run the tests in replay mode.
+1. `/k8s-openapi-tests/`: Use `./test.sh delete-cluster '...'; ./test.sh run-tests '...'` to delete the cluster and run the tests in replay mode.
 
 
 # To add support for a new minor version
@@ -50,15 +48,13 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
 
-1. `/k8s-openapi-tests/`: Use `cargo test --features 'test_v1_<>' --no-run` to build the lib crate and test crate with the new version's feature enabled.
+1. `/k8s-openapi-tests/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
 1. `/k8s-openapi-tests/test-replays/`: Create an empty directory for the new version.
 
-1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`.
+1. `/k8s-openapi-tests/`: Use `./test.sh create-cluster '...'; K8S_RECORD=1 ./test.sh run-tests '...'` to create a cluster and run the tests against it in record mode.
 
-1. `/k8s-openapi-tests/test-replays/README.md`: Add a row to the versions table with the Kubernetes and minikube versions.
-
-1. Destroy the cluster, and re-run the tests in replay mode.
+1. `/k8s-openapi-tests/`: Use `./test.sh delete-cluster '...'; ./test.sh run-tests '...'` to delete the cluster and run the tests in replay mode.
 
 1. `/.github/workflows/ci.yml`: Add a new `strategy` for the new version.
 

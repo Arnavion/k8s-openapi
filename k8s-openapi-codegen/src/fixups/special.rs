@@ -2,6 +2,81 @@
 
 //! These fixups are for special adjustments to the upstream swagger spec that are needed for the codegen of k8s-openapi.
 
+// The composite JSONSchemaProps types need special codegen.
+pub(crate) mod json_ty {
+	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let mut found = false;
+
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrArray", namespace));
+
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray(_)) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray(namespace));
+					found = true;
+				}
+			}
+		}
+
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrArray override".into())
+		}
+	}
+
+	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let mut found = false;
+
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrBool", namespace));
+
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool(_)) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool(namespace));
+					found = true;
+				}
+			}
+		}
+
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrBool override".into())
+		}
+	}
+
+	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let mut found = false;
+
+		for &namespace in &["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrStringArray", namespace));
+
+			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray(_)) = definition.kind {
+				}
+				else {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray(namespace));
+					found = true;
+				}
+			}
+		}
+
+		if found {
+			Ok(())
+		}
+		else {
+			Err("never applied JSONSchemaPropsOrStringArray override".into())
+		}
+	}
+}
+
 // This fixup copies the `io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions` type to `io.k8s.DeleteOptional` and modifies its parameters to be optional borrows.
 // This makes the new type consistent with `io.k8s.ListOptional` and `io.k8s.WatchOptional` and allows it to be used as a common parameter for
 // delete and delete-collection API operations.

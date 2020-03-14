@@ -30,13 +30,8 @@ fn time() {
 		let time_serialized = serde_json::to_string(&time).unwrap();
 		assert_eq!(time_serialized, expected_time);
 
-		k8s_if_1_8! {
-			let _ = expected_micro_time;
-		}
-		k8s_if_ge_1_9! {
-			let micro_time: meta::MicroTime = serde_json::from_str(input).unwrap();
-			let micro_time_serialized = serde_json::to_string(&micro_time).unwrap();
-			assert_eq!(micro_time_serialized, expected_micro_time);
-		}
+		let micro_time: meta::MicroTime = serde_json::from_str(input).unwrap();
+		let micro_time_serialized = serde_json::to_string(&micro_time).unwrap();
+		assert_eq!(micro_time_serialized, expected_micro_time);
 	}
 }

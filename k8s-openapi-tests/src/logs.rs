@@ -5,55 +5,62 @@ fn get() {
 	crate::Client::with("logs-get", |client| {
 		let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 		let pod_list = {
-			let response = client.execute(request).expect("couldn't list pods");
+			let response = client.execute(request);
 			crate::get_single_value(response, response_body, |response, status_code| match response {
-				k8s_openapi::ListResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't list pods")
+				k8s_openapi::ListResponse::Ok(pod_list) => crate::ValueResult::GotValue(pod_list),
+				other => panic!("{:?} {}", other, status_code),
+			})
 		};
 
-		let addon_manager_pod =
+		let apiserver_pod =
 			pod_list
 			.items.into_iter()
-			.find(|pod| pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")))
-			.expect("couldn't find addon-manager pod");
+			.filter_map(|pod| {
+				let metadata = pod.metadata.as_ref()?;
+				let name = metadata.name.as_ref()?;
+				if name.starts_with("kube-apiserver-") {
+					Some(pod)
+				}
+				else {
+					None
+				}
+			})
+			.next().expect("couldn't find apiserver pod");
 
-		let addon_manager_pod_name =
-			addon_manager_pod
-			.metadata.as_ref().expect("couldn't get addon-manager pod metadata")
-			.name.as_ref().expect("couldn't get addon-manager pod name");
+		let apiserver_pod_name =
+			apiserver_pod
+			.metadata.as_ref().expect("couldn't get apiserver pod metadata")
+			.name.as_ref().expect("couldn't get apiserver pod name");
 
 		let (request, response_body) =
-			api::Pod::read_namespaced_pod_log(addon_manager_pod_name, "kube-system", api::ReadNamespacedPodLogOptional {
-				container: Some("kube-addon-manager"),
+			api::Pod::read_namespaced_pod_log(apiserver_pod_name, "kube-system", api::ReadNamespacedPodLogOptional {
+				container: Some("kube-apiserver"),
 				..Default::default()
 			})
-			.expect("couldn't get addon-manager pod logs");
-		let mut addon_manager_logs = String::new();
+			.expect("couldn't get apiserver pod logs");
+		let mut apiserver_logs = String::new();
 		let strings = {
-			let response = client.execute(request).expect("couldn't get addon-manager pod logs");
+			let response = client.execute(request);
 			crate::get_multiple_values(response, response_body, |response, status_code| match response {
-				api::ReadNamespacedPodLogResponse::Ok(s) => Ok(crate::ValueResult::GotValue(s)),
-				other => Err(format!("{:?} {}", other, status_code).into()),
-			}).expect("couldn't get addon-manager pod logs")
+				api::ReadNamespacedPodLogResponse::Ok(s) => crate::ValueResult::GotValue(s),
+				other => panic!("{:?} {}", other, status_code),
+			})
 		};
 		let mut found_line = false;
 		for s in strings {
-			let s = s.expect("couldn't get addon-manager pod logs");
+			apiserver_logs.push_str(&s);
 
-			addon_manager_logs.push_str(&s);
-
-			if addon_manager_logs.contains("INFO: == Kubernetes addon manager started at") {
+			if apiserver_logs.contains("Serving securely on [::]:6443") {
 				found_line = true;
 				break;
 			}
 
-			if addon_manager_logs.len() > 4096 {
-				panic!("did not find expected text in addon-manager pod logs: {}", addon_manager_logs);
+			if apiserver_logs.len() > 65536 {
+				break;
 			}
 		}
 		if !found_line {
-			panic!("did not find expected text in addon-manager pod logs: {}", addon_manager_logs);
+			panic!("did not find expected text in apiserver pod logs: {}", apiserver_logs);
 		}
 	});
 }

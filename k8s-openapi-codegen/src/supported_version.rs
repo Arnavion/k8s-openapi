@@ -1,7 +1,4 @@
 pub(crate) const ALL: &[SupportedVersion] = &[
-	SupportedVersion::V1_8,
-	SupportedVersion::V1_9,
-	SupportedVersion::V1_10,
 	SupportedVersion::V1_11,
 	SupportedVersion::V1_12,
 	SupportedVersion::V1_13,
@@ -13,9 +10,6 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum SupportedVersion {
-	V1_8,
-	V1_9,
-	V1_10,
 	V1_11,
 	V1_12,
 	V1_13,
@@ -28,9 +22,6 @@ pub(crate) enum SupportedVersion {
 impl SupportedVersion {
 	pub(crate) fn mod_root(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_8 => "v1_8",
-			SupportedVersion::V1_9 => "v1_9",
-			SupportedVersion::V1_10 => "v1_10",
 			SupportedVersion::V1_11 => "v1_11",
 			SupportedVersion::V1_12 => "v1_12",
 			SupportedVersion::V1_13 => "v1_13",
@@ -43,9 +34,6 @@ impl SupportedVersion {
 
 	pub(crate) fn spec_url(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_8 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.15/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_9 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.11/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_10 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.13/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_11 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.10/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_12 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.12.10/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_13 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.13.12/api/openapi-spec/swagger.json",
@@ -59,64 +47,8 @@ impl SupportedVersion {
 	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		#[allow(clippy::match_same_arms)]
 		let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
-			SupportedVersion::V1_8 => &[
-				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::gvk::api_service_list_v1beta1,
-				crate::fixups::upstream_bugs::gvk::api_service_v1beta1,
-				crate::fixups::upstream_bugs::gvk::crd_v1beta1,
-				crate::fixups::upstream_bugs::gvk::crd_list_v1beta1,
-				crate::fixups::upstream_bugs::json_ty::json,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
-				crate::fixups::upstream_bugs::optional_properties::apigroup,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
-			SupportedVersion::V1_9 => &[
-				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::gvk::api_service_list_v1beta1,
-				crate::fixups::upstream_bugs::gvk::api_service_v1beta1,
-				crate::fixups::upstream_bugs::gvk::crd_v1beta1,
-				crate::fixups::upstream_bugs::gvk::crd_list_v1beta1,
-				crate::fixups::upstream_bugs::json_ty::json,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
-				crate::fixups::upstream_bugs::optional_properties::apigroup,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
-			SupportedVersion::V1_10 => &[
-				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::gvk::api_service_list_v1,
-				crate::fixups::upstream_bugs::gvk::api_service_list_v1beta1,
-				crate::fixups::upstream_bugs::gvk::api_service_v1beta1,
-				crate::fixups::upstream_bugs::gvk::api_service_v1,
-				crate::fixups::upstream_bugs::gvk::crd_v1beta1,
-				crate::fixups::upstream_bugs::gvk::crd_list_v1beta1,
-				crate::fixups::upstream_bugs::json_ty::json,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
-				crate::fixups::upstream_bugs::optional_properties::apigroup,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
 			SupportedVersion::V1_11 => &[
 				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
 				crate::fixups::upstream_bugs::raw_extension_ty,
@@ -125,9 +57,6 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_12 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 				crate::fixups::upstream_bugs::remove_compat_refs,
@@ -135,9 +64,6 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_13 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 				crate::fixups::upstream_bugs::remove_compat_refs,
@@ -145,38 +71,29 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_14 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 			],
 
 			SupportedVersion::V1_15 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 			],
 
 			SupportedVersion::V1_16 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 			],
 
 			SupportedVersion::V1_17 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_array,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_bool,
-				crate::fixups::upstream_bugs::json_ty::json_schema_props_or_string_array,
 			],
 		};
 
 		let special_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = &[
+			crate::fixups::special::json_ty::json_schema_props_or_array,
+			crate::fixups::special::json_ty::json_schema_props_or_bool,
+			crate::fixups::special::json_ty::json_schema_props_or_string_array,
 			crate::fixups::special::create_delete_optional,
 			crate::fixups::special::create_optionals,
 			crate::fixups::special::patch,

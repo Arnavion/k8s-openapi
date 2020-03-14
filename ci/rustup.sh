@@ -1,3 +1,5 @@
+#!/bin/bash
+
 set -euo pipefail
 
 # CI VMs have rustup and stable pre-installed, but they're not necessarily the latest.

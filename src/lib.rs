@@ -19,9 +19,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(feature = "v1_8", doc = "v1_8")]
-#![cfg_attr(feature = "v1_9", doc = "v1_9")]
-#![cfg_attr(feature = "v1_10", doc = "v1_10")]
 #![cfg_attr(feature = "v1_11", doc = "v1_11")]
 #![cfg_attr(feature = "v1_12", doc = "v1_12")]
 #![cfg_attr(feature = "v1_13", doc = "v1_13")]
@@ -64,7 +61,7 @@
 //!
 //! For example:
 //!
-//! - Your crate requires the `v1_11` or higher feature to be enabled because it uses types that were only added in Kubernetes 1.11.
+//! - Your crate requires the `v1_16` or higher feature to be enabled because it uses types that were only added in Kubernetes 1.16.
 //!   Your crate would fail to compile if a lower feature was enabled.
 //!
 //!   You can generate a custom compiler error with the `compile_error!` macro, and emit it from your crate root.
@@ -72,26 +69,52 @@
 //!   ```rust,ignore
 //!   #[macro_use] extern crate k8s_openapi;
 //!
-//!   k8s_if_le_1_10! {
-//!       compile_error!("This crate requires the v1_11 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!   k8s_if_le_1_15! {
+//!       compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!   }
 //!   ```
 //!
-//! - Your crate creates a custom resource definition. If the `v1_9` or later feature is enabled, your crate also wants to set a validation spec on the CRD.
+//! - Your crate creates a custom resource definition. If the `v1_16` or later feature is enabled, your crate wants to use the apiextensions v1 API,
+//!   otherwise it wants to use the v1beta1 API.
 //!
 //!   ```rust,ignore
+//!   k8s_if_le_1_15! {
+//!       use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+//!   }
+//!   k8s_if_ge_1_16! {
+//!       use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
+//!   }
+//!
 //!   let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!       ... // Set all fields except `validation`, ie only those available in v1.8
+//!       group: ...,
+//!       names: ...,
+//!       scope: ...,
+//!       ..Default::default()
 //!   };
 //!
-//!   k8s_if_ge_1_9! {
-//!       // Set `validation`
+//!   // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
+//!   k8s_if_le_1_15! {
 //!       let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!           validation: Some(apiextensions::CustomResourceValidation { ... },
+//!           version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
+//!           validation: Some(custom_resource_validation),
 //!           ..custom_resource_definition_spec
 //!       };
 //!   }
-//!   ```
+//!   // Set v1 `versions` field on v1.16 and later.
+//!   k8s_if_ge_1_16! {
+//!       let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!           versions: vec![
+//!               apiextensions::CustomResourceDefinitionVersion {
+//!                   name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+//!                   schema: Some(custom_resource_validation),
+//!                   served: true,
+//!                   storage: true,
+//!                   ..Default::default()
+//!               },
+//!           ].into(),
+//!           ..custom_resource_definition_spec
+//!       };
+//!   }
 //!
 //! (These macros are required because `cargo` does not give any way for your crate to determine the features enabled on another crate, ie `k8s-openapi`.)
 //!
@@ -550,15 +573,6 @@ pub mod percent_encoding2 {
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
-
-#[cfg(feature = "v1_8")] mod v1_8;
-#[cfg(feature = "v1_8")] pub use self::v1_8::*;
-
-#[cfg(feature = "v1_9")] mod v1_9;
-#[cfg(feature = "v1_9")] pub use self::v1_9::*;
-
-#[cfg(feature = "v1_10")] mod v1_10;
-#[cfg(feature = "v1_10")] pub use self::v1_10::*;
 
 #[cfg(feature = "v1_11")] mod v1_11;
 #[cfg(feature = "v1_11")] pub use self::v1_11::*;

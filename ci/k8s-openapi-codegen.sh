@@ -1,6 +1,8 @@
+#!/bin/bash
+
 set -euo pipefail
 
-bash ./ci/rustup.sh
+./ci/rustup.sh
 
 case "$OP" in
 	'clippy')

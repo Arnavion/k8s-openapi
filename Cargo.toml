@@ -35,9 +35,6 @@ default = ["api"]
 api = [] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
 
 # Each feature corresponds to a supported version of Kubernetes
-v1_8 = []
-v1_9 = []
-v1_10 = []
 v1_11 = []
 v1_12 = []
 v1_13 = []
