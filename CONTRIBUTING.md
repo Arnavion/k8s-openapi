@@ -78,3 +78,25 @@ The repository supports the latest patch versions of each of the separate 1.x re
     ```
 
 1. `../k8s-openapi-gh-pages/index.html`: Add new anchor if this is a new major release
+
+
+# Cloud offerings
+
+Keep these in mind when dropping support for older versions:
+
+- [Aliyun ACK](https://www.alibabacloud.com/help/doc-detail/98310.htm)
+
+- [Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#available-versions)
+
+- [Azure AKS](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#list-currently-supported-versions)
+
+    ```sh
+    az account list-locations --query '[].name' --output tsv |
+        while read -r location; do
+            (</dev/null az aks get-versions --location "$location" --query 'min(orchestrators[].orchestratorVersion)' --output tsv 2>/dev/null) & :
+        done |
+        sort |
+        head -1
+    ```
+
+- [Google GKE](https://cloud.google.com/kubernetes-engine/docs/release-notes#version_updates)
