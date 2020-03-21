@@ -31,8 +31,6 @@ jobs:
         - 'no'
 
         exclude:
-        - op: 'lib-tests'
-          without_api_feature: 'yes'
         - op: 'tests'
           without_api_feature: 'yes'
 

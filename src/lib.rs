@@ -205,7 +205,8 @@
 //! [the `k8s-openapi-tests` directory in the repository](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-tests/src)
 //! for examples of how to use a synchronous client with this style of API.
 //!
-//! ```rust,no_run
+#![cfg_attr(feature = "api", doc = "```rust,no_run")]
+#![cfg_attr(not(feature = "api"), doc = "```rust,ignore")]
 //! // Re-export of the http crate since it's used in the public API
 //! use k8s_openapi::http;
 //!
