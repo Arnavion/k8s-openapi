@@ -46,6 +46,8 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/Cargo.toml`: Add a new feature for the new version. It should enable the corresponding feature of the `k8s-openapi` crate.
 
+1. `/k8s-openapi-tests/build.rs`: Update the value of `MAX`
+
 1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
 
 1. `/k8s-openapi-tests/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
@@ -61,12 +63,13 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 # To make a new crate release
 
-1. `/Cargo.toml`: Update crate version
-1. `/Cargo.toml`: Update docs URL
-1. `/k8s-openapi-codegen-common/Cargo.toml`: Update crate version
-1. `/k8s-openapi-derive/Cargo.toml`: Update crate version
+1. `/Cargo.toml`: Update `package.version` value
+1. `/Cargo.toml`: Update `package.documentation` value
+1. `/Cargo.toml`: Update `package.links` value
+1. `/k8s-openapi-codegen-common/Cargo.toml`: Update `package.version` value
+1. `/k8s-openapi-derive/Cargo.toml`: Update `package.version` value
 1. `/k8s-openapi-derive/Cargo.toml`: Update version req of `k8s-openapi-codegen-common` dependency
-1. `/k8s-openapi-derive/Cargo.toml`: Update docs URL
+1. `/k8s-openapi-derive/Cargo.toml`: Update `package.documentation` value
 1. Generate docs (change feature and directory name as appropriate).
 
     ```sh

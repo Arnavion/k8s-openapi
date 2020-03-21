@@ -21,53 +21,30 @@ use k8s_openapi::{http, serde_json};
 
 #[test]
 fn test() {
-	k8s_if_le_1_15! {
-		use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	}
-	k8s_if_ge_1_16! {
-		use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
-	}
+	#[cfg(k8s_apiextensions = "v1beta1")]
+	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+	#[cfg(k8s_apiextensions = "v1")]
+	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-	k8s_if_le_1_15! {
-		#[derive(
-			Clone, Debug, PartialEq,
-			k8s_openapi_derive::CustomResourceDefinition,
-			serde_derive::Deserialize, serde_derive::Serialize,
-		)]
-		#[custom_resource_definition(
-			group = "k8s-openapi-tests-custom-resource-definition.com",
-			version = "v1",
-			plural = "foobars",
-			namespaced,
-			has_subresources = "v1beta1",
-		)]
-		struct FooBarSpec {
-			prop1: String,
-			prop2: Vec<bool>,
-			#[serde(skip_serializing_if = "Option::is_none")]
-			prop3: Option<i32>,
-		}
-	}
-	k8s_if_ge_1_16! {
-		#[derive(
-			Clone, Debug, PartialEq,
-			k8s_openapi_derive::CustomResourceDefinition,
-			serde_derive::Deserialize, serde_derive::Serialize,
-		)]
-		#[custom_resource_definition(
-			group = "k8s-openapi-tests-custom-resource-definition.com",
-			version = "v1",
-			plural = "foobars",
-			namespaced,
-			has_subresources = "v1",
-		)]
-		struct FooBarSpec {
-			prop1: String,
-			prop2: Vec<bool>,
-			#[serde(skip_serializing_if = "Option::is_none")]
-			prop3: Option<i32>,
-		}
+	#[derive(
+		Clone, Debug, PartialEq,
+		k8s_openapi_derive::CustomResourceDefinition,
+		serde_derive::Deserialize, serde_derive::Serialize,
+	)]
+	#[custom_resource_definition(
+		group = "k8s-openapi-tests-custom-resource-definition.com",
+		version = "v1",
+		plural = "foobars",
+		namespaced,
+	)]
+	#[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]
+	#[cfg_attr(k8s_apiextensions = "v1", custom_resource_definition(has_subresources = "v1"))]
+	struct FooBarSpec {
+		prop1: String,
+		prop2: Vec<bool>,
+		#[serde(skip_serializing_if = "Option::is_none")]
+		prop3: Option<i32>,
 	}
 
 	assert_eq!(<FooBar as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
@@ -179,35 +156,33 @@ fn test() {
 			..Default::default()
 		};
 
-		k8s_if_le_1_15! {
-			let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-				subresources: Some(apiextensions::CustomResourceSubresources {
-					status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
-					..Default::default()
-				}),
-				version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
-				validation: Some(custom_resource_validation),
-				..custom_resource_definition_spec
-			};
-		}
-		k8s_if_ge_1_16! {
-			let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-				versions: vec![
-					apiextensions::CustomResourceDefinitionVersion {
-						name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
-						schema: Some(custom_resource_validation),
-						served: true,
-						storage: true,
-						subresources: Some(apiextensions::CustomResourceSubresources {
-							status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
-							..Default::default()
-						}),
+		#[cfg(k8s_apiextensions = "v1beta1")]
+		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+			subresources: Some(apiextensions::CustomResourceSubresources {
+				status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
+				..Default::default()
+			}),
+			version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
+			validation: Some(custom_resource_validation),
+			..custom_resource_definition_spec
+		};
+		#[cfg(k8s_apiextensions = "v1")]
+		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+			versions: vec![
+				apiextensions::CustomResourceDefinitionVersion {
+					name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+					schema: Some(custom_resource_validation),
+					served: true,
+					storage: true,
+					subresources: Some(apiextensions::CustomResourceSubresources {
+						status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
 						..Default::default()
-					},
-				].into(),
-				..custom_resource_definition_spec
-			};
-		}
+					}),
+					..Default::default()
+				},
+			].into(),
+			..custom_resource_definition_spec
+		};
 
 		let custom_resource_definition = apiextensions::CustomResourceDefinition {
 			metadata: Some(meta::ObjectMeta {

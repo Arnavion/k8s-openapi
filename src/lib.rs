@@ -29,95 +29,6 @@
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
-//! If you're writing an application crate, your crate must depend on `k8s-openapi` and enable the feature corresponding to the version of Kubernetes
-//! that your application supports.
-//!
-//! ```toml
-//! # For application crates
-//!
-//! [dependencies]
-//! k8s-openapi = { version = "...", features = ["v1_14"] }
-//! ```
-//!
-//! If you're writing a library crate, your crate *must not* enable any features of `k8s-openapi` directly. The choice of which feature to enable
-//! must be left to the application crate that uses your library. This ensures that all `k8s-openapi`-using dependencies in that application crate's dependency graph
-//! use the same set of `k8s-openapi` types and are interoperable.
-//!
-//! If your library crate has tests or examples, you should also add a dev-dependency on `k8s-openapi` in addition to the direct dependency,
-//! and enable a version feature only for that dev-dependency.
-//!
-//! ```toml
-//! # For library crates
-//!
-//! [dependencies]
-//! k8s-openapi = "..."
-//!
-//! [dev-dependencies]
-//! k8s-openapi = { version = "...", features = ["v1_14"] }
-//! ```
-//!
-//! Your crate may need to emit different code depending on which feature of `k8s-openapi` gets selected eventually.
-//! For such things, use the `k8s_*` macros to emit different code depending on which feature eventually gets enabled. See the docs of the macros for more details.
-//!
-//! For example:
-//!
-//! - Your crate requires the `v1_16` or higher feature to be enabled because it uses types that were only added in Kubernetes 1.16.
-//!   Your crate would fail to compile if a lower feature was enabled.
-//!
-//!   You can generate a custom compiler error with the `compile_error!` macro, and emit it from your crate root.
-//!
-//!   ```rust,ignore
-//!   #[macro_use] extern crate k8s_openapi;
-//!
-//!   k8s_if_le_1_15! {
-//!       compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
-//!   }
-//!   ```
-//!
-//! - Your crate creates a custom resource definition. If the `v1_16` or later feature is enabled, your crate wants to use the apiextensions v1 API,
-//!   otherwise it wants to use the v1beta1 API.
-//!
-//!   ```rust,ignore
-//!   k8s_if_le_1_15! {
-//!       use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-//!   }
-//!   k8s_if_ge_1_16! {
-//!       use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
-//!   }
-//!
-//!   let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!       group: ...,
-//!       names: ...,
-//!       scope: ...,
-//!       ..Default::default()
-//!   };
-//!
-//!   // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
-//!   k8s_if_le_1_15! {
-//!       let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!           version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
-//!           validation: Some(custom_resource_validation),
-//!           ..custom_resource_definition_spec
-//!       };
-//!   }
-//!   // Set v1 `versions` field on v1.16 and later.
-//!   k8s_if_ge_1_16! {
-//!       let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!           versions: vec![
-//!               apiextensions::CustomResourceDefinitionVersion {
-//!                   name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
-//!                   schema: Some(custom_resource_validation),
-//!                   served: true,
-//!                   storage: true,
-//!                   ..Default::default()
-//!               },
-//!           ].into(),
-//!           ..custom_resource_definition_spec
-//!       };
-//!   }
-//!
-//! (These macros are required because `cargo` does not give any way for your crate to determine the features enabled on another crate, ie `k8s-openapi`.)
-//!
 //!
 //! # Examples
 //!
@@ -135,6 +46,8 @@
 //! ```
 //!
 //! ## Client API
+//!
+//! (This requires the `api` feature to be enabled. The feature is enabled by default. See ["Crate features"](#crate-features) below for more details.)
 //!
 //! This example executes the [`api::core::v1::Pod::list_namespaced_pod`] API operation to list all pods inside a namespace.
 //! It demonstrates the common patterns implemented by all API operation functions in this crate:
@@ -190,7 +103,7 @@
 //!
 //! 1. The response types are enums with variants corresponding to HTTP status codes. For example, the `ListResponse<Pod>::Ok` variant corresponds to the
 //!    HTTP 200 response of the list-namespaced-pod API.
-//! 
+//!
 //!    Each response enum also has an `Other` variant, that is yielded when the response status code does not match any of the other variants.
 //!    This variant has a `Result<Option<`[`serde_json::Value`]`>, `[`serde_json::Error`]`>` value.
 //!
@@ -300,12 +213,238 @@
 //!
 //! # Crate features
 //!
-//! - As mentioned above, enabling one of the `v1_*` features selects which version of the Kubernetes API server this crate should target.
+//! - This crate contains several `v1_*` features. Enabling one of the `v1_*` features selects which version of the Kubernetes API server this crate should target.
+//!   For example, enabling the `v1_16` feature means the crate will only contain the API exposed by Kubernetes 1.16. It will not expose API
+//!   that were removed in 1.16 or earlier, nor any API added in 1.17 or later.
 //!
-//! - If the `api` feature is disabled, the library will only contain the resource types like [`api::core::v1::Pod`] and not the associated operation functions
-//!   like [`api::core::v1::Pod::read_namespaced_pod`]. The corresponding `Response` and `Optional` types will also not be accessible.
+//! - The crate also contains a feature named `api`. If this feature is disabled, the library will only contain the resource types like [`api::core::v1::Pod`],
+//!   and not the associated operation functions like [`api::core::v1::Pod::read_namespaced_pod`]. The `Response` and `Optional` types for the operation functions
+//!   will also not be accessible.
 //!
 //!   This feature is enabled by default, but can be disabled if your crate does not need the operation functions to save on compile time and resources.
+//!
+//! One and only one of the `v1_*` features must be enabled at the same time, otherwise the crate will not compile. This ensures that all crates in the crate graph
+//! use the same types. If it was possible for one library crate to use `api::core::v1::Pod` corresponding to v1.15 and another to use the type
+//! corresponding to v1.16, an application would not be able to use the same `Pod` value with both.
+//!
+//! Thus, it is recommended that only application crates must enable one of the `v1_*` features, corresponding to the version of Kubernetes
+//! that the application wants to support.
+//!
+//! ```toml
+//! # For application crates
+//!
+//! [dependencies]
+//! k8s-openapi = { version = "...", features = ["v1_14"] }
+//! ```
+//!
+//! If you're writing a library crate, your crate *must not* enable any features of `k8s-openapi` directly. The choice of which feature to enable
+//! must be left to any application crates that use your library. This ensures that all `k8s-openapi`-using dependencies in that application crate's dependency graph
+//! use the same set of `k8s-openapi` types and are interoperable.
+//!
+//! If your library crate has tests or examples, you should also add a dev-dependency on `k8s-openapi` in addition to the direct dependency,
+//! and enable a version feature only for that dev-dependency.
+//!
+//! ```toml
+//! # For library crates
+//!
+//! [dependencies]
+//! k8s-openapi = "..."
+//!
+//! [dev-dependencies]
+//! k8s-openapi = { version = "...", features = ["v1_14"] }
+//! ```
+//!
+//!
+//! # Conditional compilation
+//!
+//! As the previous section explained, library crates must not enable any version features in their `k8s-openapi` dependency. However, your library crate may
+//! need to know about which version gets selected eventually.
+//!
+//! For example:
+//!
+//! 1. Your crate creates a custom resource definition using the apiextensions v1 API. This API is only available in Kubernetes 1.16+,
+//!    so your crate would fail to compile if a lower feature was enabled.
+//!
+//! 1. Your crate creates a custom resource definition. If the `v1_16` or later feature is enabled, your crate wants to use the apiextensions v1 API,
+//!    otherwise it falls back to the v1beta1 API.
+//!
+//! There are two ways for your crate to determine which feature of `k8s-openapi` is enabled:
+//!
+//! 1. The `k8s-openapi` crate exports [`k8s_if_*` macros,](#macros) which either expand to their contents or don't. See the docs of the macros for more details.
+//!
+//!    With these macros, the two cases above would be solved like this:
+//!
+//!    - ```rust,ignore
+//!      #[macro_use] extern crate k8s_openapi;
+//!
+//!      // The compile_error!() is only emitted if 1.15 or lower is selected.
+//!      k8s_if_le_1_15! {
+//!          compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      }
+//!      ```
+//!
+//!    - ```rust,ignore
+//!      #[macro_use] extern crate k8s_openapi;
+//!
+//!      k8s_if_le_1_15! {
+//!          use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+//!      }
+//!      k8s_if_ge_1_16! {
+//!          use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
+//!      }
+//!
+//!      // Common fields regardless of the apiextensions version
+//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!          group: ...,
+//!          names: ...,
+//!          scope: ...,
+//!          ..Default::default()
+//!      };
+//!
+//!      // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
+//!      k8s_if_le_1_15! {
+//!          let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!              version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
+//!              validation: Some(custom_resource_validation),
+//!              ..custom_resource_definition_spec
+//!          };
+//!      }
+//!      // Set v1 `versions` field on v1.16 and later.
+//!      k8s_if_ge_1_16! {
+//!          let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!              versions: vec![
+//!                  apiextensions::CustomResourceDefinitionVersion {
+//!                      name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+//!                      schema: Some(custom_resource_validation),
+//!                      served: true,
+//!                      storage: true,
+//!                      ..Default::default()
+//!                  },
+//!              ].into(),
+//!              ..custom_resource_definition_spec
+//!          };
+//!      }
+//!      ```
+//!
+//! 1. The `k8s-openapi` crate emits the selected version number as metadata that your crate can read in a build script
+//!    from the `DEP_K8S_OPENAPI_*_VERSION` env var.
+//!
+//!    ```rust,no_run
+//!    // Your crate's build.rs
+//!
+//!    fn main() {
+//!        let k8s_openapi_version: u32 =
+//!            std::env::vars_os()
+//!            .find_map(|(key, value)| {
+//!                let key = key.into_string().ok()?;
+//!                if key.starts_with("DEP_K8S_OPENAPI_") && key.ends_with("_VERSION") {
+//!                    let value = value.into_string().ok()?;
+//!                    Some(value)
+//!                }
+//!                else {
+//!                    None
+//!                }
+//!            }).expect("DEP_K8S_OPENAPI_*_VERSION must have been set by k8s-openapi")
+//!            .parse().expect("DEP_K8S_OPENAPI_*_VERSION is malformed");
+//!
+//!        // k8s_openapi_version has the format 0x00_MM_NN_00.
+//!        //
+//!        // - MM is the major version.
+//!        // - NN is the minor version.
+//!        //
+//!        // Thus, if the v1_16 feature was enabled, k8s_openapi_version would be 0x00_01_10_00
+//!
+//!        // The build script can now do arbitrary things with the information.
+//!        // For example, it could define custom cfgs:
+//!        if k8s_openapi_version >= 0x00_01_10_00 {
+//!            println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1""#);
+//!        }
+//!        else {
+//!            println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1beta1""#);
+//!        }
+//!
+//!        // or emit new source code files under OUT_DIR, or anything else a build script can do.
+//!    }
+//!    ```
+//!
+//!    With these cfgs, the two cases above would be solved like this:
+//!
+//!    - ```rust,ignore
+//!      // Your crate's src/lib.rs
+//!
+//!      #[cfg(k8s_apiextensions = "v1")]
+//!      compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      ```
+//!
+//!    - ```rust,ignore
+//!      #[cfg(k8s_apiextensions = "v1beta1")]
+//!      use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+//!      #[cfg(k8s_apiextensions = "v1")]
+//!      use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
+//!
+//!      // Common fields regardless of the apiextensions version
+//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!          group: ...,
+//!          names: ...,
+//!          scope: ...,
+//!          ..Default::default()
+//!      };
+//!
+//!      // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
+//!      #[cfg(k8s_apiextensions = "v1beta1")]
+//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!          version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
+//!          validation: Some(custom_resource_validation),
+//!          ..custom_resource_definition_spec
+//!      };
+//!      // Set v1 `versions` field on v1.16 and later.
+//!      #[cfg(k8s_apiextensions = "v1")]
+//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+//!          versions: vec![
+//!              apiextensions::CustomResourceDefinitionVersion {
+//!                  name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+//!                  schema: Some(custom_resource_validation),
+//!                  served: true,
+//!                  storage: true,
+//!                  ..Default::default()
+//!              },
+//!          ].into(),
+//!          ..custom_resource_definition_spec
+//!      };
+//!      ```
+//!
+//! Note that both approaches require your crate to have a direct dependency on the `k8s-openapi` crate. Neither approach is available if your crate
+//! only has a transitive dependency on the `k8s-openapi` crate.
+//!
+//! The macros approach is easier to use since it doesn't require a build script.
+//!
+//! The build script method lets you emit arbitrary cfgs, emit arbitrary source code, and generally gives you more options, at the cost of needing a build script.
+//! For example, `cfg()`s can be used in places where macros cannot, such as this example for conditionally setting attrs using `cfg_attr`:
+//!
+//! ```rust,ignore
+//! #[derive(
+//!     Clone, Debug, PartialEq,
+//!     k8s_openapi_derive::CustomResourceDefinition,
+//!     serde_derive::Deserialize, serde_derive::Serialize,
+//! )]
+//! #[custom_resource_definition(
+//!     group = "k8s-openapi-tests-custom-resource-definition.com",
+//!     version = "v1",
+//!     plural = "foobars",
+//!     namespaced,
+//! )]
+//! #[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]
+//! #[cfg_attr(k8s_apiextensions = "v1", custom_resource_definition(has_subresources = "v1"))]
+//! struct FooBarSpec {
+//!     prop1: String,
+//!     prop2: Vec<bool>,
+//!     #[serde(skip_serializing_if = "Option::is_none")]
+//!     prop3: Option<i32>,
+//! }
+//! ```
+//!
+//! It isn't possible conditionally set attributes using macros, so the entire `struct FooBarSpec` declaration would have to be duplicated and wrapped inside
+//! `k8s_if_le_1_15! { }` and `k8s_if_ge_1_16! { }` respectively.
 //!
 //!
 //! # Custom resource definitions

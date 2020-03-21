@@ -18,6 +18,15 @@ include = [
 	"src/**/*",
 ]
 
+# Dummy value to allow metadata to work, since passing metadata to downstream currently requires the links key to be set.
+#
+# It incorporates the version because we don't want to unnecessarily prevent multiple versions of k8s-openapi in the dep graph.
+# Unfortunately, this means the env var that downstream needs to check also incorporates the version number, so downstream build scripts are recommended
+# to enumerate all env vars looking for one with `DEP_K8S_OPENAPI_` prefix and `_VERSION` suffix, instead of looking it up by its whole name.
+#
+# See https://github.com/rust-lang/cargo/issues/3544 for being able to pass metadata to downstream without setting this key.
+links = "k8s-openapi-0.7.1"
+
 [dependencies]
 base64 = "0.12"
 bytes = "0.5"
