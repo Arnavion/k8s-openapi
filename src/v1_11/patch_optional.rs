@@ -1,12 +1,14 @@
 // Generated from definition io.k8s.PatchOptional
 
 /// Common parameters for all patch operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct PatchOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
+#[cfg(feature = "api")]
 impl<'a> PatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]

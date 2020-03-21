@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.ReplaceOptional
 
 /// Common parameters for all replace operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct ReplaceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -13,6 +14,7 @@ pub struct ReplaceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
+#[cfg(feature = "api")]
 impl<'a> ReplaceOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]

@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.DeleteResponse
 
 /// The common response type for all delete API operations and delete-collection API operations.
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
@@ -9,6 +10,7 @@ pub enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwned {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

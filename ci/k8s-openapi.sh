@@ -7,17 +7,22 @@ set -euo pipefail
 # Saves a few seconds for large crates
 export CARGO_INCREMENTAL=0
 
+FEATURES="--features v${VERSION//./_}"
+if [ "$WITHOUT_API_FEATURE" = 'yes' ]; then
+	FEATURES="--no-default-features $FEATURES"
+fi
+
 case "$OP" in
 	'clippy')
-		cargo clippy --features "v${VERSION//./_}" -- -D warnings
+		cargo clippy $FEATURES -- -D warnings
 		;;
 
 	'doc')
-		cargo doc --no-deps --features "v${VERSION//./_}"
+		cargo doc --no-deps $FEATURES
 		;;
 
 	'lib-tests')
-		RUST_BACKTRACE=full cargo test --features "v${VERSION//./_}"
+		RUST_BACKTRACE=full cargo test $FEATURES
 		;;
 
 	'tests')

@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.ListOptional
 
 /// Common parameters for all list operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct ListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -30,6 +31,7 @@ pub struct ListOptional<'a> {
     pub timeout_seconds: Option<i64>,
 }
 
+#[cfg(feature = "api")]
 impl<'a> ListOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]

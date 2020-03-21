@@ -76,8 +76,8 @@ pub fn run<W>(
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	crate_root: &str,
 	vis: &str,
-	use_api_feature: bool,
-	out: impl FnOnce(&[std::borrow::Cow<'_, str>]) -> std::io::Result<W>,
+	use_api_feature_for_operations: bool,
+	out: impl FnOnce(&[std::borrow::Cow<'_, str>], bool) -> std::io::Result<W>,
 	mut imports: impl FnMut(Option<String>, Option<String>) -> std::io::Result<()>,
 ) -> Result<RunResult, Error> where W: std::io::Write {
 	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {} does not exist in spec", definition_path))?;
@@ -89,7 +89,25 @@ pub fn run<W>(
 	};
 
 	let parts = replace_namespace(definition_path.split('.'), replace_namespaces);
-	let mut out = out(&parts)?;
+
+	let is_under_api_feature = match &definition.kind {
+		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
+		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
+		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
+		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
+		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => true,
+
+		_ => false,
+	};
+
+	let mut out = out(&parts, is_under_api_feature)?;
 
 	let type_name = parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?.to_string();
 
@@ -105,6 +123,7 @@ pub fn run<W>(
 		&mut out,
 		definition_path,
 		definition.description.as_ref().map(AsRef::as_ref),
+		if is_under_api_feature { "#[cfg(feature = \"api\")]\n" } else { "" },
 		derives,
 		vis,
 	)?;
@@ -285,7 +304,7 @@ pub fn run<W>(
 									crate_root,
 									vis,
 									&mut Some((&type_name, &type_ref_path)),
-									use_api_feature)?;
+									is_under_api_feature || use_api_feature_for_operations)?;
 							imports(operation_optional_parameters_name, operation_result_name)?;
 							run_result.num_generated_apis += 1;
 						}
@@ -1263,7 +1282,7 @@ pub fn write_operation(
 	crate_root: &str,
 	vis: &str,
 	type_name_and_ref_path: &mut Option<(&str, &swagger20::RefPath)>,
-	use_api_feature: bool,
+	is_under_api_feature: bool,
 ) -> Result<(Option<String>, Option<String>), Error> {
 	writeln!(out)?;
 
@@ -1441,7 +1460,7 @@ pub fn write_operation(
 		}
 	}
 
-	if use_api_feature {
+	if is_under_api_feature {
 		writeln!(out, r#"{}#[cfg(feature = "api")]"#, indent)?;
 	}
 
@@ -1676,7 +1695,7 @@ pub fn write_operation(
 			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
-		if use_api_feature {
+		if is_under_api_feature {
 			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
@@ -1718,7 +1737,7 @@ pub fn write_operation(
 					operation_result_name, operation_fn_name)?;
 			}
 
-			if use_api_feature {
+			if is_under_api_feature {
 				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 			}
 			writeln!(out, "#[derive(Debug)]")?;
@@ -1758,7 +1777,7 @@ pub fn write_operation(
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 
-			if use_api_feature {
+			if is_under_api_feature {
 				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 			}
 			writeln!(out, "impl {}::Response for {} {{", crate_root, operation_result_name)?;

@@ -22,17 +22,17 @@ include = [
 base64 = "0.12"
 bytes = "0.5"
 chrono = { version = "0.4", features = ["serde"] }
-http = "0.2"
-percent-encoding = "2"
+http = { version = "0.2", optional = true }
+percent-encoding = { version = "2", optional = true }
 serde = "1"
 serde_json = "1"
 serde-value = "0.6"
-url = "2"
+url = { version = "2", optional = true }
 
 [features]
 default = ["api"]
 
-api = [] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
+api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
 
 # Each feature corresponds to a supported version of Kubernetes
 v1_11 = []

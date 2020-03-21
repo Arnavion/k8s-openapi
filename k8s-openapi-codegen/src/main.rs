@@ -170,7 +170,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			"crate",
 			"pub ",
 			true,
-			|parts| {
+			|parts, is_under_api_feature| {
 				let mut current = out_dir.to_owned();
 
 				for part in parts.iter().rev().skip(1).rev() {
@@ -209,7 +209,13 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 				writeln!(parent_mod_rs)?;
+				if is_under_api_feature {
+					writeln!(parent_mod_rs, r#"#[cfg(feature = "api")]"#)?;
+				}
 				writeln!(parent_mod_rs, "mod {};", mod_name)?;
+				if is_under_api_feature {
+					writeln!(parent_mod_rs, r#"#[cfg(feature = "api")]"#)?;
+				}
 				writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
 
 				let file_name = current.join(&*mod_name).with_extension("rs");

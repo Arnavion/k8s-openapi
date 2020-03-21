@@ -691,7 +691,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				"k8s_openapi",
 				&vis,
 				false,
-				|_| Ok(&mut out),
+				|_, _| Ok(&mut out),
 				|_, _| Ok(()),
 			)
 			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
@@ -710,7 +710,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				"k8s_openapi",
 				&vis,
 				false,
-				|_| Ok(&mut out),
+				|_, _| Ok(&mut out),
 				|_, _| Ok(()),
 			)
 			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))

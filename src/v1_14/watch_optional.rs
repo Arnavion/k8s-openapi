@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.WatchOptional
 
 /// Common parameters for all watch operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct WatchOptional<'a> {
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -19,6 +20,7 @@ pub struct WatchOptional<'a> {
     pub timeout_seconds: Option<i64>,
 }
 
+#[cfg(feature = "api")]
 impl<'a> WatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]

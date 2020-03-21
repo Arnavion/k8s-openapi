@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.DeleteOptional
 
 /// Common parameters for all delete and delete-collection operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct DeleteOptional<'a> {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources

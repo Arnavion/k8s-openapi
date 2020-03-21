@@ -1,12 +1,14 @@
 // Generated from definition io.k8s.WatchResponse
 
 /// The common response type for all watch API operations.
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum WatchResponse<T> where T: serde::de::DeserializeOwned {
     Ok(crate::apimachinery::pkg::apis::meta::v1::WatchEvent<T>),
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl<T> crate::Response for WatchResponse<T> where T: serde::de::DeserializeOwned {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

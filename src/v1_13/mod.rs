@@ -1,41 +1,65 @@
 
+#[cfg(feature = "api")]
 mod create_optional;
+#[cfg(feature = "api")]
 pub use self::create_optional::CreateOptional;
 
+#[cfg(feature = "api")]
 mod create_response;
+#[cfg(feature = "api")]
 pub use self::create_response::CreateResponse;
 
+#[cfg(feature = "api")]
 mod delete_optional;
+#[cfg(feature = "api")]
 pub use self::delete_optional::DeleteOptional;
 
+#[cfg(feature = "api")]
 mod delete_response;
+#[cfg(feature = "api")]
 pub use self::delete_response::DeleteResponse;
 
 mod list;
 pub use self::list::List;
 
+#[cfg(feature = "api")]
 mod list_optional;
+#[cfg(feature = "api")]
 pub use self::list_optional::ListOptional;
 
+#[cfg(feature = "api")]
 mod list_response;
+#[cfg(feature = "api")]
 pub use self::list_response::ListResponse;
 
+#[cfg(feature = "api")]
 mod patch_optional;
+#[cfg(feature = "api")]
 pub use self::patch_optional::PatchOptional;
 
+#[cfg(feature = "api")]
 mod patch_response;
+#[cfg(feature = "api")]
 pub use self::patch_response::PatchResponse;
 
+#[cfg(feature = "api")]
 mod replace_optional;
+#[cfg(feature = "api")]
 pub use self::replace_optional::ReplaceOptional;
 
+#[cfg(feature = "api")]
 mod replace_response;
+#[cfg(feature = "api")]
 pub use self::replace_response::ReplaceResponse;
 
+#[cfg(feature = "api")]
 mod watch_optional;
+#[cfg(feature = "api")]
 pub use self::watch_optional::WatchOptional;
 
+#[cfg(feature = "api")]
 mod watch_response;
+#[cfg(feature = "api")]
 pub use self::watch_response::WatchResponse;
 
 pub mod api;

@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.CreateResponse
 
 /// The common response type for all create API operations.
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum CreateResponse<T> where T: serde::de::DeserializeOwned {
     Ok(T),
@@ -9,6 +10,7 @@ pub enum CreateResponse<T> where T: serde::de::DeserializeOwned {
     Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
+#[cfg(feature = "api")]
 impl<T> crate::Response for CreateResponse<T> where T: serde::de::DeserializeOwned {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {

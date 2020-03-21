@@ -313,10 +313,13 @@
 //! for custom resources. See that crate's docs for more information.
 
 pub use chrono;
+#[cfg(feature = "api")]
 pub use http;
+#[cfg(feature = "api")]
 pub use percent_encoding;
 pub use serde_json;
 pub use serde_value;
+#[cfg(feature = "api")]
 pub use url;
 
 /// A wrapper around a list of bytes.
@@ -421,6 +424,7 @@ pub fn version<T>(_: &T) -> &'static str where T: Resource {
 }
 
 /// The type of errors returned by the Kubernetes API functions that prepare the HTTP request.
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum RequestError {
     /// An error from preparing the HTTP request.
@@ -430,6 +434,7 @@ pub enum RequestError {
     Json(serde_json::Error),
 }
 
+#[cfg(feature = "api")]
 impl std::fmt::Display for RequestError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -439,6 +444,7 @@ impl std::fmt::Display for RequestError {
     }
 }
 
+#[cfg(feature = "api")]
 impl std::error::Error for RequestError {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
@@ -449,6 +455,7 @@ impl std::error::Error for RequestError {
 }
 
 /// A trait implemented by all response types corresponding to Kubernetes API functions.
+#[cfg(feature = "api")]
 pub trait Response: Sized {
     /// Tries to parse the response from the given status code and response body.
     ///
@@ -475,6 +482,7 @@ pub trait Response: Sized {
 ///
 /// You do not *have* to use this type to parse the response, say if you want to manage your own byte buffers. You can use
 /// `<T as Response>::try_from_parts` directly instead.
+#[cfg(feature = "api")]
 pub struct ResponseBody<T> {
     /// The HTTP status code of the response.
     pub status_code: http::StatusCode,
@@ -484,6 +492,7 @@ pub struct ResponseBody<T> {
     _response: std::marker::PhantomData<fn() -> T>,
 }
 
+#[cfg(feature = "api")]
 impl<T> ResponseBody<T> where T: Response {
     /// Construct a value for a response that has the specified HTTP status code.
     pub fn new(status_code: http::StatusCode) -> Self {
@@ -524,6 +533,7 @@ impl<T> ResponseBody<T> where T: Response {
     }
 }
 
+#[cfg(feature = "api")]
 impl<T> std::ops::Deref for ResponseBody<T> {
     type Target = [u8];
 
@@ -533,6 +543,7 @@ impl<T> std::ops::Deref for ResponseBody<T> {
 }
 
 /// The type of errors from parsing an HTTP response as one of the Kubernetes API functions' response types.
+#[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ResponseError {
     /// An error from deserializing the HTTP response, indicating more data is needed to complete deserialization.
@@ -545,6 +556,7 @@ pub enum ResponseError {
     Utf8(std::str::Utf8Error),
 }
 
+#[cfg(feature = "api")]
 impl std::fmt::Display for ResponseError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -555,6 +567,7 @@ impl std::fmt::Display for ResponseError {
     }
 }
 
+#[cfg(feature = "api")]
 impl std::error::Error for ResponseError {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
@@ -566,6 +579,7 @@ impl std::error::Error for ResponseError {
 }
 
 /// Extensions to the percent-encoding crate
+#[cfg(feature = "api")]
 pub mod percent_encoding2 {
     /// Ref <https://url.spec.whatwg.org/#path-percent-encode-set>
     pub const PATH_SEGMENT_ENCODE_SET: &percent_encoding::AsciiSet =

@@ -26,6 +26,16 @@ jobs:
         - 'lib-tests'
         - 'tests'
 
+        without_api_feature:
+        - 'yes'
+        - 'no'
+
+        exclude:
+        - op: 'lib-tests'
+          without_api_feature: 'yes'
+        - op: 'tests'
+          without_api_feature: 'yes'
+
     steps:
     - uses: 'actions/checkout@v2'
     - name: 'Run'
@@ -33,6 +43,7 @@ jobs:
       env:
         VERSION: "${{ matrix.version }}"
         OP: "${{ matrix.op }}"
+        WITHOUT_API_FEATURE: "${{ matrix.without_api_feature }}"
 
 
   k8s-openapi-codegen:

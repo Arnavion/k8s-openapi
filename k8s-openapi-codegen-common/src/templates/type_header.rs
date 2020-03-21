@@ -2,6 +2,7 @@ pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	definition_path: &crate::swagger20::DefinitionPath,
 	type_comment: Option<&str>,
+	attrs: &str,
 	derives: Option<Derives>,
 	vis: &str,
 ) -> Result<(), crate::Error> {
@@ -37,6 +38,7 @@ pub(crate) fn generate(
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/type_header.rs")),
 		definition_path = definition_path,
 		type_comment = type_comment,
+		attrs = attrs,
 		derives = derives,
 		vis = vis,
 	)?;

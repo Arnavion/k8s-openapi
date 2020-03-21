@@ -1,6 +1,7 @@
 // Generated from definition io.k8s.WatchOptional
 
 /// Common parameters for all watch operations.
+#[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct WatchOptional<'a> {
     /// allowWatchBookmarks requests watch events with type "BOOKMARK". Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server's discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored.
@@ -22,6 +23,7 @@ pub struct WatchOptional<'a> {
     pub timeout_seconds: Option<i64>,
 }
 
+#[cfg(feature = "api")]
 impl<'a> WatchOptional<'a> {
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
