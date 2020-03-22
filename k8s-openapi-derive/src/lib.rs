@@ -101,8 +101,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// the "group" and "API version" in the `k8s_openapi::Resource` impl respectively. The "kind" is automatically set to be the same as the resource type name,
 /// ie `"FooBar"` in this example. The `plural` meta item is used to construct the URLs of API operations for this custom resource.
 ///
-/// The `has_subresource` meta item is optional. If set, the generated custom resource type will have a `subresources` field. The value of the meta item
-/// specifies which namespace the type will be used from. For example, setting `has_subresource = "v1"` causes the field to be of the
+/// The `has_subresources` meta item is optional. If set, the generated custom resource type will have a `subresources` field. The value of the meta item
+/// specifies which namespace the type will be used from. For example, setting `has_subresources = "v1"` causes the field to be of the
 /// `k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources` type.
 ///
 /// You would then register this custom resource definition with Kubernetes, with code like this:
