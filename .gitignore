@@ -6,5 +6,5 @@
 /k8s-openapi-derive/Cargo.lock
 /k8s-openapi-derive/target
 /k8s-openapi-tests/Cargo.lock
-/k8s-openapi-tests/target
+/k8s-openapi-tests/target*
 /target

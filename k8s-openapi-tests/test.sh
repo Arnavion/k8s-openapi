@@ -133,7 +133,7 @@ case "$1" in
 		;;
 
 	'run-tests')
-		K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${2//./_}" "${@:3}"
+		CARGO_TARGET_DIR="$PWD/target-v$K8S_VERSION" K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${2//./_}" "${@:3}"
 		;;
 
 	*)
