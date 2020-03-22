@@ -443,7 +443,7 @@
 //! }
 //! ```
 //!
-//! It isn't possible conditionally set attributes using macros, so the entire `struct FooBarSpec` declaration would have to be duplicated and wrapped inside
+//! It isn't possible to conditionally set attributes using macros, so the entire `struct FooBarSpec` declaration would have to be duplicated and wrapped inside
 //! `k8s_if_le_1_15! { }` and `k8s_if_ge_1_16! { }` respectively.
 //!
 //!
