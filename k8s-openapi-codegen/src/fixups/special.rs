@@ -838,15 +838,37 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 								operation.id, response_status_codes).into());
 						}
 
+						// Prevent the Iterator::all closure below capturing all of `self` and complain about conflicting borrows
+						let definitions = &spec.definitions;
+
 						let should_use_common_response_type =
 							responses.values()
-							.all(|crate::swagger20::Schema { kind, .. }|
-								if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
-									ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status"
+							.all(|crate::swagger20::Schema { kind, .. }| {
+								let ref_path =
+									if let crate::swagger20::SchemaKind::Ref(ref_path) = kind {
+										ref_path
+									}
+									else {
+										return false;
+									};
+
+								if ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status" {
+									return true;
 								}
-								else {
-									false
-								});
+
+								if let Some(kubernetes_group_kind_version) = &operation.kubernetes_group_kind_version {
+									let response_schema =
+										definitions.get(&crate::swagger20::DefinitionPath(ref_path.path.clone()))
+										.unwrap_or_else(|| panic!("operation {} returns undefined type {:?}", operation.id, kubernetes_group_kind_version));
+									if let Some(kubernetes_group_kind_versions) = &response_schema.kubernetes_group_kind_versions {
+										if kubernetes_group_kind_versions.contains(kubernetes_group_kind_version) {
+											return true;
+										}
+									}
+								}
+
+								false
+							});
 						if !should_use_common_response_type {
 							continue;
 						}

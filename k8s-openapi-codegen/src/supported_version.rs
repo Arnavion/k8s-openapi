@@ -6,6 +6,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_15,
 	SupportedVersion::V1_16,
 	SupportedVersion::V1_17,
+	SupportedVersion::V1_18,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -17,6 +18,7 @@ pub(crate) enum SupportedVersion {
 	V1_15,
 	V1_16,
 	V1_17,
+	V1_18,
 }
 
 impl SupportedVersion {
@@ -29,6 +31,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_15 => "v1_15",
 			SupportedVersion::V1_16 => "v1_16",
 			SupportedVersion::V1_17 => "v1_17",
+			SupportedVersion::V1_18 => "v1_18",
 		}
 	}
 
@@ -41,6 +44,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_15 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.15.11/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_16 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.16.8/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_17 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.17.4/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_18 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.18.0/api/openapi-spec/swagger.json",
 		}
 	}
 
@@ -86,6 +90,10 @@ impl SupportedVersion {
 			],
 
 			SupportedVersion::V1_17 => &[
+				crate::fixups::upstream_bugs::connect_options_gvk,
+			],
+
+			SupportedVersion::V1_18 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 			],
 		};
