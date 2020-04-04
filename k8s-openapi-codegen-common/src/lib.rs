@@ -1397,7 +1397,7 @@ pub fn write_operation(
 				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root, crate_root)),
 				_ => unreachable!(),
 			},
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>`", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>", crate_root)),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root)),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("[`{}::ReplaceResponse`]`<Self>", crate_root)),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("[`{}::WatchResponse`]`<Self>", crate_root)),
