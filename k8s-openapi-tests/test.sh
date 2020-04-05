@@ -2,14 +2,14 @@
 
 # Usage:
 #
-#     test.sh create-node-image <version>
+#     test.sh create-node-image <version> <directory>
 #
-# Create a node image for testing <version>.
+# Create a node image for testing <version> and save it under <directory>.
 #
 #
 #     test.sh create-cluster <version>
 #
-# Create a cluster for testing <version>.
+# Create a cluster for testing <version> using the image stored under <directory>.
 #
 #
 #     test.sh delete-cluster <version>
@@ -22,8 +22,8 @@
 # Run the tests for <version>. Set K8S_RECORD=1 if you want to run the tests in record mode.
 #
 #
-#     test.sh all create-node-image
-#     test.sh all create-cluster
+#     test.sh all create-node-image <directory>
+#     test.sh all create-cluster <directory>
 #     test.sh all delete-cluster
 #     test.sh all run-tests
 #
@@ -87,19 +87,30 @@ fi
 
 case "$1" in
 	'create-node-image')
-		docker image inspect "kindest/node:v$K8S_VERSION" >/dev/null ||
-		docker pull "kindest/node:v$K8S_VERSION" ||
-		(
-			trap "rm -rf '/tmp/kubernetes-v$K8S_VERSION'" EXIT
+		if [ -f "$3/kindest-node-v$K8S_VERSION.tar.gz" ]; then
+			exit 0
+		fi
 
-			rm -rf "/tmp/kubernetes-v$K8S_VERSION" &&
-			git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 https://github.com/kubernetes/kubernetes "/tmp/kubernetes-v$K8S_VERSION" &&
-			"kind-$KIND_VERSION" build node-image --image "kindest/node:v$K8S_VERSION" --kube-root "/tmp/kubernetes-v$K8S_VERSION"
-		)
+		if ! docker image inspect "kindest/node:v$K8S_VERSION"; then
+			docker pull "kindest/node:v$K8S_VERSION" ||
+			(
+				trap "rm -rf '/tmp/kubernetes-v$K8S_VERSION'" EXIT
+
+				rm -rf "/tmp/kubernetes-v$K8S_VERSION" &&
+				git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 https://github.com/kubernetes/kubernetes "/tmp/kubernetes-v$K8S_VERSION" &&
+				"kind-$KIND_VERSION" build node-image --image "kindest/node:v$K8S_VERSION" --kube-root "/tmp/kubernetes-v$K8S_VERSION"
+			)
+		fi
+
+		mkdir -p "$3"
+		docker image save --output "$3/kindest-node-v$K8S_VERSION.tar.gz" "kindest/node:v$K8S_VERSION"
+		docker image rm -f "kindest/node:v$K8S_VERSION"
 		;;
 
 	'create-cluster')
 		if ! ("kind-$KIND_VERSION" get clusters | grep -q "$K8S_CLUSTER_NAME"); then
+			docker image load --input "$3/kindest-node-v$K8S_VERSION.tar.gz"
+
 			# Run against a temporary kubeconfig instead of ~/.kube/config, because kind tries to lock the kubeconfig to prevent concurrent modification.
 			# But if it does fail to lock the file, it just fails instead of retrying.
 			#
@@ -128,6 +139,8 @@ case "$1" in
 			"kind-$KIND_VERSION" delete cluster --name "$K8S_CLUSTER_NAME" --kubeconfig "/tmp/kubeconfig-v$K8S_VERSION"
 			rm -f "/tmp/kubeconfig-v$K8S_VERSION"
 		fi
+
+		docker image rm -f "kindest/node:v$K8S_VERSION"
 
 		flock -x ~/.kube -c "kubectl config delete-context 'kind-$K8S_CLUSTER_NAME'" || :
 		flock -x ~/.kube -c "kubectl config delete-cluster 'kind-$K8S_CLUSTER_NAME'" || :
