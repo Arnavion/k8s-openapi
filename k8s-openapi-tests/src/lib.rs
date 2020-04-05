@@ -22,7 +22,7 @@ enum Client {
 		recorder: std::io::BufWriter<std::fs::File>,
 	},
 
-	Replaying(std::vec::IntoIter<Replay>),
+	Replaying(std::iter::Enumerate<std::vec::IntoIter<Replay>>),
 }
 
 #[derive(Debug, serde_derive::Deserialize, serde_derive::Serialize)]
@@ -150,15 +150,16 @@ impl Client {
 				let replay_file = std::io::BufReader::new(replay_file);
 				let replays: Vec<_> = serde_json::from_reader(replay_file).expect("couldn't parse replay file");
 
-				Client::Replaying(replays.into_iter())
+				Client::Replaying(replays.into_iter().enumerate())
 			};
 
 		f(&mut client);
 
 		match client {
-			Client::Replaying(mut replays) => if replays.next().is_some() {
-				panic!("One or more replays were not consumed");
-			},
+			Client::Replaying(mut replays) =>
+				if let Some((i, _)) = replays.next() {
+					panic!("Replay #{} was not consumed", i + 1);
+				},
 
 			Client::Recording { replays, mut recorder, .. } => {
 				serde_json::to_writer_pretty(&mut recorder, &replays).expect("could not save replays");
@@ -219,11 +220,11 @@ impl Client {
 			},
 
 			Client::Replaying(replays) => {
-				let replay = replays.next().expect("no replay expected for this request");
-				assert_eq!(path.to_string(), replay.request_url);
-				assert_eq!(method, replay.request_method);
-				assert_eq!(body, replay.request_body);
-				assert_eq!(content_type, replay.request_content_type);
+				let (i, replay) = replays.next().expect("no replay expected for this request");
+				assert_eq!(path.to_string(), replay.request_url, "replay #{} does not have matching request URL", i + 1);
+				assert_eq!(method, replay.request_method, "replay #{} does not have matching request method", i + 1);
+				assert_eq!(body, replay.request_body, "replay #{} does not have matching request body", i + 1);
+				assert_eq!(content_type, replay.request_content_type, "replay #{} does not have request content type", i + 1);
 				ClientResponse {
 					status_code: http::StatusCode::from_u16(replay.response_status_code).unwrap(),
 					body: ClientResponseBody::Replaying(std::io::Cursor::new(replay.response_body)),
