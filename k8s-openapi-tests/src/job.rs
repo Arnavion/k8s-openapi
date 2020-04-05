@@ -1,5 +1,3 @@
-use k8s_openapi::http;
-
 #[test]
 fn create() {
 	use k8s_openapi::api::core::v1 as api;
@@ -67,17 +65,17 @@ fn create() {
 			.image.expect("couldn't get job container image");
 		assert_eq!(job_image, "alpine");
 
-		let (job_self_link, job_uid) = {
+		let (job_name, job_uid) = {
 			let metadata = job.metadata.expect("couldn't get job metadata");
-			(metadata.self_link.expect("couldn't get job self link"), metadata.uid.expect("couldn't get job uid"))
+			(metadata.name.expect("couldn't get job name"), metadata.uid.expect("couldn't get job uid"))
 		};
 
 		// Wait for job to fail
 		loop {
-			let request = http::Request::get(&job_self_link).body(vec![]).expect("couldn't get job");
+			let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default", Default::default()).expect("couldn't get job");
 			let job: batch::Job = {
 				let response = client.execute(request);
-				crate::get_single_value(response, k8s_openapi::ResponseBody::new, |response, status_code| match response {
+				crate::get_single_value(response, response_body, |response, status_code| match response {
 					batch::ReadNamespacedJobResponse::Ok(job) => crate::ValueResult::GotValue(job),
 					other => panic!("{:?} {}", other, status_code),
 				})
@@ -132,10 +130,10 @@ fn create() {
 			.terminated.expect("couldn't get job pod container termination info");
 		assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
-		let request = http::Request::delete(&job_self_link).body(vec![]).expect("couldn't delete job");
+		let (request, response_body) = batch::Job::delete_namespaced_job(&job_name, "default", Default::default()).expect("couldn't delete job");
 		{
 			let response = client.execute(request);
-			crate::get_single_value(response, k8s_openapi::ResponseBody::<k8s_openapi::DeleteResponse<batch::Job>>::new, |response, status_code| match response {
+			crate::get_single_value(response, response_body, |response, status_code| match response {
 				k8s_openapi::DeleteResponse::OkStatus(_) |
 				k8s_openapi::DeleteResponse::OkValue(_) => crate::ValueResult::GotValue(()),
 				other => panic!("{:?} {}", other, status_code),
