@@ -6,6 +6,8 @@
 #
 # Create a node image for testing <version> and save it under <directory>.
 #
+# Note: Use `docker images -a | egrep '<none>|k8s|rancher|kindest|kube' | awk '{ print $3 }' | xargs -n1 docker image rm -f` to clean up leftover gunk.
+#
 #
 #     test.sh create-cluster <version>
 #
