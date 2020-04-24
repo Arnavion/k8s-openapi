@@ -5,6 +5,7 @@
     clippy::default_trait_access,
     clippy::doc_markdown,
     clippy::large_enum_variant,
+    clippy::match_single_binding,
     clippy::missing_errors_doc,
     clippy::must_use_candidate,
     clippy::single_match_else,

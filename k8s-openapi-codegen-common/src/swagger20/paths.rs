@@ -164,7 +164,7 @@ impl std::ops::Deref for Path {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
-		self.0.deref()
+		&*self.0
 	}
 }
 
