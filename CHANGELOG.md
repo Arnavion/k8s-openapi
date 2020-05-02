@@ -1,3 +1,36 @@
+# v0.8.0 (2020-05-02)
+
+- BREAKING CHANGE: Support for v1.8, v1.9 and v1.10 API servers has been dropped. These versions became hard to test with `kubectl` and `kind` are are not supported by major cloud providers.
+
+- BREAKING CHANGE: `k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrArray`, `JSONSchemaPropsOrBool` and `JSONSchemaPropsOrStringArray` types  now wrap the `v1::JSONSchemaProps` type. Previously they incorrectly wrapped the `v1beta1::JSONSchemaProps` type.
+
+- BREAKING CHANGE: Turning the `api` feature off now also disables the `k8s_openapi::{http,percent_encoding,url}` re-exports, the `k8s_openapi::percent_encoding2` module, the `k8s_openapi::{RequestError,ResponseError,ResponseBody}` types, the `k8s_openapi::Response` trait, and the `k8s_openapi::{Create,Delete,List,Patch,Replace,Watch}{Optional,Response}` types. All of these were only used by the API functions which had been disabled by turning the `api` feature off.
+
+- BUGFIX: `k8s_openapi::apimachinery::pkg::apis::meta::v1::MicroTime` and `Time` are now serialized with six and zero decimals in their seconds respectively, to match the API server's expectations. Previously they would be serialized with a variable number of decimals up to nine.
+
+- FEATURE: Added support for Kubernetes 1.18 under the `v1_18` feature.
+
+- FEATURE: `k8s_openapi::ByteString` now impls `PartialOrd` and `Ord`.
+
+- FEATURE: `k8s_openapi::apimachinery::pkg::apis::meta::v1::MicroTime` and `Time` now impl `Eq`, `PartialOrd` and `Ord`.
+
+- FEATURE: If your crate has a dependency on `k8s-openapi`, you can now use a build script to detect which version feature has been enabled on the crate. This is a more verbose but also more flexible alternative to using the `k8s_if_*` version detection macros in your crate code.
+
+- FEATURE: `k8s-openapi-derive`'s `#[derive(CustomResourceDefinition)]` now supports emitting a subresources field in the generated CR type.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.11
+- v1.16.9
+- v1.17.5
+- v1.18.2
+
+---
+
 # v0.7.1 (2020-01-23)
 
 Fixed docs URLs. No other changes since v0.7.0.
@@ -16,7 +49,7 @@ Fixed docs URLs. No other changes since v0.7.0.
 
 - BREAKING CHANGE: The response types of create, delete, delete-collection, list, patch, replace and watch operations have now been combined into generic `CreateResponse<T>`, `DeleteResponse<T>`, `DeleteResponse<List<T>>`, `ListResponse<T>`, `PatchResponse<T>`, `ReplaceResponse<T>` and `WatchResponse<T>` types respectively.
 
-- BUGFIX: v1.16's `k8s_openapi::apliextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrArray`, `JSONSchemaPropsOrBool` and `JSONSchemaPropsOrStringArray` types are now generated correctly, just like their `v1beta` cousins.
+- BUGFIX: v1.16's `k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrArray`, `JSONSchemaPropsOrBool` and `JSONSchemaPropsOrStringArray` types are now generated correctly, just like their `v1beta` cousins.
 
 - FEATURE: Added support for Kubernetes 1.17 under the `v1_17` feature.
 
