@@ -57,7 +57,7 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 			for response in responses.values_mut() {
 				if let crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }), .. } = response {
 					if path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-						std::mem::replace(path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
+						*path = "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned();
 						found = true;
 					}
 				}

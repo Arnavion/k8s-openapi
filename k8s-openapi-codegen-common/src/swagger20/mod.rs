@@ -101,7 +101,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 
 			for parameter in value.parameters {
 				if let Some(p) = parameters.iter_mut().find(|p| p.name == parameter.name) {
-					std::mem::replace(p, parameter);
+					*p = parameter;
 				}
 				else {
 					parameters.push(parameter);
