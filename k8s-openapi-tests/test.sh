@@ -9,7 +9,7 @@
 # Note: Use `docker images -a | egrep '<none>|k8s|rancher|kindest|kube' | awk '{ print $3 }' | xargs -n1 docker image rm -f` to clean up leftover gunk.
 #
 #
-#     test.sh create-cluster <version>
+#     test.sh create-cluster <version> <directory>
 #
 # Create a cluster for testing <version> using the image stored under <directory>.
 #
