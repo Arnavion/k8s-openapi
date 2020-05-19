@@ -541,6 +541,15 @@ impl crate::Metadata for Event {
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         Some(&self.metadata)
     }
+
+    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
+        Some(&mut self.metadata)
+    }
+
+    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
+        self.metadata=metadata;
+    }
+
 }
 
 impl<'de> serde::Deserialize<'de> for Event {

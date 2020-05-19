@@ -23,6 +23,15 @@ impl<T> crate::Metadata for List<T> where T: crate::ListableResource {
     fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
+
+    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
+        self.metadata.as_mut()
+    }
+
+    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
+        self.metadata=Some(metadata);
+    }
+
 }
 
 impl<'de, T> serde::Deserialize<'de> for List<T> where T: serde::Deserialize<'de> + crate::ListableResource {

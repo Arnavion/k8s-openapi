@@ -20,6 +20,8 @@ pub(crate) fn generate(
 			type_generics_where = type_generics_where,
 			metadata_type_name = metadata_ty.0,
 			metadata_expr = if metadata_ty.1 { "Some(&self.metadata)" } else { "self.metadata.as_ref()" },
+			metadata_mut_expr = if metadata_ty.1 { "Some(&mut self.metadata)" } else { "self.metadata.as_mut()" },
+			set_metadata_expr = if metadata_ty.1 { "self.metadata=metadata;" } else { "self.metadata=Some(metadata);" },
 		)?;
 	}
 
