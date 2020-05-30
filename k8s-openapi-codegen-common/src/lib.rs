@@ -1667,7 +1667,7 @@ pub fn write_operation(
 	else {
 		let is_common_response_type = match operation.responses {
 			crate::swagger20::OperationResponses::Common(_) => true,
-			_ => false,
+			crate::swagger20::OperationResponses::Map(_) => false,
 		};
 
 		if is_common_response_type {
