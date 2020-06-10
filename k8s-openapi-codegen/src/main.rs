@@ -16,7 +16,7 @@ mod fixups;
 mod logger;
 mod supported_version;
 
-use k8s_openapi_codegen_common::swagger20;
+use k8s_openapi_codegen_common::{swagger20, CrateRooter};
 
 struct Error(Box<dyn std::error::Error + Send + Sync>, backtrace::Backtrace);
 
@@ -99,9 +99,19 @@ fn main() -> Result<(), Error> {
 	result
 }
 
+struct DefaultRooter {
+}
+
+impl CrateRooter for DefaultRooter {
+	fn root(&self, _: &Vec<&str>) -> String {
+		"crate".into()
+	}
+}
+
 fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client) -> Result<(), Error> {
 	use std::io::Write;
 
+	let crate_root = DefaultRooter{};
 	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -167,7 +177,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			definition_path,
 			swagger20::RefPathRelativeTo::Crate,
 			replace_namespaces,
-			"crate",
+			&crate_root,
 			"pub ",
 			true,
 			|parts, is_under_api_feature| {
@@ -272,7 +282,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				&mut mod_root_file,
 				&operation,
 				replace_namespaces,
-				"crate",
+				&crate_root,
 				"pub ",
 				&mut None,
 				true,
