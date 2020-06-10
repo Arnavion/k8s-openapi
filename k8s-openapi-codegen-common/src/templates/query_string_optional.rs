@@ -1,3 +1,5 @@
+use crate::safe_field;
+
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
@@ -15,7 +17,7 @@ pub(crate) fn generate(
 	for super::Property { name, field_name, field_type_name, .. } in fields {
 		use std::fmt::Write;
 
-		writeln!(fields_append_pair, "        if let Some(value) = &self.{} {{", field_name)?;
+		writeln!(fields_append_pair, "        if let Some(value) = &self.{} {{", safe_field(field_name))?;
 		if field_type_name == "Option<&'a str>" {
 			writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, value);"#, name)?;
 		}

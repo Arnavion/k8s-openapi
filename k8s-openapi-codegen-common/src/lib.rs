@@ -18,6 +18,8 @@
 //!
 //! WARNING: This crate is not meant to be used directly by end users and does not have a stable API.
 
+use lazy_static::lazy_static;
+
 #[doc(hidden)]
 pub mod swagger20;
 
@@ -68,6 +70,25 @@ impl std::fmt::Display for Error {
 impl std::error::Error for Error {
 }
 
+lazy_static! {
+	pub static ref ROOT_K8S_OPENAPI: Vec<&'static str> = vec!["k8s_openapi"];
+}
+
+pub trait CrateRooter {
+	fn root(&self, namespace: &Vec<&str>) -> String;
+
+	fn for_namespace  (
+		&self,
+		namespace: &str
+	) -> String {
+		self.root(&namespace.split(r#"(::|\.)"#).collect())
+	}
+
+	fn for_k8s(&self) -> String {
+		self.root(&ROOT_K8S_OPENAPI)
+	}
+}
+
 #[doc(hidden)]
 pub fn run<W>(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
@@ -75,7 +96,7 @@ pub fn run<W>(
 	definition_path: &swagger20::DefinitionPath,
 	ref_path_relative_to: swagger20::RefPathRelativeTo,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 	vis: &str,
 	use_api_feature_for_operations: bool,
 	out: impl FnOnce(&[std::borrow::Cow<'_, str>], bool) -> std::io::Result<W>,
@@ -326,7 +347,7 @@ pub fn run<W>(
 					&mut out,
 					&type_name,
 					Default::default(),
-					crate_root,
+					crate_root.for_k8s(),
 					template_resource_metadata,
 				)?;
 
@@ -334,7 +355,7 @@ pub fn run<W>(
 					&mut out,
 					&type_name,
 					Default::default(),
-					crate_root,
+					crate_root.for_k8s(),
 					template_resource_metadata,
 				)?;
 
@@ -342,7 +363,7 @@ pub fn run<W>(
 					&mut out,
 					&type_name,
 					Default::default(),
-					crate_root,
+					crate_root.for_k8s(),
 					template_resource_metadata,
 				)?;
 			}
@@ -352,7 +373,7 @@ pub fn run<W>(
 				&type_name,
 				Default::default(),
 				&template_properties,
-				crate_root,
+				crate_root.for_k8s(),
 				template_resource_metadata.as_ref(),
 			)?;
 
@@ -361,7 +382,7 @@ pub fn run<W>(
 				&type_name,
 				Default::default(),
 				&template_properties,
-				crate_root,
+				crate_root.for_k8s(),
 				template_resource_metadata.as_ref(),
 			)?;
 
@@ -452,7 +473,7 @@ pub fn run<W>(
 			templates::watch_event::generate(
 				&mut out,
 				&type_name,
-				crate_root,
+				&crate_root.for_k8s(),
 				has_bookmark_event_type,
 				&error_status_rust_type,
 				&error_other_rust_type,
@@ -464,7 +485,7 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { metadata }) => {
 			let metadata_rust_type = get_rust_type(metadata, &replace_namespaces, crate_root)?;
 
-			let template_generics_where_part = format!("T: {}::ListableResource", crate_root);
+			let template_generics_where_part = format!("T: {}::ListableResource", crate_root.for_k8s());
 			let template_generics = templates::Generics {
 				type_part: Some("T"),
 				where_part: Some(&template_generics_where_part),
@@ -511,7 +532,7 @@ pub fn run<W>(
 				&mut out,
 				&type_name,
 				template_generics,
-				crate_root,
+				crate_root.for_k8s(),
 				&template_resource_metadata,
 			)?;
 
@@ -519,7 +540,7 @@ pub fn run<W>(
 				&mut out,
 				&type_name,
 				template_generics,
-				crate_root,
+				crate_root.for_k8s(),
 				&template_resource_metadata,
 			)?;
 
@@ -527,12 +548,12 @@ pub fn run<W>(
 				&mut out,
 				&type_name,
 				template_generics,
-				crate_root,
+				crate_root.for_k8s(),
 				&template_resource_metadata,
 			)?;
 
 			{
-				let template_generics_where_part = format!("T: serde::Deserialize<'de> + {}::ListableResource", crate_root);
+				let template_generics_where_part = format!("T: serde::Deserialize<'de> + {}::ListableResource", crate_root.for_k8s());
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -543,13 +564,13 @@ pub fn run<W>(
 					&type_name,
 					template_generics,
 					&template_properties,
-					crate_root,
+					crate_root.for_k8s(),
 					Some(&template_resource_metadata),
 				)?;
 			}
 
 			{
-				let template_generics_where_part = format!("T: serde::Serialize + {}::ListableResource", crate_root);
+				let template_generics_where_part = format!("T: serde::Serialize + {}::ListableResource", crate_root.for_k8s());
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -560,7 +581,7 @@ pub fn run<W>(
 					&type_name,
 					template_generics,
 					&template_properties,
-					crate_root,
+					crate_root.for_k8s(),
 					Some(&template_resource_metadata),
 				)?;
 			}
@@ -570,7 +591,7 @@ pub fn run<W>(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
 			let item_type_name = get_rust_type(items, &replace_namespaces, crate_root)?;
-			let alias_type_name = format!("{}::List<{}>", crate_root, item_type_name);
+			let alias_type_name = format!("{}::List<{}>", crate_root.for_k8s(), item_type_name);
 
 			templates::type_alias::generate(
 				&mut out,
@@ -659,7 +680,7 @@ pub fn run<W>(
 						&type_name,
 						template_generics,
 						&template_properties,
-						crate_root,
+						crate_root.for_k8s(),
 						None,
 					)?,
 
@@ -1044,15 +1065,17 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 fn get_fully_qualified_type_name(
 	ref_path: &swagger20::RefPath,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 ) -> Result<String, Error> {
 	use std::fmt::Write;
 
 	match ref_path.relative_to {
 		swagger20::RefPathRelativeTo::Crate => {
-			let mut result = crate_root.to_owned();
 
-			let parts = replace_namespace(ref_path.path.split('.'), replace_namespaces);
+			let parts = ref_path.path.split('.');
+			let mut result = crate_root.root(&parts.clone().collect());
+
+			let parts = replace_namespace(parts, replace_namespaces);
 
 			for part in parts.iter().rev().skip(1).rev() {
 				write!(result, "::{}", get_rust_ident(part))?;
@@ -1114,7 +1137,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		}
 		else {
 			result.push(match c {
-				'-' => '_',
+				'.' | '-' => '_',
 				c => c,
 			});
 		}
@@ -1126,28 +1149,28 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 fn get_rust_borrow_type(
 	schema_kind: &swagger20::SchemaKind,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.CreateOptional" =>
-			Ok(format!("{}::CreateOptional<'_>", crate_root).into()),
+			Ok(format!("{}::CreateOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.DeleteOptional" =>
-			Ok(format!("{}::DeleteOptional<'_>", crate_root).into()),
+			Ok(format!("{}::DeleteOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ListOptional" =>
-			Ok(format!("{}::ListOptional<'_>", crate_root).into()),
+			Ok(format!("{}::ListOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.PatchOptional" =>
-			Ok(format!("{}::PatchOptional<'_>", crate_root).into()),
+			Ok(format!("{}::PatchOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ReplaceOptional" =>
-			Ok(format!("{}::ReplaceOptional<'_>", crate_root).into()),
+			Ok(format!("{}::ReplaceOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.WatchOptional" =>
-			Ok(format!("{}::WatchOptional<'_>", crate_root).into()),
+			Ok(format!("{}::WatchOptional<'_>", crate_root.for_k8s()).into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
 			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root)?).into()),
@@ -1167,12 +1190,12 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
 			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("&{}::ByteString", crate_root).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("&{}::ByteString", crate_root.for_k8s()).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
-			Ok(format!("&{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
+			Ok(format!("&{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root.for_k8s(), namespace).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
@@ -1184,7 +1207,7 @@ fn get_rust_borrow_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("&{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
+			Ok(format!("&{}::List<{}>", crate_root.for_k8s(), get_rust_type(items, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1205,7 +1228,7 @@ fn get_rust_borrow_type(
 fn get_rust_type(
 	schema_kind: &swagger20::SchemaKind,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
@@ -1228,12 +1251,12 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
 			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("{}::ByteString", crate_root).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("{}::ByteString", crate_root.for_k8s()).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
-			Ok(format!("{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
+			Ok(format!("{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root.for_k8s(), namespace).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
@@ -1245,7 +1268,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
+			Ok(format!("{}::List<{}>", crate_root.for_k8s(), get_rust_type(items, replace_namespaces, crate_root)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1287,7 +1310,7 @@ pub fn write_operation(
 	out: &mut impl std::io::Write,
 	operation: &swagger20::Operation,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 	vis: &str,
 	type_name_and_ref_path: &mut Option<(&str, &swagger20::RefPath)>,
 	is_under_api_feature: bool,
@@ -1394,21 +1417,21 @@ pub fn write_operation(
 
 		writeln!(out,
 			"{}/// Use the returned [`{}::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
-			indent, crate_root, operation_result_name, operation_result_name)?;
+			indent, crate_root.for_k8s(), operation_result_name, operation_result_name)?;
 		need_empty_line = true;
 	}
 	else {
 		let common_response_type_link = match operation.responses {
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("[`{}::CreateResponse`]`<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("[`{}::CreateResponse`]`<Self>", crate_root.for_k8s())),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
-				Some(swagger20::KubernetesAction::Delete) => Some(format!("[`{}::DeleteResponse`]`<Self>", crate_root)),
-				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root, crate_root)),
+				Some(swagger20::KubernetesAction::Delete) => Some(format!("[`{}::DeleteResponse`]`<Self>", crate_root.for_k8s())),
+				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root.for_k8s(), crate_root.for_k8s())),
 				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse response"),
 			},
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("[`{}::ReplaceResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("[`{}::WatchResponse`]`<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("[`{}::ReplaceResponse`]`<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("[`{}::WatchResponse`]`<Self>", crate_root.for_k8s())),
 			_ => None,
 		};
 
@@ -1419,7 +1442,7 @@ pub fn write_operation(
 
 			writeln!(out,
 				"{}/// Use the returned [`{}::ResponseBody`]`<`{}>` constructor, or {}` directly, to parse the HTTP response.",
-				indent, crate_root, common_response_type_link, common_response_type_link)?;
+				indent, crate_root.for_k8s(), common_response_type_link, common_response_type_link)?;
 			need_empty_line = true;
 		}
 	}
@@ -1491,31 +1514,31 @@ pub fn write_operation(
 	}
 	if let Some(operation_result_name) = &operation_result_name {
 		writeln!(out,
-			"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
-			indent, crate_root, operation_result_name, crate_root)?;
+				 "{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
+				 indent, crate_root.for_k8s(), operation_result_name, crate_root.for_k8s())?;
 	}
 	else {
 		let common_response_type = match operation.responses {
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("{}::CreateResponse<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("{}::CreateResponse<Self>", crate_root.for_k8s())),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
-				Some(swagger20::KubernetesAction::Delete) => Some(format!("{}::DeleteResponse<Self>", crate_root)),
-				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("{}::DeleteResponse<{}::List<Self>>", crate_root, crate_root)),
+				Some(swagger20::KubernetesAction::Delete) => Some(format!("{}::DeleteResponse<Self>", crate_root.for_k8s())),
+				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("{}::DeleteResponse<{}::List<Self>>", crate_root.for_k8s(), crate_root.for_k8s())),
 				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse"),
 			},
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("{}::ListResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("{}::PatchResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("{}::ReplaceResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("{}::WatchResponse<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("{}::ListResponse<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("{}::PatchResponse<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("{}::ReplaceResponse<Self>", crate_root.for_k8s())),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("{}::WatchResponse<Self>", crate_root.for_k8s())),
 			_ => None,
 		};
 
 		if let Some(common_response_type) = common_response_type {
 			writeln!(out,
-				"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
-				indent, crate_root, common_response_type, crate_root)?;
+					 "{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
+					 indent, crate_root.for_k8s(), common_response_type, crate_root.for_k8s())?;
 		}
 		else {
-			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}::RequestError> {{", indent, crate_root)?;
+			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}::RequestError> {{", indent, crate_root.for_k8s())?;
 		}
 	}
 
@@ -1553,9 +1576,9 @@ pub fn write_operation(
 						"{}        {} = {}::percent_encoding::percent_encode({}.as_bytes(), {}::percent_encoding2::PATH_SEGMENT_ENCODE_SET),",
 						indent,
 						parameter_name,
-						crate_root,
+						crate_root.for_k8s(),
 						parameter_name,
-						crate_root)?;
+						crate_root.for_k8s())?;
 				}
 			}
 			write!(out, "{}    ", indent)?;
@@ -1571,7 +1594,7 @@ pub fn write_operation(
 	}
 
 	if have_query_parameters {
-		writeln!(out, "{}    let mut __query_pairs = {}::url::form_urlencoded::Serializer::new(__url);", indent, crate_root)?;
+		writeln!(out, "{}    let mut __query_pairs = {}::url::form_urlencoded::Serializer::new(__url);", indent, crate_root.for_k8s())?;
 		if let Some((parameter_name, _, _)) = &query_string_optional_parameter {
 			writeln!(out, "{}    {}.__serialize(&mut __query_pairs);", indent, parameter_name)?;
 		}
@@ -1631,15 +1654,15 @@ pub fn write_operation(
 	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
 		if parameter.required {
 			if parameter_type.starts_with('&') {
-				writeln!(out, "serde_json::to_vec({}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+				writeln!(out, "serde_json::to_vec({}).map_err({}::RequestError::Json)?;", parameter_name, crate_root.for_k8s())?;
 			}
 			else {
-				writeln!(out, "serde_json::to_vec(&{}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+				writeln!(out, "serde_json::to_vec(&{}).map_err({}::RequestError::Json)?;", parameter_name, crate_root.for_k8s())?;
 			}
 		}
 		else {
 			writeln!(out)?;
-			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}::RequestError::Json))?;", parameter_name, crate_root)?;
+			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}::RequestError::Json))?;", parameter_name, crate_root.for_k8s())?;
 		}
 
 		let is_patch =
@@ -1667,8 +1690,8 @@ pub fn write_operation(
 
 	if operation_result_name.is_some() {
 		writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-		writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
-		writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
+		writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root.for_k8s())?;
+		writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root.for_k8s())?;
 		writeln!(out, "{}    }}", indent)?;
 	}
 	else {
@@ -1679,12 +1702,12 @@ pub fn write_operation(
 
 		if is_common_response_type {
 			writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-			writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
-			writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
+			writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root.for_k8s())?;
+			writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root.for_k8s())?;
 			writeln!(out, "{}    }}", indent)?;
 		}
 		else {
-			writeln!(out, "{}    __request.body(__body).map_err({}::RequestError::Http)", indent, crate_root)?;
+			writeln!(out, "{}    __request.body(__body).map_err({}::RequestError::Http)", indent, crate_root.for_k8s())?;
 		}
 	}
 	writeln!(out, "{}}}", indent)?;
@@ -1788,8 +1811,8 @@ pub fn write_operation(
 			if is_under_api_feature {
 				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 			}
-			writeln!(out, "impl {}::Response for {} {{", crate_root, operation_result_name)?;
-			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}::ResponseError> {{", crate_root)?;
+			writeln!(out, "impl {}::Response for {} {{", crate_root.for_k8s(), operation_result_name)?;
+			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}::ResponseError> {{", crate_root.for_k8s())?;
 
 			writeln!(out, "        match status_code {{")?;
 			for &(http_status_code, variant_name, schema) in &operation_responses {
@@ -1798,14 +1821,14 @@ pub fn write_operation(
 				match &schema.kind {
 					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
 						writeln!(out, "                if buf.is_empty() {{")?;
-						writeln!(out, "                    return Err({}::ResponseError::NeedMoreData);", crate_root)?;
+						writeln!(out, "                    return Err({}::ResponseError::NeedMoreData);", crate_root.for_k8s())?;
 						writeln!(out, "                }}")?;
 						writeln!(out)?;
 						writeln!(out, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
 						writeln!(out, "                    Ok(s) => (s, buf.len()),")?;
 						writeln!(out, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
-						writeln!(out, "                        (0, Some(_)) => return Err({}::ResponseError::Utf8(err)),", crate_root)?;
-						writeln!(out, "                        (0, None) => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
+						writeln!(out, "                        (0, Some(_)) => return Err({}::ResponseError::Utf8(err)),", crate_root.for_k8s())?;
+						writeln!(out, "                        (0, None) => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
 						writeln!(out, "                        (valid_up_to, _) => (")?;
 						writeln!(out, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
 						writeln!(out, "                            valid_up_to,")?;
@@ -1818,8 +1841,8 @@ pub fn write_operation(
 					swagger20::SchemaKind::Ref(_) => {
 						writeln!(out, "                let result = match serde_json::from_slice(buf) {{")?;
 						writeln!(out, "                    Ok(value) => value,")?;
-						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
-						writeln!(out, "                    Err(err) => return Err({}::ResponseError::Json(err)),", crate_root)?;
+						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
+						writeln!(out, "                    Err(err) => return Err({}::ResponseError::Json(err)),", crate_root.for_k8s())?;
 						writeln!(out, "                }};")?;
 						writeln!(out, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
 					},
@@ -1837,7 +1860,7 @@ pub fn write_operation(
 			writeln!(out, "                    else {{")?;
 			writeln!(out, "                        match serde_json::from_slice(buf) {{")?;
 			writeln!(out, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
-			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
+			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
 			writeln!(out, "                            Err(err) => (Err(err), 0),")?;
 			writeln!(out, "                        }}")?;
 			writeln!(out, "                    }};")?;
@@ -1899,4 +1922,13 @@ fn get_operation_names(
 	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
+}
+
+/// Ensure a field name is safe to be used as Rust identifier
+fn safe_field(name: &str) -> String {
+	match name {
+		"as" => "r#as".to_string(),
+		"ref" => "r#ref".to_string(),
+		_ => name.replace('.',"_"),
+	}
 }

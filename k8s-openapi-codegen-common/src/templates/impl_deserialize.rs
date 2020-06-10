@@ -1,9 +1,11 @@
+use crate::safe_field;
+
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
 	generics: super::Generics<'_>,
 	fields: &[super::Property<'_>],
-	crate_root: &str,
+	crate_root: String,
 	resource_metadata: Option<&super::ResourceMetadata<'_>>,
 ) -> Result<(), crate::Error> {
 	use std::fmt::Write;
@@ -80,14 +82,14 @@ pub(crate) fn generate(
 					r#"                        Field::Key_{} => value_{} = Some(serde::de::MapAccess::next_value(&mut map)?),"#,
 					field_name, field_name)?;
 
-				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field({:?}))?,", field_name, field_name, name)?;
+				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field({:?}))?,", safe_field(field_name), field_name, name)?;
 			}
 			else {
 				writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
 
 				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
 
-				writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
+				writeln!(field_value_assignment, "                    {}: value_{},", safe_field(field_name), field_name)?;
 			}
 
 			writeln!(field_name_list, r#"                {:?},"#, name)?;
@@ -105,7 +107,7 @@ pub(crate) fn generate(
 
 		writeln!(field_value_assignment,
 			"                    {}: {{",
-			field_name)?;
+			safe_field(field_name))?;
 		writeln!(field_value_assignment,
 			"                        let value_{} = {}::serde_value::Value::Map(value_{});",
 			field_name, crate_root, field_name)?;

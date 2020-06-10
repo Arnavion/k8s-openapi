@@ -2,7 +2,7 @@ pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
 	generics: super::Generics<'_>,
-	crate_root: &str,
+	crate_root: String,
 	resource_metadata: &super::ResourceMetadata<'_>,
 ) -> Result<(), crate::Error> {
 	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();

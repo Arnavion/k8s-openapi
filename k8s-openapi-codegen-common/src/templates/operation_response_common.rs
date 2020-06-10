@@ -1,7 +1,9 @@
+use crate::CrateRooter;
+
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
-	crate_root: &str,
+	crate_root: &dyn CrateRooter,
 	operation_action: OperationAction,
 ) -> Result<(), crate::Error> {
 	let type_generics_impl = "<T>";
@@ -12,9 +14,9 @@ pub(crate) fn generate(
 		OperationAction::Replace |
 		OperationAction::Patch => " where T: serde::de::DeserializeOwned".into(),
 
-		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}::ListableResource", crate_root).into(),
+		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}::ListableResource", crate_root.for_k8s()).into(),
 
-		OperationAction::Watch => format!(" where T: serde::de::DeserializeOwned + {}::Resource", crate_root).into(),
+		OperationAction::Watch => format!(" where T: serde::de::DeserializeOwned + {}::Resource", crate_root.for_k8s()).into(),
 	};
 
 	let mut variants = String::new();
@@ -27,9 +29,9 @@ pub(crate) fn generate(
 			writeln!(variants, "    Created(T),")?;
 			writeln!(variants, "    Accepted(T),")?;
 
-			variant_match_arms.push_str(&deserialize_single(crate_root, "OK", type_name, "Ok")?);
-			variant_match_arms.push_str(&deserialize_single(crate_root, "CREATED", type_name, "Created")?);
-			variant_match_arms.push_str(&deserialize_single(crate_root, "ACCEPTED", type_name, "Accepted")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "OK", type_name, "Ok")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "CREATED", type_name, "Created")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "ACCEPTED", type_name, "Accepted")?);
 		},
 
 		OperationAction::Delete => {
@@ -41,15 +43,15 @@ pub(crate) fn generate(
 			//
 			// Ref https://github.com/kubernetes/kubernetes/issues/59501
 
-			writeln!(variants, "    OkStatus({}::apimachinery::pkg::apis::meta::v1::Status),", crate_root)?;
+			writeln!(variants, "    OkStatus({}::apimachinery::pkg::apis::meta::v1::Status),", crate_root.for_k8s())?;
 			writeln!(variants, "    OkValue(T),")?;
 			writeln!(variants, "    Accepted(T),")?;
 
 			writeln!(variant_match_arms, "            http::StatusCode::OK => {{")?;
 			writeln!(variant_match_arms, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
 			writeln!(variant_match_arms, "                    Ok(value) => value,")?;
-			writeln!(variant_match_arms, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
-			writeln!(variant_match_arms, "                    Err(err) => return Err({}::ResponseError::Json(err)),", crate_root)?;
+			writeln!(variant_match_arms, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
+			writeln!(variant_match_arms, "                    Err(err) => return Err({}::ResponseError::Json(err)),", crate_root.for_k8s())?;
 			writeln!(variant_match_arms, "                }};")?;
 			writeln!(variant_match_arms, r#"                let is_status = match result.get("kind") {{"#)?;
 			writeln!(variant_match_arms, r#"                    Some(serde_json::Value::String(s)) if s == "Status" => true,"#)?;
@@ -57,24 +59,24 @@ pub(crate) fn generate(
 			writeln!(variant_match_arms, "                }};")?;
 			writeln!(variant_match_arms, "                if is_status {{")?;
 			writeln!(variant_match_arms, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
-			writeln!(variant_match_arms, "                    let result = result.map_err({}::ResponseError::Json)?;", crate_root)?;
+			writeln!(variant_match_arms, "                    let result = result.map_err({}::ResponseError::Json)?;", crate_root.for_k8s())?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkStatus(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;
 			writeln!(variant_match_arms, "                else {{")?;
 			writeln!(variant_match_arms, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
-			writeln!(variant_match_arms, "                    let result = result.map_err({}::ResponseError::Json)?;", crate_root)?;
+			writeln!(variant_match_arms, "                    let result = result.map_err({}::ResponseError::Json)?;", crate_root.for_k8s())?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkValue(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;
 			writeln!(variant_match_arms, "            }},")?;
-			variant_match_arms.push_str(&deserialize_single(crate_root, "ACCEPTED", type_name, "Accepted")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "ACCEPTED", type_name, "Accepted")?);
 		},
 
 		OperationAction::List => {
 			use std::fmt::Write;
 
-			writeln!(variants, "    Ok({}::List<T>),", crate_root)?;
+			writeln!(variants, "    Ok({}::List<T>),", crate_root.for_k8s())?;
 
-			variant_match_arms.push_str(&deserialize_single(crate_root, "OK", type_name, "Ok")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "OK", type_name, "Ok")?);
 		},
 
 		OperationAction::Patch => {
@@ -82,7 +84,7 @@ pub(crate) fn generate(
 
 			writeln!(variants, "    Ok(T),")?;
 
-			variant_match_arms.push_str(&deserialize_single(crate_root, "OK", type_name, "Ok")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "OK", type_name, "Ok")?);
 		},
 
 		OperationAction::Replace => {
@@ -91,22 +93,22 @@ pub(crate) fn generate(
 			writeln!(variants, "    Ok(T),")?;
 			writeln!(variants, "    Created(T),")?;
 
-			variant_match_arms.push_str(&deserialize_single(crate_root, "OK", type_name, "Ok")?);
-			variant_match_arms.push_str(&deserialize_single(crate_root, "CREATED", type_name, "Created")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "OK", type_name, "Ok")?);
+			variant_match_arms.push_str(&deserialize_single(crate_root.for_k8s(), "CREATED", type_name, "Created")?);
 		},
 
 		OperationAction::Watch => {
 			use std::fmt::Write;
 
-			writeln!(variants, "    Ok({}::apimachinery::pkg::apis::meta::v1::WatchEvent<T>),", crate_root)?;
+			writeln!(variants, "    Ok({}::apimachinery::pkg::apis::meta::v1::WatchEvent<T>),", crate_root.for_k8s())?;
 
 			writeln!(variant_match_arms, "            http::StatusCode::OK => {{")?;
 			writeln!(variant_match_arms, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
 			writeln!(variant_match_arms, "                let (result, byte_offset) = match deserializer.next() {{")?;
 			writeln!(variant_match_arms, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
-			writeln!(variant_match_arms, "                    Some(Err(ref err)) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
-			writeln!(variant_match_arms, "                    Some(Err(err)) => return Err({}::ResponseError::Json(err)),", crate_root)?;
-			writeln!(variant_match_arms, "                    None => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
+			writeln!(variant_match_arms, "                    Some(Err(ref err)) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
+			writeln!(variant_match_arms, "                    Some(Err(err)) => return Err({}::ResponseError::Json(err)),", crate_root.for_k8s())?;
+			writeln!(variant_match_arms, "                    None => return Err({}::ResponseError::NeedMoreData),", crate_root.for_k8s())?;
 			writeln!(variant_match_arms, "                }};")?;
 			writeln!(variant_match_arms, "                Ok(({}::Ok(result), byte_offset))", type_name)?;
 			writeln!(variant_match_arms, "            }},")?;
@@ -120,7 +122,7 @@ pub(crate) fn generate(
 		type_generics_impl = type_generics_impl,
 		type_generics_type = type_generics_type,
 		type_generics_where = type_generics_where,
-		crate_root = crate_root,
+		crate_root = crate_root.for_k8s(),
 		variants = variants,
 		variant_match_arms = variant_match_arms,
 	)?;
@@ -128,7 +130,7 @@ pub(crate) fn generate(
 	Ok(())
 }
 
-fn deserialize_single(crate_root: &str, status_code: &str, type_name: &str, variant_name: &str) -> Result<String, std::fmt::Error> {
+fn deserialize_single(crate_root: String, status_code: &str, type_name: &str, variant_name: &str) -> Result<String, std::fmt::Error> {
 	use std::fmt::Write;
 
 	let mut result = String::new();
