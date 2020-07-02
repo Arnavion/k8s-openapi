@@ -529,14 +529,11 @@ pub trait Metadata: Resource {
     /// The type of the metadata object.
     type Ty;
 
-    /// Gets the metadata of this resource value.
-    fn metadata(&self) -> Option<&<Self as Metadata>::Ty>;
+    /// Gets a reference to the metadata of this resource value.
+    fn metadata(&self) -> &<Self as Metadata>::Ty;
 
-    /// Gets the mutable metadata of this resource value.
-    fn metadata_mut(&mut self) -> Option<&mut<Self as Metadata>::Ty>;
-
-    /// Sets the metadata of this resource value.
-    fn set_metadata(&mut self, metadata: <Self as Metadata>::Ty);
+    /// Gets a mutable reference to the metadata of this resource value.
+    fn metadata_mut(&mut self) -> &mut<Self as Metadata>::Ty;
 }
 
 /// Extracts the API version of the given resource value.

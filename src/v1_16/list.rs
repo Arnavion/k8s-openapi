@@ -7,7 +7,7 @@ pub struct List<T> where T: crate::ListableResource {
     pub items: Vec<T>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ListMeta,
 }
 
 impl<T> crate::Resource for List<T> where T: crate::ListableResource {
@@ -20,16 +20,12 @@ impl<T> crate::Resource for List<T> where T: crate::ListableResource {
 impl<T> crate::Metadata for List<T> where T: crate::ListableResource {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -98,14 +94,14 @@ impl<'de, T> serde::Deserialize<'de> for List<T> where T: serde::Deserialize<'de
                             }
                         },
                         Field::Key_items => value_items = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(List {
                     items: value_items.ok_or_else(|| serde::de::Error::missing_field("items"))?,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                 })
             }
         }
@@ -127,15 +123,12 @@ impl<T> serde::Serialize for List<T> where T: serde::Serialize + crate::Listable
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.metadata.as_ref().map_or(0, |_| 1),
+            4,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::end(state)
     }
 }

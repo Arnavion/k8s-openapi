@@ -226,7 +226,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}),
 							kubernetes_group_kind_versions: None,
 							has_corresponding_list_type: false,
-						}, false)),
+						}, true)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
 							description: Some(format!("Specification of the {} custom resource", cr_name)),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {

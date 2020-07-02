@@ -10,7 +10,7 @@ pub struct ServiceAccount {
     pub image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
     pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
@@ -505,16 +505,12 @@ impl crate::ListableResource for ServiceAccount {
 impl crate::Metadata for ServiceAccount {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -590,7 +586,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
                         },
                         Field::Key_automount_service_account_token => value_automount_service_account_token = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_image_pull_secrets => value_image_pull_secrets = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_secrets => value_secrets = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -599,7 +595,7 @@ impl<'de> serde::Deserialize<'de> for ServiceAccount {
                 Ok(ServiceAccount {
                     automount_service_account_token: value_automount_service_account_token,
                     image_pull_secrets: value_image_pull_secrets,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     secrets: value_secrets,
                 })
             }
@@ -624,10 +620,9 @@ impl serde::Serialize for ServiceAccount {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            2 +
+            3 +
             self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
             self.image_pull_secrets.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
             self.secrets.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
@@ -638,9 +633,7 @@ impl serde::Serialize for ServiceAccount {
         if let Some(value) = &self.image_pull_secrets {
             serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.secrets {
             serde::ser::SerializeStruct::serialize_field(&mut state, "secrets", value)?;
         }

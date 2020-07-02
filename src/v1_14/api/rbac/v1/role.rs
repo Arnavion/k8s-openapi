@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Role {
     /// Standard object's metadata.
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this Role
     pub rules: Option<Vec<crate::api::rbac::v1::PolicyRule>>,
@@ -487,16 +487,12 @@ impl crate::ListableResource for Role {
 impl crate::Metadata for Role {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -564,14 +560,14 @@ impl<'de> serde::Deserialize<'de> for Role {
                                 return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_rules => value_rules = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Role {
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     rules: value_rules,
                 })
             }
@@ -594,15 +590,12 @@ impl serde::Serialize for Role {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            2 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
+            3 +
             self.rules.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.rules {
             serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }

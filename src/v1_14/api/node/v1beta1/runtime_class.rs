@@ -7,7 +7,7 @@ pub struct RuntimeClass {
     pub handler: String,
 
     /// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 }
 
 // Begin node.k8s.io/v1beta1/RuntimeClass
@@ -383,16 +383,12 @@ impl crate::ListableResource for RuntimeClass {
 impl crate::Metadata for RuntimeClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -461,14 +457,14 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
                             }
                         },
                         Field::Key_handler => value_handler = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RuntimeClass {
                     handler: value_handler.ok_or_else(|| serde::de::Error::missing_field("handler"))?,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                 })
             }
         }
@@ -490,15 +486,12 @@ impl serde::Serialize for RuntimeClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.metadata.as_ref().map_or(0, |_| 1),
+            4,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "handler", &self.handler)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::end(state)
     }
 }

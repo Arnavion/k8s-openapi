@@ -60,10 +60,11 @@ fn test() {
 	assert_eq!(<FooBarList as k8s_openapi::Resource>::VERSION, "v1");
 
 	{
-		let fb: FooBar = serde_json::from_str(r#"{ "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 } }"#).unwrap();
+		let fb: FooBar =
+			serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 } }"#).unwrap();
 		assert_eq!(fb, FooBar {
 			spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
-			metadata: None,
+			metadata: Default::default(),
 			subresources: Default::default(),
 		});
 		let fb = serde_json::to_string(&fb).unwrap();
@@ -71,14 +72,16 @@ fn test() {
 			{\
 				\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
 				\"kind\":\"FooBar\",\
+				\"metadata\":{},\
 				\"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5}\
 			}\
 		");
 
-		let fb: FooBar = serde_json::from_str(r#"{ "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 }, "status": { "bar": "baz" } }"#).unwrap();
+		let fb: FooBar =
+			serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 }, "status": { "bar": "baz" } }"#).unwrap();
 		assert_eq!(fb, FooBar {
 			spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
-			metadata: None,
+			metadata: Default::default(),
 			subresources: apiextensions::CustomResourceSubresources {
 				status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
 				..Default::default()
@@ -89,6 +92,7 @@ fn test() {
 			{\
 				\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
 				\"kind\":\"FooBar\",\
+				\"metadata\":{},\
 				\"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5},\
 				\"status\":{\"bar\":\"baz\"}\
 			}\
@@ -185,10 +189,10 @@ fn test() {
 		};
 
 		let custom_resource_definition = apiextensions::CustomResourceDefinition {
-			metadata: Some(meta::ObjectMeta {
+			metadata: meta::ObjectMeta {
 				name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
 				..Default::default()
-			}),
+			},
 			spec: custom_resource_definition_spec.into(),
 			..Default::default()
 		};
@@ -252,10 +256,10 @@ fn test() {
 
 		// Create CR
 		let fb1 = FooBar {
-			metadata: Some(meta::ObjectMeta {
+			metadata: meta::ObjectMeta {
 				name: Some("fb1".to_string()),
 				..Default::default()
-			}),
+			},
 			spec: Some(FooBarSpec {
 				prop1: "value1".to_string(),
 				prop2: vec![true, false, true],
@@ -290,7 +294,7 @@ fn test() {
 		let _ =
 			foo_bar_list
 			.items.into_iter()
-			.find(|fb| fb.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name == "fb1"))
+			.find(|fb| fb.metadata.name.as_ref().map_or(false, |name| name == "fb1"))
 			.expect("couldn't find FooBar");
 
 
@@ -302,7 +306,7 @@ fn test() {
 				ReadNamespacedFooBarResponse::Ok(fb) => crate::ValueResult::GotValue(fb),
 				other => panic!("{:?} {}", other, status_code),
 			});
-		assert_eq!(fb1_2.metadata.as_ref().unwrap().name.as_ref().unwrap(), "fb1");
+		assert_eq!(fb1_2.metadata.name.as_ref().unwrap(), "fb1");
 
 
 		// Watch CR
@@ -321,8 +325,7 @@ fn test() {
 					_ => return None,
 				};
 
-				let metadata = fb.metadata.as_ref()?;
-				let name = metadata.name.as_ref()?;
+				let name = fb.metadata.name.as_ref()?;
 				if name == "fb1" {
 					Some(fb)
 				}
@@ -334,7 +337,7 @@ fn test() {
 
 		// Delete CR
 		let (request, response_body) = {
-			let metadata = fb1.metadata.as_ref().expect("create FooBar response did not set metadata");
+			let metadata = &fb1.metadata;
 			let name = metadata.name.as_ref().expect("create FooBar response did not set metadata.name");
 			let namespace = metadata.namespace.as_ref().expect("create FooBar response did not set metadata.namespace");
 			FooBar::delete_namespaced_foo_bar(name, namespace, Default::default()).expect("couldn't delete FooBar")

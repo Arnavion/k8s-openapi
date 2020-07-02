@@ -15,7 +15,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Endpoints {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
     pub subsets: Option<Vec<crate::api::core::v1::EndpointSubset>>,
@@ -510,16 +510,12 @@ impl crate::ListableResource for Endpoints {
 impl crate::Metadata for Endpoints {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -587,14 +583,14 @@ impl<'de> serde::Deserialize<'de> for Endpoints {
                                 return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_subsets => value_subsets = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Endpoints {
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     subsets: value_subsets,
                 })
             }
@@ -617,15 +613,12 @@ impl serde::Serialize for Endpoints {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            2 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
+            3 +
             self.subsets.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.subsets {
             serde::ser::SerializeStruct::serialize_field(&mut state, "subsets", value)?;
         }

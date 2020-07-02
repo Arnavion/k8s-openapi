@@ -7,7 +7,7 @@ pub struct Secret {
     pub data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API.
     pub string_data: Option<std::collections::BTreeMap<String, String>>,
@@ -505,16 +505,12 @@ impl crate::ListableResource for Secret {
 impl crate::Metadata for Secret {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -589,7 +585,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
                             }
                         },
                         Field::Key_data => value_data = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_string_data => value_string_data = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
@@ -598,7 +594,7 @@ impl<'de> serde::Deserialize<'de> for Secret {
 
                 Ok(Secret {
                     data: value_data,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     string_data: value_string_data,
                     type_: value_type_,
                 })
@@ -624,9 +620,8 @@ impl serde::Serialize for Secret {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            2 +
+            3 +
             self.data.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
             self.string_data.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
@@ -635,9 +630,7 @@ impl serde::Serialize for Secret {
         if let Some(value) = &self.data {
             serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.string_data {
             serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", value)?;
         }

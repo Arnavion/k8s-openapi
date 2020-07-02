@@ -20,9 +20,7 @@ fn list() {
 		let dns_deployment =
 			deployment_list
 			.items.into_iter()
-			.find(|deployment|
-				deployment.metadata.as_ref().and_then(|metadata|
-					metadata.name.as_ref()).map(AsRef::as_ref) == Some("coredns"))
+			.find(|deployment| deployment.metadata.name.as_deref() == Some("coredns"))
 			.expect("couldn't find dns deployment");
 
 		let dns_deployment_spec =

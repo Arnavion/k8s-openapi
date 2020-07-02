@@ -75,7 +75,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// /// Custom resource for FooBarSpec
 /// #[derive(Clone, Debug, Default, PartialEq)]
 /// struct FooBar {
-///     metadata: Option<k8s_openapi::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+///     metadata: k8s_openapi::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 ///     spec: Option<FooBarSpec>,
 ///     subresources: k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources,
 /// }
@@ -129,10 +129,10 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// };
 ///
 /// let custom_resource_definition = apiextensions::CustomResourceDefinition {
-///     metadata: Some(meta::ObjectMeta {
+///     metadata: meta::ObjectMeta {
 ///         name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
 ///         ..Default::default()
-///     }),
+///     },
 ///     spec: custom_resource_definition_spec.into(),
 ///     ..Default::default()
 /// };

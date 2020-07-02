@@ -3,7 +3,7 @@
 /// LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LocalSubjectAccessReview {
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted.
     pub spec: crate::api::authorization::v1beta1::SubjectAccessReviewSpec,
@@ -67,16 +67,12 @@ impl crate::Resource for LocalSubjectAccessReview {
 impl crate::Metadata for LocalSubjectAccessReview {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -147,7 +143,7 @@ impl<'de> serde::Deserialize<'de> for LocalSubjectAccessReview {
                                 return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_spec => value_spec = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
@@ -155,7 +151,7 @@ impl<'de> serde::Deserialize<'de> for LocalSubjectAccessReview {
                 }
 
                 Ok(LocalSubjectAccessReview {
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     spec: value_spec.ok_or_else(|| serde::de::Error::missing_field("spec"))?,
                     status: value_status,
                 })
@@ -180,15 +176,12 @@ impl serde::Serialize for LocalSubjectAccessReview {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
+            4 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &self.spec)?;
         if let Some(value) = &self.status {
             serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;

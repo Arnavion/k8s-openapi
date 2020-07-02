@@ -12,7 +12,7 @@ pub struct StorageClass {
     pub allowed_topologies: Option<Vec<crate::api::core::v1::TopologySelectorTerm>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
     pub mount_options: Option<Vec<String>>,
@@ -403,16 +403,12 @@ impl crate::ListableResource for StorageClass {
 impl crate::Metadata for StorageClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -500,7 +496,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
                         },
                         Field::Key_allow_volume_expansion => value_allow_volume_expansion = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_allowed_topologies => value_allowed_topologies = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_mount_options => value_mount_options = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_parameters => value_parameters = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_provisioner => value_provisioner = Some(serde::de::MapAccess::next_value(&mut map)?),
@@ -513,7 +509,7 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
                 Ok(StorageClass {
                     allow_volume_expansion: value_allow_volume_expansion,
                     allowed_topologies: value_allowed_topologies,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     mount_options: value_mount_options,
                     parameters: value_parameters,
                     provisioner: value_provisioner.ok_or_else(|| serde::de::Error::missing_field("provisioner"))?,
@@ -546,10 +542,9 @@ impl serde::Serialize for StorageClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
+            4 +
             self.allow_volume_expansion.as_ref().map_or(0, |_| 1) +
             self.allowed_topologies.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
             self.mount_options.as_ref().map_or(0, |_| 1) +
             self.parameters.as_ref().map_or(0, |_| 1) +
             self.reclaim_policy.as_ref().map_or(0, |_| 1) +
@@ -563,9 +558,7 @@ impl serde::Serialize for StorageClass {
         if let Some(value) = &self.allowed_topologies {
             serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.mount_options {
             serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
         }

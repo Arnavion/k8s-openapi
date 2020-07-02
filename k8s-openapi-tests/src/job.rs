@@ -37,10 +37,10 @@ fn create() {
 		};
 
 		let job = batch::Job {
-			metadata: Some(meta::ObjectMeta {
+			metadata: meta::ObjectMeta {
 				name: Some("k8s-openapi-tests-create-job".to_string()),
 				..Default::default()
-			}),
+			},
 			spec: Some(job_spec),
 			..Default::default()
 		};
@@ -66,7 +66,7 @@ fn create() {
 		assert_eq!(job_image, "alpine");
 
 		let (job_name, job_uid) = {
-			let metadata = job.metadata.expect("couldn't get job metadata");
+			let metadata = job.metadata;
 			(metadata.name.expect("couldn't get job name"), metadata.uid.expect("couldn't get job uid"))
 		};
 
@@ -107,8 +107,7 @@ fn create() {
 				pod_list
 				.items.into_iter()
 				.find(|pod|
-					pod.metadata.as_ref()
-					.and_then(|metadata| metadata.owner_references.as_ref())
+					pod.metadata.owner_references.as_ref()
 					.and_then(|owner_references| owner_references.first())
 					.map(|owner_reference| owner_reference.uid.as_ref()) == Some(&*job_uid))
 				.and_then(|job_pod| job_pod.status);

@@ -111,6 +111,7 @@ impl SupportedVersion {
 			crate::fixups::special::watch_event,
 			crate::fixups::special::list, // Must run after separate_watch_from_list_operations
 			crate::fixups::special::response_types,
+			crate::fixups::special::resource_metadata_not_optional,
 		];
 
 		for fixup in upstream_bugs_fixups.iter().chain(special_fixups) {

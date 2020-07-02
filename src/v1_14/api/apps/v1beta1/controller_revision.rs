@@ -7,7 +7,7 @@ pub struct ControllerRevision {
     pub data: Option<crate::apimachinery::pkg::runtime::RawExtension>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Revision indicates the revision of the state represented by Data.
     pub revision: i64,
@@ -502,16 +502,12 @@ impl crate::ListableResource for ControllerRevision {
 impl crate::Metadata for ControllerRevision {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -583,7 +579,7 @@ impl<'de> serde::Deserialize<'de> for ControllerRevision {
                             }
                         },
                         Field::Key_data => value_data = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_revision => value_revision = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -591,7 +587,7 @@ impl<'de> serde::Deserialize<'de> for ControllerRevision {
 
                 Ok(ControllerRevision {
                     data: value_data,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     revision: value_revision.ok_or_else(|| serde::de::Error::missing_field("revision"))?,
                 })
             }
@@ -615,18 +611,15 @@ impl serde::Serialize for ControllerRevision {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.data.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1),
+            4 +
+            self.data.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.data {
             serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "revision", &self.revision)?;
         serde::ser::SerializeStruct::end(state)
     }

@@ -38,10 +38,10 @@ fn deployment() {
 			..Default::default()
 		};
 		let deployment = apps::Deployment {
-			metadata: Some(meta::ObjectMeta {
+			metadata: meta::ObjectMeta {
 				name: Some("k8s-openapi-tests-patch-deployment".to_owned()),
 				..Default::default()
-			}),
+			},
 			spec: Some(deployment_spec),
 			..Default::default()
 		};

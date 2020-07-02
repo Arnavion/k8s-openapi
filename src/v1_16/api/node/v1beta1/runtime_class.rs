@@ -7,7 +7,7 @@ pub struct RuntimeClass {
     pub handler: String,
 
     /// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.15, and is only honored by servers that enable the PodOverhead feature.
     pub overhead: Option<crate::api::node::v1beta1::Overhead>,
@@ -389,16 +389,12 @@ impl crate::ListableResource for RuntimeClass {
 impl crate::Metadata for RuntimeClass {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -473,7 +469,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
                             }
                         },
                         Field::Key_handler => value_handler = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_overhead => value_overhead = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_scheduling => value_scheduling = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
@@ -482,7 +478,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
 
                 Ok(RuntimeClass {
                     handler: value_handler.ok_or_else(|| serde::de::Error::missing_field("handler"))?,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     overhead: value_overhead,
                     scheduling: value_scheduling,
                 })
@@ -508,17 +504,14 @@ impl serde::Serialize for RuntimeClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
+            4 +
             self.overhead.as_ref().map_or(0, |_| 1) +
             self.scheduling.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "handler", &self.handler)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.overhead {
             serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", value)?;
         }

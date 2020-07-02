@@ -576,7 +576,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 		}
 
 		let metadata_schema =
-			if let Some((metadata_schema, false)) = properties.get(&metadata_property_name) {
+			if let Some((metadata_schema, _)) = properties.get(&metadata_property_name) {
 				metadata_schema
 			}
 			else {
@@ -1153,4 +1153,40 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 	}
 
 	Ok(())
+}
+
+// The `metadata` property of resource types is generally not optional, so override the property to be required.
+// For situations like PATCH requests where the property *is* optional, sending an empty object works the same.
+pub(crate) fn resource_metadata_not_optional(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut found = false;
+
+	for definition in spec.definitions.values_mut() {
+		if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+			let mut has_api_version = false;
+			let mut has_kind = false;
+			let mut has_optional_metadata = false;
+
+			for (name, (_, required)) in &mut *properties {
+				has_api_version = has_api_version || name.0 == "apiVersion";
+				has_kind = has_kind || name.0 == "kind";
+				has_optional_metadata = has_optional_metadata || (name.0 == "metadata" && !*required);
+				if has_api_version && has_kind && has_optional_metadata {
+					break;
+				}
+			}
+
+			if has_api_version && has_kind && has_optional_metadata {
+				let metadata = properties.get_mut(&crate::swagger20::PropertyName("metadata".to_owned())).unwrap();
+				metadata.1 = true;
+				found = true;
+			}
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied override to make resource metadata non-optional".into())
+	}
 }

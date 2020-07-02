@@ -7,7 +7,7 @@ pub struct ClusterRole {
     pub aggregation_rule: Option<crate::api::rbac::v1::AggregationRule>,
 
     /// Standard object's metadata.
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this ClusterRole
     pub rules: Vec<crate::api::rbac::v1::PolicyRule>,
@@ -374,16 +374,12 @@ impl crate::ListableResource for ClusterRole {
 impl crate::Metadata for ClusterRole {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -455,7 +451,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRole {
                             }
                         },
                         Field::Key_aggregation_rule => value_aggregation_rule = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_rules => value_rules = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -463,7 +459,7 @@ impl<'de> serde::Deserialize<'de> for ClusterRole {
 
                 Ok(ClusterRole {
                     aggregation_rule: value_aggregation_rule,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     rules: value_rules.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
                 })
             }
@@ -487,18 +483,15 @@ impl serde::Serialize for ClusterRole {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
-            self.aggregation_rule.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1),
+            4 +
+            self.aggregation_rule.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.aggregation_rule {
             serde::ser::SerializeStruct::serialize_field(&mut state, "aggregationRule", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
         serde::ser::SerializeStruct::end(state)
     }

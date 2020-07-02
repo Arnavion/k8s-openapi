@@ -123,7 +123,7 @@ pub fn run<W>(
 	templates::type_header::generate(
 		&mut out,
 		definition_path,
-		definition.description.as_ref().map(AsRef::as_ref),
+		definition.description.as_deref(),
 		if is_under_api_feature { "#[cfg(feature = \"api\")]\n" } else { "" },
 		derives,
 		vis,
@@ -131,7 +131,7 @@ pub fn run<W>(
 
 	match &definition.kind {
 		swagger20::SchemaKind::Properties(properties) => {
-			let (template_properties, resource_metadata, metadata_property_ty) = {
+			let (template_properties, resource_metadata, metadata_ty) = {
 				use std::fmt::Write;
 
 				let mut result = Vec::with_capacity(properties.len());
@@ -148,7 +148,7 @@ pub fn run<W>(
 					});
 				let mut has_api_version = false;
 				let mut has_kind = false;
-				let mut metadata_property_ty = None;
+				let mut metadata_ty = None;
 
 				for (name, (schema, required)) in properties {
 					if name.0 == "apiVersion" && single_group_version_kind.is_some() {
@@ -172,7 +172,7 @@ pub fn run<W>(
 					let type_name = get_rust_type(&schema.kind, &replace_namespaces, crate_root)?;
 
 					if name.0 == "metadata" {
-						metadata_property_ty = Some((*required, type_name.clone()));
+						metadata_ty = Some((type_name.clone(), *required));
 					}
 
 					// Fix cases of infinite recursion
@@ -210,7 +210,7 @@ pub fn run<W>(
 
 					result.push(templates::Property {
 						name,
-						comment: schema.description.as_ref().map(AsRef::as_ref),
+						comment: schema.description.as_deref(),
 						field_name,
 						field_type_name,
 						required: *required,
@@ -243,29 +243,7 @@ pub fn run<W>(
 					(false, true) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
 				};
 
-				(result, resource_metadata, metadata_property_ty)
-			};
-
-			let template_resource_metadata = match (&resource_metadata, &metadata_property_ty) {
-				(Some((api_version, group, kind, version)), Some((metadata_required, metadata_type_name))) => Some(templates::ResourceMetadata {
-					api_version,
-					group,
-					kind,
-					version,
-					is_listable: definition.has_corresponding_list_type,
-					metadata_ty: Some((metadata_type_name, *metadata_required)),
-				}),
-
-				(Some((api_version, group, kind, version)), None) => Some(templates::ResourceMetadata {
-					api_version,
-					group,
-					kind,
-					version,
-					is_listable: definition.has_corresponding_list_type,
-					metadata_ty: None,
-				}),
-
-				(None, _) => None,
+				(result, resource_metadata, metadata_ty)
 			};
 
 			templates::r#struct::generate(
@@ -318,6 +296,30 @@ pub fn run<W>(
 
 				*operations = operations_by_gkv.into_iter().flat_map(|(_, operations)| operations).collect();
 			}
+
+			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
+				(Some((api_version, group, kind, version)), Some((metadata_ty, true))) => Some(templates::ResourceMetadata {
+					api_version,
+					group,
+					kind,
+					version,
+					is_listable: definition.has_corresponding_list_type,
+					metadata_ty: Some(metadata_ty),
+				}),
+
+				(Some((api_version, group, kind, version)), None) => Some(templates::ResourceMetadata {
+					api_version,
+					group,
+					kind,
+					version,
+					is_listable: definition.has_corresponding_list_type,
+					metadata_ty: None,
+				}),
+
+				(Some(_), Some((_, false))) => return Err(format!("definition {} has optional metadata", definition_path).into()),
+
+				(None, _) => None,
+			};
 
 			if let Some(template_resource_metadata) = &template_resource_metadata {
 				templates::impl_resource::generate(
@@ -384,7 +386,7 @@ pub fn run<W>(
 				swagger20::Type::JSONSchemaPropsOrArray(namespace) => (namespace, templates::json_schema_props_or::Or::Array),
 				swagger20::Type::JSONSchemaPropsOrBool(namespace) => (namespace, templates::json_schema_props_or::Or::Bool),
 				swagger20::Type::JSONSchemaPropsOrStringArray(namespace) => (namespace, templates::json_schema_props_or::Or::StringArray),
-				_ => unreachable!(),
+				_ => unreachable!("unexpected JSONSchemaPropsOr* variant"),
 			};
 
 			let json_schema_props_type_name =
@@ -481,8 +483,8 @@ pub fn run<W>(
 					name: "metadata",
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
 					field_name: "metadata".into(),
-					field_type_name: format!("Option<{}>", metadata_rust_type),
-					required: false,
+					field_type_name: (&*metadata_rust_type).to_owned(),
+					required: true,
 					is_flattened: false,
 				},
 			];
@@ -493,7 +495,7 @@ pub fn run<W>(
 				kind: "<T as crate::ListableResource>::LIST_KIND",
 				version: "<T as crate::Resource>::VERSION",
 				is_listable: false,
-				metadata_ty: Some((&metadata_rust_type, false)),
+				metadata_ty: Some(&metadata_rust_type),
 			};
 
 			templates::r#struct::generate(
@@ -591,7 +593,7 @@ pub fn run<W>(
 				swagger20::Type::PatchOptional(properties) |
 				swagger20::Type::ReplaceOptional(properties) |
 				swagger20::Type::WatchOptional(properties) => properties,
-				_ => unreachable!(),
+				_ => unreachable!("unexpected optional params type"),
 			};
 
 			let template_properties = {
@@ -612,7 +614,7 @@ pub fn run<W>(
 
 					result.push(templates::Property {
 						name,
-						comment: schema.description.as_ref().map(AsRef::as_ref),
+						comment: schema.description.as_deref(),
 						field_name,
 						field_type_name,
 						required: false,
@@ -670,7 +672,7 @@ pub fn run<W>(
 						true,
 					)?,
 
-				_ => unreachable!(),
+				_ => unreachable!("unexpected optional params type"),
 			}
 
 			run_result.num_generated_structs += 1;
@@ -824,6 +826,10 @@ fn get_derives(
 		swagger20::SchemaKind::Ref(swagger20::RefPath { can_be_default: Some(can_be_default), .. }) => Ok(*can_be_default),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { relative_to: swagger20::RefPathRelativeTo::Scope, .. }) => Ok(false),
+
+		// metadata field in resource type created by #[derive(CustomResourceDefinition)]
+		swagger20::SchemaKind::Ref(swagger20::RefPath { path, relative_to: swagger20::RefPathRelativeTo::Crate, .. })
+			if path == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" => Ok(true),
 
 		// Handled by evaluate_trait_bound
 		swagger20::SchemaKind::Ref(swagger20::RefPath { relative_to: swagger20::RefPathRelativeTo::Crate, .. }) => unreachable!(),
@@ -1396,7 +1402,7 @@ pub fn write_operation(
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
 				Some(swagger20::KubernetesAction::Delete) => Some(format!("[`{}::DeleteResponse`]`<Self>", crate_root)),
 				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root, crate_root)),
-				_ => unreachable!(),
+				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse response"),
 			},
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>", crate_root)),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root)),
@@ -1493,7 +1499,7 @@ pub fn write_operation(
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
 				Some(swagger20::KubernetesAction::Delete) => Some(format!("{}::DeleteResponse<Self>", crate_root)),
 				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("{}::DeleteResponse<{}::List<Self>>", crate_root, crate_root)),
-				_ => unreachable!(),
+				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse"),
 			},
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("{}::ListResponse<Self>", crate_root)),
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("{}::PatchResponse<Self>", crate_root)),

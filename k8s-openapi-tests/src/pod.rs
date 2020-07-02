@@ -17,8 +17,7 @@ fn list() {
 			pod_list
 			.items.into_iter()
 			.filter_map(|pod| {
-				let metadata = pod.metadata.as_ref()?;
-				let name = metadata.name.as_ref()?;
+				let name = pod.metadata.name.as_ref()?;
 				if name.starts_with("kube-apiserver-") {
 					Some(pod)
 				}

@@ -16,8 +16,7 @@ fn get() {
 			pod_list
 			.items.into_iter()
 			.filter_map(|pod| {
-				let metadata = pod.metadata.as_ref()?;
-				let name = metadata.name.as_ref()?;
+				let name = pod.metadata.name.as_ref()?;
 				if name.starts_with("kube-apiserver-") {
 					Some(pod)
 				}
@@ -29,7 +28,7 @@ fn get() {
 
 		let apiserver_pod_name =
 			apiserver_pod
-			.metadata.as_ref().expect("couldn't get apiserver pod metadata")
+			.metadata
 			.name.as_ref().expect("couldn't get apiserver pod name");
 
 		let (request, response_body) =

@@ -13,7 +13,7 @@ pub struct Status {
     pub message: Option<String>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ListMeta,
 
     /// A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.
     pub reason: Option<String>,
@@ -32,16 +32,12 @@ impl crate::Resource for Status {
 impl crate::Metadata for Status {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -124,7 +120,7 @@ impl<'de> serde::Deserialize<'de> for Status {
                         Field::Key_code => value_code = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_details => value_details = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
@@ -135,7 +131,7 @@ impl<'de> serde::Deserialize<'de> for Status {
                     code: value_code,
                     details: value_details,
                     message: value_message,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     reason: value_reason,
                     status: value_status,
                 })
@@ -163,11 +159,10 @@ impl serde::Serialize for Status {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            2 +
+            3 +
             self.code.as_ref().map_or(0, |_| 1) +
             self.details.as_ref().map_or(0, |_| 1) +
             self.message.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
@@ -182,9 +177,7 @@ impl serde::Serialize for Status {
         if let Some(value) = &self.message {
             serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.reason {
             serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }

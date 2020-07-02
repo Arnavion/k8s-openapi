@@ -10,7 +10,7 @@ pub struct EndpointSlice {
     pub endpoints: Vec<crate::api::discovery::v1beta1::Endpoint>,
 
     /// Standard object's metadata.
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
     pub ports: Option<Vec<crate::api::discovery::v1beta1::EndpointPort>>,
@@ -505,16 +505,12 @@ impl crate::ListableResource for EndpointSlice {
 impl crate::Metadata for EndpointSlice {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -590,7 +586,7 @@ impl<'de> serde::Deserialize<'de> for EndpointSlice {
                         },
                         Field::Key_address_type => value_address_type = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_endpoints => value_endpoints = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -599,7 +595,7 @@ impl<'de> serde::Deserialize<'de> for EndpointSlice {
                 Ok(EndpointSlice {
                     address_type: value_address_type.ok_or_else(|| serde::de::Error::missing_field("addressType"))?,
                     endpoints: value_endpoints.ok_or_else(|| serde::de::Error::missing_field("endpoints"))?,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     ports: value_ports,
                 })
             }
@@ -624,17 +620,14 @@ impl serde::Serialize for EndpointSlice {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            4 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
+            5 +
             self.ports.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "addressType", &self.address_type)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.ports {
             serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }

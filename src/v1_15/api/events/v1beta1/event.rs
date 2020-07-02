@@ -21,7 +21,7 @@ pub struct Event {
     /// Required. Time when this Event was first observed.
     pub event_time: crate::apimachinery::pkg::apis::meta::v1::MicroTime,
 
-    pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB.
     pub note: Option<String>,
@@ -537,16 +537,12 @@ impl crate::ListableResource for Event {
 impl crate::Metadata for Event {
     type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
-        self.metadata.as_ref()
+    fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
+        &self.metadata
     }
 
-    fn metadata_mut(&mut self) -> Option<&mut<Self as crate::Metadata>::Ty> {
-        self.metadata.as_mut()
-    }
-
-    fn set_metadata(&mut self, metadata: <Self as crate::Metadata>::Ty) {
-        self.metadata = Some(metadata);
+    fn metadata_mut(&mut self) -> &mut<Self as crate::Metadata>::Ty {
+        &mut self.metadata
     }
 }
 
@@ -659,7 +655,7 @@ impl<'de> serde::Deserialize<'de> for Event {
                         Field::Key_deprecated_last_timestamp => value_deprecated_last_timestamp = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_source => value_deprecated_source = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_event_time => value_event_time = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_note => value_note = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_regarding => value_regarding = serde::de::MapAccess::next_value(&mut map)?,
@@ -679,7 +675,7 @@ impl<'de> serde::Deserialize<'de> for Event {
                     deprecated_last_timestamp: value_deprecated_last_timestamp,
                     deprecated_source: value_deprecated_source,
                     event_time: value_event_time.ok_or_else(|| serde::de::Error::missing_field("eventTime"))?,
-                    metadata: value_metadata,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     note: value_note,
                     reason: value_reason,
                     regarding: value_regarding,
@@ -722,13 +718,12 @@ impl serde::Serialize for Event {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            3 +
+            4 +
             self.action.as_ref().map_or(0, |_| 1) +
             self.deprecated_count.as_ref().map_or(0, |_| 1) +
             self.deprecated_first_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_last_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_source.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
             self.note.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1) +
             self.regarding.as_ref().map_or(0, |_| 1) +
@@ -756,9 +751,7 @@ impl serde::Serialize for Event {
             serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedSource", value)?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", &self.event_time)?;
-        if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
-        }
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.note {
             serde::ser::SerializeStruct::serialize_field(&mut state, "note", value)?;
         }
