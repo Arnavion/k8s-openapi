@@ -1,5 +1,3 @@
-use crate::safe_field;
-
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
@@ -28,21 +26,21 @@ pub(crate) fn generate(
 
 	for super::Property { name, field_name, required, is_flattened, .. } in fields {
 		if *is_flattened {
-			writeln!(fields_string, "        serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", safe_field(field_name))?;
+			writeln!(fields_string, "        serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", field_name)?;
 
 			has_flattened_field = true;
 		}
 		else if *required {
-			writeln!(fields_string, "        serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", name, safe_field(field_name))?;
+			writeln!(fields_string, "        serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", name, field_name)?;
 
 			required_fields_num += 1;
 		}
 		else {
-			writeln!(fields_string, "        if let Some(value) = &self.{} {{", safe_field(field_name))?;
+			writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
 			writeln!(fields_string, "            serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", name)?;
 			writeln!(fields_string, "        }}")?;
 
-			fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", safe_field(field_name)));
+			fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));
 		}
 	}
 

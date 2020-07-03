@@ -1,5 +1,3 @@
-use crate::safe_field;
-
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	vis: &str,
@@ -28,7 +26,7 @@ pub(crate) fn generate(
 			writeln!(&mut fields,
 				"    {vis}{field_name}: {field_type_name},",
 				vis = vis,
-				field_name = safe_field(field_name),
+				field_name = field_name,
 				field_type_name = field_type_name,
 			)?;
 

@@ -1124,6 +1124,8 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		"continue" => return "continue_".into(),
 		"enum" => return "enum_".into(),
 		"type" => return "type_".into(),
+		"as" => return "as_".into(),
+		"ref" => return "ref_".into(),
 		_ => (),
 	}
 
@@ -1949,11 +1951,13 @@ fn get_operation_names(
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }
 
-/// Ensure a field name is safe to be used as Rust identifier
-fn safe_field(name: &str) -> String {
-	match name {
-		"as" => "r#as".to_string(),
-		"ref" => "r#ref".to_string(),
-		_ => name.replace('.',"_"),
+#[cfg(test)]
+mod test {
+	use super::*;
+
+	#[test]
+	fn test_rust_ident () {
+		assert_eq!("as_", get_rust_ident("as"));
+		assert_eq!("foo_bar", get_rust_ident("foo.bar"));
 	}
 }
