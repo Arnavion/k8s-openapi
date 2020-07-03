@@ -71,8 +71,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			#[serde(default)]
 			parameters: Vec<std::sync::Arc<Parameter>>,
 			responses: std::collections::BTreeMap<String, InnerResponse>,
-			#[serde(default)]
-			tags: (String,),
+			tags: Option<(String,)>,
 		}
 
 		#[derive(Debug, serde::Deserialize)]
@@ -126,7 +125,7 @@ impl<'de> serde::Deserialize<'de> for Spec {
 				method,
 				parameters,
 				responses: OperationResponses::Map(responses?),
-				tag: value.tags.0,
+				tag: value.tags.map(|t|t.0),
 			})
 		}
 

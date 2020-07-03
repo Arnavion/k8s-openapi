@@ -1885,23 +1885,26 @@ fn get_operation_names(
 ) -> Result<(std::borrow::Cow<'static, str>, Option<String>, String), Error> {
 	let operation_id =
 		if strip_tag {
-			// For functions associated with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
-			// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
-			let tag: String =
-				operation.tag.split('_')
-				.map(|part| {
-					let mut chars = part.chars();
-					if let Some(first_char) = chars.next() {
-						let rest_chars = chars.as_str();
-						std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
-					}
-					else {
-						std::borrow::Cow::Borrowed("")
-					}
-				})
-				.collect();
+			if let Some(ref tag) = operation.tag {
+				// For functions associated with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
+				// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
+				let tag: String =
+					tag.split('_')
+						.map(|part| {
+							let mut chars = part.chars();
+							if let Some(first_char) = chars.next() {
+								let rest_chars = chars.as_str();
+								std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
+							} else {
+								std::borrow::Cow::Borrowed("")
+							}
+						})
+						.collect();
 
-			std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+				std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+			} else {
+				std::borrow::Cow::Borrowed(&*operation.id)
+			}
 		}
 		else {
 			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,

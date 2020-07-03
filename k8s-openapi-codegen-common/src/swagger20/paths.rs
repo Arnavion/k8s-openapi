@@ -67,7 +67,7 @@ pub struct Operation {
 	pub parameters: Vec<std::sync::Arc<Parameter>>,
 	pub path: Path,
 	pub responses: OperationResponses,
-	pub tag: String,
+	pub tag: Option<String>,
 }
 
 #[derive(Clone, Debug)]
