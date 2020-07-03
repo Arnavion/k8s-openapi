@@ -103,6 +103,8 @@ struct DefaultRooter {
 }
 
 impl CrateRooter for DefaultRooter {
+	/// In our case, the crate root will always be `crate`, as we are not referencing
+	/// types from other crates.
 	fn root(&self, _: &Vec<&str>) -> String {
 		"crate".into()
 	}

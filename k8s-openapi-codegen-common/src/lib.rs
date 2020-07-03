@@ -74,16 +74,38 @@ lazy_static! {
 	pub static ref ROOT_K8S_OPENAPI: Vec<&'static str> = vec!["k8s_openapi"];
 }
 
+/// A mechanism for evaluating the root of a crate.
+///
+/// This is required for code generation. Types which are inside the crate being generated
+/// will need the root 'crate::', while a crate referencing a type in another crate does
+/// require that crate name. For example, crating a new crate "foo", referencing Kubernetes
+/// types like `Pod` in the 'k8s_openapi' crate, will need to use 'crate::' for its own types
+/// but 'k8s_openapi::' when referencing an existing type in the 'k8s_openapi' crate.
+///
+/// Note: This is useful when creating a derived code generator, and not in k8s_openapi itself.
 pub trait CrateRooter {
+	/// Evaluate the crate root for an element in the provided namespace.
 	fn root(&self, namespace: &Vec<&str>) -> String;
 
+	/// Evaluate the crate root for an element in the provided namespace.
+	///
+	/// The namespace is provided as a string, and will be split by '::' or '.' into tokens.
+	/// The result is being passed to the function `root`.
 	fn for_namespace  (
 		&self,
 		namespace: &str
 	) -> String {
-		self.root(&namespace.split(r#"(::|\.)"#).collect())
+		self.root(&namespace
+			.replace("::", ".")
+			.split('.')
+			.collect())
 	}
 
+	/// Evaluate the crate root for an element of the 'k8s_openapi' module.
+	///
+	/// This is a shortcut, for getting the type root in the `k8s_openapi` crate.
+	/// In `k8s_openapi` this should return `crate`, while in all derived code generators
+	/// this should return `k8s_openapi`.
 	fn for_k8s(&self) -> String {
 		self.root(&ROOT_K8S_OPENAPI)
 	}
