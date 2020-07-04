@@ -7,13 +7,14 @@ pub(crate) fn generate(
 	let type_generics_impl = "<T>";
 	let type_generics_type = "<T>";
 	let type_generics_where: std::borrow::Cow<'_, str> = match operation_action {
-		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}::ListableResource", crate_root).into(),
-
 		OperationAction::Create |
 		OperationAction::Delete |
 		OperationAction::Replace |
-		OperationAction::Patch |
-		OperationAction::Watch => " where T: serde::de::DeserializeOwned".into(),
+		OperationAction::Patch => " where T: serde::de::DeserializeOwned".into(),
+
+		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}::ListableResource", crate_root).into(),
+
+		OperationAction::Watch => format!(" where T: serde::de::DeserializeOwned + {}::Resource", crate_root).into(),
 	};
 
 	let mut variants = String::new();
