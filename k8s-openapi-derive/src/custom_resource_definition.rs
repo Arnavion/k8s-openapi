@@ -296,7 +296,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::CreateResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -330,7 +330,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -378,7 +378,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -411,7 +411,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ListResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -460,7 +460,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -509,7 +509,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -539,7 +539,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect()),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -569,7 +569,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect()),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -604,7 +604,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -639,7 +639,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
-					tag: String::new(),
+					tag: None,
 				},
 
 				swagger20::Operation {
@@ -672,7 +672,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::WatchResponse),
-					tag: String::new(),
+					tag: None,
 				},
 			],
 		};
@@ -685,10 +685,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_name),
 				swagger20::RefPathRelativeTo::Scope,
-				&[
-					(&["io".into(), "k8s".into()], &[]),
-				],
-				"k8s_openapi",
+				&MapNamespace,
 				&vis,
 				false,
 				|_, _| Ok(&mut out),
@@ -704,10 +701,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_list_name),
 				swagger20::RefPathRelativeTo::Scope,
-				&[
-					(&["io".into(), "k8s".into()], &[]),
-				],
-				"k8s_openapi",
+				&MapNamespace,
 				&vis,
 				false,
 				|_, _| Ok(&mut out),
@@ -721,5 +715,16 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let out = String::from_utf8(out).map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err)).spanning(&tokens)?;
 		let result = out.parse().map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {:?}", err)).spanning(&tokens)?;
 		Ok(result)
+	}
+}
+
+struct MapNamespace;
+
+impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
+	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>> {
+		match path_parts {
+			["io", "k8s", rest @ ..] => Some(std::iter::once("k8s_openapi").chain(rest.iter().copied()).collect()),
+			path_parts => Some(path_parts.iter().copied().collect()),
+		}
 	}
 }

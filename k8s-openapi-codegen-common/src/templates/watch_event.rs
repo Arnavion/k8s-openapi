@@ -1,11 +1,13 @@
-pub(crate) fn generate(
+pub(crate) fn generate<M>(
 	mut writer: impl std::io::Write,
 	type_name: &str,
-	crate_root: &str,
+	map_namespace: &M,
 	has_bookmark_event_type: bool,
 	error_status_rust_type: &str,
 	error_other_rust_type: &str,
-) -> Result<(), crate::Error> {
+) -> Result<(), crate::Error> where M: crate::MapNamespace {
+	let local = crate::map_namespace_local_to_string(map_namespace)?;
+
 	let (
 		bookmark_def,
 		bookmark_event_type,
@@ -67,7 +69,7 @@ pub(crate) fn generate(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/watch_event.rs")),
 		type_name = type_name,
-		crate_root = crate_root,
+		local = local,
 		bookmark_def = bookmark_def,
 		error_status_rust_type = error_status_rust_type,
 		error_other_rust_type = error_other_rust_type,
@@ -82,7 +84,7 @@ pub(crate) fn generate(
 		writeln!(
 			writer,
 			include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/watch_event_bookmark_object.rs")),
-			crate_root = crate_root,
+			local = local,
 		)?;
 	}
 

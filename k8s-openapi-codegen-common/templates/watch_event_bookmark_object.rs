@@ -10,7 +10,7 @@ struct BookmarkObjectMeta<'a> {{
     resource_version: std::borrow::Cow<'a, str>,
 }}
 
-impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {crate_root}::Resource {{
+impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {local}Resource {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{
         #[allow(non_camel_case_types)]
         enum Field {{
@@ -47,11 +47,11 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {cr
 
         struct Visitor<T>(std::marker::PhantomData<T>);
 
-        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: {crate_root}::Resource {{
+        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: {local}Resource {{
             type Value = BookmarkObject<'static, T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
-                f.write_str(<T as {crate_root}::Resource>::KIND)
+                f.write_str(<T as {local}Resource>::KIND)
             }}
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{
@@ -61,14 +61,14 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {cr
                     match key {{
                         Field::Key_api_version => {{
                             let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <T as {crate_root}::Resource>::API_VERSION {{
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<T as {crate_root}::Resource>::API_VERSION));
+                            if value_api_version != <T as {local}Resource>::API_VERSION {{
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<T as {local}Resource>::API_VERSION));
                             }}
                         }},
                         Field::Key_kind => {{
                             let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <T as {crate_root}::Resource>::KIND {{
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<T as {crate_root}::Resource>::KIND));
+                            if value_kind != <T as {local}Resource>::KIND {{
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<T as {local}Resource>::KIND));
                             }}
                         }},
                         Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
@@ -84,7 +84,7 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {cr
         }}
 
         deserializer.deserialize_struct(
-            <T as {crate_root}::Resource>::KIND,
+            <T as {local}Resource>::KIND,
             &[
                 "apiVersion",
                 "kind",
@@ -161,14 +161,14 @@ impl<'de> serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
     }}
 }}
 
-impl<'a, T> serde::Serialize for BookmarkObject<'a, T> where T: {crate_root}::Resource {{
+impl<'a, T> serde::Serialize for BookmarkObject<'a, T> where T: {local}Resource {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{
         let mut state = serializer.serialize_struct(
-            <T as {crate_root}::Resource>::KIND,
+            <T as {local}Resource>::KIND,
             3,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <T as {crate_root}::Resource>::API_VERSION)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <T as {crate_root}::Resource>::KIND)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <T as {local}Resource>::API_VERSION)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <T as {local}Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::end(state)
     }}

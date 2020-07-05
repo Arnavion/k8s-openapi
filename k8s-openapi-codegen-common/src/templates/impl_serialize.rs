@@ -1,12 +1,14 @@
-pub(crate) fn generate(
+pub(crate) fn generate<M>(
 	mut writer: impl std::io::Write,
 	type_name: &str,
 	generics: super::Generics<'_>,
 	fields: &[super::Property<'_>],
-	crate_root: &str,
+	map_namespace: &M,
 	resource_metadata: Option<&super::ResourceMetadata<'_>>,
-) -> Result<(), crate::Error> {
+) -> Result<(), crate::Error> where M: crate::MapNamespace {
 	use std::fmt::Write;
+
+	let local = crate::map_namespace_local_to_string(map_namespace)?;
 
 	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
@@ -18,8 +20,12 @@ pub(crate) fn generate(
 	let mut has_flattened_field = false;
 
 	if resource_metadata.is_some() {
-		writeln!(fields_string, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {}::Resource>::API_VERSION)?;"#, crate_root)?;
-		writeln!(fields_string, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {}::Resource>::KIND)?;"#, crate_root)?;
+		writeln!(fields_string,
+			r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {}Resource>::API_VERSION)?;"#,
+			local)?;
+		writeln!(fields_string,
+			r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {}Resource>::KIND)?;"#,
+			local)?;
 
 		required_fields_num += 2;
 	}
@@ -79,7 +85,7 @@ pub(crate) fn generate(
 
 	let serialize_type_name =
 		if resource_metadata.is_some() {
-			format!("<Self as {}::Resource>::KIND", crate_root)
+			format!("<Self as {}Resource>::KIND", local)
 		}
 		else {
 			format!("{:?}", type_name)

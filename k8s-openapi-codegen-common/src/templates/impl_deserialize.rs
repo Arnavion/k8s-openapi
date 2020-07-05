@@ -1,12 +1,14 @@
-pub(crate) fn generate(
+pub(crate) fn generate<M>(
 	mut writer: impl std::io::Write,
 	type_name: &str,
 	generics: super::Generics<'_>,
 	fields: &[super::Property<'_>],
-	crate_root: &str,
+	map_namespace: &M,
 	resource_metadata: Option<&super::ResourceMetadata<'_>>,
-) -> Result<(), crate::Error> {
+) -> Result<(), crate::Error> where M: crate::MapNamespace {
 	use std::fmt::Write;
+
+	let local = crate::map_namespace_local_to_string(map_namespace)?;
 
 	let type_generics_impl: std::borrow::Cow<'_, str> = match generics.type_part {
 		Some(part) => format!("<'de, {}>", part).into(),
@@ -41,15 +43,17 @@ pub(crate) fn generate(
 
 		writeln!(field_value_match_arms, r#"                        Field::Key_api_version => {{"#)?;
 		writeln!(field_value_match_arms, r#"                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
-		writeln!(field_value_match_arms, r#"                            if value_api_version != <Self::Value as {}::Resource>::API_VERSION {{"#, crate_root)?;
-		writeln!(field_value_match_arms, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {}::Resource>::API_VERSION));"#, crate_root)?;
+		writeln!(field_value_match_arms, r#"                            if value_api_version != <Self::Value as {}Resource>::API_VERSION {{"#, local)?;
+		writeln!(field_value_match_arms,
+			r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {}Resource>::API_VERSION));"#,
+			local)?;
 		writeln!(field_value_match_arms, r#"                            }}"#)?;
 		writeln!(field_value_match_arms, r#"                        }},"#)?;
 
 		writeln!(field_value_match_arms, r#"                        Field::Key_kind => {{"#)?;
 		writeln!(field_value_match_arms, r#"                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
-		writeln!(field_value_match_arms, r#"                            if value_kind != <Self::Value as {}::Resource>::KIND {{"#, crate_root)?;
-		writeln!(field_value_match_arms, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}::Resource>::KIND));"#, crate_root)?;
+		writeln!(field_value_match_arms, r#"                            if value_kind != <Self::Value as {}Resource>::KIND {{"#, local)?;
+		writeln!(field_value_match_arms, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}Resource>::KIND));"#, local)?;
 		writeln!(field_value_match_arms, r#"                            }}"#)?;
 		writeln!(field_value_match_arms, r#"                        }},"#)?;
 
@@ -65,8 +69,8 @@ pub(crate) fn generate(
 			flattened_field = Some((field_name, field_type_name));
 
 			writeln!(field_value_defs,
-				r#"                let mut value_{}: std::collections::BTreeMap<{}::serde_value::Value, {}::serde_value::Value> = Default::default();"#,
-				field_name, crate_root, crate_root)?;
+				r#"                let mut value_{}: std::collections::BTreeMap<{local}serde_value::Value, {local}serde_value::Value> = Default::default();"#,
+				field_name, local = local)?;
 		}
 		else {
 			writeln!(fields_string, "            Key_{},", field_name)?;
@@ -100,18 +104,18 @@ pub(crate) fn generate(
 		writeln!(str_to_field_match_arms, "                            v => Field::Other(v.to_owned()),")?;
 
 		writeln!(field_value_match_arms,
-			"                        Field::Other(key) => {{ value_{}.insert({}::serde_value::Value::String(key), serde::de::MapAccess::next_value(&mut map)?); }},",
-			field_name, crate_root)?;
+			"                        Field::Other(key) => {{ value_{}.insert({}serde_value::Value::String(key), serde::de::MapAccess::next_value(&mut map)?); }},",
+			field_name, local)?;
 
 		writeln!(field_value_assignment,
 			"                    {}: {{",
 			field_name)?;
 		writeln!(field_value_assignment,
-			"                        let value_{} = {}::serde_value::Value::Map(value_{});",
-			field_name, crate_root, field_name)?;
+			"                        let value_{} = {}serde_value::Value::Map(value_{});",
+			field_name, local, field_name)?;
 		writeln!(field_value_assignment,
-			"                        let value_{} = {}::serde_value::ValueDeserializer::new(value_{});",
-			field_name, crate_root, field_name)?;
+			"                        let value_{} = {}serde_value::ValueDeserializer::new(value_{});",
+			field_name, local, field_name)?;
 		writeln!(field_value_assignment,
 			"                        let value_{} = serde::Deserialize::deserialize(value_{})?;",
 			field_name, field_name)?;
@@ -132,7 +136,7 @@ pub(crate) fn generate(
 
 	let deserialize_type_name =
 		if resource_metadata.is_some() {
-			format!("<Self as {}::Resource>::KIND", crate_root)
+			format!("<Self as {}Resource>::KIND", local)
 		}
 		else {
 			format!("{:?}", type_name)
@@ -140,7 +144,7 @@ pub(crate) fn generate(
 
 	let visitor_expecting_type_name =
 		if resource_metadata.is_some() {
-			format!("<Self::Value as {}::Resource>::KIND", crate_root)
+			format!("<Self::Value as {}Resource>::KIND", local)
 		}
 		else {
 			format!("{:?}", type_name)

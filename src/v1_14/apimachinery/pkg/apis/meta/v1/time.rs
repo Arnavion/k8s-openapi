@@ -2,7 +2,7 @@
 
 /// Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Time(pub chrono::DateTime<chrono::Utc>);
+pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
 impl<'de> serde::Deserialize<'de> for Time {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {

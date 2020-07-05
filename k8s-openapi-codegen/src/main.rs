@@ -106,11 +106,6 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	let out_dir = out_dir_base.join(mod_root);
 
-	let replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])] = &[
-		// Everything's under io.k8s, so strip it
-		(&["io".into(), "k8s".into()], &[]),
-	];
-
 	let mut num_generated_structs = 0usize;
 	let mut num_generated_type_aliases = 0usize;
 	let mut num_generated_apis = 0usize;
@@ -166,14 +161,13 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			&mut spec.operations,
 			definition_path,
 			swagger20::RefPathRelativeTo::Crate,
-			replace_namespaces,
-			"crate",
+			&MapNamespace,
 			"pub ",
 			true,
 			|parts, is_under_api_feature| {
 				let mut current = out_dir.to_owned();
 
-				for part in parts.iter().rev().skip(1).rev() {
+				for part in parts.iter().skip(1).rev().skip(1).rev() {
 					log::trace!("Current directory: {}", current.display());
 
 					let mod_name = k8s_openapi_codegen_common::get_rust_ident(part);
@@ -203,9 +197,9 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					log::trace!("OK");
 				}
 
-				let type_name = parts.last().unwrap().to_string();
+				let type_name = parts.last().unwrap();
 
-				let mod_name = k8s_openapi_codegen_common::get_rust_ident(&type_name);
+				let mod_name = k8s_openapi_codegen_common::get_rust_ident(type_name);
 
 				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 				writeln!(parent_mod_rs)?;
@@ -271,8 +265,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			k8s_openapi_codegen_common::write_operation(
 				&mut mod_root_file,
 				&operation,
-				replace_namespaces,
-				"crate",
+				&MapNamespace,
 				"pub ",
 				&mut None,
 				true,
@@ -298,4 +291,15 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	log::info!("");
 
 	Ok(())
+}
+
+struct MapNamespace;
+
+impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
+	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>> {
+		match path_parts {
+			["io", "k8s", rest @ ..] => Some(std::iter::once("crate").chain(rest.iter().copied()).collect()),
+			_ => None,
+		}
+	}
 }

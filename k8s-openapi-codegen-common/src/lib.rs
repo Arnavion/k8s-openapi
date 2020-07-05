@@ -3,6 +3,8 @@
 #![allow(
 	clippy::cognitive_complexity,
 	clippy::default_trait_access,
+	clippy::doc_markdown,
+	clippy::let_and_return,
 	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::struct_excessive_bools,
@@ -68,20 +70,33 @@ impl std::fmt::Display for Error {
 impl std::error::Error for Error {
 }
 
+/// A mechanism for converting (the components of) an openapi path to (the components of) a Rust namespace.
+///
+/// The k8s-openapi code generator uses this trait to emit the paths of all types relative to the `k8s_openapi` crate.
+/// For example, it maps the components of the openapi path `io.k8s.api.core.v1` to
+/// the components of the Rust namespace `crate::core::v1`. The `io.k8s.` prefix is stripped and the path starts with `crate::`.
+///
+/// Other code generators can have more complicated implementations. For example, an OpenShift code generator that has its own types but also wants to
+/// reuse types from the k8s-openapi crate would map `com.github.openshift.` to `crate::` and `io.k8s.` to `k8s_openapi::` instead.
+pub trait MapNamespace {
+	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>>;
+}
+
 #[doc(hidden)]
-pub fn run<W>(
+pub fn run<M, W>(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	operations: &mut Vec<swagger20::Operation>,
 	definition_path: &swagger20::DefinitionPath,
 	ref_path_relative_to: swagger20::RefPathRelativeTo,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	map_namespace: &M,
 	vis: &str,
 	use_api_feature_for_operations: bool,
-	out: impl FnOnce(&[std::borrow::Cow<'_, str>], bool) -> std::io::Result<W>,
+	out: impl FnOnce(&[&str], bool) -> std::io::Result<W>,
 	mut imports: impl FnMut(Option<String>, Option<String>) -> std::io::Result<()>,
-) -> Result<RunResult, Error> where W: std::io::Write {
+) -> Result<RunResult, Error> where M: MapNamespace, W: std::io::Write {
 	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {} does not exist in spec", definition_path))?;
+
+	let local = map_namespace_local_to_string(map_namespace)?;
 
 	let mut run_result = RunResult {
 		num_generated_structs: 0,
@@ -89,7 +104,11 @@ pub fn run<W>(
 		num_generated_apis: 0,
 	};
 
-	let parts = replace_namespace(definition_path.split('.'), replace_namespaces);
+	let path_parts: Vec<_> = definition_path.split('.').collect();
+	let namespace_parts: Vec<_> =
+		map_namespace.map_namespace(&path_parts).ok_or_else(|| format!("unexpected path {:?}", definition_path))?
+		.into_iter()
+		.collect();
 
 	let is_under_api_feature = match &definition.kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
@@ -108,9 +127,9 @@ pub fn run<W>(
 		_ => false,
 	};
 
-	let mut out = out(&parts, is_under_api_feature)?;
+	let mut out = out(&namespace_parts, is_under_api_feature)?;
 
-	let type_name = parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?.to_string();
+	let type_name = path_parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?;
 
 	let type_ref_path = swagger20::RefPath {
 		path: definition_path.0.clone(),
@@ -169,7 +188,7 @@ pub fn run<W>(
 						write!(field_type_name, "Option<")?;
 					}
 
-					let type_name = get_rust_type(&schema.kind, &replace_namespaces, crate_root)?;
+					let type_name = get_rust_type(&schema.kind, map_namespace)?;
 
 					if name.0 == "metadata" {
 						metadata_ty = Some((type_name.clone(), *required));
@@ -249,7 +268,7 @@ pub fn run<W>(
 			templates::r#struct::generate(
 				&mut out,
 				vis,
-				&type_name,
+				type_name,
 				Default::default(),
 				&template_properties,
 			)?;
@@ -279,10 +298,9 @@ pub fn run<W>(
 								write_operation(
 									&mut out,
 									&operation,
-									&replace_namespaces,
-									crate_root,
+									map_namespace,
 									vis,
-									&mut Some((&type_name, &type_ref_path)),
+									&mut Some((type_name, &type_ref_path)),
 									is_under_api_feature || use_api_feature_for_operations)?;
 							imports(operation_optional_parameters_name, operation_result_name)?;
 							run_result.num_generated_apis += 1;
@@ -324,44 +342,44 @@ pub fn run<W>(
 			if let Some(template_resource_metadata) = &template_resource_metadata {
 				templates::impl_resource::generate(
 					&mut out,
-					&type_name,
+					type_name,
 					Default::default(),
-					crate_root,
+					map_namespace,
 					template_resource_metadata,
 				)?;
 
 				templates::impl_listable_resource::generate(
 					&mut out,
-					&type_name,
+					type_name,
 					Default::default(),
-					crate_root,
+					map_namespace,
 					template_resource_metadata,
 				)?;
 
 				templates::impl_metadata::generate(
 					&mut out,
-					&type_name,
+					type_name,
 					Default::default(),
-					crate_root,
+					map_namespace,
 					template_resource_metadata,
 				)?;
 			}
 
 			templates::impl_deserialize::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				Default::default(),
 				&template_properties,
-				crate_root,
+				map_namespace,
 				template_resource_metadata.as_ref(),
 			)?;
 
 			templates::impl_serialize::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				Default::default(),
 				&template_properties,
-				crate_root,
+				map_namespace,
 				template_resource_metadata.as_ref(),
 			)?;
 
@@ -373,7 +391,7 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => {
 			templates::int_or_string::generate(
 				&mut out,
-				&type_name,
+				type_name,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -396,12 +414,11 @@ pub fn run<W>(
 						relative_to: swagger20::RefPathRelativeTo::Crate,
 						can_be_default: None,
 					},
-					&replace_namespaces,
-					crate_root)?;
+					map_namespace)?;
 
 			templates::json_schema_props_or::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				json_schema_props_or,
 				&json_schema_props_type_name,
 			)?;
@@ -412,7 +429,7 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => {
 			templates::patch::generate(
 				&mut out,
-				&type_name,
+				type_name,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -439,20 +456,18 @@ pub fn run<W>(
 					relative_to: swagger20::RefPathRelativeTo::Crate,
 					can_be_default: None,
 				}),
-				&replace_namespaces,
-				crate_root,
+				map_namespace,
 			)?;
 
 			let error_other_rust_type = get_rust_type(
 				&swagger20::SchemaKind::Ref(raw_extension_ref_path.clone()),
-				&replace_namespaces,
-				crate_root,
+				map_namespace,
 			)?;
 
 			templates::watch_event::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				has_bookmark_event_type,
 				&error_status_rust_type,
 				&error_other_rust_type,
@@ -462,9 +477,9 @@ pub fn run<W>(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { metadata }) => {
-			let metadata_rust_type = get_rust_type(metadata, &replace_namespaces, crate_root)?;
+			let metadata_rust_type = get_rust_type(metadata, map_namespace)?;
 
-			let template_generics_where_part = format!("T: {}::ListableResource", crate_root);
+			let template_generics_where_part = format!("T: {}ListableResource", local);
 			let template_generics = templates::Generics {
 				type_part: Some("T"),
 				where_part: Some(&template_generics_where_part),
@@ -502,37 +517,37 @@ pub fn run<W>(
 			templates::r#struct::generate(
 				&mut out,
 				vis,
-				&type_name,
+				type_name,
 				template_generics,
 				&template_properties,
 			)?;
 
 			templates::impl_resource::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				template_generics,
-				crate_root,
+				map_namespace,
 				&template_resource_metadata,
 			)?;
 
 			templates::impl_listable_resource::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				template_generics,
-				crate_root,
+				map_namespace,
 				&template_resource_metadata,
 			)?;
 
 			templates::impl_metadata::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				template_generics,
-				crate_root,
+				map_namespace,
 				&template_resource_metadata,
 			)?;
 
 			{
-				let template_generics_where_part = format!("T: serde::Deserialize<'de> + {}::ListableResource", crate_root);
+				let template_generics_where_part = format!("T: serde::Deserialize<'de> + {}ListableResource", local);
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -540,16 +555,16 @@ pub fn run<W>(
 
 				templates::impl_deserialize::generate(
 					&mut out,
-					&type_name,
+					type_name,
 					template_generics,
 					&template_properties,
-					crate_root,
+					map_namespace,
 					Some(&template_resource_metadata),
 				)?;
 			}
 
 			{
-				let template_generics_where_part = format!("T: serde::Serialize + {}::ListableResource", crate_root);
+				let template_generics_where_part = format!("T: serde::Serialize + {}ListableResource", local);
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -557,10 +572,10 @@ pub fn run<W>(
 
 				templates::impl_serialize::generate(
 					&mut out,
-					&type_name,
+					type_name,
 					template_generics,
 					&template_properties,
-					crate_root,
+					map_namespace,
 					Some(&template_resource_metadata),
 				)?;
 			}
@@ -569,12 +584,12 @@ pub fn run<W>(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
-			let item_type_name = get_rust_type(items, &replace_namespaces, crate_root)?;
-			let alias_type_name = format!("{}::List<{}>", crate_root, item_type_name);
+			let item_type_name = get_rust_type(items, map_namespace)?;
+			let alias_type_name = format!("{}List<{}>", local, item_type_name);
 
 			templates::type_alias::generate(
 				&mut out,
-				&type_name,
+				type_name,
 				&alias_type_name,
 			)?;
 
@@ -603,7 +618,7 @@ pub fn run<W>(
 				for (name, schema) in properties {
 					let field_name = get_rust_ident(name);
 
-					let type_name = get_rust_borrow_type(&schema.kind, &replace_namespaces, crate_root)?;
+					let type_name = get_rust_borrow_type(&schema.kind, map_namespace)?;
 
 					let field_type_name =
 						if type_name.starts_with('&') {
@@ -634,7 +649,7 @@ pub fn run<W>(
 			templates::r#struct::generate(
 				&mut out,
 				vis,
-				&type_name,
+				type_name,
 				template_generics,
 				&template_properties,
 			)?;
@@ -646,7 +661,7 @@ pub fn run<W>(
 				swagger20::Type::ReplaceOptional(_) =>
 					templates::query_string_optional::generate(
 						&mut out,
-						&type_name,
+						type_name,
 						template_generics,
 						vis,
 						&template_properties,
@@ -656,17 +671,17 @@ pub fn run<W>(
 				swagger20::Type::DeleteOptional(_) =>
 					templates::impl_serialize::generate(
 						&mut out,
-						&type_name,
+						type_name,
 						template_generics,
 						&template_properties,
-						crate_root,
+						map_namespace,
 						None,
 					)?,
 
 				swagger20::Type::WatchOptional(_) =>
 					templates::query_string_optional::generate(
 						&mut out,
-						&type_name,
+						type_name,
 						template_generics,
 						vis,
 						&template_properties,
@@ -682,8 +697,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::Create,
 			)?;
 
@@ -693,8 +708,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::Delete,
 			)?;
 
@@ -704,8 +719,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::List,
 			)?;
 
@@ -715,8 +730,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::Patch,
 			)?;
 
@@ -726,8 +741,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::Replace,
 			)?;
 
@@ -737,8 +752,8 @@ pub fn run<W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => {
 			templates::operation_response_common::generate(
 				&mut out,
-				&type_name,
-				crate_root,
+				type_name,
+				map_namespace,
 				templates::operation_response_common::OperationAction::Watch,
 			)?;
 
@@ -746,7 +761,7 @@ pub fn run<W>(
 		},
 
 		swagger20::SchemaKind::Ty(_) => {
-			let inner_type_name = get_rust_type(&definition.kind, &replace_namespaces, crate_root)?;
+			let inner_type_name = get_rust_type(&definition.kind, map_namespace)?;
 
 			// Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `chrono::DateTime`
 			// that uses a variable number up to nine.
@@ -776,7 +791,7 @@ pub fn run<W>(
 			templates::newtype::generate(
 				&mut out,
 				vis,
-				&type_name,
+				type_name,
 				&inner_type_name,
 				datetime_serialization_format,
 			)?;
@@ -786,6 +801,17 @@ pub fn run<W>(
 	}
 
 	Ok(run_result)
+}
+
+fn map_namespace_local_to_string<M>(map_namespace: &M) -> Result<String, Error> where M: MapNamespace {
+	let namespace_parts = map_namespace.map_namespace(&["io", "k8s"]).ok_or(r#"unexpected path "io.k8s""#)?;
+
+	let mut result = String::new();
+	for namespace_part in namespace_parts {
+		result.push_str(&*get_rust_ident(namespace_part));
+		result.push_str("::");
+	}
+	Ok(result)
 }
 
 fn get_derives(
@@ -1041,25 +1067,21 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 		})
 }
 
-fn get_fully_qualified_type_name(
+fn get_fully_qualified_type_name<M>(
 	ref_path: &swagger20::RefPath,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
-) -> Result<String, Error> {
-	use std::fmt::Write;
-
+	map_namespace: &M,
+) -> Result<String, Error> where M: MapNamespace {
 	match ref_path.relative_to {
 		swagger20::RefPathRelativeTo::Crate => {
-			let mut result = crate_root.to_owned();
+			let parts: Vec<_> = ref_path.path.split('.').collect();
+			let namespace_parts = map_namespace.map_namespace(&parts[..(parts.len() - 1)]).ok_or_else(|| format!("unexpected path {:?}", ref_path.path))?;
 
-			let parts = replace_namespace(ref_path.path.split('.'), replace_namespaces);
-
-			for part in parts.iter().rev().skip(1).rev() {
-				write!(result, "::{}", get_rust_ident(part))?;
+			let mut result = String::new();
+			for namespace_part in namespace_parts {
+				result.push_str(&*get_rust_ident(namespace_part));
+				result.push_str("::");
 			}
-
-			write!(result, "::{}", parts.last().ok_or_else(|| format!("path for {} has no parts", ref_path.path))?)?;
-
+			result.push_str(&parts[parts.len() - 1]);
 			Ok(result)
 		},
 
@@ -1076,8 +1098,10 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	match name {
 		"$ref" => return "ref_path".into(),
 		"$schema" => return "schema".into(),
+		"as" => return "as_".into(),
 		"continue" => return "continue_".into(),
 		"enum" => return "enum_".into(),
+		"ref" => return "ref_".into(),
 		"type" => return "type_".into(),
 		_ => (),
 	}
@@ -1114,7 +1138,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		}
 		else {
 			result.push(match c {
-				'-' => '_',
+				'.' | '-' => '_',
 				c => c,
 			});
 		}
@@ -1123,39 +1147,41 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_borrow_type(
+fn get_rust_borrow_type<M>(
 	schema_kind: &swagger20::SchemaKind,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
-) -> Result<std::borrow::Cow<'static, str>, Error> {
+	map_namespace: &M,
+) -> Result<std::borrow::Cow<'static, str>, Error> where M: MapNamespace {
+	let local = map_namespace_local_to_string(map_namespace)?;
+
+	#[allow(clippy::match_same_arms)]
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.CreateOptional" =>
-			Ok(format!("{}::CreateOptional<'_>", crate_root).into()),
+			Ok(format!("{}CreateOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.DeleteOptional" =>
-			Ok(format!("{}::DeleteOptional<'_>", crate_root).into()),
+			Ok(format!("{}DeleteOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ListOptional" =>
-			Ok(format!("{}::ListOptional<'_>", crate_root).into()),
+			Ok(format!("{}ListOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.PatchOptional" =>
-			Ok(format!("{}::PatchOptional<'_>", crate_root).into()),
+			Ok(format!("{}PatchOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ReplaceOptional" =>
-			Ok(format!("{}::ReplaceOptional<'_>", crate_root).into()),
+			Ok(format!("{}ReplaceOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.WatchOptional" =>
-			Ok(format!("{}::WatchOptional<'_>", crate_root).into()),
+			Ok(format!("{}WatchOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root)?).into()),
+			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, crate_root)?).into()),
+			Ok(format!("&[{}]", get_rust_type(&items.kind, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1165,14 +1191,16 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
+			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("&{}::ByteString", crate_root).into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&chrono::DateTime<chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
-			Ok(format!("&{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)) =>
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
@@ -1183,8 +1211,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("&{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1202,21 +1229,22 @@ fn get_rust_borrow_type(
 	}
 }
 
-fn get_rust_type(
+fn get_rust_type<M>(
 	schema_kind: &swagger20::SchemaKind,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
-) -> Result<std::borrow::Cow<'static, str>, Error> {
+	map_namespace: &M,
+) -> Result<std::borrow::Cow<'static, str>, Error> where M: MapNamespace {
+	let local = map_namespace_local_to_string(map_namespace)?;
+
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(get_fully_qualified_type_name(ref_path, replace_namespaces, crate_root)?.into()),
+			Ok(get_fully_qualified_type_name(ref_path, map_namespace)?.into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, crate_root)?).into()),
+			Ok(format!("Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1226,14 +1254,29 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, crate_root)?).into()),
+			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok(format!("{}::ByteString", crate_root).into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("chrono::DateTime<chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
+			Ok(format!("{}ByteString", local).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
+			Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>", local = local).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) =>
-			Ok(format!("{}::apiextensions_apiserver::pkg::apis::apiextensions::{}::CustomResourceSubresources", crate_root, namespace).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {
+			let namespace_parts =
+				&["io", "k8s", "apiextensions_apiserver", "pkg", "apis", "apiextensions", namespace];
+			let namespace_parts =
+				map_namespace.map_namespace(namespace_parts)
+				.ok_or_else(|| format!("unexpected path {:?}", namespace_parts.join(".")))?;
+
+			let mut result = String::new();
+			for namespace_part in namespace_parts {
+				result.push_str(&*get_rust_ident(namespace_part));
+				result.push_str("::");
+			}
+			result.push_str("CustomResourceSubresources");
+			Ok(result.into())
+		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
@@ -1245,7 +1288,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("{}::List<{}>", crate_root, get_rust_type(items, replace_namespaces, crate_root)?).into()),
+			Ok(format!("{}List<{}>", local, get_rust_type(items, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1263,35 +1306,17 @@ fn get_rust_type(
 	}
 }
 
-fn replace_namespace<'a, I>(
-	parts: I,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-) -> Vec<std::borrow::Cow<'a, str>> where I: IntoIterator<Item = &'a str> {
-	let parts: Vec<_> = parts.into_iter().map(Into::into).collect();
-
-	log::trace!("parts = {:?}, replace_namespaces = {:?}", parts, replace_namespaces);
-
-	for (from, to) in replace_namespaces {
-		if parts.starts_with(from) {
-			let mut result = to.to_vec();
-			result.extend(parts.into_iter().skip(from.len()));
-			return result;
-		}
-	}
-
-	parts
-}
-
 #[doc(hidden)]
-pub fn write_operation(
+pub fn write_operation<M>(
 	out: &mut impl std::io::Write,
 	operation: &swagger20::Operation,
-	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
-	crate_root: &str,
+	map_namespace: &M,
 	vis: &str,
 	type_name_and_ref_path: &mut Option<(&str, &swagger20::RefPath)>,
 	is_under_api_feature: bool,
-) -> Result<(Option<String>, Option<String>), Error> {
+) -> Result<(Option<String>, Option<String>), Error> where M: MapNamespace {
+	let local = map_namespace_local_to_string(map_namespace)?;
+
 	writeln!(out)?;
 
 	writeln!(out, "// Generated from operation {}", operation.id)?;
@@ -1318,7 +1343,7 @@ pub fn write_operation(
 			}
 			previous_parameters.insert(parameter_name.clone());
 
-			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, crate_root) {
+			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, map_namespace) {
 				Ok(parameter_type) => parameter_type,
 				Err(err) => return Err(err),
 			};
@@ -1393,22 +1418,37 @@ pub fn write_operation(
 		}
 
 		writeln!(out,
-			"{}/// Use the returned [`{}::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
-			indent, crate_root, operation_result_name, operation_result_name)?;
+			"{}/// Use the returned [`{}ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
+			indent, local, operation_result_name, operation_result_name)?;
 		need_empty_line = true;
 	}
 	else {
 		let common_response_type_link = match operation.responses {
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("[`{}::CreateResponse`]`<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) =>
+				Some(format!("[`{}CreateResponse`]`<Self>", local)),
+
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
-				Some(swagger20::KubernetesAction::Delete) => Some(format!("[`{}::DeleteResponse`]`<Self>", crate_root)),
-				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("[`{}::DeleteResponse`]`<`[`{}::List`]`<Self>>", crate_root, crate_root)),
+				Some(swagger20::KubernetesAction::Delete) =>
+					Some(format!("[`{}DeleteResponse`]`<Self>", local)),
+
+				Some(swagger20::KubernetesAction::DeleteCollection) =>
+					Some(format!("[`{local}DeleteResponse`]`<`[`{local}List`]`<Self>>", local = local)),
+
 				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse response"),
 			},
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("[`{}::ListResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("[`{}::PatchResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("[`{}::ReplaceResponse`]`<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("[`{}::WatchResponse`]`<Self>", crate_root)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
+				Some(format!("[`{}ListResponse`]`<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) =>
+				Some(format!("[`{}PatchResponse`]`<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) =>
+				Some(format!("[`{}ReplaceResponse`]`<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) =>
+				Some(format!("[`{}WatchResponse`]`<Self>", local)),
+
 			_ => None,
 		};
 
@@ -1418,8 +1458,11 @@ pub fn write_operation(
 			}
 
 			writeln!(out,
-				"{}/// Use the returned [`{}::ResponseBody`]`<`{}>` constructor, or {}` directly, to parse the HTTP response.",
-				indent, crate_root, common_response_type_link, common_response_type_link)?;
+				"{}/// Use the returned [`{}ResponseBody`]`<`{}>` constructor, or {}` directly, to parse the HTTP response.",
+				indent,
+				local,
+				common_response_type_link,
+				common_response_type_link)?;
 			need_empty_line = true;
 		}
 	}
@@ -1491,31 +1534,46 @@ pub fn write_operation(
 	}
 	if let Some(operation_result_name) = &operation_result_name {
 		writeln!(out,
-			"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
-			indent, crate_root, operation_result_name, crate_root)?;
+			"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
+			indent, operation_result_name, local = local)?;
 	}
 	else {
 		let common_response_type = match operation.responses {
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) => Some(format!("{}::CreateResponse<Self>", crate_root)),
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) =>
+				Some(format!("{}CreateResponse<Self>", local)),
+
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
-				Some(swagger20::KubernetesAction::Delete) => Some(format!("{}::DeleteResponse<Self>", crate_root)),
-				Some(swagger20::KubernetesAction::DeleteCollection) => Some(format!("{}::DeleteResponse<{}::List<Self>>", crate_root, crate_root)),
+				Some(swagger20::KubernetesAction::Delete) =>
+					Some(format!("{}DeleteResponse<Self>", local)),
+
+				Some(swagger20::KubernetesAction::DeleteCollection) =>
+					Some(format!("{local}DeleteResponse<{local}List<Self>>", local = local)),
+
 				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse"),
 			},
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) => Some(format!("{}::ListResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) => Some(format!("{}::PatchResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) => Some(format!("{}::ReplaceResponse<Self>", crate_root)),
-			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) => Some(format!("{}::WatchResponse<Self>", crate_root)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
+				Some(format!("{}ListResponse<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) =>
+				Some(format!("{}PatchResponse<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) =>
+				Some(format!("{}ReplaceResponse<Self>", local)),
+
+			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) =>
+				Some(format!("{}WatchResponse<Self>", local)),
+
 			_ => None,
 		};
 
 		if let Some(common_response_type) = common_response_type {
 			writeln!(out,
-				"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {}::ResponseBody<{}>), {}::RequestError> {{",
-				indent, crate_root, common_response_type, crate_root)?;
+				"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
+				indent, common_response_type, local = local)?;
 		}
 		else {
-			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}::RequestError> {{", indent, crate_root)?;
+			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}RequestError> {{", indent, local)?;
 		}
 	}
 
@@ -1550,12 +1608,8 @@ pub fn write_operation(
 
 					writeln!(
 						out,
-						"{}        {} = {}::percent_encoding::percent_encode({}.as_bytes(), {}::percent_encoding2::PATH_SEGMENT_ENCODE_SET),",
-						indent,
-						parameter_name,
-						crate_root,
-						parameter_name,
-						crate_root)?;
+						"{}        {} = {local}percent_encoding::percent_encode({}.as_bytes(), {local}percent_encoding2::PATH_SEGMENT_ENCODE_SET),",
+						indent, parameter_name, parameter_name, local = local)?;
 				}
 			}
 			write!(out, "{}    ", indent)?;
@@ -1571,7 +1625,7 @@ pub fn write_operation(
 	}
 
 	if have_query_parameters {
-		writeln!(out, "{}    let mut __query_pairs = {}::url::form_urlencoded::Serializer::new(__url);", indent, crate_root)?;
+		writeln!(out, "{}    let mut __query_pairs = {}url::form_urlencoded::Serializer::new(__url);", indent, local)?;
 		if let Some((parameter_name, _, _)) = &query_string_optional_parameter {
 			writeln!(out, "{}    {}.__serialize(&mut __query_pairs);", indent, parameter_name)?;
 		}
@@ -1631,15 +1685,15 @@ pub fn write_operation(
 	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
 		if parameter.required {
 			if parameter_type.starts_with('&') {
-				writeln!(out, "serde_json::to_vec({}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+				writeln!(out, "serde_json::to_vec({}).map_err({}RequestError::Json)?;", parameter_name, local)?;
 			}
 			else {
-				writeln!(out, "serde_json::to_vec(&{}).map_err({}::RequestError::Json)?;", parameter_name, crate_root)?;
+				writeln!(out, "serde_json::to_vec(&{}).map_err({}RequestError::Json)?;", parameter_name, local)?;
 			}
 		}
 		else {
 			writeln!(out)?;
-			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}::RequestError::Json))?;", parameter_name, crate_root)?;
+			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}RequestError::Json))?;", parameter_name, local)?;
 		}
 
 		let is_patch =
@@ -1650,7 +1704,7 @@ pub fn write_operation(
 				false
 			};
 		if is_patch {
-			let patch_type = get_rust_type(&parameter.schema.kind, replace_namespaces, crate_root)?;
+			let patch_type = get_rust_type(&parameter.schema.kind, map_namespace)?;
 			writeln!(out, "{}    let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
 			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
@@ -1667,8 +1721,8 @@ pub fn write_operation(
 
 	if operation_result_name.is_some() {
 		writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-		writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
-		writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
+		writeln!(out, "{}        Ok(request) => Ok((request, {}ResponseBody::new)),", indent, local)?;
+		writeln!(out, "{}        Err(err) => Err({}RequestError::Http(err)),", indent, local)?;
 		writeln!(out, "{}    }}", indent)?;
 	}
 	else {
@@ -1679,12 +1733,12 @@ pub fn write_operation(
 
 		if is_common_response_type {
 			writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-			writeln!(out, "{}        Ok(request) => Ok((request, {}::ResponseBody::new)),", indent, crate_root)?;
-			writeln!(out, "{}        Err(err) => Err({}::RequestError::Http(err)),", indent, crate_root)?;
+			writeln!(out, "{}        Ok(request) => Ok((request, {}ResponseBody::new)),", indent, local)?;
+			writeln!(out, "{}        Err(err) => Err({}RequestError::Http(err)),", indent, local)?;
 			writeln!(out, "{}    }}", indent)?;
 		}
 		else {
-			writeln!(out, "{}    __request.body(__body).map_err({}::RequestError::Http)", indent, crate_root)?;
+			writeln!(out, "{}    __request.body(__body).map_err({}RequestError::Http)", indent, local)?;
 		}
 	}
 	writeln!(out, "{}}}", indent)?;
@@ -1778,7 +1832,7 @@ pub fn write_operation(
 			let operation_responses = operation_responses?;
 
 			for &(_, variant_name, schema) in &operation_responses {
-				writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, crate_root)?)?;
+				writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, map_namespace)?)?;
 			}
 
 			writeln!(out, "    Other(Result<Option<serde_json::Value>, serde_json::Error>),")?;
@@ -1788,8 +1842,8 @@ pub fn write_operation(
 			if is_under_api_feature {
 				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
 			}
-			writeln!(out, "impl {}::Response for {} {{", crate_root, operation_result_name)?;
-			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}::ResponseError> {{", crate_root)?;
+			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
+			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}ResponseError> {{", local)?;
 
 			writeln!(out, "        match status_code {{")?;
 			for &(http_status_code, variant_name, schema) in &operation_responses {
@@ -1798,14 +1852,14 @@ pub fn write_operation(
 				match &schema.kind {
 					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
 						writeln!(out, "                if buf.is_empty() {{")?;
-						writeln!(out, "                    return Err({}::ResponseError::NeedMoreData);", crate_root)?;
+						writeln!(out, "                    return Err({}ResponseError::NeedMoreData);", local)?;
 						writeln!(out, "                }}")?;
 						writeln!(out)?;
 						writeln!(out, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
 						writeln!(out, "                    Ok(s) => (s, buf.len()),")?;
 						writeln!(out, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
-						writeln!(out, "                        (0, Some(_)) => return Err({}::ResponseError::Utf8(err)),", crate_root)?;
-						writeln!(out, "                        (0, None) => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
+						writeln!(out, "                        (0, Some(_)) => return Err({}ResponseError::Utf8(err)),", local)?;
+						writeln!(out, "                        (0, None) => return Err({}ResponseError::NeedMoreData),", local)?;
 						writeln!(out, "                        (valid_up_to, _) => (")?;
 						writeln!(out, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
 						writeln!(out, "                            valid_up_to,")?;
@@ -1818,8 +1872,8 @@ pub fn write_operation(
 					swagger20::SchemaKind::Ref(_) => {
 						writeln!(out, "                let result = match serde_json::from_slice(buf) {{")?;
 						writeln!(out, "                    Ok(value) => value,")?;
-						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
-						writeln!(out, "                    Err(err) => return Err({}::ResponseError::Json(err)),", crate_root)?;
+						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
+						writeln!(out, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
 						writeln!(out, "                }};")?;
 						writeln!(out, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
 					},
@@ -1837,7 +1891,7 @@ pub fn write_operation(
 			writeln!(out, "                    else {{")?;
 			writeln!(out, "                        match serde_json::from_slice(buf) {{")?;
 			writeln!(out, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
-			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}::ResponseError::NeedMoreData),", crate_root)?;
+			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 			writeln!(out, "                            Err(err) => (Err(err), 0),")?;
 			writeln!(out, "                        }}")?;
 			writeln!(out, "                    }};")?;
@@ -1862,23 +1916,28 @@ fn get_operation_names(
 ) -> Result<(std::borrow::Cow<'static, str>, Option<String>, String), Error> {
 	let operation_id =
 		if strip_tag {
-			// For functions associated with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
-			// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
-			let tag: String =
-				operation.tag.split('_')
-				.map(|part| {
-					let mut chars = part.chars();
-					if let Some(first_char) = chars.next() {
-						let rest_chars = chars.as_str();
-						std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
-					}
-					else {
-						std::borrow::Cow::Borrowed("")
-					}
-				})
-				.collect();
+			if let Some(tag) = &operation.tag {
+				// For functions associated with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
+				// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
+				let tag: String =
+					tag.split('_')
+					.map(|part| {
+						let mut chars = part.chars();
+						if let Some(first_char) = chars.next() {
+							let rest_chars = chars.as_str();
+							std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
+						}
+						else {
+							std::borrow::Cow::Borrowed("")
+						}
+					})
+					.collect();
 
-			std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+				std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+			}
+			else {
+				std::borrow::Cow::Borrowed(&*operation.id)
+			}
 		}
 		else {
 			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,
@@ -1899,4 +1958,13 @@ fn get_operation_names(
 	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
+}
+
+#[cfg(test)]
+mod test {
+	#[test]
+	fn test_get_rust_ident() {
+		assert_eq!(super::get_rust_ident("as"), "as_");
+		assert_eq!(super::get_rust_ident("foo.bar"), "foo_bar");
+	}
 }

@@ -2,7 +2,7 @@
 
 /// MicroTime is version of Time with microsecond level precision.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct MicroTime(pub chrono::DateTime<chrono::Utc>);
+pub struct MicroTime(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
 impl<'de> serde::Deserialize<'de> for MicroTime {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
