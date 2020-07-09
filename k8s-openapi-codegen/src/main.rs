@@ -160,11 +160,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			&spec.definitions,
 			&mut spec.operations,
 			definition_path,
-			swagger20::RefPathRelativeTo::Crate,
 			&MapNamespace,
 			"pub ",
-			true,
-			|parts, is_under_api_feature| {
+			Some("api"),
+			|parts, type_feature| {
 				let mut current = out_dir.to_owned();
 
 				for part in parts.iter().skip(1).rev().skip(1).rev() {
@@ -203,12 +202,12 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 				writeln!(parent_mod_rs)?;
-				if is_under_api_feature {
-					writeln!(parent_mod_rs, r#"#[cfg(feature = "api")]"#)?;
+				if let Some(type_feature) = type_feature {
+					writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
 				}
 				writeln!(parent_mod_rs, "mod {};", mod_name)?;
-				if is_under_api_feature {
-					writeln!(parent_mod_rs, r#"#[cfg(feature = "api")]"#)?;
+				if let Some(type_feature) = type_feature {
+					writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
 				}
 				writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
 
@@ -267,8 +266,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				&operation,
 				&MapNamespace,
 				"pub ",
-				&mut None,
-				true,
+				None,
+				Some("api"),
 			)?;
 
 			num_generated_apis += 1;

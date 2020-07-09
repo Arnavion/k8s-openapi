@@ -2,7 +2,7 @@ pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	definition_path: &crate::swagger20::DefinitionPath,
 	type_comment: Option<&str>,
-	attrs: &str,
+	type_feature: Option<&str>,
 	derives: Option<Derives>,
 	vis: &str,
 ) -> Result<(), crate::Error> {
@@ -15,6 +15,9 @@ pub(crate) fn generate(
 		else {
 			String::new()
 		};
+
+	let type_feature_attribute: std::borrow::Cow<'static, str> =
+		type_feature.map_or("".into(), |type_feature| format!("#[cfg(feature = \"{}\")]\n", type_feature).into());
 
 	let derives: std::borrow::Cow<'_, str> =
 		if let Some(Derives { clone, copy, default, eq, ord, partial_eq, partial_ord }) = derives {
@@ -38,7 +41,7 @@ pub(crate) fn generate(
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/type_header.rs")),
 		definition_path = definition_path,
 		type_comment = type_comment,
-		attrs = attrs,
+		type_feature_attribute = type_feature_attribute,
 		derives = derives,
 		vis = vis,
 	)?;

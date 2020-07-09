@@ -1,3 +1,5 @@
+//! This module contains types related to the OpenAPI types used in the Kubernetes spec.
+
 mod definitions;
 pub use self::definitions::*;
 
@@ -7,6 +9,7 @@ pub use self::info::*;
 mod paths;
 pub use self::paths::*;
 
+/// The value of an `x-kubernetes-group-version-kind` annotation on a type or an operation.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct KubernetesGroupKindVersion {
@@ -29,6 +32,7 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 	}
 }
 
+/// The whole `Spec` object. An OpenAPI spec JSON file can be deserialized into this type.
 #[derive(Debug)]
 pub struct Spec {
 	pub info: Info,

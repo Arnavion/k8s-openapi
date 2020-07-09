@@ -1,6 +1,5 @@
 
-#[cfg(feature = "api")]
-impl{type_generics_impl} {type_name}{type_generics_type}{type_generics_where} {{
+{operation_feature_attribute}impl{type_generics_impl} {type_name}{type_generics_type}{type_generics_where} {{
     #[doc(hidden)]
     /// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
     ///

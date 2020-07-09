@@ -5,6 +5,7 @@
 	clippy::default_trait_access,
 	clippy::doc_markdown,
 	clippy::let_and_return,
+	clippy::missing_errors_doc,
 	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::struct_excessive_bools,
@@ -18,14 +19,18 @@
 //! This crate contains common code for the [`k8s-openapi` code generator](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-codegen)
 //! and the [`k8s-openapi-derive`](https://crates.io/crates/k8s-openapi-derive) custom derive crate.
 //!
-//! WARNING: This crate is not meant to be used directly by end users and does not have a stable API.
+//! It can be used by code generators that want to generate crates like `k8s-openapi` and `k8s-openapi-derive` for Kubernetes-like software
+//! such as OpenShift.
+//!
+//! 1. Create a [`swagger20::Spec`] value, either by deserializing it from an OpenAPI spec JSON file or by creating it manually.
+//! 1. Invoke the [`run`] function for each definition in the spec.
+//! 1. For each left-over API operations, ie those operations that weren't associated with any definition, invoke the [`write_operation`] function.
 
-#[doc(hidden)]
 pub mod swagger20;
 
 mod templates;
 
-#[doc(hidden)]
+/// Statistics from a successful invocation of [`run`]
 #[derive(Clone, Copy, Debug)]
 pub struct RunResult {
 	pub num_generated_structs: usize,
@@ -33,7 +38,7 @@ pub struct RunResult {
 	pub num_generated_apis: usize,
 }
 
-#[doc(hidden)]
+/// Error type reported by [`run`] and [`write_operation`]
 #[derive(Debug)]
 pub struct Error(Box<dyn std::error::Error + Send + Sync>);
 
@@ -78,22 +83,52 @@ impl std::error::Error for Error {
 ///
 /// Other code generators can have more complicated implementations. For example, an OpenShift code generator that has its own types but also wants to
 /// reuse types from the k8s-openapi crate would map `com.github.openshift.` to `crate::` and `io.k8s.` to `k8s_openapi::` instead.
+///
+/// The implementation should return `None` for paths that it does not recognize.
 pub trait MapNamespace {
 	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>>;
 }
 
-#[doc(hidden)]
-pub fn run<M, W>(
+/// Each invocation of this function generates a single type specified by the `definition_path` parameter along with its associated API operation functions.
+///
+/// # Parameters
+///
+/// - `definitions`: The definitions parsed from the OpenAPI spec that should be emitted as model types.
+///
+/// - `operations`: The list of operations parsed from the OpenAPI spec that should be emitted as API functions.
+///   Note that this value will be mutated to remove the operations that are determined to be associated with the type currently being generated.
+///
+/// - `definition_path`: The specific definition path out of the `definitions` collection that should be emitted.
+///
+/// - `map_namespace`: An instance of the [`MapNamespace`] trait that controls how OpenAPI namespaces of the definitions are mapped to rust namespaces.
+///
+/// - `vis`: The visibility modifier that should be emitted on the generated code.
+///
+/// - `optional_feature`: If specified, all API functions will be emitted with a `#[cfg(feature = "<this value>")]` attribute.
+///    The attribute will also be applied to their optional parameters and response types, if any, and to common types for
+///    optional parameters and response types that are shared by multiple operations.
+///
+/// - `out`: A callback that will be invoked to get an impl of `std::io::Write` to write the generated code to.
+///   The callback receives two parameters:
+///       1. A list of strings making up the components of the path of the generated type. Code generators that are emitting crates can use this parameter
+///          to make module subdirectories for each component, and to emit `use` statements in the final module's `mod.rs`.
+///       1. The value of `optional_feature`, indicating that the generated type as a whole will be emitted under this feature.
+///          Code generators that are emitting modules can use this flag to emit a `#[cfg(feature = "<this value>")]` on the `use` statement
+///          for the generated type.
+///
+/// - `imports`: A callback that gets invoked once for every API function that was emitted for the generated type. The callback receives two parameters:
+///       1. The name of the optional parameters type associated with the operation, if any.
+///       1. The name of the response type associated with the operation, if any.
+pub fn run<W>(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	operations: &mut Vec<swagger20::Operation>,
 	definition_path: &swagger20::DefinitionPath,
-	ref_path_relative_to: swagger20::RefPathRelativeTo,
-	map_namespace: &M,
+	map_namespace: &impl MapNamespace,
 	vis: &str,
-	use_api_feature_for_operations: bool,
-	out: impl FnOnce(&[&str], bool) -> std::io::Result<W>,
+	optional_feature: Option<&str>,
+	out: impl FnOnce(&[&str], Option<&str>) -> std::io::Result<W>,
 	mut imports: impl FnMut(Option<String>, Option<String>) -> std::io::Result<()>,
-) -> Result<RunResult, Error> where M: MapNamespace, W: std::io::Write {
+) -> Result<RunResult, Error> where W: std::io::Write {
 	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {} does not exist in spec", definition_path))?;
 
 	let local = map_namespace_local_to_string(map_namespace)?;
@@ -110,7 +145,7 @@ pub fn run<M, W>(
 		.into_iter()
 		.collect();
 
-	let is_under_api_feature = match &definition.kind {
+	let type_feature = match &definition.kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
@@ -122,28 +157,22 @@ pub fn run<M, W>(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => true,
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => optional_feature,
 
-		_ => false,
+		_ => None,
 	};
 
-	let mut out = out(&namespace_parts, is_under_api_feature)?;
+	let mut out = out(&namespace_parts, type_feature)?;
 
 	let type_name = path_parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?;
 
-	let type_ref_path = swagger20::RefPath {
-		path: definition_path.0.clone(),
-		relative_to: ref_path_relative_to,
-		can_be_default: None,
-	};
-
-	let derives = get_derives(&definition.kind, definitions)?;
+	let derives = get_derives(&definition.kind, definitions, map_namespace)?;
 
 	templates::type_header::generate(
 		&mut out,
 		definition_path,
 		definition.description.as_deref(),
-		if is_under_api_feature { "#[cfg(feature = \"api\")]\n" } else { "" },
+		type_feature,
 		derives,
 		vis,
 	)?;
@@ -155,16 +184,11 @@ pub fn run<M, W>(
 
 				let mut result = Vec::with_capacity(properties.len());
 
-				let single_group_version_kind =
-					definition.kubernetes_group_kind_versions.as_ref()
-					.and_then(|group_version_kinds| {
-						if group_version_kinds.len() == 1 {
-							Some(&group_version_kinds[0])
-						}
-						else {
-							None
-						}
-					});
+				let single_group_version_kind = match &definition.kubernetes_group_kind_versions[..] {
+					[group_version_kind] => Some(group_version_kind),
+					_ => None,
+				};
+
 				let mut has_api_version = false;
 				let mut has_kind = false;
 				let mut metadata_ty = None;
@@ -273,8 +297,8 @@ pub fn run<M, W>(
 				&template_properties,
 			)?;
 
-			if let Some(kubernetes_group_kind_versions) = &definition.kubernetes_group_kind_versions {
-				let mut kubernetes_group_kind_versions: Vec<_> = kubernetes_group_kind_versions.iter().collect();
+			if !definition.kubernetes_group_kind_versions.is_empty() {
+				let mut kubernetes_group_kind_versions: Vec<_> = definition.kubernetes_group_kind_versions.iter().collect();
 				kubernetes_group_kind_versions.sort();
 
 				let mut operations_by_gkv: std::collections::BTreeMap<_, Vec<_>> = Default::default();
@@ -300,8 +324,8 @@ pub fn run<M, W>(
 									&operation,
 									map_namespace,
 									vis,
-									&mut Some((type_name, &type_ref_path)),
-									is_under_api_feature || use_api_feature_for_operations)?;
+									Some(type_name),
+									optional_feature)?;
 							imports(operation_optional_parameters_name, operation_result_name)?;
 							run_result.num_generated_apis += 1;
 						}
@@ -411,10 +435,9 @@ pub fn run<M, W>(
 				get_fully_qualified_type_name(
 					&swagger20::RefPath {
 						path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
-						relative_to: swagger20::RefPathRelativeTo::Crate,
 						can_be_default: None,
 					},
-					map_namespace)?;
+					map_namespace);
 
 			templates::json_schema_props_or::generate(
 				&mut out,
@@ -453,7 +476,6 @@ pub fn run<M, W>(
 			let error_status_rust_type = get_rust_type(
 				&swagger20::SchemaKind::Ref(swagger20::RefPath {
 					path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
-					relative_to: swagger20::RefPathRelativeTo::Crate,
 					can_be_default: None,
 				}),
 				map_namespace,
@@ -666,6 +688,7 @@ pub fn run<M, W>(
 						vis,
 						&template_properties,
 						false,
+						optional_feature,
 					)?,
 
 				swagger20::Type::DeleteOptional(_) =>
@@ -686,6 +709,7 @@ pub fn run<M, W>(
 						vis,
 						&template_properties,
 						true,
+						optional_feature,
 					)?,
 
 				_ => unreachable!("unexpected optional params type"),
@@ -700,6 +724,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Create,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -711,6 +736,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Delete,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -722,6 +748,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::List,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -733,6 +760,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Patch,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -744,6 +772,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Replace,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -755,6 +784,7 @@ pub fn run<M, W>(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Watch,
+				optional_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -803,7 +833,7 @@ pub fn run<M, W>(
 	Ok(run_result)
 }
 
-fn map_namespace_local_to_string<M>(map_namespace: &M) -> Result<String, Error> where M: MapNamespace {
+fn map_namespace_local_to_string(map_namespace: &impl MapNamespace) -> Result<String, Error> {
 	let namespace_parts = map_namespace.map_namespace(&["io", "k8s"]).ok_or(r#"unexpected path "io.k8s""#)?;
 
 	let mut result = String::new();
@@ -817,13 +847,14 @@ fn map_namespace_local_to_string<M>(map_namespace: &M) -> Result<String, Error> 
 fn get_derives(
 	kind: &swagger20::SchemaKind,
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
+	map_namespace: &impl MapNamespace,
 ) -> Result<Option<templates::type_header::Derives>, Error> {
 	if matches!(kind, swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. })) {
 		// ListRef is emitted as a type alias.
 		return Ok(None);
 	}
 
-	let derive_clone = evaluate_trait_bound(kind, true, definitions, |kind, _| match kind {
+	let derive_clone = evaluate_trait_bound(kind, true, definitions, map_namespace, |kind, _| match kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
@@ -834,7 +865,7 @@ fn get_derives(
 		_ => Ok(true),
 	})?;
 
-	let derive_copy = derive_clone && evaluate_trait_bound(kind, false, definitions, |kind, _| match kind {
+	let derive_copy = derive_clone && evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, _| match kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
@@ -846,20 +877,20 @@ fn get_derives(
 	})?;
 
 	#[allow(clippy::match_same_arms)]
-	let is_default = evaluate_trait_bound(kind, false, definitions, |kind, required| match kind {
+	let is_default = evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, required| match kind {
 		// Option<T>::default is None regardless of T
 		_ if !required => Ok(true),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { can_be_default: Some(can_be_default), .. }) => Ok(*can_be_default),
 
-		swagger20::SchemaKind::Ref(swagger20::RefPath { relative_to: swagger20::RefPathRelativeTo::Scope, .. }) => Ok(false),
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if ref_path.references_scope(map_namespace) => Ok(false),
 
 		// metadata field in resource type created by #[derive(CustomResourceDefinition)]
-		swagger20::SchemaKind::Ref(swagger20::RefPath { path, relative_to: swagger20::RefPathRelativeTo::Crate, .. })
-			if path == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" => Ok(true),
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. })
+			if !ref_path.references_scope(map_namespace) && ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" => Ok(true),
 
 		// Handled by evaluate_trait_bound
-		swagger20::SchemaKind::Ref(swagger20::RefPath { relative_to: swagger20::RefPathRelativeTo::Crate, .. }) => unreachable!(),
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
 
 		// chrono::DateTime<chrono::Utc> is not Default
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
@@ -885,7 +916,7 @@ fn get_derives(
 		_ => true,
 	};
 
-	let derive_partial_eq = evaluate_trait_bound(kind, true, definitions, |kind, _| match kind {
+	let derive_partial_eq = evaluate_trait_bound(kind, true, definitions, map_namespace, |kind, _| match kind {
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
 		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
@@ -932,6 +963,7 @@ fn evaluate_trait_bound(
 	kind: &swagger20::SchemaKind,
 	array_follows_elements: bool,
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
+	map_namespace: &impl MapNamespace,
 	mut f: impl FnMut(&swagger20::SchemaKind, bool) -> Result<bool, Error>,
 ) -> Result<bool, Error> {
 	fn evaluate_trait_bound_inner<'a>(
@@ -939,6 +971,7 @@ fn evaluate_trait_bound(
 		required: bool,
 		array_follows_elements: bool,
 		definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
+		map_namespace: &impl MapNamespace,
 		visited: &mut std::collections::BTreeSet<std::borrow::Cow<'a, swagger20::SchemaKind>>,
 		f: &mut impl FnMut(&swagger20::SchemaKind, bool) -> Result<bool, Error>,
 	) -> Result<bool, Error> {
@@ -957,6 +990,7 @@ fn evaluate_trait_bound(
 							required && *property_required,
 							array_follows_elements,
 							definitions,
+							map_namespace,
 							&mut visited,
 							f,
 						)?;
@@ -968,14 +1002,15 @@ fn evaluate_trait_bound(
 				Ok(true)
 			},
 
-			swagger20::SchemaKind::Ref(swagger20::RefPath { path, relative_to: swagger20::RefPathRelativeTo::Crate, .. }) =>
-				if let Some(target) = definitions.get(&swagger20::DefinitionPath(path.to_owned())) {
+			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) =>
+				if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.to_owned())) {
 					let mut visited = visited.clone();
 					evaluate_trait_bound_inner(
 						&std::borrow::Cow::Borrowed(&target.kind),
 						required,
 						array_follows_elements,
 						definitions,
+						map_namespace,
 						&mut visited,
 						f,
 					)
@@ -990,6 +1025,7 @@ fn evaluate_trait_bound(
 					required,
 					array_follows_elements,
 					definitions,
+					map_namespace,
 					visited,
 					f,
 				),
@@ -999,7 +1035,6 @@ fn evaluate_trait_bound(
 			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray(namespace)) => {
 				let json_schema_props_ref_path = swagger20::RefPath {
 					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
-					relative_to: swagger20::RefPathRelativeTo::Crate,
 					can_be_default: None,
 				};
 				let json_schema_props_bound =
@@ -1008,6 +1043,7 @@ fn evaluate_trait_bound(
 						required,
 						array_follows_elements,
 						definitions,
+						map_namespace,
 						visited,
 						f,
 					)?;
@@ -1025,6 +1061,7 @@ fn evaluate_trait_bound(
 						required,
 						array_follows_elements,
 						definitions,
+						map_namespace,
 						visited,
 						f,
 					)?;
@@ -1045,6 +1082,7 @@ fn evaluate_trait_bound(
 		true,
 		array_follows_elements,
 		definitions,
+		map_namespace,
 		&mut visited,
 		&mut f,
 	)
@@ -1067,32 +1105,28 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 		})
 }
 
-fn get_fully_qualified_type_name<M>(
+fn get_fully_qualified_type_name(
 	ref_path: &swagger20::RefPath,
-	map_namespace: &M,
-) -> Result<String, Error> where M: MapNamespace {
-	match ref_path.relative_to {
-		swagger20::RefPathRelativeTo::Crate => {
-			let parts: Vec<_> = ref_path.path.split('.').collect();
-			let namespace_parts = map_namespace.map_namespace(&parts[..(parts.len() - 1)]).ok_or_else(|| format!("unexpected path {:?}", ref_path.path))?;
-
-			let mut result = String::new();
-			for namespace_part in namespace_parts {
-				result.push_str(&*get_rust_ident(namespace_part));
-				result.push_str("::");
-			}
-			result.push_str(&parts[parts.len() - 1]);
-			Ok(result)
-		},
-
-		swagger20::RefPathRelativeTo::Scope => {
-			let last_part = ref_path.path.split('.').last().ok_or_else(|| format!("path for {} has no parts", ref_path.path))?;
-			Ok(last_part.to_owned())
-		},
+	map_namespace: &impl MapNamespace,
+) -> String {
+	let path_parts: Vec<_> = ref_path.path.split('.').collect();
+	let namespace_parts = map_namespace.map_namespace(&path_parts[..(path_parts.len() - 1)]);
+	if let Some(namespace_parts) = namespace_parts {
+		let mut result = String::new();
+		for namespace_part in namespace_parts {
+			result.push_str(&*get_rust_ident(namespace_part));
+			result.push_str("::");
+		}
+		result.push_str(&path_parts[path_parts.len() - 1]);
+		result
+	}
+	else {
+		let last_part = *path_parts.last().expect("str::split yields at least one item");
+		last_part.to_owned()
 	}
 }
 
-#[doc(hidden)]
+/// Converts the given string into a string that can be used as a Rust ident.
 pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	// Fix cases of invalid rust idents
 	match name {
@@ -1147,10 +1181,10 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_borrow_type<M>(
+fn get_rust_borrow_type(
 	schema_kind: &swagger20::SchemaKind,
-	map_namespace: &M,
-) -> Result<std::borrow::Cow<'static, str>, Error> where M: MapNamespace {
+	map_namespace: &impl MapNamespace,
+) -> Result<std::borrow::Cow<'static, str>, Error> {
 	let local = map_namespace_local_to_string(map_namespace)?;
 
 	#[allow(clippy::match_same_arms)]
@@ -1176,7 +1210,7 @@ fn get_rust_borrow_type<M>(
 			Ok(format!("{}WatchOptional<'_>", local).into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, map_namespace)?).into()),
+			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, map_namespace)).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&serde_json::Value".into()),
 
@@ -1229,17 +1263,17 @@ fn get_rust_borrow_type<M>(
 	}
 }
 
-fn get_rust_type<M>(
+fn get_rust_type(
 	schema_kind: &swagger20::SchemaKind,
-	map_namespace: &M,
-) -> Result<std::borrow::Cow<'static, str>, Error> where M: MapNamespace {
+	map_namespace: &impl MapNamespace,
+) -> Result<std::borrow::Cow<'static, str>, Error> {
 	let local = map_namespace_local_to_string(map_namespace)?;
 
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(get_fully_qualified_type_name(ref_path, map_namespace)?.into()),
+			Ok(get_fully_qualified_type_name(ref_path, map_namespace).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("serde_json::Value".into()),
 
@@ -1306,15 +1340,36 @@ fn get_rust_type<M>(
 	}
 }
 
-#[doc(hidden)]
-pub fn write_operation<M>(
-	out: &mut impl std::io::Write,
+/// Each invocation of this function generates a single API operation function specified by the `operation` parameter.
+///
+/// # Parameters
+///
+/// - `out`: An impl of `std::io::Write` that the operation will be emitted to.
+///
+/// - `operation`: The operation to be emitted.
+///
+/// - `map_namespace`: An instance of the [`MapNamespace`] trait that controls how OpenAPI namespaces of the definitions are mapped to rust namespaces.
+///
+/// - `vis`: The visibility modifier that should be emitted on the generated code.
+///
+/// - `type_name`: The name of the type that this operation is associated with, if any.
+///
+/// - `optional_feature`: Specifies whether the API function will be emitted with a `#[cfg(feature = "<this value>")]` attribute or not.
+///
+/// # Returns
+///
+/// A tuple of two optional strings:
+///
+/// 1. The name of the optional parameters type associated with the operation, if any.
+/// 1. The name of the response type associated with the operation, if any.
+pub fn write_operation(
+	mut out: impl std::io::Write,
 	operation: &swagger20::Operation,
-	map_namespace: &M,
+	map_namespace: &impl MapNamespace,
 	vis: &str,
-	type_name_and_ref_path: &mut Option<(&str, &swagger20::RefPath)>,
-	is_under_api_feature: bool,
-) -> Result<(Option<String>, Option<String>), Error> where M: MapNamespace {
+	type_name: Option<&str>,
+	optional_feature: Option<&str>,
+) -> Result<(Option<String>, Option<String>), Error> {
 	let local = map_namespace_local_to_string(map_namespace)?;
 
 	writeln!(out)?;
@@ -1322,13 +1377,13 @@ pub fn write_operation<M>(
 	writeln!(out, "// Generated from operation {}", operation.id)?;
 
 	let (operation_fn_name, operation_result_name, operation_optional_parameters_name) =
-		get_operation_names(operation, type_name_and_ref_path.is_some())?;
+		get_operation_names(operation, type_name.is_some())?;
 
-	let indent = if type_name_and_ref_path.is_some() { "    " } else { "" };
+	let indent = if type_name.is_some() { "    " } else { "" };
 
 	writeln!(out)?;
 
-	if let Some((type_name, _)) = type_name_and_ref_path {
+	if let Some(type_name) = type_name {
 		writeln!(out, "impl {} {{", type_name)?;
 	}
 
@@ -1511,8 +1566,8 @@ pub fn write_operation<M>(
 		}
 	}
 
-	if is_under_api_feature {
-		writeln!(out, r#"{}#[cfg(feature = "api")]"#, indent)?;
+	if let Some(optional_feature) = optional_feature {
+		writeln!(out, r#"{}#[cfg(feature = "{}")]"#, indent, optional_feature)?;
 	}
 
 	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
@@ -1743,22 +1798,22 @@ pub fn write_operation<M>(
 	}
 	writeln!(out, "{}}}", indent)?;
 
-	if type_name_and_ref_path.is_some() {
+	if type_name.is_some() {
 		writeln!(out, "}}")?;
 	}
 
 	if !optional_parameters.is_empty() {
 		writeln!(out)?;
 
-		if let Some((type_name, _)) = type_name_and_ref_path {
+		if let Some(type_name) = type_name {
 			writeln!(out, "/// Optional parameters of [`{}::{}`]", type_name, operation_fn_name)?;
 		}
 		else {
 			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
-		if is_under_api_feature {
-			writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+		if let Some(optional_feature) = optional_feature {
+			writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
 		write!(out, "{}struct {}", vis, operation_optional_parameters_name)?;
@@ -1788,7 +1843,7 @@ pub fn write_operation<M>(
 		if let Some(operation_result_name) = &operation_result_name {
 			writeln!(out)?;
 
-			if let Some((type_name, _)) = type_name_and_ref_path {
+			if let Some(type_name) = type_name {
 				writeln!(out,
 					"/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]",
 					operation_result_name, type_name, operation_fn_name)?;
@@ -1799,8 +1854,8 @@ pub fn write_operation<M>(
 					operation_result_name, operation_fn_name)?;
 			}
 
-			if is_under_api_feature {
-				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+			if let Some(optional_feature) = optional_feature {
+				writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
 			}
 			writeln!(out, "#[derive(Debug)]")?;
 			writeln!(out, "{}enum {} {{", vis, operation_result_name)?;
@@ -1839,8 +1894,8 @@ pub fn write_operation<M>(
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 
-			if is_under_api_feature {
-				writeln!(out, r#"#[cfg(feature = "api")]"#)?;
+			if let Some(optional_feature) = optional_feature {
+				writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
 			}
 			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
 			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}ResponseError> {{", local)?;
@@ -1904,7 +1959,7 @@ pub fn write_operation<M>(
 	}
 
 	let mut result = (None, operation_result_name);
-	if type_name_and_ref_path.is_some() && !optional_parameters.is_empty() {
+	if type_name.is_some() && !optional_parameters.is_empty() {
 		result.0 = Some(operation_optional_parameters_name);
 	}
 	Ok(result)

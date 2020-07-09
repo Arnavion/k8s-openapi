@@ -1,3 +1,3 @@
 // Generated from definition {definition_path}
 
-{type_comment}{attrs}{derives}{vis}
+{type_comment}{type_feature_attribute}{derives}{vis}

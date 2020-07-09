@@ -157,10 +157,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 					description: None,
 					kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 						path: cr_name.clone(),
-						relative_to: swagger20::RefPathRelativeTo::Scope,
 						can_be_default: None,
 					}),
-					kubernetes_group_kind_versions: None,
+					kubernetes_group_kind_versions: vec![],
 					has_corresponding_list_type: false,
 				},
 			});
@@ -173,7 +172,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				schema: swagger20::Schema {
 					description: Some(format!("name of the {}", cr_name)),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-					kubernetes_group_kind_versions: None,
+					kubernetes_group_kind_versions: vec![],
 					has_corresponding_list_type: false,
 				},
 			});
@@ -187,7 +186,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					schema: swagger20::Schema {
 						description: Some("object name and auth scope, such as for teams and projects".to_owned()),
 						kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-						kubernetes_group_kind_versions: None,
+						kubernetes_group_kind_versions: vec![],
 						has_corresponding_list_type: false,
 					},
 				})), "/namespaces/{namespace}")
@@ -208,33 +207,31 @@ impl super::CustomDerive for CustomResourceDefinition {
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
 							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}, false)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
 							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
 							description: Some("Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta".to_owned(),
-								relative_to: swagger20::RefPathRelativeTo::Crate,
 								can_be_default: None,
 							}),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}, true)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
 							description: Some(format!("Specification of the {} custom resource", cr_name)),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: cr_spec_name,
-								relative_to: swagger20::RefPathRelativeTo::Scope,
 								can_be_default: None,
 							}),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}, false)),
 					].into_iter().chain(
@@ -242,7 +239,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							Some((swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
 								description: Some(format!("Subresources of the {} custom resource", cr_name)),
 								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							}, true)))
 						}
@@ -250,13 +247,13 @@ impl super::CustomDerive for CustomResourceDefinition {
 							None
 						}
 					).collect()),
-					kubernetes_group_kind_versions: Some(vec![
+					kubernetes_group_kind_versions: vec![
 						swagger20::KubernetesGroupKindVersion {
 							group: group.clone(),
 							kind: cr_name.clone(),
 							version: version.clone(),
 						},
-					]),
+					],
 					has_corresponding_list_type: true,
 				}),
 
@@ -265,17 +262,16 @@ impl super::CustomDerive for CustomResourceDefinition {
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::ListRef {
 						items: Box::new(swagger20::SchemaKind::Ref(swagger20::RefPath {
 							path: cr_name.clone(),
-							relative_to: swagger20::RefPathRelativeTo::Scope,
 							can_be_default: Some(true),
 						})),
 					}),
-					kubernetes_group_kind_versions: Some(vec![
+					kubernetes_group_kind_versions: vec![
 						swagger20::KubernetesGroupKindVersion {
 							group: group.clone(),
 							kind: cr_list_name.clone(),
 							version: version.clone(),
 						},
-					]),
+					],
 					has_corresponding_list_type: false,
 				}),
 			].into_iter().collect(),
@@ -320,10 +316,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.DeleteOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -353,10 +348,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: Some("Delete options. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.DeleteOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -368,10 +362,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: Some("List options. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.ListOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -401,10 +394,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.ListOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -433,10 +425,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.apimachinery.pkg.apis.meta.v1.Patch".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -450,10 +441,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.PatchOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -482,10 +472,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.apimachinery.pkg.apis.meta.v1.Patch".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -499,10 +488,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.PatchOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -532,10 +520,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
 								can_be_default: None,
 							}),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect()),
@@ -562,10 +549,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: cr_name.clone(),
-								relative_to: swagger20::RefPathRelativeTo::Scope,
 								can_be_default: None,
 							}),
-							kubernetes_group_kind_versions: None,
+							kubernetes_group_kind_versions: vec![],
 							has_corresponding_list_type: false,
 						}),
 					].into_iter().collect()),
@@ -594,10 +580,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.ReplaceOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -629,10 +614,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: None,
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.ReplaceOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -662,10 +646,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 								description: Some("Optional parameters. Use `Default::default()` to not pass any.".to_owned()),
 								kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 									path: "io.k8s.WatchOptional".to_owned(),
-									relative_to: swagger20::RefPathRelativeTo::Crate,
 									can_be_default: None,
 								}),
-								kubernetes_group_kind_versions: None,
+								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							},
 						})),
@@ -684,10 +667,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&spec.definitions,
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_name),
-				swagger20::RefPathRelativeTo::Scope,
 				&MapNamespace,
 				&vis,
-				false,
+				None,
 				|_, _| Ok(&mut out),
 				|_, _| Ok(()),
 			)
@@ -700,10 +682,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&spec.definitions,
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_list_name),
-				swagger20::RefPathRelativeTo::Scope,
 				&MapNamespace,
 				&vis,
-				false,
+				None,
 				|_, _| Ok(&mut out),
 				|_, _| Ok(()),
 			)

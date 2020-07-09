@@ -1,11 +1,11 @@
-pub(crate) fn generate<M>(
+pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
-	map_namespace: &M,
+	map_namespace: &impl crate::MapNamespace,
 	has_bookmark_event_type: bool,
 	error_status_rust_type: &str,
 	error_other_rust_type: &str,
-) -> Result<(), crate::Error> where M: crate::MapNamespace {
+) -> Result<(), crate::Error> {
 	let local = crate::map_namespace_local_to_string(map_namespace)?;
 
 	let (

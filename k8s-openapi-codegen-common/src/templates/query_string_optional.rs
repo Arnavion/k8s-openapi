@@ -5,10 +5,14 @@ pub(crate) fn generate(
 	vis: &str,
 	fields: &[super::Property<'_>],
 	is_watch: bool,
+	operation_feature: Option<&str>,
 ) -> Result<(), crate::Error> {
 	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
+
+	let operation_feature_attribute: std::borrow::Cow<'static, str> =
+		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = \"{}\")]\n", operation_feature).into());
 
 	let mut fields_append_pair = String::new();
 
@@ -39,6 +43,7 @@ pub(crate) fn generate(
 		type_generics_impl = type_generics_impl,
 		type_generics_type = type_generics_type,
 		type_generics_where = type_generics_where,
+		operation_feature_attribute = operation_feature_attribute,
 		vis = vis,
 		fields_append_pair = fields_append_pair,
 		watch_append_pair = watch_append_pair,

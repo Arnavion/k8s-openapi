@@ -2,8 +2,7 @@ enum {type_name}{type_generics_type}{type_generics_where} {{
 {variants}    Other(Result<Option<serde_json::Value>, serde_json::Error>),
 }}
 
-#[cfg(feature = "api")]
-impl{type_generics_impl} {local}Response for {type_name}{type_generics_type}{type_generics_where} {{
+{operation_feature_attribute}impl{type_generics_impl} {local}Response for {type_name}{type_generics_type}{type_generics_where} {{
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{
         match status_code {{
 {variant_match_arms}            _ => {{

@@ -1,9 +1,10 @@
-pub(crate) fn generate<M>(
+pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
-	map_namespace: &M,
+	map_namespace: &impl crate::MapNamespace,
 	operation_action: OperationAction,
-) -> Result<(), crate::Error> where M: crate::MapNamespace {
+	operation_feature: Option<&str>,
+) -> Result<(), crate::Error> {
 	let local = crate::map_namespace_local_to_string(map_namespace)?;
 	let metav1 = {
 		let namespace_parts =
@@ -29,6 +30,9 @@ pub(crate) fn generate<M>(
 
 		OperationAction::Watch => format!(" where T: serde::de::DeserializeOwned + {}Resource", local).into(),
 	};
+
+	let operation_feature_attribute: std::borrow::Cow<'static, str> =
+		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = \"{}\")]\n", operation_feature).into());
 
 	let mut variants = String::new();
 	let mut variant_match_arms = String::new();
@@ -135,6 +139,7 @@ pub(crate) fn generate<M>(
 		type_generics_type = type_generics_type,
 		type_generics_where = type_generics_where,
 		variants = variants,
+		operation_feature_attribute = operation_feature_attribute,
 		variant_match_arms = variant_match_arms,
 	)?;
 

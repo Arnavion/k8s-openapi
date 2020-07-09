@@ -1,3 +1,4 @@
+/// A definition path.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct DefinitionPath(pub String);
@@ -16,17 +17,20 @@ impl std::fmt::Display for DefinitionPath {
 	}
 }
 
+/// An integer format. This corresponds to the `"format"` property of an `"integer"` schema type.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum IntegerFormat {
 	Int32,
 	Int64,
 }
 
+/// A number format. This corresponds to the `"format"` property of a `"number"` schema type.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum NumberFormat {
 	Double,
 }
 
+/// The name of a property of a schema type with a `"properties"` map.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct PropertyName(pub String);
@@ -45,17 +49,11 @@ impl std::fmt::Display for PropertyName {
 	}
 }
 
+/// The path specified by a `"$ref"` property.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct RefPath {
 	pub path: String,
-	pub relative_to: RefPathRelativeTo,
 	pub can_be_default: Option<bool>,
-}
-
-#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub enum RefPathRelativeTo {
-	Crate,
-	Scope,
 }
 
 #[cfg(feature = "serde")]
@@ -85,17 +83,24 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 
 		Ok(RefPath {
 			path: ref_path,
-			relative_to: RefPathRelativeTo::Crate,
 			can_be_default: None,
 		})
 	}
 }
 
+impl RefPath {
+	pub(crate) fn references_scope(&self, map_namespace: &impl crate::MapNamespace) -> bool {
+		let path_parts: Vec<_> = self.path.split('.').collect();
+		map_namespace.map_namespace(&path_parts[..(path_parts.len() - 1)]).is_none()
+	}
+}
+
+/// The schema of a definition or operation parameter.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
-	pub kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
+	pub kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
 
 	/// Used to store whether a definition with this schema has a corresponding list type.
 	pub has_corresponding_list_type: bool,
@@ -116,8 +121,8 @@ impl<'de> serde::Deserialize<'de> for Schema {
 
 			items: Option<Box<Schema>>,
 
-			#[serde(rename = "x-kubernetes-group-version-kind")]
-			kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
+			#[serde(default, rename = "x-kubernetes-group-version-kind")]
+			kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
 
 			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
 
@@ -173,6 +178,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 	}
 }
 
+/// The kind of a [`Schema`]
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum SchemaKind {
 	Properties(std::collections::BTreeMap<PropertyName, (Schema, bool)>),
@@ -180,12 +186,14 @@ pub enum SchemaKind {
 	Ty(Type),
 }
 
+/// A string format. This corresponds to the `"format"` property of an `"string"` schema type.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum StringFormat {
 	Byte,
 	DateTime,
 }
 
+/// A type definition.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Type {
 	Any,

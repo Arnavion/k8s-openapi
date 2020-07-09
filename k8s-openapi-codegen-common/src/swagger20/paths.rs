@@ -1,3 +1,4 @@
+/// The value of an `"x-kubernetes-action"` annotation on an operation.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum KubernetesAction {
 	Connect,
@@ -48,6 +49,7 @@ impl<'de> serde::Deserialize<'de> for KubernetesAction {
 	}
 }
 
+/// The HTTP method of an API operation.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Method {
 	Delete,
@@ -57,6 +59,7 @@ pub enum Method {
 	Put,
 }
 
+/// An API operation.
 #[derive(Clone, Debug)]
 pub struct Operation {
 	pub description: Option<String>,
@@ -70,12 +73,17 @@ pub struct Operation {
 	pub tag: Option<String>,
 }
 
+/// The type of all possible responses of an API operation.
 #[derive(Clone, Debug)]
 pub enum OperationResponses {
+	/// The responses of this operation are represented by a common type that is shared by other operations.
 	Common(super::Type),
+
+	/// The responses of this operation are uniquely identified by this map of HTTP status codes to schemas.
 	Map(std::collections::BTreeMap<http::StatusCode, super::Schema>),
 }
 
+/// An API operation parameter.
 #[derive(Clone, Debug)]
 pub struct Parameter {
 	pub location: ParameterLocation,
@@ -116,7 +124,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 				super::Schema {
 					description: value.description,
 					kind: super::SchemaKind::Ty(super::Type::parse::<D>(&ty, None, None, None)?),
-					kubernetes_group_kind_versions: None,
+					kubernetes_group_kind_versions: vec![],
 					has_corresponding_list_type: false,
 				},
 			),
@@ -126,7 +134,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 				super::Schema {
 					description: value.description,
 					kind: super::SchemaKind::Ty(super::Type::parse::<D>(&ty, None, None, None)?),
-					kubernetes_group_kind_versions: None,
+					kubernetes_group_kind_versions: vec![],
 					has_corresponding_list_type: false,
 				},
 			),
@@ -149,6 +157,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 	}
 }
 
+/// The location of an API operation parameter in the HTTP request.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ParameterLocation {
 	Body,
@@ -156,6 +165,7 @@ pub enum ParameterLocation {
 	Query,
 }
 
+/// The path of an API operation.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct Path(pub String);
