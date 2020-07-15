@@ -4,6 +4,11 @@ version = "0.1.0"
 authors = ["Arnavion <me@arnavion.dev>"]
 publish = false
 edition = "2018"
+include = [
+	"build.rs",
+	"Cargo.toml",
+	"src/**/*",
+]
 
 [dependencies]
 backtrace = "0.3"
