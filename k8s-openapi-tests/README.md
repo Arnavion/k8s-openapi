@@ -1,21 +1,20 @@
 To run all tests:
 
 ```sh
+# Create all node images
+KIND_IMAGES="$(realpath ~/kind-images)"
+mkdir -p "$KIND_IMAGES"
+./test.sh all create-node-image "$KIND_IMAGES"
+
 # Create all clusters
+./test.sh all create-cluster "$KIND_IMAGES"
 
-for v in {11..17}; do
-    ./test.sh create-cluster "1.$v" || break
-done
-
-
-# Run all tests
-for v in {11..17}; do
-    ./test.sh run-tests "1.$v" || break
-done
-
+# Run all tests in record mode
+K8S_RECORD=1 ./test.sh all run-tests
 
 # Delete all clusters
-for v in {11..17}; do
-    ./test.sh delete-cluster "1.$v" || break
-done
+./test.sh all delete-cluster
+
+# Run all tests in replay mode
+./test.sh all run-tests
 ```
