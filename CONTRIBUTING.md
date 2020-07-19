@@ -89,8 +89,8 @@ The repository supports the latest patch versions of each of the separate 1.x re
     cargo rustdoc --features 'v1_18' -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
-    rm -rf ../k8s-openapi-gh-pages/v0.8.x &&
-    cp -R ./target/doc ../k8s-openapi-gh-pages/v0.8.x
+    rm -rf ../k8s-openapi-gh-pages/v0.9.x &&
+    cp -R ./target/doc ../k8s-openapi-gh-pages/v0.9.x
     ```
 
 1. `../k8s-openapi-gh-pages/index.html`: Add new anchor if this is a new major release

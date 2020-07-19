@@ -1,3 +1,36 @@
+# v0.9.0 (2020-07-19)
+
+- BREAKING CHANGE: Resource types that used to have a `metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>` field now have a `metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta` field instead. That is, metadata is now a required field for resource types. Most client requests and server responses need to set the field, so dealing with it being optional required unnecessary boilerplate in client code for both creating requests and using responses.
+
+  Likewise, the `k8s_openapi::Metadata` trait's `metadata` getter now returns `&Self::Ty` instead of `Option<&Self::Ty>`
+
+  Note that the fields inside the `ObjectMeta` type are themselves still optional.
+
+  There are some sitations like PATCH requests where the metadata truly is optional. In these cases, you can create an empty metadata value via `Default::default()`, which will get serialized as an empty JSON object `{}`. If there is a situation where the empty object does not act the same as if the field had been omitted entirely, please file an issue.
+
+- BREAKING CHANGE: `k8s_openapi::apimachinery::pkg::apis::meta::v1::WatchEvent::<T>::Bookmark` used to be a tuple variant containing a `T`, but is now a struct variant containing a `resource_version: String` field.
+
+  While the Kubernetes OpenAPI spec indicates that bookmark events contain the resource type, in fact they contain a stripped down form of that type with only the `apiVersion`, `kind` and `metadata.resourceVersion` fields set to useful values. Previously this would cause deserialization of bookmark events to fail if the `T` had some required field that was actually unset or `null`. Now the deserializer only looks for those three values in the event and ignores any others.
+
+- BREAKING CHANGE: `k8s_openapi::apimachinery::pkg::apis::meta::v1::WatchEvent<T>` now requires `T` to also implement `k8s_openapi::Resource`. Previously it only required `T` to implement `serde::de::DeserializeOwned`. This is required to support the change mentioned in the previous item, since the deserialization of a `WatchEvent` now needs to take the `apiVersion`, `kind` and `metadata.resourceVersion` fields into consideration itself instead of relying on `T`'s `serde::Deserialize` impl.
+
+- FEATURE: The `k8s_openapi::Metadata` trait now has a `fn metadata_mut(&mut self) -> &mut<Self as Metadata>::Ty` method that can be used to mutate the metadata of the resource.
+
+- FEATURE: The `k8s-openapi-codegen-common` crate is now stable and documented. It can be used by other code generators that want to generate code for Kubernetes-like API servers such as OpenShift.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.13
+- v1.17.9
+- v1.18.6
+
+---
+
 # v0.8.0 (2020-05-02)
 
 - BREAKING CHANGE: Support for v1.8, v1.9 and v1.10 API servers has been dropped. These versions became hard to test with `kubectl` and `kind` are are not supported by major cloud providers.
