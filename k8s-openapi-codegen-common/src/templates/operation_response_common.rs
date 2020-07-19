@@ -68,10 +68,7 @@ pub(crate) fn generate(
 			writeln!(variant_match_arms, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 			writeln!(variant_match_arms, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
 			writeln!(variant_match_arms, "                }};")?;
-			writeln!(variant_match_arms, r#"                let is_status = match result.get("kind") {{"#)?;
-			writeln!(variant_match_arms, r#"                    Some(serde_json::Value::String(s)) if s == "Status" => true,"#)?;
-			writeln!(variant_match_arms, "                    _ => false,")?;
-			writeln!(variant_match_arms, "                }};")?;
+			writeln!(variant_match_arms, r#"                let is_status = matches!(result.get("kind"), Some(serde_json::Value::String(s)) if s == "Status");"#)?;
 			writeln!(variant_match_arms, "                if is_status {{")?;
 			writeln!(variant_match_arms, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
 			writeln!(variant_match_arms, "                    let result = result.map_err({}ResponseError::Json)?;", local)?;

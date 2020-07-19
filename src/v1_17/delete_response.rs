@@ -20,10 +20,7 @@ impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwn
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                let is_status = match result.get("kind") {
-                    Some(serde_json::Value::String(s)) if s == "Status" => true,
-                    _ => false,
-                };
+                let is_status = matches!(result.get("kind"), Some(serde_json::Value::String(s)) if s == "Status");
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;

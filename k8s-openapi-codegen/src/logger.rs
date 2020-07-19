@@ -2,8 +2,7 @@ pub(crate) struct Logger;
 
 impl log::Log for Logger {
 	fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
-		THREAD_LOCAL_LOGGER.with(|thread_local_logger|
-			if let Some(logger) = thread_local_logger.borrow().as_ref() { logger.enabled(metadata) } else { false })
+		THREAD_LOCAL_LOGGER.with(|thread_local_logger| thread_local_logger.borrow().as_ref().map(|logger| logger.enabled(metadata)).unwrap_or_default())
 	}
 
 	fn log(&self, record: &log::Record<'_>) {

@@ -7,34 +7,28 @@ pub(crate) fn generate(
 	vis: &str,
 ) -> Result<(), crate::Error> {
 	let type_comment: String =
-		if let Some(type_comment) = type_comment {
-			super::get_comment_text(type_comment, "")
-			.map(|line| format!("///{}\n", line))
-			.collect()
-		}
-		else {
-			String::new()
-		};
+		type_comment
+		.map(|type_comment| super::get_comment_text(type_comment, "").map(|line| format!("///{}\n", line)).collect())
+		.unwrap_or_default();
 
-	let type_feature_attribute: std::borrow::Cow<'static, str> =
-		type_feature.map_or("".into(), |type_feature| format!("#[cfg(feature = \"{}\")]\n", type_feature).into());
+	let type_feature_attribute =
+		type_feature
+		.map(|type_feature| format!("#[cfg(feature = \"{}\")]\n", type_feature))
+		.unwrap_or_default();
 
-	let derives: std::borrow::Cow<'_, str> =
-		if let Some(Derives { clone, copy, default, eq, ord, partial_eq, partial_ord }) = derives {
-			format!(
-				"#[derive({clone}{copy}Debug{default}{eq}{ord}{partial_eq}{partial_ord})]\n",
-				clone = if clone { "Clone, " } else { "" },
-				copy = if copy { "Copy, " } else { "" },
-				default = if default { ", Default" } else { "" },
-				eq = if eq { ", Eq" } else { "" },
-				ord = if ord { ", Ord" } else { "" },
-				partial_eq = if partial_eq { ", PartialEq" } else { "" },
-				partial_ord = if partial_ord { ", PartialOrd" } else { "" },
-			).into()
-		}
-		else {
-			"".into()
-		};
+	let derives =
+		derives
+		.map(|Derives { clone, copy, default, eq, ord, partial_eq, partial_ord }| format!(
+			"#[derive({clone}{copy}Debug{default}{eq}{ord}{partial_eq}{partial_ord})]\n",
+			clone = if clone { "Clone, " } else { "" },
+			copy = if copy { "Copy, " } else { "" },
+			default = if default { ", Default" } else { "" },
+			eq = if eq { ", Eq" } else { "" },
+			ord = if ord { ", Ord" } else { "" },
+			partial_eq = if partial_eq { ", PartialEq" } else { "" },
+			partial_ord = if partial_ord { ", PartialOrd" } else { "" },
+		))
+		.unwrap_or_default();
 
 	write!(
 		writer,

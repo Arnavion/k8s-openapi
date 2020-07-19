@@ -116,10 +116,7 @@ impl<'de, T> serde::Deserialize<'de> for {type_name}<T> where T: serde::Deserial
                     WatchEventType::Error => {{
                         let is_status =
                             if let serde_value::Value::Map(map) = &value_object {{
-                                match map.get(&serde_value::Value::String("kind".to_owned())) {{
-                                    Some(serde_value::Value::String(s)) if s == "Status" => true,
-                                    _ => false,
-                                }}
+                                matches!(map.get(&serde_value::Value::String("kind".to_owned())), Some(serde_value::Value::String(s)) if s == "Status")
                             }}
                             else {{
                                 false
