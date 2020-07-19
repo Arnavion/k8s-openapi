@@ -1,7 +1,5 @@
 Common code for the [`k8s-openapi` code generator](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-codegen) and the [`k8s-openapi-derive`](https://crates.io/crates/k8s-openapi-derive) custom derive crate.
 
-This crate is not meant to be used by end users and does not have a stable API.
-
 
 # License
 
