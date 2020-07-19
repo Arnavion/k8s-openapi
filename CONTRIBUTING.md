@@ -78,6 +78,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 1. `/Cargo.toml`: Update `package.documentation` value
 1. `/Cargo.toml`: Update `package.links` value
 1. `/k8s-openapi-codegen-common/Cargo.toml`: Update `package.version` value
+1. `/k8s-openapi-codegen-common/Cargo.toml`: Update `package.documentation` value
 1. `/k8s-openapi-derive/Cargo.toml`: Update `package.version` value
 1. `/k8s-openapi-derive/Cargo.toml`: Update version req of `k8s-openapi-codegen-common` dependency
 1. `/k8s-openapi-derive/Cargo.toml`: Update `package.documentation` value
@@ -86,6 +87,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
     ```sh
     rm -rf ./target/doc/ &&
     cargo rustdoc --features 'v1_18' -- -Z unstable-options --enable-index-page &&
+    CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
     rm -rf ../k8s-openapi-gh-pages/v0.8.x &&
     cp -R ./target/doc ../k8s-openapi-gh-pages/v0.8.x
