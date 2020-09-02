@@ -52,8 +52,6 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
-1. `/k8s-openapi-tests/test-replays/`: Create an empty directory for the new version.
-
 1. `/k8s-openapi-tests/`: Create a cluster and run the tests against it in record mode.
 
     ```sh
@@ -86,7 +84,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
     ```sh
     rm -rf ./target/doc/ &&
-    cargo rustdoc --features 'v1_18' -- -Z unstable-options --enable-index-page &&
+    cargo rustdoc --features 'v1_19' -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
     rm -rf ../k8s-openapi-gh-pages/v0.9.x &&

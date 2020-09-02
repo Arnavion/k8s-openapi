@@ -48,12 +48,18 @@ impl Client {
 		#[cfg(feature = "test_v1_16")] let replays_directory = "v1-16";
 		#[cfg(feature = "test_v1_17")] let replays_directory = "v1-17";
 		#[cfg(feature = "test_v1_18")] let replays_directory = "v1-18";
+		#[cfg(feature = "test_v1_19")] let replays_directory = "v1-19";
 
-		let replay_filename =
+		let replays_directory =
 			std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR")))
 			.join("test-replays")
-			.join(replays_directory)
-			.join(format!("{}.json", test_name));
+			.join(replays_directory);
+		let () =
+			std::fs::create_dir_all(&replays_directory)
+			.map_err(|err| format!("couldn't create test-replays directory {}: {}", replays_directory.display(), err))
+			.unwrap();
+
+		let replay_filename = replays_directory.join(format!("{}.json", test_name));
 
 		let mut client =
 			if std::env::var("K8S_RECORD").is_ok() {
