@@ -47,22 +47,22 @@ declare -A K8S_VERSIONS=(
 	['1.14']='1.14.10'
 	['1.15']='1.15.12'
 	['1.16']='1.16.15'
-	['1.17']='1.17.11'
-	['1.18']='1.18.8'
-	['1.19']='1.19.1'
+	['1.17']='1.17.12'
+	['1.18']='1.18.9'
+	['1.19']='1.19.2'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
 declare -A KIND_VERSIONS=(
 	['1.11']='0.7.0'
 	['1.12']='0.8.1'
-	['1.13']='0.8.1'
-	['1.14']='0.8.1'
-	['1.15']='0.8.1'
-	['1.16']='0.8.1'
-	['1.17']='0.8.1'
-	['1.18']='0.8.1'
-	['1.19']='0.8.1'
+	['1.13']='0.9.0'
+	['1.14']='0.9.0'
+	['1.15']='0.9.0'
+	['1.16']='0.9.0'
+	['1.17']='0.9.0'
+	['1.18']='0.9.0'
+	['1.19']='0.9.0'
 )
 
 case "$1" in
@@ -87,11 +87,15 @@ K8S_CLUSTER_NAME="v$2"
 
 
 # Download the appropriate version of kind
-if ! command -v "kind-$KIND_VERSION" >/dev/null; then
-	mkdir -p ~/bin
-	curl -Lo ~/bin/kind-$KIND_VERSION "https://github.com/kubernetes-sigs/kind/releases/download/v$KIND_VERSION/kind-linux-amd64"
+mkdir -p ~/bin
+flock -x ~/bin -c "
+hash -r
+if ! command -v 'kind-$KIND_VERSION' >/dev/null; then
+	curl -Lo ~/bin/kind-$KIND_VERSION 'https://github.com/kubernetes-sigs/kind/releases/download/v$KIND_VERSION/kind-linux-amd64'
 	chmod +x ~/bin/kind-$KIND_VERSION
 fi
+"
+hash -r
 if ! command -v "kind-$KIND_VERSION" >/dev/null; then
 	PATH="$PATH:$HOME/bin"
 fi
