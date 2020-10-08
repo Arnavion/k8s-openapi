@@ -637,8 +637,8 @@ pub fn run<W>(
 					let type_name = get_rust_borrow_type(&schema.kind, map_namespace)?;
 
 					let field_type_name =
-						if type_name.starts_with('&') {
-							format!("Option<&'a {}>", &type_name[1..])
+						if let Some(borrowed_type_name) = type_name.strip_prefix('&') {
+							format!("Option<&'a {}>", borrowed_type_name)
 						}
 						else {
 							format!("Option<{}>", type_name)
@@ -993,22 +993,26 @@ fn evaluate_trait_bound(
 				Ok(true)
 			},
 
-			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) =>
-				if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.to_owned())) {
-					let mut visited = visited.clone();
-					evaluate_trait_bound_inner(
-						&std::borrow::Cow::Borrowed(&target.kind),
-						required,
-						array_follows_elements,
-						definitions,
-						map_namespace,
-						&mut visited,
-						f,
-					)
-				}
-				else {
-					f(&kind, required)
-				},
+			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => {
+				#[allow(clippy::option_if_let_else)]
+				let trait_bound =
+					if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.to_owned())) {
+						let mut visited = visited.clone();
+						evaluate_trait_bound_inner(
+							&std::borrow::Cow::Borrowed(&target.kind),
+							required,
+							array_follows_elements,
+							definitions,
+							map_namespace,
+							&mut visited,
+							f,
+						)
+					}
+					else {
+						f(&kind, required)
+					};
+				trait_bound
+			},
 
 			swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) if array_follows_elements =>
 				evaluate_trait_bound_inner(
@@ -1807,8 +1811,8 @@ pub fn write_operation(
 					writeln!(out, "    ///{}", line)?;
 				}
 			}
-			if parameter_type.starts_with('&') {
-				writeln!(out, "    {}{}: Option<&'a {}>,", vis, parameter_name, &parameter_type[1..])?;
+			if let Some(borrowed_parameter_type) = parameter_type.strip_prefix('&') {
+				writeln!(out, "    {}{}: Option<&'a {}>,", vis, parameter_name, borrowed_parameter_type)?;
 			}
 			else {
 				writeln!(out, "    {}{}: Option<{}>,", vis, parameter_name, parameter_type)?;
