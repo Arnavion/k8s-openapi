@@ -1,3 +1,21 @@
+# v0.10.0 (2020-10-11)
+
+- FEATURE: Added support for Kubernetes 1.19 under the `v1_19` feature.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.15
+- v1.17.12
+- v1.18.9
+- v1.19.2
+
+---
+
 # v0.9.0 (2020-07-19)
 
 - BREAKING CHANGE: Resource types that used to have a `metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>` field now have a `metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta` field instead. That is, metadata is now a required field for resource types. Most client requests and server responses need to set the field, so dealing with it being optional required unnecessary boilerplate in client code for both creating requests and using responses.
