@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["admissionregistration",""],["apps",""],["authentication",""],["authorization",""],["autoscaling",""],["batch",""],["certificates",""],["coordination",""],["core",""],["discovery",""],["events",""],["extensions",""],["flowcontrol",""],["networking",""],["node",""],["policy",""],["rbac",""],["scheduling",""],["settings",""],["storage",""]]});
