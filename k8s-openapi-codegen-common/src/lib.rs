@@ -258,7 +258,7 @@ pub fn run<W>(
 				let resource_metadata = match (has_api_version, has_kind) {
 					(true, true) => {
 						let single_group_version_kind = single_group_version_kind.unwrap();
-						if single_group_version_kind.group == "" {
+						if single_group_version_kind.group.is_empty() {
 							Some((
 								format!("{:?}", single_group_version_kind.version),
 								format!("{:?}", ""),

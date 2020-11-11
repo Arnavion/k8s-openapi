@@ -11,29 +11,32 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
 
 	for operation in &mut spec.operations {
 		if let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version {
-			if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "NodeProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Node".to_string();
-				found = true;
-			}
-			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodAttachOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Pod".to_string();
-				found = true;
-			}
-			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodExecOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Pod".to_string();
-				found = true;
-			}
-			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodPortForwardOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Pod".to_string();
-				found = true;
-			}
-			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Pod".to_string();
-				found = true;
-			}
-			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "ServiceProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-				kubernetes_group_kind_version.kind = "Service".to_string();
-				found = true;
+			if kubernetes_group_kind_version.group.is_empty() && kubernetes_group_kind_version.version == "v1" {
+				let kind = &mut kubernetes_group_kind_version.kind;
+				if &*kind == "NodeProxyOptions" {
+					*kind = "Node".to_string();
+					found = true;
+				}
+				else if &*kind == "PodAttachOptions" {
+					*kind = "Pod".to_string();
+					found = true;
+				}
+				else if &*kind == "PodExecOptions" {
+					*kind = "Pod".to_string();
+					found = true;
+				}
+				else if &*kind == "PodPortForwardOptions" {
+					*kind = "Pod".to_string();
+					found = true;
+				}
+				else if &*kind == "PodProxyOptions" {
+					*kind = "Pod".to_string();
+					found = true;
+				}
+				else if &*kind == "ServiceProxyOptions" {
+					*kind = "Service".to_string();
+					found = true;
+				}
 			}
 		}
 	}
