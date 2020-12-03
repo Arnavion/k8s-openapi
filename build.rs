@@ -51,7 +51,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
 
     let mut f = {
-        let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or_else(|| "OUT_DIR not set")?.into();
+        let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or("OUT_DIR not set")?.into();
         out_file.push("conditional_compilation_macros.rs");
         std::io::BufWriter::new(std::fs::File::create(out_file)?)
     };
