@@ -1,8 +1,7 @@
 
 #[derive(Debug, PartialEq)]
-struct BookmarkObject<'a, T> {{
+struct BookmarkObject<'a> {{
     metadata: BookmarkObjectMeta<'a>,
-    _resource: std::marker::PhantomData<T>,
 }}
 
 #[derive(Debug, PartialEq)]
@@ -10,12 +9,10 @@ struct BookmarkObjectMeta<'a> {{
     resource_version: std::borrow::Cow<'a, str>,
 }}
 
-impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {local}Resource {{
+impl<'de> serde::Deserialize<'de> for BookmarkObject<'static> {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{
         #[allow(non_camel_case_types)]
         enum Field {{
-            Key_api_version,
-            Key_kind,
             Key_metadata,
             Other,
         }}
@@ -33,8 +30,6 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {lo
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{
                         Ok(match v {{
-                            "apiVersion" => Field::Key_api_version,
-                            "kind" => Field::Key_kind,
                             "metadata" => Field::Key_metadata,
                             _ => Field::Other,
                         }})
@@ -45,13 +40,13 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {lo
             }}
         }}
 
-        struct Visitor<T>(std::marker::PhantomData<T>);
+        struct Visitor;
 
-        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: {local}Resource {{
-            type Value = BookmarkObject<'static, T>;
+        impl<'de> serde::de::Visitor<'de> for Visitor {{
+            type Value = BookmarkObject<'static>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
-                f.write_str(<T as {local}Resource>::KIND)
+                f.write_str("BookmarkObject")
             }}
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{
@@ -59,18 +54,6 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {lo
 
                 while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {{
                     match key {{
-                        Field::Key_api_version => {{
-                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <T as {local}Resource>::API_VERSION {{
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<T as {local}Resource>::API_VERSION));
-                            }}
-                        }},
-                        Field::Key_kind => {{
-                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <T as {local}Resource>::KIND {{
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<T as {local}Resource>::KIND));
-                            }}
-                        }},
                         Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},
                     }}
@@ -78,19 +61,16 @@ impl<'de, T> serde::Deserialize<'de> for BookmarkObject<'static, T> where T: {lo
 
                 Ok(BookmarkObject {{
                     metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
-                    _resource: Default::default()
                 }})
             }}
         }}
 
         deserializer.deserialize_struct(
-            <T as {local}Resource>::KIND,
+            "BookmarkObject",
             &[
-                "apiVersion",
-                "kind",
                 "metadata",
             ],
-            Visitor(Default::default()),
+            Visitor,
         )
     }}
 }}
@@ -161,14 +141,12 @@ impl<'de> serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
     }}
 }}
 
-impl<'a, T> serde::Serialize for BookmarkObject<'a, T> where T: {local}Resource {{
+impl<'a> serde::Serialize for BookmarkObject<'a> {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{
         let mut state = serializer.serialize_struct(
-            <T as {local}Resource>::KIND,
-            3,
+            "BookmarkObject",
+            1,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <T as {local}Resource>::API_VERSION)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <T as {local}Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::end(state)
     }}

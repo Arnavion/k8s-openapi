@@ -483,7 +483,6 @@ pub fn run<W>(
 			templates::watch_event::generate(
 				&mut out,
 				type_name,
-				map_namespace,
 				has_bookmark_event_type,
 				&error_status_rust_type,
 				&error_other_rust_type,

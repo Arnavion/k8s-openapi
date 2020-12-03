@@ -55,8 +55,6 @@ k8s_if_ge_1_15! {
 			br#"{
 				"type": "BOOKMARK",
 				"object": {
-					"apiVersion": "v1",
-					"kind": "Pod",
 					"metadata": {
 						"resourceVersion": "123"
 					}
@@ -82,36 +80,10 @@ k8s_if_ge_1_15! {
 		];
 
 		const FAILURE_TEST_CASES: &[&[u8]] = &[
-			// Mismatched API version
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-					"apiVersion": "v2",
-					"kind": "Pod",
-					"metadata": {
-						"resourceVersion": "123"
-					}
-				}
-			}"#,
-
-			// Mismatched kind
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-					"apiVersion": "v1",
-					"kind": "Node",
-					"metadata": {
-						"resourceVersion": "123"
-					}
-				}
-			}"#,
-
 			// Missing metadata
 			br#"{
 				"type": "BOOKMARK",
 				"object": {
-					"apiVersion": "v1",
-					"kind": "Pod"
 				}
 			}"#,
 
@@ -119,8 +91,6 @@ k8s_if_ge_1_15! {
 			br#"{
 				"type": "BOOKMARK",
 				"object": {
-					"apiVersion": "v1",
-					"kind": "Pod",
 					"metadata": {}
 				}
 			}"#,

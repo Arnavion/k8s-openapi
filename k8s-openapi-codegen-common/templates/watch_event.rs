@@ -6,7 +6,7 @@ enum {type_name}<T> {{
     ErrorOther({error_other_rust_type}),
 }}
 
-impl<'de, T> serde::Deserialize<'de> for {type_name}<T> where T: serde::Deserialize<'de> + {local}Resource {{
+impl<'de, T> serde::Deserialize<'de> for {type_name}<T> where T: serde::Deserialize<'de> {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{
         #[allow(non_camel_case_types)]
         enum Field {{
@@ -77,7 +77,7 @@ impl<'de, T> serde::Deserialize<'de> for {type_name}<T> where T: serde::Deserial
 
         struct Visitor<T>(std::marker::PhantomData<T>);
 
-        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> + {local}Resource {{
+        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> {{
             type Value = {type_name}<T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
@@ -144,7 +144,7 @@ impl<'de, T> serde::Deserialize<'de> for {type_name}<T> where T: serde::Deserial
     }}
 }}
 
-impl<T> serde::Serialize for {type_name}<T> where T: serde::Serialize + {local}Resource {{
+impl<T> serde::Serialize for {type_name}<T> where T: serde::Serialize {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{
         let mut state = serializer.serialize_struct(
             {type_name:?},

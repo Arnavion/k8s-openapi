@@ -16,7 +16,7 @@ pub enum WatchEvent<T> {
     ErrorOther(crate::apimachinery::pkg::runtime::RawExtension),
 }
 
-impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deserialize<'de> + crate::Resource {
+impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deserialize<'de> {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
@@ -87,7 +87,7 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
 
         struct Visitor<T>(std::marker::PhantomData<T>);
 
-        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> + crate::Resource {
+        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> {
             type Value = WatchEvent<T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -154,7 +154,7 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
     }
 }
 
-impl<T> serde::Serialize for WatchEvent<T> where T: serde::Serialize + crate::Resource {
+impl<T> serde::Serialize for WatchEvent<T> where T: serde::Serialize {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WatchEvent",
