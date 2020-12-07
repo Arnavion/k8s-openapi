@@ -24,11 +24,9 @@ pub(crate) fn generate(
 		OperationAction::Create |
 		OperationAction::Delete |
 		OperationAction::Replace |
-		OperationAction::Patch => " where T: serde::de::DeserializeOwned".into(),
-
+		OperationAction::Patch |
+		OperationAction::Watch => " where T: serde::de::DeserializeOwned".into(),
 		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}ListableResource", local).into(),
-
-		OperationAction::Watch => format!(" where T: serde::de::DeserializeOwned + {}Resource", local).into(),
 	};
 
 	let operation_feature_attribute: std::borrow::Cow<'static, str> =
