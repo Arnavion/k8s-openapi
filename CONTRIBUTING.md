@@ -67,7 +67,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
     ./test.sh run-tests '...'
     ```
 
-1. `/.github/workflows/ci.yml`: Add a new `strategy` for the new version.
+1. `/.github/workflows/ci.yaml`: Add a new `strategy` for the new version.
 
 
 # To make a new crate release
@@ -84,7 +84,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
     ```sh
     rm -rf ./target/doc/ &&
-    cargo rustdoc --features 'v1_19' -- -Z unstable-options --enable-index-page &&
+    cargo rustdoc --features 'v1_20' -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
     rm -rf ../k8s-openapi-gh-pages/v0.10.x &&
