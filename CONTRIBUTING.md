@@ -13,9 +13,9 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
-1. `/k8s-openapi-tests/`: Use `./test.sh create-cluster '...'; K8S_RECORD=1 ./test.sh run-tests '...'` to create a cluster and run the tests against it in record mode.
+1. `/k8s-openapi-tests/`: Use `./test.sh '...' create-cluster '...'; K8S_RECORD=1 ./test.sh '...' run-tests` to create a cluster and run the tests against it in record mode.
 
-1. `/k8s-openapi-tests/`: Use `./test.sh delete-cluster '...'; ./test.sh run-tests '...'` to delete the cluster and run the tests in replay mode.
+1. `/k8s-openapi-tests/`: Use `./test.sh '...' delete-cluster; ./test.sh '...' run-tests` to delete the cluster and run the tests in replay mode.
 
 
 # To add support for a new minor version
@@ -55,16 +55,16 @@ The repository supports the latest patch versions of each of the separate 1.x re
 1. `/k8s-openapi-tests/`: Create a cluster and run the tests against it in record mode.
 
     ```sh
-    ./test.sh create-node-image '...' /path/of/node/images/directory
-    ./test.sh create-cluster '...' /path/of/node/images/directory
-    K8S_RECORD=1 ./test.sh run-tests '...'
+    ./test.sh '...' create-node-image /path/of/node/images/directory
+    ./test.sh '...' create-cluster /path/of/node/images/directory
+    K8S_RECORD=1 ./test.sh '...' run-tests
     ```
 
 1. `/k8s-openapi-tests/`: Delete the cluster and run the tests in replay mode.
 
     ```sh
-    ./test.sh delete-cluster '...'
-    ./test.sh run-tests '...'
+    ./test.sh '...' delete-cluster
+    ./test.sh '...' run-tests
     ```
 
 1. `/.github/workflows/ci.yaml`: Add a new `strategy` for the new version.

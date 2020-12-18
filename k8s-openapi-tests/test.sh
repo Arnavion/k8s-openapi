@@ -2,7 +2,7 @@
 
 # Usage:
 #
-#     test.sh create-node-image <version> <directory>
+#     test.sh <version> create-node-image <directory>
 #
 # Create a node image for testing <version> and save it under <directory>.
 #
@@ -16,27 +16,24 @@
 # ... to clean up leftover gunk.
 #
 #
-#     test.sh create-cluster <version> <directory>
+#     test.sh <version> create-cluster <directory>
 #
 # Create a cluster for testing <version> using the image stored under <directory>.
 #
 #
-#     test.sh delete-cluster <version>
+#     test.sh <version> delete-cluster
 #
 # Delete the cluster created with create-cluster.
 #
 #
-#     test.sh run-tests <version>
+#     test.sh <version> run-tests
 #
 # Run the tests for <version>. Set K8S_RECORD=1 if you want to run the tests in record mode.
 #
 #
-#     test.sh all create-node-image <directory>
-#     test.sh all create-cluster <directory>
-#     test.sh all delete-cluster
-#     test.sh all run-tests
-#
-# Run the corresponding command against all supported versions in parallel.
+# <version> can be a single string like "1.11", or multiple versions separated by comma like "1.11,1.12",
+# or the string "all" to mean all versions. If more than one version is specified, the corresponding command
+# will be run against all specified versions in parallel.
 
 set -euo pipefail
 
@@ -70,7 +67,17 @@ declare -A KIND_VERSIONS=(
 case "$1" in
 	'all')
 		for v in "${!K8S_VERSIONS[@]}"; do
-			("$0" "$2" "$v" "${@:3}" 2>&1 | sed -e "s/^/[v$v] /") &
+			("$0" "$v" "$2" "${@:3}" 2>&1 | sed -e "s/^/[v$v] /") &
+		done
+
+		wait $(jobs -pr)
+
+		exit 0
+		;;
+
+	*','*)
+		for v in ${1//,/ }; do
+			("$0" "$v" "$2" "${@:3}" 2>&1 | sed -e "s/^/[v$v] /") &
 		done
 
 		wait $(jobs -pr)
@@ -83,9 +90,9 @@ case "$1" in
 esac
 
 
-K8S_VERSION="${K8S_VERSIONS["$2"]}"
-KIND_VERSION="${KIND_VERSIONS["$2"]}"
-K8S_CLUSTER_NAME="v$2"
+K8S_VERSION="${K8S_VERSIONS["$1"]}"
+KIND_VERSION="${KIND_VERSIONS["$1"]}"
+K8S_CLUSTER_NAME="v$1"
 
 
 # Download the appropriate version of kind
@@ -103,7 +110,7 @@ if ! command -v "kind-$KIND_VERSION" >/dev/null; then
 fi
 
 
-case "$1" in
+case "$2" in
 	'create-node-image')
 		if [ -f "$3/kindest-node-v$K8S_VERSION.tar.gz" ]; then
 			exit 0
@@ -166,7 +173,7 @@ case "$1" in
 		;;
 
 	'run-tests')
-		CARGO_TARGET_DIR="$PWD/target-v$K8S_VERSION" K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${2//./_}" "${@:3}"
+		CARGO_TARGET_DIR="$PWD/target-v$K8S_VERSION" K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${1//./_}" "${@:3}"
 		;;
 
 	*)

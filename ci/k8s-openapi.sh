@@ -27,7 +27,7 @@ case "$OP" in
 
 	'tests')
 		pushd k8s-openapi-tests
-		RUST_BACKTRACE=full ./test.sh run-tests "$VERSION"
+		RUST_BACKTRACE=full ./test.sh "$VERSION" run-tests
 		popd
 		;;
 
