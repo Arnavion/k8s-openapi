@@ -115,7 +115,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		log::info!("Parsing spec file at {} ...", spec_url);
 		let response = client.get(spec_url).send()?;
 		let status = response.status();
-		if status != reqwest::StatusCode::OK {
+		if status != http::StatusCode::OK {
 			return Err(status.to_string().into());
 		}
 		response.json()?

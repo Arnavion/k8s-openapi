@@ -481,7 +481,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			.chain(std::iter::once(watch_optional_parameter.clone()))
 			.collect();
 		if let crate::swagger20::OperationResponses::Map(responses) = &mut watch_operation.responses {
-			responses.insert(reqwest::StatusCode::OK, crate::swagger20::Schema {
+			responses.insert(http::StatusCode::OK, crate::swagger20::Schema {
 				description: Some("OK".to_owned()),
 				kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath {
 					path: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned(),
