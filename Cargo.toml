@@ -29,7 +29,7 @@ links = "k8s-openapi-0.10.0"
 
 [dependencies]
 base64 = "0.13"
-bytes = "0.5"
+bytes = "1"
 chrono = { version = "0.4.1", features = ["serde"] }
 http = { version = "0.2", optional = true }
 percent-encoding = { version = "2", optional = true }
