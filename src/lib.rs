@@ -376,7 +376,7 @@
 //!    - ```rust,ignore
 //!      // Your crate's src/lib.rs
 //!
-//!      #[cfg(k8s_apiextensions = "v1")]
+//!      #[cfg(not(k8s_apiextensions = "v1"))]
 //!      compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      ```
 //!
