@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["k8s_openapi_codegen_common"] = [{"text":"impl From&lt;&amp;'_ str&gt; for Error","synthetic":false,"types":[]},{"text":"impl From&lt;String&gt; for Error","synthetic":false,"types":[]},{"text":"impl From&lt;Error&gt; for Error","synthetic":false,"types":[]},{"text":"impl From&lt;Error&gt; for Error","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["k8s_openapi"] = [{"text":"impl Display for RequestError","synthetic":false,"types":[]},{"text":"impl Display for ResponseError","synthetic":false,"types":[]}];
+implementors["k8s_openapi_codegen_common"] = [{"text":"impl Display for DefinitionPath","synthetic":false,"types":[]},{"text":"impl Display for PropertyName","synthetic":false,"types":[]},{"text":"impl Display for Path","synthetic":false,"types":[]},{"text":"impl Display for Error","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
