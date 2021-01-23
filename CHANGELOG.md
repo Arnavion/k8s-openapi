@@ -1,3 +1,28 @@
+# v0.11.0 (2021-01-23)
+
+- BREAKING CHANGE: This version partially reverts the change in v0.9.0 that made `k8s_openapi::apimachinery::pkg::apis::meta::v1::WatchEvent<T>` require `T: k8s_openapi::Resource`; now it only requires `T: serde::Deserialize<'de>` once more. This has been done to make it possible to use `WatchEvent` with custom user-provided resource types that do not implement `k8s_openapi::Resource`.
+
+  The `k8s_openapi::Resource` bound in v0.9.0 was added to be able to enforce that the `WatchEvent::<T>::Bookmark` events contain the correct `apiVersion` and `kind` fields for the specified `T` during deserialization. Without the bound now, it is no longer possible to do that. So it is now possible to deserialize, say, a `WatchEvent::<Pod>::Bookmark` as a `WatchEvent::<Node>::Bookmark` without any runtime error. Take care to deserialize `watch_*` API responses into the right `k8s_openapi::WatchResponse<T>` type, such as by relying on the returned `k8s_openapi::ResponseBody<T>` as documented in the crate docs.
+
+- BREAKING CHANGE: The `bytes` dependency has been updated to match the `tokio` v1 ecosystem.
+
+- FEATURE: Added support for Kubernetes 1.20 under the `v1_20` feature.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.15
+- v1.17.17
+- v1.18.15
+- v1.19.7
+- v1.20.2
+
+---
+
 # v0.10.0 (2020-10-11)
 
 - FEATURE: Added support for Kubernetes 1.19 under the `v1_19` feature.
