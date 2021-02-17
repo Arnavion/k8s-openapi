@@ -415,13 +415,13 @@ pub fn run<W>(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrStringArray(_)) => {
+		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrArray(_)) |
+		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrBool(_)) |
+		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrStringArray(_)) => {
 			let (namespace, json_schema_props_or) = match ty {
-				swagger20::Type::JSONSchemaPropsOrArray(namespace) => (namespace, templates::json_schema_props_or::Or::Array),
-				swagger20::Type::JSONSchemaPropsOrBool(namespace) => (namespace, templates::json_schema_props_or::Or::Bool),
-				swagger20::Type::JSONSchemaPropsOrStringArray(namespace) => (namespace, templates::json_schema_props_or::Or::StringArray),
+				swagger20::Type::JsonSchemaPropsOrArray(namespace) => (namespace, templates::json_schema_props_or::Or::Array),
+				swagger20::Type::JsonSchemaPropsOrBool(namespace) => (namespace, templates::json_schema_props_or::Or::Bool),
+				swagger20::Type::JsonSchemaPropsOrStringArray(namespace) => (namespace, templates::json_schema_props_or::Or::StringArray),
 				_ => unreachable!("unexpected JSONSchemaPropsOr* variant"),
 			};
 
@@ -889,9 +889,9 @@ fn get_derives(
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
 		// Enums without a default value
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) |
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) |
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
@@ -1024,9 +1024,9 @@ fn evaluate_trait_bound(
 					f,
 				),
 
-			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray(namespace)) |
-			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool(namespace)) |
-			swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray(namespace)) => {
+			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(namespace)) |
+			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(namespace)) |
+			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(namespace)) => {
 				let json_schema_props_ref_path = swagger20::RefPath {
 					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
 					can_be_default: None,
@@ -1232,9 +1232,9 @@ fn get_rust_borrow_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
@@ -1308,9 +1308,9 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
