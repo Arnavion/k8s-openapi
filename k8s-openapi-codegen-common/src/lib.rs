@@ -184,24 +184,26 @@ pub fn run<W>(
 
 				let mut result = Vec::with_capacity(properties.len());
 
-				let single_group_version_kind = match &definition.kubernetes_group_kind_versions[..] {
-					[group_version_kind] => Some(group_version_kind),
+				let mut single_group_version_kind = match &definition.kubernetes_group_kind_versions[..] {
+					[group_version_kind] => Some((group_version_kind, false, false)),
 					_ => None,
 				};
 
-				let mut has_api_version = false;
-				let mut has_kind = false;
 				let mut metadata_ty = None;
 
 				for (name, (schema, required)) in properties {
-					if name.0 == "apiVersion" && single_group_version_kind.is_some() {
-						has_api_version = true;
-						continue;
+					if name.0 == "apiVersion" {
+						if let Some((_, has_api_version, _)) = &mut single_group_version_kind {
+							*has_api_version = true;
+							continue;
+						}
 					}
 
-					if name.0 == "kind" && single_group_version_kind.is_some() {
-						has_kind = true;
-						continue;
+					if name.0 == "kind" {
+						if let Some((_, _, has_kind)) = &mut single_group_version_kind {
+							*has_kind = true;
+							continue;
+						}
 					}
 
 					let field_name = get_rust_ident(&name);
@@ -255,29 +257,27 @@ pub fn run<W>(
 					});
 				}
 
-				let resource_metadata = match (has_api_version, has_kind) {
-					(true, true) => {
-						let single_group_version_kind = single_group_version_kind.unwrap();
-						if single_group_version_kind.group.is_empty() {
-							Some((
+				let resource_metadata = match single_group_version_kind {
+					Some((single_group_version_kind, true, true)) =>
+						Some(if single_group_version_kind.group.is_empty() {
+							(
 								format!("{:?}", single_group_version_kind.version),
 								format!("{:?}", ""),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
-							))
+							)
 						}
 						else {
-							Some((
+							(
 								format!("{:?}", format!("{}/{}", single_group_version_kind.group, single_group_version_kind.version)),
 								format!("{:?}", single_group_version_kind.group),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
-							))
-						}
-					},
-					(false, false) => None,
-					(true, false) => return Err(format!("{} has an apiVersion property but not a kind property", definition_path).into()),
-					(false, true) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
+							)
+						}),
+					Some((_, true, false)) => return Err(format!("{} has an apiVersion property but not a kind property", definition_path).into()),
+					Some((_, false, true)) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
+					Some((_, false, false)) | None => None,
 				};
 
 				(result, resource_metadata, metadata_ty)
@@ -1471,7 +1471,9 @@ pub fn write_operation(
 				Some(swagger20::KubernetesAction::DeleteCollection) =>
 					Some(format!("[`{local}DeleteResponse`]`<`[`{local}List`]`<Self>>", local = local)),
 
-				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse response"),
+				kubernetes_action => return Err(format!(
+					"operation {} has a DeleteResponse response but its action {:?} is neither a Delete nor DeleteCollection action",
+					operation.id, kubernetes_action).into()),
 			},
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
@@ -1586,7 +1588,9 @@ pub fn write_operation(
 				Some(swagger20::KubernetesAction::DeleteCollection) =>
 					Some(format!("{local}DeleteResponse<{local}List<Self>>", local = local)),
 
-				_ => unreachable!("action that is neither Delete nor DeleteCollection has DeleteResponse"),
+				kubernetes_action => return Err(format!(
+					"operation {} has a DeleteResponse response but its action {:?} is neither a Delete nor DeleteCollection action",
+					operation.id, kubernetes_action).into()),
 			},
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
