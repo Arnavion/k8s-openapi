@@ -6,7 +6,7 @@ on:
 
 jobs:
   k8s-openapi:
-    runs-on: 'ubuntu-18.04'
+    runs-on: 'ubuntu-20.04'
 
     strategy:
       fail-fast: false
@@ -49,7 +49,7 @@ jobs:
 
 
   k8s-openapi-codegen:
-    runs-on: 'ubuntu-18.04'
+    runs-on: 'ubuntu-20.04'
 
     strategy:
       fail-fast: false
@@ -68,7 +68,7 @@ jobs:
 
 
   k8s-openapi-derive:
-    runs-on: 'ubuntu-18.04'
+    runs-on: 'ubuntu-20.04'
 
     strategy:
       fail-fast: false
