@@ -49,36 +49,32 @@ impl super::CustomDerive for CustomResourceDefinition {
 								group = Some(lit.value());
 								continue;
 							}
-							else {
-								return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
-							}
+
+							return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
 						}
 						else if meta.path.is_ident("plural") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								plural = Some(lit.value());
 								continue;
 							}
-							else {
-								return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
-							}
+
+							return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
 						}
 						else if meta.path.is_ident("version") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								version = Some(lit.value());
 								continue;
 							}
-							else {
-								return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
-							}
+
+							return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
 						}
 						else if meta.path.is_ident("has_subresources") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								has_subresources = Some(lit.value());
 								continue;
 							}
-							else {
-								return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
-							}
+
+							return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
 						}
 						else {
 							meta
