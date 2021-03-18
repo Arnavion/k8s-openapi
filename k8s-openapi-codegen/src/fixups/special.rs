@@ -168,7 +168,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 						};
 
 					optional_definition
-						.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+						.entry(crate::swagger20::PropertyName(expected_parameter_name.clone()))
 						.or_insert_with(|| expected_parameter.schema.clone());
 				}
 
@@ -351,7 +351,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 
 			if expected_parameter_name != "allowWatchBookmarks" && expected_parameter_name != "watch" {
 				list_optional_definition
-					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+					.entry(crate::swagger20::PropertyName(expected_parameter_name.clone()))
 					.or_insert_with(|| expected_parameter.schema.clone());
 			}
 
@@ -362,7 +362,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				expected_parameter_name != "watch"
 			{
 				watch_optional_definition
-					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+					.entry(crate::swagger20::PropertyName(expected_parameter_name.clone()))
 					.or_insert_with(|| expected_parameter.schema.clone());
 			}
 		}
@@ -373,7 +373,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}
 		}
 
-		list_operations.push(operation.id.to_owned());
+		list_operations.push(operation.id.clone());
 	}
 
 	if list_operations.is_empty() {

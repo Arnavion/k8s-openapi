@@ -164,7 +164,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			"pub ",
 			Some("api"),
 			|parts, type_feature| {
-				let mut current = out_dir.to_owned();
+				let mut current = out_dir.clone();
 
 				for part in parts.iter().skip(1).rev().skip(1).rev() {
 					log::trace!("Current directory: {}", current.display());
