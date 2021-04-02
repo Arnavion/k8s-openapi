@@ -100,8 +100,6 @@ fn main() -> Result<(), Error> {
 }
 
 fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client) -> Result<(), Error> {
-	use std::io::Write;
-
 	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -154,7 +152,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	for definition_path in spec.definitions.keys() {
 		log::trace!("Working on {} ...", definition_path);
 
-		let parent_mod_rs_file_and_mod_name = std::cell::RefCell::new(None);
+		let run_state = RunState {
+			out_dir: &out_dir,
+			parent_mod_rs_file_and_mod_name: None,
+		};
 
 		let run_result = k8s_openapi_codegen_common::run(
 			&spec.definitions,
@@ -163,85 +164,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			&MapNamespace,
 			"pub ",
 			Some("api"),
-			|parts, type_feature| {
-				let mut current = out_dir.clone();
-
-				for part in parts.iter().skip(1).rev().skip(1).rev() {
-					log::trace!("Current directory: {}", current.display());
-
-					let mod_name = k8s_openapi_codegen_common::get_rust_ident(part);
-
-					current.push(&*mod_name);
-
-					log::trace!("Checking if subdirectory {} exists...", current.display());
-
-					if !current.is_dir() {
-						log::trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
-
-						let current_mod_rs_path = current.with_file_name("mod.rs");
-						let append_newline = current_mod_rs_path.exists();
-						let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current_mod_rs_path)?);
-						if append_newline {
-							writeln!(parent_mod_rs)?;
-						}
-						writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
-
-						log::trace!("    OK");
-						log::trace!("    Creating subdirectory...");
-
-						std::fs::create_dir(&current)?;
-						log::trace!("    OK");
-					}
-
-					log::trace!("OK");
-				}
-
-				let type_name = parts.last().unwrap();
-
-				let mod_name = k8s_openapi_codegen_common::get_rust_ident(type_name);
-
-				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
-				writeln!(parent_mod_rs)?;
-				if let Some(type_feature) = type_feature {
-					writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
-				}
-				writeln!(parent_mod_rs, "mod {};", mod_name)?;
-				if let Some(type_feature) = type_feature {
-					writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
-				}
-				writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
-
-				let file_name = current.join(&*mod_name).with_extension("rs");
-				let file = std::io::BufWriter::new(std::fs::File::create(file_name)?);
-
-				parent_mod_rs_file_and_mod_name.replace(Some((parent_mod_rs, mod_name)));
-
-				Ok(file)
-			},
-			|operation_optional_parameters_name, operation_result_name| {
-				let mut parent_mod_rs_file_and_mod_name = parent_mod_rs_file_and_mod_name.borrow_mut();
-				let (parent_mod_rs, mod_name) = parent_mod_rs_file_and_mod_name.as_mut().unwrap();
-				match (operation_optional_parameters_name, operation_result_name) {
-					(Some(operation_optional_parameters_name), Some(operation_result_name)) =>
-						writeln!(
-							parent_mod_rs,
-							r#"#[cfg(feature = "api")] pub use self::{}::{{{}, {}}};"#,
-							mod_name, operation_optional_parameters_name, operation_result_name)?,
-					(Some(operation_optional_parameters_name), None) =>
-						writeln!(
-							parent_mod_rs,
-							r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
-							mod_name, operation_optional_parameters_name)?,
-					(None, Some(operation_result_name)) =>
-						writeln!(
-							parent_mod_rs,
-							r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
-							mod_name, operation_result_name)?,
-					(None, None) =>
-						(),
-				}
-				Ok(())
-			},
+			run_state,
 		)?;
 
 		num_generated_structs += run_result.num_generated_structs;
@@ -301,4 +224,107 @@ impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
 			_ => None,
 		}
 	}
+}
+
+struct RunState<'a> {
+	out_dir: &'a std::path::Path,
+	parent_mod_rs_file_and_mod_name: Option<(<Self as k8s_openapi_codegen_common::RunState>::Writer, std::borrow::Cow<'static, str>)>,
+}
+
+impl k8s_openapi_codegen_common::RunState for RunState<'_> {
+	type Writer = std::io::BufWriter<std::fs::File>;
+
+	fn make_writer(
+		&mut self,
+		parts: &[&str],
+		type_feature: Option<&str>,
+	) -> std::io::Result<Self::Writer> {
+		use std::io::Write;
+
+		let mut current = self.out_dir.to_owned();
+
+		for part in parts.iter().skip(1).rev().skip(1).rev() {
+			log::trace!("Current directory: {}", current.display());
+
+			let mod_name = k8s_openapi_codegen_common::get_rust_ident(part);
+
+			current.push(&*mod_name);
+
+			log::trace!("Checking if subdirectory {} exists...", current.display());
+
+			if !current.is_dir() {
+				log::trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
+
+				let current_mod_rs_path = current.with_file_name("mod.rs");
+				let append_newline = current_mod_rs_path.exists();
+				let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current_mod_rs_path)?);
+				if append_newline {
+					writeln!(parent_mod_rs)?;
+				}
+				writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
+
+				log::trace!("    OK");
+				log::trace!("    Creating subdirectory...");
+
+				std::fs::create_dir(&current)?;
+				log::trace!("    OK");
+			}
+
+			log::trace!("OK");
+		}
+
+		let type_name = parts.last().unwrap();
+
+		let mod_name = k8s_openapi_codegen_common::get_rust_ident(type_name);
+
+		let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
+		writeln!(parent_mod_rs)?;
+		if let Some(type_feature) = type_feature {
+			writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
+		}
+		writeln!(parent_mod_rs, "mod {};", mod_name)?;
+		if let Some(type_feature) = type_feature {
+			writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
+		}
+		writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
+
+		let file_name = current.join(&*mod_name).with_extension("rs");
+		let file = std::io::BufWriter::new(std::fs::File::create(file_name)?);
+
+		self.parent_mod_rs_file_and_mod_name = Some((parent_mod_rs, mod_name));
+
+		Ok(file)
+	}
+
+	fn handle_operation_types(
+		&mut self,
+		operation_optional_parameters_name: Option<&str>,
+		operation_result_name: Option<&str>,
+	) -> std::io::Result<()> {
+		use std::io::Write;
+
+		let (parent_mod_rs, mod_name) = self.parent_mod_rs_file_and_mod_name.as_mut().unwrap();
+		match (operation_optional_parameters_name, operation_result_name) {
+			(Some(operation_optional_parameters_name), Some(operation_result_name)) =>
+				writeln!(
+					parent_mod_rs,
+					r#"#[cfg(feature = "api")] pub use self::{}::{{{}, {}}};"#,
+					mod_name, operation_optional_parameters_name, operation_result_name)?,
+			(Some(operation_optional_parameters_name), None) =>
+				writeln!(
+					parent_mod_rs,
+					r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
+					mod_name, operation_optional_parameters_name)?,
+			(None, Some(operation_result_name)) =>
+				writeln!(
+					parent_mod_rs,
+					r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
+					mod_name, operation_result_name)?,
+			(None, None) =>
+				(),
+		}
+		Ok(())
+	}
+
+	fn finish(&mut self, _writer: Self::Writer) { }
 }

@@ -656,7 +656,9 @@ impl super::CustomDerive for CustomResourceDefinition {
 			],
 		};
 
-		let mut out = vec![];
+		let mut run_state = RunState {
+			writer: vec![],
+		};
 
 		let _ =
 			k8s_openapi_codegen_common::run(
@@ -666,12 +668,10 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&MapNamespace,
 				&vis,
 				None,
-				|_, _| Ok(&mut out),
-				|_, _| Ok(()),
+				&mut run_state,
 			)
 			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
 			.spanning(&tokens)?;
-
 
 		let _ =
 			k8s_openapi_codegen_common::run(
@@ -681,15 +681,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&MapNamespace,
 				&vis,
 				None,
-				|_, _| Ok(&mut out),
-				|_, _| Ok(()),
+				&mut run_state,
 			)
 			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
 			.spanning(&tokens)?;
 
 		assert!(spec.operations.is_empty());
 
-		let out = String::from_utf8(out).map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err)).spanning(&tokens)?;
+		let out = String::from_utf8(run_state.writer).map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err)).spanning(&tokens)?;
 		let result = out.parse().map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {:?}", err)).spanning(&tokens)?;
 		Ok(result)
 	}
@@ -703,5 +702,33 @@ impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
 			["io", "k8s", rest @ ..] => Some(std::iter::once("k8s_openapi").chain(rest.iter().copied()).collect()),
 			path_parts => Some(path_parts.iter().copied().collect()),
 		}
+	}
+}
+
+struct RunState {
+	writer: Vec<u8>,
+}
+
+impl k8s_openapi_codegen_common::RunState for RunState {
+	type Writer = Vec<u8>;
+
+	fn make_writer(
+		&mut self,
+		_parts: &[&str],
+		_type_feature: Option<&str>,
+	) -> std::io::Result<Self::Writer> {
+		Ok(std::mem::take(&mut self.writer))
+	}
+
+	fn handle_operation_types(
+		&mut self,
+		_operation_optional_parameters_name: Option<&str>,
+		_operation_result_name: Option<&str>,
+	) -> std::io::Result<()> {
+		Ok(())
+	}
+
+	fn finish(&mut self, writer: Self::Writer) {
+		self.writer = writer;
 	}
 }

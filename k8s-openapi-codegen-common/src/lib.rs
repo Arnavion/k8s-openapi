@@ -6,6 +6,7 @@
 	clippy::doc_markdown,
 	clippy::let_and_return,
 	clippy::missing_errors_doc,
+	clippy::missing_panics_doc,
 	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::struct_excessive_bools,
@@ -89,6 +90,65 @@ pub trait MapNamespace {
 	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>>;
 }
 
+/// Used to create an impl of `std::io::Write` for each type that the type's generated code will be written to.
+pub trait RunState {
+	/// The impl of `std::io::Write` for each type that the type's generated code will be written to.
+	type Writer: std::io::Write;
+
+	/// Returns an impl of `std::io::Write` for each type that the type's generated code will be written to.
+	///
+	/// # Parameters
+	///
+	/// - `parts`: A list of strings making up the components of the path of the generated type. Code generators that are emitting crates
+	///   can use this parameter to make module subdirectories for each component, and to emit `use` statements in the final module's `mod.rs`.
+	///
+	/// - `type_feature`: The name of the Rust feature that should be used to `cfg`-gate this type as a whole, if any.
+	///   Code generators that are emitting modules can use this flag to emit a `#[cfg(feature = "<this value>")]` on the `use` statement
+	///   for the generated type in the module's `mod.rs`.
+	fn make_writer(
+		&mut self,
+		parts: &[&str],
+		type_feature: Option<&str>,
+	) -> std::io::Result<Self::Writer>;
+
+	/// This function is invoked with the names of the optional parameters type and result type for each operation generated for a particular type.
+	///
+	/// Code generators that are emitting modules can write out `use` lines in the module's `mod.rs` for each of these types.
+	fn handle_operation_types(
+		&mut self,
+		operation_optional_parameters_name: Option<&str>,
+		operation_result_name: Option<&str>,
+	) -> std::io::Result<()>;
+
+	/// This function is invoked when `k8s_openapi_codegen_common::run` is done with the writer and completes successfully.
+	/// The implementation can do any cleanup that it wants here.
+	fn finish(&mut self, writer: Self::Writer);
+}
+
+impl<T> RunState for &'_ mut T where T: RunState {
+	type Writer = <T as RunState>::Writer;
+
+	fn make_writer(
+		&mut self,
+		parts: &[&str],
+		type_feature: Option<&str>,
+	) -> std::io::Result<Self::Writer> {
+		(*self).make_writer(parts, type_feature)
+	}
+
+	fn handle_operation_types(
+		&mut self,
+		operation_optional_parameters_name: Option<&str>,
+		operation_result_name: Option<&str>,
+	) -> std::io::Result<()> {
+		(*self).handle_operation_types(operation_optional_parameters_name, operation_result_name)
+	}
+
+	fn finish(&mut self, writer: Self::Writer) {
+		(*self).finish(writer)
+	}
+}
+
 /// Each invocation of this function generates a single type specified by the `definition_path` parameter along with its associated API operation functions.
 ///
 /// # Parameters
@@ -108,27 +168,18 @@ pub trait MapNamespace {
 ///    The attribute will also be applied to their optional parameters and response types, if any, and to common types for
 ///    optional parameters and response types that are shared by multiple operations.
 ///
-/// - `out`: A callback that will be invoked to get an impl of `std::io::Write` to write the generated code to.
-///   The callback receives two parameters:
-///       1. A list of strings making up the components of the path of the generated type. Code generators that are emitting crates can use this parameter
-///          to make module subdirectories for each component, and to emit `use` statements in the final module's `mod.rs`.
-///       1. The value of `optional_feature`, indicating that the generated type as a whole will be emitted under this feature.
-///          Code generators that are emitting modules can use this flag to emit a `#[cfg(feature = "<this value>")]` on the `use` statement
-///          for the generated type.
-///
-/// - `imports`: A callback that gets invoked once for every API function that was emitted for the generated type. The callback receives two parameters:
-///       1. The name of the optional parameters type associated with the operation, if any.
-///       1. The name of the response type associated with the operation, if any.
-pub fn run<W>(
+/// - `state`: See the documentation of the [`RunState`] trait.
+pub fn run(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	operations: &mut Vec<swagger20::Operation>,
 	definition_path: &swagger20::DefinitionPath,
 	map_namespace: &impl MapNamespace,
 	vis: &str,
 	optional_feature: Option<&str>,
-	out: impl FnOnce(&[&str], Option<&str>) -> std::io::Result<W>,
-	mut imports: impl FnMut(Option<String>, Option<String>) -> std::io::Result<()>,
-) -> Result<RunResult, Error> where W: std::io::Write {
+	mut state: impl RunState,
+) -> Result<RunResult, Error> {
+	use std::io::Write;
+
 	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {} does not exist in spec", definition_path))?;
 
 	let local = map_namespace_local_to_string(map_namespace)?;
@@ -162,7 +213,7 @@ pub fn run<W>(
 		_ => None,
 	};
 
-	let mut out = out(&namespace_parts, type_feature)?;
+	let mut out = state.make_writer(&namespace_parts, type_feature)?;
 
 	let type_name = path_parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?;
 
@@ -320,7 +371,7 @@ pub fn run<W>(
 									vis,
 									Some(type_name),
 									optional_feature)?;
-							imports(operation_optional_parameters_name, operation_result_name)?;
+							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
 							run_result.num_generated_apis += 1;
 						}
 
@@ -822,6 +873,8 @@ pub fn run<W>(
 			run_result.num_generated_type_aliases += 1;
 		},
 	}
+
+	state.finish(out);
 
 	Ok(run_result)
 }
