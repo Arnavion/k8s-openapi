@@ -11,6 +11,7 @@
     clippy::single_match_else,
     clippy::too_many_lines,
     clippy::type_complexity,
+    clippy::upper_case_acronyms,
     clippy::use_self,
 )]
 
