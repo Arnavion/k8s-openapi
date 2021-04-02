@@ -11,9 +11,7 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrArray", namespace));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(_)) = definition.kind {
-				}
-				else {
+				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(_))) {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(namespace));
 					found = true;
 				}
@@ -35,9 +33,7 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrBool", namespace));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(_)) = definition.kind {
-				}
-				else {
+				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(_))) {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(namespace));
 					found = true;
 				}
@@ -59,9 +55,7 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrStringArray", namespace));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(_)) = definition.kind {
-				}
-				else {
+				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(_))) {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(namespace));
 					found = true;
 				}
@@ -564,13 +558,8 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 				continue;
 			};
 
-		#[allow(clippy::needless_continue)]
-		{
-			if let Some((_, true)) = properties.get(&items_property_name) {
-			}
-			else {
-				continue;
-			}
+		if !matches!(properties.get(&items_property_name), Some((_, true))) {
+			continue;
 		}
 
 		let metadata_schema =

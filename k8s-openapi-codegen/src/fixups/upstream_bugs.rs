@@ -133,9 +133,7 @@ pub(crate) mod optional_properties {
 pub(crate) fn raw_extension_ty(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.runtime.RawExtension".to_owned());
 	if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-		if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
-		}
-		else {
+		if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any)) {
 			definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
 			return Ok(());
 		}
