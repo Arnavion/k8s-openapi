@@ -9,8 +9,6 @@
 	clippy::unseparated_literal_suffix,
 )]
 
-#[macro_use] extern crate k8s_openapi;
-
 use k8s_openapi::{http, serde_json};
 
 #[derive(Debug)]

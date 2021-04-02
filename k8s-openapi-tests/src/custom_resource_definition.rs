@@ -137,7 +137,7 @@ fn test() {
 		};
 		// v1 (1.16+) requires "type" to be set. But with v1beta1 on 1.11 and below, creating the CRD fails because
 		// only "description", "properties" and "required" can be set if the status subresource is also enabled. Thus "type" cannot be set.
-		k8s_if_ge_1_12! {
+		k8s_openapi::k8s_if_ge_1_12! {
 			let open_api_v3_schema = apiextensions::JSONSchemaProps {
 				type_: Some("object".to_owned()),
 				..open_api_v3_schema
@@ -238,10 +238,10 @@ fn test() {
 
 			let accepted_names_kind = {
 				let status = custom_resource_definition.status.as_ref();
-				k8s_if_le_1_17! {
+				k8s_openapi::k8s_if_le_1_17! {
 					let accepted_names = status.map(|status| &status.accepted_names);
 				}
-				k8s_if_ge_1_18! {
+				k8s_openapi::k8s_if_ge_1_18! {
 					let accepted_names = status.and_then(|status| status.accepted_names.as_ref());
 				}
 				accepted_names.map(|accepted_names| &accepted_names.kind)

@@ -20,5 +20,4 @@ include = [
 
 [dependencies]
 http = "0.2"
-log = "0.4"
 serde = { version = "1", features = ["derive", "rc"], optional = true }

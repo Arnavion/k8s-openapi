@@ -44,7 +44,7 @@ fn watch_pods() {
 	});
 }
 
-k8s_if_ge_1_15! {
+k8s_openapi::k8s_if_ge_1_15! {
 	#[test]
 	fn bookmark_events() {
 		use k8s_openapi::api::core::v1 as api;
