@@ -149,7 +149,7 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 }
 
-fn do_inter_resource_name_from_url(url: &str) -> Option<Option<&str>> {
+fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 	// we have to special-case Namespaces
 	const NAMESPACE_RESOURCE_URLS: &[&str] = &[
 		"/api/v1/namespaces",
@@ -167,19 +167,19 @@ fn do_inter_resource_name_from_url(url: &str) -> Option<Option<&str>> {
 	}
 
 	let mut parts = url.split('/');
-	if parts.next()? != "" {
+	if !parts.next().ok_or(())?.is_empty() {
 		return None;
 	}
 	match parts.next().unwrap() {
 		"apis" => {
 			// skip api group
-			parts.next()?;
+			parts.next().ok_or(())?;
 			// skip version
-			parts.next()?;
+			parts.next().ok_or(())?;
 		},
 		"api" => {
 			// skip version
-			parts.next()?;
+			parts.next().ok_or(())?;
 		}
 		_ => return None
 	}
@@ -190,8 +190,8 @@ fn do_inter_resource_name_from_url(url: &str) -> Option<Option<&str>> {
 
 			// at lease two components
 			// are left ({namespace}, resource)
-			parts.next()?;
-			parts.next()?
+			parts.next().ok_or(())?;
+			parts.next().ok_or(())?
 		}
 		resource_name => {
 			// cluster-scoped resource
@@ -217,7 +217,7 @@ enum InferredResource {
 /// e.g. `/apis/apps/v1/namespaces/{namespace}/deployments` maps to
 /// `deployments`
 fn infer_resource_name_from_url(url: &str) -> InferredResource {
-	let name = do_inter_resource_name_from_url(url).unwrap_or_else(||panic!("failed to infer resource name from {}", url));
+	let name = do_inter_resource_name_from_url(url).unwrap_or_else(|| panic!("failed to infer resource name from {}", url));
 
 	// eprintln!("{} -> {:?}", url, name);
 	match name {
