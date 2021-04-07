@@ -684,7 +684,10 @@ impl crate::Resource for ResourceQuota {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ResourceQuota";
+    const PLURAL_NAME: &'static str = "resourcequotas";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for ResourceQuota {

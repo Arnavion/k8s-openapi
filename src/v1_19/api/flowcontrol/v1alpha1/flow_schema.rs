@@ -550,7 +550,10 @@ impl crate::Resource for FlowSchema {
     const API_VERSION: &'static str = "flowcontrol.apiserver.k8s.io/v1alpha1";
     const GROUP: &'static str = "flowcontrol.apiserver.k8s.io";
     const KIND: &'static str = "FlowSchema";
+    const PLURAL_NAME: &'static str = "flowschemas";
     const VERSION: &'static str = "v1alpha1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for FlowSchema {

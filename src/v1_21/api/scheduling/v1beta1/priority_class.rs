@@ -370,7 +370,10 @@ impl crate::Resource for PriorityClass {
     const API_VERSION: &'static str = "scheduling.k8s.io/v1beta1";
     const GROUP: &'static str = "scheduling.k8s.io";
     const KIND: &'static str = "PriorityClass";
+    const PLURAL_NAME: &'static str = "priorityclasses";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for PriorityClass {

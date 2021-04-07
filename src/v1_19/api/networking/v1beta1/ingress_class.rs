@@ -373,7 +373,10 @@ impl crate::Resource for IngressClass {
     const API_VERSION: &'static str = "networking.k8s.io/v1beta1";
     const GROUP: &'static str = "networking.k8s.io";
     const KIND: &'static str = "IngressClass";
+    const PLURAL_NAME: &'static str = "ingressclasses";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for IngressClass {

@@ -1030,7 +1030,10 @@ impl crate::Resource for Node {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Node";
+    const PLURAL_NAME: &'static str = "nodes";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for Node {

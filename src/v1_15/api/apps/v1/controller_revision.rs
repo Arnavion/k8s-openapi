@@ -492,7 +492,10 @@ impl crate::Resource for ControllerRevision {
     const API_VERSION: &'static str = "apps/v1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "ControllerRevision";
+    const PLURAL_NAME: &'static str = "controllerrevisions";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for ControllerRevision {

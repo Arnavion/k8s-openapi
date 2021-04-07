@@ -789,7 +789,10 @@ impl crate::Resource for Scale {
     const API_VERSION: &'static str = "autoscaling/v1";
     const GROUP: &'static str = "autoscaling";
     const KIND: &'static str = "Scale";
+    const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::Metadata for Scale {

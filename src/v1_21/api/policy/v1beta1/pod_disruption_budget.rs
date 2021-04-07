@@ -671,7 +671,10 @@ impl crate::Resource for PodDisruptionBudget {
     const API_VERSION: &'static str = "policy/v1beta1";
     const GROUP: &'static str = "policy";
     const KIND: &'static str = "PodDisruptionBudget";
+    const PLURAL_NAME: &'static str = "poddisruptionbudgets";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for PodDisruptionBudget {

@@ -373,7 +373,10 @@ impl crate::Resource for PodSecurityPolicy {
     const API_VERSION: &'static str = "extensions/v1beta1";
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "PodSecurityPolicy";
+    const PLURAL_NAME: &'static str = "podsecuritypolicies";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for PodSecurityPolicy {

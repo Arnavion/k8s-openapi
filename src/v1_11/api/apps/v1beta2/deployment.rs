@@ -684,7 +684,10 @@ impl crate::Resource for Deployment {
     const API_VERSION: &'static str = "apps/v1beta2";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "Deployment";
+    const PLURAL_NAME: &'static str = "deployments";
     const VERSION: &'static str = "v1beta2";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for Deployment {

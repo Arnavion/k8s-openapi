@@ -500,7 +500,10 @@ impl crate::Resource for Endpoints {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Endpoints";
+    const PLURAL_NAME: &'static str = "endpoints";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for Endpoints {

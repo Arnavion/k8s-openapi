@@ -672,7 +672,10 @@ impl crate::Resource for Ingress {
     const API_VERSION: &'static str = "networking.k8s.io/v1";
     const GROUP: &'static str = "networking.k8s.io";
     const KIND: &'static str = "Ingress";
+    const PLURAL_NAME: &'static str = "ingresses";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for Ingress {

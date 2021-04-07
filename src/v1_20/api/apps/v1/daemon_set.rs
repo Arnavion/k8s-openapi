@@ -684,7 +684,10 @@ impl crate::Resource for DaemonSet {
     const API_VERSION: &'static str = "apps/v1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "DaemonSet";
+    const PLURAL_NAME: &'static str = "daemonsets";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for DaemonSet {

@@ -483,7 +483,10 @@ impl crate::Resource for ServiceAccount {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ServiceAccount";
+    const PLURAL_NAME: &'static str = "serviceaccounts";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for ServiceAccount {

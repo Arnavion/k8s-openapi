@@ -405,7 +405,10 @@ impl crate::Resource for Scale {
     const API_VERSION: &'static str = "apps/v1beta1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "Scale";
+    const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::Metadata for Scale {

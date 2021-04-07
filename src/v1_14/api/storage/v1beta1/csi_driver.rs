@@ -373,7 +373,10 @@ impl crate::Resource for CSIDriver {
     const API_VERSION: &'static str = "storage.k8s.io/v1beta1";
     const GROUP: &'static str = "storage.k8s.io";
     const KIND: &'static str = "CSIDriver";
+    const PLURAL_NAME: &'static str = "csidrivers";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::ListableResource for CSIDriver {

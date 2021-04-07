@@ -65,7 +65,10 @@ impl crate::Resource for TokenRequest {
     const API_VERSION: &'static str = "authentication.k8s.io/v1";
     const GROUP: &'static str = "authentication.k8s.io";
     const KIND: &'static str = "TokenRequest";
+    const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::Metadata for TokenRequest {

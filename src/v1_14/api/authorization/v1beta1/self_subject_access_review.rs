@@ -54,7 +54,10 @@ impl crate::Resource for SelfSubjectAccessReview {
     const API_VERSION: &'static str = "authorization.k8s.io/v1beta1";
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "SelfSubjectAccessReview";
+    const PLURAL_NAME: &'static str = "selfsubjectaccessreviews";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
+    type Scope = crate::ClusterScopedResource;
 }
 
 impl crate::Metadata for SelfSubjectAccessReview {

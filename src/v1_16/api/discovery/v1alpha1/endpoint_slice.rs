@@ -495,7 +495,10 @@ impl crate::Resource for EndpointSlice {
     const API_VERSION: &'static str = "discovery.k8s.io/v1alpha1";
     const GROUP: &'static str = "discovery.k8s.io";
     const KIND: &'static str = "EndpointSlice";
+    const PLURAL_NAME: &'static str = "endpointslices";
     const VERSION: &'static str = "v1alpha1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for EndpointSlice {

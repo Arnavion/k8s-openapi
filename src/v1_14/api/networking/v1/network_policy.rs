@@ -489,7 +489,10 @@ impl crate::Resource for NetworkPolicy {
     const API_VERSION: &'static str = "networking.k8s.io/v1";
     const GROUP: &'static str = "networking.k8s.io";
     const KIND: &'static str = "NetworkPolicy";
+    const PLURAL_NAME: &'static str = "networkpolicies";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for NetworkPolicy {

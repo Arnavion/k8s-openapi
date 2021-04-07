@@ -495,7 +495,10 @@ impl crate::Resource for ConfigMap {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ConfigMap";
+    const PLURAL_NAME: &'static str = "configmaps";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for ConfigMap {

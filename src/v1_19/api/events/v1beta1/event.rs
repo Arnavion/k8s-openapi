@@ -527,7 +527,10 @@ impl crate::Resource for Event {
     const API_VERSION: &'static str = "events.k8s.io/v1beta1";
     const GROUP: &'static str = "events.k8s.io";
     const KIND: &'static str = "Event";
+    const PLURAL_NAME: &'static str = "events";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for Event {

@@ -684,7 +684,10 @@ impl crate::Resource for Job {
     const API_VERSION: &'static str = "batch/v1";
     const GROUP: &'static str = "batch";
     const KIND: &'static str = "Job";
+    const PLURAL_NAME: &'static str = "jobs";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
+    type Scope = crate::NamespaceScopedResource;
 }
 
 impl crate::ListableResource for Job {
