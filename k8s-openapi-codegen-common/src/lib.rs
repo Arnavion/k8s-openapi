@@ -160,15 +160,15 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 		"/api/v1/namespaces/{name}/finalize"
 	];
 	if NAMESPACE_RESOURCE_URLS.contains(&url) {
-		return Some(Some("namespaces"));
+		return Ok(Some("namespaces"));
 	}
 	if NAMESPACE_SUBRESOURCE_URLS.contains(&url) {
-		return Some(None);
+		return Ok(None);
 	}
 
 	let mut parts = url.split('/');
 	if !parts.next().ok_or(())?.is_empty() {
-		return None;
+		return Err(());
 	}
 	match parts.next().unwrap() {
 		"apis" => {
@@ -181,7 +181,7 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 			// skip version
 			parts.next().ok_or(())?;
 		}
-		_ => return None
+		_ => return Err(())
 	}
 	let res = match parts.next().unwrap() {
 		"namespaces" => {
@@ -201,10 +201,10 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 	// let's check this is not a subresource
 	if parts.next().is_some() {
 		if let Some(_subresource_name ) = parts.next() {
-			return Some(None);
+			return Ok(None);
 		}
 	}
-	Some(Some(res))
+	Ok(Some(res))
 }
 
 
@@ -217,7 +217,7 @@ enum InferredResource {
 /// e.g. `/apis/apps/v1/namespaces/{namespace}/deployments` maps to
 /// `deployments`
 fn infer_resource_name_from_url(url: &str) -> InferredResource {
-	let name = do_inter_resource_name_from_url(url).unwrap_or_else(|| panic!("failed to infer resource name from {}", url));
+	let name = do_inter_resource_name_from_url(url).unwrap_or_else(|_| panic!("failed to infer resource name from {}", url));
 
 	// eprintln!("{} -> {:?}", url, name);
 	match name {
