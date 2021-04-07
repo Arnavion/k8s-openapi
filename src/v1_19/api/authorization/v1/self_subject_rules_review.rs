@@ -54,6 +54,7 @@ impl crate::Resource for SelfSubjectRulesReview {
     const API_VERSION: &'static str = "authorization.k8s.io/v1";
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "SelfSubjectRulesReview";
+    const NAME: &'static str = "selfsubjectrulesreviews";
     const VERSION: &'static str = "v1";
 }
 

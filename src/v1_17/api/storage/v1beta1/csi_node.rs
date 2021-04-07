@@ -373,6 +373,7 @@ impl crate::Resource for CSINode {
     const API_VERSION: &'static str = "storage.k8s.io/v1beta1";
     const GROUP: &'static str = "storage.k8s.io";
     const KIND: &'static str = "CSINode";
+    const NAME: &'static str = "csinodes";
     const VERSION: &'static str = "v1beta1";
 }
 

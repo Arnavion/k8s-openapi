@@ -684,6 +684,7 @@ impl crate::Resource for CronJob {
     const API_VERSION: &'static str = "batch/v1beta1";
     const GROUP: &'static str = "batch";
     const KIND: &'static str = "CronJob";
+    const NAME: &'static str = "cronjobs";
     const VERSION: &'static str = "v1beta1";
 }
 

@@ -489,6 +489,7 @@ impl crate::Resource for LimitRange {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "LimitRange";
+    const NAME: &'static str = "limitranges";
     const VERSION: &'static str = "v1";
 }
 

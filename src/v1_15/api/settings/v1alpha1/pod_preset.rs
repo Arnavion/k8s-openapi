@@ -487,6 +487,7 @@ impl crate::Resource for PodPreset {
     const API_VERSION: &'static str = "settings.k8s.io/v1alpha1";
     const GROUP: &'static str = "settings.k8s.io";
     const KIND: &'static str = "PodPreset";
+    const NAME: &'static str = "podpresets";
     const VERSION: &'static str = "v1alpha1";
 }
 

@@ -26,6 +26,7 @@ impl crate::Resource for Status {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Status";
+    const NAME: &'static str = "";
     const VERSION: &'static str = "v1";
 }
 

@@ -372,6 +372,7 @@ impl crate::Resource for AuditSink {
     const API_VERSION: &'static str = "auditregistration.k8s.io/v1alpha1";
     const GROUP: &'static str = "auditregistration.k8s.io";
     const KIND: &'static str = "AuditSink";
+    const NAME: &'static str = "auditsinks";
     const VERSION: &'static str = "v1alpha1";
 }
 

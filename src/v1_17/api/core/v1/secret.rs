@@ -495,6 +495,7 @@ impl crate::Resource for Secret {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Secret";
+    const NAME: &'static str = "secrets";
     const VERSION: &'static str = "v1";
 }
 

@@ -492,6 +492,7 @@ impl crate::Resource for ControllerRevision {
     const API_VERSION: &'static str = "apps/v1beta1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "ControllerRevision";
+    const NAME: &'static str = "controllerrevisions";
     const VERSION: &'static str = "v1beta1";
 }
 

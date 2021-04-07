@@ -684,6 +684,7 @@ impl crate::Resource for ReplicaSet {
     const API_VERSION: &'static str = "apps/v1beta2";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "ReplicaSet";
+    const NAME: &'static str = "replicasets";
     const VERSION: &'static str = "v1beta2";
 }
 

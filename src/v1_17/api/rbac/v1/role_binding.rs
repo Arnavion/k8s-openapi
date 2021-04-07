@@ -480,6 +480,7 @@ impl crate::Resource for RoleBinding {
     const API_VERSION: &'static str = "rbac.authorization.k8s.io/v1";
     const GROUP: &'static str = "rbac.authorization.k8s.io";
     const KIND: &'static str = "RoleBinding";
+    const NAME: &'static str = "rolebindings";
     const VERSION: &'static str = "v1";
 }
 

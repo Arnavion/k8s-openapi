@@ -14,6 +14,7 @@ impl<T> crate::Resource for List<T> where T: crate::ListableResource {
     const API_VERSION: &'static str = <T as crate::Resource>::API_VERSION;
     const GROUP: &'static str = <T as crate::Resource>::GROUP;
     const KIND: &'static str = <T as crate::ListableResource>::LIST_KIND;
+    const NAME: &'static str = "";
     const VERSION: &'static str = <T as crate::Resource>::VERSION;
 }
 

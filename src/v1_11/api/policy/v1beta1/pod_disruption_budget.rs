@@ -683,6 +683,7 @@ impl crate::Resource for PodDisruptionBudget {
     const API_VERSION: &'static str = "policy/v1beta1";
     const GROUP: &'static str = "policy";
     const KIND: &'static str = "PodDisruptionBudget";
+    const NAME: &'static str = "poddisruptionbudgets";
     const VERSION: &'static str = "v1beta1";
 }
 

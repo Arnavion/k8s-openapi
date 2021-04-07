@@ -61,6 +61,7 @@ impl crate::Resource for LocalSubjectAccessReview {
     const API_VERSION: &'static str = "authorization.k8s.io/v1";
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "LocalSubjectAccessReview";
+    const NAME: &'static str = "localsubjectaccessreviews";
     const VERSION: &'static str = "v1";
 }
 

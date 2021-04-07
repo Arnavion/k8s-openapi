@@ -684,6 +684,7 @@ impl crate::Resource for PersistentVolumeClaim {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "PersistentVolumeClaim";
+    const NAME: &'static str = "persistentvolumeclaims";
     const VERSION: &'static str = "v1";
 }
 

@@ -590,6 +590,7 @@ impl crate::Resource for CertificateSigningRequest {
     const API_VERSION: &'static str = "certificates.k8s.io/v1beta1";
     const GROUP: &'static str = "certificates.k8s.io";
     const KIND: &'static str = "CertificateSigningRequest";
+    const NAME: &'static str = "certificatesigningrequests";
     const VERSION: &'static str = "v1beta1";
 }
 

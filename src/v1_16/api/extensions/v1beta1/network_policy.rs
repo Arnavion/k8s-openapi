@@ -489,6 +489,7 @@ impl crate::Resource for NetworkPolicy {
     const API_VERSION: &'static str = "extensions/v1beta1";
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "NetworkPolicy";
+    const NAME: &'static str = "networkpolicies";
     const VERSION: &'static str = "v1beta1";
 }
 

@@ -14,6 +14,7 @@ impl crate::Resource for APIResourceList {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "APIResourceList";
+    const NAME: &'static str = "";
     const VERSION: &'static str = "v1";
 }
 

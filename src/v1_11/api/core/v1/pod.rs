@@ -1784,6 +1784,7 @@ impl crate::Resource for Pod {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Pod";
+    const NAME: &'static str = "pods";
     const VERSION: &'static str = "v1";
 }
 

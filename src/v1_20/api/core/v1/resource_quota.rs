@@ -684,6 +684,7 @@ impl crate::Resource for ResourceQuota {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ResourceQuota";
+    const NAME: &'static str = "resourcequotas";
     const VERSION: &'static str = "v1";
 }
 

@@ -495,6 +495,7 @@ impl crate::Resource for ConfigMap {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ConfigMap";
+    const NAME: &'static str = "configmaps";
     const VERSION: &'static str = "v1";
 }
 

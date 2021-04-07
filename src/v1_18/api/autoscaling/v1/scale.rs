@@ -789,6 +789,7 @@ impl crate::Resource for Scale {
     const API_VERSION: &'static str = "autoscaling/v1";
     const GROUP: &'static str = "autoscaling";
     const KIND: &'static str = "Scale";
+    const NAME: &'static str = "";
     const VERSION: &'static str = "v1";
 }
 

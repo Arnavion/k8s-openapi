@@ -1181,6 +1181,7 @@ impl crate::Resource for Service {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Service";
+    const NAME: &'static str = "services";
     const VERSION: &'static str = "v1";
 }
 

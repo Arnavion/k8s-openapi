@@ -684,6 +684,7 @@ impl crate::Resource for Job {
     const API_VERSION: &'static str = "batch/v1";
     const GROUP: &'static str = "batch";
     const KIND: &'static str = "Job";
+    const NAME: &'static str = "jobs";
     const VERSION: &'static str = "v1";
 }
 

@@ -65,6 +65,7 @@ impl crate::Resource for Eviction {
     const API_VERSION: &'static str = "policy/v1beta1";
     const GROUP: &'static str = "policy";
     const KIND: &'static str = "Eviction";
+    const NAME: &'static str = "";
     const VERSION: &'static str = "v1beta1";
 }
 

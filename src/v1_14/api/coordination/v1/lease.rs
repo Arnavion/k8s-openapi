@@ -489,6 +489,7 @@ impl crate::Resource for Lease {
     const API_VERSION: &'static str = "coordination.k8s.io/v1";
     const GROUP: &'static str = "coordination.k8s.io";
     const KIND: &'static str = "Lease";
+    const NAME: &'static str = "leases";
     const VERSION: &'static str = "v1";
 }
 

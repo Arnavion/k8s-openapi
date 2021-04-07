@@ -684,6 +684,7 @@ impl crate::Resource for HorizontalPodAutoscaler {
     const API_VERSION: &'static str = "autoscaling/v2beta2";
     const GROUP: &'static str = "autoscaling";
     const KIND: &'static str = "HorizontalPodAutoscaler";
+    const NAME: &'static str = "horizontalpodautoscalers";
     const VERSION: &'static str = "v2beta2";
 }
 

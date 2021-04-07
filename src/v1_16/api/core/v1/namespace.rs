@@ -555,6 +555,7 @@ impl crate::Resource for Namespace {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Namespace";
+    const NAME: &'static str = "namespaces";
     const VERSION: &'static str = "v1";
 }
 

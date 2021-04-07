@@ -489,6 +489,7 @@ impl crate::Resource for PodTemplate {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "PodTemplate";
+    const NAME: &'static str = "podtemplates";
     const VERSION: &'static str = "v1";
 }
 

@@ -551,6 +551,7 @@ impl crate::Resource for StorageVersion {
     const API_VERSION: &'static str = "internal.apiserver.k8s.io/v1alpha1";
     const GROUP: &'static str = "internal.apiserver.k8s.io";
     const KIND: &'static str = "StorageVersion";
+    const NAME: &'static str = "storageversions";
     const VERSION: &'static str = "v1alpha1";
 }
 

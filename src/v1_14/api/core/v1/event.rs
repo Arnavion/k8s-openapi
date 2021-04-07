@@ -528,6 +528,7 @@ impl crate::Resource for Event {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Event";
+    const NAME: &'static str = "events";
     const VERSION: &'static str = "v1";
 }
 

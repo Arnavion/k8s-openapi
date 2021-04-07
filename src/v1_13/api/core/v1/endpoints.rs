@@ -500,6 +500,7 @@ impl crate::Resource for Endpoints {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Endpoints";
+    const NAME: &'static str = "endpoints";
     const VERSION: &'static str = "v1";
 }
 

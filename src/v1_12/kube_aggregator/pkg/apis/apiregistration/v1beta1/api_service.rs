@@ -549,6 +549,7 @@ impl crate::Resource for APIService {
     const API_VERSION: &'static str = "apiregistration.k8s.io/v1beta1";
     const GROUP: &'static str = "apiregistration.k8s.io";
     const KIND: &'static str = "APIService";
+    const NAME: &'static str = "apiservices";
     const VERSION: &'static str = "v1beta1";
 }
 
