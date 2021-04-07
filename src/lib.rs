@@ -515,9 +515,9 @@ pub trait Resource {
     /// This is the string used in the `kind` field of the resource's serialized form.
     const KIND: &'static str;
 
-    /// The name of the resource.
-    /// Name must be used to construct URLs.
-    const NAME: &'static str;
+    /// The plural name of the resource.
+    /// It can be used to construct URLs.
+    const PLURAL_NAME: &'static str;
 
     /// The version of the resource.
     const VERSION: &'static str;
