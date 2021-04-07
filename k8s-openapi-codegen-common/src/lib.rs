@@ -149,7 +149,7 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 }
 
-fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
+fn do_inter_resource_name_from_url(url: &str) -> Result<Option<(&str, bool)>, ()> {
 	// we have to special-case Namespaces
 	const NAMESPACE_RESOURCE_URLS: &[&str] = &[
 		"/api/v1/namespaces",
@@ -160,7 +160,8 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 		"/api/v1/namespaces/{name}/finalize"
 	];
 	if NAMESPACE_RESOURCE_URLS.contains(&url) {
-		return Ok(Some("namespaces"));
+		// we know that Namespace has cluster scope
+		return Ok(Some(("namespaces", false)));
 	}
 	if NAMESPACE_SUBRESOURCE_URLS.contains(&url) {
 		return Ok(None);
@@ -183,10 +184,12 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 		}
 		_ => return Err(())
 	}
+	let namespaced;
 	let res = match parts.next().unwrap() {
 		"namespaces" => {
 			// we have checked for Namespace earlier,
             // so this is namespace-scoped resource.
+			namespaced = true;
 
 			// at lease two components
 			// are left ({namespace}, resource)
@@ -195,6 +198,7 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 		}
 		resource_name => {
 			// cluster-scoped resource
+			namespaced = false;
 			resource_name
 		}
 	};
@@ -204,12 +208,12 @@ fn do_inter_resource_name_from_url(url: &str) -> Result<Option<&str>, ()> {
 			return Ok(None);
 		}
 	}
-	Ok(Some(res))
+	Ok(Some((res, namespaced)))
 }
 
 
 enum InferredResource {
-	Resource(String),
+	Resource(String, bool),
 	Subresource,
 }
 
@@ -221,7 +225,7 @@ fn infer_resource_name_from_url(url: &str) -> InferredResource {
 
 	// eprintln!("{} -> {:?}", url, name);
 	match name {
-		Some(n) => InferredResource::Resource(n.to_string()),
+		Some((n, namespaced)) => InferredResource::Resource(n.to_string(), namespaced),
 		None => InferredResource::Subresource
 	}
 }
@@ -420,6 +424,7 @@ pub fn run(
 			)?;
 
 			let mut inferred_resource_names: Vec<String> = Vec::new();
+			let mut is_namespaced = false;
 
 			if !definition.kubernetes_group_kind_versions.is_empty() {
 				let mut kubernetes_group_kind_versions: Vec<_> = definition.kubernetes_group_kind_versions.iter().collect();
@@ -453,7 +458,8 @@ pub fn run(
 							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
 							run_result.num_generated_apis += 1;
 							let resource_name = infer_resource_name_from_url(&operation.path);
-							if let InferredResource::Resource(r) = resource_name {
+							if let InferredResource::Resource(r, namespaced) = resource_name {
+								is_namespaced = is_namespaced || namespaced;
 								inferred_resource_names.push(r);
 							}
 						}
@@ -478,6 +484,12 @@ pub fn run(
 				name.clone()
 			};
 
+			let is_namespaced = if is_namespaced {
+				"true"
+			} else {
+				"false"
+			};
+
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
 				(Some((api_version, group, kind, version)), Some((metadata_ty, true))) => Some(templates::ResourceMetadata {
 					api_version,
@@ -487,6 +499,7 @@ pub fn run(
 					version,
 					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: Some(metadata_ty),
+					namespaced: is_namespaced,
 				}),
 
 				(Some((api_version, group, kind, version)), None) => Some(templates::ResourceMetadata {
@@ -497,6 +510,7 @@ pub fn run(
 					version,
 					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: None,
+					namespaced: is_namespaced,
 				}),
 
 				(Some(_), Some((_, false))) => return Err(format!("definition {} has optional metadata", definition_path).into()),
@@ -676,6 +690,7 @@ pub fn run(
 				name: "",
 				is_listable: false,
 				metadata_ty: Some(&metadata_rust_type),
+				namespaced: "<T as crate::Resource>::NAMESPACED",
 			};
 
 			templates::r#struct::generate(

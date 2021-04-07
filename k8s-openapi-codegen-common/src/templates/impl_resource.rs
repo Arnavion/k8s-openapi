@@ -24,6 +24,7 @@ pub(crate) fn generate(
 		kind = resource_metadata.kind,
 		resource_name = resource_metadata.name,
 		version = resource_metadata.version,
+		namespaced = resource_metadata.namespaced,
 	)?;
 
 	Ok(())

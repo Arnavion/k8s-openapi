@@ -521,6 +521,9 @@ pub trait Resource {
 
     /// The version of the resource.
     const VERSION: &'static str;
+
+    /// If true, this resource is namespaced
+    const NAMESPACED: bool;
 }
 
 /// A trait applied to all Kubernetes resources that can be part of a corresponding list.
