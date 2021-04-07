@@ -373,7 +373,7 @@ impl crate::Resource for MutatingWebhookConfiguration {
     const API_VERSION: &'static str = "admissionregistration.k8s.io/v1";
     const GROUP: &'static str = "admissionregistration.k8s.io";
     const KIND: &'static str = "MutatingWebhookConfiguration";
-    const NAME: &'static str = "mutatingwebhookconfigurations";
+    const PLURAL_NAME: &'static str = "mutatingwebhookconfigurations";
     const VERSION: &'static str = "v1";
 }
 

@@ -382,7 +382,7 @@ impl crate::Resource for PriorityClass {
     const API_VERSION: &'static str = "scheduling.k8s.io/v1";
     const GROUP: &'static str = "scheduling.k8s.io";
     const KIND: &'static str = "PriorityClass";
-    const NAME: &'static str = "priorityclasses";
+    const PLURAL_NAME: &'static str = "priorityclasses";
     const VERSION: &'static str = "v1";
 }
 

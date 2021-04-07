@@ -1030,7 +1030,7 @@ impl crate::Resource for Node {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Node";
-    const NAME: &'static str = "nodes";
+    const PLURAL_NAME: &'static str = "nodes";
     const VERSION: &'static str = "v1";
 }
 

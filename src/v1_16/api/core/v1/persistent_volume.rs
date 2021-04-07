@@ -550,7 +550,7 @@ impl crate::Resource for PersistentVolume {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "PersistentVolume";
-    const NAME: &'static str = "persistentvolumes";
+    const PLURAL_NAME: &'static str = "persistentvolumes";
     const VERSION: &'static str = "v1";
 }
 

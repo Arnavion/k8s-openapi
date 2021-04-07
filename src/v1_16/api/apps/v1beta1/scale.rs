@@ -405,7 +405,7 @@ impl crate::Resource for Scale {
     const API_VERSION: &'static str = "apps/v1beta1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "Scale";
-    const NAME: &'static str = "";
+    const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1beta1";
 }
 

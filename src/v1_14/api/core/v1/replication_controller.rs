@@ -684,7 +684,7 @@ impl crate::Resource for ReplicationController {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ReplicationController";
-    const NAME: &'static str = "replicationcontrollers";
+    const PLURAL_NAME: &'static str = "replicationcontrollers";
     const VERSION: &'static str = "v1";
 }
 

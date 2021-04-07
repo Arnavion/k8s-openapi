@@ -686,7 +686,7 @@ impl crate::Resource for StatefulSet {
     const API_VERSION: &'static str = "apps/v1beta2";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "StatefulSet";
-    const NAME: &'static str = "statefulsets";
+    const PLURAL_NAME: &'static str = "statefulsets";
     const VERSION: &'static str = "v1beta2";
 }
 

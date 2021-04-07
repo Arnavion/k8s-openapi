@@ -477,7 +477,7 @@ impl crate::Resource for Role {
     const API_VERSION: &'static str = "rbac.authorization.k8s.io/v1beta1";
     const GROUP: &'static str = "rbac.authorization.k8s.io";
     const KIND: &'static str = "Role";
-    const NAME: &'static str = "roles";
+    const PLURAL_NAME: &'static str = "roles";
     const VERSION: &'static str = "v1beta1";
 }
 

@@ -20,7 +20,7 @@ impl crate::Resource for APIGroup {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "APIGroup";
-    const NAME: &'static str = "";
+    const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
 }
 

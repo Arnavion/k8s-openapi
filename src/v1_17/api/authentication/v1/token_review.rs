@@ -54,7 +54,7 @@ impl crate::Resource for TokenReview {
     const API_VERSION: &'static str = "authentication.k8s.io/v1";
     const GROUP: &'static str = "authentication.k8s.io";
     const KIND: &'static str = "TokenReview";
-    const NAME: &'static str = "tokenreviews";
+    const PLURAL_NAME: &'static str = "tokenreviews";
     const VERSION: &'static str = "v1";
 }
 

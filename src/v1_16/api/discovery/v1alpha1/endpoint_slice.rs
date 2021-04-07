@@ -495,7 +495,7 @@ impl crate::Resource for EndpointSlice {
     const API_VERSION: &'static str = "discovery.k8s.io/v1alpha1";
     const GROUP: &'static str = "discovery.k8s.io";
     const KIND: &'static str = "EndpointSlice";
-    const NAME: &'static str = "endpointslices";
+    const PLURAL_NAME: &'static str = "endpointslices";
     const VERSION: &'static str = "v1alpha1";
 }
 

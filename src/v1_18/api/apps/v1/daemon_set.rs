@@ -684,7 +684,7 @@ impl crate::Resource for DaemonSet {
     const API_VERSION: &'static str = "apps/v1";
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "DaemonSet";
-    const NAME: &'static str = "daemonsets";
+    const PLURAL_NAME: &'static str = "daemonsets";
     const VERSION: &'static str = "v1";
 }
 

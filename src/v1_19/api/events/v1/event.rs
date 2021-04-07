@@ -527,7 +527,7 @@ impl crate::Resource for Event {
     const API_VERSION: &'static str = "events.k8s.io/v1";
     const GROUP: &'static str = "events.k8s.io";
     const KIND: &'static str = "Event";
-    const NAME: &'static str = "events";
+    const PLURAL_NAME: &'static str = "events";
     const VERSION: &'static str = "v1";
 }
 

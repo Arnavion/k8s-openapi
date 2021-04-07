@@ -106,7 +106,7 @@ impl crate::Resource for Binding {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "Binding";
-    const NAME: &'static str = "bindings";
+    const PLURAL_NAME: &'static str = "bindings";
     const VERSION: &'static str = "v1";
 }
 

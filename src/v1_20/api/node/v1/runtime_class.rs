@@ -381,7 +381,7 @@ impl crate::Resource for RuntimeClass {
     const API_VERSION: &'static str = "node.k8s.io/v1";
     const GROUP: &'static str = "node.k8s.io";
     const KIND: &'static str = "RuntimeClass";
-    const NAME: &'static str = "runtimeclasses";
+    const PLURAL_NAME: &'static str = "runtimeclasses";
     const VERSION: &'static str = "v1";
 }
 

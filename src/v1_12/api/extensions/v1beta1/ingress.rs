@@ -684,7 +684,7 @@ impl crate::Resource for Ingress {
     const API_VERSION: &'static str = "extensions/v1beta1";
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "Ingress";
-    const NAME: &'static str = "ingresses";
+    const PLURAL_NAME: &'static str = "ingresses";
     const VERSION: &'static str = "v1beta1";
 }
 

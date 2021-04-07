@@ -373,7 +373,7 @@ impl crate::Resource for IngressClass {
     const API_VERSION: &'static str = "networking.k8s.io/v1";
     const GROUP: &'static str = "networking.k8s.io";
     const KIND: &'static str = "IngressClass";
-    const NAME: &'static str = "ingressclasses";
+    const PLURAL_NAME: &'static str = "ingressclasses";
     const VERSION: &'static str = "v1";
 }
 

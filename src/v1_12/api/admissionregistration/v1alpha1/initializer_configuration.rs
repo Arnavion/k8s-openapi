@@ -373,7 +373,7 @@ impl crate::Resource for InitializerConfiguration {
     const API_VERSION: &'static str = "admissionregistration.k8s.io/v1alpha1";
     const GROUP: &'static str = "admissionregistration.k8s.io";
     const KIND: &'static str = "InitializerConfiguration";
-    const NAME: &'static str = "initializerconfigurations";
+    const PLURAL_NAME: &'static str = "initializerconfigurations";
     const VERSION: &'static str = "v1alpha1";
 }
 

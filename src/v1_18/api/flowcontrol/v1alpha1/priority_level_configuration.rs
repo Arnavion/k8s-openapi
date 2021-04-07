@@ -550,7 +550,7 @@ impl crate::Resource for PriorityLevelConfiguration {
     const API_VERSION: &'static str = "flowcontrol.apiserver.k8s.io/v1alpha1";
     const GROUP: &'static str = "flowcontrol.apiserver.k8s.io";
     const KIND: &'static str = "PriorityLevelConfiguration";
-    const NAME: &'static str = "prioritylevelconfigurations";
+    const PLURAL_NAME: &'static str = "prioritylevelconfigurations";
     const VERSION: &'static str = "v1alpha1";
 }
 

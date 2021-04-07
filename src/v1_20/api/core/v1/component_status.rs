@@ -170,7 +170,7 @@ impl crate::Resource for ComponentStatus {
     const API_VERSION: &'static str = "v1";
     const GROUP: &'static str = "";
     const KIND: &'static str = "ComponentStatus";
-    const NAME: &'static str = "componentstatuses";
+    const PLURAL_NAME: &'static str = "componentstatuses";
     const VERSION: &'static str = "v1";
 }
 
