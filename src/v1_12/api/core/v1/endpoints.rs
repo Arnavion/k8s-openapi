@@ -502,6 +502,7 @@ impl crate::Resource for Endpoints {
     const KIND: &'static str = "Endpoints";
     const PLURAL_NAME: &'static str = "endpoints";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Endpoints {

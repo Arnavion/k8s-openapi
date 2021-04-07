@@ -491,6 +491,7 @@ impl crate::Resource for PodTemplate {
     const KIND: &'static str = "PodTemplate";
     const PLURAL_NAME: &'static str = "podtemplates";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for PodTemplate {

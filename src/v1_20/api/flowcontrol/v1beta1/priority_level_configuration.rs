@@ -552,6 +552,7 @@ impl crate::Resource for PriorityLevelConfiguration {
     const KIND: &'static str = "PriorityLevelConfiguration";
     const PLURAL_NAME: &'static str = "prioritylevelconfigurations";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for PriorityLevelConfiguration {

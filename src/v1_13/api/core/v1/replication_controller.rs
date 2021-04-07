@@ -686,6 +686,7 @@ impl crate::Resource for ReplicationController {
     const KIND: &'static str = "ReplicationController";
     const PLURAL_NAME: &'static str = "replicationcontrollers";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for ReplicationController {

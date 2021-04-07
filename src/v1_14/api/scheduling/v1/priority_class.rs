@@ -381,6 +381,7 @@ impl crate::Resource for PriorityClass {
     const KIND: &'static str = "PriorityClass";
     const PLURAL_NAME: &'static str = "priorityclasses";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for PriorityClass {

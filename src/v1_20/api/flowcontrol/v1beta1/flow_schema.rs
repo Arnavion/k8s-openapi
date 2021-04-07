@@ -552,6 +552,7 @@ impl crate::Resource for FlowSchema {
     const KIND: &'static str = "FlowSchema";
     const PLURAL_NAME: &'static str = "flowschemas";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for FlowSchema {

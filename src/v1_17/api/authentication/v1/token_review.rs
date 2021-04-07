@@ -56,6 +56,7 @@ impl crate::Resource for TokenReview {
     const KIND: &'static str = "TokenReview";
     const PLURAL_NAME: &'static str = "tokenreviews";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::Metadata for TokenReview {

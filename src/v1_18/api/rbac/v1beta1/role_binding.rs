@@ -482,6 +482,7 @@ impl crate::Resource for RoleBinding {
     const KIND: &'static str = "RoleBinding";
     const PLURAL_NAME: &'static str = "rolebindings";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for RoleBinding {

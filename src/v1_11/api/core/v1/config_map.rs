@@ -494,6 +494,7 @@ impl crate::Resource for ConfigMap {
     const KIND: &'static str = "ConfigMap";
     const PLURAL_NAME: &'static str = "configmaps";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for ConfigMap {

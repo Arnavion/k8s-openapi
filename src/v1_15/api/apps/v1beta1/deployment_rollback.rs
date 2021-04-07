@@ -126,6 +126,7 @@ impl crate::Resource for DeploymentRollback {
     const KIND: &'static str = "DeploymentRollback";
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl<'de> serde::Deserialize<'de> for DeploymentRollback {

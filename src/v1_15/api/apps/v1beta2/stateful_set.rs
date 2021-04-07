@@ -688,6 +688,7 @@ impl crate::Resource for StatefulSet {
     const KIND: &'static str = "StatefulSet";
     const PLURAL_NAME: &'static str = "statefulsets";
     const VERSION: &'static str = "v1beta2";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for StatefulSet {

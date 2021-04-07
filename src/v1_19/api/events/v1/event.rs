@@ -529,6 +529,7 @@ impl crate::Resource for Event {
     const KIND: &'static str = "Event";
     const PLURAL_NAME: &'static str = "events";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Event {

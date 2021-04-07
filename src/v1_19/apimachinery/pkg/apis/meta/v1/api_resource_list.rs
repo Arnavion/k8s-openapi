@@ -16,6 +16,7 @@ impl crate::Resource for APIResourceList {
     const KIND: &'static str = "APIResourceList";
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl<'de> serde::Deserialize<'de> for APIResourceList {

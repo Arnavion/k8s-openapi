@@ -28,6 +28,7 @@ impl crate::Resource for Status {
     const KIND: &'static str = "Status";
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::Metadata for Status {

@@ -731,6 +731,7 @@ impl crate::Resource for CertificateSigningRequest {
     const KIND: &'static str = "CertificateSigningRequest";
     const PLURAL_NAME: &'static str = "certificatesigningrequests";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for CertificateSigningRequest {

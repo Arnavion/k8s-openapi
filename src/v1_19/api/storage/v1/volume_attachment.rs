@@ -554,6 +554,7 @@ impl crate::Resource for VolumeAttachment {
     const KIND: &'static str = "VolumeAttachment";
     const PLURAL_NAME: &'static str = "volumeattachments";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for VolumeAttachment {

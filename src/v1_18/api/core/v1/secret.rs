@@ -500,6 +500,7 @@ impl crate::Resource for Secret {
     const KIND: &'static str = "Secret";
     const PLURAL_NAME: &'static str = "secrets";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Secret {

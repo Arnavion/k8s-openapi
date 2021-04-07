@@ -63,6 +63,7 @@ impl crate::Resource for LocalSubjectAccessReview {
     const KIND: &'static str = "LocalSubjectAccessReview";
     const PLURAL_NAME: &'static str = "localsubjectaccessreviews";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::Metadata for LocalSubjectAccessReview {

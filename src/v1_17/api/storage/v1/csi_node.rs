@@ -375,6 +375,7 @@ impl crate::Resource for CSINode {
     const KIND: &'static str = "CSINode";
     const PLURAL_NAME: &'static str = "csinodes";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for CSINode {

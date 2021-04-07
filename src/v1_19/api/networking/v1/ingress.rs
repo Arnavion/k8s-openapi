@@ -686,6 +686,7 @@ impl crate::Resource for Ingress {
     const KIND: &'static str = "Ingress";
     const PLURAL_NAME: &'static str = "ingresses";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Ingress {

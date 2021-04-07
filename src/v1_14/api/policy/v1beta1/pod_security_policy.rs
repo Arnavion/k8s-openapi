@@ -375,6 +375,7 @@ impl crate::Resource for PodSecurityPolicy {
     const KIND: &'static str = "PodSecurityPolicy";
     const PLURAL_NAME: &'static str = "podsecuritypolicies";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for PodSecurityPolicy {

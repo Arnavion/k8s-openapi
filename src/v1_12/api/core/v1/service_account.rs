@@ -497,6 +497,7 @@ impl crate::Resource for ServiceAccount {
     const KIND: &'static str = "ServiceAccount";
     const PLURAL_NAME: &'static str = "serviceaccounts";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for ServiceAccount {

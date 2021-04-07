@@ -489,6 +489,7 @@ impl crate::Resource for PodPreset {
     const KIND: &'static str = "PodPreset";
     const PLURAL_NAME: &'static str = "podpresets";
     const VERSION: &'static str = "v1alpha1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for PodPreset {

@@ -686,6 +686,7 @@ impl crate::Resource for PersistentVolumeClaim {
     const KIND: &'static str = "PersistentVolumeClaim";
     const PLURAL_NAME: &'static str = "persistentvolumeclaims";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for PersistentVolumeClaim {

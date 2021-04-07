@@ -56,6 +56,7 @@ impl crate::Resource for SelfSubjectAccessReview {
     const KIND: &'static str = "SelfSubjectAccessReview";
     const PLURAL_NAME: &'static str = "selfsubjectaccessreviews";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::Metadata for SelfSubjectAccessReview {

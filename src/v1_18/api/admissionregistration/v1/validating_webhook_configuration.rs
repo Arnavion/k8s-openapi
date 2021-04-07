@@ -375,6 +375,7 @@ impl crate::Resource for ValidatingWebhookConfiguration {
     const KIND: &'static str = "ValidatingWebhookConfiguration";
     const PLURAL_NAME: &'static str = "validatingwebhookconfigurations";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for ValidatingWebhookConfiguration {

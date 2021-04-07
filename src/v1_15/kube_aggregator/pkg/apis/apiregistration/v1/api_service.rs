@@ -551,6 +551,7 @@ impl crate::Resource for APIService {
     const KIND: &'static str = "APIService";
     const PLURAL_NAME: &'static str = "apiservices";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for APIService {

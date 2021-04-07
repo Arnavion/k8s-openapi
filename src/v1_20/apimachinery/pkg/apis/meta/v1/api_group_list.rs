@@ -13,6 +13,7 @@ impl crate::Resource for APIGroupList {
     const KIND: &'static str = "APIGroupList";
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl<'de> serde::Deserialize<'de> for APIGroupList {

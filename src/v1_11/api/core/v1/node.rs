@@ -1032,6 +1032,7 @@ impl crate::Resource for Node {
     const KIND: &'static str = "Node";
     const PLURAL_NAME: &'static str = "nodes";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for Node {

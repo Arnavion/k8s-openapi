@@ -1183,6 +1183,7 @@ impl crate::Resource for Service {
     const KIND: &'static str = "Service";
     const PLURAL_NAME: &'static str = "services";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Service {

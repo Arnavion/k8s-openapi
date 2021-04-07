@@ -1792,6 +1792,7 @@ impl crate::Resource for Pod {
     const KIND: &'static str = "Pod";
     const PLURAL_NAME: &'static str = "pods";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for Pod {

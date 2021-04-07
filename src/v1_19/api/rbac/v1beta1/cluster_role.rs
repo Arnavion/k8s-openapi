@@ -366,6 +366,7 @@ impl crate::Resource for ClusterRole {
     const KIND: &'static str = "ClusterRole";
     const PLURAL_NAME: &'static str = "clusterroles";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for ClusterRole {

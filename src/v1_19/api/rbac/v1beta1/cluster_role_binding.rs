@@ -366,6 +366,7 @@ impl crate::Resource for ClusterRoleBinding {
     const KIND: &'static str = "ClusterRoleBinding";
     const PLURAL_NAME: &'static str = "clusterrolebindings";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for ClusterRoleBinding {

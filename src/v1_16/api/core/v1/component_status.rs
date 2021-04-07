@@ -172,6 +172,7 @@ impl crate::Resource for ComponentStatus {
     const KIND: &'static str = "ComponentStatus";
     const PLURAL_NAME: &'static str = "componentstatuses";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for ComponentStatus {

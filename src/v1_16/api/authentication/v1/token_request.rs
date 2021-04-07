@@ -67,6 +67,7 @@ impl crate::Resource for TokenRequest {
     const KIND: &'static str = "TokenRequest";
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::Metadata for TokenRequest {

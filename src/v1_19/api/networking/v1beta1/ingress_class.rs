@@ -375,6 +375,7 @@ impl crate::Resource for IngressClass {
     const KIND: &'static str = "IngressClass";
     const PLURAL_NAME: &'static str = "ingressclasses";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for IngressClass {

@@ -553,6 +553,7 @@ impl crate::Resource for StorageVersion {
     const KIND: &'static str = "StorageVersion";
     const PLURAL_NAME: &'static str = "storageversions";
     const VERSION: &'static str = "v1alpha1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for StorageVersion {

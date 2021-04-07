@@ -395,6 +395,7 @@ impl crate::Resource for StorageClass {
     const KIND: &'static str = "StorageClass";
     const PLURAL_NAME: &'static str = "storageclasses";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for StorageClass {

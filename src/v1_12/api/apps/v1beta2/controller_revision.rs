@@ -494,6 +494,7 @@ impl crate::Resource for ControllerRevision {
     const KIND: &'static str = "ControllerRevision";
     const PLURAL_NAME: &'static str = "controllerrevisions";
     const VERSION: &'static str = "v1beta2";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for ControllerRevision {

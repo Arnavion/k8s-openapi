@@ -686,6 +686,7 @@ impl crate::Resource for ResourceQuota {
     const KIND: &'static str = "ResourceQuota";
     const PLURAL_NAME: &'static str = "resourcequotas";
     const VERSION: &'static str = "v1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for ResourceQuota {

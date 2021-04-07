@@ -375,6 +375,7 @@ impl crate::Resource for InitializerConfiguration {
     const KIND: &'static str = "InitializerConfiguration";
     const PLURAL_NAME: &'static str = "initializerconfigurations";
     const VERSION: &'static str = "v1alpha1";
+    const NAMESPACED: bool = false;
 }
 
 impl crate::ListableResource for InitializerConfiguration {

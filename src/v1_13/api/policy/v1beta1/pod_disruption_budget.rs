@@ -685,6 +685,7 @@ impl crate::Resource for PodDisruptionBudget {
     const KIND: &'static str = "PodDisruptionBudget";
     const PLURAL_NAME: &'static str = "poddisruptionbudgets";
     const VERSION: &'static str = "v1beta1";
+    const NAMESPACED: bool = true;
 }
 
 impl crate::ListableResource for PodDisruptionBudget {
