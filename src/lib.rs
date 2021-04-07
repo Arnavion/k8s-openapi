@@ -501,6 +501,19 @@ impl serde::Serialize for ByteString {
     }
 }
 
+/// Describes resource scope.
+pub trait ResourceScope {}
+
+pub struct ClusterScopedResource;
+impl ResourceScope for ClusterScopedResource {}
+
+pub struct NamespaceScopedResource;
+impl ResourceScope for NamespaceScopedResource {}
+
+// Neither cluster nor namespace scoped.
+// pub struct NotScopedResource;
+// impl ResourceScope for NotScopedResource {}
+
 /// A trait applied to all Kubernetes resources.
 pub trait Resource {
     /// The API version of the resource. This is a composite of [`Resource::GROUP`] and [`Resource::VERSION`] (eg `"apiextensions.k8s.io/v1beta1"`)
@@ -517,8 +530,20 @@ pub trait Resource {
     /// This is the string used in the `kind` field of the resource's serialized form.
     const KIND: &'static str;
 
+    /// The plural name of the resource.
+    /// It can be used to construct URLs.
+    const PLURAL_NAME: &'static str;
+
     /// The version of the resource.
     const VERSION: &'static str;
+
+    /// If true, this resource is namespaced
+    const NAMESPACED: bool;
+
+    /// Type that represents scope of the resource.
+    /// If `NAMESPACED` is true, this is `NamespaceScopedResource`.
+    /// Otherwise, this is `ClusterScopedResource`.
+    type Scope: ResourceScope;
 }
 
 /// A trait applied to all Kubernetes resources that can be part of a corresponding list.
