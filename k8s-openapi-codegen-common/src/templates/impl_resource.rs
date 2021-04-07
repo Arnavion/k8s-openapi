@@ -22,6 +22,7 @@ pub(crate) fn generate(
 		api_version = resource_metadata.api_version,
 		group = resource_metadata.group,
 		kind = resource_metadata.kind,
+		resource_name = resource_metadata.name,
 		version = resource_metadata.version,
 	)?;
 

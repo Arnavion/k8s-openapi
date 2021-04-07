@@ -149,6 +149,83 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 }
 
+fn do_inter_resource_name_from_url(url: &str) -> Option<Option<&str>> {
+	// we have to special-case Namespaces
+	const NAMESPACE_RESOURCE_URLS: &[&str] = &[
+		"/api/v1/namespaces",
+	    "/api/v1/namespaces/{name}"
+	];
+	const NAMESPACE_SUBRESOURCE_URLS: &[&str] = &[
+		"/api/v1/namespaces/{name}/status",
+		"/api/v1/namespaces/{name}/finalize"
+	];
+	if NAMESPACE_RESOURCE_URLS.contains(&url) {
+		return Some(Some("namespaces"));
+	}
+	if NAMESPACE_SUBRESOURCE_URLS.contains(&url) {
+		return Some(None);
+	}
+
+	let mut parts = url.split('/');
+	if parts.next()? != "" {
+		return None;
+	}
+	match parts.next().unwrap() {
+		"apis" => {
+			// skip api group
+			parts.next()?;
+			// skip version
+			parts.next()?;
+		},
+		"api" => {
+			// skip version
+			parts.next()?;
+		}
+		_ => return None
+	}
+	let res = match parts.next().unwrap() {
+		"namespaces" => {
+			// we have checked for Namespace earlier,
+            // so this is namespace-scoped resource.
+
+			// at lease two components
+			// are left ({namespace}, resource)
+			parts.next()?;
+			parts.next()?
+		}
+		resource_name => {
+			// cluster-scoped resource
+			resource_name
+		}
+	};
+	// let's check this is not a subresource
+	if parts.next().is_some() {
+		if let Some(_subresource_name ) = parts.next() {
+			return Some(None);
+		}
+	}
+	Some(Some(res))
+}
+
+
+enum InferredResource {
+	Resource(String),
+	Subresource,
+}
+
+/// Gets an operation url and returns resource name,
+/// e.g. `/apis/apps/v1/namespaces/{namespace}/deployments` maps to
+/// `deployments`
+fn infer_resource_name_from_url(url: &str) -> InferredResource {
+	let name = do_inter_resource_name_from_url(url).unwrap_or_else(||panic!("failed to infer resource name from {}", url));
+
+	// eprintln!("{} -> {:?}", url, name);
+	match name {
+		Some(n) => InferredResource::Resource(n.to_string()),
+		None => InferredResource::Subresource
+	}
+}
+
 /// Each invocation of this function generates a single type specified by the `definition_path` parameter along with its associated API operation functions.
 ///
 /// # Parameters
@@ -342,6 +419,8 @@ pub fn run(
 				&template_properties,
 			)?;
 
+			let mut inferred_resource_names: Vec<String> = Vec::new();
+
 			if !definition.kubernetes_group_kind_versions.is_empty() {
 				let mut kubernetes_group_kind_versions: Vec<_> = definition.kubernetes_group_kind_versions.iter().collect();
 				kubernetes_group_kind_versions.sort();
@@ -373,6 +452,10 @@ pub fn run(
 									optional_feature)?;
 							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
 							run_result.num_generated_apis += 1;
+							let resource_name = infer_resource_name_from_url(&operation.path);
+							if let InferredResource::Resource(r) = resource_name {
+								inferred_resource_names.push(r);
+							}
 						}
 
 						writeln!(out)?;
@@ -384,11 +467,23 @@ pub fn run(
 				*operations = operations_by_gkv.into_iter().flat_map(|(_, operations)| operations).collect();
 			}
 
+			let resource_name = if inferred_resource_names.is_empty() {
+				// TODO
+				String::new()
+			} else {
+				let name = &inferred_resource_names[0];
+				for other_name in &inferred_resource_names {
+					assert_eq!(name, other_name);
+				}
+				name.clone()
+			};
+
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
 				(Some((api_version, group, kind, version)), Some((metadata_ty, true))) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
+					name: &resource_name,
 					version,
 					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: Some(metadata_ty),
@@ -398,6 +493,7 @@ pub fn run(
 					api_version,
 					group,
 					kind,
+					name: &resource_name,
 					version,
 					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: None,
@@ -576,6 +672,8 @@ pub fn run(
 				group: "<T as crate::Resource>::GROUP",
 				kind: "<T as crate::ListableResource>::LIST_KIND",
 				version: "<T as crate::Resource>::VERSION",
+				// TODO
+				name: "",
 				is_listable: false,
 				metadata_ty: Some(&metadata_rust_type),
 			};
