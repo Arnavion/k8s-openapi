@@ -552,6 +552,7 @@ impl crate::Resource for APIService {
     const PLURAL_NAME: &'static str = "apiservices";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for APIService {

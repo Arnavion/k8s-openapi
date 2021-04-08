@@ -408,6 +408,7 @@ impl crate::Resource for Scale {
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::Metadata for Scale {

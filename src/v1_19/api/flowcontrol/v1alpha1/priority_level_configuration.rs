@@ -553,6 +553,7 @@ impl crate::Resource for PriorityLevelConfiguration {
     const PLURAL_NAME: &'static str = "prioritylevelconfigurations";
     const VERSION: &'static str = "v1alpha1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for PriorityLevelConfiguration {

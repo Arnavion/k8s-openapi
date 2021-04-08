@@ -687,6 +687,7 @@ impl crate::Resource for CronJob {
     const PLURAL_NAME: &'static str = "cronjobs";
     const VERSION: &'static str = "v2alpha1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for CronJob {

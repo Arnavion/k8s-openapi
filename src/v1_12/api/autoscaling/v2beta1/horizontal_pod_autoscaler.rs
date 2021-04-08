@@ -687,6 +687,7 @@ impl crate::Resource for HorizontalPodAutoscaler {
     const PLURAL_NAME: &'static str = "horizontalpodautoscalers";
     const VERSION: &'static str = "v2beta1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for HorizontalPodAutoscaler {

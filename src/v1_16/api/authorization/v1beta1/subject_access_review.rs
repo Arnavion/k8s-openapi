@@ -57,6 +57,7 @@ impl crate::Resource for SubjectAccessReview {
     const PLURAL_NAME: &'static str = "subjectaccessreviews";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::Metadata for SubjectAccessReview {

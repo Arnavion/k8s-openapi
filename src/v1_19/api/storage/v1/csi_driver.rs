@@ -376,6 +376,7 @@ impl crate::Resource for CSIDriver {
     const PLURAL_NAME: &'static str = "csidrivers";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for CSIDriver {

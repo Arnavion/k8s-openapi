@@ -554,6 +554,7 @@ impl crate::Resource for StorageVersion {
     const PLURAL_NAME: &'static str = "storageversions";
     const VERSION: &'static str = "v1alpha1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for StorageVersion {

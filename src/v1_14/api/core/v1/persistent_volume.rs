@@ -553,6 +553,7 @@ impl crate::Resource for PersistentVolume {
     const PLURAL_NAME: &'static str = "persistentvolumes";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for PersistentVolume {

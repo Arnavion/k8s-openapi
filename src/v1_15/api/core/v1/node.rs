@@ -1033,6 +1033,7 @@ impl crate::Resource for Node {
     const PLURAL_NAME: &'static str = "nodes";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for Node {

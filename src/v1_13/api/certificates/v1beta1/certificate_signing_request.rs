@@ -593,6 +593,7 @@ impl crate::Resource for CertificateSigningRequest {
     const PLURAL_NAME: &'static str = "certificatesigningrequests";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for CertificateSigningRequest {

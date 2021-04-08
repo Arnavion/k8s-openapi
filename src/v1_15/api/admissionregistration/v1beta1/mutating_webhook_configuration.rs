@@ -376,6 +376,7 @@ impl crate::Resource for MutatingWebhookConfiguration {
     const PLURAL_NAME: &'static str = "mutatingwebhookconfigurations";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for MutatingWebhookConfiguration {

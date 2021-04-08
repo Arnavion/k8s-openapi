@@ -109,6 +109,7 @@ impl crate::Resource for Binding {
     const PLURAL_NAME: &'static str = "bindings";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::Metadata for Binding {

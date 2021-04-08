@@ -11,6 +11,13 @@ pub(crate) fn generate(
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
 
+	let scope_type = match resource_metadata.namespaced {
+		"true" => "String",
+    	"false" =>  "()",
+		"<T as crate::Resource>::NAMESPACED" => "<T as crate::Resource>::Scope",
+		_ => unreachable!(),
+	};
+
 	writeln!(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/impl_resource.rs")),
@@ -25,6 +32,7 @@ pub(crate) fn generate(
 		resource_name = resource_metadata.name,
 		version = resource_metadata.version,
 		namespaced = resource_metadata.namespaced,
+		scope_type = scope_type,
 	)?;
 
 	Ok(())

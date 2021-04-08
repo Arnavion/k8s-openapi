@@ -499,6 +499,20 @@ impl serde::Serialize for ByteString {
     }
 }
 
+mod seal {
+    pub trait Internal {}
+    impl Internal for () {}
+    impl Internal for String {}
+}
+
+/// Information that describes resource scope.
+/// This is sealed trait which is implemented for `()` (cluster-scoped
+/// resources) and `String` (namespaced resources).
+pub trait Scope: seal::Internal {}
+
+impl Scope for () {}
+impl Scope for String {}
+
 /// A trait applied to all Kubernetes resources.
 pub trait Resource {
     /// The API version of the resource. This is a composite of [`Resource::GROUP`] and [`Resource::VERSION`] (eg `"apiextensions.k8s.io/v1beta1"`)
@@ -524,7 +538,21 @@ pub trait Resource {
 
     /// If true, this resource is namespaced
     const NAMESPACED: bool;
+
+    /// Type that represents scope of the resource.
+    /// If `NAMESPACED` is true, this is `String`.
+    /// Otherwise, this is `()`.
+    type Scope: Scope;
 }
+
+/// Trait applied to all cluster-scoped resources
+pub trait ClusterScopedResource: Resource<Scope=()> {}
+
+impl<R: Resource<Scope=()>> ClusterScopedResource for R {}
+
+/// Trait applied to all namespaced resources
+pub trait NamespacedResource: Resource<Scope=String> {}
+impl<R: Resource<Scope=String>> NamespacedResource for R {}
 
 /// A trait applied to all Kubernetes resources that can be part of a corresponding list.
 pub trait ListableResource: Resource {

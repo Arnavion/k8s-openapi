@@ -6,4 +6,5 @@ impl{type_generics_impl} {local}Resource for {type_name}{type_generics_type}{typ
     const PLURAL_NAME: &'static str = "{resource_name}";
     const VERSION: &'static str = {version};
     const NAMESPACED: bool = {namespaced};
+    type Scope = {scope_type};
 }}

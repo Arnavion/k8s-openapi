@@ -492,6 +492,7 @@ impl crate::Resource for LimitRange {
     const PLURAL_NAME: &'static str = "limitranges";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for LimitRange {

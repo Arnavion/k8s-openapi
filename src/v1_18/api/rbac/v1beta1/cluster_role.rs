@@ -367,6 +367,7 @@ impl crate::Resource for ClusterRole {
     const PLURAL_NAME: &'static str = "clusterroles";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for ClusterRole {

@@ -492,6 +492,7 @@ impl crate::Resource for NetworkPolicy {
     const PLURAL_NAME: &'static str = "networkpolicies";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for NetworkPolicy {

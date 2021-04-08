@@ -17,6 +17,7 @@ impl<T> crate::Resource for List<T> where T: crate::ListableResource {
     const PLURAL_NAME: &'static str = "";
     const VERSION: &'static str = <T as crate::Resource>::VERSION;
     const NAMESPACED: bool = <T as crate::Resource>::NAMESPACED;
+    type Scope = <T as crate::Resource>::Scope;
 }
 
 impl<T> crate::Metadata for List<T> where T: crate::ListableResource {

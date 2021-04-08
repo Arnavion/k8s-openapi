@@ -552,6 +552,7 @@ impl crate::Resource for CustomResourceDefinition {
     const PLURAL_NAME: &'static str = "customresourcedefinitions";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for CustomResourceDefinition {

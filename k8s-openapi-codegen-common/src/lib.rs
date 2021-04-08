@@ -686,7 +686,6 @@ pub fn run(
 				group: "<T as crate::Resource>::GROUP",
 				kind: "<T as crate::ListableResource>::LIST_KIND",
 				version: "<T as crate::Resource>::VERSION",
-				// TODO
 				name: "",
 				is_listable: false,
 				metadata_ty: Some(&metadata_rust_type),

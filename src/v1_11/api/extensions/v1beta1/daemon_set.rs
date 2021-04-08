@@ -687,6 +687,7 @@ impl crate::Resource for DaemonSet {
     const PLURAL_NAME: &'static str = "daemonsets";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for DaemonSet {

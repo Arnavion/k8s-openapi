@@ -498,6 +498,7 @@ impl crate::Resource for EndpointSlice {
     const PLURAL_NAME: &'static str = "endpointslices";
     const VERSION: &'static str = "v1alpha1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for EndpointSlice {

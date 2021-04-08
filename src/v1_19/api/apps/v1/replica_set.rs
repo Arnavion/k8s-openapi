@@ -687,6 +687,7 @@ impl crate::Resource for ReplicaSet {
     const PLURAL_NAME: &'static str = "replicasets";
     const VERSION: &'static str = "v1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for ReplicaSet {

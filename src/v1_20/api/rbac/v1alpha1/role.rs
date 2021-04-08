@@ -480,6 +480,7 @@ impl crate::Resource for Role {
     const PLURAL_NAME: &'static str = "roles";
     const VERSION: &'static str = "v1alpha1";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for Role {

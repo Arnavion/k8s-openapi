@@ -687,6 +687,7 @@ impl crate::Resource for Deployment {
     const PLURAL_NAME: &'static str = "deployments";
     const VERSION: &'static str = "v1beta2";
     const NAMESPACED: bool = true;
+    type Scope = String;
 }
 
 impl crate::ListableResource for Deployment {

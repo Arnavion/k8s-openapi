@@ -376,6 +376,7 @@ impl crate::Resource for RuntimeClass {
     const PLURAL_NAME: &'static str = "runtimeclasses";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for RuntimeClass {

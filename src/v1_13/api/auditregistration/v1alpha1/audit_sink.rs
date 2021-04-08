@@ -375,6 +375,7 @@ impl crate::Resource for AuditSink {
     const PLURAL_NAME: &'static str = "auditsinks";
     const VERSION: &'static str = "v1alpha1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::ListableResource for AuditSink {

@@ -57,6 +57,7 @@ impl crate::Resource for SelfSubjectAccessReview {
     const PLURAL_NAME: &'static str = "selfsubjectaccessreviews";
     const VERSION: &'static str = "v1beta1";
     const NAMESPACED: bool = false;
+    type Scope = ();
 }
 
 impl crate::Metadata for SelfSubjectAccessReview {
