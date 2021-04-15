@@ -53,7 +53,11 @@ fn main() -> Result<(), Error> {
 		log::set_max_level(logger.filter());
 	}
 
-	let client = std::sync::Arc::new(reqwest::blocking::Client::new());
+	let client =
+		std::sync::Arc::new(
+			reqwest::blocking::ClientBuilder::new()
+			.timeout(None)
+			.build().expect("could not create reqwest client"));
 
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
