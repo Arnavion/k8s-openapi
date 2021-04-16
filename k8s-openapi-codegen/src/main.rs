@@ -41,6 +41,35 @@ impl std::fmt::Debug for Error {
 	}
 }
 
+struct RequestedVersion {
+	ver: supported_version::SupportedVersion,
+	overriden_spec_url: Option<String>
+}
+
+fn parse_requested_versions(spec: &str) -> Vec<RequestedVersion> {
+	let mut res = Vec::new();
+	for item in spec.split(',') {
+		let mut it = item.split('=');
+		let name = it.next().expect("empty requested version");
+		let url = it.next();
+		let mut found_version = false;
+		for ver in supported_version::ALL.iter().copied() {
+			if ver.name() == name {
+				res.push(RequestedVersion {
+					ver,
+					overriden_spec_url: url.map(ToString::to_string)
+				});
+				found_version = true;
+				break;
+			}
+		} 
+		if !found_version {
+			panic!("unknown requested version");
+		}
+	}
+	res
+} 
+
 fn main() -> Result<(), Error> {
 	{
 		let logger = logger::Logger;
@@ -58,10 +87,22 @@ fn main() -> Result<(), Error> {
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
 
-	let threads: Vec<_> =
-		supported_version::ALL.iter()
-		.map(|&supported_version| {
-			let mod_root = supported_version.mod_root().to_owned();
+    let versions = match std::env::var("VERSIONS") {
+		Ok(v) => parse_requested_versions(&v),
+		Err(_) => supported_version::ALL
+			.iter()
+			.copied()
+			.map(|ver| RequestedVersion {
+				ver,
+				overriden_spec_url: None
+			})
+			.collect(),
+	};
+
+	let threads: Vec<_> = versions
+		.into_iter()
+		.map(|requested_version| {
+			let mod_root = requested_version.ver.mod_root().to_owned();
 
 			std::thread::Builder::new().name(mod_root.clone()).spawn({
 				let out_dir_base = out_dir_base.clone();
@@ -79,7 +120,7 @@ fn main() -> Result<(), Error> {
 						logger::register_thread_local_logger(builder.build());
 					}
 
-					run(supported_version, &out_dir_base, &client)?;
+					run(requested_version.ver, &out_dir_base, &client, requested_version.overriden_spec_url.as_deref())?;
 
 					Ok(())
 				}
@@ -99,7 +140,7 @@ fn main() -> Result<(), Error> {
 	result
 }
 
-fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client) -> Result<(), Error> {
+fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client, spec_url_override: Option<&str>) -> Result<(), Error> {
 	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -109,7 +150,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let mut num_generated_apis = 0usize;
 
 	let mut spec: swagger20::Spec = {
-		let spec_url = supported_version.spec_url();
+		let spec_url = spec_url_override.unwrap_or_else(|| supported_version.spec_url());
 		log::info!("Parsing spec file at {} ...", spec_url);
 		let response = client.get(spec_url).send()?;
 		let status = response.status();

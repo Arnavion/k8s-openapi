@@ -26,6 +26,21 @@ pub(crate) enum SupportedVersion {
 }
 
 impl SupportedVersion {
+    pub(crate) fn name(self) -> &'static str {
+		match self {
+			SupportedVersion::V1_11 => "v1.11",
+			SupportedVersion::V1_12 => "v1.12",
+			SupportedVersion::V1_13 => "v1.13",
+			SupportedVersion::V1_14 => "v1.14",
+			SupportedVersion::V1_15 => "v1.15",
+			SupportedVersion::V1_16 => "v1.16",
+			SupportedVersion::V1_17 => "v1.17",
+			SupportedVersion::V1_18 => "v1.18",
+			SupportedVersion::V1_19 => "v1.19",
+			SupportedVersion::V1_20 => "v1.20",	
+		}
+	}
+
 	pub(crate) fn mod_root(self) -> &'static str {
 		match self {
 			SupportedVersion::V1_11 => "v1_11",
