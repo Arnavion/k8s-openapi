@@ -14,3 +14,4 @@ log = "0.4"
 reqwest = { version = "0.11", default-features = false, features = ["blocking", "default-tls", "json"] }
 serde = "1"
 serde_derive = "1"
+structopt = "0.3"

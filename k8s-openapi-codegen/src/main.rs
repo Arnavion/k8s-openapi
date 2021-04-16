@@ -41,7 +41,15 @@ impl std::fmt::Debug for Error {
 	}
 }
 
+impl std::fmt::Display for Error {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Debug::fmt(self, f)
+	}
+}
+
 fn main() -> Result<(), Error> {
+	let Options { versions: requested_versions } = structopt::StructOpt::from_args();
+
 	{
 		let logger = logger::Logger;
 		log::set_boxed_logger(Box::new(logger))?;
@@ -62,12 +70,20 @@ fn main() -> Result<(), Error> {
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
 
-	let threads: Vec<_> =
-		supported_version::ALL.iter()
-		.map(|&supported_version| {
-			let mod_root = supported_version.mod_root().to_owned();
+	let requested_versions =
+		if requested_versions.is_empty() {
+			supported_version::ALL.iter().map(|&version| RequestedVersion { version, overriden_spec_url: None }).collect()
+		}
+		else {
+			requested_versions
+		};
 
-			std::thread::Builder::new().name(mod_root.clone()).spawn({
+	let threads: Vec<_> =
+		requested_versions.into_iter()
+		.map(|RequestedVersion { version, overriden_spec_url }| {
+			let version_name = version.name();
+
+			std::thread::Builder::new().name(version_name.to_owned()).spawn({
 				let out_dir_base = out_dir_base.clone();
 				let client = client.clone();
 
@@ -76,14 +92,16 @@ fn main() -> Result<(), Error> {
 						let mut builder = env_logger::Builder::new();
 						builder.format(move |buf, record| {
 							use std::io::Write;
-							writeln!(buf, "[{}] {} {}:{} {}", mod_root, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
+							writeln!(buf, "[{}] {} {}:{} {}", version_name, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
 						});
 						let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
 						builder.parse_filters(&rust_log);
 						logger::register_thread_local_logger(builder.build());
 					}
 
-					run(supported_version, &out_dir_base, &client)?;
+					let spec_url = overriden_spec_url.as_deref().unwrap_or_else(|| version.spec_url());
+
+					run(version, spec_url, &out_dir_base, &client)?;
 
 					Ok(())
 				}
@@ -103,7 +121,68 @@ fn main() -> Result<(), Error> {
 	result
 }
 
-fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client) -> Result<(), Error> {
+#[derive(structopt::StructOpt)]
+struct Options {
+	/// This parameter specifies the versions of Kubernetes that the API bindings should be generated for.
+	///
+	/// `--generate=1.20` means "generate bindings for Kubernetes v1.20,
+	/// based on that version's OpenAPI spec from the https://github.com/kubernetes/kubernetes repository".
+	///
+	/// `--generate=1.20:https://example.org/spec.json` means "generate binding for v1.20,
+	/// based on the OpenAPI spec at https://example.org/spec.json".
+	///
+	/// This parameter can be specified multiple times to specify multiple versions.
+	///
+	/// If this parameter isn't specified, the API bindings will be generated for all supported versions,
+	/// based on their OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
+	#[structopt(long = "generate", value_name = "VERSION")]
+	versions: Vec<RequestedVersion>,
+}
+
+struct RequestedVersion {
+	version: supported_version::SupportedVersion,
+	overriden_spec_url: Option<String>,
+}
+
+impl std::str::FromStr for RequestedVersion {
+	type Err = Error;
+
+	fn from_str(spec: &str) -> Result<Self, Error> {
+		let mut parts = spec.splitn(2, ':');
+
+		let version = parts.next().expect("str::split returns at least one part");
+		let url = parts.next();
+
+		let &version =
+			supported_version::ALL.iter()
+			.find(|v| v.name() == version)
+			.ok_or_else(|| {
+				let mut err = format!("unknown version {:?} requested, supported versions are ", version);
+				for (i, &version) in supported_version::ALL.iter().enumerate() {
+					if i > 0 {
+						err.push_str(", ");
+					}
+
+					err.push('"');
+					err.push_str(version.name());
+					err.push('"');
+				}
+				err
+			})?;
+
+		Ok(RequestedVersion {
+			version,
+			overriden_spec_url: url.map(ToString::to_string),
+		})
+	}
+}
+
+fn run(
+	supported_version: supported_version::SupportedVersion,
+	spec_url: &str,
+	out_dir_base: &std::path::Path,
+	client: &reqwest::blocking::Client,
+) -> Result<(), Error> {
 	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -113,7 +192,6 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let mut num_generated_apis = 0usize;
 
 	let mut spec: swagger20::Spec = {
-		let spec_url = supported_version.spec_url();
 		log::info!("Parsing spec file at {} ...", spec_url);
 		let response = client.get(spec_url).send()?;
 		let status = response.status();

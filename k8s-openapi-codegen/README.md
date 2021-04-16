@@ -10,3 +10,5 @@ cargo run
 ```
 
 Bindings will now be generated in the `../` directory.
+
+The binary accepts command-line arguments for advanced usage scenarios. Run `cargo run -- --help` for more details.
