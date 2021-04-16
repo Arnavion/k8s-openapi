@@ -10,3 +10,6 @@ cargo run
 ```
 
 Bindings will now be generated in the `../` directory.
+
+Generator accepts command-line arguments for advanced usage scenarios, run
+`cargo run -- --help` for more details.

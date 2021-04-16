@@ -17,6 +17,8 @@ mod logger;
 mod supported_version;
 
 use k8s_openapi_codegen_common::swagger20;
+use structopt::StructOpt;
+use std::str::FromStr;
 
 struct Error(Box<dyn std::error::Error + Send + Sync>, backtrace::Backtrace);
 
@@ -41,36 +43,49 @@ impl std::fmt::Debug for Error {
 	}
 }
 
+impl std::fmt::Display for Error {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Debug::fmt(self, f)
+	}
+}
+
 struct RequestedVersion {
 	ver: supported_version::SupportedVersion,
 	overriden_spec_url: Option<String>
 }
 
-fn parse_requested_versions(spec: &str) -> Vec<RequestedVersion> {
-	let mut res = Vec::new();
-	for item in spec.split(',') {
-		let mut it = item.split('=');
-		let name = it.next().expect("empty requested version");
+impl FromStr for RequestedVersion {
+	type Err = Error;
+	fn from_str(spec: &str) -> Result<Self, Error> {
+		let mut it = spec.split(':');
+		let name = it.next().ok_or_else(|| Error::from("empty requested version"))?;
 		let url = it.next();
-		let mut found_version = false;
-		for ver in supported_version::ALL.iter().copied() {
-			if ver.name() == name {
-				res.push(RequestedVersion {
-					ver,
-					overriden_spec_url: url.map(ToString::to_string)
-				});
-				found_version = true;
-				break;
-			}
-		} 
-		if !found_version {
-			panic!("unknown requested version");
+		let ver = supported_version::ALL.iter().find(|v| v.name() == name);
+		if let Some(&ver) = ver {
+			Ok(RequestedVersion {
+				ver,
+				overriden_spec_url: url.map(ToString::to_string)
+			})
+		} else {
+			Err(format!("unknown requested version: {}", name).into())
 		}
 	}
-	res
-} 
+}
+
+#[derive(StructOpt)]
+struct Args {
+	/// By default bindings will be generated for all supported k8s versions.
+	/// Using this flag you can override this behavior. `--version=v1.X` means
+	/// "generate bindings for v1.X based on openapi spec from the kubernetes repository".
+	/// `--version=v1.x:http://foo.bar/spec.json` means "generate binding for v1.X and
+	/// take specification from http://foo.bar/spec.json". This flag can be specified
+	/// several times.
+    #[structopt(long)]
+	version: Vec<RequestedVersion>
+}
 
 fn main() -> Result<(), Error> {
+	let args: Args = StructOpt::from_args();
 	{
 		let logger = logger::Logger;
 		log::set_boxed_logger(Box::new(logger))?;
@@ -87,16 +102,17 @@ fn main() -> Result<(), Error> {
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
 
-    let versions = match std::env::var("VERSIONS") {
-		Ok(v) => parse_requested_versions(&v),
-		Err(_) => supported_version::ALL
-			.iter()
-			.copied()
-			.map(|ver| RequestedVersion {
-				ver,
-				overriden_spec_url: None
-			})
-			.collect(),
+	let versions = if args.version.is_empty() {
+		supported_version::ALL
+		.iter()
+		.copied()
+		.map(|ver| RequestedVersion {
+			ver,
+			overriden_spec_url: None
+		})
+		.collect()
+	} else {
+		args.version
 	};
 
 	let threads: Vec<_> = versions
@@ -120,7 +136,10 @@ fn main() -> Result<(), Error> {
 						logger::register_thread_local_logger(builder.build());
 					}
 
-					run(requested_version.ver, &out_dir_base, &client, requested_version.overriden_spec_url.as_deref())?;
+					let url = requested_version.overriden_spec_url.as_deref()
+						.unwrap_or_else(|| requested_version.ver.spec_url());
+
+					run(requested_version.ver, &out_dir_base, &client, url)?;
 
 					Ok(())
 				}
@@ -140,7 +159,7 @@ fn main() -> Result<(), Error> {
 	result
 }
 
-fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client, spec_url_override: Option<&str>) -> Result<(), Error> {
+fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::blocking::Client, url: &str) -> Result<(), Error> {
 	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -150,9 +169,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let mut num_generated_apis = 0usize;
 
 	let mut spec: swagger20::Spec = {
-		let spec_url = spec_url_override.unwrap_or_else(|| supported_version.spec_url());
-		log::info!("Parsing spec file at {} ...", spec_url);
-		let response = client.get(spec_url).send()?;
+		log::info!("Parsing spec file at {} ...", url);
+		let response = client.get(url).send()?;
 		let status = response.status();
 		if status != http::StatusCode::OK {
 			return Err(status.to_string().into());
