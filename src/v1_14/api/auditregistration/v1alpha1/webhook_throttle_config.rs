@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for WebhookThrottleConfig {
                     qps: value_qps,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(WebhookThrottleConfig {
+                    burst: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("burst"))?,
+                    qps: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("qps"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for WebhookThrottleConfig {
             self.qps.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.burst {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "burst", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "burst", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "burst")?;
         }
         if let Some(value) = &self.qps {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "qps", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "qps", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "qps")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

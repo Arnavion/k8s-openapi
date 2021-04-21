@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ContainerState {
                     waiting: value_waiting,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerState {
+                    running: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("running"))?,
+                    terminated: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("terminated"))?,
+                    waiting: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("waiting"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for ContainerState {
             self.waiting.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.running {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "running", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "running", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "running")?;
         }
         if let Some(value) = &self.terminated {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminated", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminated", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "terminated")?;
         }
         if let Some(value) = &self.waiting {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "waiting", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "waiting", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "waiting")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

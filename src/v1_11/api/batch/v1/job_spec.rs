@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
                     template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(JobSpec {
+                    active_deadline_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("active_deadline_seconds"))?,
+                    backoff_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("backoff_limit"))?,
+                    completions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("completions"))?,
+                    manual_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("manual_selector"))?,
+                    parallelism: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("parallelism"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -140,22 +152,40 @@ impl serde::Serialize for JobSpec {
             self.selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "activeDeadlineSeconds")?;
         }
         if let Some(value) = &self.backoff_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "backoffLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "backoffLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "backoffLimit")?;
         }
         if let Some(value) = &self.completions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "completions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "completions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "completions")?;
         }
         if let Some(value) = &self.manual_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "manualSelector")?;
         }
         if let Some(value) = &self.parallelism {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "parallelism")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         serde::ser::SerializeStruct::end(state)

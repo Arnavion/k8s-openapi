@@ -233,6 +233,33 @@ impl<'de> serde::Deserialize<'de> for PodSecurityPolicySpec {
                     volumes: value_volumes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodSecurityPolicySpec {
+                    allow_privilege_escalation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allow_privilege_escalation"))?,
+                    allowed_capabilities: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_capabilities"))?,
+                    allowed_flex_volumes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_flex_volumes"))?,
+                    allowed_host_paths: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_host_paths"))?,
+                    allowed_proc_mount_types: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_proc_mount_types"))?,
+                    allowed_unsafe_sysctls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_unsafe_sysctls"))?,
+                    default_add_capabilities: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_add_capabilities"))?,
+                    default_allow_privilege_escalation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_allow_privilege_escalation"))?,
+                    forbidden_sysctls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("forbidden_sysctls"))?,
+                    fs_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_group"))?,
+                    host_ipc: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_ipc"))?,
+                    host_network: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_network"))?,
+                    host_pid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_pid"))?,
+                    host_ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_ports"))?,
+                    privileged: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("privileged"))?,
+                    read_only_root_filesystem: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only_root_filesystem"))?,
+                    required_drop_capabilities: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("required_drop_capabilities"))?,
+                    run_as_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_group"))?,
+                    run_as_user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_user"))?,
+                    se_linux: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("se_linux"))?,
+                    supplemental_groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("supplemental_groups"))?,
+                    volumes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volumes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -291,62 +318,116 @@ impl serde::Serialize for PodSecurityPolicySpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowPrivilegeEscalation")?;
         }
         if let Some(value) = &self.allowed_capabilities {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedCapabilities")?;
         }
         if let Some(value) = &self.allowed_flex_volumes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedFlexVolumes")?;
         }
         if let Some(value) = &self.allowed_host_paths {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedHostPaths")?;
         }
         if let Some(value) = &self.allowed_proc_mount_types {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedProcMountTypes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedProcMountTypes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedProcMountTypes")?;
         }
         if let Some(value) = &self.allowed_unsafe_sysctls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedUnsafeSysctls")?;
         }
         if let Some(value) = &self.default_add_capabilities {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultAddCapabilities")?;
         }
         if let Some(value) = &self.default_allow_privilege_escalation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAllowPrivilegeEscalation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAllowPrivilegeEscalation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultAllowPrivilegeEscalation")?;
         }
         if let Some(value) = &self.forbidden_sysctls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "forbiddenSysctls")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", &self.fs_group)?;
         if let Some(value) = &self.host_ipc {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostIPC")?;
         }
         if let Some(value) = &self.host_network {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostNetwork")?;
         }
         if let Some(value) = &self.host_pid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostPID")?;
         }
         if let Some(value) = &self.host_ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostPorts")?;
         }
         if let Some(value) = &self.privileged {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "privileged")?;
         }
         if let Some(value) = &self.read_only_root_filesystem {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnlyRootFilesystem")?;
         }
         if let Some(value) = &self.required_drop_capabilities {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "requiredDropCapabilities")?;
         }
         if let Some(value) = &self.run_as_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsGroup")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &self.run_as_user)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "seLinux", &self.se_linux)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
         if let Some(value) = &self.volumes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

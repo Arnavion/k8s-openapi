@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
                     propagation_policy: value_propagation_policy,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DeleteOptions {
+                    api_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_version"))?,
+                    dry_run: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dry_run"))?,
+                    grace_period_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("grace_period_seconds"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    orphan_dependents: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("orphan_dependents"))?,
+                    preconditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("preconditions"))?,
+                    propagation_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("propagation_policy"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -140,25 +152,46 @@ impl serde::Serialize for DeleteOptions {
             self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiVersion")?;
         }
         if let Some(value) = &self.dry_run {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "dryRun")?;
         }
         if let Some(value) = &self.grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "gracePeriodSeconds")?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "kind")?;
         }
         if let Some(value) = &self.orphan_dependents {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "orphanDependents")?;
         }
         if let Some(value) = &self.preconditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preconditions")?;
         }
         if let Some(value) = &self.propagation_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "propagationPolicy")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

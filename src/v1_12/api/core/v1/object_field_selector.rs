@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ObjectFieldSelector {
                     field_path: value_field_path.ok_or_else(|| serde::de::Error::missing_field("fieldPath"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ObjectFieldSelector {
+                    api_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_version"))?,
+                    field_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("field_path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for ObjectFieldSelector {
             self.api_version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiVersion")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "fieldPath", &self.field_path)?;
         serde::ser::SerializeStruct::end(state)

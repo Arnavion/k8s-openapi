@@ -72,6 +72,13 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
                     scale_up: value_scale_up,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HorizontalPodAutoscalerBehavior {
+                    scale_down: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scale_down"))?,
+                    scale_up: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scale_up"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -93,10 +100,16 @@ impl serde::Serialize for HorizontalPodAutoscalerBehavior {
             self.scale_up.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.scale_down {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleDown", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleDown", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scaleDown")?;
         }
         if let Some(value) = &self.scale_up {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleUp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleUp", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scaleUp")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

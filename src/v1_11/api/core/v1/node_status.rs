@@ -141,6 +141,22 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
                     volumes_in_use: value_volumes_in_use,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeStatus {
+                    addresses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("addresses"))?,
+                    allocatable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allocatable"))?,
+                    capacity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("capacity"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("config"))?,
+                    daemon_endpoints: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("daemon_endpoints"))?,
+                    images: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("images"))?,
+                    node_info: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_info"))?,
+                    phase: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("phase"))?,
+                    volumes_attached: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volumes_attached"))?,
+                    volumes_in_use: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volumes_in_use"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -180,37 +196,70 @@ impl serde::Serialize for NodeStatus {
             self.volumes_in_use.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "addresses")?;
         }
         if let Some(value) = &self.allocatable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allocatable")?;
         }
         if let Some(value) = &self.capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "capacity")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "config", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "config", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "config")?;
         }
         if let Some(value) = &self.daemon_endpoints {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "daemonEndpoints", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "daemonEndpoints", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "daemonEndpoints")?;
         }
         if let Some(value) = &self.images {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "images", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "images", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "images")?;
         }
         if let Some(value) = &self.node_info {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeInfo", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeInfo", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeInfo")?;
         }
         if let Some(value) = &self.phase {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "phase")?;
         }
         if let Some(value) = &self.volumes_attached {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumesAttached")?;
         }
         if let Some(value) = &self.volumes_in_use {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumesInUse")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

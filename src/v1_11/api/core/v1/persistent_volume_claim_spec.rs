@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimSpec {
                     volume_name: value_volume_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PersistentVolumeClaimSpec {
+                    access_modes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("access_modes"))?,
+                    resources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    storage_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_class_name"))?,
+                    volume_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_mode"))?,
+                    volume_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for PersistentVolumeClaimSpec {
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "accessModes")?;
         }
         if let Some(value) = &self.resources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resources")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.storage_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageClassName")?;
         }
         if let Some(value) = &self.volume_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeMode")?;
         }
         if let Some(value) = &self.volume_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
                     token: value_token.ok_or_else(|| serde::de::Error::missing_field("token"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TokenRequestStatus {
+                    expiration_timestamp: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("expiration_timestamp"))?,
+                    token: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("token"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

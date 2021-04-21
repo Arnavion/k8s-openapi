@@ -87,6 +87,15 @@ impl<'de> serde::Deserialize<'de> for SecretVolumeSource {
                     secret_name: value_secret_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SecretVolumeSource {
+                    default_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_mode"))?,
+                    items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("items"))?,
+                    optional: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("optional"))?,
+                    secret_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -112,16 +121,28 @@ impl serde::Serialize for SecretVolumeSource {
             self.secret_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultMode")?;
         }
         if let Some(value) = &self.items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "items")?;
         }
         if let Some(value) = &self.optional {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "optional", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "optional")?;
         }
         if let Some(value) = &self.secret_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

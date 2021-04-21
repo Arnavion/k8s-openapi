@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetSpec {
                     selector: value_selector,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodDisruptionBudgetSpec {
+                    max_unavailable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_unavailable"))?,
+                    min_available: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_available"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for PodDisruptionBudgetSpec {
             self.selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.max_unavailable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxUnavailable")?;
         }
         if let Some(value) = &self.min_available {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minAvailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minAvailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minAvailable")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

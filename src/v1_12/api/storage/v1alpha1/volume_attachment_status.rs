@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachmentStatus {
                     detach_error: value_detach_error,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeAttachmentStatus {
+                    attach_error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("attach_error"))?,
+                    attached: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("attached"))?,
+                    attachment_metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("attachment_metadata"))?,
+                    detach_error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("detach_error"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,14 +119,23 @@ impl serde::Serialize for VolumeAttachmentStatus {
             self.detach_error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachError", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "attachError", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "attachError")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "attached", &self.attached)?;
         if let Some(value) = &self.attachment_metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachmentMetadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "attachmentMetadata", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "attachmentMetadata")?;
         }
         if let Some(value) = &self.detach_error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "detachError", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "detachError", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "detachError")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

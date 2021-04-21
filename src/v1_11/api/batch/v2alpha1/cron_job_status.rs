@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for CronJobStatus {
                     last_schedule_time: value_last_schedule_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CronJobStatus {
+                    active: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("active"))?,
+                    last_schedule_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_schedule_time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for CronJobStatus {
             self.last_schedule_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "active", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "active")?;
         }
         if let Some(value) = &self.last_schedule_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastScheduleTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastScheduleTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastScheduleTime")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

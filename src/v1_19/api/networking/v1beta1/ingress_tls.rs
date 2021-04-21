@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for IngressTLS {
                     secret_name: value_secret_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressTLS {
+                    hosts: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hosts"))?,
+                    secret_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for IngressTLS {
             self.secret_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hosts {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hosts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hosts", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hosts")?;
         }
         if let Some(value) = &self.secret_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for RollingUpdateDaemonSet {
                     max_unavailable: value_max_unavailable,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RollingUpdateDaemonSet {
+                    max_unavailable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_unavailable"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for RollingUpdateDaemonSet {
             self.max_unavailable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.max_unavailable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxUnavailable")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

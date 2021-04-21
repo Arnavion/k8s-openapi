@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for Probe {
                     timeout_seconds: value_timeout_seconds,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Probe {
+                    exec: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("exec"))?,
+                    failure_threshold: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("failure_threshold"))?,
+                    http_get: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("http_get"))?,
+                    initial_delay_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("initial_delay_seconds"))?,
+                    period_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("period_seconds"))?,
+                    success_threshold: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("success_threshold"))?,
+                    tcp_socket: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tcp_socket"))?,
+                    timeout_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("timeout_seconds"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -150,28 +163,52 @@ impl serde::Serialize for Probe {
             self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.exec {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exec", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "exec")?;
         }
         if let Some(value) = &self.failure_threshold {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failureThreshold", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "failureThreshold", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "failureThreshold")?;
         }
         if let Some(value) = &self.http_get {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "httpGet", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "httpGet", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "httpGet")?;
         }
         if let Some(value) = &self.initial_delay_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initialDelaySeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initialDelaySeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "initialDelaySeconds")?;
         }
         if let Some(value) = &self.period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "periodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "periodSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "periodSeconds")?;
         }
         if let Some(value) = &self.success_threshold {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "successThreshold", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "successThreshold", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "successThreshold")?;
         }
         if let Some(value) = &self.tcp_socket {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tcpSocket", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tcpSocket", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tcpSocket")?;
         }
         if let Some(value) = &self.timeout_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "timeoutSeconds")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

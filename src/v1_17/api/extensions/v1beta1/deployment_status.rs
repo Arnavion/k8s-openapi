@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
                     updated_replicas: value_updated_replicas,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DeploymentStatus {
+                    available_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("available_replicas"))?,
+                    collision_count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("collision_count"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    observed_generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("observed_generation"))?,
+                    ready_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ready_replicas"))?,
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                    unavailable_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("unavailable_replicas"))?,
+                    updated_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("updated_replicas"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -150,28 +163,52 @@ impl serde::Serialize for DeploymentStatus {
             self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.available_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "availableReplicas")?;
         }
         if let Some(value) = &self.collision_count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "collisionCount")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "observedGeneration")?;
         }
         if let Some(value) = &self.ready_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readyReplicas")?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "replicas")?;
         }
         if let Some(value) = &self.unavailable_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "unavailableReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "unavailableReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "unavailableReplicas")?;
         }
         if let Some(value) = &self.updated_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "updatedReplicas")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for EndpointAddress {
                     target_ref: value_target_ref,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EndpointAddress {
+                    hostname: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hostname"))?,
+                    ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ip"))?,
+                    node_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_name"))?,
+                    target_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_ref"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,14 +119,23 @@ impl serde::Serialize for EndpointAddress {
             self.target_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostname")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &self.ip)?;
         if let Some(value) = &self.node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeName")?;
         }
         if let Some(value) = &self.target_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetRef")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -145,6 +145,22 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
                     start_time: value_start_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodStatus {
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    container_statuses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_statuses"))?,
+                    host_ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_ip"))?,
+                    init_container_statuses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("init_container_statuses"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    nominated_node_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("nominated_node_name"))?,
+                    phase: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("phase"))?,
+                    pod_ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_ip"))?,
+                    qos_class: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("qos_class"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                    start_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("start_time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -184,37 +200,70 @@ impl serde::Serialize for PodStatus {
             self.start_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.container_statuses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "containerStatuses")?;
         }
         if let Some(value) = &self.host_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostIP")?;
         }
         if let Some(value) = &self.init_container_statuses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "initContainerStatuses")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         if let Some(value) = &self.nominated_node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nominatedNodeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nominatedNodeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nominatedNodeName")?;
         }
         if let Some(value) = &self.phase {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "phase")?;
         }
         if let Some(value) = &self.pod_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podIP", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podIP")?;
         }
         if let Some(value) = &self.qos_class {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "qosClass", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "qosClass", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "qosClass")?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         if let Some(value) = &self.start_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "startTime")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

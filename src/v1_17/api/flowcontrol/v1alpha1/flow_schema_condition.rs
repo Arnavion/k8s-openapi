@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for FlowSchemaCondition {
                     type_: value_type_,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(FlowSchemaCondition {
+                    last_transition_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_transition_time"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                    status: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("status"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,19 +130,34 @@ impl serde::Serialize for FlowSchemaCondition {
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.last_transition_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastTransitionTime")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "status")?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

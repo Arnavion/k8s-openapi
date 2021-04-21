@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ContainerImage {
                     size_bytes: value_size_bytes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerImage {
+                    names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("names"))?,
+                    size_bytes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("size_bytes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for ContainerImage {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         if let Some(value) = &self.size_bytes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeBytes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeBytes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sizeBytes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

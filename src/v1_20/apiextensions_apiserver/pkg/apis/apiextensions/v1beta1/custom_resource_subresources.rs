@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for CustomResourceSubresources {
                     status: value_status,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceSubresources {
+                    scale: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scale"))?,
+                    status: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("status"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for CustomResourceSubresources {
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.scale {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scale", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scale", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scale")?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "status")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

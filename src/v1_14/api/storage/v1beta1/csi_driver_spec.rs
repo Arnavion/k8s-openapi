@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
                     pod_info_on_mount: value_pod_info_on_mount,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CSIDriverSpec {
+                    attach_required: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("attach_required"))?,
+                    pod_info_on_mount: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_info_on_mount"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for CSIDriverSpec {
             self.pod_info_on_mount.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "attachRequired")?;
         }
         if let Some(value) = &self.pod_info_on_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podInfoOnMount")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

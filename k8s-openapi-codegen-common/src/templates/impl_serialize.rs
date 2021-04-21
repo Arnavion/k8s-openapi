@@ -43,7 +43,10 @@ pub(crate) fn generate(
 		}
 		else {
 			writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
-			writeln!(fields_string, "            serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", name)?;
+			writeln!(fields_string, "            serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &Some(value))?;", name)?;
+			writeln!(fields_string, "        }}")?;
+			writeln!(fields_string, "        else {{")?;
+			writeln!(fields_string, "            serde::ser::SerializeStruct::skip_field(&mut state, {:?})?;", name)?;
 			writeln!(fields_string, "        }}")?;
 
 			fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));

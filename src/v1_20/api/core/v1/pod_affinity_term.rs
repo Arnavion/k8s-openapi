@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for PodAffinityTerm {
                     topology_key: value_topology_key.ok_or_else(|| serde::de::Error::missing_field("topologyKey"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodAffinityTerm {
+                    label_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("label_selector"))?,
+                    namespaces: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespaces"))?,
+                    topology_key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("topology_key"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,10 +108,16 @@ impl serde::Serialize for PodAffinityTerm {
             self.namespaces.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.label_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "labelSelector")?;
         }
         if let Some(value) = &self.namespaces {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespaces")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKey", &self.topology_key)?;
         serde::ser::SerializeStruct::end(state)

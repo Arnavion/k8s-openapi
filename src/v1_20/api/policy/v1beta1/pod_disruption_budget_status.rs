@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
                     observed_generation: value_observed_generation,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodDisruptionBudgetStatus {
+                    current_healthy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_healthy"))?,
+                    desired_healthy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("desired_healthy"))?,
+                    disrupted_pods: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("disrupted_pods"))?,
+                    disruptions_allowed: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("disruptions_allowed"))?,
+                    expected_pods: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("expected_pods"))?,
+                    observed_generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("observed_generation"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -129,12 +140,18 @@ impl serde::Serialize for PodDisruptionBudgetStatus {
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentHealthy", &self.current_healthy)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "desiredHealthy", &self.desired_healthy)?;
         if let Some(value) = &self.disrupted_pods {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "disruptedPods", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "disruptedPods", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "disruptedPods")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "disruptionsAllowed", &self.disruptions_allowed)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "expectedPods", &self.expected_pods)?;
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "observedGeneration")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

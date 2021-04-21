@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for StorageVersionStatus {
                     storage_versions: value_storage_versions,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(StorageVersionStatus {
+                    common_encoding_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("common_encoding_version"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    storage_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for StorageVersionStatus {
             self.storage_versions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.common_encoding_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "commonEncodingVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "commonEncodingVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "commonEncodingVersion")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.storage_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageVersions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

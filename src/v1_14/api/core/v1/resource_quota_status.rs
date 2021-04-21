@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ResourceQuotaStatus {
                     used: value_used,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceQuotaStatus {
+                    hard: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hard"))?,
+                    used: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("used"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for ResourceQuotaStatus {
             self.used.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hard {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hard", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hard", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hard")?;
         }
         if let Some(value) = &self.used {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "used", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "used", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "used")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

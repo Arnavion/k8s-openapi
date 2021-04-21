@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for PolicyRulesWithSubjects {
                     subjects: value_subjects.ok_or_else(|| serde::de::Error::missing_field("subjects"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PolicyRulesWithSubjects {
+                    non_resource_rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("non_resource_rules"))?,
+                    resource_rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_rules"))?,
+                    subjects: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subjects"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,10 +108,16 @@ impl serde::Serialize for PolicyRulesWithSubjects {
             self.resource_rules.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.non_resource_rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceRules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceRules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nonResourceRules")?;
         }
         if let Some(value) = &self.resource_rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceRules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceRules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceRules")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", &self.subjects)?;
         serde::ser::SerializeStruct::end(state)

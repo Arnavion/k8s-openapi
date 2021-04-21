@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricSource {
                     target_average_value: value_target_average_value,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceMetricSource {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    target_average_utilization: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_average_utilization"))?,
+                    target_average_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_average_value"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,10 +109,16 @@ impl serde::Serialize for ResourceMetricSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.target_average_utilization {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageUtilization", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageUtilization", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetAverageUtilization")?;
         }
         if let Some(value) = &self.target_average_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetAverageValue")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

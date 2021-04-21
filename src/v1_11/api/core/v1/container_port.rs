@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for ContainerPort {
                     protocol: value_protocol,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerPort {
+                    container_port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_port"))?,
+                    host_ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_ip"))?,
+                    host_port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_port"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    protocol: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("protocol"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -121,16 +131,28 @@ impl serde::Serialize for ContainerPort {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "containerPort", &self.container_port)?;
         if let Some(value) = &self.host_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostIP")?;
         }
         if let Some(value) = &self.host_port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPort", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPort", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostPort")?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.protocol {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "protocol")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

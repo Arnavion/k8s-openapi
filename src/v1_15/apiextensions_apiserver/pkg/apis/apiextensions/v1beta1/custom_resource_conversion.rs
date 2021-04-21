@@ -78,6 +78,14 @@ impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
                     webhook_client_config: value_webhook_client_config,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceConversion {
+                    conversion_review_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conversion_review_versions"))?,
+                    strategy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("strategy"))?,
+                    webhook_client_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("webhook_client_config"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,11 +109,17 @@ impl serde::Serialize for CustomResourceConversion {
             self.webhook_client_config.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conversion_review_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conversionReviewVersions")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", &self.strategy)?;
         if let Some(value) = &self.webhook_client_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "webhookClientConfig", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "webhookClientConfig", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "webhookClientConfig")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

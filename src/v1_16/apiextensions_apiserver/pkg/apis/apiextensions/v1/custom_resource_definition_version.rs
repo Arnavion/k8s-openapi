@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionVersion {
                     subresources: value_subresources,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionVersion {
+                    additional_printer_columns: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("additional_printer_columns"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    schema: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("schema"))?,
+                    served: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("served"))?,
+                    storage: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage"))?,
+                    subresources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subresources"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -128,16 +139,25 @@ impl serde::Serialize for CustomResourceDefinitionVersion {
             self.subresources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.additional_printer_columns {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "additionalPrinterColumns")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.schema {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "schema", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "schema", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "schema")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "served", &self.served)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "storage", &self.storage)?;
         if let Some(value) = &self.subresources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subresources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subresources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subresources")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

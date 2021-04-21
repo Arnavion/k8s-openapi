@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyEgressRule {
                     to: value_to,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NetworkPolicyEgressRule {
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                    to: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("to"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for NetworkPolicyEgressRule {
             self.to.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         if let Some(value) = &self.to {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "to", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "to", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "to")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

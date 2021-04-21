@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for NonResourceAttributes {
                     verb: value_verb,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NonResourceAttributes {
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    verb: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verb"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for NonResourceAttributes {
             self.verb.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "path", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "path")?;
         }
         if let Some(value) = &self.verb {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "verb", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "verb", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "verb")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ResourceRequirements {
                     requests: value_requests,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceRequirements {
+                    limits: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("limits"))?,
+                    requests: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("requests"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for ResourceRequirements {
             self.requests.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.limits {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "limits", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "limits", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "limits")?;
         }
         if let Some(value) = &self.requests {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "requests", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "requests", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "requests")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

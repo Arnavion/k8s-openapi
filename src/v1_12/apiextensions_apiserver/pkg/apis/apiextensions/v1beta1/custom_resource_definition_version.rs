@@ -76,6 +76,14 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionVersion {
                     storage: value_storage.ok_or_else(|| serde::de::Error::missing_field("storage"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionVersion {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    served: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("served"))?,
+                    storage: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

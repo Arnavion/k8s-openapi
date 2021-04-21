@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for EnvVarSource {
                     secret_key_ref: value_secret_key_ref,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EnvVarSource {
+                    config_map_key_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("config_map_key_ref"))?,
+                    field_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("field_ref"))?,
+                    resource_field_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_field_ref"))?,
+                    secret_key_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_key_ref"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for EnvVarSource {
             self.secret_key_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map_key_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "configMapKeyRef")?;
         }
         if let Some(value) = &self.field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fieldRef")?;
         }
         if let Some(value) = &self.resource_field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceFieldRef")?;
         }
         if let Some(value) = &self.secret_key_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretKeyRef")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

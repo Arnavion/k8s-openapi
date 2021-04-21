@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
                     volume_path: value_volume_path.ok_or_else(|| serde::de::Error::missing_field("volumePath"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VsphereVirtualDiskVolumeSource {
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    storage_policy_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_policy_id"))?,
+                    storage_policy_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_policy_name"))?,
+                    volume_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,13 +119,22 @@ impl serde::Serialize for VsphereVirtualDiskVolumeSource {
             self.storage_policy_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         if let Some(value) = &self.storage_policy_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storagePolicyID")?;
         }
         if let Some(value) = &self.storage_policy_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storagePolicyName")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "volumePath", &self.volume_path)?;
         serde::ser::SerializeStruct::end(state)

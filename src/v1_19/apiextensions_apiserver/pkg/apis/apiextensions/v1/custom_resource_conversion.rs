@@ -70,6 +70,13 @@ impl<'de> serde::Deserialize<'de> for CustomResourceConversion {
                     webhook: value_webhook,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceConversion {
+                    strategy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("strategy"))?,
+                    webhook: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("webhook"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -92,7 +99,10 @@ impl serde::Serialize for CustomResourceConversion {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", &self.strategy)?;
         if let Some(value) = &self.webhook {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "webhook", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "webhook", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "webhook")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

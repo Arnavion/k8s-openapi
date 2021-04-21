@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for CSIVolumeSource {
                     volume_attributes: value_volume_attributes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CSIVolumeSource {
+                    driver: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("driver"))?,
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    node_publish_secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_publish_secret_ref"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    volume_attributes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_attributes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -121,16 +131,28 @@ impl serde::Serialize for CSIVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         if let Some(value) = &self.node_publish_secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodePublishSecretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodePublishSecretRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodePublishSecretRef")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.volume_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeAttributes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

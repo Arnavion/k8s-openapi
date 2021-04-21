@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for QueuingConfiguration {
                     queues: value_queues,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(QueuingConfiguration {
+                    hand_size: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hand_size"))?,
+                    queue_length_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("queue_length_limit"))?,
+                    queues: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("queues"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for QueuingConfiguration {
             self.queues.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hand_size {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "handSize", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "handSize", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "handSize")?;
         }
         if let Some(value) = &self.queue_length_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "queueLengthLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "queueLengthLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "queueLengthLimit")?;
         }
         if let Some(value) = &self.queues {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "queues", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "queues", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "queues")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

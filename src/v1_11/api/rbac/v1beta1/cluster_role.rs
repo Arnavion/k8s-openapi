@@ -463,6 +463,24 @@ impl<'de> serde::Deserialize<'de> for ClusterRole {
                     rules: value_rules.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(ClusterRole {
+                    aggregation_rule: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("aggregation_rule"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -489,7 +507,10 @@ impl serde::Serialize for ClusterRole {
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.aggregation_rule {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "aggregationRule", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "aggregationRule", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "aggregationRule")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;

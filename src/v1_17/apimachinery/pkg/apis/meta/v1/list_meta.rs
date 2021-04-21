@@ -87,6 +87,15 @@ impl<'de> serde::Deserialize<'de> for ListMeta {
                     self_link: value_self_link,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ListMeta {
+                    continue_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("continue_"))?,
+                    remaining_item_count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("remaining_item_count"))?,
+                    resource_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_version"))?,
+                    self_link: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("self_link"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -112,16 +121,28 @@ impl serde::Serialize for ListMeta {
             self.self_link.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.continue_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "continue", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "continue", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "continue")?;
         }
         if let Some(value) = &self.remaining_item_count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "remainingItemCount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "remainingItemCount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "remainingItemCount")?;
         }
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceVersion")?;
         }
         if let Some(value) = &self.self_link {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selfLink")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

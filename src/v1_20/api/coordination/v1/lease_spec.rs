@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for LeaseSpec {
                     renew_time: value_renew_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LeaseSpec {
+                    acquire_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("acquire_time"))?,
+                    holder_identity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("holder_identity"))?,
+                    lease_duration_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("lease_duration_seconds"))?,
+                    lease_transitions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("lease_transitions"))?,
+                    renew_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("renew_time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,19 +130,34 @@ impl serde::Serialize for LeaseSpec {
             self.renew_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.acquire_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "acquireTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "acquireTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "acquireTime")?;
         }
         if let Some(value) = &self.holder_identity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "holderIdentity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "holderIdentity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "holderIdentity")?;
         }
         if let Some(value) = &self.lease_duration_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "leaseDurationSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "leaseDurationSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "leaseDurationSeconds")?;
         }
         if let Some(value) = &self.lease_transitions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "leaseTransitions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "leaseTransitions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "leaseTransitions")?;
         }
         if let Some(value) = &self.renew_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "renewTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "renewTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "renewTime")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

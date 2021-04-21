@@ -133,6 +133,21 @@ impl<'de> serde::Deserialize<'de> for DaemonSetStatus {
                     updated_number_scheduled: value_updated_number_scheduled,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DaemonSetStatus {
+                    collision_count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("collision_count"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    current_number_scheduled: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_number_scheduled"))?,
+                    desired_number_scheduled: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("desired_number_scheduled"))?,
+                    number_available: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("number_available"))?,
+                    number_misscheduled: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("number_misscheduled"))?,
+                    number_ready: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("number_ready"))?,
+                    number_unavailable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("number_unavailable"))?,
+                    observed_generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("observed_generation"))?,
+                    updated_number_scheduled: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("updated_number_scheduled"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -167,26 +182,44 @@ impl serde::Serialize for DaemonSetStatus {
             self.updated_number_scheduled.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.collision_count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "collisionCount")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentNumberScheduled", &self.current_number_scheduled)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "desiredNumberScheduled", &self.desired_number_scheduled)?;
         if let Some(value) = &self.number_available {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "numberAvailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "numberAvailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "numberAvailable")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "numberMisscheduled", &self.number_misscheduled)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "numberReady", &self.number_ready)?;
         if let Some(value) = &self.number_unavailable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "numberUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "numberUnavailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "numberUnavailable")?;
         }
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "observedGeneration")?;
         }
         if let Some(value) = &self.updated_number_scheduled {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedNumberScheduled", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedNumberScheduled", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "updatedNumberScheduled")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

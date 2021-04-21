@@ -141,6 +141,22 @@ impl<'de> serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
                     target_portal: value_target_portal.ok_or_else(|| serde::de::Error::missing_field("targetPortal"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ISCSIPersistentVolumeSource {
+                    chap_auth_discovery: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("chap_auth_discovery"))?,
+                    chap_auth_session: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("chap_auth_session"))?,
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    initiator_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("initiator_name"))?,
+                    iqn: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("iqn"))?,
+                    iscsi_interface: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("iscsi_interface"))?,
+                    lun: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("lun"))?,
+                    portals: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("portals"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_ref"))?,
+                    target_portal: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_portal"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -178,30 +194,54 @@ impl serde::Serialize for ISCSIPersistentVolumeSource {
             self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.chap_auth_discovery {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthDiscovery", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthDiscovery", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "chapAuthDiscovery")?;
         }
         if let Some(value) = &self.chap_auth_session {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthSession", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthSession", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "chapAuthSession")?;
         }
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         if let Some(value) = &self.initiator_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initiatorName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initiatorName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "initiatorName")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "iqn", &self.iqn)?;
         if let Some(value) = &self.iscsi_interface {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsiInterface", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsiInterface", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "iscsiInterface")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "lun", &self.lun)?;
         if let Some(value) = &self.portals {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "portals", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "portals", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "portals")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretRef")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "targetPortal", &self.target_portal)?;
         serde::ser::SerializeStruct::end(state)

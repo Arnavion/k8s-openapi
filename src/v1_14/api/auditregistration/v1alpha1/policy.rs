@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Policy {
                     stages: value_stages,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Policy {
+                    level: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("level"))?,
+                    stages: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("stages"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for Policy {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "level", &self.level)?;
         if let Some(value) = &self.stages {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stages", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stages", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "stages")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

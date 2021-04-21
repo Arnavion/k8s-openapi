@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for HostPathVolumeSource {
                     type_: value_type_,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HostPathVolumeSource {
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for HostPathVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

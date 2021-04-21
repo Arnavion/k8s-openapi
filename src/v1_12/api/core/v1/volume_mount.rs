@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for VolumeMount {
                     sub_path: value_sub_path,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeMount {
+                    mount_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mount_path"))?,
+                    mount_propagation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mount_propagation"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    sub_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("sub_path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,14 +130,23 @@ impl serde::Serialize for VolumeMount {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "mountPath", &self.mount_path)?;
         if let Some(value) = &self.mount_propagation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mountPropagation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mountPropagation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "mountPropagation")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.sub_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subPath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subPath", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subPath")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

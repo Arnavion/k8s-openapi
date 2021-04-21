@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for TopologySelectorLabelRequirement {
                     values: value_values.ok_or_else(|| serde::de::Error::missing_field("values"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TopologySelectorLabelRequirement {
+                    key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("key"))?,
+                    values: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("values"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

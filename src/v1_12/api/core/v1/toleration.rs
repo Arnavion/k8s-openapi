@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for Toleration {
                     value: value_value,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Toleration {
+                    effect: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("effect"))?,
+                    key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("key"))?,
+                    operator: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("operator"))?,
+                    toleration_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("toleration_seconds"))?,
+                    value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("value"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,19 +130,34 @@ impl serde::Serialize for Toleration {
             self.value.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.effect {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "effect", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "effect", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "effect")?;
         }
         if let Some(value) = &self.key {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "key", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "key", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "key")?;
         }
         if let Some(value) = &self.operator {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "operator", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "operator")?;
         }
         if let Some(value) = &self.toleration_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerationSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerationSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tolerationSeconds")?;
         }
         if let Some(value) = &self.value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "value", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "value")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ResourceQuotaSpec {
                     scopes: value_scopes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceQuotaSpec {
+                    hard: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hard"))?,
+                    scope_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scope_selector"))?,
+                    scopes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scopes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for ResourceQuotaSpec {
             self.scopes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hard {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hard", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hard", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hard")?;
         }
         if let Some(value) = &self.scope_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scopeSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scopeSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scopeSelector")?;
         }
         if let Some(value) = &self.scopes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scopes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scopes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scopes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

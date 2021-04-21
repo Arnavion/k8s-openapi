@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for DaemonSetSpec {
                     update_strategy: value_update_strategy,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DaemonSetSpec {
+                    min_ready_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_ready_seconds"))?,
+                    revision_history_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("revision_history_limit"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                    update_strategy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("update_strategy"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -119,15 +129,24 @@ impl serde::Serialize for DaemonSetSpec {
             self.update_strategy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minReadySeconds")?;
         }
         if let Some(value) = &self.revision_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "revisionHistoryLimit")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         if let Some(value) = &self.update_strategy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "updateStrategy")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

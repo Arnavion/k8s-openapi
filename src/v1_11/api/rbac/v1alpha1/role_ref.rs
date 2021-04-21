@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for RoleRef {
                     name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RoleRef {
+                    api_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_group"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

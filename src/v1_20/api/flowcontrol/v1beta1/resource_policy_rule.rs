@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for ResourcePolicyRule {
                     verbs: value_verbs.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourcePolicyRule {
+                    api_groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_groups"))?,
+                    cluster_scope: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cluster_scope"))?,
+                    namespaces: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespaces"))?,
+                    resources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
+                    verbs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -119,10 +129,16 @@ impl serde::Serialize for ResourcePolicyRule {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
         if let Some(value) = &self.cluster_scope {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterScope", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterScope", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "clusterScope")?;
         }
         if let Some(value) = &self.namespaces {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespaces")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;

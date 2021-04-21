@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for TokenReviewStatus {
                     user: value_user,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TokenReviewStatus {
+                    authenticated: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("authenticated"))?,
+                    error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("error"))?,
+                    user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("user"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for TokenReviewStatus {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.authenticated {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "authenticated")?;
         }
         if let Some(value) = &self.error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "error", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "error")?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "user")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

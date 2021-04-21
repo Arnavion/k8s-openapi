@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for EventSeries {
                     last_observed_time: value_last_observed_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EventSeries {
+                    count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("count"))?,
+                    last_observed_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_observed_time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for EventSeries {
             self.last_observed_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "count", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "count")?;
         }
         if let Some(value) = &self.last_observed_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastObservedTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastObservedTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastObservedTime")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for UserInfo {
                     username: value_username,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(UserInfo {
+                    extra: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("extra"))?,
+                    groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("groups"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                    username: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("username"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for UserInfo {
             self.username.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "extra")?;
         }
         if let Some(value) = &self.groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "groups")?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         if let Some(value) = &self.username {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "username", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "username", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "username")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

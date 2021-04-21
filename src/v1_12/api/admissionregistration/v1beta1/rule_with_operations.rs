@@ -91,6 +91,15 @@ impl<'de> serde::Deserialize<'de> for RuleWithOperations {
                     resources: value_resources,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RuleWithOperations {
+                    api_groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_groups"))?,
+                    api_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_versions"))?,
+                    operations: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("operations"))?,
+                    resources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -116,16 +125,28 @@ impl serde::Serialize for RuleWithOperations {
             self.resources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiGroups")?;
         }
         if let Some(value) = &self.api_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiVersions")?;
         }
         if let Some(value) = &self.operations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "operations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "operations", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "operations")?;
         }
         if let Some(value) = &self.resources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resources")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

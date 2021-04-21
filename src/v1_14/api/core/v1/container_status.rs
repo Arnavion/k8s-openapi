@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for ContainerStatus {
                     state: value_state,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerStatus {
+                    container_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_id"))?,
+                    image: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image"))?,
+                    image_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image_id"))?,
+                    last_state: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_state"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    ready: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ready"))?,
+                    restart_count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("restart_count"))?,
+                    state: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("state"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -146,18 +159,27 @@ impl serde::Serialize for ContainerStatus {
             self.state.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "containerID")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "imageID", &self.image_id)?;
         if let Some(value) = &self.last_state {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastState", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastState", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastState")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "ready", &self.ready)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "restartCount", &self.restart_count)?;
         if let Some(value) = &self.state {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "state", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "state", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "state")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

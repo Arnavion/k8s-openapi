@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for WebhookConversion {
                     conversion_review_versions: value_conversion_review_versions.ok_or_else(|| serde::de::Error::missing_field("conversionReviewVersions"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(WebhookConversion {
+                    client_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("client_config"))?,
+                    conversion_review_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conversion_review_versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for WebhookConversion {
             self.client_config.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.client_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "clientConfig")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", &self.conversion_review_versions)?;
         serde::ser::SerializeStruct::end(state)

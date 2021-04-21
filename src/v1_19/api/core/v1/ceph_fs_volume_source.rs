@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for CephFSVolumeSource {
                     user: value_user,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CephFSVolumeSource {
+                    monitors: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("monitors"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_file: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_file"))?,
+                    secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_ref"))?,
+                    user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("user"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -131,19 +142,34 @@ impl serde::Serialize for CephFSVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
         if let Some(value) = &self.path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "path", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "path")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.secret_file {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretFile", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretFile", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretFile")?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretRef")?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "user")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

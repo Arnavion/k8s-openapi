@@ -34,6 +34,9 @@ pub(crate) fn generate(
 
 	let mut flattened_field = None;
 
+	let mut resource_metadata_defs = String::new();
+	let mut field_value_direct_assignment = String::new();
+
 	if resource_metadata.is_some() {
 		writeln!(fields_string, "            Key_api_version,")?;
 		writeln!(fields_string, "            Key_kind,")?;
@@ -59,6 +62,23 @@ pub(crate) fn generate(
 
 		writeln!(field_name_list, r#"                "apiVersion","#)?;
 		writeln!(field_name_list, r#"                "kind","#)?;
+
+		writeln!(resource_metadata_defs,
+			r#"                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;"#)?;
+		writeln!(resource_metadata_defs, r#"                if api_version != <Self::Value as {}Resource>::API_VERSION {{"#, local)?;
+		writeln!(resource_metadata_defs,
+			r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as {}Resource>::API_VERSION));"#,
+			local)?;
+		writeln!(resource_metadata_defs, r#"                }}"#)?;
+		writeln!(resource_metadata_defs)?;
+		writeln!(resource_metadata_defs,
+			r#"                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;"#)?;
+		writeln!(resource_metadata_defs, r#"                if kind != <Self::Value as {}Resource>::KIND {{"#, local)?;
+		writeln!(resource_metadata_defs,
+			r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as {}Resource>::KIND));"#,
+			local)?;
+		writeln!(resource_metadata_defs, r#"                }}"#)?;
+		writeln!(resource_metadata_defs)?;
 	}
 	for super::Property { name, field_name, field_type_name, required, is_flattened, .. } in fields {
 		if *is_flattened {
@@ -96,6 +116,10 @@ pub(crate) fn generate(
 
 			writeln!(field_name_list, r#"                {:?},"#, name)?;
 		}
+
+		writeln!(field_value_direct_assignment,
+			r#"                    {}: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field({:?}))?,"#,
+			field_name, field_name)?;
 	}
 
 	if let Some((field_name, _)) = flattened_field {
@@ -162,6 +186,8 @@ pub(crate) fn generate(
 		field_value_defs = field_value_defs,
 		field_value_match_arms = field_value_match_arms,
 		field_value_assignment = field_value_assignment,
+		resource_metadata_defs = resource_metadata_defs,
+		field_value_direct_assignment = field_value_direct_assignment,
 		field_name_list = field_name_list,
 		visitor_field = visitor_field,
 		visitor_create_field = visitor_create_field,

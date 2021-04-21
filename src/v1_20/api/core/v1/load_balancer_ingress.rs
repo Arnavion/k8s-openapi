@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for LoadBalancerIngress {
                     ports: value_ports,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LoadBalancerIngress {
+                    hostname: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hostname"))?,
+                    ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ip"))?,
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for LoadBalancerIngress {
             self.ports.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostname")?;
         }
         if let Some(value) = &self.ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ip")?;
         }
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

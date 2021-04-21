@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for HTTPGetAction {
                     scheme: value_scheme,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HTTPGetAction {
+                    host: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host"))?,
+                    http_headers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("http_headers"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                    scheme: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scheme"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,17 +130,29 @@ impl serde::Serialize for HTTPGetAction {
             self.scheme.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "host", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "host")?;
         }
         if let Some(value) = &self.http_headers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "httpHeaders", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "httpHeaders", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "httpHeaders")?;
         }
         if let Some(value) = &self.path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "path", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "path")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "port", &self.port)?;
         if let Some(value) = &self.scheme {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scheme", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scheme", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scheme")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

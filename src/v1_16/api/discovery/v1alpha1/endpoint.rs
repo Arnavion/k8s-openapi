@@ -99,6 +99,16 @@ impl<'de> serde::Deserialize<'de> for Endpoint {
                     topology: value_topology,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Endpoint {
+                    addresses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("addresses"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    hostname: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hostname"))?,
+                    target_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_ref"))?,
+                    topology: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("topology"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -127,16 +137,28 @@ impl serde::Serialize for Endpoint {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostname")?;
         }
         if let Some(value) = &self.target_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetRef")?;
         }
         if let Some(value) = &self.topology {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "topology", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "topology", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "topology")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

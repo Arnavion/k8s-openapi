@@ -79,6 +79,14 @@ impl<'de> serde::Deserialize<'de> for GitRepoVolumeSource {
                     revision: value_revision,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(GitRepoVolumeSource {
+                    directory: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("directory"))?,
+                    repository: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("repository"))?,
+                    revision: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("revision"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -102,11 +110,17 @@ impl serde::Serialize for GitRepoVolumeSource {
             self.revision.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.directory {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "directory", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "directory", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "directory")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "repository", &self.repository)?;
         if let Some(value) = &self.revision {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revision", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revision", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "revision")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
                     metric: value_metric.ok_or_else(|| serde::de::Error::missing_field("metric"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodsMetricStatus {
+                    current: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current"))?,
+                    metric: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metric"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

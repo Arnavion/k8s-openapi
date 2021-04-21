@@ -133,6 +133,21 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
                     windows_options: value_windows_options,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SecurityContext {
+                    allow_privilege_escalation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allow_privilege_escalation"))?,
+                    capabilities: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("capabilities"))?,
+                    privileged: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("privileged"))?,
+                    proc_mount: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("proc_mount"))?,
+                    read_only_root_filesystem: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only_root_filesystem"))?,
+                    run_as_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_group"))?,
+                    run_as_non_root: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_non_root"))?,
+                    run_as_user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_user"))?,
+                    se_linux_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("se_linux_options"))?,
+                    windows_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("windows_options"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -170,34 +185,64 @@ impl serde::Serialize for SecurityContext {
             self.windows_options.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowPrivilegeEscalation")?;
         }
         if let Some(value) = &self.capabilities {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "capabilities", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "capabilities")?;
         }
         if let Some(value) = &self.privileged {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "privileged")?;
         }
         if let Some(value) = &self.proc_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "procMount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "procMount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "procMount")?;
         }
         if let Some(value) = &self.read_only_root_filesystem {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnlyRootFilesystem")?;
         }
         if let Some(value) = &self.run_as_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsGroup")?;
         }
         if let Some(value) = &self.run_as_non_root {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsNonRoot")?;
         }
         if let Some(value) = &self.run_as_user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsUser")?;
         }
         if let Some(value) = &self.se_linux_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "seLinuxOptions")?;
         }
         if let Some(value) = &self.windows_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "windowsOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "windowsOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "windowsOptions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

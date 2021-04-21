@@ -102,6 +102,16 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
                     volume_lifecycle_modes: value_volume_lifecycle_modes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CSIDriverSpec {
+                    attach_required: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("attach_required"))?,
+                    fs_group_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_group_policy"))?,
+                    pod_info_on_mount: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_info_on_mount"))?,
+                    storage_capacity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_capacity"))?,
+                    volume_lifecycle_modes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_lifecycle_modes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -129,19 +139,34 @@ impl serde::Serialize for CSIDriverSpec {
             self.volume_lifecycle_modes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "attachRequired")?;
         }
         if let Some(value) = &self.fs_group_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroupPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroupPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsGroupPolicy")?;
         }
         if let Some(value) = &self.pod_info_on_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podInfoOnMount")?;
         }
         if let Some(value) = &self.storage_capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageCapacity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageCapacity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageCapacity")?;
         }
         if let Some(value) = &self.volume_lifecycle_modes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeLifecycleModes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

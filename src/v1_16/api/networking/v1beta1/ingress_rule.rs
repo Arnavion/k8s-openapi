@@ -73,6 +73,13 @@ impl<'de> serde::Deserialize<'de> for IngressRule {
                     http: value_http,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressRule {
+                    host: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host"))?,
+                    http: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("http"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -94,10 +101,16 @@ impl serde::Serialize for IngressRule {
             self.http.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "host", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "host")?;
         }
         if let Some(value) = &self.http {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "http", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "http", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "http")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

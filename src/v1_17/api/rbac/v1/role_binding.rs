@@ -579,6 +579,24 @@ impl<'de> serde::Deserialize<'de> for RoleBinding {
                     subjects: value_subjects,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(RoleBinding {
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    role_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("role_ref"))?,
+                    subjects: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subjects"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -607,7 +625,10 @@ impl serde::Serialize for RoleBinding {
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "roleRef", &self.role_ref)?;
         if let Some(value) = &self.subjects {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subjects")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for AggregationRule {
                     cluster_role_selectors: value_cluster_role_selectors,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(AggregationRule {
+                    cluster_role_selectors: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cluster_role_selectors"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for AggregationRule {
             self.cluster_role_selectors.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_role_selectors {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterRoleSelectors", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterRoleSelectors", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "clusterRoleSelectors")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

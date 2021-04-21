@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for NodeDaemonEndpoints {
                     kubelet_endpoint: value_kubelet_endpoint,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeDaemonEndpoints {
+                    kubelet_endpoint: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kubelet_endpoint"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for NodeDaemonEndpoints {
             self.kubelet_endpoint.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.kubelet_endpoint {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kubeletEndpoint", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kubeletEndpoint", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "kubeletEndpoint")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

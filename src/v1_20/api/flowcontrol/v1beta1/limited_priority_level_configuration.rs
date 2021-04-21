@@ -75,6 +75,13 @@ impl<'de> serde::Deserialize<'de> for LimitedPriorityLevelConfiguration {
                     limit_response: value_limit_response,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LimitedPriorityLevelConfiguration {
+                    assured_concurrency_shares: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("assured_concurrency_shares"))?,
+                    limit_response: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("limit_response"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -96,10 +103,16 @@ impl serde::Serialize for LimitedPriorityLevelConfiguration {
             self.limit_response.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.assured_concurrency_shares {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "assuredConcurrencyShares", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "assuredConcurrencyShares", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "assuredConcurrencyShares")?;
         }
         if let Some(value) = &self.limit_response {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "limitResponse", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "limitResponse", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "limitResponse")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

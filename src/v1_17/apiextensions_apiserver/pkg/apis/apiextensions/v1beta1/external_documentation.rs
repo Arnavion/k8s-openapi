@@ -67,6 +67,13 @@ impl<'de> serde::Deserialize<'de> for ExternalDocumentation {
                     url: value_url,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ExternalDocumentation {
+                    description: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("description"))?,
+                    url: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("url"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -88,10 +95,16 @@ impl serde::Serialize for ExternalDocumentation {
             self.url.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.description {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "description", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "description")?;
         }
         if let Some(value) = &self.url {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "url", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "url", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "url")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

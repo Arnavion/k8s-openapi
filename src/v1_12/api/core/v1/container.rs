@@ -221,6 +221,32 @@ impl<'de> serde::Deserialize<'de> for Container {
                     working_dir: value_working_dir,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Container {
+                    args: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("args"))?,
+                    command: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("command"))?,
+                    env: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("env"))?,
+                    env_from: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("env_from"))?,
+                    image: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image"))?,
+                    image_pull_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image_pull_policy"))?,
+                    lifecycle: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("lifecycle"))?,
+                    liveness_probe: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("liveness_probe"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                    readiness_probe: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("readiness_probe"))?,
+                    resources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
+                    security_context: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("security_context"))?,
+                    stdin: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("stdin"))?,
+                    stdin_once: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("stdin_once"))?,
+                    termination_message_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("termination_message_path"))?,
+                    termination_message_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("termination_message_policy"))?,
+                    tty: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tty"))?,
+                    volume_devices: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_devices"))?,
+                    volume_mounts: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_mounts"))?,
+                    working_dir: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("working_dir"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -280,65 +306,125 @@ impl serde::Serialize for Container {
             self.working_dir.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.args {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "args", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "args")?;
         }
         if let Some(value) = &self.command {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "command", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "command")?;
         }
         if let Some(value) = &self.env {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "env", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "env")?;
         }
         if let Some(value) = &self.env_from {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "envFrom")?;
         }
         if let Some(value) = &self.image {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "image", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "image", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "image")?;
         }
         if let Some(value) = &self.image_pull_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "imagePullPolicy")?;
         }
         if let Some(value) = &self.lifecycle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lifecycle")?;
         }
         if let Some(value) = &self.liveness_probe {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "livenessProbe")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         if let Some(value) = &self.readiness_probe {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readinessProbe")?;
         }
         if let Some(value) = &self.resources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resources")?;
         }
         if let Some(value) = &self.security_context {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "securityContext")?;
         }
         if let Some(value) = &self.stdin {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "stdin")?;
         }
         if let Some(value) = &self.stdin_once {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "stdinOnce")?;
         }
         if let Some(value) = &self.termination_message_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "terminationMessagePath")?;
         }
         if let Some(value) = &self.termination_message_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "terminationMessagePolicy")?;
         }
         if let Some(value) = &self.tty {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tty", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tty")?;
         }
         if let Some(value) = &self.volume_devices {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeDevices")?;
         }
         if let Some(value) = &self.volume_mounts {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeMounts")?;
         }
         if let Some(value) = &self.working_dir {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "workingDir")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

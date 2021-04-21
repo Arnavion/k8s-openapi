@@ -209,6 +209,28 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
                     uid: value_uid,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ObjectMeta {
+                    annotations: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("annotations"))?,
+                    cluster_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cluster_name"))?,
+                    creation_timestamp: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("creation_timestamp"))?,
+                    deletion_grace_period_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("deletion_grace_period_seconds"))?,
+                    deletion_timestamp: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("deletion_timestamp"))?,
+                    finalizers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("finalizers"))?,
+                    generate_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("generate_name"))?,
+                    generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("generation"))?,
+                    initializers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("initializers"))?,
+                    labels: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("labels"))?,
+                    managed_fields: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("managed_fields"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
+                    owner_references: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("owner_references"))?,
+                    resource_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_version"))?,
+                    self_link: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("self_link"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -260,55 +282,106 @@ impl serde::Serialize for ObjectMeta {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.annotations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "annotations")?;
         }
         if let Some(value) = &self.cluster_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "clusterName")?;
         }
         if let Some(value) = &self.creation_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "creationTimestamp")?;
         }
         if let Some(value) = &self.deletion_grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "deletionGracePeriodSeconds")?;
         }
         if let Some(value) = &self.deletion_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "deletionTimestamp")?;
         }
         if let Some(value) = &self.finalizers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "finalizers")?;
         }
         if let Some(value) = &self.generate_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "generateName")?;
         }
         if let Some(value) = &self.generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "generation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "generation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "generation")?;
         }
         if let Some(value) = &self.initializers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "initializers")?;
         }
         if let Some(value) = &self.labels {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labels", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "labels")?;
         }
         if let Some(value) = &self.managed_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "managedFields")?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespace")?;
         }
         if let Some(value) = &self.owner_references {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ownerReferences")?;
         }
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceVersion")?;
         }
         if let Some(value) = &self.self_link {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selfLink")?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

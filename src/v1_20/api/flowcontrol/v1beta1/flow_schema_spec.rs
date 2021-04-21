@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for FlowSchemaSpec {
                     rules: value_rules,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(FlowSchemaSpec {
+                    distinguisher_method: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("distinguisher_method"))?,
+                    matching_precedence: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("matching_precedence"))?,
+                    priority_level_configuration: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("priority_level_configuration"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,14 +119,23 @@ impl serde::Serialize for FlowSchemaSpec {
             self.rules.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.distinguisher_method {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "distinguisherMethod", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "distinguisherMethod", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "distinguisherMethod")?;
         }
         if let Some(value) = &self.matching_precedence {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchingPrecedence", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "matchingPrecedence", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "matchingPrecedence")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "priorityLevelConfiguration", &self.priority_level_configuration)?;
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rules")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for FlowDistinguisherMethod {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(FlowDistinguisherMethod {
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

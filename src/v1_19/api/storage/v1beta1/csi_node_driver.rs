@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for CSINodeDriver {
                     topology_keys: value_topology_keys,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CSINodeDriver {
+                    allocatable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allocatable"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    node_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_id"))?,
+                    topology_keys: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("topology_keys"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -109,12 +118,18 @@ impl serde::Serialize for CSINodeDriver {
             self.topology_keys.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allocatable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allocatable")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "nodeID", &self.node_id)?;
         if let Some(value) = &self.topology_keys {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "topologyKeys")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

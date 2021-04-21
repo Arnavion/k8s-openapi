@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Lifecycle {
                     pre_stop: value_pre_stop,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Lifecycle {
+                    post_start: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("post_start"))?,
+                    pre_stop: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pre_stop"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for Lifecycle {
             self.pre_stop.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.post_start {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "postStart", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "postStart", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "postStart")?;
         }
         if let Some(value) = &self.pre_stop {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preStop", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preStop", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preStop")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

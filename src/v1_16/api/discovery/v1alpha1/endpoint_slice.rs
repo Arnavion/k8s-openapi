@@ -599,6 +599,25 @@ impl<'de> serde::Deserialize<'de> for EndpointSlice {
                     ports: value_ports,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(EndpointSlice {
+                    address_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("address_type"))?,
+                    endpoints: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("endpoints"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -627,12 +646,18 @@ impl serde::Serialize for EndpointSlice {
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.address_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "addressType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "addressType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "addressType")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

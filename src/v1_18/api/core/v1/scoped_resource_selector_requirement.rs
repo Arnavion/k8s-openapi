@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ScopedResourceSelectorRequirement {
                     values: value_values,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ScopedResourceSelectorRequirement {
+                    operator: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("operator"))?,
+                    scope_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scope_name"))?,
+                    values: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("values"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,7 +109,10 @@ impl serde::Serialize for ScopedResourceSelectorRequirement {
         serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &self.operator)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "scopeName", &self.scope_name)?;
         if let Some(value) = &self.values {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "values", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "values", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "values")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

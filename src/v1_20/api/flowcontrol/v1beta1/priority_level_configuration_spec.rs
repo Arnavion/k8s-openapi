@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PriorityLevelConfigurationSpec {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PriorityLevelConfigurationSpec {
+                    limited: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("limited"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for PriorityLevelConfigurationSpec {
             self.limited.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.limited {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "limited", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "limited", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "limited")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         serde::ser::SerializeStruct::end(state)

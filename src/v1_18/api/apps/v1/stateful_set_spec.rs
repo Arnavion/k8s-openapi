@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
                     volume_claim_templates: value_volume_claim_templates,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(StatefulSetSpec {
+                    pod_management_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_management_policy"))?,
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                    revision_history_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("revision_history_limit"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    service_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_name"))?,
+                    template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                    update_strategy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("update_strategy"))?,
+                    volume_claim_templates: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_claim_templates"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -148,22 +161,37 @@ impl serde::Serialize for StatefulSetSpec {
             self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.pod_management_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podManagementPolicy")?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "replicas")?;
         }
         if let Some(value) = &self.revision_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "revisionHistoryLimit")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         if let Some(value) = &self.update_strategy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "updateStrategy")?;
         }
         if let Some(value) = &self.volume_claim_templates {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeClaimTemplates")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

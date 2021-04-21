@@ -88,6 +88,15 @@ impl<'de> serde::Deserialize<'de> for TopologySpreadConstraint {
                     when_unsatisfiable: value_when_unsatisfiable.ok_or_else(|| serde::de::Error::missing_field("whenUnsatisfiable"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TopologySpreadConstraint {
+                    label_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("label_selector"))?,
+                    max_skew: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_skew"))?,
+                    topology_key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("topology_key"))?,
+                    when_unsatisfiable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("when_unsatisfiable"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -111,7 +120,10 @@ impl serde::Serialize for TopologySpreadConstraint {
             self.label_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.label_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "labelSelector")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "maxSkew", &self.max_skew)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKey", &self.topology_key)?;

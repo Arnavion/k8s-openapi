@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for ManagedFieldsEntry {
                     time: value_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ManagedFieldsEntry {
+                    api_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_version"))?,
+                    fields_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fields_type"))?,
+                    fields_v1: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fields_v1"))?,
+                    manager: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("manager"))?,
+                    operation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("operation"))?,
+                    time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for ManagedFieldsEntry {
             self.time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiVersion")?;
         }
         if let Some(value) = &self.fields_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fieldsType")?;
         }
         if let Some(value) = &self.fields_v1 {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldsV1", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldsV1", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fieldsV1")?;
         }
         if let Some(value) = &self.manager {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "manager", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "manager", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "manager")?;
         }
         if let Some(value) = &self.operation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "operation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "operation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "operation")?;
         }
         if let Some(value) = &self.time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "time", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "time", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "time")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

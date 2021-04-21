@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Capabilities {
                     drop: value_drop,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Capabilities {
+                    add: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("add"))?,
+                    drop: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("drop"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for Capabilities {
             self.drop.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.add {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "add", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "add", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "add")?;
         }
         if let Some(value) = &self.drop {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "drop", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "drop", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "drop")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

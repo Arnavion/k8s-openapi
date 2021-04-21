@@ -82,6 +82,15 @@ impl<'de> serde::Deserialize<'de> for Subject {
                     user: value_user,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Subject {
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    service_account: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_account"))?,
+                    user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("user"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -107,14 +116,23 @@ impl serde::Serialize for Subject {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         if let Some(value) = &self.service_account {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serviceAccount")?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "user")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

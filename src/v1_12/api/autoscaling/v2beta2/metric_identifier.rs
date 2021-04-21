@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for MetricIdentifier {
                     selector: value_selector,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(MetricIdentifier {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for MetricIdentifier {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

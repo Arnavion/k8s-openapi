@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for RollingUpdateDeployment {
                     max_unavailable: value_max_unavailable,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RollingUpdateDeployment {
+                    max_surge: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_surge"))?,
+                    max_unavailable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_unavailable"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for RollingUpdateDeployment {
             self.max_unavailable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.max_surge {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxSurge", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxSurge", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxSurge")?;
         }
         if let Some(value) = &self.max_unavailable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxUnavailable")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

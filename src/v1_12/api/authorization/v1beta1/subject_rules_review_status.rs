@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for SubjectRulesReviewStatus {
                     resource_rules: value_resource_rules.ok_or_else(|| serde::de::Error::missing_field("resourceRules"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SubjectRulesReviewStatus {
+                    evaluation_error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("evaluation_error"))?,
+                    incomplete: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("incomplete"))?,
+                    non_resource_rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("non_resource_rules"))?,
+                    resource_rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_rules"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -108,7 +117,10 @@ impl serde::Serialize for SubjectRulesReviewStatus {
             self.evaluation_error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.evaluation_error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "evaluationError", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "evaluationError", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "evaluationError")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "incomplete", &self.incomplete)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceRules", &self.non_resource_rules)?;

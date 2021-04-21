@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for AzureDiskVolumeSource {
                     read_only: value_read_only,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(AzureDiskVolumeSource {
+                    caching_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("caching_mode"))?,
+                    disk_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("disk_name"))?,
+                    disk_uri: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("disk_uri"))?,
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -129,18 +140,30 @@ impl serde::Serialize for AzureDiskVolumeSource {
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.caching_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "cachingMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "cachingMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "cachingMode")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "diskName", &self.disk_name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "diskURI", &self.disk_uri)?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "kind")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

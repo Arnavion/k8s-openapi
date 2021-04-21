@@ -45,6 +45,11 @@ impl{type_generics_impl} serde::Deserialize<'de> for {type_name}{type_generics_t
                 Ok({type_name} {{
 {field_value_assignment}                }})
             }}
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {{
+{resource_metadata_defs}                Ok({type_name} {{
+{field_value_direct_assignment}                }})
+            }}
         }}
 
         deserializer.deserialize_struct(

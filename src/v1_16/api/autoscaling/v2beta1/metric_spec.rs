@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(MetricSpec {
+                    external: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external"))?,
+                    object: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("object"))?,
+                    pods: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pods"))?,
+                    resource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,16 +130,28 @@ impl serde::Serialize for MetricSpec {
             self.resource.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.external {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "external", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "external", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "external")?;
         }
         if let Some(value) = &self.object {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "object", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "object", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "object")?;
         }
         if let Some(value) = &self.pods {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pods", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pods", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "pods")?;
         }
         if let Some(value) = &self.resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resource")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         serde::ser::SerializeStruct::end(state)

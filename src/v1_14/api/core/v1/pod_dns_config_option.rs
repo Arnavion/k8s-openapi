@@ -68,6 +68,13 @@ impl<'de> serde::Deserialize<'de> for PodDNSConfigOption {
                     value: value_value,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodDNSConfigOption {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("value"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -89,10 +96,16 @@ impl serde::Serialize for PodDNSConfigOption {
             self.value.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "value", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "value")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

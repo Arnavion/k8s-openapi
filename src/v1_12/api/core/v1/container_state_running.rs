@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for ContainerStateRunning {
                     started_at: value_started_at,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerStateRunning {
+                    started_at: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("started_at"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for ContainerStateRunning {
             self.started_at.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.started_at {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startedAt", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "startedAt", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "startedAt")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

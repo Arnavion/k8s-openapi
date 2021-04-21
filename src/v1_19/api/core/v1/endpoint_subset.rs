@@ -84,6 +84,14 @@ impl<'de> serde::Deserialize<'de> for EndpointSubset {
                     ports: value_ports,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EndpointSubset {
+                    addresses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("addresses"))?,
+                    not_ready_addresses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("not_ready_addresses"))?,
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -107,13 +115,22 @@ impl serde::Serialize for EndpointSubset {
             self.ports.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "addresses")?;
         }
         if let Some(value) = &self.not_ready_addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "notReadyAddresses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "notReadyAddresses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "notReadyAddresses")?;
         }
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

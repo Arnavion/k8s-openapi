@@ -136,6 +136,27 @@ impl<'de> serde::Deserialize<'de> for Status {
                     status: value_status,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(Status {
+                    code: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("code"))?,
+                    details: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("details"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                    status: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("status"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -169,20 +190,35 @@ impl serde::Serialize for Status {
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.code {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "code", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "code", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "code")?;
         }
         if let Some(value) = &self.details {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "details", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "details", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "details")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "status")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for PodReadinessGate {
                     condition_type: value_condition_type.ok_or_else(|| serde::de::Error::missing_field("conditionType"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodReadinessGate {
+                    condition_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("condition_type"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

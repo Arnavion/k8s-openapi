@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for VolumeAttachmentSource {
                     persistent_volume_name: value_persistent_volume_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeAttachmentSource {
+                    persistent_volume_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("persistent_volume_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for VolumeAttachmentSource {
             self.persistent_volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.persistent_volume_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "persistentVolumeName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

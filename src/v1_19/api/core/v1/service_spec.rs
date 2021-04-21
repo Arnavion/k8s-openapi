@@ -173,6 +173,26 @@ impl<'de> serde::Deserialize<'de> for ServiceSpec {
                     type_: value_type_,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceSpec {
+                    cluster_ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cluster_ip"))?,
+                    external_ips: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external_ips"))?,
+                    external_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external_name"))?,
+                    external_traffic_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external_traffic_policy"))?,
+                    health_check_node_port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("health_check_node_port"))?,
+                    ip_family: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ip_family"))?,
+                    load_balancer_ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("load_balancer_ip"))?,
+                    load_balancer_source_ranges: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("load_balancer_source_ranges"))?,
+                    ports: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ports"))?,
+                    publish_not_ready_addresses: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("publish_not_ready_addresses"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    session_affinity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("session_affinity"))?,
+                    session_affinity_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("session_affinity_config"))?,
+                    topology_keys: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("topology_keys"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -220,49 +240,94 @@ impl serde::Serialize for ServiceSpec {
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "clusterIP")?;
         }
         if let Some(value) = &self.external_ips {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "externalIPs")?;
         }
         if let Some(value) = &self.external_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "externalName")?;
         }
         if let Some(value) = &self.external_traffic_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "externalTrafficPolicy")?;
         }
         if let Some(value) = &self.health_check_node_port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "healthCheckNodePort")?;
         }
         if let Some(value) = &self.ip_family {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ipFamily", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ipFamily", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ipFamily")?;
         }
         if let Some(value) = &self.load_balancer_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "loadBalancerIP")?;
         }
         if let Some(value) = &self.load_balancer_source_ranges {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "loadBalancerSourceRanges")?;
         }
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ports")?;
         }
         if let Some(value) = &self.publish_not_ready_addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "publishNotReadyAddresses", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "publishNotReadyAddresses", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "publishNotReadyAddresses")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.session_affinity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sessionAffinity")?;
         }
         if let Some(value) = &self.session_affinity_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinityConfig", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinityConfig", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sessionAffinityConfig")?;
         }
         if let Some(value) = &self.topology_keys {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "topologyKeys")?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

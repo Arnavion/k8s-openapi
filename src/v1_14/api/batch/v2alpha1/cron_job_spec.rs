@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for CronJobSpec {
                     suspend: value_suspend,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CronJobSpec {
+                    concurrency_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("concurrency_policy"))?,
+                    failed_jobs_history_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("failed_jobs_history_limit"))?,
+                    job_template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("job_template"))?,
+                    schedule: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("schedule"))?,
+                    starting_deadline_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("starting_deadline_seconds"))?,
+                    successful_jobs_history_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("successful_jobs_history_limit"))?,
+                    suspend: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("suspend"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -139,21 +151,36 @@ impl serde::Serialize for CronJobSpec {
             self.suspend.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.concurrency_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "concurrencyPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "concurrencyPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "concurrencyPolicy")?;
         }
         if let Some(value) = &self.failed_jobs_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failedJobsHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "failedJobsHistoryLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "failedJobsHistoryLimit")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "jobTemplate", &self.job_template)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "schedule", &self.schedule)?;
         if let Some(value) = &self.starting_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startingDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "startingDeadlineSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "startingDeadlineSeconds")?;
         }
         if let Some(value) = &self.successful_jobs_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "successfulJobsHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "successfulJobsHistoryLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "successfulJobsHistoryLimit")?;
         }
         if let Some(value) = &self.suspend {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "suspend", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "suspend", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "suspend")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

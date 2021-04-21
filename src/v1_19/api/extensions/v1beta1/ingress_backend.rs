@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for IngressBackend {
                     service_port: value_service_port,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressBackend {
+                    resource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
+                    service_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_name"))?,
+                    service_port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_port"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for IngressBackend {
             self.service_port.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resource")?;
         }
         if let Some(value) = &self.service_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serviceName")?;
         }
         if let Some(value) = &self.service_port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "servicePort", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "servicePort", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "servicePort")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

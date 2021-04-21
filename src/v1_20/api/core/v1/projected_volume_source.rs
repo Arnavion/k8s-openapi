@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ProjectedVolumeSource {
                     sources: value_sources,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ProjectedVolumeSource {
+                    default_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_mode"))?,
+                    sources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("sources"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for ProjectedVolumeSource {
             self.sources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultMode")?;
         }
         if let Some(value) = &self.sources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sources")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

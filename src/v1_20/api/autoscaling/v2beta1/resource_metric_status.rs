@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ResourceMetricStatus {
                     name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceMetricStatus {
+                    current_average_utilization: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_average_utilization"))?,
+                    current_average_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_average_value"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -99,7 +107,10 @@ impl serde::Serialize for ResourceMetricStatus {
             self.current_average_utilization.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_average_utilization {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageUtilization", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageUtilization", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "currentAverageUtilization")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", &self.current_average_value)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;

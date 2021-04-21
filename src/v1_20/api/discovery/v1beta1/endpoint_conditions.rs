@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for EndpointConditions {
                     terminating: value_terminating,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EndpointConditions {
+                    ready: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ready"))?,
+                    serving: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("serving"))?,
+                    terminating: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("terminating"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for EndpointConditions {
             self.terminating.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ready {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ready", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ready", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ready")?;
         }
         if let Some(value) = &self.serving {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serving", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serving", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serving")?;
         }
         if let Some(value) = &self.terminating {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminating", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminating", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "terminating")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -71,6 +71,13 @@ impl<'de> serde::Deserialize<'de> for SeccompProfile {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SeccompProfile {
+                    localhost_profile: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("localhost_profile"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -92,7 +99,10 @@ impl serde::Serialize for SeccompProfile {
             self.localhost_profile.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.localhost_profile {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "localhostProfile", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "localhostProfile", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "localhostProfile")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         serde::ser::SerializeStruct::end(state)

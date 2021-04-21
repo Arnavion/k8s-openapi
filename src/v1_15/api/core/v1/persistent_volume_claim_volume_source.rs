@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
                     read_only: value_read_only,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PersistentVolumeClaimVolumeSource {
+                    claim_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("claim_name"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for PersistentVolumeClaimVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "claimName", &self.claim_name)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

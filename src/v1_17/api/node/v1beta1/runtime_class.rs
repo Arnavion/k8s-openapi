@@ -483,6 +483,25 @@ impl<'de> serde::Deserialize<'de> for RuntimeClass {
                     scheduling: value_scheduling,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(RuntimeClass {
+                    handler: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("handler"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    overhead: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("overhead"))?,
+                    scheduling: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scheduling"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -513,10 +532,16 @@ impl serde::Serialize for RuntimeClass {
         serde::ser::SerializeStruct::serialize_field(&mut state, "handler", &self.handler)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.overhead {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "overhead")?;
         }
         if let Some(value) = &self.scheduling {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scheduling", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scheduling", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scheduling")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

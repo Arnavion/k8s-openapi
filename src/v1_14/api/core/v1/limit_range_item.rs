@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for LimitRangeItem {
                     type_: value_type_,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LimitRangeItem {
+                    default: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default"))?,
+                    default_request: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_request"))?,
+                    max: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max"))?,
+                    max_limit_request_ratio: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_limit_request_ratio"))?,
+                    min: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for LimitRangeItem {
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "default", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "default")?;
         }
         if let Some(value) = &self.default_request {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRequest", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRequest", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultRequest")?;
         }
         if let Some(value) = &self.max {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "max", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "max", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "max")?;
         }
         if let Some(value) = &self.max_limit_request_ratio {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLimitRequestRatio", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLimitRequestRatio", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxLimitRequestRatio")?;
         }
         if let Some(value) = &self.min {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "min", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "min", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "min")?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

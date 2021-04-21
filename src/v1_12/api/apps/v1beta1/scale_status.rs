@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ScaleStatus {
                     target_selector: value_target_selector,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ScaleStatus {
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    target_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_selector"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,10 +109,16 @@ impl serde::Serialize for ScaleStatus {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.target_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetSelector")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

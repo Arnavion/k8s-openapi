@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for OwnerReference {
                     uid: value_uid.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(OwnerReference {
+                    api_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_version"))?,
+                    block_owner_deletion: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("block_owner_deletion"))?,
+                    controller: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("controller"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -128,10 +139,16 @@ impl serde::Serialize for OwnerReference {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &self.api_version)?;
         if let Some(value) = &self.block_owner_deletion {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "blockOwnerDeletion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "blockOwnerDeletion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "blockOwnerDeletion")?;
         }
         if let Some(value) = &self.controller {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "controller", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "controller", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "controller")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;

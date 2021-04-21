@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ServerStorageVersion {
                     encoding_version: value_encoding_version,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServerStorageVersion {
+                    api_server_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_server_id"))?,
+                    decodable_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("decodable_versions"))?,
+                    encoding_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("encoding_version"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for ServerStorageVersion {
             self.encoding_version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_server_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiServerID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiServerID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiServerID")?;
         }
         if let Some(value) = &self.decodable_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "decodableVersions")?;
         }
         if let Some(value) = &self.encoding_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "encodingVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "encodingVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "encodingVersion")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

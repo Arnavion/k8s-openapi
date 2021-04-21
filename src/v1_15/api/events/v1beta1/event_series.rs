@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for EventSeries {
                     state: value_state.ok_or_else(|| serde::de::Error::missing_field("state"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EventSeries {
+                    count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("count"))?,
+                    last_observed_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_observed_time"))?,
+                    state: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("state"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

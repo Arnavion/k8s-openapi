@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for SupplementalGroupsStrategyOptions {
                     rule: value_rule,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SupplementalGroupsStrategyOptions {
+                    ranges: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ranges"))?,
+                    rule: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rule"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for SupplementalGroupsStrategyOptions {
             self.rule.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ranges {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ranges")?;
         }
         if let Some(value) = &self.rule {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rule", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rule")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

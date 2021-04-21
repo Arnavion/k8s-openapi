@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for FlockerVolumeSource {
                     dataset_uuid: value_dataset_uuid,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(FlockerVolumeSource {
+                    dataset_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dataset_name"))?,
+                    dataset_uuid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dataset_uuid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for FlockerVolumeSource {
             self.dataset_uuid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.dataset_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "datasetName")?;
         }
         if let Some(value) = &self.dataset_uuid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetUUID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetUUID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "datasetUUID")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

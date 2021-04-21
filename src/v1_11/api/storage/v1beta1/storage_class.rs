@@ -517,6 +517,29 @@ impl<'de> serde::Deserialize<'de> for StorageClass {
                     volume_binding_mode: value_volume_binding_mode,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(StorageClass {
+                    allow_volume_expansion: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allow_volume_expansion"))?,
+                    allowed_topologies: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_topologies"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    mount_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mount_options"))?,
+                    parameters: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("parameters"))?,
+                    provisioner: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("provisioner"))?,
+                    reclaim_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reclaim_policy"))?,
+                    volume_binding_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_binding_mode"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -553,24 +576,42 @@ impl serde::Serialize for StorageClass {
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.allow_volume_expansion {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowVolumeExpansion")?;
         }
         if let Some(value) = &self.allowed_topologies {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allowedTopologies")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.mount_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "mountOptions")?;
         }
         if let Some(value) = &self.parameters {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "parameters")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "provisioner", &self.provisioner)?;
         if let Some(value) = &self.reclaim_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reclaimPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reclaimPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reclaimPolicy")?;
         }
         if let Some(value) = &self.volume_binding_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeBindingMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeBindingMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeBindingMode")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

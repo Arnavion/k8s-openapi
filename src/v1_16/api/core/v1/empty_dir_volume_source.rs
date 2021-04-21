@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
                     size_limit: value_size_limit,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EmptyDirVolumeSource {
+                    medium: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("medium"))?,
+                    size_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("size_limit"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for EmptyDirVolumeSource {
             self.size_limit.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.medium {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "medium", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "medium")?;
         }
         if let Some(value) = &self.size_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sizeLimit")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

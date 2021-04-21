@@ -293,6 +293,41 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeSpec {
                     vsphere_volume: value_vsphere_volume,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PersistentVolumeSpec {
+                    access_modes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("access_modes"))?,
+                    aws_elastic_block_store: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("aws_elastic_block_store"))?,
+                    azure_disk: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("azure_disk"))?,
+                    azure_file: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("azure_file"))?,
+                    capacity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("capacity"))?,
+                    cephfs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cephfs"))?,
+                    cinder: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cinder"))?,
+                    claim_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("claim_ref"))?,
+                    csi: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("csi"))?,
+                    fc: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fc"))?,
+                    flex_volume: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("flex_volume"))?,
+                    flocker: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("flocker"))?,
+                    gce_persistent_disk: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("gce_persistent_disk"))?,
+                    glusterfs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("glusterfs"))?,
+                    host_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_path"))?,
+                    iscsi: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("iscsi"))?,
+                    local: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("local"))?,
+                    mount_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mount_options"))?,
+                    nfs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("nfs"))?,
+                    node_affinity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_affinity"))?,
+                    persistent_volume_reclaim_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("persistent_volume_reclaim_policy"))?,
+                    photon_persistent_disk: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("photon_persistent_disk"))?,
+                    portworx_volume: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("portworx_volume"))?,
+                    quobyte: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("quobyte"))?,
+                    rbd: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rbd"))?,
+                    scale_io: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scale_io"))?,
+                    storage_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_class_name"))?,
+                    storageos: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storageos"))?,
+                    volume_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_mode"))?,
+                    vsphere_volume: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("vsphere_volume"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -370,94 +405,184 @@ impl serde::Serialize for PersistentVolumeSpec {
             self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "accessModes")?;
         }
         if let Some(value) = &self.aws_elastic_block_store {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "awsElasticBlockStore")?;
         }
         if let Some(value) = &self.azure_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "azureDisk")?;
         }
         if let Some(value) = &self.azure_file {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "azureFile")?;
         }
         if let Some(value) = &self.capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "capacity")?;
         }
         if let Some(value) = &self.cephfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "cephfs")?;
         }
         if let Some(value) = &self.cinder {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "cinder")?;
         }
         if let Some(value) = &self.claim_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "claimRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "claimRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "claimRef")?;
         }
         if let Some(value) = &self.csi {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "csi", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "csi", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "csi")?;
         }
         if let Some(value) = &self.fc {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fc", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fc", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fc")?;
         }
         if let Some(value) = &self.flex_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "flexVolume")?;
         }
         if let Some(value) = &self.flocker {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "flocker")?;
         }
         if let Some(value) = &self.gce_persistent_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "gcePersistentDisk")?;
         }
         if let Some(value) = &self.glusterfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "glusterfs")?;
         }
         if let Some(value) = &self.host_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostPath")?;
         }
         if let Some(value) = &self.iscsi {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "iscsi")?;
         }
         if let Some(value) = &self.local {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "local", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "local", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "local")?;
         }
         if let Some(value) = &self.mount_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "mountOptions")?;
         }
         if let Some(value) = &self.nfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nfs")?;
         }
         if let Some(value) = &self.node_affinity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeAffinity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeAffinity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeAffinity")?;
         }
         if let Some(value) = &self.persistent_volume_reclaim_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeReclaimPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeReclaimPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "persistentVolumeReclaimPolicy")?;
         }
         if let Some(value) = &self.photon_persistent_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "photonPersistentDisk")?;
         }
         if let Some(value) = &self.portworx_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "portworxVolume")?;
         }
         if let Some(value) = &self.quobyte {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "quobyte")?;
         }
         if let Some(value) = &self.rbd {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rbd")?;
         }
         if let Some(value) = &self.scale_io {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scaleIO")?;
         }
         if let Some(value) = &self.storage_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageClassName")?;
         }
         if let Some(value) = &self.storageos {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageos")?;
         }
         if let Some(value) = &self.volume_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeMode")?;
         }
         if let Some(value) = &self.vsphere_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "vsphereVolume")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

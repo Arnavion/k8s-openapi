@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for TopologySelectorTerm {
                     match_label_expressions: value_match_label_expressions,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TopologySelectorTerm {
+                    match_label_expressions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("match_label_expressions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for TopologySelectorTerm {
             self.match_label_expressions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.match_label_expressions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabelExpressions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabelExpressions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "matchLabelExpressions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

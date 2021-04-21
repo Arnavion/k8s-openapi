@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Scheduling {
                     tolerations: value_tolerations,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Scheduling {
+                    node_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_selector"))?,
+                    tolerations: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tolerations"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for Scheduling {
             self.tolerations.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.node_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeSelector")?;
         }
         if let Some(value) = &self.tolerations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tolerations")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

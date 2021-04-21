@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for IPBlock {
                     except: value_except,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IPBlock {
+                    cidr: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("cidr"))?,
+                    except: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("except"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for IPBlock {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "cidr", &self.cidr)?;
         if let Some(value) = &self.except {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "except", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "except", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "except")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ServiceStatus {
                     load_balancer: value_load_balancer,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceStatus {
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    load_balancer: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("load_balancer"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for ServiceStatus {
             self.load_balancer.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.load_balancer {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancer", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancer", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "loadBalancer")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

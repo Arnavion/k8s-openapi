@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for ComponentCondition {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ComponentCondition {
+                    error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("error"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    status: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("status"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -109,10 +118,16 @@ impl serde::Serialize for ComponentCondition {
             self.message.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "error", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "error")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "status", &self.status)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;

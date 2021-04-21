@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
                     user: value_user,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RBDPersistentVolumeSource {
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    image: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image"))?,
+                    keyring: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("keyring"))?,
+                    monitors: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("monitors"))?,
+                    pool: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pool"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_ref"))?,
+                    user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("user"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -149,24 +162,42 @@ impl serde::Serialize for RBDPersistentVolumeSource {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
         if let Some(value) = &self.keyring {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "keyring", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "keyring", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "keyring")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
         if let Some(value) = &self.pool {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pool", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pool", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "pool")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretRef")?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "user")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

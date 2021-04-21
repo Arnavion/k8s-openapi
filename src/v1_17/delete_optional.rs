@@ -39,25 +39,46 @@ impl<'a> serde::Serialize for DeleteOptional<'a> {
             self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiVersion")?;
         }
         if let Some(value) = &self.dry_run {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "dryRun")?;
         }
         if let Some(value) = &self.grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "gracePeriodSeconds")?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "kind")?;
         }
         if let Some(value) = &self.orphan_dependents {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "orphanDependents")?;
         }
         if let Some(value) = &self.preconditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preconditions")?;
         }
         if let Some(value) = &self.propagation_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "propagationPolicy")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

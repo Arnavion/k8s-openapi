@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for NodeSpec {
                     unschedulable: value_unschedulable,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeSpec {
+                    config_source: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("config_source"))?,
+                    external_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external_id"))?,
+                    pod_cidr: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_cidr"))?,
+                    provider_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("provider_id"))?,
+                    taints: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("taints"))?,
+                    unschedulable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("unschedulable"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for NodeSpec {
             self.unschedulable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_source {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configSource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configSource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "configSource")?;
         }
         if let Some(value) = &self.external_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "externalID")?;
         }
         if let Some(value) = &self.pod_cidr {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podCIDR", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podCIDR", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podCIDR")?;
         }
         if let Some(value) = &self.provider_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "providerID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "providerID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "providerID")?;
         }
         if let Some(value) = &self.taints {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "taints", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "taints", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "taints")?;
         }
         if let Some(value) = &self.unschedulable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "unschedulable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "unschedulable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "unschedulable")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

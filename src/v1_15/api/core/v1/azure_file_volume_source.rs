@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for AzureFileVolumeSource {
                     share_name: value_share_name.ok_or_else(|| serde::de::Error::missing_field("shareName"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(AzureFileVolumeSource {
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_name"))?,
+                    share_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("share_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -99,7 +107,10 @@ impl serde::Serialize for AzureFileVolumeSource {
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", &self.secret_name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "shareName", &self.share_name)?;

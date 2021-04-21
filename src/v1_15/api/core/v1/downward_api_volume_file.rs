@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeFile {
                     resource_field_ref: value_resource_field_ref,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DownwardAPIVolumeFile {
+                    field_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("field_ref"))?,
+                    mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mode"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    resource_field_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_field_ref"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,14 +119,23 @@ impl serde::Serialize for DownwardAPIVolumeFile {
             self.resource_field_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fieldRef")?;
         }
         if let Some(value) = &self.mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "mode")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.resource_field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceFieldRef")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

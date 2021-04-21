@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ServiceBackendPort {
                     number: value_number,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceBackendPort {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    number: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("number"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for ServiceBackendPort {
             self.number.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.number {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "number", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "number", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "number")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

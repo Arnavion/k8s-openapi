@@ -133,6 +133,21 @@ impl<'de> serde::Deserialize<'de> for ScaleIOPersistentVolumeSource {
                     volume_name: value_volume_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ScaleIOPersistentVolumeSource {
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    gateway: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("gateway"))?,
+                    protection_domain: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("protection_domain"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_ref"))?,
+                    ssl_enabled: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ssl_enabled"))?,
+                    storage_mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_mode"))?,
+                    storage_pool: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_pool"))?,
+                    system: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("system"))?,
+                    volume_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -168,28 +183,49 @@ impl serde::Serialize for ScaleIOPersistentVolumeSource {
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "gateway", &self.gateway)?;
         if let Some(value) = &self.protection_domain {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "protectionDomain", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "protectionDomain", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "protectionDomain")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &self.secret_ref)?;
         if let Some(value) = &self.ssl_enabled {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sslEnabled", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sslEnabled", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sslEnabled")?;
         }
         if let Some(value) = &self.storage_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageMode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageMode")?;
         }
         if let Some(value) = &self.storage_pool {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePool", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePool", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storagePool")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "system", &self.system)?;
         if let Some(value) = &self.volume_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for IngressSpec {
                     tls: value_tls,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressSpec {
+                    default_backend: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_backend"))?,
+                    ingress_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ingress_class_name"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                    tls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tls"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for IngressSpec {
             self.tls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_backend {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultBackend", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultBackend", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultBackend")?;
         }
         if let Some(value) = &self.ingress_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ingressClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ingressClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ingressClassName")?;
         }
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rules")?;
         }
         if let Some(value) = &self.tls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tls", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tls")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

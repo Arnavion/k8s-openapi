@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for HostAlias {
                     ip: value_ip,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HostAlias {
+                    hostnames: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hostnames"))?,
+                    ip: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ip"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for HostAlias {
             self.ip.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostnames {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostnames")?;
         }
         if let Some(value) = &self.ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ip")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

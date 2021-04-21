@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for ContainerStateTerminated {
                     started_at: value_started_at,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ContainerStateTerminated {
+                    container_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_id"))?,
+                    exit_code: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("exit_code"))?,
+                    finished_at: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("finished_at"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                    signal: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("signal"))?,
+                    started_at: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("started_at"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -140,23 +152,41 @@ impl serde::Serialize for ContainerStateTerminated {
             self.started_at.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "containerID")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "exitCode", &self.exit_code)?;
         if let Some(value) = &self.finished_at {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "finishedAt", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "finishedAt", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "finishedAt")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         if let Some(value) = &self.signal {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "signal", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "signal", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "signal")?;
         }
         if let Some(value) = &self.started_at {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startedAt", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "startedAt", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "startedAt")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

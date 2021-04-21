@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Webhook {
                     throttle: value_throttle,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Webhook {
+                    client_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("client_config"))?,
+                    throttle: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("throttle"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for Webhook {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.throttle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "throttle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "throttle", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "throttle")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

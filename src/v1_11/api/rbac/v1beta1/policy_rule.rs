@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for PolicyRule {
                     verbs: value_verbs.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PolicyRule {
+                    api_groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("api_groups"))?,
+                    non_resource_urls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("non_resource_urls"))?,
+                    resource_names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_names"))?,
+                    resources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
+                    verbs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,16 +130,28 @@ impl serde::Serialize for PolicyRule {
             self.resources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "apiGroups")?;
         }
         if let Some(value) = &self.non_resource_urls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nonResourceURLs")?;
         }
         if let Some(value) = &self.resource_names {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceNames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceNames", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceNames")?;
         }
         if let Some(value) = &self.resources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resources")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
         serde::ser::SerializeStruct::end(state)

@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for ResourceAttributes {
                     version: value_version,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceAttributes {
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
+                    resource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
+                    subresource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subresource"))?,
+                    verb: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verb"))?,
+                    version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("version"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -140,25 +152,46 @@ impl serde::Serialize for ResourceAttributes {
             self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespace")?;
         }
         if let Some(value) = &self.resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resource")?;
         }
         if let Some(value) = &self.subresource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subresource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subresource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subresource")?;
         }
         if let Some(value) = &self.verb {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "verb", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "verb", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "verb")?;
         }
         if let Some(value) = &self.version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "version", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "version")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

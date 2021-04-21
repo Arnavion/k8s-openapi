@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PodsMetricSource {
                     target_average_value: value_target_average_value.ok_or_else(|| serde::de::Error::missing_field("targetAverageValue"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodsMetricSource {
+                    metric_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metric_name"))?,
+                    target_average_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_average_value"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

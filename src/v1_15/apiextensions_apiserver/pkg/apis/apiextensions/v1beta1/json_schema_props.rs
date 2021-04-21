@@ -346,6 +346,51 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
                     x_kubernetes_preserve_unknown_fields: value_x_kubernetes_preserve_unknown_fields,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(JSONSchemaProps {
+                    ref_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ref_path"))?,
+                    schema: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("schema"))?,
+                    additional_items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("additional_items"))?,
+                    additional_properties: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("additional_properties"))?,
+                    all_of: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("all_of"))?,
+                    any_of: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("any_of"))?,
+                    default: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default"))?,
+                    definitions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("definitions"))?,
+                    dependencies: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dependencies"))?,
+                    description: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("description"))?,
+                    enum_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("enum_"))?,
+                    example: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("example"))?,
+                    exclusive_maximum: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("exclusive_maximum"))?,
+                    exclusive_minimum: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("exclusive_minimum"))?,
+                    external_docs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("external_docs"))?,
+                    format: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("format"))?,
+                    id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("id"))?,
+                    items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("items"))?,
+                    max_items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_items"))?,
+                    max_length: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_length"))?,
+                    max_properties: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_properties"))?,
+                    maximum: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("maximum"))?,
+                    min_items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_items"))?,
+                    min_length: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_length"))?,
+                    min_properties: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_properties"))?,
+                    minimum: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("minimum"))?,
+                    multiple_of: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("multiple_of"))?,
+                    not: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("not"))?,
+                    nullable: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("nullable"))?,
+                    one_of: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("one_of"))?,
+                    pattern: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pattern"))?,
+                    pattern_properties: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pattern_properties"))?,
+                    properties: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("properties"))?,
+                    required: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("required"))?,
+                    title: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("title"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                    unique_items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("unique_items"))?,
+                    x_kubernetes_embedded_resource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("x_kubernetes_embedded_resource"))?,
+                    x_kubernetes_int_or_string: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("x_kubernetes_int_or_string"))?,
+                    x_kubernetes_preserve_unknown_fields: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("x_kubernetes_preserve_unknown_fields"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -443,124 +488,244 @@ impl serde::Serialize for JSONSchemaProps {
             self.x_kubernetes_preserve_unknown_fields.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ref_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "$ref")?;
         }
         if let Some(value) = &self.schema {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "$schema")?;
         }
         if let Some(value) = &self.additional_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "additionalItems")?;
         }
         if let Some(value) = &self.additional_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "additionalProperties")?;
         }
         if let Some(value) = &self.all_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "allOf")?;
         }
         if let Some(value) = &self.any_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "anyOf")?;
         }
         if let Some(value) = &self.default {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "default", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "default")?;
         }
         if let Some(value) = &self.definitions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "definitions")?;
         }
         if let Some(value) = &self.dependencies {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "dependencies")?;
         }
         if let Some(value) = &self.description {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "description", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "description")?;
         }
         if let Some(value) = &self.enum_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "enum", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "enum")?;
         }
         if let Some(value) = &self.example {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "example", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "example")?;
         }
         if let Some(value) = &self.exclusive_maximum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "exclusiveMaximum")?;
         }
         if let Some(value) = &self.exclusive_minimum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "exclusiveMinimum")?;
         }
         if let Some(value) = &self.external_docs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "externalDocs")?;
         }
         if let Some(value) = &self.format {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "format", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "format")?;
         }
         if let Some(value) = &self.id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "id", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "id", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "id")?;
         }
         if let Some(value) = &self.items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "items")?;
         }
         if let Some(value) = &self.max_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxItems")?;
         }
         if let Some(value) = &self.max_length {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxLength")?;
         }
         if let Some(value) = &self.max_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maxProperties")?;
         }
         if let Some(value) = &self.maximum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "maximum")?;
         }
         if let Some(value) = &self.min_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minItems")?;
         }
         if let Some(value) = &self.min_length {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minLength")?;
         }
         if let Some(value) = &self.min_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minProperties")?;
         }
         if let Some(value) = &self.minimum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minimum")?;
         }
         if let Some(value) = &self.multiple_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "multipleOf")?;
         }
         if let Some(value) = &self.not {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "not", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "not", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "not")?;
         }
         if let Some(value) = &self.nullable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nullable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nullable", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nullable")?;
         }
         if let Some(value) = &self.one_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "oneOf")?;
         }
         if let Some(value) = &self.pattern {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "pattern")?;
         }
         if let Some(value) = &self.pattern_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "patternProperties")?;
         }
         if let Some(value) = &self.properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "properties", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "properties")?;
         }
         if let Some(value) = &self.required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "required", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "required")?;
         }
         if let Some(value) = &self.title {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "title", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "title")?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         if let Some(value) = &self.unique_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uniqueItems")?;
         }
         if let Some(value) = &self.x_kubernetes_embedded_resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-embedded-resource", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-embedded-resource", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "x-kubernetes-embedded-resource")?;
         }
         if let Some(value) = &self.x_kubernetes_int_or_string {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-int-or-string", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-int-or-string", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "x-kubernetes-int-or-string")?;
         }
         if let Some(value) = &self.x_kubernetes_preserve_unknown_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-preserve-unknown-fields", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-preserve-unknown-fields", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "x-kubernetes-preserve-unknown-fields")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

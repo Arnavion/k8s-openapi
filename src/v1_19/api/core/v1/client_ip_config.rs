@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for ClientIPConfig {
                     timeout_seconds: value_timeout_seconds,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ClientIPConfig {
+                    timeout_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("timeout_seconds"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for ClientIPConfig {
             self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.timeout_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "timeoutSeconds")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

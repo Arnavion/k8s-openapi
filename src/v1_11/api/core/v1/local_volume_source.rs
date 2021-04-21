@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for LocalVolumeSource {
                     path: value_path.ok_or_else(|| serde::de::Error::missing_field("path"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LocalVolumeSource {
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

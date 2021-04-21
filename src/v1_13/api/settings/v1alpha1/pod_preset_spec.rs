@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for PodPresetSpec {
                     volumes: value_volumes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodPresetSpec {
+                    env: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("env"))?,
+                    env_from: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("env_from"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    volume_mounts: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_mounts"))?,
+                    volumes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volumes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -120,19 +130,34 @@ impl serde::Serialize for PodPresetSpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.env {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "env", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "env")?;
         }
         if let Some(value) = &self.env_from {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "envFrom")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.volume_mounts {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeMounts")?;
         }
         if let Some(value) = &self.volumes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

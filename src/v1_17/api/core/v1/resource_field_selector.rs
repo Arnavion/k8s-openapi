@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
                     resource: value_resource.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ResourceFieldSelector {
+                    container_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_name"))?,
+                    divisor: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("divisor"))?,
+                    resource: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,10 +108,16 @@ impl serde::Serialize for ResourceFieldSelector {
             self.divisor.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "containerName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "containerName")?;
         }
         if let Some(value) = &self.divisor {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "divisor", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "divisor", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "divisor")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &self.resource)?;
         serde::ser::SerializeStruct::end(state)

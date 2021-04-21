@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for DaemonEndpoint {
                     port: value_port.ok_or_else(|| serde::de::Error::missing_field("Port"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DaemonEndpoint {
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

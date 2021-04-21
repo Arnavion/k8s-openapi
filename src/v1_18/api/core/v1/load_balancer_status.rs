@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for LoadBalancerStatus {
                     ingress: value_ingress,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LoadBalancerStatus {
+                    ingress: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ingress"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for LoadBalancerStatus {
             self.ingress.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ingress {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "ingress")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

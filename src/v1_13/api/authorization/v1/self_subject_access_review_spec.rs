@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
                     resource_attributes: value_resource_attributes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SelfSubjectAccessReviewSpec {
+                    non_resource_attributes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("non_resource_attributes"))?,
+                    resource_attributes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_attributes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for SelfSubjectAccessReviewSpec {
             self.resource_attributes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.non_resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nonResourceAttributes")?;
         }
         if let Some(value) = &self.resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceAttributes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

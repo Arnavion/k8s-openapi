@@ -123,6 +123,16 @@ impl<'de> serde::Deserialize<'de> for Webhook {
                     rules: value_rules,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Webhook {
+                    client_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("client_config"))?,
+                    failure_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("failure_policy"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace_selector"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -150,14 +160,23 @@ impl serde::Serialize for Webhook {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.failure_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "failurePolicy")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.namespace_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespaceSelector")?;
         }
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rules")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for VolumeNodeAffinity {
                     required: value_required,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeNodeAffinity {
+                    required: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("required"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for VolumeNodeAffinity {
             self.required.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "required", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "required")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

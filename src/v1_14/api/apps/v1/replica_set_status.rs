@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for ReplicaSetStatus {
                     replicas: value_replicas.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ReplicaSetStatus {
+                    available_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("available_replicas"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    fully_labeled_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fully_labeled_replicas"))?,
+                    observed_generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("observed_generation"))?,
+                    ready_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ready_replicas"))?,
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,19 +141,34 @@ impl serde::Serialize for ReplicaSetStatus {
             self.ready_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.available_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "availableReplicas")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.fully_labeled_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fullyLabeledReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fullyLabeledReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fullyLabeledReplicas")?;
         }
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "observedGeneration")?;
         }
         if let Some(value) = &self.ready_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readyReplicas")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
         serde::ser::SerializeStruct::end(state)

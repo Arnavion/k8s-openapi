@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for JobTemplateSpec {
                     spec: value_spec,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(JobTemplateSpec {
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    spec: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("spec"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for JobTemplateSpec {
             self.spec.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.metadata {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "metadata")?;
         }
         if let Some(value) = &self.spec {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "spec")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

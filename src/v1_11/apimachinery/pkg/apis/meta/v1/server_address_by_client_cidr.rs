@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ServerAddressByClientCIDR {
                     server_address: value_server_address.ok_or_else(|| serde::de::Error::missing_field("serverAddress"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServerAddressByClientCIDR {
+                    client_cidr: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("client_cidr"))?,
+                    server_address: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("server_address"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

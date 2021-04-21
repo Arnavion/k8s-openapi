@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for WindowsSecurityContextOptions {
                     run_as_user_name: value_run_as_user_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(WindowsSecurityContextOptions {
+                    gmsa_credential_spec: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("gmsa_credential_spec"))?,
+                    gmsa_credential_spec_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("gmsa_credential_spec_name"))?,
+                    run_as_user_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_user_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for WindowsSecurityContextOptions {
             self.run_as_user_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.gmsa_credential_spec {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gmsaCredentialSpec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gmsaCredentialSpec", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "gmsaCredentialSpec")?;
         }
         if let Some(value) = &self.gmsa_credential_spec_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gmsaCredentialSpecName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gmsaCredentialSpecName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "gmsaCredentialSpecName")?;
         }
         if let Some(value) = &self.run_as_user_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUserName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUserName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsUserName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

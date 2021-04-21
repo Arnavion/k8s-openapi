@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Initializer {
                     rules: value_rules,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Initializer {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for Initializer {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rules")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

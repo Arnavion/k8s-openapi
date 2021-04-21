@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for VolumeDevice {
                     name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeDevice {
+                    device_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("device_path"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

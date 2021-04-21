@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
                     expiration_seconds: value_expiration_seconds,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TokenRequestSpec {
+                    audiences: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("audiences"))?,
+                    bound_object_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("bound_object_ref"))?,
+                    expiration_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("expiration_seconds"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,10 +109,16 @@ impl serde::Serialize for TokenRequestSpec {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", &self.audiences)?;
         if let Some(value) = &self.bound_object_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "boundObjectRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "boundObjectRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "boundObjectRef")?;
         }
         if let Some(value) = &self.expiration_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "expirationSeconds")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

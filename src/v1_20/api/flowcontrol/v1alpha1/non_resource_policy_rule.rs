@@ -75,6 +75,13 @@ impl<'de> serde::Deserialize<'de> for NonResourcePolicyRule {
                     verbs: value_verbs.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NonResourcePolicyRule {
+                    non_resource_urls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("non_resource_urls"))?,
+                    verbs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

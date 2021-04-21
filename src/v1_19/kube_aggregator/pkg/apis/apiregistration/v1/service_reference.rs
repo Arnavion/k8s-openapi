@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ServiceReference {
                     port: value_port,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceReference {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for ServiceReference {
             self.port.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespace")?;
         }
         if let Some(value) = &self.port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "port", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "port", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "port")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

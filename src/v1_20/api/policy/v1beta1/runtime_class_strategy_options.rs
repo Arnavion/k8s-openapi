@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for RuntimeClassStrategyOptions {
                     default_runtime_class_name: value_default_runtime_class_name,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RuntimeClassStrategyOptions {
+                    allowed_runtime_class_names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed_runtime_class_names"))?,
+                    default_runtime_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("default_runtime_class_name"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for RuntimeClassStrategyOptions {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "allowedRuntimeClassNames", &self.allowed_runtime_class_names)?;
         if let Some(value) = &self.default_runtime_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRuntimeClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRuntimeClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "defaultRuntimeClassName")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for NFSVolumeSource {
                     server: value_server.ok_or_else(|| serde::de::Error::missing_field("server"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NFSVolumeSource {
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    server: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("server"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,7 +108,10 @@ impl serde::Serialize for NFSVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "server", &self.server)?;
         serde::ser::SerializeStruct::end(state)

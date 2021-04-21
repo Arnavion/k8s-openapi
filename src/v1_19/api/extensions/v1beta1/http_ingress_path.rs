@@ -87,6 +87,14 @@ impl<'de> serde::Deserialize<'de> for HTTPIngressPath {
                     path_type: value_path_type,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HTTPIngressPath {
+                    backend: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("backend"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    path_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path_type"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -111,10 +119,16 @@ impl serde::Serialize for HTTPIngressPath {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "backend", &self.backend)?;
         if let Some(value) = &self.path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "path", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "path")?;
         }
         if let Some(value) = &self.path_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pathType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pathType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "pathType")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

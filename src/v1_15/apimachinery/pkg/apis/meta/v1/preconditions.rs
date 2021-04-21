@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for Preconditions {
                     uid: value_uid,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Preconditions {
+                    resource_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_version"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for Preconditions {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceVersion")?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

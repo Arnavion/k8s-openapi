@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for ReplicaSetSpec {
                     template: value_template,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ReplicaSetSpec {
+                    min_ready_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_ready_seconds"))?,
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for ReplicaSetSpec {
             self.template.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minReadySeconds")?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "replicas")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.template {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "template", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "template", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "template")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

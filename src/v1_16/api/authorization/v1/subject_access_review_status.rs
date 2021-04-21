@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewStatus {
                     reason: value_reason,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SubjectAccessReviewStatus {
+                    allowed: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("allowed"))?,
+                    denied: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("denied"))?,
+                    evaluation_error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("evaluation_error"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -111,13 +120,22 @@ impl serde::Serialize for SubjectAccessReviewStatus {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "allowed", &self.allowed)?;
         if let Some(value) = &self.denied {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "denied", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "denied", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "denied")?;
         }
         if let Some(value) = &self.evaluation_error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "evaluationError", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "evaluationError", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "evaluationError")?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -113,6 +113,18 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
                     sysctls: value_sysctls,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodSecurityContext {
+                    fs_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_group"))?,
+                    run_as_group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_group"))?,
+                    run_as_non_root: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_non_root"))?,
+                    run_as_user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("run_as_user"))?,
+                    se_linux_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("se_linux_options"))?,
+                    supplemental_groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("supplemental_groups"))?,
+                    sysctls: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("sysctls"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -144,25 +156,46 @@ impl serde::Serialize for PodSecurityContext {
             self.sysctls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsGroup")?;
         }
         if let Some(value) = &self.run_as_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsGroup")?;
         }
         if let Some(value) = &self.run_as_non_root {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsNonRoot")?;
         }
         if let Some(value) = &self.run_as_user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runAsUser")?;
         }
         if let Some(value) = &self.se_linux_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "seLinuxOptions")?;
         }
         if let Some(value) = &self.supplemental_groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "supplementalGroups")?;
         }
         if let Some(value) = &self.sysctls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sysctls")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

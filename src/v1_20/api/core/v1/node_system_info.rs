@@ -133,6 +133,21 @@ impl<'de> serde::Deserialize<'de> for NodeSystemInfo {
                     system_uuid: value_system_uuid.ok_or_else(|| serde::de::Error::missing_field("systemUUID"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeSystemInfo {
+                    architecture: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("architecture"))?,
+                    boot_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("boot_id"))?,
+                    container_runtime_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("container_runtime_version"))?,
+                    kernel_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kernel_version"))?,
+                    kube_proxy_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kube_proxy_version"))?,
+                    kubelet_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kubelet_version"))?,
+                    machine_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("machine_id"))?,
+                    operating_system: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("operating_system"))?,
+                    os_image: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("os_image"))?,
+                    system_uuid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("system_uuid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

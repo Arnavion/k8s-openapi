@@ -125,6 +125,20 @@ impl<'de> serde::Deserialize<'de> for DeploymentSpec {
                     template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DeploymentSpec {
+                    min_ready_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_ready_seconds"))?,
+                    paused: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("paused"))?,
+                    progress_deadline_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("progress_deadline_seconds"))?,
+                    replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
+                    revision_history_limit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("revision_history_limit"))?,
+                    rollback_to: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rollback_to"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    strategy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("strategy"))?,
+                    template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -160,28 +174,52 @@ impl serde::Serialize for DeploymentSpec {
             self.strategy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minReadySeconds")?;
         }
         if let Some(value) = &self.paused {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "paused", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "paused", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "paused")?;
         }
         if let Some(value) = &self.progress_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "progressDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "progressDeadlineSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "progressDeadlineSeconds")?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "replicas")?;
         }
         if let Some(value) = &self.revision_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "revisionHistoryLimit")?;
         }
         if let Some(value) = &self.rollback_to {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rollbackTo")?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         if let Some(value) = &self.strategy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "strategy")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         serde::ser::SerializeStruct::end(state)

@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
                     succeeded: value_succeeded,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(JobStatus {
+                    active: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("active"))?,
+                    completion_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("completion_time"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    failed: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("failed"))?,
+                    start_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("start_time"))?,
+                    succeeded: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("succeeded"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for JobStatus {
             self.succeeded.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "active", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "active")?;
         }
         if let Some(value) = &self.completion_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "completionTime")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.failed {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failed", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "failed", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "failed")?;
         }
         if let Some(value) = &self.start_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "startTime")?;
         }
         if let Some(value) = &self.succeeded {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "succeeded", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "succeeded", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "succeeded")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

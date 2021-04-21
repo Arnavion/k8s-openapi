@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for ConfigMapNodeConfigSource {
                     uid: value_uid,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ConfigMapNodeConfigSource {
+                    kubelet_config_key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kubelet_config_key"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
+                    resource_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("resource_version"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -121,10 +131,16 @@ impl serde::Serialize for ConfigMapNodeConfigSource {
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &self.namespace)?;
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "resourceVersion")?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
                     uid: value_uid,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(StatusDetails {
+                    causes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("causes"))?,
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    retry_after_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("retry_after_seconds"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -130,22 +141,40 @@ impl serde::Serialize for StatusDetails {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.causes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "causes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "causes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "causes")?;
         }
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "kind")?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "name")?;
         }
         if let Some(value) = &self.retry_after_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "retryAfterSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "retryAfterSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "retryAfterSeconds")?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

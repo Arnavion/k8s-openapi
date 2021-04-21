@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
                     scale_target_ref: value_scale_target_ref.ok_or_else(|| serde::de::Error::missing_field("scaleTargetRef"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HorizontalPodAutoscalerSpec {
+                    max_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("max_replicas"))?,
+                    metrics: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metrics"))?,
+                    min_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("min_replicas"))?,
+                    scale_target_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scale_target_ref"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,10 +119,16 @@ impl serde::Serialize for HorizontalPodAutoscalerSpec {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;
         if let Some(value) = &self.metrics {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "metrics")?;
         }
         if let Some(value) = &self.min_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minReplicas", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "minReplicas")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "scaleTargetRef", &self.scale_target_ref)?;
         serde::ser::SerializeStruct::end(state)

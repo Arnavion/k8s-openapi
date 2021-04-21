@@ -142,6 +142,18 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestSpec {
                     username: value_username,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CertificateSigningRequestSpec {
+                    extra: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("extra"))?,
+                    groups: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("groups"))?,
+                    request: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("request"))?,
+                    signer_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("signer_name"))?,
+                    uid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
+                    usages: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("usages"))?,
+                    username: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("username"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -172,21 +184,36 @@ impl serde::Serialize for CertificateSigningRequestSpec {
             self.username.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "extra")?;
         }
         if let Some(value) = &self.groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "groups")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "request", &self.request)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "signerName", &self.signer_name)?;
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "uid")?;
         }
         if let Some(value) = &self.usages {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "usages", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "usages", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "usages")?;
         }
         if let Some(value) = &self.username {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "username", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "username", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "username")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

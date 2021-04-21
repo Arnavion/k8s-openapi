@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                     versions: value_versions.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionSpec {
+                    conversion: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conversion"))?,
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("names"))?,
+                    preserve_unknown_fields: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("preserve_unknown_fields"))?,
+                    scope: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scope"))?,
+                    versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -127,12 +138,18 @@ impl serde::Serialize for CustomResourceDefinitionSpec {
             self.preserve_unknown_fields.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conversion {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conversion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conversion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conversion")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         if let Some(value) = &self.preserve_unknown_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preserveUnknownFields", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preserveUnknownFields", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preserveUnknownFields")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "scope", &self.scope)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;

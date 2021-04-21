@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for IngressBackend {
                     service_port: value_service_port.ok_or_else(|| serde::de::Error::missing_field("servicePort"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressBackend {
+                    service_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_name"))?,
+                    service_port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_port"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

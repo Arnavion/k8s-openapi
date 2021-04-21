@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for LocalVolumeSource {
                     path: value_path.ok_or_else(|| serde::de::Error::missing_field("path"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LocalVolumeSource {
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for LocalVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         serde::ser::SerializeStruct::end(state)

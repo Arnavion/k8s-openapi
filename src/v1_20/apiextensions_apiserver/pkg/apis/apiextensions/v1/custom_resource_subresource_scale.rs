@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for CustomResourceSubresourceScale {
                     status_replicas_path: value_status_replicas_path.ok_or_else(|| serde::de::Error::missing_field("statusReplicasPath"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceSubresourceScale {
+                    label_selector_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("label_selector_path"))?,
+                    spec_replicas_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("spec_replicas_path"))?,
+                    status_replicas_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("status_replicas_path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -99,7 +107,10 @@ impl serde::Serialize for CustomResourceSubresourceScale {
             self.label_selector_path.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.label_selector_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelectorPath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelectorPath", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "labelSelectorPath")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "specReplicasPath", &self.spec_replicas_path)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "statusReplicasPath", &self.status_replicas_path)?;

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PreferredSchedulingTerm {
                     weight: value_weight.ok_or_else(|| serde::de::Error::missing_field("weight"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PreferredSchedulingTerm {
+                    preference: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("preference"))?,
+                    weight: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("weight"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

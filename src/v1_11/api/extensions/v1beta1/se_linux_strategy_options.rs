@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for SELinuxStrategyOptions {
                     se_linux_options: value_se_linux_options,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(SELinuxStrategyOptions {
+                    rule: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rule"))?,
+                    se_linux_options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("se_linux_options"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -91,7 +98,10 @@ impl serde::Serialize for SELinuxStrategyOptions {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
         if let Some(value) = &self.se_linux_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "seLinuxOptions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

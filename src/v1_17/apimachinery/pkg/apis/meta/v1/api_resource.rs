@@ -133,6 +133,21 @@ impl<'de> serde::Deserialize<'de> for APIResource {
                     version: value_version,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(APIResource {
+                    categories: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("categories"))?,
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespaced: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespaced"))?,
+                    short_names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("short_names"))?,
+                    singular_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("singular_name"))?,
+                    storage_version_hash: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("storage_version_hash"))?,
+                    verbs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
+                    version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("version"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -166,24 +181,39 @@ impl serde::Serialize for APIResource {
             self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.categories {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "categories", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "categories")?;
         }
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "namespaced", &self.namespaced)?;
         if let Some(value) = &self.short_names {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "shortNames")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "singularName", &self.singular_name)?;
         if let Some(value) = &self.storage_version_hash {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersionHash", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersionHash", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storageVersionHash")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
         if let Some(value) = &self.version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "version", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "version")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for PodDNSConfig {
                     searches: value_searches,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodDNSConfig {
+                    nameservers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("nameservers"))?,
+                    options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("options"))?,
+                    searches: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("searches"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for PodDNSConfig {
             self.searches.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.nameservers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nameservers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nameservers", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nameservers")?;
         }
         if let Some(value) = &self.options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "options", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "options")?;
         }
         if let Some(value) = &self.searches {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "searches", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "searches", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "searches")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

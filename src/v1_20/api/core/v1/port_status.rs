@@ -79,6 +79,14 @@ impl<'de> serde::Deserialize<'de> for PortStatus {
                     protocol: value_protocol.ok_or_else(|| serde::de::Error::missing_field("protocol"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PortStatus {
+                    error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("error"))?,
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                    protocol: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("protocol"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,7 +109,10 @@ impl serde::Serialize for PortStatus {
             self.error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "error", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "error")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "port", &self.port)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", &self.protocol)?;

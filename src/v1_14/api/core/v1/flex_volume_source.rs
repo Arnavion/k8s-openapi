@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for FlexVolumeSource {
                     secret_ref: value_secret_ref,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(FlexVolumeSource {
+                    driver: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("driver"))?,
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    options: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("options"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    secret_ref: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret_ref"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -121,16 +131,28 @@ impl serde::Serialize for FlexVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         if let Some(value) = &self.options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "options", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "options")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secretRef")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

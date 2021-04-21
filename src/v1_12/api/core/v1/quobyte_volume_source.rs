@@ -93,6 +93,16 @@ impl<'de> serde::Deserialize<'de> for QuobyteVolumeSource {
                     volume: value_volume.ok_or_else(|| serde::de::Error::missing_field("volume"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(QuobyteVolumeSource {
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    registry: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("registry"))?,
+                    user: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("user"))?,
+                    volume: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -119,14 +129,23 @@ impl serde::Serialize for QuobyteVolumeSource {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "registry", &self.registry)?;
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "user")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "volume", &self.volume)?;
         serde::ser::SerializeStruct::end(state)

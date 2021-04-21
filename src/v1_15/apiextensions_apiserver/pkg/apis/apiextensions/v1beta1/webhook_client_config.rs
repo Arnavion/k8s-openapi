@@ -89,6 +89,14 @@ impl<'de> serde::Deserialize<'de> for WebhookClientConfig {
                     url: value_url,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(WebhookClientConfig {
+                    ca_bundle: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ca_bundle"))?,
+                    service: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service"))?,
+                    url: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("url"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -112,13 +120,22 @@ impl serde::Serialize for WebhookClientConfig {
             self.url.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ca_bundle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "caBundle")?;
         }
         if let Some(value) = &self.service {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "service", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "service", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "service")?;
         }
         if let Some(value) = &self.url {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "url", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "url", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "url")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for CustomResourceValidation {
                     open_api_v3_schema: value_open_api_v3_schema,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceValidation {
+                    open_api_v3_schema: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("open_api_v3_schema"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for CustomResourceValidation {
             self.open_api_v3_schema.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.open_api_v3_schema {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "openAPIV3Schema", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "openAPIV3Schema", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "openAPIV3Schema")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

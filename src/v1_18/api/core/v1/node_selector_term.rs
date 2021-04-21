@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for NodeSelectorTerm {
                     match_fields: value_match_fields,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeSelectorTerm {
+                    match_expressions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("match_expressions"))?,
+                    match_fields: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("match_fields"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for NodeSelectorTerm {
             self.match_fields.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.match_expressions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "matchExpressions")?;
         }
         if let Some(value) = &self.match_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchFields", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "matchFields", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "matchFields")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

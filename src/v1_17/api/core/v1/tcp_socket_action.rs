@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for TCPSocketAction {
                     port: value_port.ok_or_else(|| serde::de::Error::missing_field("port"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(TCPSocketAction {
+                    host: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host"))?,
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for TCPSocketAction {
             self.host.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "host", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "host")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "port", &self.port)?;
         serde::ser::SerializeStruct::end(state)

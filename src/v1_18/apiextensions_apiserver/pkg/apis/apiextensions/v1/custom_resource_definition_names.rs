@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionNames {
                     singular: value_singular,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionNames {
+                    categories: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("categories"))?,
+                    kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    list_kind: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("list_kind"))?,
+                    plural: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("plural"))?,
+                    short_names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("short_names"))?,
+                    singular: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("singular"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -129,18 +140,30 @@ impl serde::Serialize for CustomResourceDefinitionNames {
             self.singular.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.categories {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "categories", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "categories")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         if let Some(value) = &self.list_kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "listKind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "listKind", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "listKind")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "plural", &self.plural)?;
         if let Some(value) = &self.short_names {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "shortNames")?;
         }
         if let Some(value) = &self.singular {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "singular", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "singular", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "singular")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

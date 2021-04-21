@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PodAntiAffinity {
                     required_during_scheduling_ignored_during_execution: value_required_during_scheduling_ignored_during_execution,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodAntiAffinity {
+                    preferred_during_scheduling_ignored_during_execution: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("preferred_during_scheduling_ignored_during_execution"))?,
+                    required_during_scheduling_ignored_during_execution: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("required_during_scheduling_ignored_during_execution"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for PodAntiAffinity {
             self.required_during_scheduling_ignored_during_execution.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.preferred_during_scheduling_ignored_during_execution {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preferredDuringSchedulingIgnoredDuringExecution", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preferredDuringSchedulingIgnoredDuringExecution", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preferredDuringSchedulingIgnoredDuringExecution")?;
         }
         if let Some(value) = &self.required_during_scheduling_ignored_during_execution {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDuringSchedulingIgnoredDuringExecution", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDuringSchedulingIgnoredDuringExecution", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "requiredDuringSchedulingIgnoredDuringExecution")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

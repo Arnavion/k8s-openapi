@@ -293,6 +293,41 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
                     volumes: value_volumes,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodSpec {
+                    active_deadline_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("active_deadline_seconds"))?,
+                    affinity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("affinity"))?,
+                    automount_service_account_token: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("automount_service_account_token"))?,
+                    containers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("containers"))?,
+                    dns_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dns_config"))?,
+                    dns_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("dns_policy"))?,
+                    enable_service_links: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("enable_service_links"))?,
+                    host_aliases: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_aliases"))?,
+                    host_ipc: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_ipc"))?,
+                    host_network: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_network"))?,
+                    host_pid: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("host_pid"))?,
+                    hostname: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("hostname"))?,
+                    image_pull_secrets: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("image_pull_secrets"))?,
+                    init_containers: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("init_containers"))?,
+                    node_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_name"))?,
+                    node_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("node_selector"))?,
+                    priority: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("priority"))?,
+                    priority_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("priority_class_name"))?,
+                    readiness_gates: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("readiness_gates"))?,
+                    restart_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("restart_policy"))?,
+                    runtime_class_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("runtime_class_name"))?,
+                    scheduler_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scheduler_name"))?,
+                    security_context: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("security_context"))?,
+                    service_account: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_account"))?,
+                    service_account_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_account_name"))?,
+                    share_process_namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("share_process_namespace"))?,
+                    subdomain: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subdomain"))?,
+                    termination_grace_period_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("termination_grace_period_seconds"))?,
+                    tolerations: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tolerations"))?,
+                    volumes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volumes"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -370,92 +405,179 @@ impl serde::Serialize for PodSpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "activeDeadlineSeconds")?;
         }
         if let Some(value) = &self.affinity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "affinity")?;
         }
         if let Some(value) = &self.automount_service_account_token {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "automountServiceAccountToken")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "containers", &self.containers)?;
         if let Some(value) = &self.dns_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsConfig", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsConfig", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "dnsConfig")?;
         }
         if let Some(value) = &self.dns_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "dnsPolicy")?;
         }
         if let Some(value) = &self.enable_service_links {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "enableServiceLinks", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "enableServiceLinks", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "enableServiceLinks")?;
         }
         if let Some(value) = &self.host_aliases {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostAliases")?;
         }
         if let Some(value) = &self.host_ipc {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostIPC")?;
         }
         if let Some(value) = &self.host_network {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostNetwork")?;
         }
         if let Some(value) = &self.host_pid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostPID")?;
         }
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "hostname")?;
         }
         if let Some(value) = &self.image_pull_secrets {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "imagePullSecrets")?;
         }
         if let Some(value) = &self.init_containers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "initContainers")?;
         }
         if let Some(value) = &self.node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeName")?;
         }
         if let Some(value) = &self.node_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "nodeSelector")?;
         }
         if let Some(value) = &self.priority {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "priority", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "priority", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "priority")?;
         }
         if let Some(value) = &self.priority_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "priorityClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "priorityClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "priorityClassName")?;
         }
         if let Some(value) = &self.readiness_gates {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readinessGates")?;
         }
         if let Some(value) = &self.restart_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "restartPolicy")?;
         }
         if let Some(value) = &self.runtime_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runtimeClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runtimeClassName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "runtimeClassName")?;
         }
         if let Some(value) = &self.scheduler_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "schedulerName")?;
         }
         if let Some(value) = &self.security_context {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "securityContext")?;
         }
         if let Some(value) = &self.service_account {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serviceAccount")?;
         }
         if let Some(value) = &self.service_account_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serviceAccountName")?;
         }
         if let Some(value) = &self.share_process_namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "shareProcessNamespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "shareProcessNamespace", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "shareProcessNamespace")?;
         }
         if let Some(value) = &self.subdomain {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subdomain")?;
         }
         if let Some(value) = &self.termination_grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "terminationGracePeriodSeconds")?;
         }
         if let Some(value) = &self.tolerations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tolerations")?;
         }
         if let Some(value) = &self.volumes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumes")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

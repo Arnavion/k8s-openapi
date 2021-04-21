@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for KeyToPath {
                     path: value_path.ok_or_else(|| serde::de::Error::missing_field("path"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(KeyToPath {
+                    key: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("key"))?,
+                    mode: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("mode"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,7 +108,10 @@ impl serde::Serialize for KeyToPath {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         if let Some(value) = &self.mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mode", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "mode")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         serde::ser::SerializeStruct::end(state)

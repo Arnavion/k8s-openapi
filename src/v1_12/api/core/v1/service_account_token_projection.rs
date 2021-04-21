@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for ServiceAccountTokenProjection {
                     path: value_path.ok_or_else(|| serde::de::Error::missing_field("path"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceAccountTokenProjection {
+                    audience: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("audience"))?,
+                    expiration_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("expiration_seconds"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,10 +108,16 @@ impl serde::Serialize for ServiceAccountTokenProjection {
             self.expiration_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.audience {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "audience", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "audience", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "audience")?;
         }
         if let Some(value) = &self.expiration_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "expirationSeconds")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         serde::ser::SerializeStruct::end(state)

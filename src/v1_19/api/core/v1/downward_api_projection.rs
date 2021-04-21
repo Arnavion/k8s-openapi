@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for DownwardAPIProjection {
                     items: value_items,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(DownwardAPIProjection {
+                    items: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("items"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for DownwardAPIProjection {
             self.items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "items")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

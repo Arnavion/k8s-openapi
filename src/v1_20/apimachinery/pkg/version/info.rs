@@ -116,6 +116,20 @@ impl<'de> serde::Deserialize<'de> for Info {
                     platform: value_platform.ok_or_else(|| serde::de::Error::missing_field("platform"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Info {
+                    build_date: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("build_date"))?,
+                    compiler: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("compiler"))?,
+                    git_commit: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("git_commit"))?,
+                    git_tree_state: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("git_tree_state"))?,
+                    git_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("git_version"))?,
+                    go_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("go_version"))?,
+                    major: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("major"))?,
+                    minor: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("minor"))?,
+                    platform: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("platform"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

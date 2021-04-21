@@ -108,6 +108,25 @@ impl<'de> serde::Deserialize<'de> for APIGroup {
                     versions: value_versions.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(APIGroup {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    preferred_version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("preferred_version"))?,
+                    server_address_by_client_cidrs: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("server_address_by_client_cidrs"))?,
+                    versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -137,10 +156,16 @@ impl serde::Serialize for APIGroup {
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.preferred_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preferredVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preferredVersion", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "preferredVersion")?;
         }
         if let Some(value) = &self.server_address_by_client_cidrs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serverAddressByClientCIDRs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serverAddressByClientCIDRs", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serverAddressByClientCIDRs")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;
         serde::ser::SerializeStruct::end(state)

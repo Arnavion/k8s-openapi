@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for VolumeProjection {
                     service_account_token: value_service_account_token,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeProjection {
+                    config_map: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("config_map"))?,
+                    downward_api: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("downward_api"))?,
+                    secret: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("secret"))?,
+                    service_account_token: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service_account_token"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for VolumeProjection {
             self.service_account_token.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "configMap")?;
         }
         if let Some(value) = &self.downward_api {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "downwardAPI")?;
         }
         if let Some(value) = &self.secret {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secret", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secret", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "secret")?;
         }
         if let Some(value) = &self.service_account_token {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountToken", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountToken", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "serviceAccountToken")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

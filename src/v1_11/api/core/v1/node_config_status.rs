@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
                     last_known_good: value_last_known_good,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeConfigStatus {
+                    active: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("active"))?,
+                    assigned: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("assigned"))?,
+                    error: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("error"))?,
+                    last_known_good: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_known_good"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for NodeConfigStatus {
             self.last_known_good.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "active", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "active")?;
         }
         if let Some(value) = &self.assigned {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "assigned", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "assigned", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "assigned")?;
         }
         if let Some(value) = &self.error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "error", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "error")?;
         }
         if let Some(value) = &self.last_known_good {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastKnownGood", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastKnownGood", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastKnownGood")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

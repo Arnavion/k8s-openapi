@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
                     target_value: value_target_value,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ExternalMetricSource {
+                    metric_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metric_name"))?,
+                    metric_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metric_selector"))?,
+                    target_average_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_average_value"))?,
+                    target_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("target_value"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -111,13 +120,22 @@ impl serde::Serialize for ExternalMetricSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.metric_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "metricSelector")?;
         }
         if let Some(value) = &self.target_average_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetAverageValue")?;
         }
         if let Some(value) = &self.target_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetValue", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "targetValue", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "targetValue")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

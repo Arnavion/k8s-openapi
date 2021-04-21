@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
                     observed_generation: value_observed_generation,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HorizontalPodAutoscalerStatus {
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    current_metrics: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_metrics"))?,
+                    current_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_replicas"))?,
+                    desired_replicas: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("desired_replicas"))?,
+                    last_scale_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_scale_time"))?,
+                    observed_generation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("observed_generation"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -131,10 +142,16 @@ impl serde::Serialize for HorizontalPodAutoscalerStatus {
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", &self.current_replicas)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "desiredReplicas", &self.desired_replicas)?;
         if let Some(value) = &self.last_scale_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastScaleTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastScaleTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastScaleTime")?;
         }
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "observedGeneration")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

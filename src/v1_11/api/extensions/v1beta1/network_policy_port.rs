@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPort {
                     protocol: value_protocol,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NetworkPolicyPort {
+                    port: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("port"))?,
+                    protocol: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("protocol"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for NetworkPolicyPort {
             self.protocol.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "port", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "port", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "port")?;
         }
         if let Some(value) = &self.protocol {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "protocol")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

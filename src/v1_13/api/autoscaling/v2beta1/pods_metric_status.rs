@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for PodsMetricStatus {
                     selector: value_selector,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PodsMetricStatus {
+                    current_average_value: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("current_average_value"))?,
+                    metric_name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metric_name"))?,
+                    selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -101,7 +109,10 @@ impl serde::Serialize for PodsMetricStatus {
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", &self.current_average_value)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selector")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

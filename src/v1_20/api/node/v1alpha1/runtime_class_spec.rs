@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for RuntimeClassSpec {
                     scheduling: value_scheduling,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RuntimeClassSpec {
+                    overhead: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("overhead"))?,
+                    runtime_handler: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("runtime_handler"))?,
+                    scheduling: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scheduling"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,11 +108,17 @@ impl serde::Serialize for RuntimeClassSpec {
             self.scheduling.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.overhead {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "overhead")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "runtimeHandler", &self.runtime_handler)?;
         if let Some(value) = &self.scheduling {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scheduling", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scheduling", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "scheduling")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

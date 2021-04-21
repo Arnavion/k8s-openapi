@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionStatus {
                     stored_versions: value_stored_versions,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionStatus {
+                    accepted_names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("accepted_names"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    stored_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("stored_versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for CustomResourceDefinitionStatus {
             self.stored_versions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.accepted_names {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "acceptedNames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "acceptedNames", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "acceptedNames")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.stored_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storedVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storedVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "storedVersions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

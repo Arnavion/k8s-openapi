@@ -109,6 +109,18 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
                     version_priority: value_version_priority.ok_or_else(|| serde::de::Error::missing_field("versionPriority"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(APIServiceSpec {
+                    ca_bundle: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("ca_bundle"))?,
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    group_priority_minimum: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group_priority_minimum"))?,
+                    insecure_skip_tls_verify: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("insecure_skip_tls_verify"))?,
+                    service: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("service"))?,
+                    version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("version"))?,
+                    version_priority: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("version_priority"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -139,20 +151,35 @@ impl serde::Serialize for APIServiceSpec {
             self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ca_bundle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "caBundle")?;
         }
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "group")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "groupPriorityMinimum", &self.group_priority_minimum)?;
         if let Some(value) = &self.insecure_skip_tls_verify {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "insecureSkipTLSVerify", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "insecureSkipTLSVerify", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "insecureSkipTLSVerify")?;
         }
         if let Some(value) = &self.service {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "service", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "service", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "service")?;
         }
         if let Some(value) = &self.version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "version", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "version")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "versionPriority", &self.version_priority)?;
         serde::ser::SerializeStruct::end(state)

@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for Handler {
                     tcp_socket: value_tcp_socket,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Handler {
+                    exec: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("exec"))?,
+                    http_get: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("http_get"))?,
+                    tcp_socket: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("tcp_socket"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for Handler {
             self.tcp_socket.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.exec {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exec", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "exec")?;
         }
         if let Some(value) = &self.http_get {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "httpGet", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "httpGet", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "httpGet")?;
         }
         if let Some(value) = &self.tcp_socket {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tcpSocket", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tcpSocket", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "tcpSocket")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

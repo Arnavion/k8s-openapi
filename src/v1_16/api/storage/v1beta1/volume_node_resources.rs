@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for VolumeNodeResources {
                     count: value_count,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeNodeResources {
+                    count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("count"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for VolumeNodeResources {
             self.count.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "count", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "count")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

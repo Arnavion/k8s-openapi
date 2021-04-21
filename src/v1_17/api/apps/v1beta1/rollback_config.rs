@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for RollbackConfig {
                     revision: value_revision,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(RollbackConfig {
+                    revision: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("revision"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for RollbackConfig {
             self.revision.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.revision {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revision", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revision", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "revision")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

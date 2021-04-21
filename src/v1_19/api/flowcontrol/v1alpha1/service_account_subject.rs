@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for ServiceAccountSubject {
                     namespace: value_namespace.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(ServiceAccountSubject {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

@@ -101,6 +101,17 @@ impl<'de> serde::Deserialize<'de> for CustomResourceColumnDefinition {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceColumnDefinition {
+                    description: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("description"))?,
+                    format: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("format"))?,
+                    json_path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("json_path"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    priority: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("priority"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -128,15 +139,24 @@ impl serde::Serialize for CustomResourceColumnDefinition {
             self.priority.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.description {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "description", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "description")?;
         }
         if let Some(value) = &self.format {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "format", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "format")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "jsonPath", &self.json_path)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.priority {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "priority", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "priority", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "priority")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         serde::ser::SerializeStruct::end(state)

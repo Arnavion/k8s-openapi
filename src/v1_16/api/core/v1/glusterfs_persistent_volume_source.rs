@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
                     read_only: value_read_only,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(GlusterfsPersistentVolumeSource {
+                    endpoints: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("endpoints"))?,
+                    endpoints_namespace: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("endpoints_namespace"))?,
+                    path: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("path"))?,
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,11 +119,17 @@ impl serde::Serialize for GlusterfsPersistentVolumeSource {
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
         if let Some(value) = &self.endpoints_namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "endpointsNamespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "endpointsNamespace", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "endpointsNamespace")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

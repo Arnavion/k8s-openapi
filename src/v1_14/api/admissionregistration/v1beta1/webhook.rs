@@ -147,6 +147,19 @@ impl<'de> serde::Deserialize<'de> for Webhook {
                     timeout_seconds: value_timeout_seconds,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Webhook {
+                    admission_review_versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("admission_review_versions"))?,
+                    client_config: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("client_config"))?,
+                    failure_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("failure_policy"))?,
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    namespace_selector: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("namespace_selector"))?,
+                    rules: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rules"))?,
+                    side_effects: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("side_effects"))?,
+                    timeout_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("timeout_seconds"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -179,24 +192,42 @@ impl serde::Serialize for Webhook {
             self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.admission_review_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "admissionReviewVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "admissionReviewVersions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "admissionReviewVersions")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.failure_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "failurePolicy")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.namespace_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "namespaceSelector")?;
         }
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "rules")?;
         }
         if let Some(value) = &self.side_effects {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sideEffects", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sideEffects", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "sideEffects")?;
         }
         if let Some(value) = &self.timeout_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "timeoutSeconds")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for VolumeError {
                     time: value_time,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(VolumeError {
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("time"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for VolumeError {
             self.time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         if let Some(value) = &self.time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "time", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "time", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "time")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

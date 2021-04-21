@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for IngressClassSpec {
                     parameters: value_parameters,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(IngressClassSpec {
+                    controller: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("controller"))?,
+                    parameters: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("parameters"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,10 +97,16 @@ impl serde::Serialize for IngressClassSpec {
             self.parameters.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.controller {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "controller", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "controller", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "controller")?;
         }
         if let Some(value) = &self.parameters {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "parameters")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

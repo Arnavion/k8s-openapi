@@ -85,6 +85,15 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimStatus {
                     phase: value_phase,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PersistentVolumeClaimStatus {
+                    access_modes: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("access_modes"))?,
+                    capacity: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("capacity"))?,
+                    conditions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("conditions"))?,
+                    phase: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("phase"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -110,16 +119,28 @@ impl serde::Serialize for PersistentVolumeClaimStatus {
             self.phase.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "accessModes")?;
         }
         if let Some(value) = &self.capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "capacity")?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "conditions")?;
         }
         if let Some(value) = &self.phase {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "phase")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

@@ -687,6 +687,36 @@ impl<'de> serde::Deserialize<'de> for Event {
                     type_: value_type_,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(Event {
+                    action: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("action"))?,
+                    count: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("count"))?,
+                    event_time: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("event_time"))?,
+                    first_timestamp: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("first_timestamp"))?,
+                    involved_object: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("involved_object"))?,
+                    last_timestamp: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("last_timestamp"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    metadata: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                    related: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("related"))?,
+                    reporting_component: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reporting_component"))?,
+                    reporting_instance: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reporting_instance"))?,
+                    series: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("series"))?,
+                    source: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("source"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -737,45 +767,84 @@ impl serde::Serialize for Event {
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.action {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "action", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "action")?;
         }
         if let Some(value) = &self.count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "count", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "count")?;
         }
         if let Some(value) = &self.event_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "eventTime")?;
         }
         if let Some(value) = &self.first_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "firstTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "firstTimestamp", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "firstTimestamp")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "involvedObject", &self.involved_object)?;
         if let Some(value) = &self.last_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTimestamp", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "lastTimestamp")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         if let Some(value) = &self.related {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "related", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "related", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "related")?;
         }
         if let Some(value) = &self.reporting_component {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingComponent", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingComponent", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reportingComponent")?;
         }
         if let Some(value) = &self.reporting_instance {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingInstance", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingInstance", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reportingInstance")?;
         }
         if let Some(value) = &self.series {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "series", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "series", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "series")?;
         }
         if let Some(value) = &self.source {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "source", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "source", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "source")?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "type")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

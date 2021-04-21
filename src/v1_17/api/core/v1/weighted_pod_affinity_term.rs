@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for WeightedPodAffinityTerm {
                     weight: value_weight.ok_or_else(|| serde::de::Error::missing_field("weight"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(WeightedPodAffinityTerm {
+                    pod_affinity_term: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_affinity_term"))?,
+                    weight: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("weight"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(

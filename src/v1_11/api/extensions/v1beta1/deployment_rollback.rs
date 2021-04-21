@@ -151,6 +151,24 @@ impl<'de> serde::Deserialize<'de> for DeploymentRollback {
                     updated_annotations: value_updated_annotations,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                let api_version: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?;
+                if api_version != <Self::Value as crate::Resource>::API_VERSION {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                }
+
+                let kind: String = serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("kind"))?;
+                if kind != <Self::Value as crate::Resource>::KIND {
+                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&kind), &<Self::Value as crate::Resource>::KIND));
+                }
+
+                Ok(DeploymentRollback {
+                    name: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    rollback_to: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("rollback_to"))?,
+                    updated_annotations: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("updated_annotations"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -179,7 +197,10 @@ impl serde::Serialize for DeploymentRollback {
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", &self.rollback_to)?;
         if let Some(value) = &self.updated_annotations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedAnnotations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedAnnotations", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "updatedAnnotations")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

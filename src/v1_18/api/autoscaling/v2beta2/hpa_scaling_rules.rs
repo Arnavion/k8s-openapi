@@ -77,6 +77,14 @@ impl<'de> serde::Deserialize<'de> for HPAScalingRules {
                     stabilization_window_seconds: value_stabilization_window_seconds,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(HPAScalingRules {
+                    policies: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("policies"))?,
+                    select_policy: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("select_policy"))?,
+                    stabilization_window_seconds: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("stabilization_window_seconds"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -100,13 +108,22 @@ impl serde::Serialize for HPAScalingRules {
             self.stabilization_window_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.policies {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "policies", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "policies", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "policies")?;
         }
         if let Some(value) = &self.select_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selectPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selectPolicy", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "selectPolicy")?;
         }
         if let Some(value) = &self.stabilization_window_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stabilizationWindowSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stabilizationWindowSeconds", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "stabilizationWindowSeconds")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

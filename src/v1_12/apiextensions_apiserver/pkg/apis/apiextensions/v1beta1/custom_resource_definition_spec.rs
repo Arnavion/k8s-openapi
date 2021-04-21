@@ -117,6 +117,19 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                     versions: value_versions,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(CustomResourceDefinitionSpec {
+                    additional_printer_columns: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("additional_printer_columns"))?,
+                    group: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("group"))?,
+                    names: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("names"))?,
+                    scope: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("scope"))?,
+                    subresources: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("subresources"))?,
+                    validation: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("validation"))?,
+                    version: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("version"))?,
+                    versions: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -148,22 +161,37 @@ impl serde::Serialize for CustomResourceDefinitionSpec {
             self.versions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.additional_printer_columns {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "additionalPrinterColumns")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "scope", &self.scope)?;
         if let Some(value) = &self.subresources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subresources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subresources", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "subresources")?;
         }
         if let Some(value) = &self.validation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "validation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "validation", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "validation")?;
         }
         if let Some(value) = &self.version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "version", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "version")?;
         }
         if let Some(value) = &self.versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "versions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "versions")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

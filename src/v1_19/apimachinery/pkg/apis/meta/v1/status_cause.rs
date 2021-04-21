@@ -81,6 +81,14 @@ impl<'de> serde::Deserialize<'de> for StatusCause {
                     reason: value_reason,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(StatusCause {
+                    field: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("field"))?,
+                    message: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("message"))?,
+                    reason: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("reason"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -104,13 +112,22 @@ impl serde::Serialize for StatusCause {
             self.reason.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.field {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "field", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "field", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "field")?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "message")?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "reason")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

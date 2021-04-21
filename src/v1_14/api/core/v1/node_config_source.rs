@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for NodeConfigSource {
                     config_map: value_config_map,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(NodeConfigSource {
+                    config_map: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("config_map"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for NodeConfigSource {
             self.config_map.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "configMap")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

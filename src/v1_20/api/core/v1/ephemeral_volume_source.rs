@@ -75,6 +75,13 @@ impl<'de> serde::Deserialize<'de> for EphemeralVolumeSource {
                     volume_claim_template: value_volume_claim_template,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(EphemeralVolumeSource {
+                    read_only: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("read_only"))?,
+                    volume_claim_template: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("volume_claim_template"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -96,10 +103,16 @@ impl serde::Serialize for EphemeralVolumeSource {
             self.volume_claim_template.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "readOnly")?;
         }
         if let Some(value) = &self.volume_claim_template {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplate", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplate", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "volumeClaimTemplate")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

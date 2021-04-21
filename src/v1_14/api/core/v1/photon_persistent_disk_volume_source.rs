@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for PhotonPersistentDiskVolumeSource {
                     pd_id: value_pd_id.ok_or_else(|| serde::de::Error::missing_field("pdID"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(PhotonPersistentDiskVolumeSource {
+                    fs_type: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("fs_type"))?,
+                    pd_id: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pd_id"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for PhotonPersistentDiskVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "fsType")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "pdID", &self.pd_id)?;
         serde::ser::SerializeStruct::end(state)

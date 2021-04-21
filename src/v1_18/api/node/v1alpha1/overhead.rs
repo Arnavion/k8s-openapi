@@ -61,6 +61,12 @@ impl<'de> serde::Deserialize<'de> for Overhead {
                     pod_fixed: value_pod_fixed,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(Overhead {
+                    pod_fixed: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("pod_fixed"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -80,7 +86,10 @@ impl serde::Serialize for Overhead {
             self.pod_fixed.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.pod_fixed {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podFixed", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podFixed", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "podFixed")?;
         }
         serde::ser::SerializeStruct::end(state)
     }

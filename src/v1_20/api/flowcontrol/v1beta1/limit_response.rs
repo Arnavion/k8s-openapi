@@ -69,6 +69,13 @@ impl<'de> serde::Deserialize<'de> for LimitResponse {
                     type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {
+                Ok(LimitResponse {
+                    queuing: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("queuing"))?,
+                    type_: serde::de::SeqAccess::next_element(&mut seq)?.ok_or_else(|| serde::de::Error::missing_field("type_"))?,
+                })
+            }
         }
 
         deserializer.deserialize_struct(
@@ -90,7 +97,10 @@ impl serde::Serialize for LimitResponse {
             self.queuing.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.queuing {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "queuing", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "queuing", &Some(value))?;
+        }
+        else {
+            serde::ser::SerializeStruct::skip_field(&mut state, "queuing")?;
         }
         serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         serde::ser::SerializeStruct::end(state)
