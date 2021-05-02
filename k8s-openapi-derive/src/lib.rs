@@ -67,7 +67,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///
 /// - The name of the spec type must end with `Spec`. This suffix is trimmed to generate the names of the other types.
 ///
-/// - The `k8s_openapi` crate must have been added as a dependency, since the macro expansion refers to types from it.
+/// - The `k8s_openapi` and `http` crates must have been added as a dependency, since the macro expansion refers to types from them.
 ///
 /// The custom derive then generates a `FooBar` type that represents a custom resource corresponding to this definition:
 ///
