@@ -25,8 +25,8 @@ pub struct DeleteOptions {
     pub propagation_policy: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for DeleteOptions {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -39,18 +39,18 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "dryRun" => Field::Key_dry_run,
@@ -70,14 +70,14 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeleteOptions;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("DeleteOptions")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
                 let mut value_dry_run: Option<Vec<String>> = None;
                 let mut value_grace_period_seconds: Option<i64> = None;
@@ -86,16 +86,16 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
                 let mut value_preconditions: Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
                 let mut value_propagation_policy: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_dry_run => value_dry_run = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_grace_period_seconds => value_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_orphan_dependents => value_orphan_dependents = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_preconditions => value_preconditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_propagation_policy => value_propagation_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_version => value_api_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dry_run => value_dry_run = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_grace_period_seconds => value_grace_period_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_orphan_dependents => value_orphan_dependents = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_preconditions => value_preconditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_propagation_policy => value_propagation_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -127,8 +127,8 @@ impl<'de> serde::Deserialize<'de> for DeleteOptions {
     }
 }
 
-impl serde::Serialize for DeleteOptions {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for DeleteOptions {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeleteOptions",
             self.api_version.as_ref().map_or(0, |_| 1) +
@@ -140,26 +140,26 @@ impl serde::Serialize for DeleteOptions {
             self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
         if let Some(value) = &self.dry_run {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
         }
         if let Some(value) = &self.grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.orphan_dependents {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
         }
         if let Some(value) = &self.preconditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
         }
         if let Some(value) = &self.propagation_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

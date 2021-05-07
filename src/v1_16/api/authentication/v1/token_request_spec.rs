@@ -13,8 +13,8 @@ pub struct TokenRequestSpec {
     pub expiration_seconds: Option<i64>,
 }
 
-impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_audiences,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "audiences" => Field::Key_audiences,
                             "boundObjectRef" => Field::Key_bound_object_ref,
@@ -50,29 +50,29 @@ impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TokenRequestSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("TokenRequestSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_audiences: Option<Vec<String>> = None;
                 let mut value_bound_object_ref: Option<crate::api::authentication::v1::BoundObjectReference> = None;
                 let mut value_expiration_seconds: Option<i64> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_audiences => value_audiences = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_bound_object_ref => value_bound_object_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_expiration_seconds => value_expiration_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_audiences => value_audiences = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_bound_object_ref => value_bound_object_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_expiration_seconds => value_expiration_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TokenRequestSpec {
-                    audiences: value_audiences.ok_or_else(|| serde::de::Error::missing_field("audiences"))?,
+                    audiences: value_audiences.ok_or_else(|| crate::serde::de::Error::missing_field("audiences"))?,
                     bound_object_ref: value_bound_object_ref,
                     expiration_seconds: value_expiration_seconds,
                 })
@@ -91,21 +91,21 @@ impl<'de> serde::Deserialize<'de> for TokenRequestSpec {
     }
 }
 
-impl serde::Serialize for TokenRequestSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for TokenRequestSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenRequestSpec",
             1 +
             self.bound_object_ref.as_ref().map_or(0, |_| 1) +
             self.expiration_seconds.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", &self.audiences)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", &self.audiences)?;
         if let Some(value) = &self.bound_object_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "boundObjectRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "boundObjectRef", value)?;
         }
         if let Some(value) = &self.expiration_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "expirationSeconds", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

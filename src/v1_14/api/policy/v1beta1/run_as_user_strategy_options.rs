@@ -10,8 +10,8 @@ pub struct RunAsUserStrategyOptions {
     pub rule: String,
 }
 
-impl<'de> serde::Deserialize<'de> for RunAsUserStrategyOptions {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for RunAsUserStrategyOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ranges,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for RunAsUserStrategyOptions {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "ranges" => Field::Key_ranges,
                             "rule" => Field::Key_rule,
@@ -45,28 +45,28 @@ impl<'de> serde::Deserialize<'de> for RunAsUserStrategyOptions {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = RunAsUserStrategyOptions;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("RunAsUserStrategyOptions")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>> = None;
                 let mut value_rule: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ranges => value_ranges = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rule => value_rule = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ranges => value_ranges = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rule => value_rule = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RunAsUserStrategyOptions {
                     ranges: value_ranges,
-                    rule: value_rule.ok_or_else(|| serde::de::Error::missing_field("rule"))?,
+                    rule: value_rule.ok_or_else(|| crate::serde::de::Error::missing_field("rule"))?,
                 })
             }
         }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for RunAsUserStrategyOptions {
     }
 }
 
-impl serde::Serialize for RunAsUserStrategyOptions {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for RunAsUserStrategyOptions {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RunAsUserStrategyOptions",
             1 +
             self.ranges.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ranges {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

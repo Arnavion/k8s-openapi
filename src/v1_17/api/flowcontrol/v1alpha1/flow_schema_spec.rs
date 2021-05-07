@@ -16,8 +16,8 @@ pub struct FlowSchemaSpec {
     pub rules: Option<Vec<crate::api::flowcontrol::v1alpha1::PolicyRulesWithSubjects>>,
 }
 
-impl<'de> serde::Deserialize<'de> for FlowSchemaSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_distinguisher_method,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for FlowSchemaSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "distinguisherMethod" => Field::Key_distinguisher_method,
                             "matchingPrecedence" => Field::Key_matching_precedence,
@@ -55,33 +55,33 @@ impl<'de> serde::Deserialize<'de> for FlowSchemaSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = FlowSchemaSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("FlowSchemaSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_distinguisher_method: Option<crate::api::flowcontrol::v1alpha1::FlowDistinguisherMethod> = None;
                 let mut value_matching_precedence: Option<i32> = None;
                 let mut value_priority_level_configuration: Option<crate::api::flowcontrol::v1alpha1::PriorityLevelConfigurationReference> = None;
                 let mut value_rules: Option<Vec<crate::api::flowcontrol::v1alpha1::PolicyRulesWithSubjects>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_distinguisher_method => value_distinguisher_method = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_matching_precedence => value_matching_precedence = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_priority_level_configuration => value_priority_level_configuration = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_rules => value_rules = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_distinguisher_method => value_distinguisher_method = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_matching_precedence => value_matching_precedence = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_priority_level_configuration => value_priority_level_configuration = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(FlowSchemaSpec {
                     distinguisher_method: value_distinguisher_method,
                     matching_precedence: value_matching_precedence,
-                    priority_level_configuration: value_priority_level_configuration.ok_or_else(|| serde::de::Error::missing_field("priorityLevelConfiguration"))?,
+                    priority_level_configuration: value_priority_level_configuration.ok_or_else(|| crate::serde::de::Error::missing_field("priorityLevelConfiguration"))?,
                     rules: value_rules,
                 })
             }
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for FlowSchemaSpec {
     }
 }
 
-impl serde::Serialize for FlowSchemaSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for FlowSchemaSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlowSchemaSpec",
             1 +
@@ -110,15 +110,15 @@ impl serde::Serialize for FlowSchemaSpec {
             self.rules.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.distinguisher_method {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "distinguisherMethod", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "distinguisherMethod", value)?;
         }
         if let Some(value) = &self.matching_precedence {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchingPrecedence", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchingPrecedence", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "priorityLevelConfiguration", &self.priority_level_configuration)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "priorityLevelConfiguration", &self.priority_level_configuration)?;
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

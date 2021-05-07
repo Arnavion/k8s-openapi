@@ -22,8 +22,8 @@ pub struct VolumeMount {
     pub sub_path_expr: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for VolumeMount {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_mount_path,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for VolumeMount {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "mountPath" => Field::Key_mount_path,
                             "mountPropagation" => Field::Key_mount_propagation,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for VolumeMount {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VolumeMount;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("VolumeMount")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_mount_path: Option<String> = None;
                 let mut value_mount_propagation: Option<String> = None;
                 let mut value_name: Option<String> = None;
@@ -80,22 +80,22 @@ impl<'de> serde::Deserialize<'de> for VolumeMount {
                 let mut value_sub_path: Option<String> = None;
                 let mut value_sub_path_expr: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_mount_path => value_mount_path = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_mount_propagation => value_mount_propagation = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_sub_path => value_sub_path = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_sub_path_expr => value_sub_path_expr = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_mount_path => value_mount_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_mount_propagation => value_mount_propagation = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_sub_path => value_sub_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_sub_path_expr => value_sub_path_expr = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(VolumeMount {
-                    mount_path: value_mount_path.ok_or_else(|| serde::de::Error::missing_field("mountPath"))?,
+                    mount_path: value_mount_path.ok_or_else(|| crate::serde::de::Error::missing_field("mountPath"))?,
                     mount_propagation: value_mount_propagation,
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     read_only: value_read_only,
                     sub_path: value_sub_path,
                     sub_path_expr: value_sub_path_expr,
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for VolumeMount {
     }
 }
 
-impl serde::Serialize for VolumeMount {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for VolumeMount {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeMount",
             2 +
@@ -128,20 +128,20 @@ impl serde::Serialize for VolumeMount {
             self.sub_path.as_ref().map_or(0, |_| 1) +
             self.sub_path_expr.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "mountPath", &self.mount_path)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountPath", &self.mount_path)?;
         if let Some(value) = &self.mount_propagation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "mountPropagation", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountPropagation", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.sub_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subPath", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subPath", value)?;
         }
         if let Some(value) = &self.sub_path_expr {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subPathExpr", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subPathExpr", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

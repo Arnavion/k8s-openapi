@@ -22,8 +22,8 @@ pub struct MetricSpec {
     pub type_: String,
 }
 
-impl<'de> serde::Deserialize<'de> for MetricSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for MetricSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_container_resource,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "containerResource" => Field::Key_container_resource,
                             "external" => Field::Key_external,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = MetricSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("MetricSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_container_resource: Option<crate::api::autoscaling::v2beta1::ContainerResourceMetricSource> = None;
                 let mut value_external: Option<crate::api::autoscaling::v2beta1::ExternalMetricSource> = None;
                 let mut value_object: Option<crate::api::autoscaling::v2beta1::ObjectMetricSource> = None;
@@ -80,15 +80,15 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
                 let mut value_resource: Option<crate::api::autoscaling::v2beta1::ResourceMetricSource> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_container_resource => value_container_resource = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external => value_external = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_object => value_object = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pods => value_pods = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource => value_resource = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_container_resource => value_container_resource = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external => value_external = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_object => value_object = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pods => value_pods = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource => value_resource = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -98,7 +98,7 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
                     object: value_object,
                     pods: value_pods,
                     resource: value_resource,
-                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for MetricSpec {
     }
 }
 
-impl serde::Serialize for MetricSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for MetricSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "MetricSpec",
             1 +
@@ -130,21 +130,21 @@ impl serde::Serialize for MetricSpec {
             self.resource.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerResource", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containerResource", value)?;
         }
         if let Some(value) = &self.external {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "external", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "external", value)?;
         }
         if let Some(value) = &self.object {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "object", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", value)?;
         }
         if let Some(value) = &self.pods {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pods", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "pods", value)?;
         }
         if let Some(value) = &self.resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resource", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resource", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

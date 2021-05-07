@@ -22,8 +22,8 @@ pub struct PodDisruptionBudgetStatus {
     pub observed_generation: Option<i64>,
 }
 
-impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_current_healthy,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "currentHealthy" => Field::Key_current_healthy,
                             "desiredHealthy" => Field::Key_desired_healthy,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodDisruptionBudgetStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("PodDisruptionBudgetStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_current_healthy: Option<i32> = None;
                 let mut value_desired_healthy: Option<i32> = None;
                 let mut value_disrupted_pods: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>> = None;
@@ -80,24 +80,24 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
                 let mut value_expected_pods: Option<i32> = None;
                 let mut value_observed_generation: Option<i64> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_current_healthy => value_current_healthy = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_desired_healthy => value_desired_healthy = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_disrupted_pods => value_disrupted_pods = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_disruptions_allowed => value_disruptions_allowed = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_expected_pods => value_expected_pods = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_observed_generation => value_observed_generation = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_current_healthy => value_current_healthy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_desired_healthy => value_desired_healthy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_disrupted_pods => value_disrupted_pods = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_disruptions_allowed => value_disruptions_allowed = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_expected_pods => value_expected_pods = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PodDisruptionBudgetStatus {
-                    current_healthy: value_current_healthy.ok_or_else(|| serde::de::Error::missing_field("currentHealthy"))?,
-                    desired_healthy: value_desired_healthy.ok_or_else(|| serde::de::Error::missing_field("desiredHealthy"))?,
+                    current_healthy: value_current_healthy.ok_or_else(|| crate::serde::de::Error::missing_field("currentHealthy"))?,
+                    desired_healthy: value_desired_healthy.ok_or_else(|| crate::serde::de::Error::missing_field("desiredHealthy"))?,
                     disrupted_pods: value_disrupted_pods,
-                    disruptions_allowed: value_disruptions_allowed.ok_or_else(|| serde::de::Error::missing_field("disruptionsAllowed"))?,
-                    expected_pods: value_expected_pods.ok_or_else(|| serde::de::Error::missing_field("expectedPods"))?,
+                    disruptions_allowed: value_disruptions_allowed.ok_or_else(|| crate::serde::de::Error::missing_field("disruptionsAllowed"))?,
+                    expected_pods: value_expected_pods.ok_or_else(|| crate::serde::de::Error::missing_field("expectedPods"))?,
                     observed_generation: value_observed_generation,
                 })
             }
@@ -118,24 +118,24 @@ impl<'de> serde::Deserialize<'de> for PodDisruptionBudgetStatus {
     }
 }
 
-impl serde::Serialize for PodDisruptionBudgetStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PodDisruptionBudgetStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDisruptionBudgetStatus",
             4 +
             self.disrupted_pods.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "currentHealthy", &self.current_healthy)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "desiredHealthy", &self.desired_healthy)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentHealthy", &self.current_healthy)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "desiredHealthy", &self.desired_healthy)?;
         if let Some(value) = &self.disrupted_pods {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "disruptedPods", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "disruptedPods", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "disruptionsAllowed", &self.disruptions_allowed)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "expectedPods", &self.expected_pods)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "disruptionsAllowed", &self.disruptions_allowed)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "expectedPods", &self.expected_pods)?;
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

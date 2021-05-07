@@ -16,8 +16,8 @@ pub struct Taint {
     pub value: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for Taint {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Taint {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_effect,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for Taint {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "effect" => Field::Key_effect,
                             "key" => Field::Key_key,
@@ -55,32 +55,32 @@ impl<'de> serde::Deserialize<'de> for Taint {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Taint;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Taint")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_effect: Option<String> = None;
                 let mut value_key: Option<String> = None;
                 let mut value_time_added: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_value: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_effect => value_effect = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_key => value_key = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_time_added => value_time_added = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_value => value_value = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_effect => value_effect = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_key => value_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_time_added => value_time_added = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Taint {
-                    effect: value_effect.ok_or_else(|| serde::de::Error::missing_field("effect"))?,
-                    key: value_key.ok_or_else(|| serde::de::Error::missing_field("key"))?,
+                    effect: value_effect.ok_or_else(|| crate::serde::de::Error::missing_field("effect"))?,
+                    key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
                     time_added: value_time_added,
                     value: value_value,
                 })
@@ -100,22 +100,22 @@ impl<'de> serde::Deserialize<'de> for Taint {
     }
 }
 
-impl serde::Serialize for Taint {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Taint {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Taint",
             2 +
             self.time_added.as_ref().map_or(0, |_| 1) +
             self.value.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "effect", &self.effect)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "effect", &self.effect)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         if let Some(value) = &self.time_added {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "timeAdded", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "timeAdded", value)?;
         }
         if let Some(value) = &self.value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

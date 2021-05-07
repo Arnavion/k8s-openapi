@@ -68,8 +68,8 @@ pub struct ObjectMeta {
     pub uid: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ObjectMeta {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_annotations,
@@ -91,18 +91,18 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "annotations" => Field::Key_annotations,
                             "clusterName" => Field::Key_cluster_name,
@@ -131,14 +131,14 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ObjectMeta;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ObjectMeta")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_cluster_name: Option<String> = None;
                 let mut value_creation_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
@@ -156,25 +156,25 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
                 let mut value_self_link: Option<String> = None;
                 let mut value_uid: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_annotations => value_annotations = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cluster_name => value_cluster_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_creation_timestamp => value_creation_timestamp = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_deletion_grace_period_seconds => value_deletion_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_deletion_timestamp => value_deletion_timestamp = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_finalizers => value_finalizers = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_generate_name => value_generate_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_generation => value_generation = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_labels => value_labels = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_managed_fields => value_managed_fields = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespace => value_namespace = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_owner_references => value_owner_references = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_version => value_resource_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_self_link => value_self_link = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_annotations => value_annotations = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cluster_name => value_cluster_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_creation_timestamp => value_creation_timestamp = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_deletion_grace_period_seconds => value_deletion_grace_period_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_deletion_timestamp => value_deletion_timestamp = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_finalizers => value_finalizers = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_generate_name => value_generate_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_generation => value_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_labels => value_labels = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_managed_fields => value_managed_fields = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespace => value_namespace = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_owner_references => value_owner_references = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_version => value_resource_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_self_link => value_self_link = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -224,8 +224,8 @@ impl<'de> serde::Deserialize<'de> for ObjectMeta {
     }
 }
 
-impl serde::Serialize for ObjectMeta {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ObjectMeta {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
             self.annotations.as_ref().map_or(0, |_| 1) +
@@ -246,53 +246,53 @@ impl serde::Serialize for ObjectMeta {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.annotations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
         }
         if let Some(value) = &self.cluster_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
         }
         if let Some(value) = &self.creation_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", value)?;
         }
         if let Some(value) = &self.deletion_grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.deletion_timestamp {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
         }
         if let Some(value) = &self.finalizers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
         }
         if let Some(value) = &self.generate_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
         }
         if let Some(value) = &self.generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "generation", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "generation", value)?;
         }
         if let Some(value) = &self.labels {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
         }
         if let Some(value) = &self.managed_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", value)?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
         }
         if let Some(value) = &self.owner_references {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
         }
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
         }
         if let Some(value) = &self.self_link {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

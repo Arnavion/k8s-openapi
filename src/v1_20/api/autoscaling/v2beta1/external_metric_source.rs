@@ -16,8 +16,8 @@ pub struct ExternalMetricSource {
     pub target_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
-impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ExternalMetricSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_metric_name,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "metricName" => Field::Key_metric_name,
                             "metricSelector" => Field::Key_metric_selector,
@@ -55,31 +55,31 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ExternalMetricSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ExternalMetricSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_metric_name: Option<String> = None;
                 let mut value_metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_target_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_metric_name => value_metric_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric_selector => value_metric_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_average_value => value_target_average_value = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_value => value_target_value = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metric_name => value_metric_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metric_selector => value_metric_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_average_value => value_target_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_value => value_target_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ExternalMetricSource {
-                    metric_name: value_metric_name.ok_or_else(|| serde::de::Error::missing_field("metricName"))?,
+                    metric_name: value_metric_name.ok_or_else(|| crate::serde::de::Error::missing_field("metricName"))?,
                     metric_selector: value_metric_selector,
                     target_average_value: value_target_average_value,
                     target_value: value_target_value,
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricSource {
     }
 }
 
-impl serde::Serialize for ExternalMetricSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ExternalMetricSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalMetricSource",
             1 +
@@ -109,16 +109,16 @@ impl serde::Serialize for ExternalMetricSource {
             self.target_average_value.as_ref().map_or(0, |_| 1) +
             self.target_value.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.metric_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", value)?;
         }
         if let Some(value) = &self.target_average_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", value)?;
         }
         if let Some(value) = &self.target_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetValue", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetValue", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

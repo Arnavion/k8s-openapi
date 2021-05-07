@@ -6,7 +6,10 @@ pub(crate) fn generate(
 	fields: &[super::Property<'_>],
 	is_watch: bool,
 	operation_feature: Option<&str>,
+	map_namespace: &impl crate::MapNamespace,
 ) -> Result<(), crate::Error> {
+	let local = crate::map_namespace_local_to_string(map_namespace)?;
+
 	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
@@ -39,6 +42,7 @@ pub(crate) fn generate(
 	writeln!(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/query_string_optional.rs")),
+		local = local,
 		type_name = type_name,
 		type_generics_impl = type_generics_impl,
 		type_generics_type = type_generics_type,

@@ -13,8 +13,8 @@ pub struct ResourceFieldSelector {
     pub resource: String,
 }
 
-impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_container_name,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "containerName" => Field::Key_container_name,
                             "divisor" => Field::Key_divisor,
@@ -50,31 +50,31 @@ impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ResourceFieldSelector;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ResourceFieldSelector")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_container_name: Option<String> = None;
                 let mut value_divisor: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_resource: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_container_name => value_container_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_divisor => value_divisor = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource => value_resource = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_container_name => value_container_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_divisor => value_divisor = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource => value_resource = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ResourceFieldSelector {
                     container_name: value_container_name,
                     divisor: value_divisor,
-                    resource: value_resource.ok_or_else(|| serde::de::Error::missing_field("resource"))?,
+                    resource: value_resource.ok_or_else(|| crate::serde::de::Error::missing_field("resource"))?,
                 })
             }
         }
@@ -91,8 +91,8 @@ impl<'de> serde::Deserialize<'de> for ResourceFieldSelector {
     }
 }
 
-impl serde::Serialize for ResourceFieldSelector {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ResourceFieldSelector {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceFieldSelector",
             1 +
@@ -100,12 +100,12 @@ impl serde::Serialize for ResourceFieldSelector {
             self.divisor.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containerName", value)?;
         }
         if let Some(value) = &self.divisor {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "divisor", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "divisor", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &self.resource)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resource", &self.resource)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

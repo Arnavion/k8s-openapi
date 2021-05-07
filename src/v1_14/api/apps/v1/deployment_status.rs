@@ -28,8 +28,8 @@ pub struct DeploymentStatus {
     pub updated_replicas: Option<i32>,
 }
 
-impl<'de> serde::Deserialize<'de> for DeploymentStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for DeploymentStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_available_replicas,
@@ -43,18 +43,18 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "availableReplicas" => Field::Key_available_replicas,
                             "collisionCount" => Field::Key_collision_count,
@@ -75,14 +75,14 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeploymentStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("DeploymentStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_available_replicas: Option<i32> = None;
                 let mut value_collision_count: Option<i32> = None;
                 let mut value_conditions: Option<Vec<crate::api::apps::v1::DeploymentCondition>> = None;
@@ -92,17 +92,17 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
                 let mut value_unavailable_replicas: Option<i32> = None;
                 let mut value_updated_replicas: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_available_replicas => value_available_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_collision_count => value_collision_count = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_observed_generation => value_observed_generation = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ready_replicas => value_ready_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_unavailable_replicas => value_unavailable_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_updated_replicas => value_updated_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_available_replicas => value_available_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_collision_count => value_collision_count = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ready_replicas => value_ready_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_unavailable_replicas => value_unavailable_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_updated_replicas => value_updated_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -136,8 +136,8 @@ impl<'de> serde::Deserialize<'de> for DeploymentStatus {
     }
 }
 
-impl serde::Serialize for DeploymentStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for DeploymentStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeploymentStatus",
             self.available_replicas.as_ref().map_or(0, |_| 1) +
@@ -150,29 +150,29 @@ impl serde::Serialize for DeploymentStatus {
             self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.available_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
         }
         if let Some(value) = &self.collision_count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.observed_generation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
         }
         if let Some(value) = &self.ready_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
         }
         if let Some(value) = &self.unavailable_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "unavailableReplicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "unavailableReplicas", value)?;
         }
         if let Some(value) = &self.updated_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

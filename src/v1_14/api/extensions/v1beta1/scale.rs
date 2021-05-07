@@ -43,7 +43,7 @@ impl Scale {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -52,9 +52,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+        let __request = crate::http::Request::patch(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static(match body {
             crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
@@ -94,7 +94,7 @@ impl Scale {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -103,9 +103,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+        let __request = crate::http::Request::patch(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static(match body {
             crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
@@ -145,7 +145,7 @@ impl Scale {
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -154,9 +154,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+        let __request = crate::http::Request::patch(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static(match body {
             crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
@@ -193,7 +193,7 @@ impl Scale {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedDeploymentScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedDeploymentScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedDeploymentScaleResponse>), crate::RequestError> {
         let ReadNamespacedDeploymentScaleOptional {
             pretty,
         } = optional;
@@ -207,7 +207,7 @@ impl Scale {
         }
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -229,15 +229,15 @@ pub struct ReadNamespacedDeploymentScaleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedDeploymentScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
+            crate::http::StatusCode::OK => {
+                let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
@@ -250,7 +250,7 @@ impl crate::Response for ReadNamespacedDeploymentScaleResponse {
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
@@ -287,7 +287,7 @@ impl Scale {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicaSetScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetScaleResponse>), crate::RequestError> {
         let ReadNamespacedReplicaSetScaleOptional {
             pretty,
         } = optional;
@@ -301,7 +301,7 @@ impl Scale {
         }
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -323,15 +323,15 @@ pub struct ReadNamespacedReplicaSetScaleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
+            crate::http::StatusCode::OK => {
+                let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
@@ -344,7 +344,7 @@ impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
@@ -381,7 +381,7 @@ impl Scale {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicationControllerDummyScaleOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerDummyScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerDummyScaleResponse>), crate::RequestError> {
         let ReadNamespacedReplicationControllerDummyScaleOptional {
             pretty,
         } = optional;
@@ -395,7 +395,7 @@ impl Scale {
         }
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -417,15 +417,15 @@ pub struct ReadNamespacedReplicationControllerDummyScaleOptional<'a> {
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerDummyScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
 impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
+            crate::http::StatusCode::OK => {
+                let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
@@ -438,7 +438,7 @@ impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
@@ -478,7 +478,7 @@ impl Scale {
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
         optional: crate::ReplaceOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -487,9 +487,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::put(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -525,7 +525,7 @@ impl Scale {
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
         optional: crate::ReplaceOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -534,9 +534,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::put(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -572,7 +572,7 @@ impl Scale {
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
         optional: crate::ReplaceOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -581,9 +581,9 @@ impl Scale {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::put(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -612,8 +612,8 @@ impl crate::Metadata for Scale {
     }
 }
 
-impl<'de> serde::Deserialize<'de> for Scale {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Scale {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -624,18 +624,18 @@ impl<'de> serde::Deserialize<'de> for Scale {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -653,41 +653,41 @@ impl<'de> serde::Deserialize<'de> for Scale {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Scale;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_spec: Option<crate::api::extensions::v1beta1::ScaleSpec> = None;
                 let mut value_status: Option<crate::api::extensions::v1beta1::ScaleStatus> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_api_version: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_kind: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_kind != <Self::Value as crate::Resource>::KIND {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_spec => value_spec = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Scale {
-                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                     spec: value_spec,
                     status: value_status,
                 })
@@ -708,23 +708,23 @@ impl<'de> serde::Deserialize<'de> for Scale {
     }
 }
 
-impl serde::Serialize for Scale {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Scale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.spec {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

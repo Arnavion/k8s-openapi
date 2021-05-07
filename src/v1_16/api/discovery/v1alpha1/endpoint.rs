@@ -25,8 +25,8 @@ pub struct Endpoint {
     pub topology: Option<std::collections::BTreeMap<String, String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for Endpoint {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Endpoint {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_addresses,
@@ -37,18 +37,18 @@ impl<'de> serde::Deserialize<'de> for Endpoint {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "addresses" => Field::Key_addresses,
                             "conditions" => Field::Key_conditions,
@@ -66,33 +66,33 @@ impl<'de> serde::Deserialize<'de> for Endpoint {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Endpoint;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Endpoint")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_addresses: Option<Vec<String>> = None;
                 let mut value_conditions: Option<crate::api::discovery::v1alpha1::EndpointConditions> = None;
                 let mut value_hostname: Option<String> = None;
                 let mut value_target_ref: Option<crate::api::core::v1::ObjectReference> = None;
                 let mut value_topology: Option<std::collections::BTreeMap<String, String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_addresses => value_addresses = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_hostname => value_hostname = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_ref => value_target_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_topology => value_topology = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_addresses => value_addresses = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_hostname => value_hostname = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_ref => value_target_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_topology => value_topology = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Endpoint {
-                    addresses: value_addresses.ok_or_else(|| serde::de::Error::missing_field("addresses"))?,
+                    addresses: value_addresses.ok_or_else(|| crate::serde::de::Error::missing_field("addresses"))?,
                     conditions: value_conditions,
                     hostname: value_hostname,
                     target_ref: value_target_ref,
@@ -115,8 +115,8 @@ impl<'de> serde::Deserialize<'de> for Endpoint {
     }
 }
 
-impl serde::Serialize for Endpoint {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Endpoint {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Endpoint",
             1 +
@@ -125,19 +125,19 @@ impl serde::Serialize for Endpoint {
             self.target_ref.as_ref().map_or(0, |_| 1) +
             self.topology.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
         }
         if let Some(value) = &self.target_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
         }
         if let Some(value) = &self.topology {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "topology", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topology", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

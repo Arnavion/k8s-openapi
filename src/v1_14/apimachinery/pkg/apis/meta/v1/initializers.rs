@@ -10,8 +10,8 @@ pub struct Initializers {
     pub result: Option<crate::apimachinery::pkg::apis::meta::v1::Status>,
 }
 
-impl<'de> serde::Deserialize<'de> for Initializers {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Initializers {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_pending,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for Initializers {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "pending" => Field::Key_pending,
                             "result" => Field::Key_result,
@@ -45,27 +45,27 @@ impl<'de> serde::Deserialize<'de> for Initializers {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Initializers;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Initializers")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_pending: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Initializer>> = None;
                 let mut value_result: Option<crate::apimachinery::pkg::apis::meta::v1::Status> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_pending => value_pending = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_result => value_result = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_pending => value_pending = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_result => value_result = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Initializers {
-                    pending: value_pending.ok_or_else(|| serde::de::Error::missing_field("pending"))?,
+                    pending: value_pending.ok_or_else(|| crate::serde::de::Error::missing_field("pending"))?,
                     result: value_result,
                 })
             }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for Initializers {
     }
 }
 
-impl serde::Serialize for Initializers {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Initializers {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Initializers",
             1 +
             self.result.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "pending", &self.pending)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "pending", &self.pending)?;
         if let Some(value) = &self.result {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "result", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "result", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

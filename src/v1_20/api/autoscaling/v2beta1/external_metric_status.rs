@@ -16,8 +16,8 @@ pub struct ExternalMetricStatus {
     pub metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
-impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_current_average_value,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "currentAverageValue" => Field::Key_current_average_value,
                             "currentValue" => Field::Key_current_value,
@@ -55,33 +55,33 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ExternalMetricStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ExternalMetricStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_current_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_current_value: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_metric_name: Option<String> = None;
                 let mut value_metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_current_average_value => value_current_average_value = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_value => value_current_value = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric_name => value_metric_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric_selector => value_metric_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_current_average_value => value_current_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_current_value => value_current_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metric_name => value_metric_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metric_selector => value_metric_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ExternalMetricStatus {
                     current_average_value: value_current_average_value,
-                    current_value: value_current_value.ok_or_else(|| serde::de::Error::missing_field("currentValue"))?,
-                    metric_name: value_metric_name.ok_or_else(|| serde::de::Error::missing_field("metricName"))?,
+                    current_value: value_current_value.ok_or_else(|| crate::serde::de::Error::missing_field("currentValue"))?,
+                    metric_name: value_metric_name.ok_or_else(|| crate::serde::de::Error::missing_field("metricName"))?,
                     metric_selector: value_metric_selector,
                 })
             }
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for ExternalMetricStatus {
     }
 }
 
-impl serde::Serialize for ExternalMetricStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ExternalMetricStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalMetricStatus",
             2 +
@@ -109,13 +109,13 @@ impl serde::Serialize for ExternalMetricStatus {
             self.metric_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_average_value {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "currentValue", &self.current_value)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentValue", &self.current_value)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.metric_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metricSelector", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

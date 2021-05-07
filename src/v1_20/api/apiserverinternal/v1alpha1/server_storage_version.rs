@@ -13,8 +13,8 @@ pub struct ServerStorageVersion {
     pub encoding_version: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ServerStorageVersion {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_server_id,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for ServerStorageVersion {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiServerID" => Field::Key_api_server_id,
                             "decodableVersions" => Field::Key_decodable_versions,
@@ -50,24 +50,24 @@ impl<'de> serde::Deserialize<'de> for ServerStorageVersion {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ServerStorageVersion;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ServerStorageVersion")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_api_server_id: Option<String> = None;
                 let mut value_decodable_versions: Option<Vec<String>> = None;
                 let mut value_encoding_version: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_server_id => value_api_server_id = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_decodable_versions => value_decodable_versions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_encoding_version => value_encoding_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_server_id => value_api_server_id = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_decodable_versions => value_decodable_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_encoding_version => value_encoding_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -91,8 +91,8 @@ impl<'de> serde::Deserialize<'de> for ServerStorageVersion {
     }
 }
 
-impl serde::Serialize for ServerStorageVersion {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ServerStorageVersion {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServerStorageVersion",
             self.api_server_id.as_ref().map_or(0, |_| 1) +
@@ -100,14 +100,14 @@ impl serde::Serialize for ServerStorageVersion {
             self.encoding_version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_server_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiServerID", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiServerID", value)?;
         }
         if let Some(value) = &self.decodable_versions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", value)?;
         }
         if let Some(value) = &self.encoding_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "encodingVersion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "encodingVersion", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

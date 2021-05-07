@@ -13,8 +13,8 @@ pub struct ConfigMapKeySelector {
     pub optional: Option<bool>,
 }
 
-impl<'de> serde::Deserialize<'de> for ConfigMapKeySelector {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ConfigMapKeySelector {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_key,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for ConfigMapKeySelector {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "key" => Field::Key_key,
                             "name" => Field::Key_name,
@@ -50,29 +50,29 @@ impl<'de> serde::Deserialize<'de> for ConfigMapKeySelector {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ConfigMapKeySelector;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ConfigMapKeySelector")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_key: Option<String> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_optional: Option<bool> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_key => value_key = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_optional => value_optional = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_key => value_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_optional => value_optional = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ConfigMapKeySelector {
-                    key: value_key.ok_or_else(|| serde::de::Error::missing_field("key"))?,
+                    key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
                     name: value_name,
                     optional: value_optional,
                 })
@@ -91,21 +91,21 @@ impl<'de> serde::Deserialize<'de> for ConfigMapKeySelector {
     }
 }
 
-impl serde::Serialize for ConfigMapKeySelector {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ConfigMapKeySelector {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ConfigMapKeySelector",
             1 +
             self.name.as_ref().map_or(0, |_| 1) +
             self.optional.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.optional {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

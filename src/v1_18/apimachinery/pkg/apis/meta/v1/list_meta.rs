@@ -18,8 +18,8 @@ pub struct ListMeta {
     pub self_link: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ListMeta {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ListMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_continue_,
@@ -29,18 +29,18 @@ impl<'de> serde::Deserialize<'de> for ListMeta {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "continue" => Field::Key_continue_,
                             "remainingItemCount" => Field::Key_remaining_item_count,
@@ -57,26 +57,26 @@ impl<'de> serde::Deserialize<'de> for ListMeta {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ListMeta;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ListMeta")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_continue_: Option<String> = None;
                 let mut value_remaining_item_count: Option<i64> = None;
                 let mut value_resource_version: Option<String> = None;
                 let mut value_self_link: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_continue_ => value_continue_ = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_remaining_item_count => value_remaining_item_count = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_version => value_resource_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_self_link => value_self_link = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_continue_ => value_continue_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_remaining_item_count => value_remaining_item_count = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_version => value_resource_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_self_link => value_self_link = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -102,8 +102,8 @@ impl<'de> serde::Deserialize<'de> for ListMeta {
     }
 }
 
-impl serde::Serialize for ListMeta {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ListMeta {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ListMeta",
             self.continue_.as_ref().map_or(0, |_| 1) +
@@ -112,17 +112,17 @@ impl serde::Serialize for ListMeta {
             self.self_link.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.continue_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "continue", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "continue", value)?;
         }
         if let Some(value) = &self.remaining_item_count {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "remainingItemCount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "remainingItemCount", value)?;
         }
         if let Some(value) = &self.resource_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
         }
         if let Some(value) = &self.self_link {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

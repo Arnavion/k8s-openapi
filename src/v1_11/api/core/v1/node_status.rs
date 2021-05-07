@@ -37,8 +37,8 @@ pub struct NodeStatus {
     pub volumes_in_use: Option<Vec<String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for NodeStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_addresses,
@@ -55,18 +55,18 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "addresses" => Field::Key_addresses,
                             "allocatable" => Field::Key_allocatable,
@@ -90,14 +90,14 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NodeStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NodeStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_addresses: Option<Vec<crate::api::core::v1::NodeAddress>> = None;
                 let mut value_allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
                 let mut value_capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
@@ -110,20 +110,20 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
                 let mut value_volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>> = None;
                 let mut value_volumes_in_use: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_addresses => value_addresses = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allocatable => value_allocatable = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_capacity => value_capacity = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_config => value_config = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_daemon_endpoints => value_daemon_endpoints = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_images => value_images = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_info => value_node_info = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_phase => value_phase = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volumes_attached => value_volumes_attached = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volumes_in_use => value_volumes_in_use = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_addresses => value_addresses = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allocatable => value_allocatable = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_capacity => value_capacity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_config => value_config = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_daemon_endpoints => value_daemon_endpoints = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_images => value_images = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_info => value_node_info = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_phase => value_phase = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volumes_attached => value_volumes_attached = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volumes_in_use => value_volumes_in_use = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -163,8 +163,8 @@ impl<'de> serde::Deserialize<'de> for NodeStatus {
     }
 }
 
-impl serde::Serialize for NodeStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NodeStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeStatus",
             self.addresses.as_ref().map_or(0, |_| 1) +
@@ -180,38 +180,38 @@ impl serde::Serialize for NodeStatus {
             self.volumes_in_use.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
         }
         if let Some(value) = &self.allocatable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
         }
         if let Some(value) = &self.capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "config", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "config", value)?;
         }
         if let Some(value) = &self.daemon_endpoints {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "daemonEndpoints", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "daemonEndpoints", value)?;
         }
         if let Some(value) = &self.images {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "images", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "images", value)?;
         }
         if let Some(value) = &self.node_info {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeInfo", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeInfo", value)?;
         }
         if let Some(value) = &self.phase {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
         }
         if let Some(value) = &self.volumes_attached {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", value)?;
         }
         if let Some(value) = &self.volumes_in_use {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

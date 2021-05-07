@@ -13,8 +13,8 @@ pub struct HPAScalingPolicy {
     pub value: i32,
 }
 
-impl<'de> serde::Deserialize<'de> for HPAScalingPolicy {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for HPAScalingPolicy {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_period_seconds,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for HPAScalingPolicy {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "periodSeconds" => Field::Key_period_seconds,
                             "type" => Field::Key_type_,
@@ -50,31 +50,31 @@ impl<'de> serde::Deserialize<'de> for HPAScalingPolicy {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HPAScalingPolicy;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("HPAScalingPolicy")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_period_seconds: Option<i32> = None;
                 let mut value_type_: Option<String> = None;
                 let mut value_value: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_period_seconds => value_period_seconds = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_value => value_value = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_period_seconds => value_period_seconds = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_value => value_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(HPAScalingPolicy {
-                    period_seconds: value_period_seconds.ok_or_else(|| serde::de::Error::missing_field("periodSeconds"))?,
-                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
-                    value: value_value.ok_or_else(|| serde::de::Error::missing_field("value"))?,
+                    period_seconds: value_period_seconds.ok_or_else(|| crate::serde::de::Error::missing_field("periodSeconds"))?,
+                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    value: value_value.ok_or_else(|| crate::serde::de::Error::missing_field("value"))?,
                 })
             }
         }
@@ -91,15 +91,15 @@ impl<'de> serde::Deserialize<'de> for HPAScalingPolicy {
     }
 }
 
-impl serde::Serialize for HPAScalingPolicy {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for HPAScalingPolicy {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HPAScalingPolicy",
             3,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "periodSeconds", &self.period_seconds)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "periodSeconds", &self.period_seconds)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

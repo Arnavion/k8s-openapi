@@ -90,9 +90,9 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ...
 /// }
 ///
-/// impl<'de> serde_derive::Deserialize<'de> for FooBar { ... }
+/// impl<'de> k8s_openapi::serde::Deserialize<'de> for FooBar { ... }
 ///
-/// impl serde_derive::Serialize for FooBar { ... }
+/// impl k8s_openapi::serde::Serialize for FooBar { ... }
 /// ```
 ///
 /// The name of this type is automatically derived from the name of the spec type by truncating the `Spec` suffix.
@@ -108,7 +108,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// You would then register this custom resource definition with Kubernetes, with code like this:
 ///
 /// ```rust,ignore
-/// use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+/// use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
 /// use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 ///
 /// // Same as the `plurals` meta item in the `#[custom_resource_definition]` attribute
@@ -156,8 +156,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::CreateResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::CreateResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -171,8 +171,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -186,8 +186,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<k8s_openapi::List<Self>>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::DeleteResponse<k8s_openapi::List<Self>>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -200,8 +200,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ListResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ListResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -216,8 +216,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -232,8 +232,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::PatchResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -243,13 +243,25 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     fn read_namespaced_foo_bar(
 ///         name: &str,
 ///         namespace: &str,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarResponse>), k8s_openapi::RequestError> { ... }
+///     ) -> Result<
+///         (
+///             k8s_openapi::http::Request<Vec<u8>>,
+///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarResponse>
+///         ),
+///         k8s_openapi::RequestError,
+///     > { ... }
 ///
 ///     /// Read status of the specified FooBar
 ///     fn read_namespaced_foo_bar_status(
 ///         name: &str,
 ///         namespace: &str,
-///     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarStatusResponse>), k8s_openapi::RequestError> { ... }
+///     ) -> Result<
+///         (
+///             k8s_openapi::http::Request<Vec<u8>>,
+///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarStatusResponse>
+///         ),
+///         k8s_openapi::RequestError,
+///     > { ... }
 ///
 ///     /// Replace the specified FooBar
 ///     fn replace_namespaced_foo_bar(
@@ -260,8 +272,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ReplaceResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ReplaceResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -276,8 +288,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ReplaceResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::ReplaceResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >
@@ -290,8 +302,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     ) ->
 ///         Result<
 ///             (
-///                 http::Request<Vec<u8>>,
-///                 fn(http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::WatchResponse<Self>>
+///                 k8s_openapi::http::Request<Vec<u8>>,
+///                 fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<k8s_openapi::WatchResponse<Self>>
 ///             ),
 ///             k8s_openapi::RequestError,
 ///         >

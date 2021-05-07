@@ -22,8 +22,8 @@ pub struct CustomResourceDefinitionSpec {
     pub versions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>,
 }
 
-impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_conversion,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "conversion" => Field::Key_conversion,
                             "group" => Field::Key_group,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CustomResourceDefinitionSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CustomResourceDefinitionSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_conversion: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion> = None;
                 let mut value_group: Option<String> = None;
                 let mut value_names: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames> = None;
@@ -80,25 +80,25 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                 let mut value_scope: Option<String> = None;
                 let mut value_versions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_conversion => value_conversion = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group => value_group = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_names => value_names = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_preserve_unknown_fields => value_preserve_unknown_fields = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scope => value_scope = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_versions => value_versions = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_conversion => value_conversion = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_group => value_group = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_names => value_names = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_preserve_unknown_fields => value_preserve_unknown_fields = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scope => value_scope = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_versions => value_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceDefinitionSpec {
                     conversion: value_conversion,
-                    group: value_group.ok_or_else(|| serde::de::Error::missing_field("group"))?,
-                    names: value_names.ok_or_else(|| serde::de::Error::missing_field("names"))?,
+                    group: value_group.ok_or_else(|| crate::serde::de::Error::missing_field("group"))?,
+                    names: value_names.ok_or_else(|| crate::serde::de::Error::missing_field("names"))?,
                     preserve_unknown_fields: value_preserve_unknown_fields,
-                    scope: value_scope.ok_or_else(|| serde::de::Error::missing_field("scope"))?,
-                    versions: value_versions.ok_or_else(|| serde::de::Error::missing_field("versions"))?,
+                    scope: value_scope.ok_or_else(|| crate::serde::de::Error::missing_field("scope"))?,
+                    versions: value_versions.ok_or_else(|| crate::serde::de::Error::missing_field("versions"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionSpec {
     }
 }
 
-impl serde::Serialize for CustomResourceDefinitionSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CustomResourceDefinitionSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionSpec",
             4 +
@@ -127,15 +127,15 @@ impl serde::Serialize for CustomResourceDefinitionSpec {
             self.preserve_unknown_fields.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conversion {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conversion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conversion", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         if let Some(value) = &self.preserve_unknown_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preserveUnknownFields", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preserveUnknownFields", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "scope", &self.scope)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scope", &self.scope)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

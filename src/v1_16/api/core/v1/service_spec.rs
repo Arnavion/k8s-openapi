@@ -46,8 +46,8 @@ pub struct ServiceSpec {
     pub type_: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ServiceSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_cluster_ip,
@@ -67,18 +67,18 @@ impl<'de> serde::Deserialize<'de> for ServiceSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "clusterIP" => Field::Key_cluster_ip,
                             "externalIPs" => Field::Key_external_ips,
@@ -105,14 +105,14 @@ impl<'de> serde::Deserialize<'de> for ServiceSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ServiceSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ServiceSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_cluster_ip: Option<String> = None;
                 let mut value_external_ips: Option<Vec<String>> = None;
                 let mut value_external_name: Option<String> = None;
@@ -128,23 +128,23 @@ impl<'de> serde::Deserialize<'de> for ServiceSpec {
                 let mut value_session_affinity_config: Option<crate::api::core::v1::SessionAffinityConfig> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_cluster_ip => value_cluster_ip = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_ips => value_external_ips = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_name => value_external_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_traffic_policy => value_external_traffic_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_health_check_node_port => value_health_check_node_port = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ip_family => value_ip_family = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_load_balancer_ip => value_load_balancer_ip = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_load_balancer_source_ranges => value_load_balancer_source_ranges = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_publish_not_ready_addresses => value_publish_not_ready_addresses = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_session_affinity => value_session_affinity = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_session_affinity_config => value_session_affinity_config = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_cluster_ip => value_cluster_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_ips => value_external_ips = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_name => value_external_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_traffic_policy => value_external_traffic_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_health_check_node_port => value_health_check_node_port = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ip_family => value_ip_family = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_load_balancer_ip => value_load_balancer_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_load_balancer_source_ranges => value_load_balancer_source_ranges = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ports => value_ports = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_publish_not_ready_addresses => value_publish_not_ready_addresses = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_session_affinity => value_session_affinity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_session_affinity_config => value_session_affinity_config = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -190,8 +190,8 @@ impl<'de> serde::Deserialize<'de> for ServiceSpec {
     }
 }
 
-impl serde::Serialize for ServiceSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ServiceSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceSpec",
             self.cluster_ip.as_ref().map_or(0, |_| 1) +
@@ -210,47 +210,47 @@ impl serde::Serialize for ServiceSpec {
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
         }
         if let Some(value) = &self.external_ips {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
         }
         if let Some(value) = &self.external_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
         }
         if let Some(value) = &self.external_traffic_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", value)?;
         }
         if let Some(value) = &self.health_check_node_port {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", value)?;
         }
         if let Some(value) = &self.ip_family {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ipFamily", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ipFamily", value)?;
         }
         if let Some(value) = &self.load_balancer_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
         }
         if let Some(value) = &self.load_balancer_source_ranges {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
         }
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
         if let Some(value) = &self.publish_not_ready_addresses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "publishNotReadyAddresses", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "publishNotReadyAddresses", value)?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
         if let Some(value) = &self.session_affinity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;
         }
         if let Some(value) = &self.session_affinity_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinityConfig", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinityConfig", value)?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

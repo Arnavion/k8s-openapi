@@ -16,8 +16,8 @@ pub struct HorizontalPodAutoscalerSpec {
     pub scale_target_ref: crate::api::autoscaling::v2beta2::CrossVersionObjectReference,
 }
 
-impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_max_replicas,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "maxReplicas" => Field::Key_max_replicas,
                             "metrics" => Field::Key_metrics,
@@ -55,34 +55,34 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HorizontalPodAutoscalerSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("HorizontalPodAutoscalerSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_max_replicas: Option<i32> = None;
                 let mut value_metrics: Option<Vec<crate::api::autoscaling::v2beta2::MetricSpec>> = None;
                 let mut value_min_replicas: Option<i32> = None;
                 let mut value_scale_target_ref: Option<crate::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_max_replicas => value_max_replicas = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metrics => value_metrics = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_replicas => value_min_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scale_target_ref => value_scale_target_ref = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_max_replicas => value_max_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metrics => value_metrics = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_replicas => value_min_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scale_target_ref => value_scale_target_ref = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(HorizontalPodAutoscalerSpec {
-                    max_replicas: value_max_replicas.ok_or_else(|| serde::de::Error::missing_field("maxReplicas"))?,
+                    max_replicas: value_max_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("maxReplicas"))?,
                     metrics: value_metrics,
                     min_replicas: value_min_replicas,
-                    scale_target_ref: value_scale_target_ref.ok_or_else(|| serde::de::Error::missing_field("scaleTargetRef"))?,
+                    scale_target_ref: value_scale_target_ref.ok_or_else(|| crate::serde::de::Error::missing_field("scaleTargetRef"))?,
                 })
             }
         }
@@ -100,22 +100,22 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     }
 }
 
-impl serde::Serialize for HorizontalPodAutoscalerSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for HorizontalPodAutoscalerSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerSpec",
             2 +
             self.metrics.as_ref().map_or(0, |_| 1) +
             self.min_replicas.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;
         if let Some(value) = &self.metrics {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", value)?;
         }
         if let Some(value) = &self.min_replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minReplicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minReplicas", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "scaleTargetRef", &self.scale_target_ref)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scaleTargetRef", &self.scale_target_ref)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

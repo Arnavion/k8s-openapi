@@ -36,15 +36,15 @@ impl PriorityClass {
     pub fn create_priority_class(
         body: &crate::api::scheduling::v1alpha1::PriorityClass,
         optional: crate::CreateOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
         let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::post(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::post(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -72,15 +72,15 @@ impl PriorityClass {
     pub fn delete_collection_priority_class(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
         let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         list_optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::delete(__url);
-        let __body = serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::delete(__url);
+        let __body = crate::serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -108,14 +108,14 @@ impl PriorityClass {
     pub fn delete_priority_class(
         name: &str,
         optional: crate::DeleteOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
 
-        let __request = http::Request::delete(__url);
-        let __body = serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::delete(__url);
+        let __body = crate::serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -140,13 +140,13 @@ impl PriorityClass {
     #[cfg(feature = "api")]
     pub fn list_priority_class(
         optional: crate::ListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -178,7 +178,7 @@ impl PriorityClass {
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::PatchResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -186,9 +186,9 @@ impl PriorityClass {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::patch(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match body {
+        let __request = crate::http::Request::patch(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static(match body {
             crate::apimachinery::pkg::apis::meta::v1::Patch::Json(_) => "application/json-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::Merge(_) => "application/merge-patch+json",
             crate::apimachinery::pkg::apis::meta::v1::Patch::StrategicMerge(_) => "application/strategic-merge-patch+json",
@@ -220,7 +220,7 @@ impl PriorityClass {
     pub fn read_priority_class(
         name: &str,
         optional: ReadPriorityClassOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadPriorityClassResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPriorityClassResponse>), crate::RequestError> {
         let ReadPriorityClassOptional {
             exact,
             export,
@@ -241,7 +241,7 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -267,15 +267,15 @@ pub struct ReadPriorityClassOptional<'a> {
 #[derive(Debug)]
 pub enum ReadPriorityClassResponse {
     Ok(crate::api::scheduling::v1alpha1::PriorityClass),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
 impl crate::Response for ReadPriorityClassResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            http::StatusCode::OK => {
-                let result = match serde_json::from_slice(buf) {
+            crate::http::StatusCode::OK => {
+                let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
@@ -288,7 +288,7 @@ impl crate::Response for ReadPriorityClassResponse {
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
@@ -323,7 +323,7 @@ impl PriorityClass {
         name: &str,
         body: &crate::api::scheduling::v1alpha1::PriorityClass,
         optional: crate::ReplaceOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ReplaceResponse<Self>>), crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
@@ -331,9 +331,9 @@ impl PriorityClass {
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::put(__url);
-        let __body = serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));
+        let __request = crate::http::Request::put(__url);
+        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
+        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
             Err(err) => Err(crate::RequestError::Http(err)),
@@ -358,13 +358,13 @@ impl PriorityClass {
     #[cfg(feature = "api")]
     pub fn watch_priority_class(
         optional: crate::WatchOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_owned();
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         optional.__serialize(&mut __query_pairs);
         let __url = __query_pairs.finish();
 
-        let __request = http::Request::get(__url);
+        let __request = crate::http::Request::get(__url);
         let __body = vec![];
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -398,8 +398,8 @@ impl crate::Metadata for PriorityClass {
     }
 }
 
-impl<'de> serde::Deserialize<'de> for PriorityClass {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PriorityClass {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -411,18 +411,18 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -441,46 +441,46 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PriorityClass;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_description: Option<String> = None;
                 let mut value_global_default: Option<bool> = None;
                 let mut value_metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_value: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_api_version: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_kind: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_kind != <Self::Value as crate::Resource>::KIND {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_description => value_description = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_global_default => value_global_default = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_value => value_value = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_description => value_description = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_global_default => value_global_default = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_value => value_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PriorityClass {
                     description: value_description,
                     global_default: value_global_default,
-                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
-                    value: value_value.ok_or_else(|| serde::de::Error::missing_field("value"))?,
+                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    value: value_value.ok_or_else(|| crate::serde::de::Error::missing_field("value"))?,
                 })
             }
         }
@@ -500,24 +500,24 @@ impl<'de> serde::Deserialize<'de> for PriorityClass {
     }
 }
 
-impl serde::Serialize for PriorityClass {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PriorityClass {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             4 +
             self.description.as_ref().map_or(0, |_| 1) +
             self.global_default.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.description {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }
         if let Some(value) = &self.global_default {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "globalDefault", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "globalDefault", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

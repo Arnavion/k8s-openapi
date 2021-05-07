@@ -133,8 +133,8 @@ pub struct JSONSchemaProps {
     pub x_kubernetes_preserve_unknown_fields: Option<bool>,
 }
 
-impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ref_path,
@@ -183,18 +183,18 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "$ref" => Field::Key_ref_path,
                             "$schema" => Field::Key_schema,
@@ -250,14 +250,14 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = JSONSchemaProps;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("JSONSchemaProps")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_ref_path: Option<String> = None;
                 let mut value_schema: Option<String> = None;
                 let mut value_additional_items: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrBool> = None;
@@ -302,52 +302,52 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
                 let mut value_x_kubernetes_map_type: Option<String> = None;
                 let mut value_x_kubernetes_preserve_unknown_fields: Option<bool> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ref_path => value_ref_path = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_schema => value_schema = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_additional_items => value_additional_items = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_additional_properties => value_additional_properties = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_all_of => value_all_of = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_any_of => value_any_of = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_default => value_default = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_definitions => value_definitions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_dependencies => value_dependencies = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_description => value_description = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_enum_ => value_enum_ = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_example => value_example = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_exclusive_maximum => value_exclusive_maximum = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_exclusive_minimum => value_exclusive_minimum = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_docs => value_external_docs = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_format => value_format = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_id => value_id = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_items => value_items = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_items => value_max_items = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_length => value_max_length = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_properties => value_max_properties = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_maximum => value_maximum = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_items => value_min_items = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_length => value_min_length = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_properties => value_min_properties = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_minimum => value_minimum = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_multiple_of => value_multiple_of = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_not => value_not = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_nullable => value_nullable = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_one_of => value_one_of = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pattern => value_pattern = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pattern_properties => value_pattern_properties = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_properties => value_properties = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_required => value_required = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_title => value_title = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_unique_items => value_unique_items = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_embedded_resource => value_x_kubernetes_embedded_resource = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_int_or_string => value_x_kubernetes_int_or_string = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_list_map_keys => value_x_kubernetes_list_map_keys = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_list_type => value_x_kubernetes_list_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_map_type => value_x_kubernetes_map_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_x_kubernetes_preserve_unknown_fields => value_x_kubernetes_preserve_unknown_fields = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ref_path => value_ref_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_schema => value_schema = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_additional_items => value_additional_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_additional_properties => value_additional_properties = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_all_of => value_all_of = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_any_of => value_any_of = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_default => value_default = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_definitions => value_definitions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dependencies => value_dependencies = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_description => value_description = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_enum_ => value_enum_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_example => value_example = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_exclusive_maximum => value_exclusive_maximum = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_exclusive_minimum => value_exclusive_minimum = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_docs => value_external_docs = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_format => value_format = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_id => value_id = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_items => value_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_items => value_max_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_length => value_max_length = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_properties => value_max_properties = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_maximum => value_maximum = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_items => value_min_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_length => value_min_length = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_properties => value_min_properties = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_minimum => value_minimum = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_multiple_of => value_multiple_of = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_not => value_not = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_nullable => value_nullable = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_one_of => value_one_of = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pattern => value_pattern = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pattern_properties => value_pattern_properties = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_properties => value_properties = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_required => value_required = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_title => value_title = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_unique_items => value_unique_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_embedded_resource => value_x_kubernetes_embedded_resource = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_int_or_string => value_x_kubernetes_int_or_string = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_list_map_keys => value_x_kubernetes_list_map_keys = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_list_type => value_x_kubernetes_list_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_map_type => value_x_kubernetes_map_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_x_kubernetes_preserve_unknown_fields => value_x_kubernetes_preserve_unknown_fields = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -451,8 +451,8 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
     }
 }
 
-impl serde::Serialize for JSONSchemaProps {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for JSONSchemaProps {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JSONSchemaProps",
             self.ref_path.as_ref().map_or(0, |_| 1) +
@@ -500,134 +500,134 @@ impl serde::Serialize for JSONSchemaProps {
             self.x_kubernetes_preserve_unknown_fields.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ref_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
         }
         if let Some(value) = &self.schema {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", value)?;
         }
         if let Some(value) = &self.additional_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", value)?;
         }
         if let Some(value) = &self.additional_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
         }
         if let Some(value) = &self.all_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
         }
         if let Some(value) = &self.any_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
         }
         if let Some(value) = &self.default {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
         }
         if let Some(value) = &self.definitions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
         }
         if let Some(value) = &self.dependencies {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
         }
         if let Some(value) = &self.description {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }
         if let Some(value) = &self.enum_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
         }
         if let Some(value) = &self.example {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
         }
         if let Some(value) = &self.exclusive_maximum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", value)?;
         }
         if let Some(value) = &self.exclusive_minimum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", value)?;
         }
         if let Some(value) = &self.external_docs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", value)?;
         }
         if let Some(value) = &self.format {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
         }
         if let Some(value) = &self.id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "id", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "id", value)?;
         }
         if let Some(value) = &self.items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
         if let Some(value) = &self.max_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", value)?;
         }
         if let Some(value) = &self.max_length {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", value)?;
         }
         if let Some(value) = &self.max_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", value)?;
         }
         if let Some(value) = &self.maximum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", value)?;
         }
         if let Some(value) = &self.min_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", value)?;
         }
         if let Some(value) = &self.min_length {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", value)?;
         }
         if let Some(value) = &self.min_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", value)?;
         }
         if let Some(value) = &self.minimum {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", value)?;
         }
         if let Some(value) = &self.multiple_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", value)?;
         }
         if let Some(value) = &self.not {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "not", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "not", value)?;
         }
         if let Some(value) = &self.nullable {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nullable", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nullable", value)?;
         }
         if let Some(value) = &self.one_of {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
         }
         if let Some(value) = &self.pattern {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
         }
         if let Some(value) = &self.pattern_properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
         }
         if let Some(value) = &self.properties {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
         }
         if let Some(value) = &self.required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
         }
         if let Some(value) = &self.title {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
         if let Some(value) = &self.unique_items {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", value)?;
         }
         if let Some(value) = &self.x_kubernetes_embedded_resource {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-embedded-resource", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-embedded-resource", value)?;
         }
         if let Some(value) = &self.x_kubernetes_int_or_string {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-int-or-string", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-int-or-string", value)?;
         }
         if let Some(value) = &self.x_kubernetes_list_map_keys {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-map-keys", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-map-keys", value)?;
         }
         if let Some(value) = &self.x_kubernetes_list_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-type", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-type", value)?;
         }
         if let Some(value) = &self.x_kubernetes_map_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-map-type", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-map-type", value)?;
         }
         if let Some(value) = &self.x_kubernetes_preserve_unknown_fields {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-preserve-unknown-fields", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-preserve-unknown-fields", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

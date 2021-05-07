@@ -28,8 +28,8 @@ pub struct StatefulSetSpec {
     pub volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>,
 }
 
-impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_pod_management_policy,
@@ -43,18 +43,18 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "podManagementPolicy" => Field::Key_pod_management_policy,
                             "replicas" => Field::Key_replicas,
@@ -75,14 +75,14 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = StatefulSetSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("StatefulSetSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_pod_management_policy: Option<String> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
@@ -92,17 +92,17 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
                 let mut value_update_strategy: Option<crate::api::apps::v1beta1::StatefulSetUpdateStrategy> = None;
                 let mut value_volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_pod_management_policy => value_pod_management_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_revision_history_limit => value_revision_history_limit = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service_name => value_service_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_template => value_template = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_update_strategy => value_update_strategy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_claim_templates => value_volume_claim_templates = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_pod_management_policy => value_pod_management_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_revision_history_limit => value_revision_history_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_name => value_service_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_template => value_template = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_update_strategy => value_update_strategy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_claim_templates => value_volume_claim_templates = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -111,8 +111,8 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
                     replicas: value_replicas,
                     revision_history_limit: value_revision_history_limit,
                     selector: value_selector,
-                    service_name: value_service_name.ok_or_else(|| serde::de::Error::missing_field("serviceName"))?,
-                    template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                    service_name: value_service_name.ok_or_else(|| crate::serde::de::Error::missing_field("serviceName"))?,
+                    template: value_template.ok_or_else(|| crate::serde::de::Error::missing_field("template"))?,
                     update_strategy: value_update_strategy,
                     volume_claim_templates: value_volume_claim_templates,
                 })
@@ -136,8 +136,8 @@ impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
     }
 }
 
-impl serde::Serialize for StatefulSetSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for StatefulSetSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetSpec",
             2 +
@@ -149,25 +149,25 @@ impl serde::Serialize for StatefulSetSpec {
             self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.pod_management_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
         }
         if let Some(value) = &self.replicas {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
         }
         if let Some(value) = &self.revision_history_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         if let Some(value) = &self.update_strategy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
         }
         if let Some(value) = &self.volume_claim_templates {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

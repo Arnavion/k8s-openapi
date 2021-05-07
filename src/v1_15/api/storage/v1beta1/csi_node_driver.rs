@@ -13,8 +13,8 @@ pub struct CSINodeDriver {
     pub topology_keys: Option<Vec<String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for CSINodeDriver {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_name,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for CSINodeDriver {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "name" => Field::Key_name,
                             "nodeID" => Field::Key_node_id,
@@ -50,30 +50,30 @@ impl<'de> serde::Deserialize<'de> for CSINodeDriver {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CSINodeDriver;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CSINodeDriver")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
                 let mut value_node_id: Option<String> = None;
                 let mut value_topology_keys: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_node_id => value_node_id = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_topology_keys => value_topology_keys = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_node_id => value_node_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_topology_keys => value_topology_keys = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CSINodeDriver {
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
-                    node_id: value_node_id.ok_or_else(|| serde::de::Error::missing_field("nodeID"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    node_id: value_node_id.ok_or_else(|| crate::serde::de::Error::missing_field("nodeID"))?,
                     topology_keys: value_topology_keys,
                 })
             }
@@ -91,18 +91,18 @@ impl<'de> serde::Deserialize<'de> for CSINodeDriver {
     }
 }
 
-impl serde::Serialize for CSINodeDriver {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CSINodeDriver {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSINodeDriver",
             2 +
             self.topology_keys.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "nodeID", &self.node_id)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeID", &self.node_id)?;
         if let Some(value) = &self.topology_keys {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

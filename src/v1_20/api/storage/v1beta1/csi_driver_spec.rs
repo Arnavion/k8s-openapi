@@ -48,8 +48,8 @@ pub struct CSIDriverSpec {
     pub volume_lifecycle_modes: Option<Vec<String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_attach_required,
@@ -62,18 +62,18 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "attachRequired" => Field::Key_attach_required,
                             "fsGroupPolicy" => Field::Key_fs_group_policy,
@@ -93,14 +93,14 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CSIDriverSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CSIDriverSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_attach_required: Option<bool> = None;
                 let mut value_fs_group_policy: Option<String> = None;
                 let mut value_pod_info_on_mount: Option<bool> = None;
@@ -109,16 +109,16 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
                 let mut value_token_requests: Option<Vec<crate::api::storage::v1beta1::TokenRequest>> = None;
                 let mut value_volume_lifecycle_modes: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_attach_required => value_attach_required = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fs_group_policy => value_fs_group_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_info_on_mount => value_pod_info_on_mount = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_requires_republish => value_requires_republish = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_capacity => value_storage_capacity = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_token_requests => value_token_requests = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_lifecycle_modes => value_volume_lifecycle_modes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_attach_required => value_attach_required = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fs_group_policy => value_fs_group_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_info_on_mount => value_pod_info_on_mount = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_requires_republish => value_requires_republish = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_capacity => value_storage_capacity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_token_requests => value_token_requests = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_lifecycle_modes => value_volume_lifecycle_modes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -150,8 +150,8 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
     }
 }
 
-impl serde::Serialize for CSIDriverSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CSIDriverSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSIDriverSpec",
             self.attach_required.as_ref().map_or(0, |_| 1) +
@@ -163,26 +163,26 @@ impl serde::Serialize for CSIDriverSpec {
             self.volume_lifecycle_modes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
         }
         if let Some(value) = &self.fs_group_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroupPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroupPolicy", value)?;
         }
         if let Some(value) = &self.pod_info_on_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
         }
         if let Some(value) = &self.requires_republish {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "requiresRepublish", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "requiresRepublish", value)?;
         }
         if let Some(value) = &self.storage_capacity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageCapacity", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageCapacity", value)?;
         }
         if let Some(value) = &self.token_requests {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tokenRequests", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tokenRequests", value)?;
         }
         if let Some(value) = &self.volume_lifecycle_modes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

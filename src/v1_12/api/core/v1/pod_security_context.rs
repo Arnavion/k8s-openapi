@@ -29,8 +29,8 @@ pub struct PodSecurityContext {
     pub sysctls: Option<Vec<crate::api::core::v1::Sysctl>>,
 }
 
-impl<'de> serde::Deserialize<'de> for PodSecurityContext {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_group,
@@ -43,18 +43,18 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "fsGroup" => Field::Key_fs_group,
                             "runAsGroup" => Field::Key_run_as_group,
@@ -74,14 +74,14 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodSecurityContext;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("PodSecurityContext")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_fs_group: Option<i64> = None;
                 let mut value_run_as_group: Option<i64> = None;
                 let mut value_run_as_non_root: Option<bool> = None;
@@ -90,16 +90,16 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
                 let mut value_supplemental_groups: Option<Vec<i64>> = None;
                 let mut value_sysctls: Option<Vec<crate::api::core::v1::Sysctl>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_group => value_fs_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_group => value_run_as_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_non_root => value_run_as_non_root = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_user => value_run_as_user = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_se_linux_options => value_se_linux_options = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_supplemental_groups => value_supplemental_groups = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_sysctls => value_sysctls = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_group => value_fs_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_group => value_run_as_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_non_root => value_run_as_non_root = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_user => value_run_as_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_se_linux_options => value_se_linux_options = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_supplemental_groups => value_supplemental_groups = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_sysctls => value_sysctls = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -131,8 +131,8 @@ impl<'de> serde::Deserialize<'de> for PodSecurityContext {
     }
 }
 
-impl serde::Serialize for PodSecurityContext {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PodSecurityContext {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSecurityContext",
             self.fs_group.as_ref().map_or(0, |_| 1) +
@@ -144,26 +144,26 @@ impl serde::Serialize for PodSecurityContext {
             self.sysctls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;
         }
         if let Some(value) = &self.run_as_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
         }
         if let Some(value) = &self.run_as_non_root {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
         }
         if let Some(value) = &self.run_as_user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
         }
         if let Some(value) = &self.se_linux_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
         }
         if let Some(value) = &self.supplemental_groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
         }
         if let Some(value) = &self.sysctls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

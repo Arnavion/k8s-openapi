@@ -16,8 +16,8 @@ pub struct NodeConfigStatus {
     pub last_known_good: Option<crate::api::core::v1::NodeConfigSource>,
 }
 
-impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NodeConfigStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "active" => Field::Key_active,
                             "assigned" => Field::Key_assigned,
@@ -55,26 +55,26 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NodeConfigStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NodeConfigStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_active: Option<crate::api::core::v1::NodeConfigSource> = None;
                 let mut value_assigned: Option<crate::api::core::v1::NodeConfigSource> = None;
                 let mut value_error: Option<String> = None;
                 let mut value_last_known_good: Option<crate::api::core::v1::NodeConfigSource> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active => value_active = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_assigned => value_assigned = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_error => value_error = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_last_known_good => value_last_known_good = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active => value_active = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_assigned => value_assigned = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_error => value_error = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_last_known_good => value_last_known_good = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
     }
 }
 
-impl serde::Serialize for NodeConfigStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NodeConfigStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeConfigStatus",
             self.active.as_ref().map_or(0, |_| 1) +
@@ -110,17 +110,17 @@ impl serde::Serialize for NodeConfigStatus {
             self.last_known_good.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
         }
         if let Some(value) = &self.assigned {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "assigned", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "assigned", value)?;
         }
         if let Some(value) = &self.error {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
         }
         if let Some(value) = &self.last_known_good {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastKnownGood", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lastKnownGood", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

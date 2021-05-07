@@ -10,8 +10,8 @@ pub struct IPBlock {
     pub except: Option<Vec<String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for IPBlock {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for IPBlock {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_cidr,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for IPBlock {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "cidr" => Field::Key_cidr,
                             "except" => Field::Key_except,
@@ -45,27 +45,27 @@ impl<'de> serde::Deserialize<'de> for IPBlock {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = IPBlock;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("IPBlock")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_cidr: Option<String> = None;
                 let mut value_except: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_cidr => value_cidr = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_except => value_except = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_cidr => value_cidr = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_except => value_except = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(IPBlock {
-                    cidr: value_cidr.ok_or_else(|| serde::de::Error::missing_field("cidr"))?,
+                    cidr: value_cidr.ok_or_else(|| crate::serde::de::Error::missing_field("cidr"))?,
                     except: value_except,
                 })
             }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for IPBlock {
     }
 }
 
-impl serde::Serialize for IPBlock {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for IPBlock {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IPBlock",
             1 +
             self.except.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "cidr", &self.cidr)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "cidr", &self.cidr)?;
         if let Some(value) = &self.except {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "except", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "except", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

@@ -10,8 +10,8 @@ pub struct NonResourceAttributes {
     pub verb: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for NonResourceAttributes {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NonResourceAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_path,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for NonResourceAttributes {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "path" => Field::Key_path,
                             "verb" => Field::Key_verb,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for NonResourceAttributes {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NonResourceAttributes;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NonResourceAttributes")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_path: Option<String> = None;
                 let mut value_verb: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_path => value_path = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_verb => value_verb = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_path => value_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_verb => value_verb = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for NonResourceAttributes {
     }
 }
 
-impl serde::Serialize for NonResourceAttributes {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NonResourceAttributes {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NonResourceAttributes",
             self.path.as_ref().map_or(0, |_| 1) +
             self.verb.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
         }
         if let Some(value) = &self.verb {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "verb", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "verb", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

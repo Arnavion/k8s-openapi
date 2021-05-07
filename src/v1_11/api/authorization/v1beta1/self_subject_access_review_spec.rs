@@ -10,8 +10,8 @@ pub struct SelfSubjectAccessReviewSpec {
     pub resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes>,
 }
 
-impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_non_resource_attributes,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "nonResourceAttributes" => Field::Key_non_resource_attributes,
                             "resourceAttributes" => Field::Key_resource_attributes,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SelfSubjectAccessReviewSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("SelfSubjectAccessReviewSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_non_resource_attributes: Option<crate::api::authorization::v1beta1::NonResourceAttributes> = None;
                 let mut value_resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_non_resource_attributes => value_non_resource_attributes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_attributes => value_resource_attributes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_non_resource_attributes => value_non_resource_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_attributes => value_resource_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
     }
 }
 
-impl serde::Serialize for SelfSubjectAccessReviewSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for SelfSubjectAccessReviewSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SelfSubjectAccessReviewSpec",
             self.non_resource_attributes.as_ref().map_or(0, |_| 1) +
             self.resource_attributes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.non_resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
         }
         if let Some(value) = &self.resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

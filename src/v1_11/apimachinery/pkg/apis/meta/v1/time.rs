@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
-impl<'de> serde::Deserialize<'de> for Time {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Time {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Time;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Time")
             }
 
-            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {
-                Ok(Time(serde::Deserialize::deserialize(deserializer)?))
+            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: crate::serde::Deserializer<'de> {
+                Ok(Time(crate::serde::Deserialize::deserialize(deserializer)?))
             }
         }
 
@@ -24,8 +24,8 @@ impl<'de> serde::Deserialize<'de> for Time {
     }
 }
 
-impl serde::Serialize for Time {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Time {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
     }
 }

@@ -20,13 +20,13 @@ pub(crate) fn generate(
 
 	let type_generics_impl = "<T>";
 	let type_generics_type = "<T>";
-	let type_generics_where: std::borrow::Cow<'_, str> = match operation_action {
+	let type_generics_where = match operation_action {
 		OperationAction::Create |
 		OperationAction::Delete |
 		OperationAction::Replace |
 		OperationAction::Patch |
-		OperationAction::Watch => " where T: serde::de::DeserializeOwned".into(),
-		OperationAction::List => format!(" where T: serde::de::DeserializeOwned + {}ListableResource", local).into(),
+		OperationAction::Watch => format!(" where T: {}serde::de::DeserializeOwned", local),
+		OperationAction::List => format!(" where T: {local}serde::de::DeserializeOwned + {local}ListableResource", local = local),
 	};
 
 	let operation_feature_attribute: std::borrow::Cow<'static, str> =
@@ -68,12 +68,12 @@ pub(crate) fn generate(
 			writeln!(variant_match_arms, "                }};")?;
 			writeln!(variant_match_arms, r#"                let is_status = matches!(result.get("kind"), Some(serde_json::Value::String(s)) if s == "Status");"#)?;
 			writeln!(variant_match_arms, "                if is_status {{")?;
-			writeln!(variant_match_arms, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+			writeln!(variant_match_arms, "                    let result = {}serde::Deserialize::deserialize(serde_json::Value::Object(result));", local)?;
 			writeln!(variant_match_arms, "                    let result = result.map_err({}ResponseError::Json)?;", local)?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkStatus(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;
 			writeln!(variant_match_arms, "                else {{")?;
-			writeln!(variant_match_arms, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+			writeln!(variant_match_arms, "                    let result = {}serde::Deserialize::deserialize(serde_json::Value::Object(result));", local)?;
 			writeln!(variant_match_arms, "                    let result = result.map_err({}ResponseError::Json)?;", local)?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkValue(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;

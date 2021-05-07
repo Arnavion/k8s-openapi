@@ -461,6 +461,7 @@ pub fn run(
 			templates::int_or_string::generate(
 				&mut out,
 				type_name,
+				map_namespace,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -489,6 +490,7 @@ pub fn run(
 				type_name,
 				json_schema_props_or,
 				&json_schema_props_type_name,
+				map_namespace,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -498,6 +500,7 @@ pub fn run(
 			templates::patch::generate(
 				&mut out,
 				type_name,
+				map_namespace,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -537,6 +540,7 @@ pub fn run(
 				has_bookmark_event_type,
 				&error_status_rust_type,
 				&error_other_rust_type,
+				map_namespace,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -613,7 +617,7 @@ pub fn run(
 			)?;
 
 			{
-				let template_generics_where_part = format!("T: serde::Deserialize<'de> + {}ListableResource", local);
+				let template_generics_where_part = format!("T: {local}serde::Deserialize<'de> + {local}ListableResource", local = local);
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -630,7 +634,7 @@ pub fn run(
 			}
 
 			{
-				let template_generics_where_part = format!("T: serde::Serialize + {}ListableResource", local);
+				let template_generics_where_part = format!("T: {local}serde::Serialize + {local}ListableResource", local = local);
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -733,6 +737,7 @@ pub fn run(
 						&template_properties,
 						false,
 						optional_feature,
+						map_namespace,
 					)?,
 
 				swagger20::Type::DeleteOptional(_) =>
@@ -754,6 +759,7 @@ pub fn run(
 						&template_properties,
 						true,
 						optional_feature,
+						map_namespace,
 					)?,
 
 				_ => unreachable!("unexpected optional params type"),
@@ -868,6 +874,7 @@ pub fn run(
 				type_name,
 				&inner_type_name,
 				datetime_serialization_format,
+				map_namespace,
 			)?;
 
 			run_result.num_generated_type_aliases += 1;
@@ -1259,7 +1266,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ref(ref_path) =>
 			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, map_namespace)).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&serde_json::Value".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("&{}serde_json::Value", local).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
 			Ok(format!("&[{}]", get_rust_type(&items.kind, map_namespace)?).into()),
@@ -1322,7 +1329,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ref(ref_path) =>
 			Ok(get_fully_qualified_type_name(ref_path, map_namespace).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("serde_json::Value".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("{}serde_json::Value", local).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
 			Ok(format!("Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
@@ -1626,7 +1633,7 @@ pub fn write_operation(
 	}
 	if let Some(operation_result_name) = &operation_result_name {
 		writeln!(out,
-			"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
+			"{}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
 			indent, operation_result_name, local = local)?;
 	}
 	else {
@@ -1663,11 +1670,11 @@ pub fn write_operation(
 
 		if let Some(common_response_type) = common_response_type {
 			writeln!(out,
-				"{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
+				"{}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
 				indent, common_response_type, local = local)?;
 		}
 		else {
-			writeln!(out, "{}) -> Result<http::Request<Vec<u8>>, {}RequestError> {{", indent, local)?;
+			writeln!(out, "{}) -> Result<{local}http::Request<Vec<u8>>, {local}RequestError> {{", indent, local = local)?;
 		}
 	}
 
@@ -1769,7 +1776,7 @@ pub fn write_operation(
 		swagger20::Method::Put => "put",
 	};
 
-	writeln!(out, "{}    let __request = http::Request::{}(__url);", indent, method)?;
+	writeln!(out, "{}    let __request = {}http::Request::{}(__url);", indent, local, method)?;
 
 	let body_parameter =
 		delete_optional_parameter.as_ref()
@@ -1779,15 +1786,15 @@ pub fn write_operation(
 	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
 		if parameter.required {
 			if parameter_type.starts_with('&') {
-				writeln!(out, "serde_json::to_vec({}).map_err({}RequestError::Json)?;", parameter_name, local)?;
+				writeln!(out, "{local}serde_json::to_vec({}).map_err({local}RequestError::Json)?;", parameter_name, local = local)?;
 			}
 			else {
-				writeln!(out, "serde_json::to_vec(&{}).map_err({}RequestError::Json)?;", parameter_name, local)?;
+				writeln!(out, "{local}serde_json::to_vec(&{}).map_err({local}RequestError::Json)?;", parameter_name, local = local)?;
 			}
 		}
 		else {
 			writeln!(out)?;
-			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err({}RequestError::Json))?;", parameter_name, local)?;
+			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| {local}serde_json::to_vec(value).map_err({local}RequestError::Json))?;", parameter_name, local = local)?;
 		}
 
 		let is_patch =
@@ -1799,14 +1806,18 @@ pub fn write_operation(
 			};
 		if is_patch {
 			let patch_type = get_rust_type(&parameter.schema.kind, map_namespace)?;
-			writeln!(out, "{}    let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static(match {} {{", indent, parameter_name)?;
+			writeln!(out,
+				"{}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static(match {} {{",
+				indent, parameter_name, local = local)?;
 			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
 			writeln!(out, r#"{}        {}::StrategicMerge(_) => "application/strategic-merge-patch+json","#, indent, patch_type)?;
 			writeln!(out, "{}    }}));", indent)?;
 		}
 		else {
-			writeln!(out, r#"{}    let __request = __request.header(http::header::CONTENT_TYPE, http::header::HeaderValue::from_static("application/json"));"#, indent)?;
+			writeln!(out,
+				r#"{}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static("application/json"));"#,
+				indent, local = local)?;
 		}
 	}
 	else {
@@ -1929,7 +1940,7 @@ pub fn write_operation(
 				writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, map_namespace)?)?;
 			}
 
-			writeln!(out, "    Other(Result<Option<serde_json::Value>, serde_json::Error>),")?;
+			writeln!(out, "    Other(Result<Option<{local}serde_json::Value>, {local}serde_json::Error>),", local = local)?;
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 
@@ -1937,11 +1948,11 @@ pub fn write_operation(
 				writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
 			}
 			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
-			writeln!(out, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {}ResponseError> {{", local)?;
+			writeln!(out, "    fn try_from_parts(status_code: {local}http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{", local = local)?;
 
 			writeln!(out, "        match status_code {{")?;
 			for &(http_status_code, variant_name, schema) in &operation_responses {
-				writeln!(out, "            http::StatusCode::{} => {{", http_status_code)?;
+				writeln!(out, "            {}http::StatusCode::{} => {{", local, http_status_code)?;
 
 				match &schema.kind {
 					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
@@ -1964,7 +1975,7 @@ pub fn write_operation(
 					},
 
 					swagger20::SchemaKind::Ref(_) => {
-						writeln!(out, "                let result = match serde_json::from_slice(buf) {{")?;
+						writeln!(out, "                let result = match {}serde_json::from_slice(buf) {{", local)?;
 						writeln!(out, "                    Ok(value) => value,")?;
 						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 						writeln!(out, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
@@ -1983,7 +1994,7 @@ pub fn write_operation(
 			writeln!(out, "                        (Ok(None), 0)")?;
 			writeln!(out, "                    }}")?;
 			writeln!(out, "                    else {{")?;
-			writeln!(out, "                        match serde_json::from_slice(buf) {{")?;
+			writeln!(out, "                        match {}serde_json::from_slice(buf) {{", local)?;
 			writeln!(out, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
 			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 			writeln!(out, "                            Err(err) => (Err(err), 0),")?;

@@ -10,8 +10,8 @@ pub struct ContainerImage {
     pub size_bytes: Option<i64>,
 }
 
-impl<'de> serde::Deserialize<'de> for ContainerImage {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ContainerImage {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_names,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for ContainerImage {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "names" => Field::Key_names,
                             "sizeBytes" => Field::Key_size_bytes,
@@ -45,27 +45,27 @@ impl<'de> serde::Deserialize<'de> for ContainerImage {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ContainerImage;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ContainerImage")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_names: Option<Vec<String>> = None;
                 let mut value_size_bytes: Option<i64> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_names => value_names = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_size_bytes => value_size_bytes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_names => value_names = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_size_bytes => value_size_bytes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ContainerImage {
-                    names: value_names.ok_or_else(|| serde::de::Error::missing_field("names"))?,
+                    names: value_names.ok_or_else(|| crate::serde::de::Error::missing_field("names"))?,
                     size_bytes: value_size_bytes,
                 })
             }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for ContainerImage {
     }
 }
 
-impl serde::Serialize for ContainerImage {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ContainerImage {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerImage",
             1 +
             self.size_bytes.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         if let Some(value) = &self.size_bytes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeBytes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sizeBytes", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

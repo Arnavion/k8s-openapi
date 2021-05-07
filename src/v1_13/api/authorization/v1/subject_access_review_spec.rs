@@ -22,8 +22,8 @@ pub struct SubjectAccessReviewSpec {
     pub user: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_extra,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "extra" => Field::Key_extra,
                             "groups" => Field::Key_groups,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SubjectAccessReviewSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("SubjectAccessReviewSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_extra: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut value_groups: Option<Vec<String>> = None;
                 let mut value_non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes> = None;
@@ -80,15 +80,15 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
                 let mut value_uid: Option<String> = None;
                 let mut value_user: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_extra => value_extra = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_groups => value_groups = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_non_resource_attributes => value_non_resource_attributes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_attributes => value_resource_attributes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_extra => value_extra = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_groups => value_groups = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_non_resource_attributes => value_non_resource_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_attributes => value_resource_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for SubjectAccessReviewSpec {
     }
 }
 
-impl serde::Serialize for SubjectAccessReviewSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for SubjectAccessReviewSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SubjectAccessReviewSpec",
             self.extra.as_ref().map_or(0, |_| 1) +
@@ -130,23 +130,23 @@ impl serde::Serialize for SubjectAccessReviewSpec {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
         }
         if let Some(value) = &self.groups {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
         }
         if let Some(value) = &self.non_resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
         }
         if let Some(value) = &self.resource_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

@@ -1,6 +1,28 @@
 The repository supports the latest patch versions of each of the separate 1.x releases.
 
 
+# To run all tests
+
+```sh
+# Create all node images
+KIND_IMAGES="$(realpath ~/kind-images)"
+mkdir -p "$KIND_IMAGES"
+./test.sh all create-node-image "$KIND_IMAGES"
+
+# Create all clusters
+./test.sh all create-cluster "$KIND_IMAGES"
+
+# Run all tests in record mode
+K8S_RECORD=1 ./test.sh all run-tests
+
+# Delete all clusters
+./test.sh all delete-cluster
+
+# Run all tests in replay mode
+./test.sh all run-tests
+```
+
+
 # To add support for a new patch version
 
 (Eg: The repository supports v1.10.5 and you want to add support for v1.10.6)
@@ -11,11 +33,11 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-codegen/`: Use `cargo run` to regenerate the bindings. Inspect the diff. This combined with the changelog may indicate new fixups that could be backported to older versions.
 
-1. `/k8s-openapi-tests/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
+1. `/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
-1. `/k8s-openapi-tests/`: Use `./test.sh '...' create-cluster '...'; K8S_RECORD=1 ./test.sh '...' run-tests` to create a cluster and run the tests against it in record mode.
+1. `/`: Use `./test.sh '...' create-cluster '...'; K8S_RECORD=1 ./test.sh '...' run-tests` to create a cluster and run the tests against it in record mode.
 
-1. `/k8s-openapi-tests/`: Use `./test.sh '...' delete-cluster; ./test.sh '...' run-tests` to delete the cluster and run the tests in replay mode.
+1. `/`: Use `./test.sh '...' delete-cluster; ./test.sh '...' run-tests` to delete the cluster and run the tests in replay mode.
 
 
 # To add support for a new minor version
@@ -50,9 +72,9 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
 
-1. `/k8s-openapi-tests/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
+1. `/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
-1. `/k8s-openapi-tests/`: Create a cluster and run the tests against it in record mode.
+1. `/`: Create a cluster and run the tests against it in record mode.
 
     ```sh
     ./test.sh '...' create-node-image /path/of/node/images/directory

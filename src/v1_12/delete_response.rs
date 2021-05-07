@@ -3,16 +3,16 @@
 /// The common response type for all delete API operations and delete-collection API operations.
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
+pub enum DeleteResponse<T> where T: crate::serde::de::DeserializeOwned {
     OkStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(T),
     Accepted(T),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwned {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+impl<T> crate::Response for DeleteResponse<T> where T: crate::serde::de::DeserializeOwned {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
                 let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
@@ -22,12 +22,12 @@ impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwn
                 };
                 let is_status = matches!(result.get("kind"), Some(serde_json::Value::String(s)) if s == "Status");
                 if is_status {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = crate::serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = crate::serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteResponse::OkValue(result), buf.len()))
                 }
@@ -46,7 +46,7 @@ impl<T> crate::Response for DeleteResponse<T> where T: serde::de::DeserializeOwn
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),

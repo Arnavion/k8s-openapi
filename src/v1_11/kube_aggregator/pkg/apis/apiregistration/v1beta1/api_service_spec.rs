@@ -25,8 +25,8 @@ pub struct APIServiceSpec {
     pub version_priority: i32,
 }
 
-impl<'de> serde::Deserialize<'de> for APIServiceSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ca_bundle,
@@ -39,18 +39,18 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "caBundle" => Field::Key_ca_bundle,
                             "group" => Field::Key_group,
@@ -70,14 +70,14 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = APIServiceSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("APIServiceSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_ca_bundle: Option<crate::ByteString> = None;
                 let mut value_group: Option<String> = None;
                 let mut value_group_priority_minimum: Option<i32> = None;
@@ -86,27 +86,27 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
                 let mut value_version: Option<String> = None;
                 let mut value_version_priority: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ca_bundle => value_ca_bundle = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group => value_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group_priority_minimum => value_group_priority_minimum = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_insecure_skip_tls_verify => value_insecure_skip_tls_verify = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service => value_service = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_version => value_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_version_priority => value_version_priority = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ca_bundle => value_ca_bundle = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_group_priority_minimum => value_group_priority_minimum = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_insecure_skip_tls_verify => value_insecure_skip_tls_verify = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service => value_service = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_version => value_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_version_priority => value_version_priority = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(APIServiceSpec {
                     ca_bundle: value_ca_bundle,
                     group: value_group,
-                    group_priority_minimum: value_group_priority_minimum.ok_or_else(|| serde::de::Error::missing_field("groupPriorityMinimum"))?,
+                    group_priority_minimum: value_group_priority_minimum.ok_or_else(|| crate::serde::de::Error::missing_field("groupPriorityMinimum"))?,
                     insecure_skip_tls_verify: value_insecure_skip_tls_verify,
-                    service: value_service.ok_or_else(|| serde::de::Error::missing_field("service"))?,
+                    service: value_service.ok_or_else(|| crate::serde::de::Error::missing_field("service"))?,
                     version: value_version,
-                    version_priority: value_version_priority.ok_or_else(|| serde::de::Error::missing_field("versionPriority"))?,
+                    version_priority: value_version_priority.ok_or_else(|| crate::serde::de::Error::missing_field("versionPriority"))?,
                 })
             }
         }
@@ -127,8 +127,8 @@ impl<'de> serde::Deserialize<'de> for APIServiceSpec {
     }
 }
 
-impl serde::Serialize for APIServiceSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for APIServiceSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIServiceSpec",
             3 +
@@ -138,20 +138,20 @@ impl serde::Serialize for APIServiceSpec {
             self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ca_bundle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
         }
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "groupPriorityMinimum", &self.group_priority_minimum)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groupPriorityMinimum", &self.group_priority_minimum)?;
         if let Some(value) = &self.insecure_skip_tls_verify {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "insecureSkipTLSVerify", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "insecureSkipTLSVerify", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "service", &self.service)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "service", &self.service)?;
         if let Some(value) = &self.version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "versionPriority", &self.version_priority)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "versionPriority", &self.version_priority)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

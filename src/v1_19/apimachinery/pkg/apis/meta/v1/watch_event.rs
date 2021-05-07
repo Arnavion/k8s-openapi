@@ -17,8 +17,8 @@ pub enum WatchEvent<T> {
     ErrorOther(crate::apimachinery::pkg::runtime::RawExtension),
 }
 
-impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deserialize<'de> {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::serde::Deserialize<'de> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_type,
@@ -26,18 +26,18 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "type" => Field::Key_type,
                             "object" => Field::Key_object,
@@ -58,25 +58,25 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
             Error,
         }
 
-        impl<'de> serde::Deserialize<'de> for WatchEventType {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for WatchEventType {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = WatchEventType;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("watch event type")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "ADDED" => WatchEventType::Added,
                             "DELETED" => WatchEventType::Deleted,
                             "MODIFIED" => WatchEventType::Modified,
                             "BOOKMARK" => WatchEventType::Bookmark,
                             "ERROR" => WatchEventType::Error,
-                            _ => return Err(serde::de::Error::unknown_variant(
+                            _ => return Err(crate::serde::de::Error::unknown_variant(
                                 v,
                                 &["ADDED", "DELETED", "MODIFIED", "BOOKMARK", "ERROR"],
                             )),
@@ -90,44 +90,44 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
 
         struct Visitor<T>(std::marker::PhantomData<T>);
 
-        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> {
+        impl<'de, T> crate::serde::de::Visitor<'de> for Visitor<T> where T: crate::serde::Deserialize<'de> {
             type Value = WatchEvent<T>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("WatchEvent")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_type: Option<WatchEventType> = None;
-                let mut value_object: Option<serde_value::Value> = None;
+                let mut value_object: Option<crate::serde_value::Value> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_type => value_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_object => value_object = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_type => value_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_object => value_object = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
-                let value_type = value_type.ok_or_else(|| serde::de::Error::missing_field("type"))?;
-                let value_object = value_object.ok_or_else(|| serde::de::Error::missing_field("object"))?;
+                let value_type = value_type.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?;
+                let value_object = value_object.ok_or_else(|| crate::serde::de::Error::missing_field("object"))?;
 
                 Ok(match value_type {
                     WatchEventType::Added => {
-                        let value_object = serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Added(serde::Deserialize::deserialize(value_object)?)
+                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
+                        WatchEvent::Added(crate::serde::Deserialize::deserialize(value_object)?)
                     },
                     WatchEventType::Deleted => {
-                        let value_object = serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Deleted(serde::Deserialize::deserialize(value_object)?)
+                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
+                        WatchEvent::Deleted(crate::serde::Deserialize::deserialize(value_object)?)
                     },
                     WatchEventType::Modified => {
-                        let value_object = serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Modified(serde::Deserialize::deserialize(value_object)?)
+                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
+                        WatchEvent::Modified(crate::serde::Deserialize::deserialize(value_object)?)
                     },
                     WatchEventType::Bookmark => {
-                        let value_object = serde_value::ValueDeserializer::new(value_object);
-                        let value: BookmarkObject<'static> = serde::Deserialize::deserialize(value_object)?;
+                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
+                        let value: BookmarkObject<'static> = crate::serde::Deserialize::deserialize(value_object)?;
                         WatchEvent::Bookmark {
                             resource_version: value.metadata.resource_version.into_owned(),
                         }
@@ -135,18 +135,18 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
 
                     WatchEventType::Error => {
                         let is_status =
-                            if let serde_value::Value::Map(map) = &value_object {
-                                matches!(map.get(&serde_value::Value::String("kind".to_owned())), Some(serde_value::Value::String(s)) if s == "Status")
+                            if let crate::serde_value::Value::Map(map) = &value_object {
+                                matches!(map.get(&crate::serde_value::Value::String("kind".to_owned())), Some(crate::serde_value::Value::String(s)) if s == "Status")
                             }
                             else {
                                 false
                             };
-                        let value_object = serde_value::ValueDeserializer::new(value_object);
+                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
                         if is_status {
-                            WatchEvent::ErrorStatus(serde::Deserialize::deserialize(value_object)?)
+                            WatchEvent::ErrorStatus(crate::serde::Deserialize::deserialize(value_object)?)
                         }
                         else {
-                            WatchEvent::ErrorOther(serde::Deserialize::deserialize(value_object)?)
+                            WatchEvent::ErrorOther(crate::serde::Deserialize::deserialize(value_object)?)
                         }
                     },
                 })
@@ -164,44 +164,44 @@ impl<'de, T> serde::Deserialize<'de> for WatchEvent<T> where T: serde::Deseriali
     }
 }
 
-impl<T> serde::Serialize for WatchEvent<T> where T: serde::Serialize {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl<T> crate::serde::Serialize for WatchEvent<T> where T: crate::serde::Serialize {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WatchEvent",
             2,
         )?;
         match self {
             WatchEvent::Added(object) => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ADDED")?;
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ADDED")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
             WatchEvent::Deleted(object) => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "DELETED")?;
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "DELETED")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
             WatchEvent::Modified(object) => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
             WatchEvent::Bookmark { resource_version } => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "BOOKMARK")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "BOOKMARK")?;
                 let object = BookmarkObject {
                     metadata: BookmarkObjectMeta {
                         resource_version: std::borrow::Cow::Borrowed(&**resource_version),
                     },
                 };
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
             WatchEvent::ErrorStatus(object) => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
             WatchEvent::ErrorOther(object) => {
-                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;
-                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;
+                crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }
 
@@ -215,26 +215,26 @@ struct BookmarkObjectMeta<'a> {
     resource_version: std::borrow::Cow<'a, str>,
 }
 
-impl<'de> serde::Deserialize<'de> for BookmarkObject<'static> {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for BookmarkObject<'static> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_metadata,
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "metadata" => Field::Key_metadata,
                             _ => Field::Other,
@@ -248,25 +248,25 @@ impl<'de> serde::Deserialize<'de> for BookmarkObject<'static> {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = BookmarkObject<'static>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("BookmarkObject")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_metadata: Option<BookmarkObjectMeta<'static>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(BookmarkObject {
-                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                 })
             }
         }
@@ -281,26 +281,26 @@ impl<'de> serde::Deserialize<'de> for BookmarkObject<'static> {
     }
 }
 
-impl<'de> serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_resource_version,
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "resourceVersion" => Field::Key_resource_version,
                             _ => Field::Other,
@@ -314,25 +314,25 @@ impl<'de> serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = BookmarkObjectMeta<'static>;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ObjectMeta")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_resource_version: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_resource_version => value_resource_version = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_resource_version => value_resource_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(BookmarkObjectMeta {
-                    resource_version: std::borrow::Cow::Owned(value_resource_version.ok_or_else(|| serde::de::Error::missing_field("resourceVersion"))?),
+                    resource_version: std::borrow::Cow::Owned(value_resource_version.ok_or_else(|| crate::serde::de::Error::missing_field("resourceVersion"))?),
                 })
             }
         }
@@ -347,25 +347,25 @@ impl<'de> serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
     }
 }
 
-impl<'a> serde::Serialize for BookmarkObject<'a> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl<'a> crate::serde::Serialize for BookmarkObject<'a> {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "BookmarkObject",
             1,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }
 
-impl<'a> serde::Serialize for BookmarkObjectMeta<'a> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl<'a> crate::serde::Serialize for BookmarkObjectMeta<'a> {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
             1,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &self.resource_version)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &self.resource_version)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }
 

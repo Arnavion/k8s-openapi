@@ -2,7 +2,7 @@
 
 # Usage:
 #
-#     test.sh <version> create-node-image <directory>
+#     ./test.sh <version> create-node-image <directory>
 #
 # Create a node image for testing <version> and save it under <directory>.
 #
@@ -16,17 +16,17 @@
 # ... to clean up leftover gunk.
 #
 #
-#     test.sh <version> create-cluster <directory>
+#     ./test.sh <version> create-cluster <directory>
 #
 # Create a cluster for testing <version> using the image stored under <directory>.
 #
 #
-#     test.sh <version> delete-cluster
+#     ./test.sh <version> delete-cluster
 #
 # Delete the cluster created with create-cluster.
 #
 #
-#     test.sh <version> run-tests
+#     ./test.sh <version> run-tests
 #
 # Run the tests for <version>. Set K8S_RECORD=1 if you want to run the tests in record mode.
 #
@@ -93,6 +93,7 @@ esac
 K8S_VERSION="${K8S_VERSIONS["$1"]}"
 KIND_VERSION="${KIND_VERSIONS["$1"]}"
 K8S_CLUSTER_NAME="v$1"
+export CARGO_TARGET_DIR="$PWD/target-tests-v$1"
 
 
 # Download the appropriate version of kind
@@ -173,7 +174,8 @@ case "$2" in
 		;;
 
 	'run-tests')
-		CARGO_TARGET_DIR="$PWD/target-v$K8S_VERSION" K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${1//./_}" "${@:3}"
+		(cd k8s-openapi-tests; K8S_CONTEXT="kind-$K8S_CLUSTER_NAME" cargo test --features "test_v${1//./_}" "${@:3}")
+		(cd k8s-openapi-tests-macro-deps; cargo test --features "test_v${1//./_}" "${@:3}")
 		;;
 
 	*)

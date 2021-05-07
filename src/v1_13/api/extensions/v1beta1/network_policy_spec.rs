@@ -16,8 +16,8 @@ pub struct NetworkPolicySpec {
     pub policy_types: Option<Vec<String>>,
 }
 
-impl<'de> serde::Deserialize<'de> for NetworkPolicySpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_egress,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicySpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "egress" => Field::Key_egress,
                             "ingress" => Field::Key_ingress,
@@ -55,33 +55,33 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicySpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NetworkPolicySpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NetworkPolicySpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_egress: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyEgressRule>> = None;
                 let mut value_ingress: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyIngressRule>> = None;
                 let mut value_pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_policy_types: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_egress => value_egress = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ingress => value_ingress = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_selector => value_pod_selector = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_policy_types => value_policy_types = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_egress => value_egress = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ingress => value_ingress = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_selector => value_pod_selector = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_policy_types => value_policy_types = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NetworkPolicySpec {
                     egress: value_egress,
                     ingress: value_ingress,
-                    pod_selector: value_pod_selector.ok_or_else(|| serde::de::Error::missing_field("podSelector"))?,
+                    pod_selector: value_pod_selector.ok_or_else(|| crate::serde::de::Error::missing_field("podSelector"))?,
                     policy_types: value_policy_types,
                 })
             }
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicySpec {
     }
 }
 
-impl serde::Serialize for NetworkPolicySpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NetworkPolicySpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicySpec",
             1 +
@@ -110,15 +110,15 @@ impl serde::Serialize for NetworkPolicySpec {
             self.policy_types.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.egress {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "egress", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "egress", value)?;
         }
         if let Some(value) = &self.ingress {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", &self.pod_selector)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", &self.pod_selector)?;
         if let Some(value) = &self.policy_types {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "policyTypes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policyTypes", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

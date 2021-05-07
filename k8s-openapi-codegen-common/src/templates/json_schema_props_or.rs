@@ -3,7 +3,10 @@ pub(crate) fn generate(
 	type_name: &str,
 	or: Or,
 	json_schema_props_type_name: &str,
+	map_namespace: &impl crate::MapNamespace,
 ) -> Result<(), crate::Error> {
+	let local = crate::map_namespace_local_to_string(map_namespace)?;
+
 	let or_variant_name = match or {
 		Or::Array => "Schemas",
 		Or::Bool => "Bool",
@@ -21,15 +24,17 @@ pub(crate) fn generate(
 		Or::Array => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {{")?;
-			writeln!(or_visit, "                Ok({}::Schemas(serde::de::Deserialize::deserialize(serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {}serde::de::SeqAccess<'de> {{", local)?;
+			writeln!(or_visit,
+				"                Ok({}::Schemas({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))",
+				type_name, local = local)?;
 			writeln!(or_visit, "            }}")?;
 		},
 
 		Or::Bool => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+			writeln!(or_visit, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: {}serde::de::Error {{", local)?;
 			writeln!(or_visit, "                Ok({}::Bool(v))", type_name)?;
 			writeln!(or_visit, "            }}")?;
 		},
@@ -37,8 +42,10 @@ pub(crate) fn generate(
 		Or::StringArray => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {{")?;
-			writeln!(or_visit, "                Ok({}::Strings(serde::de::Deserialize::deserialize(serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {}serde::de::SeqAccess<'de> {{", local)?;
+			writeln!(or_visit,
+				"                Ok({}::Strings({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))",
+				type_name, local = local)?;
 			writeln!(or_visit, "            }}")?;
 		},
 	}
@@ -46,6 +53,7 @@ pub(crate) fn generate(
 	writeln!(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/json_schema_props_or.rs")),
+		local = local,
 		type_name = type_name,
 		json_schema_props_type_name = json_schema_props_type_name,
 		or_variant_name = or_variant_name,

@@ -23,8 +23,8 @@ pub struct DeleteOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-impl<'a> serde::Serialize for DeleteOptional<'a> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl<'a> crate::serde::Serialize for DeleteOptional<'a> {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeleteOptional",
             self.api_version.as_ref().map_or(0, |_| 1) +
@@ -35,23 +35,23 @@ impl<'a> serde::Serialize for DeleteOptional<'a> {
             self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
         if let Some(value) = &self.grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.orphan_dependents {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
         }
         if let Some(value) = &self.preconditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
         }
         if let Some(value) = &self.propagation_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

@@ -16,8 +16,8 @@ pub struct VsphereVirtualDiskVolumeSource {
     pub volume_path: String,
 }
 
-impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_type,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "fsType" => Field::Key_fs_type,
                             "storagePolicyID" => Field::Key_storage_policy_id,
@@ -55,26 +55,26 @@ impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VsphereVirtualDiskVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("VsphereVirtualDiskVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_storage_policy_id: Option<String> = None;
                 let mut value_storage_policy_name: Option<String> = None;
                 let mut value_volume_path: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_policy_id => value_storage_policy_id = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_policy_name => value_storage_policy_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_path => value_volume_path = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_policy_id => value_storage_policy_id = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_policy_name => value_storage_policy_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_path => value_volume_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,7 +82,7 @@ impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
                     fs_type: value_fs_type,
                     storage_policy_id: value_storage_policy_id,
                     storage_policy_name: value_storage_policy_name,
-                    volume_path: value_volume_path.ok_or_else(|| serde::de::Error::missing_field("volumePath"))?,
+                    volume_path: value_volume_path.ok_or_else(|| crate::serde::de::Error::missing_field("volumePath"))?,
                 })
             }
         }
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
     }
 }
 
-impl serde::Serialize for VsphereVirtualDiskVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for VsphereVirtualDiskVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VsphereVirtualDiskVolumeSource",
             1 +
@@ -110,15 +110,15 @@ impl serde::Serialize for VsphereVirtualDiskVolumeSource {
             self.storage_policy_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
         if let Some(value) = &self.storage_policy_id {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyID", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyID", value)?;
         }
         if let Some(value) = &self.storage_policy_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storagePolicyName", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "volumePath", &self.volume_path)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumePath", &self.volume_path)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

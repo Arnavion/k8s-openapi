@@ -10,8 +10,8 @@ pub struct EmptyDirVolumeSource {
     pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
-impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for EmptyDirVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_medium,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "medium" => Field::Key_medium,
                             "sizeLimit" => Field::Key_size_limit,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = EmptyDirVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("EmptyDirVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_medium: Option<String> = None;
                 let mut value_size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_medium => value_medium = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_size_limit => value_size_limit = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_medium => value_medium = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_size_limit => value_size_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
     }
 }
 
-impl serde::Serialize for EmptyDirVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for EmptyDirVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EmptyDirVolumeSource",
             self.medium.as_ref().map_or(0, |_| 1) +
             self.size_limit.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.medium {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
         }
         if let Some(value) = &self.size_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

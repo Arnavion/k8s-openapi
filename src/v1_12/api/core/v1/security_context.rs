@@ -31,8 +31,8 @@ pub struct SecurityContext {
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 }
 
-impl<'de> serde::Deserialize<'de> for SecurityContext {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for SecurityContext {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_allow_privilege_escalation,
@@ -47,18 +47,18 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "allowPrivilegeEscalation" => Field::Key_allow_privilege_escalation,
                             "capabilities" => Field::Key_capabilities,
@@ -80,14 +80,14 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SecurityContext;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("SecurityContext")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_allow_privilege_escalation: Option<bool> = None;
                 let mut value_capabilities: Option<crate::api::core::v1::Capabilities> = None;
                 let mut value_privileged: Option<bool> = None;
@@ -98,18 +98,18 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
                 let mut value_run_as_user: Option<i64> = None;
                 let mut value_se_linux_options: Option<crate::api::core::v1::SELinuxOptions> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_allow_privilege_escalation => value_allow_privilege_escalation = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_capabilities => value_capabilities = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_privileged => value_privileged = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_proc_mount => value_proc_mount = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only_root_filesystem => value_read_only_root_filesystem = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_group => value_run_as_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_non_root => value_run_as_non_root = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_user => value_run_as_user = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_se_linux_options => value_se_linux_options = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_allow_privilege_escalation => value_allow_privilege_escalation = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_capabilities => value_capabilities = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_privileged => value_privileged = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_proc_mount => value_proc_mount = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only_root_filesystem => value_read_only_root_filesystem = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_group => value_run_as_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_non_root => value_run_as_non_root = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_user => value_run_as_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_se_linux_options => value_se_linux_options = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -145,8 +145,8 @@ impl<'de> serde::Deserialize<'de> for SecurityContext {
     }
 }
 
-impl serde::Serialize for SecurityContext {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for SecurityContext {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SecurityContext",
             self.allow_privilege_escalation.as_ref().map_or(0, |_| 1) +
@@ -160,32 +160,32 @@ impl serde::Serialize for SecurityContext {
             self.se_linux_options.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
         }
         if let Some(value) = &self.capabilities {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "capabilities", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capabilities", value)?;
         }
         if let Some(value) = &self.privileged {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
         }
         if let Some(value) = &self.proc_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "procMount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "procMount", value)?;
         }
         if let Some(value) = &self.read_only_root_filesystem {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
         }
         if let Some(value) = &self.run_as_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
         }
         if let Some(value) = &self.run_as_non_root {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
         }
         if let Some(value) = &self.run_as_user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
         }
         if let Some(value) = &self.se_linux_options {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

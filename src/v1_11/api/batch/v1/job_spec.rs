@@ -25,8 +25,8 @@ pub struct JobSpec {
     pub template: crate::api::core::v1::PodTemplateSpec,
 }
 
-impl<'de> serde::Deserialize<'de> for JobSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for JobSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active_deadline_seconds,
@@ -39,18 +39,18 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "activeDeadlineSeconds" => Field::Key_active_deadline_seconds,
                             "backoffLimit" => Field::Key_backoff_limit,
@@ -70,14 +70,14 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = JobSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("JobSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_active_deadline_seconds: Option<i64> = None;
                 let mut value_backoff_limit: Option<i32> = None;
                 let mut value_completions: Option<i32> = None;
@@ -86,16 +86,16 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
                 let mut value_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_template: Option<crate::api::core::v1::PodTemplateSpec> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_backoff_limit => value_backoff_limit = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_completions => value_completions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_manual_selector => value_manual_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_parallelism => value_parallelism = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_template => value_template = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_backoff_limit => value_backoff_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_completions => value_completions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_manual_selector => value_manual_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_parallelism => value_parallelism = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_template => value_template = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -106,7 +106,7 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
                     manual_selector: value_manual_selector,
                     parallelism: value_parallelism,
                     selector: value_selector,
-                    template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
+                    template: value_template.ok_or_else(|| crate::serde::de::Error::missing_field("template"))?,
                 })
             }
         }
@@ -127,8 +127,8 @@ impl<'de> serde::Deserialize<'de> for JobSpec {
     }
 }
 
-impl serde::Serialize for JobSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for JobSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JobSpec",
             1 +
@@ -140,24 +140,24 @@ impl serde::Serialize for JobSpec {
             self.selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
         }
         if let Some(value) = &self.backoff_limit {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "backoffLimit", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "backoffLimit", value)?;
         }
         if let Some(value) = &self.completions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "completions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "completions", value)?;
         }
         if let Some(value) = &self.manual_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", value)?;
         }
         if let Some(value) = &self.parallelism {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", value)?;
         }
         if let Some(value) = &self.selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

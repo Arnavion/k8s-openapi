@@ -10,8 +10,8 @@ pub struct PersistentVolumeClaimVolumeSource {
     pub read_only: Option<bool>,
 }
 
-impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_claim_name,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "claimName" => Field::Key_claim_name,
                             "readOnly" => Field::Key_read_only,
@@ -45,27 +45,27 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PersistentVolumeClaimVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("PersistentVolumeClaimVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_claim_name: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_claim_name => value_claim_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_claim_name => value_claim_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PersistentVolumeClaimVolumeSource {
-                    claim_name: value_claim_name.ok_or_else(|| serde::de::Error::missing_field("claimName"))?,
+                    claim_name: value_claim_name.ok_or_else(|| crate::serde::de::Error::missing_field("claimName"))?,
                     read_only: value_read_only,
                 })
             }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
     }
 }
 
-impl serde::Serialize for PersistentVolumeClaimVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PersistentVolumeClaimVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimVolumeSource",
             1 +
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "claimName", &self.claim_name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "claimName", &self.claim_name)?;
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

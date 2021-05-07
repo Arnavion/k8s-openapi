@@ -10,8 +10,8 @@ pub struct TokenRequestStatus {
     pub token: String,
 }
 
-impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_expiration_timestamp,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "expirationTimestamp" => Field::Key_expiration_timestamp,
                             "token" => Field::Key_token,
@@ -45,28 +45,28 @@ impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TokenRequestStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("TokenRequestStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_expiration_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_token: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_expiration_timestamp => value_expiration_timestamp = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_token => value_token = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_expiration_timestamp => value_expiration_timestamp = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_token => value_token = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TokenRequestStatus {
-                    expiration_timestamp: value_expiration_timestamp.ok_or_else(|| serde::de::Error::missing_field("expirationTimestamp"))?,
-                    token: value_token.ok_or_else(|| serde::de::Error::missing_field("token"))?,
+                    expiration_timestamp: value_expiration_timestamp.ok_or_else(|| crate::serde::de::Error::missing_field("expirationTimestamp"))?,
+                    token: value_token.ok_or_else(|| crate::serde::de::Error::missing_field("token"))?,
                 })
             }
         }
@@ -82,14 +82,14 @@ impl<'de> serde::Deserialize<'de> for TokenRequestStatus {
     }
 }
 
-impl serde::Serialize for TokenRequestStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for TokenRequestStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenRequestStatus",
             2,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "expirationTimestamp", &self.expiration_timestamp)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "token", &self.token)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "expirationTimestamp", &self.expiration_timestamp)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "token", &self.token)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

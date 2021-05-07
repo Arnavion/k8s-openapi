@@ -41,8 +41,8 @@ impl crate::Metadata for Status {
     }
 }
 
-impl<'de> serde::Deserialize<'de> for Status {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Status {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -56,18 +56,18 @@ impl<'de> serde::Deserialize<'de> for Status {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -88,14 +88,14 @@ impl<'de> serde::Deserialize<'de> for Status {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Status;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str(<Self::Value as crate::Resource>::KIND)
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_code: Option<i32> = None;
                 let mut value_details: Option<crate::apimachinery::pkg::apis::meta::v1::StatusDetails> = None;
                 let mut value_message: Option<String> = None;
@@ -103,27 +103,27 @@ impl<'de> serde::Deserialize<'de> for Status {
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_api_version: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_api_version != <Self::Value as crate::Resource>::API_VERSION {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::API_VERSION));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            let value_kind: String = crate::serde::de::MapAccess::next_value(&mut map)?;
                             if value_kind != <Self::Value as crate::Resource>::KIND {
-                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
+                                return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_code => value_code = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_details => value_details = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_code => value_code = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_details => value_details = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -131,7 +131,7 @@ impl<'de> serde::Deserialize<'de> for Status {
                     code: value_code,
                     details: value_details,
                     message: value_message,
-                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                     reason: value_reason,
                     status: value_status,
                 })
@@ -155,8 +155,8 @@ impl<'de> serde::Deserialize<'de> for Status {
     }
 }
 
-impl serde::Serialize for Status {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Status {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
@@ -166,24 +166,24 @@ impl serde::Serialize for Status {
             self.reason.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.code {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "code", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "code", value)?;
         }
         if let Some(value) = &self.details {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "details", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "details", value)?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

@@ -16,8 +16,8 @@ pub struct SELinuxOptions {
     pub user: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for SELinuxOptions {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for SELinuxOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_level,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for SELinuxOptions {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "level" => Field::Key_level,
                             "role" => Field::Key_role,
@@ -55,26 +55,26 @@ impl<'de> serde::Deserialize<'de> for SELinuxOptions {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SELinuxOptions;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("SELinuxOptions")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_level: Option<String> = None;
                 let mut value_role: Option<String> = None;
                 let mut value_type_: Option<String> = None;
                 let mut value_user: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_level => value_level = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_role => value_role = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_level => value_level = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_role => value_role = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for SELinuxOptions {
     }
 }
 
-impl serde::Serialize for SELinuxOptions {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for SELinuxOptions {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SELinuxOptions",
             self.level.as_ref().map_or(0, |_| 1) +
@@ -110,17 +110,17 @@ impl serde::Serialize for SELinuxOptions {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.level {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "level", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "level", value)?;
         }
         if let Some(value) = &self.role {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "role", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "role", value)?;
         }
         if let Some(value) = &self.type_ {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

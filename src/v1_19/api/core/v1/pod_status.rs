@@ -47,8 +47,8 @@ pub struct PodStatus {
     pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
-impl<'de> serde::Deserialize<'de> for PodStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PodStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_conditions,
@@ -67,18 +67,18 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "conditions" => Field::Key_conditions,
                             "containerStatuses" => Field::Key_container_statuses,
@@ -104,14 +104,14 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("PodStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_conditions: Option<Vec<crate::api::core::v1::PodCondition>> = None;
                 let mut value_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>> = None;
                 let mut value_ephemeral_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>> = None;
@@ -126,22 +126,22 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
                 let mut value_reason: Option<String> = None;
                 let mut value_start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_container_statuses => value_container_statuses = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ephemeral_container_statuses => value_ephemeral_container_statuses = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_ip => value_host_ip = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_init_container_statuses => value_init_container_statuses = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_nominated_node_name => value_nominated_node_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_phase => value_phase = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_ip => value_pod_ip = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_ips => value_pod_ips = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_qos_class => value_qos_class = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_start_time => value_start_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_container_statuses => value_container_statuses = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ephemeral_container_statuses => value_ephemeral_container_statuses = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_ip => value_host_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_init_container_statuses => value_init_container_statuses = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_nominated_node_name => value_nominated_node_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_phase => value_phase = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_ip => value_pod_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_ips => value_pod_ips = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_qos_class => value_qos_class = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_start_time => value_start_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -185,8 +185,8 @@ impl<'de> serde::Deserialize<'de> for PodStatus {
     }
 }
 
-impl serde::Serialize for PodStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PodStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodStatus",
             self.conditions.as_ref().map_or(0, |_| 1) +
@@ -204,44 +204,44 @@ impl serde::Serialize for PodStatus {
             self.start_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.container_statuses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", value)?;
         }
         if let Some(value) = &self.ephemeral_container_statuses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeralContainerStatuses", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeralContainerStatuses", value)?;
         }
         if let Some(value) = &self.host_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
         }
         if let Some(value) = &self.init_container_statuses {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", value)?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
         if let Some(value) = &self.nominated_node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nominatedNodeName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nominatedNodeName", value)?;
         }
         if let Some(value) = &self.phase {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
         }
         if let Some(value) = &self.pod_ip {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podIP", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podIP", value)?;
         }
         if let Some(value) = &self.pod_ips {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podIPs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podIPs", value)?;
         }
         if let Some(value) = &self.qos_class {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "qosClass", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "qosClass", value)?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
         if let Some(value) = &self.start_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

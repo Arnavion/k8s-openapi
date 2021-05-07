@@ -42,18 +42,20 @@ pub(crate) fn generate(
 		writeln!(str_to_field_match_arms, r#"                            "kind" => Field::Key_kind,"#)?;
 
 		writeln!(field_value_match_arms, r#"                        Field::Key_api_version => {{"#)?;
-		writeln!(field_value_match_arms, r#"                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
+		writeln!(field_value_match_arms, r#"                            let value_api_version: String = {}serde::de::MapAccess::next_value(&mut map)?;"#, local)?;
 		writeln!(field_value_match_arms, r#"                            if value_api_version != <Self::Value as {}Resource>::API_VERSION {{"#, local)?;
 		writeln!(field_value_match_arms,
-			r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {}Resource>::API_VERSION));"#,
-			local)?;
+			r#"                                return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {local}Resource>::API_VERSION));"#,
+			local = local)?;
 		writeln!(field_value_match_arms, r#"                            }}"#)?;
 		writeln!(field_value_match_arms, r#"                        }},"#)?;
 
 		writeln!(field_value_match_arms, r#"                        Field::Key_kind => {{"#)?;
-		writeln!(field_value_match_arms, r#"                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
+		writeln!(field_value_match_arms, r#"                            let value_kind: String = {}serde::de::MapAccess::next_value(&mut map)?;"#, local)?;
 		writeln!(field_value_match_arms, r#"                            if value_kind != <Self::Value as {}Resource>::KIND {{"#, local)?;
-		writeln!(field_value_match_arms, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}Resource>::KIND));"#, local)?;
+		writeln!(field_value_match_arms,
+			r#"                                return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Str(&value_kind), &<Self::Value as {}Resource>::KIND));"#,
+			local = local)?;
 		writeln!(field_value_match_arms, r#"                            }}"#)?;
 		writeln!(field_value_match_arms, r#"                        }},"#)?;
 
@@ -81,15 +83,15 @@ pub(crate) fn generate(
 				writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
 
 				writeln!(field_value_match_arms,
-					r#"                        Field::Key_{} => value_{} = Some(serde::de::MapAccess::next_value(&mut map)?),"#,
-					field_name, field_name)?;
+					r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
+					field_name, field_name, local)?;
 
-				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field({:?}))?,", field_name, field_name, name)?;
+				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,", field_name, field_name, local, name)?;
 			}
 			else {
 				writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
 
-				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
+				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name, local)?;
 
 				writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
 			}
@@ -104,8 +106,8 @@ pub(crate) fn generate(
 		writeln!(str_to_field_match_arms, "                            v => Field::Other(v.to_owned()),")?;
 
 		writeln!(field_value_match_arms,
-			"                        Field::Other(key) => {{ value_{}.insert({}serde_value::Value::String(key), serde::de::MapAccess::next_value(&mut map)?); }},",
-			field_name, local)?;
+			"                        Field::Other(key) => {{ value_{}.insert({local}serde_value::Value::String(key), {local}serde::de::MapAccess::next_value(&mut map)?); }},",
+			field_name, local = local)?;
 
 		writeln!(field_value_assignment,
 			"                    {}: {{",
@@ -117,8 +119,8 @@ pub(crate) fn generate(
 			"                        let value_{} = {}serde_value::ValueDeserializer::new(value_{});",
 			field_name, local, field_name)?;
 		writeln!(field_value_assignment,
-			"                        let value_{} = serde::Deserialize::deserialize(value_{})?;",
-			field_name, field_name)?;
+			"                        let value_{} = {}serde::Deserialize::deserialize(value_{})?;",
+			field_name, local, field_name)?;
 		writeln!(field_value_assignment,
 			"                        value_{}",
 			field_name)?;
@@ -131,7 +133,8 @@ pub(crate) fn generate(
 		writeln!(str_to_field_match_arms, "                            _ => Field::Other,")?;
 
 		writeln!(field_value_match_arms,
-			"                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},")?;
+			"                        Field::Other => {{ let _: {local}serde::de::IgnoredAny = {local}serde::de::MapAccess::next_value(&mut map)?; }},",
+			local = local)?;
 	}
 
 	let deserialize_type_name =
@@ -153,6 +156,7 @@ pub(crate) fn generate(
 	writeln!(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/impl_deserialize.rs")),
+		local = local,
 		type_name = type_name,
 		type_generics_impl = type_generics_impl,
 		type_generics_type = type_generics_type,

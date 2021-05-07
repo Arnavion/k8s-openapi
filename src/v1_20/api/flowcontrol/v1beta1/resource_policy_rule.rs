@@ -19,8 +19,8 @@ pub struct ResourcePolicyRule {
     pub verbs: Vec<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ResourcePolicyRule {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ResourcePolicyRule {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_groups,
@@ -31,18 +31,18 @@ impl<'de> serde::Deserialize<'de> for ResourcePolicyRule {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiGroups" => Field::Key_api_groups,
                             "clusterScope" => Field::Key_cluster_scope,
@@ -60,37 +60,37 @@ impl<'de> serde::Deserialize<'de> for ResourcePolicyRule {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ResourcePolicyRule;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ResourcePolicyRule")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_api_groups: Option<Vec<String>> = None;
                 let mut value_cluster_scope: Option<bool> = None;
                 let mut value_namespaces: Option<Vec<String>> = None;
                 let mut value_resources: Option<Vec<String>> = None;
                 let mut value_verbs: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_groups => value_api_groups = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_cluster_scope => value_cluster_scope = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespaces => value_namespaces = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resources => value_resources = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_verbs => value_verbs = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_groups => value_api_groups = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_cluster_scope => value_cluster_scope = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespaces => value_namespaces = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_verbs => value_verbs = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ResourcePolicyRule {
-                    api_groups: value_api_groups.ok_or_else(|| serde::de::Error::missing_field("apiGroups"))?,
+                    api_groups: value_api_groups.ok_or_else(|| crate::serde::de::Error::missing_field("apiGroups"))?,
                     cluster_scope: value_cluster_scope,
                     namespaces: value_namespaces,
-                    resources: value_resources.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
-                    verbs: value_verbs.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
+                    resources: value_resources.ok_or_else(|| crate::serde::de::Error::missing_field("resources"))?,
+                    verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
                 })
             }
         }
@@ -109,23 +109,23 @@ impl<'de> serde::Deserialize<'de> for ResourcePolicyRule {
     }
 }
 
-impl serde::Serialize for ResourcePolicyRule {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ResourcePolicyRule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourcePolicyRule",
             3 +
             self.cluster_scope.as_ref().map_or(0, |_| 1) +
             self.namespaces.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
         if let Some(value) = &self.cluster_scope {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterScope", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterScope", value)?;
         }
         if let Some(value) = &self.namespaces {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

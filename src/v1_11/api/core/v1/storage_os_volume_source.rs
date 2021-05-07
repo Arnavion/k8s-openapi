@@ -19,8 +19,8 @@ pub struct StorageOSVolumeSource {
     pub volume_namespace: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for StorageOSVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for StorageOSVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_type,
@@ -31,18 +31,18 @@ impl<'de> serde::Deserialize<'de> for StorageOSVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "fsType" => Field::Key_fs_type,
                             "readOnly" => Field::Key_read_only,
@@ -60,28 +60,28 @@ impl<'de> serde::Deserialize<'de> for StorageOSVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = StorageOSVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("StorageOSVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_volume_name: Option<String> = None;
                 let mut value_volume_namespace: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_name => value_volume_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_namespace => value_volume_namespace = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_name => value_volume_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_namespace => value_volume_namespace = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -109,8 +109,8 @@ impl<'de> serde::Deserialize<'de> for StorageOSVolumeSource {
     }
 }
 
-impl serde::Serialize for StorageOSVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for StorageOSVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StorageOSVolumeSource",
             self.fs_type.as_ref().map_or(0, |_| 1) +
@@ -120,20 +120,20 @@ impl serde::Serialize for StorageOSVolumeSource {
             self.volume_namespace.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
         }
         if let Some(value) = &self.volume_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
         }
         if let Some(value) = &self.volume_namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeNamespace", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeNamespace", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

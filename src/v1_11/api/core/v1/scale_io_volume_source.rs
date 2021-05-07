@@ -34,8 +34,8 @@ pub struct ScaleIOVolumeSource {
     pub volume_name: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for ScaleIOVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ScaleIOVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_type,
@@ -51,18 +51,18 @@ impl<'de> serde::Deserialize<'de> for ScaleIOVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "fsType" => Field::Key_fs_type,
                             "gateway" => Field::Key_gateway,
@@ -85,14 +85,14 @@ impl<'de> serde::Deserialize<'de> for ScaleIOVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ScaleIOVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ScaleIOVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_gateway: Option<String> = None;
                 let mut value_protection_domain: Option<String> = None;
@@ -104,32 +104,32 @@ impl<'de> serde::Deserialize<'de> for ScaleIOVolumeSource {
                 let mut value_system: Option<String> = None;
                 let mut value_volume_name: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_gateway => value_gateway = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_protection_domain => value_protection_domain = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_ssl_enabled => value_ssl_enabled = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_mode => value_storage_mode = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_pool => value_storage_pool = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_system => value_system = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_volume_name => value_volume_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_gateway => value_gateway = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_protection_domain => value_protection_domain = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_ssl_enabled => value_ssl_enabled = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_mode => value_storage_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_pool => value_storage_pool = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_system => value_system = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volume_name => value_volume_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ScaleIOVolumeSource {
                     fs_type: value_fs_type,
-                    gateway: value_gateway.ok_or_else(|| serde::de::Error::missing_field("gateway"))?,
+                    gateway: value_gateway.ok_or_else(|| crate::serde::de::Error::missing_field("gateway"))?,
                     protection_domain: value_protection_domain,
                     read_only: value_read_only,
-                    secret_ref: value_secret_ref.ok_or_else(|| serde::de::Error::missing_field("secretRef"))?,
+                    secret_ref: value_secret_ref.ok_or_else(|| crate::serde::de::Error::missing_field("secretRef"))?,
                     ssl_enabled: value_ssl_enabled,
                     storage_mode: value_storage_mode,
                     storage_pool: value_storage_pool,
-                    system: value_system.ok_or_else(|| serde::de::Error::missing_field("system"))?,
+                    system: value_system.ok_or_else(|| crate::serde::de::Error::missing_field("system"))?,
                     volume_name: value_volume_name,
                 })
             }
@@ -154,8 +154,8 @@ impl<'de> serde::Deserialize<'de> for ScaleIOVolumeSource {
     }
 }
 
-impl serde::Serialize for ScaleIOVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ScaleIOVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ScaleIOVolumeSource",
             3 +
@@ -168,29 +168,29 @@ impl serde::Serialize for ScaleIOVolumeSource {
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "gateway", &self.gateway)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gateway", &self.gateway)?;
         if let Some(value) = &self.protection_domain {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "protectionDomain", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "protectionDomain", value)?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &self.secret_ref)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", &self.secret_ref)?;
         if let Some(value) = &self.ssl_enabled {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "sslEnabled", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sslEnabled", value)?;
         }
         if let Some(value) = &self.storage_mode {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageMode", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageMode", value)?;
         }
         if let Some(value) = &self.storage_pool {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storagePool", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storagePool", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "system", &self.system)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "system", &self.system)?;
         if let Some(value) = &self.volume_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

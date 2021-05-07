@@ -16,8 +16,8 @@ pub struct EnvVarSource {
     pub secret_key_ref: Option<crate::api::core::v1::SecretKeySelector>,
 }
 
-impl<'de> serde::Deserialize<'de> for EnvVarSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for EnvVarSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_config_map_key_ref,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for EnvVarSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "configMapKeyRef" => Field::Key_config_map_key_ref,
                             "fieldRef" => Field::Key_field_ref,
@@ -55,26 +55,26 @@ impl<'de> serde::Deserialize<'de> for EnvVarSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = EnvVarSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("EnvVarSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_config_map_key_ref: Option<crate::api::core::v1::ConfigMapKeySelector> = None;
                 let mut value_field_ref: Option<crate::api::core::v1::ObjectFieldSelector> = None;
                 let mut value_resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector> = None;
                 let mut value_secret_key_ref: Option<crate::api::core::v1::SecretKeySelector> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_config_map_key_ref => value_config_map_key_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_field_ref => value_field_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_field_ref => value_resource_field_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_key_ref => value_secret_key_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_config_map_key_ref => value_config_map_key_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_field_ref => value_field_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_field_ref => value_resource_field_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_key_ref => value_secret_key_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for EnvVarSource {
     }
 }
 
-impl serde::Serialize for EnvVarSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for EnvVarSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EnvVarSource",
             self.config_map_key_ref.as_ref().map_or(0, |_| 1) +
@@ -110,17 +110,17 @@ impl serde::Serialize for EnvVarSource {
             self.secret_key_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map_key_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
         }
         if let Some(value) = &self.field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
         }
         if let Some(value) = &self.resource_field_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
         }
         if let Some(value) = &self.secret_key_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

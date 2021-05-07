@@ -22,8 +22,8 @@ pub struct Info {
     pub platform: String,
 }
 
-impl<'de> serde::Deserialize<'de> for Info {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Info {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_build_date,
@@ -38,18 +38,18 @@ impl<'de> serde::Deserialize<'de> for Info {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "buildDate" => Field::Key_build_date,
                             "compiler" => Field::Key_compiler,
@@ -71,14 +71,14 @@ impl<'de> serde::Deserialize<'de> for Info {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Info;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Info")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_build_date: Option<String> = None;
                 let mut value_compiler: Option<String> = None;
                 let mut value_git_commit: Option<String> = None;
@@ -89,31 +89,31 @@ impl<'de> serde::Deserialize<'de> for Info {
                 let mut value_minor: Option<String> = None;
                 let mut value_platform: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_build_date => value_build_date = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_compiler => value_compiler = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_commit => value_git_commit = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_tree_state => value_git_tree_state = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_version => value_git_version = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_go_version => value_go_version = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_major => value_major = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_minor => value_minor = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_platform => value_platform = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_build_date => value_build_date = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_compiler => value_compiler = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_git_commit => value_git_commit = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_git_tree_state => value_git_tree_state = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_git_version => value_git_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_go_version => value_go_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_major => value_major = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_minor => value_minor = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_platform => value_platform = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Info {
-                    build_date: value_build_date.ok_or_else(|| serde::de::Error::missing_field("buildDate"))?,
-                    compiler: value_compiler.ok_or_else(|| serde::de::Error::missing_field("compiler"))?,
-                    git_commit: value_git_commit.ok_or_else(|| serde::de::Error::missing_field("gitCommit"))?,
-                    git_tree_state: value_git_tree_state.ok_or_else(|| serde::de::Error::missing_field("gitTreeState"))?,
-                    git_version: value_git_version.ok_or_else(|| serde::de::Error::missing_field("gitVersion"))?,
-                    go_version: value_go_version.ok_or_else(|| serde::de::Error::missing_field("goVersion"))?,
-                    major: value_major.ok_or_else(|| serde::de::Error::missing_field("major"))?,
-                    minor: value_minor.ok_or_else(|| serde::de::Error::missing_field("minor"))?,
-                    platform: value_platform.ok_or_else(|| serde::de::Error::missing_field("platform"))?,
+                    build_date: value_build_date.ok_or_else(|| crate::serde::de::Error::missing_field("buildDate"))?,
+                    compiler: value_compiler.ok_or_else(|| crate::serde::de::Error::missing_field("compiler"))?,
+                    git_commit: value_git_commit.ok_or_else(|| crate::serde::de::Error::missing_field("gitCommit"))?,
+                    git_tree_state: value_git_tree_state.ok_or_else(|| crate::serde::de::Error::missing_field("gitTreeState"))?,
+                    git_version: value_git_version.ok_or_else(|| crate::serde::de::Error::missing_field("gitVersion"))?,
+                    go_version: value_go_version.ok_or_else(|| crate::serde::de::Error::missing_field("goVersion"))?,
+                    major: value_major.ok_or_else(|| crate::serde::de::Error::missing_field("major"))?,
+                    minor: value_minor.ok_or_else(|| crate::serde::de::Error::missing_field("minor"))?,
+                    platform: value_platform.ok_or_else(|| crate::serde::de::Error::missing_field("platform"))?,
                 })
             }
         }
@@ -136,21 +136,21 @@ impl<'de> serde::Deserialize<'de> for Info {
     }
 }
 
-impl serde::Serialize for Info {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Info {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Info",
             9,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "buildDate", &self.build_date)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "compiler", &self.compiler)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "gitCommit", &self.git_commit)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "gitTreeState", &self.git_tree_state)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "gitVersion", &self.git_version)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "goVersion", &self.go_version)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "major", &self.major)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "minor", &self.minor)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "platform", &self.platform)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "buildDate", &self.build_date)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "compiler", &self.compiler)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gitCommit", &self.git_commit)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gitTreeState", &self.git_tree_state)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gitVersion", &self.git_version)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "goVersion", &self.go_version)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "major", &self.major)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minor", &self.minor)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "platform", &self.platform)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

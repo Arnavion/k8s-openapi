@@ -22,8 +22,8 @@ pub struct JobStatus {
     pub succeeded: Option<i32>,
 }
 
-impl<'de> serde::Deserialize<'de> for JobStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for JobStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "active" => Field::Key_active,
                             "completionTime" => Field::Key_completion_time,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = JobStatus;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("JobStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_active: Option<i32> = None;
                 let mut value_completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_conditions: Option<Vec<crate::api::batch::v1::JobCondition>> = None;
@@ -80,15 +80,15 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
                 let mut value_start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_succeeded: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active => value_active = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_completion_time => value_completion_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_failed => value_failed = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_start_time => value_start_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_succeeded => value_succeeded = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active => value_active = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_completion_time => value_completion_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_failed => value_failed = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_start_time => value_start_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_succeeded => value_succeeded = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for JobStatus {
     }
 }
 
-impl serde::Serialize for JobStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for JobStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JobStatus",
             self.active.as_ref().map_or(0, |_| 1) +
@@ -130,23 +130,23 @@ impl serde::Serialize for JobStatus {
             self.succeeded.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
         }
         if let Some(value) = &self.completion_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", value)?;
         }
         if let Some(value) = &self.conditions {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.failed {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failed", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "failed", value)?;
         }
         if let Some(value) = &self.start_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "startTime", value)?;
         }
         if let Some(value) = &self.succeeded {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "succeeded", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "succeeded", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

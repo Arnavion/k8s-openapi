@@ -10,8 +10,8 @@ pub struct AuditSinkSpec {
     pub webhook: crate::api::auditregistration::v1alpha1::Webhook,
 }
 
-impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for AuditSinkSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_policy,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "policy" => Field::Key_policy,
                             "webhook" => Field::Key_webhook,
@@ -45,28 +45,28 @@ impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = AuditSinkSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("AuditSinkSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_policy: Option<crate::api::auditregistration::v1alpha1::Policy> = None;
                 let mut value_webhook: Option<crate::api::auditregistration::v1alpha1::Webhook> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_policy => value_policy = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_webhook => value_webhook = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_policy => value_policy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_webhook => value_webhook = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(AuditSinkSpec {
-                    policy: value_policy.ok_or_else(|| serde::de::Error::missing_field("policy"))?,
-                    webhook: value_webhook.ok_or_else(|| serde::de::Error::missing_field("webhook"))?,
+                    policy: value_policy.ok_or_else(|| crate::serde::de::Error::missing_field("policy"))?,
+                    webhook: value_webhook.ok_or_else(|| crate::serde::de::Error::missing_field("webhook"))?,
                 })
             }
         }
@@ -82,14 +82,14 @@ impl<'de> serde::Deserialize<'de> for AuditSinkSpec {
     }
 }
 
-impl serde::Serialize for AuditSinkSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for AuditSinkSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AuditSinkSpec",
             2,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "policy", &self.policy)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "webhook", &self.webhook)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policy", &self.policy)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "webhook", &self.webhook)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

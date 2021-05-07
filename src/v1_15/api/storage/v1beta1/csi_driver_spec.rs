@@ -10,8 +10,8 @@ pub struct CSIDriverSpec {
     pub pod_info_on_mount: Option<bool>,
 }
 
-impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_attach_required,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "attachRequired" => Field::Key_attach_required,
                             "podInfoOnMount" => Field::Key_pod_info_on_mount,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CSIDriverSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CSIDriverSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_attach_required: Option<bool> = None;
                 let mut value_pod_info_on_mount: Option<bool> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_attach_required => value_attach_required = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_info_on_mount => value_pod_info_on_mount = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_attach_required => value_attach_required = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_info_on_mount => value_pod_info_on_mount = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for CSIDriverSpec {
     }
 }
 
-impl serde::Serialize for CSIDriverSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CSIDriverSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSIDriverSpec",
             self.attach_required.as_ref().map_or(0, |_| 1) +
             self.pod_info_on_mount.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_required {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
         }
         if let Some(value) = &self.pod_info_on_mount {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

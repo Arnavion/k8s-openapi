@@ -10,8 +10,8 @@ pub struct Lifecycle {
     pub pre_stop: Option<crate::api::core::v1::Handler>,
 }
 
-impl<'de> serde::Deserialize<'de> for Lifecycle {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Lifecycle {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_post_start,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for Lifecycle {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "postStart" => Field::Key_post_start,
                             "preStop" => Field::Key_pre_stop,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for Lifecycle {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Lifecycle;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Lifecycle")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_post_start: Option<crate::api::core::v1::Handler> = None;
                 let mut value_pre_stop: Option<crate::api::core::v1::Handler> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_post_start => value_post_start = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pre_stop => value_pre_stop = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_post_start => value_post_start = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pre_stop => value_pre_stop = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for Lifecycle {
     }
 }
 
-impl serde::Serialize for Lifecycle {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Lifecycle {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Lifecycle",
             self.post_start.as_ref().map_or(0, |_| 1) +
             self.pre_stop.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.post_start {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "postStart", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "postStart", value)?;
         }
         if let Some(value) = &self.pre_stop {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preStop", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preStop", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

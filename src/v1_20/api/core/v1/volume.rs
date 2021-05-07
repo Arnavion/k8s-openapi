@@ -107,8 +107,8 @@ pub struct Volume {
     pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
 }
 
-impl<'de> serde::Deserialize<'de> for Volume {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Volume {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_aws_elastic_block_store,
@@ -144,18 +144,18 @@ impl<'de> serde::Deserialize<'de> for Volume {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "awsElasticBlockStore" => Field::Key_aws_elastic_block_store,
                             "azureDisk" => Field::Key_azure_disk,
@@ -198,14 +198,14 @@ impl<'de> serde::Deserialize<'de> for Volume {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Volume;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Volume")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
                 let mut value_azure_disk: Option<crate::api::core::v1::AzureDiskVolumeSource> = None;
                 let mut value_azure_file: Option<crate::api::core::v1::AzureFileVolumeSource> = None;
@@ -237,39 +237,39 @@ impl<'de> serde::Deserialize<'de> for Volume {
                 let mut value_storageos: Option<crate::api::core::v1::StorageOSVolumeSource> = None;
                 let mut value_vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_aws_elastic_block_store => value_aws_elastic_block_store = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_azure_disk => value_azure_disk = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_azure_file => value_azure_file = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cephfs => value_cephfs = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cinder => value_cinder = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_config_map => value_config_map = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_csi => value_csi = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_downward_api => value_downward_api = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_empty_dir => value_empty_dir = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ephemeral => value_ephemeral = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fc => value_fc = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_flex_volume => value_flex_volume = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_flocker => value_flocker = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_gce_persistent_disk => value_gce_persistent_disk = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_git_repo => value_git_repo = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_glusterfs => value_glusterfs = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_path => value_host_path = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_iscsi => value_iscsi = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_nfs => value_nfs = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_persistent_volume_claim => value_persistent_volume_claim = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_photon_persistent_disk => value_photon_persistent_disk = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_portworx_volume => value_portworx_volume = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_projected => value_projected = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_quobyte => value_quobyte = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rbd => value_rbd = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scale_io => value_scale_io = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret => value_secret = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storageos => value_storageos = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_vsphere_volume => value_vsphere_volume = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_aws_elastic_block_store => value_aws_elastic_block_store = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_azure_disk => value_azure_disk = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_azure_file => value_azure_file = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cephfs => value_cephfs = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cinder => value_cinder = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_config_map => value_config_map = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_csi => value_csi = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_downward_api => value_downward_api = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_empty_dir => value_empty_dir = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ephemeral => value_ephemeral = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fc => value_fc = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_flex_volume => value_flex_volume = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_flocker => value_flocker = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_gce_persistent_disk => value_gce_persistent_disk = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_git_repo => value_git_repo = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_glusterfs => value_glusterfs = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_path => value_host_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_iscsi => value_iscsi = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_nfs => value_nfs = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_persistent_volume_claim => value_persistent_volume_claim = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_photon_persistent_disk => value_photon_persistent_disk = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_portworx_volume => value_portworx_volume = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_projected => value_projected = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_quobyte => value_quobyte = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rbd => value_rbd = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scale_io => value_scale_io = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret => value_secret = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storageos => value_storageos = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_vsphere_volume => value_vsphere_volume = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -292,7 +292,7 @@ impl<'de> serde::Deserialize<'de> for Volume {
                     glusterfs: value_glusterfs,
                     host_path: value_host_path,
                     iscsi: value_iscsi,
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     nfs: value_nfs,
                     persistent_volume_claim: value_persistent_volume_claim,
                     photon_persistent_disk: value_photon_persistent_disk,
@@ -347,8 +347,8 @@ impl<'de> serde::Deserialize<'de> for Volume {
     }
 }
 
-impl serde::Serialize for Volume {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Volume {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Volume",
             1 +
@@ -383,93 +383,93 @@ impl serde::Serialize for Volume {
             self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.aws_elastic_block_store {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
         }
         if let Some(value) = &self.azure_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", value)?;
         }
         if let Some(value) = &self.azure_file {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
         }
         if let Some(value) = &self.cephfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
         }
         if let Some(value) = &self.cinder {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", value)?;
         }
         if let Some(value) = &self.config_map {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
         }
         if let Some(value) = &self.csi {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "csi", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "csi", value)?;
         }
         if let Some(value) = &self.downward_api {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", value)?;
         }
         if let Some(value) = &self.empty_dir {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "emptyDir", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "emptyDir", value)?;
         }
         if let Some(value) = &self.ephemeral {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeral", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeral", value)?;
         }
         if let Some(value) = &self.fc {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fc", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fc", value)?;
         }
         if let Some(value) = &self.flex_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", value)?;
         }
         if let Some(value) = &self.flocker {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", value)?;
         }
         if let Some(value) = &self.gce_persistent_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", value)?;
         }
         if let Some(value) = &self.git_repo {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "gitRepo", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gitRepo", value)?;
         }
         if let Some(value) = &self.glusterfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", value)?;
         }
         if let Some(value) = &self.host_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", value)?;
         }
         if let Some(value) = &self.iscsi {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.nfs {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;
         }
         if let Some(value) = &self.persistent_volume_claim {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeClaim", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeClaim", value)?;
         }
         if let Some(value) = &self.photon_persistent_disk {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", value)?;
         }
         if let Some(value) = &self.portworx_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", value)?;
         }
         if let Some(value) = &self.projected {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "projected", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "projected", value)?;
         }
         if let Some(value) = &self.quobyte {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", value)?;
         }
         if let Some(value) = &self.rbd {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", value)?;
         }
         if let Some(value) = &self.scale_io {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", value)?;
         }
         if let Some(value) = &self.secret {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secret", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secret", value)?;
         }
         if let Some(value) = &self.storageos {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", value)?;
         }
         if let Some(value) = &self.vsphere_volume {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

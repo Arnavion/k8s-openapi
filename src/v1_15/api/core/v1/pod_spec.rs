@@ -97,8 +97,8 @@ pub struct PodSpec {
     pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
 }
 
-impl<'de> serde::Deserialize<'de> for PodSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for PodSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active_deadline_seconds,
@@ -135,18 +135,18 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "activeDeadlineSeconds" => Field::Key_active_deadline_seconds,
                             "affinity" => Field::Key_affinity,
@@ -190,14 +190,14 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("PodSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_active_deadline_seconds: Option<i64> = None;
                 let mut value_affinity: Option<crate::api::core::v1::Affinity> = None;
                 let mut value_automount_service_account_token: Option<bool> = None;
@@ -230,40 +230,40 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
                 let mut value_tolerations: Option<Vec<crate::api::core::v1::Toleration>> = None;
                 let mut value_volumes: Option<Vec<crate::api::core::v1::Volume>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_affinity => value_affinity = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_automount_service_account_token => value_automount_service_account_token = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_containers => value_containers = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_dns_config => value_dns_config = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_dns_policy => value_dns_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_enable_service_links => value_enable_service_links = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_aliases => value_host_aliases = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_ipc => value_host_ipc = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_network => value_host_network = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_pid => value_host_pid = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_hostname => value_hostname = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image_pull_secrets => value_image_pull_secrets = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_init_containers => value_init_containers = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_name => value_node_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_selector => value_node_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_preemption_policy => value_preemption_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_priority => value_priority = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_priority_class_name => value_priority_class_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_readiness_gates => value_readiness_gates = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_restart_policy => value_restart_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_runtime_class_name => value_runtime_class_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scheduler_name => value_scheduler_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_security_context => value_security_context = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service_account => value_service_account = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service_account_name => value_service_account_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_share_process_namespace => value_share_process_namespace = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_subdomain => value_subdomain = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_grace_period_seconds => value_termination_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_tolerations => value_tolerations = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volumes => value_volumes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_affinity => value_affinity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_automount_service_account_token => value_automount_service_account_token = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_containers => value_containers = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_dns_config => value_dns_config = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dns_policy => value_dns_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_enable_service_links => value_enable_service_links = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_aliases => value_host_aliases = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_ipc => value_host_ipc = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_network => value_host_network = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_pid => value_host_pid = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_hostname => value_hostname = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image_pull_secrets => value_image_pull_secrets = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_init_containers => value_init_containers = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_name => value_node_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_selector => value_node_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_preemption_policy => value_preemption_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_priority => value_priority = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_priority_class_name => value_priority_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_readiness_gates => value_readiness_gates = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_restart_policy => value_restart_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_runtime_class_name => value_runtime_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scheduler_name => value_scheduler_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_security_context => value_security_context = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_account => value_service_account = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_account_name => value_service_account_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_share_process_namespace => value_share_process_namespace = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_subdomain => value_subdomain = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_grace_period_seconds => value_termination_grace_period_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tolerations => value_tolerations = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volumes => value_volumes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -271,7 +271,7 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
                     active_deadline_seconds: value_active_deadline_seconds,
                     affinity: value_affinity,
                     automount_service_account_token: value_automount_service_account_token,
-                    containers: value_containers.ok_or_else(|| serde::de::Error::missing_field("containers"))?,
+                    containers: value_containers.ok_or_else(|| crate::serde::de::Error::missing_field("containers"))?,
                     dns_config: value_dns_config,
                     dns_policy: value_dns_policy,
                     enable_service_links: value_enable_service_links,
@@ -343,8 +343,8 @@ impl<'de> serde::Deserialize<'de> for PodSpec {
     }
 }
 
-impl serde::Serialize for PodSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for PodSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSpec",
             1 +
@@ -380,96 +380,96 @@ impl serde::Serialize for PodSpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
         }
         if let Some(value) = &self.affinity {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", value)?;
         }
         if let Some(value) = &self.automount_service_account_token {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "containers", &self.containers)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containers", &self.containers)?;
         if let Some(value) = &self.dns_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsConfig", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dnsConfig", value)?;
         }
         if let Some(value) = &self.dns_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", value)?;
         }
         if let Some(value) = &self.enable_service_links {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "enableServiceLinks", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "enableServiceLinks", value)?;
         }
         if let Some(value) = &self.host_aliases {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
         }
         if let Some(value) = &self.host_ipc {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
         }
         if let Some(value) = &self.host_network {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
         }
         if let Some(value) = &self.host_pid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
         }
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
         }
         if let Some(value) = &self.image_pull_secrets {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
         }
         if let Some(value) = &self.init_containers {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
         }
         if let Some(value) = &self.node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
         }
         if let Some(value) = &self.node_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
         }
         if let Some(value) = &self.preemption_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "preemptionPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preemptionPolicy", value)?;
         }
         if let Some(value) = &self.priority {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "priority", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "priority", value)?;
         }
         if let Some(value) = &self.priority_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "priorityClassName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "priorityClassName", value)?;
         }
         if let Some(value) = &self.readiness_gates {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", value)?;
         }
         if let Some(value) = &self.restart_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
         }
         if let Some(value) = &self.runtime_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "runtimeClassName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runtimeClassName", value)?;
         }
         if let Some(value) = &self.scheduler_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", value)?;
         }
         if let Some(value) = &self.security_context {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
         }
         if let Some(value) = &self.service_account {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
         }
         if let Some(value) = &self.service_account_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", value)?;
         }
         if let Some(value) = &self.share_process_namespace {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "shareProcessNamespace", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "shareProcessNamespace", value)?;
         }
         if let Some(value) = &self.subdomain {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", value)?;
         }
         if let Some(value) = &self.termination_grace_period_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.tolerations {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
         }
         if let Some(value) = &self.volumes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

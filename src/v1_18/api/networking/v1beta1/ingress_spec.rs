@@ -16,8 +16,8 @@ pub struct IngressSpec {
     pub tls: Option<Vec<crate::api::networking::v1beta1::IngressTLS>>,
 }
 
-impl<'de> serde::Deserialize<'de> for IngressSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_backend,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for IngressSpec {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "backend" => Field::Key_backend,
                             "ingressClassName" => Field::Key_ingress_class_name,
@@ -55,26 +55,26 @@ impl<'de> serde::Deserialize<'de> for IngressSpec {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = IngressSpec;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("IngressSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_backend: Option<crate::api::networking::v1beta1::IngressBackend> = None;
                 let mut value_ingress_class_name: Option<String> = None;
                 let mut value_rules: Option<Vec<crate::api::networking::v1beta1::IngressRule>> = None;
                 let mut value_tls: Option<Vec<crate::api::networking::v1beta1::IngressTLS>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_backend => value_backend = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ingress_class_name => value_ingress_class_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rules => value_rules = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_tls => value_tls = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_backend => value_backend = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ingress_class_name => value_ingress_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tls => value_tls = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for IngressSpec {
     }
 }
 
-impl serde::Serialize for IngressSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for IngressSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressSpec",
             self.backend.as_ref().map_or(0, |_| 1) +
@@ -110,17 +110,17 @@ impl serde::Serialize for IngressSpec {
             self.tls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.backend {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "backend", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "backend", value)?;
         }
         if let Some(value) = &self.ingress_class_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ingressClassName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingressClassName", value)?;
         }
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
         if let Some(value) = &self.tls {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tls", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tls", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

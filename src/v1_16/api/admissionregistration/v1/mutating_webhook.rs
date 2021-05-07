@@ -79,8 +79,8 @@ pub struct MutatingWebhook {
     pub timeout_seconds: Option<i32>,
 }
 
-impl<'de> serde::Deserialize<'de> for MutatingWebhook {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_admission_review_versions,
@@ -97,18 +97,18 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "admissionReviewVersions" => Field::Key_admission_review_versions,
                             "clientConfig" => Field::Key_client_config,
@@ -132,14 +132,14 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = MutatingWebhook;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("MutatingWebhook")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_admission_review_versions: Option<Vec<String>> = None;
                 let mut value_client_config: Option<crate::api::admissionregistration::v1::WebhookClientConfig> = None;
                 let mut value_failure_policy: Option<String> = None;
@@ -152,34 +152,34 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
                 let mut value_side_effects: Option<String> = None;
                 let mut value_timeout_seconds: Option<i32> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_admission_review_versions => value_admission_review_versions = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_client_config => value_client_config = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_failure_policy => value_failure_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_match_policy => value_match_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_namespace_selector => value_namespace_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_object_selector => value_object_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reinvocation_policy => value_reinvocation_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rules => value_rules = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_side_effects => value_side_effects = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_timeout_seconds => value_timeout_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_admission_review_versions => value_admission_review_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_client_config => value_client_config = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_failure_policy => value_failure_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_match_policy => value_match_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_namespace_selector => value_namespace_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_object_selector => value_object_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reinvocation_policy => value_reinvocation_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_side_effects => value_side_effects = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_timeout_seconds => value_timeout_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(MutatingWebhook {
-                    admission_review_versions: value_admission_review_versions.ok_or_else(|| serde::de::Error::missing_field("admissionReviewVersions"))?,
-                    client_config: value_client_config.ok_or_else(|| serde::de::Error::missing_field("clientConfig"))?,
+                    admission_review_versions: value_admission_review_versions.ok_or_else(|| crate::serde::de::Error::missing_field("admissionReviewVersions"))?,
+                    client_config: value_client_config.ok_or_else(|| crate::serde::de::Error::missing_field("clientConfig"))?,
                     failure_policy: value_failure_policy,
                     match_policy: value_match_policy,
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     namespace_selector: value_namespace_selector,
                     object_selector: value_object_selector,
                     reinvocation_policy: value_reinvocation_policy,
                     rules: value_rules,
-                    side_effects: value_side_effects.ok_or_else(|| serde::de::Error::missing_field("sideEffects"))?,
+                    side_effects: value_side_effects.ok_or_else(|| crate::serde::de::Error::missing_field("sideEffects"))?,
                     timeout_seconds: value_timeout_seconds,
                 })
             }
@@ -205,8 +205,8 @@ impl<'de> serde::Deserialize<'de> for MutatingWebhook {
     }
 }
 
-impl serde::Serialize for MutatingWebhook {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for MutatingWebhook {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "MutatingWebhook",
             4 +
@@ -218,31 +218,31 @@ impl serde::Serialize for MutatingWebhook {
             self.rules.as_ref().map_or(0, |_| 1) +
             self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "admissionReviewVersions", &self.admission_review_versions)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "admissionReviewVersions", &self.admission_review_versions)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.failure_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;
         }
         if let Some(value) = &self.match_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "matchPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchPolicy", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.namespace_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
         }
         if let Some(value) = &self.object_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "objectSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "objectSelector", value)?;
         }
         if let Some(value) = &self.reinvocation_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reinvocationPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "reinvocationPolicy", value)?;
         }
         if let Some(value) = &self.rules {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "sideEffects", &self.side_effects)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sideEffects", &self.side_effects)?;
         if let Some(value) = &self.timeout_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "timeoutSeconds", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

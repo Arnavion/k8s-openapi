@@ -22,8 +22,8 @@ pub struct StatusDetails {
     pub uid: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for StatusDetails {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for StatusDetails {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_causes,
@@ -35,18 +35,18 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "causes" => Field::Key_causes,
                             "group" => Field::Key_group,
@@ -65,14 +65,14 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = StatusDetails;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("StatusDetails")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_causes: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>> = None;
                 let mut value_group: Option<String> = None;
                 let mut value_kind: Option<String> = None;
@@ -80,15 +80,15 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
                 let mut value_retry_after_seconds: Option<i32> = None;
                 let mut value_uid: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_causes => value_causes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group => value_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_retry_after_seconds => value_retry_after_seconds = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_causes => value_causes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_retry_after_seconds => value_retry_after_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -118,8 +118,8 @@ impl<'de> serde::Deserialize<'de> for StatusDetails {
     }
 }
 
-impl serde::Serialize for StatusDetails {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for StatusDetails {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatusDetails",
             self.causes.as_ref().map_or(0, |_| 1) +
@@ -130,23 +130,23 @@ impl serde::Serialize for StatusDetails {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.causes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "causes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "causes", value)?;
         }
         if let Some(value) = &self.group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
         }
         if let Some(value) = &self.kind {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.retry_after_seconds {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "retryAfterSeconds", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "retryAfterSeconds", value)?;
         }
         if let Some(value) = &self.uid {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

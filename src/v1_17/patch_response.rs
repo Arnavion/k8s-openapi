@@ -3,14 +3,14 @@
 /// The common response type for all patch API operations.
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum PatchResponse<T> where T: serde::de::DeserializeOwned {
+pub enum PatchResponse<T> where T: crate::serde::de::DeserializeOwned {
     Ok(T),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl<T> crate::Response for PatchResponse<T> where T: serde::de::DeserializeOwned {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+impl<T> crate::Response for PatchResponse<T> where T: crate::serde::de::DeserializeOwned {
+    fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
                 let result = match serde_json::from_slice(buf) {
@@ -26,7 +26,7 @@ impl<T> crate::Response for PatchResponse<T> where T: serde::de::DeserializeOwne
                         (Ok(None), 0)
                     }
                     else {
-                        match serde_json::from_slice(buf) {
+                        match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
                             Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),

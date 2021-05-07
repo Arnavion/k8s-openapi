@@ -28,8 +28,8 @@ pub struct RBDPersistentVolumeSource {
     pub user: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for RBDPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_type,
@@ -43,18 +43,18 @@ impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "fsType" => Field::Key_fs_type,
                             "image" => Field::Key_image,
@@ -75,14 +75,14 @@ impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = RBDPersistentVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("RBDPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_image: Option<String> = None;
                 let mut value_keyring: Option<String> = None;
@@ -92,25 +92,25 @@ impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
                 let mut value_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_user: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image => value_image = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_keyring => value_keyring = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_monitors => value_monitors = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_pool => value_pool = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image => value_image = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_keyring => value_keyring = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_monitors => value_monitors = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_pool => value_pool = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RBDPersistentVolumeSource {
                     fs_type: value_fs_type,
-                    image: value_image.ok_or_else(|| serde::de::Error::missing_field("image"))?,
+                    image: value_image.ok_or_else(|| crate::serde::de::Error::missing_field("image"))?,
                     keyring: value_keyring,
-                    monitors: value_monitors.ok_or_else(|| serde::de::Error::missing_field("monitors"))?,
+                    monitors: value_monitors.ok_or_else(|| crate::serde::de::Error::missing_field("monitors"))?,
                     pool: value_pool,
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,
@@ -136,8 +136,8 @@ impl<'de> serde::Deserialize<'de> for RBDPersistentVolumeSource {
     }
 }
 
-impl serde::Serialize for RBDPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for RBDPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RBDPersistentVolumeSource",
             2 +
@@ -149,25 +149,25 @@ impl serde::Serialize for RBDPersistentVolumeSource {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
         if let Some(value) = &self.keyring {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "keyring", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "keyring", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
         if let Some(value) = &self.pool {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "pool", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "pool", value)?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
         }
         if let Some(value) = &self.user {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

@@ -21,8 +21,8 @@ pub struct CertificateSigningRequestCondition {
     pub type_: String,
 }
 
-impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestCondition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_last_transition_time,
@@ -34,18 +34,18 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "lastTransitionTime" => Field::Key_last_transition_time,
                             "lastUpdateTime" => Field::Key_last_update_time,
@@ -64,14 +64,14 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CertificateSigningRequestCondition;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CertificateSigningRequestCondition")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_last_update_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
@@ -79,15 +79,15 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
                 let mut value_status: Option<String> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_last_transition_time => value_last_transition_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_last_update_time => value_last_update_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_last_transition_time => value_last_transition_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_last_update_time => value_last_update_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -97,7 +97,7 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
                     message: value_message,
                     reason: value_reason,
                     status: value_status,
-                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
                 })
             }
         }
@@ -117,8 +117,8 @@ impl<'de> serde::Deserialize<'de> for CertificateSigningRequestCondition {
     }
 }
 
-impl serde::Serialize for CertificateSigningRequestCondition {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CertificateSigningRequestCondition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestCondition",
             1 +
@@ -129,21 +129,21 @@ impl serde::Serialize for CertificateSigningRequestCondition {
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.last_transition_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
         }
         if let Some(value) = &self.last_update_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastUpdateTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lastUpdateTime", value)?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
         if let Some(value) = &self.status {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

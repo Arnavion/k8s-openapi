@@ -13,8 +13,8 @@ pub struct TypedLocalObjectReference {
     pub name: String,
 }
 
-impl<'de> serde::Deserialize<'de> for TypedLocalObjectReference {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for TypedLocalObjectReference {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_group,
@@ -23,18 +23,18 @@ impl<'de> serde::Deserialize<'de> for TypedLocalObjectReference {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "apiGroup" => Field::Key_api_group,
                             "kind" => Field::Key_kind,
@@ -50,31 +50,31 @@ impl<'de> serde::Deserialize<'de> for TypedLocalObjectReference {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TypedLocalObjectReference;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("TypedLocalObjectReference")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_api_group: Option<String> = None;
                 let mut value_kind: Option<String> = None;
                 let mut value_name: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_group => value_api_group = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_group => value_api_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TypedLocalObjectReference {
                     api_group: value_api_group,
-                    kind: value_kind.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                 })
             }
         }
@@ -91,18 +91,18 @@ impl<'de> serde::Deserialize<'de> for TypedLocalObjectReference {
     }
 }
 
-impl serde::Serialize for TypedLocalObjectReference {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for TypedLocalObjectReference {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TypedLocalObjectReference",
             2 +
             self.api_group.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_group {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroup", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroup", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

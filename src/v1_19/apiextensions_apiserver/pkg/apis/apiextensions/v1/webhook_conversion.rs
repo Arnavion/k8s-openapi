@@ -10,8 +10,8 @@ pub struct WebhookConversion {
     pub conversion_review_versions: Vec<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for WebhookConversion {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for WebhookConversion {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_client_config,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for WebhookConversion {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "clientConfig" => Field::Key_client_config,
                             "conversionReviewVersions" => Field::Key_conversion_review_versions,
@@ -45,28 +45,28 @@ impl<'de> serde::Deserialize<'de> for WebhookConversion {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = WebhookConversion;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("WebhookConversion")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig> = None;
                 let mut value_conversion_review_versions: Option<Vec<String>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_client_config => value_client_config = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conversion_review_versions => value_conversion_review_versions = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_client_config => value_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conversion_review_versions => value_conversion_review_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(WebhookConversion {
                     client_config: value_client_config,
-                    conversion_review_versions: value_conversion_review_versions.ok_or_else(|| serde::de::Error::missing_field("conversionReviewVersions"))?,
+                    conversion_review_versions: value_conversion_review_versions.ok_or_else(|| crate::serde::de::Error::missing_field("conversionReviewVersions"))?,
                 })
             }
         }
@@ -82,17 +82,17 @@ impl<'de> serde::Deserialize<'de> for WebhookConversion {
     }
 }
 
-impl serde::Serialize for WebhookConversion {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for WebhookConversion {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WebhookConversion",
             1 +
             self.client_config.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.client_config {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", &self.conversion_review_versions)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", &self.conversion_review_versions)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

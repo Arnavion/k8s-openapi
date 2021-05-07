@@ -10,8 +10,8 @@ pub struct NetworkPolicyIngressRule {
     pub ports: Option<Vec<crate::api::networking::v1::NetworkPolicyPort>>,
 }
 
-impl<'de> serde::Deserialize<'de> for NetworkPolicyIngressRule {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyIngressRule {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_from,
@@ -19,18 +19,18 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyIngressRule {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "from" => Field::Key_from,
                             "ports" => Field::Key_ports,
@@ -45,22 +45,22 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyIngressRule {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NetworkPolicyIngressRule;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NetworkPolicyIngressRule")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_from: Option<Vec<crate::api::networking::v1::NetworkPolicyPeer>> = None;
                 let mut value_ports: Option<Vec<crate::api::networking::v1::NetworkPolicyPort>> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_from => value_from = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_from => value_from = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ports => value_ports = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,19 +82,19 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyIngressRule {
     }
 }
 
-impl serde::Serialize for NetworkPolicyIngressRule {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NetworkPolicyIngressRule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyIngressRule",
             self.from.as_ref().map_or(0, |_| 1) +
             self.ports.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.from {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "from", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "from", value)?;
         }
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

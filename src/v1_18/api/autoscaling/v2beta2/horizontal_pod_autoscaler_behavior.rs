@@ -13,8 +13,8 @@ pub struct HorizontalPodAutoscalerBehavior {
     pub scale_up: Option<crate::api::autoscaling::v2beta2::HPAScalingRules>,
 }
 
-impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_scale_down,
@@ -22,18 +22,18 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "scaleDown" => Field::Key_scale_down,
                             "scaleUp" => Field::Key_scale_up,
@@ -48,22 +48,22 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HorizontalPodAutoscalerBehavior;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("HorizontalPodAutoscalerBehavior")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_scale_down: Option<crate::api::autoscaling::v2beta2::HPAScalingRules> = None;
                 let mut value_scale_up: Option<crate::api::autoscaling::v2beta2::HPAScalingRules> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_scale_down => value_scale_down = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scale_up => value_scale_up = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_scale_down => value_scale_down = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scale_up => value_scale_up = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -85,19 +85,19 @@ impl<'de> serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
     }
 }
 
-impl serde::Serialize for HorizontalPodAutoscalerBehavior {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for HorizontalPodAutoscalerBehavior {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerBehavior",
             self.scale_down.as_ref().map_or(0, |_| 1) +
             self.scale_up.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.scale_down {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleDown", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scaleDown", value)?;
         }
         if let Some(value) = &self.scale_up {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleUp", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scaleUp", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

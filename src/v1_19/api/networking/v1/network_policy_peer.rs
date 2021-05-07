@@ -17,8 +17,8 @@ pub struct NetworkPolicyPeer {
     pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
-impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyPeer {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ip_block,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "ipBlock" => Field::Key_ip_block,
                             "namespaceSelector" => Field::Key_namespace_selector,
@@ -54,24 +54,24 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NetworkPolicyPeer;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("NetworkPolicyPeer")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_ip_block: Option<crate::api::networking::v1::IPBlock> = None;
                 let mut value_namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ip_block => value_ip_block = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespace_selector => value_namespace_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_selector => value_pod_selector = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ip_block => value_ip_block = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespace_selector => value_namespace_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pod_selector => value_pod_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -95,8 +95,8 @@ impl<'de> serde::Deserialize<'de> for NetworkPolicyPeer {
     }
 }
 
-impl serde::Serialize for NetworkPolicyPeer {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for NetworkPolicyPeer {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyPeer",
             self.ip_block.as_ref().map_or(0, |_| 1) +
@@ -104,14 +104,14 @@ impl serde::Serialize for NetworkPolicyPeer {
             self.pod_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ip_block {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ipBlock", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ipBlock", value)?;
         }
         if let Some(value) = &self.namespace_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
         }
         if let Some(value) = &self.pod_selector {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

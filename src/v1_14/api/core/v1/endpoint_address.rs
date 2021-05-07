@@ -16,8 +16,8 @@ pub struct EndpointAddress {
     pub target_ref: Option<crate::api::core::v1::ObjectReference>,
 }
 
-impl<'de> serde::Deserialize<'de> for EndpointAddress {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_hostname,
@@ -27,18 +27,18 @@ impl<'de> serde::Deserialize<'de> for EndpointAddress {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "hostname" => Field::Key_hostname,
                             "ip" => Field::Key_ip,
@@ -55,32 +55,32 @@ impl<'de> serde::Deserialize<'de> for EndpointAddress {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = EndpointAddress;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("EndpointAddress")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_hostname: Option<String> = None;
                 let mut value_ip: Option<String> = None;
                 let mut value_node_name: Option<String> = None;
                 let mut value_target_ref: Option<crate::api::core::v1::ObjectReference> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_hostname => value_hostname = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ip => value_ip = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_node_name => value_node_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_ref => value_target_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_hostname => value_hostname = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ip => value_ip = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_node_name => value_node_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_ref => value_target_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(EndpointAddress {
                     hostname: value_hostname,
-                    ip: value_ip.ok_or_else(|| serde::de::Error::missing_field("ip"))?,
+                    ip: value_ip.ok_or_else(|| crate::serde::de::Error::missing_field("ip"))?,
                     node_name: value_node_name,
                     target_ref: value_target_ref,
                 })
@@ -100,8 +100,8 @@ impl<'de> serde::Deserialize<'de> for EndpointAddress {
     }
 }
 
-impl serde::Serialize for EndpointAddress {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for EndpointAddress {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EndpointAddress",
             1 +
@@ -110,15 +110,15 @@ impl serde::Serialize for EndpointAddress {
             self.target_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostname {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &self.ip)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &self.ip)?;
         if let Some(value) = &self.node_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
         }
         if let Some(value) = &self.target_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

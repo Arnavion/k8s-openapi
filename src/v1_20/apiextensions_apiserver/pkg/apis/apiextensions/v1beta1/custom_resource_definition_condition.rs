@@ -19,8 +19,8 @@ pub struct CustomResourceDefinitionCondition {
     pub type_: String,
 }
 
-impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionCondition {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionCondition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_last_transition_time,
@@ -31,18 +31,18 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionCondition {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "lastTransitionTime" => Field::Key_last_transition_time,
                             "message" => Field::Key_message,
@@ -60,28 +60,28 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionCondition {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CustomResourceDefinitionCondition;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CustomResourceDefinitionCondition")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_last_transition_time => value_last_transition_time = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_last_transition_time => value_last_transition_time = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -89,8 +89,8 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionCondition {
                     last_transition_time: value_last_transition_time,
                     message: value_message,
                     reason: value_reason,
-                    status: value_status.ok_or_else(|| serde::de::Error::missing_field("status"))?,
-                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
+                    status: value_status.ok_or_else(|| crate::serde::de::Error::missing_field("status"))?,
+                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
                 })
             }
         }
@@ -109,8 +109,8 @@ impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionCondition {
     }
 }
 
-impl serde::Serialize for CustomResourceDefinitionCondition {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CustomResourceDefinitionCondition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionCondition",
             2 +
@@ -119,16 +119,16 @@ impl serde::Serialize for CustomResourceDefinitionCondition {
             self.reason.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.last_transition_time {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
         }
         if let Some(value) = &self.message {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
         if let Some(value) = &self.reason {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "status", &self.status)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "status", &self.status)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

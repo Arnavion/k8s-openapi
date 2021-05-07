@@ -37,8 +37,8 @@ pub struct ISCSIVolumeSource {
     pub target_portal: String,
 }
 
-impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ISCSIVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_chap_auth_discovery,
@@ -55,18 +55,18 @@ impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "chapAuthDiscovery" => Field::Key_chap_auth_discovery,
                             "chapAuthSession" => Field::Key_chap_auth_session,
@@ -90,14 +90,14 @@ impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ISCSIVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ISCSIVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_chap_auth_discovery: Option<bool> = None;
                 let mut value_chap_auth_session: Option<bool> = None;
                 let mut value_fs_type: Option<String> = None;
@@ -110,20 +110,20 @@ impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
                 let mut value_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_target_portal: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_chap_auth_discovery => value_chap_auth_discovery = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_chap_auth_session => value_chap_auth_session = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_initiator_name => value_initiator_name = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_iqn => value_iqn = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_iscsi_interface => value_iscsi_interface = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_lun => value_lun = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_portals => value_portals = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_portal => value_target_portal = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_chap_auth_discovery => value_chap_auth_discovery = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_chap_auth_session => value_chap_auth_session = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_initiator_name => value_initiator_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_iqn => value_iqn = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_iscsi_interface => value_iscsi_interface = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_lun => value_lun = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_portals => value_portals = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_portal => value_target_portal = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -132,13 +132,13 @@ impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
                     chap_auth_session: value_chap_auth_session,
                     fs_type: value_fs_type,
                     initiator_name: value_initiator_name,
-                    iqn: value_iqn.ok_or_else(|| serde::de::Error::missing_field("iqn"))?,
+                    iqn: value_iqn.ok_or_else(|| crate::serde::de::Error::missing_field("iqn"))?,
                     iscsi_interface: value_iscsi_interface,
-                    lun: value_lun.ok_or_else(|| serde::de::Error::missing_field("lun"))?,
+                    lun: value_lun.ok_or_else(|| crate::serde::de::Error::missing_field("lun"))?,
                     portals: value_portals,
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,
-                    target_portal: value_target_portal.ok_or_else(|| serde::de::Error::missing_field("targetPortal"))?,
+                    target_portal: value_target_portal.ok_or_else(|| crate::serde::de::Error::missing_field("targetPortal"))?,
                 })
             }
         }
@@ -163,8 +163,8 @@ impl<'de> serde::Deserialize<'de> for ISCSIVolumeSource {
     }
 }
 
-impl serde::Serialize for ISCSIVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ISCSIVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ISCSIVolumeSource",
             3 +
@@ -178,32 +178,32 @@ impl serde::Serialize for ISCSIVolumeSource {
             self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.chap_auth_discovery {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthDiscovery", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthDiscovery", value)?;
         }
         if let Some(value) = &self.chap_auth_session {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthSession", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthSession", value)?;
         }
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
         if let Some(value) = &self.initiator_name {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "initiatorName", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initiatorName", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "iqn", &self.iqn)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "iqn", &self.iqn)?;
         if let Some(value) = &self.iscsi_interface {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsiInterface", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "iscsiInterface", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "lun", &self.lun)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lun", &self.lun)?;
         if let Some(value) = &self.portals {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "portals", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "portals", value)?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "targetPortal", &self.target_portal)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetPortal", &self.target_portal)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

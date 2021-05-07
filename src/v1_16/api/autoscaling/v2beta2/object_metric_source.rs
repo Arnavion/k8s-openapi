@@ -12,8 +12,8 @@ pub struct ObjectMetricSource {
     pub target: crate::api::autoscaling::v2beta2::MetricTarget,
 }
 
-impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for ObjectMetricSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_described_object,
@@ -22,18 +22,18 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "describedObject" => Field::Key_described_object,
                             "metric" => Field::Key_metric,
@@ -49,31 +49,31 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ObjectMetricSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("ObjectMetricSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_described_object: Option<crate::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
                 let mut value_metric: Option<crate::api::autoscaling::v2beta2::MetricIdentifier> = None;
                 let mut value_target: Option<crate::api::autoscaling::v2beta2::MetricTarget> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_described_object => value_described_object = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric => value_metric = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_target => value_target = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_described_object => value_described_object = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metric => value_metric = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_target => value_target = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ObjectMetricSource {
-                    described_object: value_described_object.ok_or_else(|| serde::de::Error::missing_field("describedObject"))?,
-                    metric: value_metric.ok_or_else(|| serde::de::Error::missing_field("metric"))?,
-                    target: value_target.ok_or_else(|| serde::de::Error::missing_field("target"))?,
+                    described_object: value_described_object.ok_or_else(|| crate::serde::de::Error::missing_field("describedObject"))?,
+                    metric: value_metric.ok_or_else(|| crate::serde::de::Error::missing_field("metric"))?,
+                    target: value_target.ok_or_else(|| crate::serde::de::Error::missing_field("target"))?,
                 })
             }
         }
@@ -90,15 +90,15 @@ impl<'de> serde::Deserialize<'de> for ObjectMetricSource {
     }
 }
 
-impl serde::Serialize for ObjectMetricSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for ObjectMetricSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMetricSource",
             3,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "describedObject", &self.described_object)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "metric", &self.metric)?;
-        serde::ser::SerializeStruct::serialize_field(&mut state, "target", &self.target)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "describedObject", &self.described_object)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metric", &self.metric)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "target", &self.target)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

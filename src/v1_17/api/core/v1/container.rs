@@ -70,8 +70,8 @@ pub struct Container {
     pub working_dir: Option<String>,
 }
 
-impl<'de> serde::Deserialize<'de> for Container {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for Container {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_args,
@@ -99,18 +99,18 @@ impl<'de> serde::Deserialize<'de> for Container {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "args" => Field::Key_args,
                             "command" => Field::Key_command,
@@ -145,14 +145,14 @@ impl<'de> serde::Deserialize<'de> for Container {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = Container;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("Container")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_args: Option<Vec<String>> = None;
                 let mut value_command: Option<Vec<String>> = None;
                 let mut value_env: Option<Vec<crate::api::core::v1::EnvVar>> = None;
@@ -176,31 +176,31 @@ impl<'de> serde::Deserialize<'de> for Container {
                 let mut value_volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>> = None;
                 let mut value_working_dir: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_args => value_args = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_command => value_command = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_env => value_env = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_env_from => value_env_from = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image => value_image = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image_pull_policy => value_image_pull_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_lifecycle => value_lifecycle = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_liveness_probe => value_liveness_probe = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_readiness_probe => value_readiness_probe = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resources => value_resources = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_security_context => value_security_context = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_startup_probe => value_startup_probe = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_stdin => value_stdin = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_stdin_once => value_stdin_once = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_message_path => value_termination_message_path = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_message_policy => value_termination_message_policy = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_tty => value_tty = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_devices => value_volume_devices = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_mounts => value_volume_mounts = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_working_dir => value_working_dir = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_args => value_args = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_command => value_command = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_env => value_env = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_env_from => value_env_from = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image => value_image = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image_pull_policy => value_image_pull_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_lifecycle => value_lifecycle = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_liveness_probe => value_liveness_probe = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_ports => value_ports = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_readiness_probe => value_readiness_probe = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_security_context => value_security_context = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_startup_probe => value_startup_probe = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_stdin => value_stdin = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_stdin_once => value_stdin_once = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_message_path => value_termination_message_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_message_policy => value_termination_message_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tty => value_tty = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_devices => value_volume_devices = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_mounts => value_volume_mounts = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_working_dir => value_working_dir = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -213,7 +213,7 @@ impl<'de> serde::Deserialize<'de> for Container {
                     image_pull_policy: value_image_pull_policy,
                     lifecycle: value_lifecycle,
                     liveness_probe: value_liveness_probe,
-                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     ports: value_ports,
                     readiness_probe: value_readiness_probe,
                     resources: value_resources,
@@ -262,8 +262,8 @@ impl<'de> serde::Deserialize<'de> for Container {
     }
 }
 
-impl serde::Serialize for Container {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for Container {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Container",
             1 +
@@ -290,69 +290,69 @@ impl serde::Serialize for Container {
             self.working_dir.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.args {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
         }
         if let Some(value) = &self.command {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
         }
         if let Some(value) = &self.env {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
         }
         if let Some(value) = &self.env_from {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
         }
         if let Some(value) = &self.image {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "image", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "image", value)?;
         }
         if let Some(value) = &self.image_pull_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", value)?;
         }
         if let Some(value) = &self.lifecycle {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", value)?;
         }
         if let Some(value) = &self.liveness_probe {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.ports {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
         if let Some(value) = &self.readiness_probe {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
         }
         if let Some(value) = &self.resources {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
         }
         if let Some(value) = &self.security_context {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
         }
         if let Some(value) = &self.startup_probe {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "startupProbe", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "startupProbe", value)?;
         }
         if let Some(value) = &self.stdin {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", value)?;
         }
         if let Some(value) = &self.stdin_once {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", value)?;
         }
         if let Some(value) = &self.termination_message_path {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", value)?;
         }
         if let Some(value) = &self.termination_message_policy {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", value)?;
         }
         if let Some(value) = &self.tty {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
         }
         if let Some(value) = &self.volume_devices {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", value)?;
         }
         if let Some(value) = &self.volume_mounts {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
         }
         if let Some(value) = &self.working_dir {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;
         }
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }

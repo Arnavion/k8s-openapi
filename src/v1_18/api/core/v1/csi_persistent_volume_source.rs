@@ -31,8 +31,8 @@ pub struct CSIPersistentVolumeSource {
     pub volume_handle: String,
 }
 
-impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_controller_expand_secret_ref,
@@ -47,18 +47,18 @@ impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> serde::de::Visitor<'de> for Visitor {
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         f.write_str("field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
                             "controllerExpandSecretRef" => Field::Key_controller_expand_secret_ref,
                             "controllerPublishSecretRef" => Field::Key_controller_publish_secret_ref,
@@ -80,14 +80,14 @@ impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CSIPersistentVolumeSource;
 
             fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str("CSIPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_controller_expand_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_controller_publish_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
                 let mut value_driver: Option<String> = None;
@@ -98,31 +98,31 @@ impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
                 let mut value_volume_attributes: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_volume_handle: Option<String> = None;
 
-                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_controller_expand_secret_ref => value_controller_expand_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_controller_publish_secret_ref => value_controller_publish_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_driver => value_driver = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_publish_secret_ref => value_node_publish_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_stage_secret_ref => value_node_stage_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_attributes => value_volume_attributes = serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_handle => value_volume_handle = Some(serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_controller_expand_secret_ref => value_controller_expand_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_controller_publish_secret_ref => value_controller_publish_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_driver => value_driver = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_publish_secret_ref => value_node_publish_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_stage_secret_ref => value_node_stage_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_attributes => value_volume_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_handle => value_volume_handle = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CSIPersistentVolumeSource {
                     controller_expand_secret_ref: value_controller_expand_secret_ref,
                     controller_publish_secret_ref: value_controller_publish_secret_ref,
-                    driver: value_driver.ok_or_else(|| serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.ok_or_else(|| crate::serde::de::Error::missing_field("driver"))?,
                     fs_type: value_fs_type,
                     node_publish_secret_ref: value_node_publish_secret_ref,
                     node_stage_secret_ref: value_node_stage_secret_ref,
                     read_only: value_read_only,
                     volume_attributes: value_volume_attributes,
-                    volume_handle: value_volume_handle.ok_or_else(|| serde::de::Error::missing_field("volumeHandle"))?,
+                    volume_handle: value_volume_handle.ok_or_else(|| crate::serde::de::Error::missing_field("volumeHandle"))?,
                 })
             }
         }
@@ -145,8 +145,8 @@ impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
     }
 }
 
-impl serde::Serialize for CSIPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+impl crate::serde::Serialize for CSIPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSIPersistentVolumeSource",
             2 +
@@ -159,28 +159,28 @@ impl serde::Serialize for CSIPersistentVolumeSource {
             self.volume_attributes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.controller_expand_secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "controllerExpandSecretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "controllerExpandSecretRef", value)?;
         }
         if let Some(value) = &self.controller_publish_secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "controllerPublishSecretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "controllerPublishSecretRef", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
         if let Some(value) = &self.node_publish_secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodePublishSecretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodePublishSecretRef", value)?;
         }
         if let Some(value) = &self.node_stage_secret_ref {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeStageSecretRef", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeStageSecretRef", value)?;
         }
         if let Some(value) = &self.read_only {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.volume_attributes {
-            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", value)?;
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", value)?;
         }
-        serde::ser::SerializeStruct::serialize_field(&mut state, "volumeHandle", &self.volume_handle)?;
-        serde::ser::SerializeStruct::end(state)
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeHandle", &self.volume_handle)?;
+        crate::serde::ser::SerializeStruct::end(state)
     }
 }
