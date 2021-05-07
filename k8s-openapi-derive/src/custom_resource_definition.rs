@@ -120,8 +120,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 
 			group,
 			version,
-			namespaced,
 			plural,
+			namespaced,
 			has_subresources,
 		})
 	}
@@ -231,17 +231,13 @@ impl super::CustomDerive for CustomResourceDefinition {
 							has_corresponding_list_type: false,
 						}, false)),
 					].into_iter().chain(
-						if let Some(has_subresources) = has_subresources {
-							Some((swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
+						has_subresources.map(|has_subresources|
+							(swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
 								description: Some(format!("Subresources of the {} custom resource", cr_name)),
 								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
 								kubernetes_group_kind_versions: vec![],
 								has_corresponding_list_type: false,
 							}, true)))
-						}
-						else {
-							None
-						}
 					).collect()),
 					kubernetes_group_kind_versions: vec![
 						swagger20::KubernetesGroupKindVersion {

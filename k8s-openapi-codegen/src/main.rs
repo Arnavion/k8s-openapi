@@ -3,6 +3,7 @@
 #![allow(
 	clippy::cognitive_complexity,
 	clippy::default_trait_access,
+	clippy::let_underscore_drop,
 	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::too_many_arguments,
@@ -148,10 +149,12 @@ impl std::str::FromStr for RequestedVersion {
 	type Err = Error;
 
 	fn from_str(spec: &str) -> Result<Self, Error> {
-		let mut parts = spec.splitn(2, ':');
-
-		let version = parts.next().expect("str::split returns at least one part");
-		let url = parts.next();
+		let (version, overriden_spec_url) =
+			spec.split_once(':')
+			.map_or(
+				(spec, None),
+				|(version, url)| (version, Some(url.to_owned())),
+			);
 
 		let &version =
 			supported_version::ALL.iter()
@@ -172,7 +175,7 @@ impl std::str::FromStr for RequestedVersion {
 
 		Ok(RequestedVersion {
 			version,
-			overriden_spec_url: url.map(ToString::to_string),
+			overriden_spec_url,
 		})
 	}
 }
