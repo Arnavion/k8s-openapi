@@ -80,6 +80,25 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 //
 // Override it to be optional to achieve the same effect.
 pub(crate) mod optional_properties {
+	// `ContainerImage::names`
+	//
+	// Ref: https://github.com/kubernetes/kubernetes/issues/93606
+	pub(crate) fn containerimage(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ContainerImage".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("names".to_string())) {
+					if property.1 {
+						property.1 = false;
+						return Ok(());
+					}
+				}
+			}
+		}
+
+		Err("never applied ContainerImage optional properties override".into())
+	}
+
 	// `CustomResourceDefinitionStatus::conditions`
 	//
 	// Ref: https://github.com/kubernetes/kubernetes/pull/64996
