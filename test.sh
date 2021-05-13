@@ -9,8 +9,8 @@
 # Note: Use:
 #
 # ```sh
-# docker ps -a | grep kube-build-data | awk '{ print $1 }' | xargs docker rm -f
-# docker images -a | egrep '<none>|k8s|rancher|kindest|kube' | awk '{ print $3 }' | xargs -n1 docker image rm -f
+# docker ps -a | grep kube-build-data | awk '{ print $1 }' | xargs -r docker rm -f
+# docker images -a | egrep '<none>|k8s|rancher|kindest|kube' | awk '{ print $3 }' | xargs -r -n1 docker image rm -f
 # ```
 #
 # ... to clean up leftover gunk.
@@ -45,9 +45,9 @@ declare -A K8S_VERSIONS=(
 	['1.15']='1.15.12'
 	['1.16']='1.16.15'
 	['1.17']='1.17.17'
-	['1.18']='1.18.18'
-	['1.19']='1.19.10'
-	['1.20']='1.20.6'
+	['1.18']='1.18.19'
+	['1.19']='1.19.11'
+	['1.20']='1.20.7'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
