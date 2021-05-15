@@ -62,7 +62,7 @@ pub(crate) fn generate(
 		writeln!(field_name_list, r#"                "apiVersion","#)?;
 		writeln!(field_name_list, r#"                "kind","#)?;
 	}
-	for super::Property { name, field_name, field_type_name, required, is_flattened, .. } in fields {
+	for super::Property { name, ser_skip, field_name, field_type_name, required, is_flattened, .. } in fields {
 		if *is_flattened {
 			if flattened_field.is_some() {
 				return Err(format!("{} has two flattened fields", type_name).into());
@@ -80,7 +80,11 @@ pub(crate) fn generate(
 			writeln!(str_to_field_match_arms, r#"                            {:?} => Field::Key_{},"#, name, field_name)?;
 
 			if *required {
-				writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+                if ser_skip.is_some() {
+                    writeln!(field_value_defs, r#"                let mut value_{}: {} = Default::default;"#, field_name, field_type_name)?;
+                } else {
+				    writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+                }
 
 				writeln!(field_value_match_arms,
 					r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
@@ -89,7 +93,11 @@ pub(crate) fn generate(
 				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,", field_name, field_name, local, name)?;
 			}
 			else {
-				writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+                if ser_skip.is_some() {
+                    writeln!(field_value_defs, r#"                let mut value_{}: {} = Default::default();"#, field_name, field_type_name)?;
+                } else {
+				    writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+                }
 
 				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name, local)?;
 
