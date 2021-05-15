@@ -10,7 +10,7 @@ pub(crate) fn generate(
 
 	let fields: String = {
 		fields.iter()
-		.try_fold(String::new(), |mut fields, super::Property { comment, ser_skip, field_name, field_type_name, .. }| -> Result<_, std::fmt::Error> {
+		.try_fold(String::new(), |mut fields, super::Property { comment, field_name, field_type_name, .. }| -> Result<_, std::fmt::Error> {
 			use std::fmt::Write;
 
 			if !fields.is_empty() {
@@ -22,14 +22,6 @@ pub(crate) fn generate(
 					writeln!(&mut fields, "    ///{}", line)?;
 				}
 			}
-
-            if let Some(ss) = ser_skip {
-                writeln!(
-                    &mut fields,
-                    "    #[serde(default, skip_serializing_if = \"{}\")]",
-                    ss,
-                )?;
-            }
 
 			writeln!(&mut fields,
 				"    {vis}{field_name}: {field_type_name},",

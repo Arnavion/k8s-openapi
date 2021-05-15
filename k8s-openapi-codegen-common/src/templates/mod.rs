@@ -68,7 +68,7 @@ pub(crate) struct Generics<'a> {
 pub(crate) struct Property<'a> {
 	pub(crate) name: &'a str,
 	pub(crate) comment: Option<&'a str>,
-    pub(crate) ser_skip: Option<&'a str>,
+	pub(crate) ser_skip: Option<&'a str>,
 	pub(crate) field_name: std::borrow::Cow<'static, str>,
 	pub(crate) field_type_name: String,
 	pub(crate) required: bool,

@@ -30,9 +30,15 @@ pub(crate) fn generate(
 		required_fields_num += 2;
 	}
 
-	for super::Property { name, field_name, required, is_flattened, .. } in fields {
+	for super::Property { name, ser_skip, field_name, required, is_flattened, .. } in fields {
 		if *is_flattened {
-			writeln!(fields_string, "        {}serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", local, field_name)?;
+			if let Some(ss) = ser_skip {
+				writeln!(fields_string, "        if !{}(&self.{}) {{", ss, field_name)?;
+				writeln!(fields_string, "            {}serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", local, field_name)?;
+				writeln!(fields_string, "        }}")?;
+			} else {	
+				writeln!(fields_string, "        {}serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", local, field_name)?;
+			}
 
 			has_flattened_field = true;
 		}
@@ -42,8 +48,13 @@ pub(crate) fn generate(
 			required_fields_num += 1;
 		}
 		else {
-			writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
-			writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", local, name)?;
+			if let Some(ss) = ser_skip {
+				writeln!(fields_string, "        if !{}(&self.{}) {{", ss, field_name)?;
+				writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
+			} else {
+				writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
+				writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", local, name)?;
+			}
 			writeln!(fields_string, "        }}")?;
 
 			fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));
