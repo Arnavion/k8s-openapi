@@ -261,7 +261,7 @@ pub fn run(
 
 					let mut field_type_name = String::new();
 
-										let ser_skip = get_ser_skip(&schema.kind);
+					let ser_skip = get_ser_skip(&schema.kind);
 
 					if !required && ser_skip.is_none() {
 						write!(field_type_name, "Option<")?;
@@ -303,7 +303,7 @@ pub fn run(
 					result.push(templates::Property {
 						name,
 						comment: schema.description.as_deref(),
-												ser_skip,
+						ser_skip,
 						field_name,
 						field_type_name,
 						required: *required,
@@ -562,7 +562,7 @@ pub fn run(
 				templates::Property {
 					name: "items",
 					comment: Some("List of objects."),
-										ser_skip: Some("Vec::is_empty"), // probably not correct?
+					ser_skip: Some("Vec::is_empty"), // probably not correct?
 					field_name: "items".into(),
 					field_type_name: "Vec<T>".to_owned(),
 					required: true,
@@ -572,7 +572,7 @@ pub fn run(
 				templates::Property {
 					name: "metadata",
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
-										ser_skip: None,
+					ser_skip: None,
 					field_name: "metadata".into(),
 					field_type_name: (&*metadata_rust_type).to_owned(),
 					required: true,
@@ -706,7 +706,7 @@ pub fn run(
 					result.push(templates::Property {
 						name,
 						comment: schema.description.as_deref(),
-												ser_skip: None, // need fix?
+						ser_skip: None, // need fix?
 						field_name,
 						field_type_name,
 						required: false,
