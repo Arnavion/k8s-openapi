@@ -16,7 +16,10 @@ case "$OP" in
 		cargo run
 		popd
 
-		[ -z "$(git status --porcelain)" ]
+		if [ -n "$(git status --porcelain)" ]; then
+			echo "The changes to the generated code have not been git-add'ed."
+			exit 1
+		fi
 
 		;;
 
