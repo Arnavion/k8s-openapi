@@ -119,7 +119,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     names: apiextensions::CustomResourceDefinitionNames {
 ///         kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
 ///         plural: plural.to_owned(),
-///         short_names: Some(vec!["fb".to_owned()]),
+///         short_names: vec!["fb".to_owned()],
 ///         singular: Some("foobar".to_owned()),
 ///         ..Default::default()
 ///     },

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaStatus {
     /// Hard is the set of enforced hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
-    pub hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub hard: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// Used is the current observed total usage of the resource in the namespace.
-    pub used: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub used: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaStatus {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaStatus {
                 }
 
                 Ok(ResourceQuotaStatus {
-                    hard: value_hard,
-                    used: value_used,
+                    hard: value_hard.unwrap_or_default(),
+                    used: value_used.unwrap_or_default(),
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for ResourceQuotaStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceQuotaStatus",
-            self.hard.as_ref().map_or(0, |_| 1) +
-            self.used.as_ref().map_or(0, |_| 1),
+            usize::from(!self.hard.is_empty()) +
+            usize::from(!self.used.is_empty()),
         )?;
-        if let Some(value) = &self.hard {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hard", value)?;
+        if !self.hard.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hard", &self.hard)?;
         }
-        if let Some(value) = &self.used {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "used", value)?;
+        if !self.used.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "used", &self.used)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

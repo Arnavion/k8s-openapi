@@ -10,7 +10,7 @@ pub struct HorizontalPodAutoscalerSpec {
     pub max_replicas: i32,
 
     /// metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
-    pub metrics: Option<Vec<crate::api::autoscaling::v2beta2::MetricSpec>>,
+    pub metrics: Vec<crate::api::autoscaling::v2beta2::MetricSpec>,
 
     /// minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.
     pub min_replicas: Option<i32>,
@@ -88,7 +88,7 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
                 Ok(HorizontalPodAutoscalerSpec {
                     behavior: value_behavior,
                     max_replicas: value_max_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("maxReplicas"))?,
-                    metrics: value_metrics,
+                    metrics: value_metrics.unwrap_or_default(),
                     min_replicas: value_min_replicas,
                     scale_target_ref: value_scale_target_ref.ok_or_else(|| crate::serde::de::Error::missing_field("scaleTargetRef"))?,
                 })
@@ -115,15 +115,15 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerSpec {
             "HorizontalPodAutoscalerSpec",
             2 +
             self.behavior.as_ref().map_or(0, |_| 1) +
-            self.metrics.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.metrics.is_empty()) +
             self.min_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.behavior {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "behavior", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;
-        if let Some(value) = &self.metrics {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", value)?;
+        if !self.metrics.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metrics", &self.metrics)?;
         }
         if let Some(value) = &self.min_replicas {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "minReplicas", value)?;

@@ -70,8 +70,15 @@ pub(crate) struct Property<'a> {
 	pub(crate) comment: Option<&'a str>,
 	pub(crate) field_name: std::borrow::Cow<'static, str>,
 	pub(crate) field_type_name: String,
-	pub(crate) required: bool,
+	pub(crate) required: PropertyRequired,
 	pub(crate) is_flattened: bool,
+}
+
+#[derive(Clone, Copy)]
+pub(crate) enum PropertyRequired {
+	Required,
+	Optional,
+	OptionalDefault,
 }
 
 #[derive(Clone, Copy)]

@@ -10,7 +10,7 @@ pub struct ClusterRole {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this ClusterRole
-    pub rules: Option<Vec<crate::api::rbac::v1beta1::PolicyRule>>,
+    pub rules: Vec<crate::api::rbac::v1beta1::PolicyRule>,
 }
 
 // Begin rbac.authorization.k8s.io/v1beta1/ClusterRole
@@ -460,7 +460,7 @@ impl<'de> crate::serde::Deserialize<'de> for ClusterRole {
                 Ok(ClusterRole {
                     aggregation_rule: value_aggregation_rule,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    rules: value_rules,
+                    rules: value_rules.unwrap_or_default(),
                 })
             }
         }
@@ -485,7 +485,7 @@ impl crate::serde::Serialize for ClusterRole {
             <Self as crate::Resource>::KIND,
             3 +
             self.aggregation_rule.as_ref().map_or(0, |_| 1) +
-            self.rules.as_ref().map_or(0, |_| 1),
+            usize::from(!self.rules.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
@@ -493,8 +493,8 @@ impl crate::serde::Serialize for ClusterRole {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "aggregationRule", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if let Some(value) = &self.rules {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+        if !self.rules.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

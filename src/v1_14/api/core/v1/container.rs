@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Container {
     /// Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-    pub args: Option<Vec<String>>,
+    pub args: Vec<String>,
 
     /// Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-    pub command: Option<Vec<String>>,
+    pub command: Vec<String>,
 
     /// List of environment variables to set in the container. Cannot be updated.
-    pub env: Option<Vec<crate::api::core::v1::EnvVar>>,
+    pub env: Vec<crate::api::core::v1::EnvVar>,
 
     /// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-    pub env_from: Option<Vec<crate::api::core::v1::EnvFromSource>>,
+    pub env_from: Vec<crate::api::core::v1::EnvFromSource>,
 
     /// Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.
     pub image: Option<String>,
@@ -31,7 +31,7 @@ pub struct Container {
     pub name: String,
 
     /// List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. Cannot be updated.
-    pub ports: Option<Vec<crate::api::core::v1::ContainerPort>>,
+    pub ports: Vec<crate::api::core::v1::ContainerPort>,
 
     /// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
     pub readiness_probe: Option<crate::api::core::v1::Probe>,
@@ -58,10 +58,10 @@ pub struct Container {
     pub tty: Option<bool>,
 
     /// volumeDevices is the list of block devices to be used by the container. This is a beta feature.
-    pub volume_devices: Option<Vec<crate::api::core::v1::VolumeDevice>>,
+    pub volume_devices: Vec<crate::api::core::v1::VolumeDevice>,
 
     /// Pod volumes to mount into the container's filesystem. Cannot be updated.
-    pub volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>>,
+    pub volume_mounts: Vec<crate::api::core::v1::VolumeMount>,
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
     pub working_dir: Option<String>,
@@ -198,16 +198,16 @@ impl<'de> crate::serde::Deserialize<'de> for Container {
                 }
 
                 Ok(Container {
-                    args: value_args,
-                    command: value_command,
-                    env: value_env,
-                    env_from: value_env_from,
+                    args: value_args.unwrap_or_default(),
+                    command: value_command.unwrap_or_default(),
+                    env: value_env.unwrap_or_default(),
+                    env_from: value_env_from.unwrap_or_default(),
                     image: value_image,
                     image_pull_policy: value_image_pull_policy,
                     lifecycle: value_lifecycle,
                     liveness_probe: value_liveness_probe,
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    ports: value_ports,
+                    ports: value_ports.unwrap_or_default(),
                     readiness_probe: value_readiness_probe,
                     resources: value_resources,
                     security_context: value_security_context,
@@ -216,8 +216,8 @@ impl<'de> crate::serde::Deserialize<'de> for Container {
                     termination_message_path: value_termination_message_path,
                     termination_message_policy: value_termination_message_policy,
                     tty: value_tty,
-                    volume_devices: value_volume_devices,
-                    volume_mounts: value_volume_mounts,
+                    volume_devices: value_volume_devices.unwrap_or_default(),
+                    volume_mounts: value_volume_mounts.unwrap_or_default(),
                     working_dir: value_working_dir,
                 })
             }
@@ -258,15 +258,15 @@ impl crate::serde::Serialize for Container {
         let mut state = serializer.serialize_struct(
             "Container",
             1 +
-            self.args.as_ref().map_or(0, |_| 1) +
-            self.command.as_ref().map_or(0, |_| 1) +
-            self.env.as_ref().map_or(0, |_| 1) +
-            self.env_from.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.args.is_empty()) +
+            usize::from(!self.command.is_empty()) +
+            usize::from(!self.env.is_empty()) +
+            usize::from(!self.env_from.is_empty()) +
             self.image.as_ref().map_or(0, |_| 1) +
             self.image_pull_policy.as_ref().map_or(0, |_| 1) +
             self.lifecycle.as_ref().map_or(0, |_| 1) +
             self.liveness_probe.as_ref().map_or(0, |_| 1) +
-            self.ports.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.ports.is_empty()) +
             self.readiness_probe.as_ref().map_or(0, |_| 1) +
             self.resources.as_ref().map_or(0, |_| 1) +
             self.security_context.as_ref().map_or(0, |_| 1) +
@@ -275,21 +275,21 @@ impl crate::serde::Serialize for Container {
             self.termination_message_path.as_ref().map_or(0, |_| 1) +
             self.termination_message_policy.as_ref().map_or(0, |_| 1) +
             self.tty.as_ref().map_or(0, |_| 1) +
-            self.volume_devices.as_ref().map_or(0, |_| 1) +
-            self.volume_mounts.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.volume_devices.is_empty()) +
+            usize::from(!self.volume_mounts.is_empty()) +
             self.working_dir.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.args {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
+        if !self.args.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "args", &self.args)?;
         }
-        if let Some(value) = &self.command {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
+        if !self.command.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "command", &self.command)?;
         }
-        if let Some(value) = &self.env {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
+        if !self.env.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "env", &self.env)?;
         }
-        if let Some(value) = &self.env_from {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
+        if !self.env_from.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", &self.env_from)?;
         }
         if let Some(value) = &self.image {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "image", value)?;
@@ -304,8 +304,8 @@ impl crate::serde::Serialize for Container {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
-        if let Some(value) = &self.ports {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+        if !self.ports.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
         }
         if let Some(value) = &self.readiness_probe {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
@@ -331,11 +331,11 @@ impl crate::serde::Serialize for Container {
         if let Some(value) = &self.tty {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
         }
-        if let Some(value) = &self.volume_devices {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", value)?;
+        if !self.volume_devices.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeDevices", &self.volume_devices)?;
         }
-        if let Some(value) = &self.volume_mounts {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
+        if !self.volume_mounts.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", &self.volume_mounts)?;
         }
         if let Some(value) = &self.working_dir {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;

@@ -10,7 +10,7 @@ pub struct VolumeAttachmentStatus {
     pub attached: bool,
 
     /// Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    pub attachment_metadata: Option<std::collections::BTreeMap<String, String>>,
+    pub attachment_metadata: std::collections::BTreeMap<String, String>,
 
     /// The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
     pub detach_error: Option<crate::api::storage::v1beta1::VolumeError>,
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
                 Ok(VolumeAttachmentStatus {
                     attach_error: value_attach_error,
                     attached: value_attached.ok_or_else(|| crate::serde::de::Error::missing_field("attached"))?,
-                    attachment_metadata: value_attachment_metadata,
+                    attachment_metadata: value_attachment_metadata.unwrap_or_default(),
                     detach_error: value_detach_error,
                 })
             }
@@ -106,15 +106,15 @@ impl crate::serde::Serialize for VolumeAttachmentStatus {
             "VolumeAttachmentStatus",
             1 +
             self.attach_error.as_ref().map_or(0, |_| 1) +
-            self.attachment_metadata.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.attachment_metadata.is_empty()) +
             self.detach_error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_error {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachError", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attached", &self.attached)?;
-        if let Some(value) = &self.attachment_metadata {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachmentMetadata", value)?;
+        if !self.attachment_metadata.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachmentMetadata", &self.attachment_metadata)?;
         }
         if let Some(value) = &self.detach_error {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "detachError", value)?;

@@ -7,7 +7,7 @@ pub struct ScaleStatus {
     pub replicas: i32,
 
     /// label query over pods that should match the replicas count. More info: http://kubernetes.io/docs/user-guide/labels#label-selectors
-    pub selector: Option<std::collections::BTreeMap<String, String>>,
+    pub selector: std::collections::BTreeMap<String, String>,
 
     /// label selector for pods that should match the replicas count. This is a serializated version of both map-based and more expressive set-based selectors. This is done to avoid introspection in the clients. The string will be in the same format as the query-param syntax. If the target type only supports map-based selectors, both this field and map-based selector field are populated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
     pub target_selector: Option<String>,
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
 
                 Ok(ScaleStatus {
                     replicas: value_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("replicas"))?,
-                    selector: value_selector,
+                    selector: value_selector.unwrap_or_default(),
                     target_selector: value_target_selector,
                 })
             }
@@ -96,12 +96,12 @@ impl crate::serde::Serialize for ScaleStatus {
         let mut state = serializer.serialize_struct(
             "ScaleStatus",
             1 +
-            self.selector.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.selector.is_empty()) +
             self.target_selector.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
-        if let Some(value) = &self.selector {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+        if !self.selector.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
         }
         if let Some(value) = &self.target_selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetSelector", value)?;

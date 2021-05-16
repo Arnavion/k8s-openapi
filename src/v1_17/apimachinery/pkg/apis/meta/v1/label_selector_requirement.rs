@@ -10,7 +10,7 @@ pub struct LabelSelectorRequirement {
     pub operator: String,
 
     /// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    pub values: Option<Vec<String>>,
+    pub values: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for LabelSelectorRequirement {
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for LabelSelectorRequirement {
                 Ok(LabelSelectorRequirement {
                     key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
                     operator: value_operator.ok_or_else(|| crate::serde::de::Error::missing_field("operator"))?,
-                    values: value_values,
+                    values: value_values.unwrap_or_default(),
                 })
             }
         }
@@ -96,12 +96,12 @@ impl crate::serde::Serialize for LabelSelectorRequirement {
         let mut state = serializer.serialize_struct(
             "LabelSelectorRequirement",
             2 +
-            self.values.as_ref().map_or(0, |_| 1),
+            usize::from(!self.values.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &self.operator)?;
-        if let Some(value) = &self.values {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", value)?;
+        if !self.values.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", &self.values)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

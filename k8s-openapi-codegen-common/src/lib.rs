@@ -231,8 +231,6 @@ pub fn run(
 	match &definition.kind {
 		swagger20::SchemaKind::Properties(properties) => {
 			let (template_properties, resource_metadata, metadata_ty) = {
-				use std::fmt::Write;
-
 				let mut result = Vec::with_capacity(properties.len());
 
 				let mut single_group_version_kind = match &definition.kubernetes_group_kind_versions[..] {
@@ -261,14 +259,21 @@ pub fn run(
 
 					let mut field_type_name = String::new();
 
-					if !required {
-						write!(field_type_name, "Option<")?;
+					let required = match (required, &schema.kind) {
+						(true, _) => templates::PropertyRequired::Required,
+						(false, swagger20::SchemaKind::Ty(swagger20::Type::Array { .. })) |
+						(false, swagger20::SchemaKind::Ty(swagger20::Type::Object { .. })) => templates::PropertyRequired::OptionalDefault,
+						(false, _) => templates::PropertyRequired::Optional,
+					};
+
+					if let templates::PropertyRequired::Optional = required {
+						field_type_name.push_str("Option<");
 					}
 
 					let type_name = get_rust_type(&schema.kind, map_namespace)?;
 
 					if name.0 == "metadata" {
-						metadata_ty = Some((type_name.clone(), *required));
+						metadata_ty = Some((type_name.clone(), required));
 					}
 
 					// Fix cases of infinite recursion
@@ -283,17 +288,21 @@ pub fn run(
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaProps",
 								"not",
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaProps",
-							) => write!(field_type_name, "Box<{}>", type_name)?,
+							) => {
+								field_type_name.push_str("Box<");
+								field_type_name.push_str(&type_name);
+								field_type_name.push_str(">");
+							},
 
-							_ => write!(field_type_name, "{}", type_name)?,
+							_ => field_type_name.push_str(&type_name),
 						}
 					}
 					else {
-						write!(field_type_name, "{}", type_name)?;
+						field_type_name.push_str(&type_name);
 					};
 
-					if !required {
-						write!(field_type_name, ">")?;
+					if let templates::PropertyRequired::Optional = required {
+						field_type_name.push_str(">");
 					}
 
 					let is_flattened = matches!(&schema.kind, swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)));
@@ -303,7 +312,7 @@ pub fn run(
 						comment: schema.description.as_deref(),
 						field_name,
 						field_type_name,
-						required: *required,
+						required,
 						is_flattened,
 					});
 				}
@@ -385,7 +394,7 @@ pub fn run(
 			}
 
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
-				(Some((api_version, group, kind, version)), Some((metadata_ty, true))) => Some(templates::ResourceMetadata {
+				(Some((api_version, group, kind, version)), Some((metadata_ty, templates::PropertyRequired::Required))) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
@@ -403,7 +412,7 @@ pub fn run(
 					metadata_ty: None,
 				}),
 
-				(Some(_), Some((_, false))) => return Err(format!("definition {} has optional metadata", definition_path).into()),
+				(Some(_), Some(_)) => return Err(format!("definition {} has optional metadata", definition_path).into()),
 
 				(None, _) => None,
 			};
@@ -561,7 +570,7 @@ pub fn run(
 					comment: Some("List of objects."),
 					field_name: "items".into(),
 					field_type_name: "Vec<T>".to_owned(),
-					required: true,
+					required: templates::PropertyRequired::Required,
 					is_flattened: false,
 				},
 
@@ -570,7 +579,7 @@ pub fn run(
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
 					field_name: "metadata".into(),
 					field_type_name: (&*metadata_rust_type).to_owned(),
-					required: true,
+					required: templates::PropertyRequired::Required,
 					is_flattened: false,
 				},
 			];
@@ -703,7 +712,7 @@ pub fn run(
 						comment: schema.description.as_deref(),
 						field_name,
 						field_type_name,
-						required: false,
+						required: templates::PropertyRequired::Optional,
 						is_flattened: false,
 					});
 				}

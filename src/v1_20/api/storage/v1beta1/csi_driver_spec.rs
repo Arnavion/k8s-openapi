@@ -42,10 +42,10 @@ pub struct CSIDriverSpec {
     /// Note: Audience in each TokenRequest should be different and at most one token is empty string. To receive a new token after expiry, RequiresRepublish can be used to trigger NodePublishVolume periodically.
     ///
     /// This is an alpha feature and only available when the CSIServiceAccountToken feature is enabled.
-    pub token_requests: Option<Vec<crate::api::storage::v1beta1::TokenRequest>>,
+    pub token_requests: Vec<crate::api::storage::v1beta1::TokenRequest>,
 
     /// VolumeLifecycleModes defines what kind of volumes this CSI volume driver supports. The default if the list is empty is "Persistent", which is the usage defined by the CSI specification and implemented in Kubernetes via the usual PV/PVC mechanism. The other mode is "Ephemeral". In this mode, volumes are defined inline inside the pod spec with CSIVolumeSource and their lifecycle is tied to the lifecycle of that pod. A driver has to be aware of this because it is only going to get a NodePublishVolume call for such a volume. For more information about implementing this mode, see https://kubernetes-csi.github.io/docs/ephemeral-local-volumes.html A driver can support one or more of these modes and more modes may be added in the future.
-    pub volume_lifecycle_modes: Option<Vec<String>>,
+    pub volume_lifecycle_modes: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
@@ -128,8 +128,8 @@ impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
                     pod_info_on_mount: value_pod_info_on_mount,
                     requires_republish: value_requires_republish,
                     storage_capacity: value_storage_capacity,
-                    token_requests: value_token_requests,
-                    volume_lifecycle_modes: value_volume_lifecycle_modes,
+                    token_requests: value_token_requests.unwrap_or_default(),
+                    volume_lifecycle_modes: value_volume_lifecycle_modes.unwrap_or_default(),
                 })
             }
         }
@@ -159,8 +159,8 @@ impl crate::serde::Serialize for CSIDriverSpec {
             self.pod_info_on_mount.as_ref().map_or(0, |_| 1) +
             self.requires_republish.as_ref().map_or(0, |_| 1) +
             self.storage_capacity.as_ref().map_or(0, |_| 1) +
-            self.token_requests.as_ref().map_or(0, |_| 1) +
-            self.volume_lifecycle_modes.as_ref().map_or(0, |_| 1),
+            usize::from(!self.token_requests.is_empty()) +
+            usize::from(!self.volume_lifecycle_modes.is_empty()),
         )?;
         if let Some(value) = &self.attach_required {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
@@ -177,11 +177,11 @@ impl crate::serde::Serialize for CSIDriverSpec {
         if let Some(value) = &self.storage_capacity {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageCapacity", value)?;
         }
-        if let Some(value) = &self.token_requests {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tokenRequests", value)?;
+        if !self.token_requests.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tokenRequests", &self.token_requests)?;
         }
-        if let Some(value) = &self.volume_lifecycle_modes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", value)?;
+        if !self.volume_lifecycle_modes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", &self.volume_lifecycle_modes)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -7,7 +7,7 @@ pub struct IPBlock {
     pub cidr: String,
 
     /// Except is a slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range
-    pub except: Option<Vec<String>>,
+    pub except: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for IPBlock {
@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for IPBlock {
 
                 Ok(IPBlock {
                     cidr: value_cidr.ok_or_else(|| crate::serde::de::Error::missing_field("cidr"))?,
-                    except: value_except,
+                    except: value_except.unwrap_or_default(),
                 })
             }
         }
@@ -87,11 +87,11 @@ impl crate::serde::Serialize for IPBlock {
         let mut state = serializer.serialize_struct(
             "IPBlock",
             1 +
-            self.except.as_ref().map_or(0, |_| 1),
+            usize::from(!self.except.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "cidr", &self.cidr)?;
-        if let Some(value) = &self.except {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "except", value)?;
+        if !self.except.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "except", &self.except)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

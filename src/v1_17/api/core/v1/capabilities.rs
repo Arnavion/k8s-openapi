@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Capabilities {
     /// Added capabilities
-    pub add: Option<Vec<String>>,
+    pub add: Vec<String>,
 
     /// Removed capabilities
-    pub drop: Option<Vec<String>>,
+    pub drop: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Capabilities {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for Capabilities {
                 }
 
                 Ok(Capabilities {
-                    add: value_add,
-                    drop: value_drop,
+                    add: value_add.unwrap_or_default(),
+                    drop: value_drop.unwrap_or_default(),
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for Capabilities {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Capabilities",
-            self.add.as_ref().map_or(0, |_| 1) +
-            self.drop.as_ref().map_or(0, |_| 1),
+            usize::from(!self.add.is_empty()) +
+            usize::from(!self.drop.is_empty()),
         )?;
-        if let Some(value) = &self.add {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "add", value)?;
+        if !self.add.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "add", &self.add)?;
         }
-        if let Some(value) = &self.drop {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "drop", value)?;
+        if !self.drop.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "drop", &self.drop)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

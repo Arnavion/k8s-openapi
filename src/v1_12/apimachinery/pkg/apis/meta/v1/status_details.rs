@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatusDetails {
     /// The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
-    pub causes: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>>,
+    pub causes: Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>,
 
     /// The group attribute of the resource associated with the status StatusReason.
     pub group: Option<String>,
@@ -93,7 +93,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatusDetails {
                 }
 
                 Ok(StatusDetails {
-                    causes: value_causes,
+                    causes: value_causes.unwrap_or_default(),
                     group: value_group,
                     kind: value_kind,
                     name: value_name,
@@ -122,15 +122,15 @@ impl crate::serde::Serialize for StatusDetails {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatusDetails",
-            self.causes.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.causes.is_empty()) +
             self.group.as_ref().map_or(0, |_| 1) +
             self.kind.as_ref().map_or(0, |_| 1) +
             self.name.as_ref().map_or(0, |_| 1) +
             self.retry_after_seconds.as_ref().map_or(0, |_| 1) +
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.causes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "causes", value)?;
+        if !self.causes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "causes", &self.causes)?;
         }
         if let Some(value) = &self.group {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;

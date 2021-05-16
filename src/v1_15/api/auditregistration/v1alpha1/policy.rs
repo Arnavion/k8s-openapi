@@ -7,7 +7,7 @@ pub struct Policy {
     pub level: String,
 
     /// Stages is a list of stages for which events are created.
-    pub stages: Option<Vec<String>>,
+    pub stages: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Policy {
@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for Policy {
 
                 Ok(Policy {
                     level: value_level.ok_or_else(|| crate::serde::de::Error::missing_field("level"))?,
-                    stages: value_stages,
+                    stages: value_stages.unwrap_or_default(),
                 })
             }
         }
@@ -87,11 +87,11 @@ impl crate::serde::Serialize for Policy {
         let mut state = serializer.serialize_struct(
             "Policy",
             1 +
-            self.stages.as_ref().map_or(0, |_| 1),
+            usize::from(!self.stages.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "level", &self.level)?;
-        if let Some(value) = &self.stages {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stages", value)?;
+        if !self.stages.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stages", &self.stages)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

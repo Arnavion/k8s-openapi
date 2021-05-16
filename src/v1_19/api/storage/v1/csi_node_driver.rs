@@ -13,7 +13,7 @@ pub struct CSINodeDriver {
     pub node_id: String,
 
     /// topologyKeys is the list of keys supported by the driver. When a driver is initialized on a cluster, it provides a set of topology keys that it understands (e.g. "company.com/zone", "company.com/region"). When a driver is initialized on a node, it provides the same topology keys along with values. Kubelet will expose these topology keys as labels on its own node object. When Kubernetes does topology aware provisioning, it can use this list to determine which labels it should retrieve from the node object and pass back to the driver. It is possible for different nodes to use different topology keys. This can be empty if driver does not support topology.
-    pub topology_keys: Option<Vec<String>>,
+    pub topology_keys: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
@@ -82,7 +82,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
                     allocatable: value_allocatable,
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     node_id: value_node_id.ok_or_else(|| crate::serde::de::Error::missing_field("nodeID"))?,
-                    topology_keys: value_topology_keys,
+                    topology_keys: value_topology_keys.unwrap_or_default(),
                 })
             }
         }
@@ -106,15 +106,15 @@ impl crate::serde::Serialize for CSINodeDriver {
             "CSINodeDriver",
             2 +
             self.allocatable.as_ref().map_or(0, |_| 1) +
-            self.topology_keys.as_ref().map_or(0, |_| 1),
+            usize::from(!self.topology_keys.is_empty()),
         )?;
         if let Some(value) = &self.allocatable {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeID", &self.node_id)?;
-        if let Some(value) = &self.topology_keys {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", value)?;
+        if !self.topology_keys.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKeys", &self.topology_keys)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -7,24 +7,24 @@ pub struct PodSecurityPolicySpec {
     pub allow_privilege_escalation: Option<bool>,
 
     /// allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.
-    pub allowed_capabilities: Option<Vec<String>>,
+    pub allowed_capabilities: Vec<String>,
 
     /// allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
-    pub allowed_flex_volumes: Option<Vec<crate::api::policy::v1beta1::AllowedFlexVolume>>,
+    pub allowed_flex_volumes: Vec<crate::api::policy::v1beta1::AllowedFlexVolume>,
 
     /// allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.
-    pub allowed_host_paths: Option<Vec<crate::api::policy::v1beta1::AllowedHostPath>>,
+    pub allowed_host_paths: Vec<crate::api::policy::v1beta1::AllowedHostPath>,
 
     /// AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
-    pub allowed_proc_mount_types: Option<Vec<String>>,
+    pub allowed_proc_mount_types: Vec<String>,
 
     /// allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
     ///
     /// Examples: e.g. "foo/*" allows "foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.
-    pub allowed_unsafe_sysctls: Option<Vec<String>>,
+    pub allowed_unsafe_sysctls: Vec<String>,
 
     /// defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.
-    pub default_add_capabilities: Option<Vec<String>>,
+    pub default_add_capabilities: Vec<String>,
 
     /// defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.
     pub default_allow_privilege_escalation: Option<bool>,
@@ -32,7 +32,7 @@ pub struct PodSecurityPolicySpec {
     /// forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.
     ///
     /// Examples: e.g. "foo/*" forbids "foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.
-    pub forbidden_sysctls: Option<Vec<String>>,
+    pub forbidden_sysctls: Vec<String>,
 
     /// fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
     pub fs_group: crate::api::policy::v1beta1::FSGroupStrategyOptions,
@@ -47,7 +47,7 @@ pub struct PodSecurityPolicySpec {
     pub host_pid: Option<bool>,
 
     /// hostPorts determines which host port ranges are allowed to be exposed.
-    pub host_ports: Option<Vec<crate::api::policy::v1beta1::HostPortRange>>,
+    pub host_ports: Vec<crate::api::policy::v1beta1::HostPortRange>,
 
     /// privileged determines if a pod can request to be run as privileged.
     pub privileged: Option<bool>,
@@ -56,7 +56,7 @@ pub struct PodSecurityPolicySpec {
     pub read_only_root_filesystem: Option<bool>,
 
     /// requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.
-    pub required_drop_capabilities: Option<Vec<String>>,
+    pub required_drop_capabilities: Vec<String>,
 
     /// RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled.
     pub run_as_group: Option<crate::api::policy::v1beta1::RunAsGroupStrategyOptions>,
@@ -71,7 +71,7 @@ pub struct PodSecurityPolicySpec {
     pub supplemental_groups: crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions,
 
     /// volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
-    pub volumes: Option<Vec<String>>,
+    pub volumes: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityPolicySpec {
@@ -210,27 +210,27 @@ impl<'de> crate::serde::Deserialize<'de> for PodSecurityPolicySpec {
 
                 Ok(PodSecurityPolicySpec {
                     allow_privilege_escalation: value_allow_privilege_escalation,
-                    allowed_capabilities: value_allowed_capabilities,
-                    allowed_flex_volumes: value_allowed_flex_volumes,
-                    allowed_host_paths: value_allowed_host_paths,
-                    allowed_proc_mount_types: value_allowed_proc_mount_types,
-                    allowed_unsafe_sysctls: value_allowed_unsafe_sysctls,
-                    default_add_capabilities: value_default_add_capabilities,
+                    allowed_capabilities: value_allowed_capabilities.unwrap_or_default(),
+                    allowed_flex_volumes: value_allowed_flex_volumes.unwrap_or_default(),
+                    allowed_host_paths: value_allowed_host_paths.unwrap_or_default(),
+                    allowed_proc_mount_types: value_allowed_proc_mount_types.unwrap_or_default(),
+                    allowed_unsafe_sysctls: value_allowed_unsafe_sysctls.unwrap_or_default(),
+                    default_add_capabilities: value_default_add_capabilities.unwrap_or_default(),
                     default_allow_privilege_escalation: value_default_allow_privilege_escalation,
-                    forbidden_sysctls: value_forbidden_sysctls,
+                    forbidden_sysctls: value_forbidden_sysctls.unwrap_or_default(),
                     fs_group: value_fs_group.ok_or_else(|| crate::serde::de::Error::missing_field("fsGroup"))?,
                     host_ipc: value_host_ipc,
                     host_network: value_host_network,
                     host_pid: value_host_pid,
-                    host_ports: value_host_ports,
+                    host_ports: value_host_ports.unwrap_or_default(),
                     privileged: value_privileged,
                     read_only_root_filesystem: value_read_only_root_filesystem,
-                    required_drop_capabilities: value_required_drop_capabilities,
+                    required_drop_capabilities: value_required_drop_capabilities.unwrap_or_default(),
                     run_as_group: value_run_as_group,
                     run_as_user: value_run_as_user.ok_or_else(|| crate::serde::de::Error::missing_field("runAsUser"))?,
                     se_linux: value_se_linux.ok_or_else(|| crate::serde::de::Error::missing_field("seLinux"))?,
                     supplemental_groups: value_supplemental_groups.ok_or_else(|| crate::serde::de::Error::missing_field("supplementalGroups"))?,
-                    volumes: value_volumes,
+                    volumes: value_volumes.unwrap_or_default(),
                 })
             }
         }
@@ -272,50 +272,50 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
             "PodSecurityPolicySpec",
             4 +
             self.allow_privilege_escalation.as_ref().map_or(0, |_| 1) +
-            self.allowed_capabilities.as_ref().map_or(0, |_| 1) +
-            self.allowed_flex_volumes.as_ref().map_or(0, |_| 1) +
-            self.allowed_host_paths.as_ref().map_or(0, |_| 1) +
-            self.allowed_proc_mount_types.as_ref().map_or(0, |_| 1) +
-            self.allowed_unsafe_sysctls.as_ref().map_or(0, |_| 1) +
-            self.default_add_capabilities.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.allowed_capabilities.is_empty()) +
+            usize::from(!self.allowed_flex_volumes.is_empty()) +
+            usize::from(!self.allowed_host_paths.is_empty()) +
+            usize::from(!self.allowed_proc_mount_types.is_empty()) +
+            usize::from(!self.allowed_unsafe_sysctls.is_empty()) +
+            usize::from(!self.default_add_capabilities.is_empty()) +
             self.default_allow_privilege_escalation.as_ref().map_or(0, |_| 1) +
-            self.forbidden_sysctls.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.forbidden_sysctls.is_empty()) +
             self.host_ipc.as_ref().map_or(0, |_| 1) +
             self.host_network.as_ref().map_or(0, |_| 1) +
             self.host_pid.as_ref().map_or(0, |_| 1) +
-            self.host_ports.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.host_ports.is_empty()) +
             self.privileged.as_ref().map_or(0, |_| 1) +
             self.read_only_root_filesystem.as_ref().map_or(0, |_| 1) +
-            self.required_drop_capabilities.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.required_drop_capabilities.is_empty()) +
             self.run_as_group.as_ref().map_or(0, |_| 1) +
-            self.volumes.as_ref().map_or(0, |_| 1),
+            usize::from(!self.volumes.is_empty()),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
         }
-        if let Some(value) = &self.allowed_capabilities {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", value)?;
+        if !self.allowed_capabilities.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", &self.allowed_capabilities)?;
         }
-        if let Some(value) = &self.allowed_flex_volumes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", value)?;
+        if !self.allowed_flex_volumes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", &self.allowed_flex_volumes)?;
         }
-        if let Some(value) = &self.allowed_host_paths {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", value)?;
+        if !self.allowed_host_paths.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", &self.allowed_host_paths)?;
         }
-        if let Some(value) = &self.allowed_proc_mount_types {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedProcMountTypes", value)?;
+        if !self.allowed_proc_mount_types.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedProcMountTypes", &self.allowed_proc_mount_types)?;
         }
-        if let Some(value) = &self.allowed_unsafe_sysctls {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", value)?;
+        if !self.allowed_unsafe_sysctls.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", &self.allowed_unsafe_sysctls)?;
         }
-        if let Some(value) = &self.default_add_capabilities {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", value)?;
+        if !self.default_add_capabilities.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", &self.default_add_capabilities)?;
         }
         if let Some(value) = &self.default_allow_privilege_escalation {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAllowPrivilegeEscalation", value)?;
         }
-        if let Some(value) = &self.forbidden_sysctls {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", value)?;
+        if !self.forbidden_sysctls.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", &self.forbidden_sysctls)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", &self.fs_group)?;
         if let Some(value) = &self.host_ipc {
@@ -327,8 +327,8 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
         if let Some(value) = &self.host_pid {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
         }
-        if let Some(value) = &self.host_ports {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", value)?;
+        if !self.host_ports.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", &self.host_ports)?;
         }
         if let Some(value) = &self.privileged {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
@@ -336,8 +336,8 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
         if let Some(value) = &self.read_only_root_filesystem {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
         }
-        if let Some(value) = &self.required_drop_capabilities {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", value)?;
+        if !self.required_drop_capabilities.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", &self.required_drop_capabilities)?;
         }
         if let Some(value) = &self.run_as_group {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
@@ -345,8 +345,8 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &self.run_as_user)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinux", &self.se_linux)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
-        if let Some(value) = &self.volumes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+        if !self.volumes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &self.volumes)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

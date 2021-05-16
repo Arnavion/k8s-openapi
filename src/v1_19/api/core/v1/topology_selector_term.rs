@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TopologySelectorTerm {
     /// A list of topology selector requirements by labels.
-    pub match_label_expressions: Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>>,
+    pub match_label_expressions: Vec<crate::api::core::v1::TopologySelectorLabelRequirement>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for TopologySelectorTerm {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for TopologySelectorTerm {
                 }
 
                 Ok(TopologySelectorTerm {
-                    match_label_expressions: value_match_label_expressions,
+                    match_label_expressions: value_match_label_expressions.unwrap_or_default(),
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for TopologySelectorTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TopologySelectorTerm",
-            self.match_label_expressions.as_ref().map_or(0, |_| 1),
+            usize::from(!self.match_label_expressions.is_empty()),
         )?;
-        if let Some(value) = &self.match_label_expressions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabelExpressions", value)?;
+        if !self.match_label_expressions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabelExpressions", &self.match_label_expressions)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

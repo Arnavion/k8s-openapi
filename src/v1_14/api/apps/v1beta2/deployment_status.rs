@@ -10,7 +10,7 @@ pub struct DeploymentStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a deployment's current state.
-    pub conditions: Option<Vec<crate::api::apps::v1beta2::DeploymentCondition>>,
+    pub conditions: Vec<crate::api::apps::v1beta2::DeploymentCondition>,
 
     /// The generation observed by the deployment controller.
     pub observed_generation: Option<i64>,
@@ -109,7 +109,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentStatus {
                 Ok(DeploymentStatus {
                     available_replicas: value_available_replicas,
                     collision_count: value_collision_count,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
                     replicas: value_replicas,
@@ -142,7 +142,7 @@ impl crate::serde::Serialize for DeploymentStatus {
             "DeploymentStatus",
             self.available_replicas.as_ref().map_or(0, |_| 1) +
             self.collision_count.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
             self.ready_replicas.as_ref().map_or(0, |_| 1) +
             self.replicas.as_ref().map_or(0, |_| 1) +
@@ -155,8 +155,8 @@ impl crate::serde::Serialize for DeploymentStatus {
         if let Some(value) = &self.collision_count {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         if let Some(value) = &self.observed_generation {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;

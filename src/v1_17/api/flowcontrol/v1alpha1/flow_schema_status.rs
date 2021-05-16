@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FlowSchemaStatus {
     /// `conditions` is a list of the current states of FlowSchema.
-    pub conditions: Option<Vec<crate::api::flowcontrol::v1alpha1::FlowSchemaCondition>>,
+    pub conditions: Vec<crate::api::flowcontrol::v1alpha1::FlowSchemaCondition>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaStatus {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaStatus {
                 }
 
                 Ok(FlowSchemaStatus {
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for FlowSchemaStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlowSchemaStatus",
-            self.conditions.as_ref().map_or(0, |_| 1),
+            usize::from(!self.conditions.is_empty()),
         )?;
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

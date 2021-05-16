@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SupplementalGroupsStrategyOptions {
     /// ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end. Required for MustRunAs.
-    pub ranges: Option<Vec<crate::api::extensions::v1beta1::IDRange>>,
+    pub ranges: Vec<crate::api::extensions::v1beta1::IDRange>,
 
     /// rule is the strategy that will dictate what supplemental groups is used in the SecurityContext.
     pub rule: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for SupplementalGroupsStrategyOptions {
                 }
 
                 Ok(SupplementalGroupsStrategyOptions {
-                    ranges: value_ranges,
+                    ranges: value_ranges.unwrap_or_default(),
                     rule: value_rule,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for SupplementalGroupsStrategyOptions {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SupplementalGroupsStrategyOptions",
-            self.ranges.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.ranges.is_empty()) +
             self.rule.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.ranges {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
+        if !self.ranges.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", &self.ranges)?;
         }
         if let Some(value) = &self.rule {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", value)?;

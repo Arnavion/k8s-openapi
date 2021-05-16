@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodStatus {
     /// Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
-    pub conditions: Option<Vec<crate::api::core::v1::PodCondition>>,
+    pub conditions: Vec<crate::api::core::v1::PodCondition>,
 
     /// The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-    pub container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>>,
+    pub container_statuses: Vec<crate::api::core::v1::ContainerStatus>,
 
     /// IP address of the host to which the pod is assigned. Empty if not yet scheduled.
     pub host_ip: Option<String>,
 
     /// The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-    pub init_container_statuses: Option<Vec<crate::api::core::v1::ContainerStatus>>,
+    pub init_container_statuses: Vec<crate::api::core::v1::ContainerStatus>,
 
     /// A human readable message indicating details about why the pod is in this condition.
     pub message: Option<String>,
@@ -132,10 +132,10 @@ impl<'de> crate::serde::Deserialize<'de> for PodStatus {
                 }
 
                 Ok(PodStatus {
-                    conditions: value_conditions,
-                    container_statuses: value_container_statuses,
+                    conditions: value_conditions.unwrap_or_default(),
+                    container_statuses: value_container_statuses.unwrap_or_default(),
                     host_ip: value_host_ip,
-                    init_container_statuses: value_init_container_statuses,
+                    init_container_statuses: value_init_container_statuses.unwrap_or_default(),
                     message: value_message,
                     nominated_node_name: value_nominated_node_name,
                     phase: value_phase,
@@ -171,10 +171,10 @@ impl crate::serde::Serialize for PodStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodStatus",
-            self.conditions.as_ref().map_or(0, |_| 1) +
-            self.container_statuses.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
+            usize::from(!self.container_statuses.is_empty()) +
             self.host_ip.as_ref().map_or(0, |_| 1) +
-            self.init_container_statuses.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.init_container_statuses.is_empty()) +
             self.message.as_ref().map_or(0, |_| 1) +
             self.nominated_node_name.as_ref().map_or(0, |_| 1) +
             self.phase.as_ref().map_or(0, |_| 1) +
@@ -183,17 +183,17 @@ impl crate::serde::Serialize for PodStatus {
             self.reason.as_ref().map_or(0, |_| 1) +
             self.start_time.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
-        if let Some(value) = &self.container_statuses {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", value)?;
+        if !self.container_statuses.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "containerStatuses", &self.container_statuses)?;
         }
         if let Some(value) = &self.host_ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
         }
-        if let Some(value) = &self.init_container_statuses {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", value)?;
+        if !self.init_container_statuses.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainerStatuses", &self.init_container_statuses)?;
         }
         if let Some(value) = &self.message {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;

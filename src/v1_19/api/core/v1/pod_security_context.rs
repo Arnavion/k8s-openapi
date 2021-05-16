@@ -29,10 +29,10 @@ pub struct PodSecurityContext {
     pub seccomp_profile: Option<crate::api::core::v1::SeccompProfile>,
 
     /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-    pub supplemental_groups: Option<Vec<i64>>,
+    pub supplemental_groups: Vec<i64>,
 
     /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    pub sysctls: Option<Vec<crate::api::core::v1::Sysctl>>,
+    pub sysctls: Vec<crate::api::core::v1::Sysctl>,
 
     /// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
@@ -132,8 +132,8 @@ impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
                     run_as_user: value_run_as_user,
                     se_linux_options: value_se_linux_options,
                     seccomp_profile: value_seccomp_profile,
-                    supplemental_groups: value_supplemental_groups,
-                    sysctls: value_sysctls,
+                    supplemental_groups: value_supplemental_groups.unwrap_or_default(),
+                    sysctls: value_sysctls.unwrap_or_default(),
                     windows_options: value_windows_options,
                 })
             }
@@ -169,8 +169,8 @@ impl crate::serde::Serialize for PodSecurityContext {
             self.run_as_user.as_ref().map_or(0, |_| 1) +
             self.se_linux_options.as_ref().map_or(0, |_| 1) +
             self.seccomp_profile.as_ref().map_or(0, |_| 1) +
-            self.supplemental_groups.as_ref().map_or(0, |_| 1) +
-            self.sysctls.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.supplemental_groups.is_empty()) +
+            usize::from(!self.sysctls.is_empty()) +
             self.windows_options.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
@@ -194,11 +194,11 @@ impl crate::serde::Serialize for PodSecurityContext {
         if let Some(value) = &self.seccomp_profile {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "seccompProfile", value)?;
         }
-        if let Some(value) = &self.supplemental_groups {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
+        if !self.supplemental_groups.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
         }
-        if let Some(value) = &self.sysctls {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", value)?;
+        if !self.sysctls.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", &self.sysctls)?;
         }
         if let Some(value) = &self.windows_options {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "windowsOptions", value)?;

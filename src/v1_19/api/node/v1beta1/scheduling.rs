@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Scheduling {
     /// nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.
-    pub node_selector: Option<std::collections::BTreeMap<String, String>>,
+    pub node_selector: std::collections::BTreeMap<String, String>,
 
     /// tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
-    pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
+    pub tolerations: Vec<crate::api::core::v1::Toleration>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Scheduling {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for Scheduling {
                 }
 
                 Ok(Scheduling {
-                    node_selector: value_node_selector,
-                    tolerations: value_tolerations,
+                    node_selector: value_node_selector.unwrap_or_default(),
+                    tolerations: value_tolerations.unwrap_or_default(),
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for Scheduling {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Scheduling",
-            self.node_selector.as_ref().map_or(0, |_| 1) +
-            self.tolerations.as_ref().map_or(0, |_| 1),
+            usize::from(!self.node_selector.is_empty()) +
+            usize::from(!self.tolerations.is_empty()),
         )?;
-        if let Some(value) = &self.node_selector {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+        if !self.node_selector.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", &self.node_selector)?;
         }
-        if let Some(value) = &self.tolerations {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+        if !self.tolerations.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", &self.tolerations)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

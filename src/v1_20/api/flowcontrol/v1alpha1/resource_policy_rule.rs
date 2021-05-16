@@ -10,7 +10,7 @@ pub struct ResourcePolicyRule {
     pub cluster_scope: Option<bool>,
 
     /// `namespaces` is a list of target namespaces that restricts matches.  A request that specifies a target namespace matches only if either (a) this list contains that target namespace or (b) this list contains "*".  Note that "*" matches any specified namespace but does not match a request that _does not specify_ a namespace (see the `clusterScope` field for that). This list may be empty, but only if `clusterScope` is true.
-    pub namespaces: Option<Vec<String>>,
+    pub namespaces: Vec<String>,
 
     /// `resources` is a list of matching resources (i.e., lowercase and plural) with, if desired, subresource.  For example, \[ "services", "nodes/status" \].  This list may not be empty. "*" matches all resources and, if present, must be the only entry. Required.
     pub resources: Vec<String>,
@@ -88,7 +88,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourcePolicyRule {
                 Ok(ResourcePolicyRule {
                     api_groups: value_api_groups.ok_or_else(|| crate::serde::de::Error::missing_field("apiGroups"))?,
                     cluster_scope: value_cluster_scope,
-                    namespaces: value_namespaces,
+                    namespaces: value_namespaces.unwrap_or_default(),
                     resources: value_resources.ok_or_else(|| crate::serde::de::Error::missing_field("resources"))?,
                     verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
                 })
@@ -115,14 +115,14 @@ impl crate::serde::Serialize for ResourcePolicyRule {
             "ResourcePolicyRule",
             3 +
             self.cluster_scope.as_ref().map_or(0, |_| 1) +
-            self.namespaces.as_ref().map_or(0, |_| 1),
+            usize::from(!self.namespaces.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
         if let Some(value) = &self.cluster_scope {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterScope", value)?;
         }
-        if let Some(value) = &self.namespaces {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+        if !self.namespaces.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", &self.namespaces)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;

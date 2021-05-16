@@ -13,10 +13,10 @@ pub struct FCVolumeSource {
     pub read_only: Option<bool>,
 
     /// Optional: FC target worldwide names (WWNs)
-    pub target_wwns: Option<Vec<String>>,
+    pub target_wwns: Vec<String>,
 
     /// Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
-    pub wwids: Option<Vec<String>>,
+    pub wwids: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for FCVolumeSource {
@@ -89,8 +89,8 @@ impl<'de> crate::serde::Deserialize<'de> for FCVolumeSource {
                     fs_type: value_fs_type,
                     lun: value_lun,
                     read_only: value_read_only,
-                    target_wwns: value_target_wwns,
-                    wwids: value_wwids,
+                    target_wwns: value_target_wwns.unwrap_or_default(),
+                    wwids: value_wwids.unwrap_or_default(),
                 })
             }
         }
@@ -116,8 +116,8 @@ impl crate::serde::Serialize for FCVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.lun.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            self.target_wwns.as_ref().map_or(0, |_| 1) +
-            self.wwids.as_ref().map_or(0, |_| 1),
+            usize::from(!self.target_wwns.is_empty()) +
+            usize::from(!self.wwids.is_empty()),
         )?;
         if let Some(value) = &self.fs_type {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
@@ -128,11 +128,11 @@ impl crate::serde::Serialize for FCVolumeSource {
         if let Some(value) = &self.read_only {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        if let Some(value) = &self.target_wwns {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetWWNs", value)?;
+        if !self.target_wwns.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetWWNs", &self.target_wwns)?;
         }
-        if let Some(value) = &self.wwids {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "wwids", value)?;
+        if !self.wwids.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "wwids", &self.wwids)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

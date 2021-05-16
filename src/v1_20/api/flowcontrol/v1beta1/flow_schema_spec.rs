@@ -13,7 +13,7 @@ pub struct FlowSchemaSpec {
     pub priority_level_configuration: crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationReference,
 
     /// `rules` describes which requests will match this flow schema. This FlowSchema matches a request if and only if at least one member of rules matches the request. if it is an empty slice, there will be no requests matching the FlowSchema.
-    pub rules: Option<Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>>,
+    pub rules: Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
@@ -82,7 +82,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
                     distinguisher_method: value_distinguisher_method,
                     matching_precedence: value_matching_precedence,
                     priority_level_configuration: value_priority_level_configuration.ok_or_else(|| crate::serde::de::Error::missing_field("priorityLevelConfiguration"))?,
-                    rules: value_rules,
+                    rules: value_rules.unwrap_or_default(),
                 })
             }
         }
@@ -107,7 +107,7 @@ impl crate::serde::Serialize for FlowSchemaSpec {
             1 +
             self.distinguisher_method.as_ref().map_or(0, |_| 1) +
             self.matching_precedence.as_ref().map_or(0, |_| 1) +
-            self.rules.as_ref().map_or(0, |_| 1),
+            usize::from(!self.rules.is_empty()),
         )?;
         if let Some(value) = &self.distinguisher_method {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "distinguisherMethod", value)?;
@@ -116,8 +116,8 @@ impl crate::serde::Serialize for FlowSchemaSpec {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchingPrecedence", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "priorityLevelConfiguration", &self.priority_level_configuration)?;
-        if let Some(value) = &self.rules {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+        if !self.rules.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -10,7 +10,7 @@ pub struct LoadBalancerIngress {
     pub ip: Option<String>,
 
     /// Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
-    pub ports: Option<Vec<crate::api::core::v1::PortStatus>>,
+    pub ports: Vec<crate::api::core::v1::PortStatus>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
                 Ok(LoadBalancerIngress {
                     hostname: value_hostname,
                     ip: value_ip,
-                    ports: value_ports,
+                    ports: value_ports.unwrap_or_default(),
                 })
             }
         }
@@ -97,7 +97,7 @@ impl crate::serde::Serialize for LoadBalancerIngress {
             "LoadBalancerIngress",
             self.hostname.as_ref().map_or(0, |_| 1) +
             self.ip.as_ref().map_or(0, |_| 1) +
-            self.ports.as_ref().map_or(0, |_| 1),
+            usize::from(!self.ports.is_empty()),
         )?;
         if let Some(value) = &self.hostname {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
@@ -105,8 +105,8 @@ impl crate::serde::Serialize for LoadBalancerIngress {
         if let Some(value) = &self.ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;
         }
-        if let Some(value) = &self.ports {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+        if !self.ports.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

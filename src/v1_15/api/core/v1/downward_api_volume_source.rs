@@ -7,7 +7,7 @@ pub struct DownwardAPIVolumeSource {
     pub default_mode: Option<i32>,
 
     /// Items is a list of downward API volume file
-    pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Vec<crate::api::core::v1::DownwardAPIVolumeFile>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeSource {
@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeSource {
 
                 Ok(DownwardAPIVolumeSource {
                     default_mode: value_default_mode,
-                    items: value_items,
+                    items: value_items.unwrap_or_default(),
                 })
             }
         }
@@ -87,13 +87,13 @@ impl crate::serde::Serialize for DownwardAPIVolumeSource {
         let mut state = serializer.serialize_struct(
             "DownwardAPIVolumeSource",
             self.default_mode.as_ref().map_or(0, |_| 1) +
-            self.items.as_ref().map_or(0, |_| 1),
+            usize::from(!self.items.is_empty()),
         )?;
         if let Some(value) = &self.default_mode {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
         }
-        if let Some(value) = &self.items {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+        if !self.items.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

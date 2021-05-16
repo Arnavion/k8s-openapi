@@ -25,7 +25,7 @@ pub struct StatefulSetSpec {
     pub update_strategy: Option<crate::api::apps::v1beta1::StatefulSetUpdateStrategy>,
 
     /// volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
-    pub volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>,
+    pub volume_claim_templates: Vec<crate::api::core::v1::PersistentVolumeClaim>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
@@ -114,7 +114,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
                     service_name: value_service_name.ok_or_else(|| crate::serde::de::Error::missing_field("serviceName"))?,
                     template: value_template.ok_or_else(|| crate::serde::de::Error::missing_field("template"))?,
                     update_strategy: value_update_strategy,
-                    volume_claim_templates: value_volume_claim_templates,
+                    volume_claim_templates: value_volume_claim_templates.unwrap_or_default(),
                 })
             }
         }
@@ -146,7 +146,7 @@ impl crate::serde::Serialize for StatefulSetSpec {
             self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
             self.update_strategy.as_ref().map_or(0, |_| 1) +
-            self.volume_claim_templates.as_ref().map_or(0, |_| 1),
+            usize::from(!self.volume_claim_templates.is_empty()),
         )?;
         if let Some(value) = &self.pod_management_policy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
@@ -165,8 +165,8 @@ impl crate::serde::Serialize for StatefulSetSpec {
         if let Some(value) = &self.update_strategy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
         }
-        if let Some(value) = &self.volume_claim_templates {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
+        if !self.volume_claim_templates.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", &self.volume_claim_templates)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

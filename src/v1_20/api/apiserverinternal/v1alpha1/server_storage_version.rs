@@ -7,7 +7,7 @@ pub struct ServerStorageVersion {
     pub api_server_id: Option<String>,
 
     /// The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
-    pub decodable_versions: Option<Vec<String>>,
+    pub decodable_versions: Vec<String>,
 
     /// The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
     pub encoding_version: Option<String>,
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
 
                 Ok(ServerStorageVersion {
                     api_server_id: value_api_server_id,
-                    decodable_versions: value_decodable_versions,
+                    decodable_versions: value_decodable_versions.unwrap_or_default(),
                     encoding_version: value_encoding_version,
                 })
             }
@@ -96,14 +96,14 @@ impl crate::serde::Serialize for ServerStorageVersion {
         let mut state = serializer.serialize_struct(
             "ServerStorageVersion",
             self.api_server_id.as_ref().map_or(0, |_| 1) +
-            self.decodable_versions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.decodable_versions.is_empty()) +
             self.encoding_version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_server_id {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiServerID", value)?;
         }
-        if let Some(value) = &self.decodable_versions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", value)?;
+        if !self.decodable_versions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "decodableVersions", &self.decodable_versions)?;
         }
         if let Some(value) = &self.encoding_version {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "encodingVersion", value)?;

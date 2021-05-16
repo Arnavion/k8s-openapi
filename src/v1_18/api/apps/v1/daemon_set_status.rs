@@ -7,7 +7,7 @@ pub struct DaemonSetStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a DaemonSet's current state.
-    pub conditions: Option<Vec<crate::api::apps::v1::DaemonSetCondition>>,
+    pub conditions: Vec<crate::api::apps::v1::DaemonSetCondition>,
 
     /// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
     pub current_number_scheduled: i32,
@@ -122,7 +122,7 @@ impl<'de> crate::serde::Deserialize<'de> for DaemonSetStatus {
 
                 Ok(DaemonSetStatus {
                     collision_count: value_collision_count,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     current_number_scheduled: value_current_number_scheduled.ok_or_else(|| crate::serde::de::Error::missing_field("currentNumberScheduled"))?,
                     desired_number_scheduled: value_desired_number_scheduled.ok_or_else(|| crate::serde::de::Error::missing_field("desiredNumberScheduled"))?,
                     number_available: value_number_available,
@@ -160,7 +160,7 @@ impl crate::serde::Serialize for DaemonSetStatus {
             "DaemonSetStatus",
             4 +
             self.collision_count.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
             self.number_available.as_ref().map_or(0, |_| 1) +
             self.number_unavailable.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
@@ -169,8 +169,8 @@ impl crate::serde::Serialize for DaemonSetStatus {
         if let Some(value) = &self.collision_count {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentNumberScheduled", &self.current_number_scheduled)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "desiredNumberScheduled", &self.desired_number_scheduled)?;

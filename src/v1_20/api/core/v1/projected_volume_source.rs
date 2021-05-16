@@ -7,7 +7,7 @@ pub struct ProjectedVolumeSource {
     pub default_mode: Option<i32>,
 
     /// list of volume projections
-    pub sources: Option<Vec<crate::api::core::v1::VolumeProjection>>,
+    pub sources: Vec<crate::api::core::v1::VolumeProjection>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
 
                 Ok(ProjectedVolumeSource {
                     default_mode: value_default_mode,
-                    sources: value_sources,
+                    sources: value_sources.unwrap_or_default(),
                 })
             }
         }
@@ -87,13 +87,13 @@ impl crate::serde::Serialize for ProjectedVolumeSource {
         let mut state = serializer.serialize_struct(
             "ProjectedVolumeSource",
             self.default_mode.as_ref().map_or(0, |_| 1) +
-            self.sources.as_ref().map_or(0, |_| 1),
+            usize::from(!self.sources.is_empty()),
         )?;
         if let Some(value) = &self.default_mode {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
         }
-        if let Some(value) = &self.sources {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sources", value)?;
+        if !self.sources.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sources", &self.sources)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerImage {
     /// Names by which this image is known. e.g. \["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"\]
-    pub names: Option<Vec<String>>,
+    pub names: Vec<String>,
 
     /// The size of the image in bytes.
     pub size_bytes: Option<i64>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerImage {
                 }
 
                 Ok(ContainerImage {
-                    names: value_names,
+                    names: value_names.unwrap_or_default(),
                     size_bytes: value_size_bytes,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for ContainerImage {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerImage",
-            self.names.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.names.is_empty()) +
             self.size_bytes.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.names {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "names", value)?;
+        if !self.names.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         }
         if let Some(value) = &self.size_bytes {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sizeBytes", value)?;
