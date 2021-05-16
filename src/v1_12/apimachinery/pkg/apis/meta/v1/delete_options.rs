@@ -7,7 +7,7 @@ pub struct DeleteOptions {
     pub api_version: Option<String>,
 
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    pub dry_run: Option<Vec<String>>,
+    pub dry_run: Vec<String>,
 
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -101,7 +101,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
 
                 Ok(DeleteOptions {
                     api_version: value_api_version,
-                    dry_run: value_dry_run,
+                    dry_run: value_dry_run.unwrap_or_default(),
                     grace_period_seconds: value_grace_period_seconds,
                     kind: value_kind,
                     orphan_dependents: value_orphan_dependents,
@@ -132,7 +132,7 @@ impl crate::serde::Serialize for DeleteOptions {
         let mut state = serializer.serialize_struct(
             "DeleteOptions",
             self.api_version.as_ref().map_or(0, |_| 1) +
-            self.dry_run.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.dry_run.is_empty()) +
             self.grace_period_seconds.as_ref().map_or(0, |_| 1) +
             self.kind.as_ref().map_or(0, |_| 1) +
             self.orphan_dependents.as_ref().map_or(0, |_| 1) +
@@ -142,8 +142,8 @@ impl crate::serde::Serialize for DeleteOptions {
         if let Some(value) = &self.api_version {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
-        if let Some(value) = &self.dry_run {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
+        if !self.dry_run.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", &self.dry_run)?;
         }
         if let Some(value) = &self.grace_period_seconds {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;

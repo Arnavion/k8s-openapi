@@ -10,7 +10,7 @@ pub struct ReplicationControllerSpec {
     pub replicas: Option<i32>,
 
     /// Selector is a label query over pods that should match the Replicas count. If Selector is empty, it is defaulted to the labels present on the Pod template. Label keys and values that must match in order to be controlled by this replication controller, if empty defaulted to labels on Pod template. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: Option<std::collections::BTreeMap<String, String>>,
+    pub selector: std::collections::BTreeMap<String, String>,
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerSpec {
                 Ok(ReplicationControllerSpec {
                     min_ready_seconds: value_min_ready_seconds,
                     replicas: value_replicas,
-                    selector: value_selector,
+                    selector: value_selector.unwrap_or_default(),
                     template: value_template,
                 })
             }
@@ -106,7 +106,7 @@ impl crate::serde::Serialize for ReplicationControllerSpec {
             "ReplicationControllerSpec",
             self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
             self.replicas.as_ref().map_or(0, |_| 1) +
-            self.selector.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.selector.is_empty()) +
             self.template.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
@@ -115,8 +115,8 @@ impl crate::serde::Serialize for ReplicationControllerSpec {
         if let Some(value) = &self.replicas {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
         }
-        if let Some(value) = &self.selector {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+        if !self.selector.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
         }
         if let Some(value) = &self.template {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "template", value)?;

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimSpec {
     /// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-    pub access_modes: Option<Vec<String>>,
+    pub access_modes: Vec<String>,
 
     /// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
     pub resources: Option<crate::api::core::v1::ResourceRequirements>,
@@ -93,7 +93,7 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
                 }
 
                 Ok(PersistentVolumeClaimSpec {
-                    access_modes: value_access_modes,
+                    access_modes: value_access_modes.unwrap_or_default(),
                     resources: value_resources,
                     selector: value_selector,
                     storage_class_name: value_storage_class_name,
@@ -122,15 +122,15 @@ impl crate::serde::Serialize for PersistentVolumeClaimSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimSpec",
-            self.access_modes.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.access_modes.is_empty()) +
             self.resources.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
             self.storage_class_name.as_ref().map_or(0, |_| 1) +
             self.volume_mode.as_ref().map_or(0, |_| 1) +
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.access_modes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+        if !self.access_modes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &self.access_modes)?;
         }
         if let Some(value) = &self.resources {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;

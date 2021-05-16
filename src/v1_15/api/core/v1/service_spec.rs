@@ -7,7 +7,7 @@ pub struct ServiceSpec {
     pub cluster_ip: Option<String>,
 
     /// externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service.  These IPs are not managed by Kubernetes.  The user is responsible for ensuring that traffic arrives at a node with this IP.  A common example is external load-balancers that are not part of the Kubernetes system.
-    pub external_ips: Option<Vec<String>>,
+    pub external_ips: Vec<String>,
 
     /// externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
     pub external_name: Option<String>,
@@ -22,16 +22,16 @@ pub struct ServiceSpec {
     pub load_balancer_ip: Option<String>,
 
     /// If specified and supported by the platform, this will restrict traffic through the cloud-provider load-balancer will be restricted to the specified client IPs. This field will be ignored if the cloud-provider does not support the feature." More info: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/
-    pub load_balancer_source_ranges: Option<Vec<String>>,
+    pub load_balancer_source_ranges: Vec<String>,
 
     /// The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-    pub ports: Option<Vec<crate::api::core::v1::ServicePort>>,
+    pub ports: Vec<crate::api::core::v1::ServicePort>,
 
     /// publishNotReadyAddresses, when set to true, indicates that DNS implementations must publish the notReadyAddresses of subsets for the Endpoints associated with the Service. The default value is false. The primary use case for setting this field is to use a StatefulSet's Headless Service to propagate SRV records for its Pods without respect to their readiness for purpose of peer discovery.
     pub publish_not_ready_addresses: Option<bool>,
 
     /// Route service traffic to pods with label keys and values matching this selector. If empty or not present, the service is assumed to have an external process managing its endpoints, which Kubernetes will not modify. Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/
-    pub selector: Option<std::collections::BTreeMap<String, String>>,
+    pub selector: std::collections::BTreeMap<String, String>,
 
     /// Supports "ClientIP" and "None". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
     pub session_affinity: Option<String>,
@@ -143,15 +143,15 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
 
                 Ok(ServiceSpec {
                     cluster_ip: value_cluster_ip,
-                    external_ips: value_external_ips,
+                    external_ips: value_external_ips.unwrap_or_default(),
                     external_name: value_external_name,
                     external_traffic_policy: value_external_traffic_policy,
                     health_check_node_port: value_health_check_node_port,
                     load_balancer_ip: value_load_balancer_ip,
-                    load_balancer_source_ranges: value_load_balancer_source_ranges,
-                    ports: value_ports,
+                    load_balancer_source_ranges: value_load_balancer_source_ranges.unwrap_or_default(),
+                    ports: value_ports.unwrap_or_default(),
                     publish_not_ready_addresses: value_publish_not_ready_addresses,
-                    selector: value_selector,
+                    selector: value_selector.unwrap_or_default(),
                     session_affinity: value_session_affinity,
                     session_affinity_config: value_session_affinity_config,
                     type_: value_type_,
@@ -186,15 +186,15 @@ impl crate::serde::Serialize for ServiceSpec {
         let mut state = serializer.serialize_struct(
             "ServiceSpec",
             self.cluster_ip.as_ref().map_or(0, |_| 1) +
-            self.external_ips.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.external_ips.is_empty()) +
             self.external_name.as_ref().map_or(0, |_| 1) +
             self.external_traffic_policy.as_ref().map_or(0, |_| 1) +
             self.health_check_node_port.as_ref().map_or(0, |_| 1) +
             self.load_balancer_ip.as_ref().map_or(0, |_| 1) +
-            self.load_balancer_source_ranges.as_ref().map_or(0, |_| 1) +
-            self.ports.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.load_balancer_source_ranges.is_empty()) +
+            usize::from(!self.ports.is_empty()) +
             self.publish_not_ready_addresses.as_ref().map_or(0, |_| 1) +
-            self.selector.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.selector.is_empty()) +
             self.session_affinity.as_ref().map_or(0, |_| 1) +
             self.session_affinity_config.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
@@ -202,8 +202,8 @@ impl crate::serde::Serialize for ServiceSpec {
         if let Some(value) = &self.cluster_ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
         }
-        if let Some(value) = &self.external_ips {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
+        if !self.external_ips.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", &self.external_ips)?;
         }
         if let Some(value) = &self.external_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
@@ -217,17 +217,17 @@ impl crate::serde::Serialize for ServiceSpec {
         if let Some(value) = &self.load_balancer_ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
         }
-        if let Some(value) = &self.load_balancer_source_ranges {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
+        if !self.load_balancer_source_ranges.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", &self.load_balancer_source_ranges)?;
         }
-        if let Some(value) = &self.ports {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+        if !self.ports.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
         }
         if let Some(value) = &self.publish_not_ready_addresses {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "publishNotReadyAddresses", value)?;
         }
-        if let Some(value) = &self.selector {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+        if !self.selector.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
         }
         if let Some(value) = &self.session_affinity {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;

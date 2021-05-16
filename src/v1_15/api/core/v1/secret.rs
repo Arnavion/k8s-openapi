@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Secret {
     /// Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
-    pub data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
+    pub data: std::collections::BTreeMap<String, crate::ByteString>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API.
-    pub string_data: Option<std::collections::BTreeMap<String, String>>,
+    pub string_data: std::collections::BTreeMap<String, String>,
 
     /// Used to facilitate programmatic handling of secret data.
     pub type_: Option<String>,
@@ -593,9 +593,9 @@ impl<'de> crate::serde::Deserialize<'de> for Secret {
                 }
 
                 Ok(Secret {
-                    data: value_data,
+                    data: value_data.unwrap_or_default(),
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    string_data: value_string_data,
+                    string_data: value_string_data.unwrap_or_default(),
                     type_: value_type_,
                 })
             }
@@ -621,18 +621,18 @@ impl crate::serde::Serialize for Secret {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            self.data.as_ref().map_or(0, |_| 1) +
-            self.string_data.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.data.is_empty()) +
+            usize::from(!self.string_data.is_empty()) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if let Some(value) = &self.data {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
+        if !self.data.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", &self.data)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if let Some(value) = &self.string_data {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", value)?;
+        if !self.string_data.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", &self.string_data)?;
         }
         if let Some(value) = &self.type_ {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;

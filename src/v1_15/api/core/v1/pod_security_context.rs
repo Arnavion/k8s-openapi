@@ -23,10 +23,10 @@ pub struct PodSecurityContext {
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 
     /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-    pub supplemental_groups: Option<Vec<i64>>,
+    pub supplemental_groups: Vec<i64>,
 
     /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    pub sysctls: Option<Vec<crate::api::core::v1::Sysctl>>,
+    pub sysctls: Vec<crate::api::core::v1::Sysctl>,
 
     /// Windows security options.
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
@@ -116,8 +116,8 @@ impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
                     run_as_non_root: value_run_as_non_root,
                     run_as_user: value_run_as_user,
                     se_linux_options: value_se_linux_options,
-                    supplemental_groups: value_supplemental_groups,
-                    sysctls: value_sysctls,
+                    supplemental_groups: value_supplemental_groups.unwrap_or_default(),
+                    sysctls: value_sysctls.unwrap_or_default(),
                     windows_options: value_windows_options,
                 })
             }
@@ -149,8 +149,8 @@ impl crate::serde::Serialize for PodSecurityContext {
             self.run_as_non_root.as_ref().map_or(0, |_| 1) +
             self.run_as_user.as_ref().map_or(0, |_| 1) +
             self.se_linux_options.as_ref().map_or(0, |_| 1) +
-            self.supplemental_groups.as_ref().map_or(0, |_| 1) +
-            self.sysctls.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.supplemental_groups.is_empty()) +
+            usize::from(!self.sysctls.is_empty()) +
             self.windows_options.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
@@ -168,11 +168,11 @@ impl crate::serde::Serialize for PodSecurityContext {
         if let Some(value) = &self.se_linux_options {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
         }
-        if let Some(value) = &self.supplemental_groups {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
+        if !self.supplemental_groups.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
         }
-        if let Some(value) = &self.sysctls {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", value)?;
+        if !self.sysctls.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sysctls", &self.sysctls)?;
         }
         if let Some(value) = &self.windows_options {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "windowsOptions", value)?;

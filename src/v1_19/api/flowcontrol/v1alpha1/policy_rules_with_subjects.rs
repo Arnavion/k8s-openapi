@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PolicyRulesWithSubjects {
     /// `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
-    pub non_resource_rules: Option<Vec<crate::api::flowcontrol::v1alpha1::NonResourcePolicyRule>>,
+    pub non_resource_rules: Vec<crate::api::flowcontrol::v1alpha1::NonResourcePolicyRule>,
 
     /// `resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.
-    pub resource_rules: Option<Vec<crate::api::flowcontrol::v1alpha1::ResourcePolicyRule>>,
+    pub resource_rules: Vec<crate::api::flowcontrol::v1alpha1::ResourcePolicyRule>,
 
     /// subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
     pub subjects: Vec<crate::api::flowcontrol::v1alpha1::Subject>,
@@ -72,8 +72,8 @@ impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
                 }
 
                 Ok(PolicyRulesWithSubjects {
-                    non_resource_rules: value_non_resource_rules,
-                    resource_rules: value_resource_rules,
+                    non_resource_rules: value_non_resource_rules.unwrap_or_default(),
+                    resource_rules: value_resource_rules.unwrap_or_default(),
                     subjects: value_subjects.ok_or_else(|| crate::serde::de::Error::missing_field("subjects"))?,
                 })
             }
@@ -96,14 +96,14 @@ impl crate::serde::Serialize for PolicyRulesWithSubjects {
         let mut state = serializer.serialize_struct(
             "PolicyRulesWithSubjects",
             1 +
-            self.non_resource_rules.as_ref().map_or(0, |_| 1) +
-            self.resource_rules.as_ref().map_or(0, |_| 1),
+            usize::from(!self.non_resource_rules.is_empty()) +
+            usize::from(!self.resource_rules.is_empty()),
         )?;
-        if let Some(value) = &self.non_resource_rules {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceRules", value)?;
+        if !self.non_resource_rules.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceRules", &self.non_resource_rules)?;
         }
-        if let Some(value) = &self.resource_rules {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceRules", value)?;
+        if !self.resource_rules.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceRules", &self.resource_rules)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", &self.subjects)?;
         crate::serde::ser::SerializeStruct::end(state)

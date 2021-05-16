@@ -7,7 +7,7 @@ pub struct CustomResourceDefinitionStatus {
     pub accepted_names: crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames,
 
     /// conditions indicate state for particular aspects of a CustomResourceDefinition
-    pub conditions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionCondition>>,
+    pub conditions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionCondition>,
 
     /// storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.
     pub stored_versions: Vec<String>,
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
 
                 Ok(CustomResourceDefinitionStatus {
                     accepted_names: value_accepted_names.ok_or_else(|| crate::serde::de::Error::missing_field("acceptedNames"))?,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     stored_versions: value_stored_versions.ok_or_else(|| crate::serde::de::Error::missing_field("storedVersions"))?,
                 })
             }
@@ -96,11 +96,11 @@ impl crate::serde::Serialize for CustomResourceDefinitionStatus {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionStatus",
             2 +
-            self.conditions.as_ref().map_or(0, |_| 1),
+            usize::from(!self.conditions.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "acceptedNames", &self.accepted_names)?;
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storedVersions", &self.stored_versions)?;
         crate::serde::ser::SerializeStruct::end(state)

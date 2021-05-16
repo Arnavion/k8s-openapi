@@ -7,13 +7,13 @@ pub struct ServiceAccount {
     pub automount_service_account_token: Option<bool>,
 
     /// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Vec<crate::api::core::v1::LocalObjectReference>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
-    pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
+    pub secrets: Vec<crate::api::core::v1::ObjectReference>,
 }
 
 // Begin /v1/ServiceAccount
@@ -594,9 +594,9 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccount {
 
                 Ok(ServiceAccount {
                     automount_service_account_token: value_automount_service_account_token,
-                    image_pull_secrets: value_image_pull_secrets,
+                    image_pull_secrets: value_image_pull_secrets.unwrap_or_default(),
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    secrets: value_secrets,
+                    secrets: value_secrets.unwrap_or_default(),
                 })
             }
         }
@@ -622,20 +622,20 @@ impl crate::serde::Serialize for ServiceAccount {
             <Self as crate::Resource>::KIND,
             3 +
             self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
-            self.image_pull_secrets.as_ref().map_or(0, |_| 1) +
-            self.secrets.as_ref().map_or(0, |_| 1),
+            usize::from(!self.image_pull_secrets.is_empty()) +
+            usize::from(!self.secrets.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         if let Some(value) = &self.automount_service_account_token {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
         }
-        if let Some(value) = &self.image_pull_secrets {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+        if !self.image_pull_secrets.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", &self.image_pull_secrets)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if let Some(value) = &self.secrets {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secrets", value)?;
+        if !self.secrets.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secrets", &self.secrets)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

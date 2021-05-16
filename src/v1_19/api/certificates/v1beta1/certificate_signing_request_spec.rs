@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestSpec {
     /// Extra information about the requesting user. See user.Info interface for details.
-    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
+    pub extra: std::collections::BTreeMap<String, Vec<String>>,
 
     /// Group information about the requesting user. See user.Info interface for details.
-    pub groups: Option<Vec<String>>,
+    pub groups: Vec<String>,
 
     /// Base64-encoded PKCS#10 CSR data
     pub request: crate::ByteString,
@@ -50,7 +50,7 @@ pub struct CertificateSigningRequestSpec {
     ///  "ocsp signing",
     ///  "microsoft sgc",
     ///  "netscape sgc"
-    pub usages: Option<Vec<String>>,
+    pub usages: Vec<String>,
 
     /// Information about the requesting user. See user.Info interface for details.
     pub username: Option<String>,
@@ -131,12 +131,12 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
                 }
 
                 Ok(CertificateSigningRequestSpec {
-                    extra: value_extra,
-                    groups: value_groups,
+                    extra: value_extra.unwrap_or_default(),
+                    groups: value_groups.unwrap_or_default(),
                     request: value_request.ok_or_else(|| crate::serde::de::Error::missing_field("request"))?,
                     signer_name: value_signer_name,
                     uid: value_uid,
-                    usages: value_usages,
+                    usages: value_usages.unwrap_or_default(),
                     username: value_username,
                 })
             }
@@ -163,18 +163,18 @@ impl crate::serde::Serialize for CertificateSigningRequestSpec {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestSpec",
             1 +
-            self.extra.as_ref().map_or(0, |_| 1) +
-            self.groups.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.extra.is_empty()) +
+            usize::from(!self.groups.is_empty()) +
             self.signer_name.as_ref().map_or(0, |_| 1) +
             self.uid.as_ref().map_or(0, |_| 1) +
-            self.usages.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.usages.is_empty()) +
             self.username.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.extra {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+        if !self.extra.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", &self.extra)?;
         }
-        if let Some(value) = &self.groups {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
+        if !self.groups.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", &self.groups)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "request", &self.request)?;
         if let Some(value) = &self.signer_name {
@@ -183,8 +183,8 @@ impl crate::serde::Serialize for CertificateSigningRequestSpec {
         if let Some(value) = &self.uid {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
-        if let Some(value) = &self.usages {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "usages", value)?;
+        if !self.usages.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "usages", &self.usages)?;
         }
         if let Some(value) = &self.username {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "username", value)?;

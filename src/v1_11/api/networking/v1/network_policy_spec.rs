@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicySpec {
     /// List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8
-    pub egress: Option<Vec<crate::api::networking::v1::NetworkPolicyEgressRule>>,
+    pub egress: Vec<crate::api::networking::v1::NetworkPolicyEgressRule>,
 
     /// List of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic source is the pod's local node, OR if the traffic matches at least one ingress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and serves solely to ensure that the pods it selects are isolated by default)
-    pub ingress: Option<Vec<crate::api::networking::v1::NetworkPolicyIngressRule>>,
+    pub ingress: Vec<crate::api::networking::v1::NetworkPolicyIngressRule>,
 
     /// Selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.
     pub pod_selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// List of rule types that the NetworkPolicy relates to. Valid options are Ingress, Egress, or Ingress,Egress. If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes \[ "Egress" \]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just \[ "Ingress" \]). This field is beta-level in 1.8
-    pub policy_types: Option<Vec<String>>,
+    pub policy_types: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
@@ -79,10 +79,10 @@ impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
                 }
 
                 Ok(NetworkPolicySpec {
-                    egress: value_egress,
-                    ingress: value_ingress,
+                    egress: value_egress.unwrap_or_default(),
+                    ingress: value_ingress.unwrap_or_default(),
                     pod_selector: value_pod_selector.ok_or_else(|| crate::serde::de::Error::missing_field("podSelector"))?,
-                    policy_types: value_policy_types,
+                    policy_types: value_policy_types.unwrap_or_default(),
                 })
             }
         }
@@ -105,19 +105,19 @@ impl crate::serde::Serialize for NetworkPolicySpec {
         let mut state = serializer.serialize_struct(
             "NetworkPolicySpec",
             1 +
-            self.egress.as_ref().map_or(0, |_| 1) +
-            self.ingress.as_ref().map_or(0, |_| 1) +
-            self.policy_types.as_ref().map_or(0, |_| 1),
+            usize::from(!self.egress.is_empty()) +
+            usize::from(!self.ingress.is_empty()) +
+            usize::from(!self.policy_types.is_empty()),
         )?;
-        if let Some(value) = &self.egress {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "egress", value)?;
+        if !self.egress.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "egress", &self.egress)?;
         }
-        if let Some(value) = &self.ingress {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
+        if !self.ingress.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", &self.ingress)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", &self.pod_selector)?;
-        if let Some(value) = &self.policy_types {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policyTypes", value)?;
+        if !self.policy_types.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policyTypes", &self.policy_types)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

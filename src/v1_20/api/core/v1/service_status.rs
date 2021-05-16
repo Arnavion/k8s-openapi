@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServiceStatus {
     /// Current service state
-    pub conditions: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>>,
+    pub conditions: Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>,
 
     /// LoadBalancer contains the current status of the load-balancer, if one is present.
     pub load_balancer: Option<crate::api::core::v1::LoadBalancerStatus>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceStatus {
                 }
 
                 Ok(ServiceStatus {
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     load_balancer: value_load_balancer,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for ServiceStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceStatus",
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
             self.load_balancer.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         if let Some(value) = &self.load_balancer {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancer", value)?;

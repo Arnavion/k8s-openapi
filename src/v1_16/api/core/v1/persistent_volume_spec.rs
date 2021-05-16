@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeSpec {
     /// AccessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
-    pub access_modes: Option<Vec<String>>,
+    pub access_modes: Vec<String>,
 
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
     pub aws_elastic_block_store: Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource>,
@@ -16,7 +16,7 @@ pub struct PersistentVolumeSpec {
     pub azure_file: Option<crate::api::core::v1::AzureFilePersistentVolumeSource>,
 
     /// A description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
     pub cephfs: Option<crate::api::core::v1::CephFSPersistentVolumeSource>,
@@ -55,7 +55,7 @@ pub struct PersistentVolumeSpec {
     pub local: Option<crate::api::core::v1::LocalVolumeSource>,
 
     /// A list of mount options, e.g. \["ro", "soft"\]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
-    pub mount_options: Option<Vec<String>>,
+    pub mount_options: Vec<String>,
 
     /// NFS represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
     pub nfs: Option<crate::api::core::v1::NFSVolumeSource>,
@@ -261,11 +261,11 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeSpec {
                 }
 
                 Ok(PersistentVolumeSpec {
-                    access_modes: value_access_modes,
+                    access_modes: value_access_modes.unwrap_or_default(),
                     aws_elastic_block_store: value_aws_elastic_block_store,
                     azure_disk: value_azure_disk,
                     azure_file: value_azure_file,
-                    capacity: value_capacity,
+                    capacity: value_capacity.unwrap_or_default(),
                     cephfs: value_cephfs,
                     cinder: value_cinder,
                     claim_ref: value_claim_ref,
@@ -278,7 +278,7 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeSpec {
                     host_path: value_host_path,
                     iscsi: value_iscsi,
                     local: value_local,
-                    mount_options: value_mount_options,
+                    mount_options: value_mount_options.unwrap_or_default(),
                     nfs: value_nfs,
                     node_affinity: value_node_affinity,
                     persistent_volume_reclaim_policy: value_persistent_volume_reclaim_policy,
@@ -338,11 +338,11 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeSpec",
-            self.access_modes.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.access_modes.is_empty()) +
             self.aws_elastic_block_store.as_ref().map_or(0, |_| 1) +
             self.azure_disk.as_ref().map_or(0, |_| 1) +
             self.azure_file.as_ref().map_or(0, |_| 1) +
-            self.capacity.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.capacity.is_empty()) +
             self.cephfs.as_ref().map_or(0, |_| 1) +
             self.cinder.as_ref().map_or(0, |_| 1) +
             self.claim_ref.as_ref().map_or(0, |_| 1) +
@@ -355,7 +355,7 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
             self.host_path.as_ref().map_or(0, |_| 1) +
             self.iscsi.as_ref().map_or(0, |_| 1) +
             self.local.as_ref().map_or(0, |_| 1) +
-            self.mount_options.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.mount_options.is_empty()) +
             self.nfs.as_ref().map_or(0, |_| 1) +
             self.node_affinity.as_ref().map_or(0, |_| 1) +
             self.persistent_volume_reclaim_policy.as_ref().map_or(0, |_| 1) +
@@ -369,8 +369,8 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
             self.volume_mode.as_ref().map_or(0, |_| 1) +
             self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.access_modes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+        if !self.access_modes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &self.access_modes)?;
         }
         if let Some(value) = &self.aws_elastic_block_store {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
@@ -381,8 +381,8 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
         if let Some(value) = &self.azure_file {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
         }
-        if let Some(value) = &self.capacity {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+        if !self.capacity.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &self.capacity)?;
         }
         if let Some(value) = &self.cephfs {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
@@ -420,8 +420,8 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
         if let Some(value) = &self.local {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "local", value)?;
         }
-        if let Some(value) = &self.mount_options {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
+        if !self.mount_options.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", &self.mount_options)?;
         }
         if let Some(value) = &self.nfs {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;

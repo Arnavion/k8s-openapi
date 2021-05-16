@@ -22,7 +22,7 @@ pub struct CSIPersistentVolumeSource {
     pub read_only: Option<bool>,
 
     /// Attributes of the volume to publish.
-    pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
+    pub volume_attributes: std::collections::BTreeMap<String, String>,
 
     /// VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
     pub volume_handle: String,
@@ -113,7 +113,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
                     node_publish_secret_ref: value_node_publish_secret_ref,
                     node_stage_secret_ref: value_node_stage_secret_ref,
                     read_only: value_read_only,
-                    volume_attributes: value_volume_attributes,
+                    volume_attributes: value_volume_attributes.unwrap_or_default(),
                     volume_handle: value_volume_handle.ok_or_else(|| crate::serde::de::Error::missing_field("volumeHandle"))?,
                 })
             }
@@ -146,7 +146,7 @@ impl crate::serde::Serialize for CSIPersistentVolumeSource {
             self.node_publish_secret_ref.as_ref().map_or(0, |_| 1) +
             self.node_stage_secret_ref.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            self.volume_attributes.as_ref().map_or(0, |_| 1),
+            usize::from(!self.volume_attributes.is_empty()),
         )?;
         if let Some(value) = &self.controller_publish_secret_ref {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "controllerPublishSecretRef", value)?;
@@ -164,8 +164,8 @@ impl crate::serde::Serialize for CSIPersistentVolumeSource {
         if let Some(value) = &self.read_only {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        if let Some(value) = &self.volume_attributes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", value)?;
+        if !self.volume_attributes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", &self.volume_attributes)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeHandle", &self.volume_handle)?;
         crate::serde::ser::SerializeStruct::end(state)

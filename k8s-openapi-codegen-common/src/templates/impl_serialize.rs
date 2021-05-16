@@ -36,17 +36,30 @@ pub(crate) fn generate(
 
 			has_flattened_field = true;
 		}
-		else if *required {
-			writeln!(fields_string, "        {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
-
-			required_fields_num += 1;
-		}
 		else {
-			writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
-			writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", local, name)?;
-			writeln!(fields_string, "        }}")?;
+			match required {
+				super::PropertyRequired::Required => {
+					writeln!(fields_string, "        {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
 
-			fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));
+					required_fields_num += 1;
+				},
+
+				super::PropertyRequired::Optional => {
+					writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
+					writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", local, name)?;
+					writeln!(fields_string, "        }}")?;
+
+					fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));
+				},
+
+				super::PropertyRequired::OptionalDefault => {
+					writeln!(fields_string, "        if !self.{}.is_empty() {{", field_name)?;
+					writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
+					writeln!(fields_string, "        }}")?;
+
+					fields_num.push(format!("usize::from(!self.{}.is_empty())", field_name));
+				},
+			}
 		}
 	}
 

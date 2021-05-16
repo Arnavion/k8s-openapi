@@ -9,7 +9,7 @@ pub struct SecretVolumeSource {
     pub default_mode: Option<i32>,
 
     /// If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-    pub items: Option<Vec<crate::api::core::v1::KeyToPath>>,
+    pub items: Vec<crate::api::core::v1::KeyToPath>,
 
     /// Specify whether the Secret or it's keys must be defined
     pub optional: Option<bool>,
@@ -82,7 +82,7 @@ impl<'de> crate::serde::Deserialize<'de> for SecretVolumeSource {
 
                 Ok(SecretVolumeSource {
                     default_mode: value_default_mode,
-                    items: value_items,
+                    items: value_items.unwrap_or_default(),
                     optional: value_optional,
                     secret_name: value_secret_name,
                 })
@@ -107,15 +107,15 @@ impl crate::serde::Serialize for SecretVolumeSource {
         let mut state = serializer.serialize_struct(
             "SecretVolumeSource",
             self.default_mode.as_ref().map_or(0, |_| 1) +
-            self.items.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.items.is_empty()) +
             self.optional.as_ref().map_or(0, |_| 1) +
             self.secret_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
         }
-        if let Some(value) = &self.items {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+        if !self.items.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
         }
         if let Some(value) = &self.optional {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;

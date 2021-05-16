@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct AggregationRule {
     /// ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
-    pub cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
+    pub cluster_role_selectors: Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for AggregationRule {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for AggregationRule {
                 }
 
                 Ok(AggregationRule {
-                    cluster_role_selectors: value_cluster_role_selectors,
+                    cluster_role_selectors: value_cluster_role_selectors.unwrap_or_default(),
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for AggregationRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AggregationRule",
-            self.cluster_role_selectors.as_ref().map_or(0, |_| 1),
+            usize::from(!self.cluster_role_selectors.is_empty()),
         )?;
-        if let Some(value) = &self.cluster_role_selectors {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterRoleSelectors", value)?;
+        if !self.cluster_role_selectors.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterRoleSelectors", &self.cluster_role_selectors)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

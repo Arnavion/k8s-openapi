@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenReviewSpec {
     /// Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
-    pub audiences: Option<Vec<String>>,
+    pub audiences: Vec<String>,
 
     /// Token is the opaque bearer token.
     pub token: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenReviewSpec {
                 }
 
                 Ok(TokenReviewSpec {
-                    audiences: value_audiences,
+                    audiences: value_audiences.unwrap_or_default(),
                     token: value_token,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for TokenReviewSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenReviewSpec",
-            self.audiences.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.audiences.is_empty()) +
             self.token.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.audiences {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", value)?;
+        if !self.audiences.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", &self.audiences)?;
         }
         if let Some(value) = &self.token {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "token", value)?;

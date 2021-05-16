@@ -11,13 +11,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointSubset {
     /// IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
-    pub addresses: Option<Vec<crate::api::core::v1::EndpointAddress>>,
+    pub addresses: Vec<crate::api::core::v1::EndpointAddress>,
 
     /// IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
-    pub not_ready_addresses: Option<Vec<crate::api::core::v1::EndpointAddress>>,
+    pub not_ready_addresses: Vec<crate::api::core::v1::EndpointAddress>,
 
     /// Port numbers available on the related IP addresses.
-    pub ports: Option<Vec<crate::api::core::v1::EndpointPort>>,
+    pub ports: Vec<crate::api::core::v1::EndpointPort>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointSubset {
@@ -79,9 +79,9 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointSubset {
                 }
 
                 Ok(EndpointSubset {
-                    addresses: value_addresses,
-                    not_ready_addresses: value_not_ready_addresses,
-                    ports: value_ports,
+                    addresses: value_addresses.unwrap_or_default(),
+                    not_ready_addresses: value_not_ready_addresses.unwrap_or_default(),
+                    ports: value_ports.unwrap_or_default(),
                 })
             }
         }
@@ -102,18 +102,18 @@ impl crate::serde::Serialize for EndpointSubset {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EndpointSubset",
-            self.addresses.as_ref().map_or(0, |_| 1) +
-            self.not_ready_addresses.as_ref().map_or(0, |_| 1) +
-            self.ports.as_ref().map_or(0, |_| 1),
+            usize::from(!self.addresses.is_empty()) +
+            usize::from(!self.not_ready_addresses.is_empty()) +
+            usize::from(!self.ports.is_empty()),
         )?;
-        if let Some(value) = &self.addresses {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
+        if !self.addresses.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
         }
-        if let Some(value) = &self.not_ready_addresses {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "notReadyAddresses", value)?;
+        if !self.not_ready_addresses.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "notReadyAddresses", &self.not_ready_addresses)?;
         }
-        if let Some(value) = &self.ports {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+        if !self.ports.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionVersion {
     /// additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. Top-level and per-version columns are mutually exclusive. Per-version columns must not all be set to identical values (top-level columns should be used instead). If no top-level or per-version columns are specified, a single column displaying the age of the custom resource is used.
-    pub additional_printer_columns: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>>,
+    pub additional_printer_columns: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>,
 
     /// name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at `/apis/\<group\>/\<version\>/...` if `served` is true.
     pub name: String,
@@ -93,7 +93,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionVersion {
                 }
 
                 Ok(CustomResourceDefinitionVersion {
-                    additional_printer_columns: value_additional_printer_columns,
+                    additional_printer_columns: value_additional_printer_columns.unwrap_or_default(),
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     schema: value_schema,
                     served: value_served.ok_or_else(|| crate::serde::de::Error::missing_field("served"))?,
@@ -123,12 +123,12 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionVersion",
             3 +
-            self.additional_printer_columns.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.additional_printer_columns.is_empty()) +
             self.schema.as_ref().map_or(0, |_| 1) +
             self.subresources.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.additional_printer_columns {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", value)?;
+        if !self.additional_printer_columns.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", &self.additional_printer_columns)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.schema {

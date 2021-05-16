@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RuleWithOperations {
     /// APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
-    pub api_groups: Option<Vec<String>>,
+    pub api_groups: Vec<String>,
 
     /// APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.
-    pub api_versions: Option<Vec<String>>,
+    pub api_versions: Vec<String>,
 
     /// Operations is the operations the admission hook cares about - CREATE, UPDATE, or * for all operations. If '*' is present, the length of the slice must be one. Required.
-    pub operations: Option<Vec<String>>,
+    pub operations: Vec<String>,
 
     /// Resources is a list of resources this rule applies to.
     ///
@@ -19,7 +19,7 @@ pub struct RuleWithOperations {
     /// If wildcard is present, the validation rule will ensure resources do not overlap with each other.
     ///
     /// Depending on the enclosing object, subresources might not be allowed. Required.
-    pub resources: Option<Vec<String>>,
+    pub resources: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for RuleWithOperations {
@@ -85,10 +85,10 @@ impl<'de> crate::serde::Deserialize<'de> for RuleWithOperations {
                 }
 
                 Ok(RuleWithOperations {
-                    api_groups: value_api_groups,
-                    api_versions: value_api_versions,
-                    operations: value_operations,
-                    resources: value_resources,
+                    api_groups: value_api_groups.unwrap_or_default(),
+                    api_versions: value_api_versions.unwrap_or_default(),
+                    operations: value_operations.unwrap_or_default(),
+                    resources: value_resources.unwrap_or_default(),
                 })
             }
         }
@@ -110,22 +110,22 @@ impl crate::serde::Serialize for RuleWithOperations {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RuleWithOperations",
-            self.api_groups.as_ref().map_or(0, |_| 1) +
-            self.api_versions.as_ref().map_or(0, |_| 1) +
-            self.operations.as_ref().map_or(0, |_| 1) +
-            self.resources.as_ref().map_or(0, |_| 1),
+            usize::from(!self.api_groups.is_empty()) +
+            usize::from(!self.api_versions.is_empty()) +
+            usize::from(!self.operations.is_empty()) +
+            usize::from(!self.resources.is_empty()),
         )?;
-        if let Some(value) = &self.api_groups {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
+        if !self.api_groups.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
         }
-        if let Some(value) = &self.api_versions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", value)?;
+        if !self.api_versions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", &self.api_versions)?;
         }
-        if let Some(value) = &self.operations {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "operations", value)?;
+        if !self.operations.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "operations", &self.operations)?;
         }
-        if let Some(value) = &self.resources {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+        if !self.resources.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -79,21 +79,38 @@ pub(crate) fn generate(
 
 			writeln!(str_to_field_match_arms, r#"                            {:?} => Field::Key_{},"#, name, field_name)?;
 
-			if *required {
-				writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+			match required {
+				super::PropertyRequired::Required => {
+					writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
 
-				writeln!(field_value_match_arms,
-					r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
-					field_name, field_name, local)?;
+					writeln!(field_value_match_arms,
+						r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
+						field_name, field_name, local)?;
 
-				writeln!(field_value_assignment, "                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,", field_name, field_name, local, name)?;
-			}
-			else {
-				writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+					writeln!(field_value_assignment,
+						"                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,",
+						field_name, field_name, local, name)?;
+				},
 
-				writeln!(field_value_match_arms, r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name, local)?;
+				super::PropertyRequired::Optional => {
+					writeln!(field_value_defs, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
 
-				writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
+					writeln!(field_value_match_arms,
+						r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#,
+						field_name, field_name, local)?;
+
+					writeln!(field_value_assignment, "                    {}: value_{},", field_name, field_name)?;
+				},
+
+				super::PropertyRequired::OptionalDefault => {
+					writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+
+					writeln!(field_value_match_arms,
+						r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#,
+						field_name, field_name, local)?;
+
+					writeln!(field_value_assignment, "                    {}: value_{}.unwrap_or_default(),", field_name, field_name)?;
+				},
 			}
 
 			writeln!(field_name_list, r#"                {:?},"#, name)?;

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ScopeSelector {
     /// A list of scope selector requirements by scope of the resources.
-    pub match_expressions: Option<Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>>,
+    pub match_expressions: Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ScopeSelector {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for ScopeSelector {
                 }
 
                 Ok(ScopeSelector {
-                    match_expressions: value_match_expressions,
+                    match_expressions: value_match_expressions.unwrap_or_default(),
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for ScopeSelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ScopeSelector",
-            self.match_expressions.as_ref().map_or(0, |_| 1),
+            usize::from(!self.match_expressions.is_empty()),
         )?;
-        if let Some(value) = &self.match_expressions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;
+        if !self.match_expressions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", &self.match_expressions)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

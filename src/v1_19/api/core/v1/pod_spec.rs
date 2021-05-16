@@ -25,10 +25,10 @@ pub struct PodSpec {
     pub enable_service_links: Option<bool>,
 
     /// List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
-    pub ephemeral_containers: Option<Vec<crate::api::core::v1::EphemeralContainer>>,
+    pub ephemeral_containers: Vec<crate::api::core::v1::EphemeralContainer>,
 
     /// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
-    pub host_aliases: Option<Vec<crate::api::core::v1::HostAlias>>,
+    pub host_aliases: Vec<crate::api::core::v1::HostAlias>,
 
     /// Use the host's ipc namespace. Optional: Default to false.
     pub host_ipc: Option<bool>,
@@ -43,19 +43,19 @@ pub struct PodSpec {
     pub hostname: Option<String>,
 
     /// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<crate::api::core::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Vec<crate::api::core::v1::LocalObjectReference>,
 
     /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-    pub init_containers: Option<Vec<crate::api::core::v1::Container>>,
+    pub init_containers: Vec<crate::api::core::v1::Container>,
 
     /// NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
     pub node_name: Option<String>,
 
     /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-    pub node_selector: Option<std::collections::BTreeMap<String, String>>,
+    pub node_selector: std::collections::BTreeMap<String, String>,
 
     /// Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
-    pub overhead: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub overhead: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
     pub preemption_policy: Option<String>,
@@ -67,7 +67,7 @@ pub struct PodSpec {
     pub priority_class_name: Option<String>,
 
     /// If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/0007-pod-ready%2B%2B.md
-    pub readiness_gates: Option<Vec<crate::api::core::v1::PodReadinessGate>>,
+    pub readiness_gates: Vec<crate::api::core::v1::PodReadinessGate>,
 
     /// Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     pub restart_policy: Option<String>,
@@ -100,13 +100,13 @@ pub struct PodSpec {
     pub termination_grace_period_seconds: Option<i64>,
 
     /// If specified, the pod's tolerations.
-    pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
+    pub tolerations: Vec<crate::api::core::v1::Toleration>,
 
     /// TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
-    pub topology_spread_constraints: Option<Vec<crate::api::core::v1::TopologySpreadConstraint>>,
+    pub topology_spread_constraints: Vec<crate::api::core::v1::TopologySpreadConstraint>,
 
     /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
-    pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
+    pub volumes: Vec<crate::api::core::v1::Volume>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for PodSpec {
@@ -303,21 +303,21 @@ impl<'de> crate::serde::Deserialize<'de> for PodSpec {
                     dns_config: value_dns_config,
                     dns_policy: value_dns_policy,
                     enable_service_links: value_enable_service_links,
-                    ephemeral_containers: value_ephemeral_containers,
-                    host_aliases: value_host_aliases,
+                    ephemeral_containers: value_ephemeral_containers.unwrap_or_default(),
+                    host_aliases: value_host_aliases.unwrap_or_default(),
                     host_ipc: value_host_ipc,
                     host_network: value_host_network,
                     host_pid: value_host_pid,
                     hostname: value_hostname,
-                    image_pull_secrets: value_image_pull_secrets,
-                    init_containers: value_init_containers,
+                    image_pull_secrets: value_image_pull_secrets.unwrap_or_default(),
+                    init_containers: value_init_containers.unwrap_or_default(),
                     node_name: value_node_name,
-                    node_selector: value_node_selector,
-                    overhead: value_overhead,
+                    node_selector: value_node_selector.unwrap_or_default(),
+                    overhead: value_overhead.unwrap_or_default(),
                     preemption_policy: value_preemption_policy,
                     priority: value_priority,
                     priority_class_name: value_priority_class_name,
-                    readiness_gates: value_readiness_gates,
+                    readiness_gates: value_readiness_gates.unwrap_or_default(),
                     restart_policy: value_restart_policy,
                     runtime_class_name: value_runtime_class_name,
                     scheduler_name: value_scheduler_name,
@@ -328,9 +328,9 @@ impl<'de> crate::serde::Deserialize<'de> for PodSpec {
                     share_process_namespace: value_share_process_namespace,
                     subdomain: value_subdomain,
                     termination_grace_period_seconds: value_termination_grace_period_seconds,
-                    tolerations: value_tolerations,
-                    topology_spread_constraints: value_topology_spread_constraints,
-                    volumes: value_volumes,
+                    tolerations: value_tolerations.unwrap_or_default(),
+                    topology_spread_constraints: value_topology_spread_constraints.unwrap_or_default(),
+                    volumes: value_volumes.unwrap_or_default(),
                 })
             }
         }
@@ -390,21 +390,21 @@ impl crate::serde::Serialize for PodSpec {
             self.dns_config.as_ref().map_or(0, |_| 1) +
             self.dns_policy.as_ref().map_or(0, |_| 1) +
             self.enable_service_links.as_ref().map_or(0, |_| 1) +
-            self.ephemeral_containers.as_ref().map_or(0, |_| 1) +
-            self.host_aliases.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.ephemeral_containers.is_empty()) +
+            usize::from(!self.host_aliases.is_empty()) +
             self.host_ipc.as_ref().map_or(0, |_| 1) +
             self.host_network.as_ref().map_or(0, |_| 1) +
             self.host_pid.as_ref().map_or(0, |_| 1) +
             self.hostname.as_ref().map_or(0, |_| 1) +
-            self.image_pull_secrets.as_ref().map_or(0, |_| 1) +
-            self.init_containers.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.image_pull_secrets.is_empty()) +
+            usize::from(!self.init_containers.is_empty()) +
             self.node_name.as_ref().map_or(0, |_| 1) +
-            self.node_selector.as_ref().map_or(0, |_| 1) +
-            self.overhead.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.node_selector.is_empty()) +
+            usize::from(!self.overhead.is_empty()) +
             self.preemption_policy.as_ref().map_or(0, |_| 1) +
             self.priority.as_ref().map_or(0, |_| 1) +
             self.priority_class_name.as_ref().map_or(0, |_| 1) +
-            self.readiness_gates.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.readiness_gates.is_empty()) +
             self.restart_policy.as_ref().map_or(0, |_| 1) +
             self.runtime_class_name.as_ref().map_or(0, |_| 1) +
             self.scheduler_name.as_ref().map_or(0, |_| 1) +
@@ -415,9 +415,9 @@ impl crate::serde::Serialize for PodSpec {
             self.share_process_namespace.as_ref().map_or(0, |_| 1) +
             self.subdomain.as_ref().map_or(0, |_| 1) +
             self.termination_grace_period_seconds.as_ref().map_or(0, |_| 1) +
-            self.tolerations.as_ref().map_or(0, |_| 1) +
-            self.topology_spread_constraints.as_ref().map_or(0, |_| 1) +
-            self.volumes.as_ref().map_or(0, |_| 1),
+            usize::from(!self.tolerations.is_empty()) +
+            usize::from(!self.topology_spread_constraints.is_empty()) +
+            usize::from(!self.volumes.is_empty()),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
@@ -438,11 +438,11 @@ impl crate::serde::Serialize for PodSpec {
         if let Some(value) = &self.enable_service_links {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "enableServiceLinks", value)?;
         }
-        if let Some(value) = &self.ephemeral_containers {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeralContainers", value)?;
+        if !self.ephemeral_containers.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ephemeralContainers", &self.ephemeral_containers)?;
         }
-        if let Some(value) = &self.host_aliases {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
+        if !self.host_aliases.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", &self.host_aliases)?;
         }
         if let Some(value) = &self.host_ipc {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
@@ -456,20 +456,20 @@ impl crate::serde::Serialize for PodSpec {
         if let Some(value) = &self.hostname {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
         }
-        if let Some(value) = &self.image_pull_secrets {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+        if !self.image_pull_secrets.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", &self.image_pull_secrets)?;
         }
-        if let Some(value) = &self.init_containers {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
+        if !self.init_containers.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", &self.init_containers)?;
         }
         if let Some(value) = &self.node_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
         }
-        if let Some(value) = &self.node_selector {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+        if !self.node_selector.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", &self.node_selector)?;
         }
-        if let Some(value) = &self.overhead {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", value)?;
+        if !self.overhead.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "overhead", &self.overhead)?;
         }
         if let Some(value) = &self.preemption_policy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preemptionPolicy", value)?;
@@ -480,8 +480,8 @@ impl crate::serde::Serialize for PodSpec {
         if let Some(value) = &self.priority_class_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "priorityClassName", value)?;
         }
-        if let Some(value) = &self.readiness_gates {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", value)?;
+        if !self.readiness_gates.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessGates", &self.readiness_gates)?;
         }
         if let Some(value) = &self.restart_policy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
@@ -513,14 +513,14 @@ impl crate::serde::Serialize for PodSpec {
         if let Some(value) = &self.termination_grace_period_seconds {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
         }
-        if let Some(value) = &self.tolerations {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+        if !self.tolerations.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", &self.tolerations)?;
         }
-        if let Some(value) = &self.topology_spread_constraints {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologySpreadConstraints", value)?;
+        if !self.topology_spread_constraints.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologySpreadConstraints", &self.topology_spread_constraints)?;
         }
-        if let Some(value) = &self.volumes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+        if !self.volumes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &self.volumes)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

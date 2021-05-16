@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenReviewStatus {
     /// Audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "true", the token is valid against the audience of the Kubernetes API server.
-    pub audiences: Option<Vec<String>>,
+    pub audiences: Vec<String>,
 
     /// Authenticated indicates that the token was associated with a known user.
     pub authenticated: Option<bool>,
@@ -79,7 +79,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenReviewStatus {
                 }
 
                 Ok(TokenReviewStatus {
-                    audiences: value_audiences,
+                    audiences: value_audiences.unwrap_or_default(),
                     authenticated: value_authenticated,
                     error: value_error,
                     user: value_user,
@@ -104,13 +104,13 @@ impl crate::serde::Serialize for TokenReviewStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenReviewStatus",
-            self.audiences.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.audiences.is_empty()) +
             self.authenticated.as_ref().map_or(0, |_| 1) +
             self.error.as_ref().map_or(0, |_| 1) +
             self.user.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.audiences {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", value)?;
+        if !self.audiences.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "audiences", &self.audiences)?;
         }
         if let Some(value) = &self.authenticated {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", value)?;

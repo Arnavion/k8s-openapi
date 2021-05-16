@@ -22,7 +22,7 @@ pub struct Endpoint {
     ///   endpoint is located. This should match the corresponding node label.
     /// * topology.kubernetes.io/region: the value indicates the region where the
     ///   endpoint is located. This should match the corresponding node label.
-    pub topology: Option<std::collections::BTreeMap<String, String>>,
+    pub topology: std::collections::BTreeMap<String, String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Endpoint {
@@ -96,7 +96,7 @@ impl<'de> crate::serde::Deserialize<'de> for Endpoint {
                     conditions: value_conditions,
                     hostname: value_hostname,
                     target_ref: value_target_ref,
-                    topology: value_topology,
+                    topology: value_topology.unwrap_or_default(),
                 })
             }
         }
@@ -123,7 +123,7 @@ impl crate::serde::Serialize for Endpoint {
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.hostname.as_ref().map_or(0, |_| 1) +
             self.target_ref.as_ref().map_or(0, |_| 1) +
-            self.topology.as_ref().map_or(0, |_| 1),
+            usize::from(!self.topology.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
         if let Some(value) = &self.conditions {
@@ -135,8 +135,8 @@ impl crate::serde::Serialize for Endpoint {
         if let Some(value) = &self.target_ref {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "targetRef", value)?;
         }
-        if let Some(value) = &self.topology {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topology", value)?;
+        if !self.topology.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topology", &self.topology)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

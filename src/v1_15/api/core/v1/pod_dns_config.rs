@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDNSConfig {
     /// A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.
-    pub nameservers: Option<Vec<String>>,
+    pub nameservers: Vec<String>,
 
     /// A list of DNS resolver options. This will be merged with the base options generated from DNSPolicy. Duplicated entries will be removed. Resolution options given in Options will override those that appear in the base DNSPolicy.
-    pub options: Option<Vec<crate::api::core::v1::PodDNSConfigOption>>,
+    pub options: Vec<crate::api::core::v1::PodDNSConfigOption>,
 
     /// A list of DNS search domains for host-name lookup. This will be appended to the base search paths generated from DNSPolicy. Duplicated search paths will be removed.
-    pub searches: Option<Vec<String>>,
+    pub searches: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for PodDNSConfig {
@@ -72,9 +72,9 @@ impl<'de> crate::serde::Deserialize<'de> for PodDNSConfig {
                 }
 
                 Ok(PodDNSConfig {
-                    nameservers: value_nameservers,
-                    options: value_options,
-                    searches: value_searches,
+                    nameservers: value_nameservers.unwrap_or_default(),
+                    options: value_options.unwrap_or_default(),
+                    searches: value_searches.unwrap_or_default(),
                 })
             }
         }
@@ -95,18 +95,18 @@ impl crate::serde::Serialize for PodDNSConfig {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDNSConfig",
-            self.nameservers.as_ref().map_or(0, |_| 1) +
-            self.options.as_ref().map_or(0, |_| 1) +
-            self.searches.as_ref().map_or(0, |_| 1),
+            usize::from(!self.nameservers.is_empty()) +
+            usize::from(!self.options.is_empty()) +
+            usize::from(!self.searches.is_empty()),
         )?;
-        if let Some(value) = &self.nameservers {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nameservers", value)?;
+        if !self.nameservers.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nameservers", &self.nameservers)?;
         }
-        if let Some(value) = &self.options {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
+        if !self.options.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "options", &self.options)?;
         }
-        if let Some(value) = &self.searches {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "searches", value)?;
+        if !self.searches.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "searches", &self.searches)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

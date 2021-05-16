@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NonResourceRule {
     /// NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
-    pub non_resource_urls: Option<Vec<String>>,
+    pub non_resource_urls: Vec<String>,
 
     /// Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
     pub verbs: Vec<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for NonResourceRule {
                 }
 
                 Ok(NonResourceRule {
-                    non_resource_urls: value_non_resource_urls,
+                    non_resource_urls: value_non_resource_urls.unwrap_or_default(),
                     verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
                 })
             }
@@ -87,10 +87,10 @@ impl crate::serde::Serialize for NonResourceRule {
         let mut state = serializer.serialize_struct(
             "NonResourceRule",
             1 +
-            self.non_resource_urls.as_ref().map_or(0, |_| 1),
+            usize::from(!self.non_resource_urls.is_empty()),
         )?;
-        if let Some(value) = &self.non_resource_urls {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", value)?;
+        if !self.non_resource_urls.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", &self.non_resource_urls)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
         crate::serde::ser::SerializeStruct::end(state)

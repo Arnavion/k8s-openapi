@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Rule {
     /// APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
-    pub api_groups: Option<Vec<String>>,
+    pub api_groups: Vec<String>,
 
     /// APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.
-    pub api_versions: Option<Vec<String>>,
+    pub api_versions: Vec<String>,
 
     /// Resources is a list of resources this rule applies to.
     ///
@@ -16,7 +16,7 @@ pub struct Rule {
     /// If wildcard is present, the validation rule will ensure resources do not overlap with each other.
     ///
     /// Depending on the enclosing object, subresources might not be allowed. Required.
-    pub resources: Option<Vec<String>>,
+    pub resources: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Rule {
@@ -78,9 +78,9 @@ impl<'de> crate::serde::Deserialize<'de> for Rule {
                 }
 
                 Ok(Rule {
-                    api_groups: value_api_groups,
-                    api_versions: value_api_versions,
-                    resources: value_resources,
+                    api_groups: value_api_groups.unwrap_or_default(),
+                    api_versions: value_api_versions.unwrap_or_default(),
+                    resources: value_resources.unwrap_or_default(),
                 })
             }
         }
@@ -101,18 +101,18 @@ impl crate::serde::Serialize for Rule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Rule",
-            self.api_groups.as_ref().map_or(0, |_| 1) +
-            self.api_versions.as_ref().map_or(0, |_| 1) +
-            self.resources.as_ref().map_or(0, |_| 1),
+            usize::from(!self.api_groups.is_empty()) +
+            usize::from(!self.api_versions.is_empty()) +
+            usize::from(!self.resources.is_empty()),
         )?;
-        if let Some(value) = &self.api_groups {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
+        if !self.api_groups.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
         }
-        if let Some(value) = &self.api_versions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", value)?;
+        if !self.api_versions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", &self.api_versions)?;
         }
-        if let Some(value) = &self.resources {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+        if !self.resources.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

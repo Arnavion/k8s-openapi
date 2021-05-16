@@ -10,7 +10,7 @@ pub struct ClusterRoleBinding {
     pub role_ref: crate::api::rbac::v1beta1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
-    pub subjects: Option<Vec<crate::api::rbac::v1beta1::Subject>>,
+    pub subjects: Vec<crate::api::rbac::v1beta1::Subject>,
 }
 
 // Begin rbac.authorization.k8s.io/v1beta1/ClusterRoleBinding
@@ -460,7 +460,7 @@ impl<'de> crate::serde::Deserialize<'de> for ClusterRoleBinding {
                 Ok(ClusterRoleBinding {
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                     role_ref: value_role_ref.ok_or_else(|| crate::serde::de::Error::missing_field("roleRef"))?,
-                    subjects: value_subjects,
+                    subjects: value_subjects.unwrap_or_default(),
                 })
             }
         }
@@ -484,14 +484,14 @@ impl crate::serde::Serialize for ClusterRoleBinding {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             4 +
-            self.subjects.as_ref().map_or(0, |_| 1),
+            usize::from(!self.subjects.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "roleRef", &self.role_ref)?;
-        if let Some(value) = &self.subjects {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", value)?;
+        if !self.subjects.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", &self.subjects)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

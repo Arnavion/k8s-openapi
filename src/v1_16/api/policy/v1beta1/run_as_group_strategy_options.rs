@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RunAsGroupStrategyOptions {
     /// ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
-    pub ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>>,
+    pub ranges: Vec<crate::api::policy::v1beta1::IDRange>,
 
     /// rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
     pub rule: String,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for RunAsGroupStrategyOptions {
                 }
 
                 Ok(RunAsGroupStrategyOptions {
-                    ranges: value_ranges,
+                    ranges: value_ranges.unwrap_or_default(),
                     rule: value_rule.ok_or_else(|| crate::serde::de::Error::missing_field("rule"))?,
                 })
             }
@@ -87,10 +87,10 @@ impl crate::serde::Serialize for RunAsGroupStrategyOptions {
         let mut state = serializer.serialize_struct(
             "RunAsGroupStrategyOptions",
             1 +
-            self.ranges.as_ref().map_or(0, |_| 1),
+            usize::from(!self.ranges.is_empty()),
         )?;
-        if let Some(value) = &self.ranges {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
+        if !self.ranges.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", &self.ranges)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
         crate::serde::ser::SerializeStruct::end(state)

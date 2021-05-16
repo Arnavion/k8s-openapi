@@ -7,7 +7,7 @@ pub struct MutatingWebhookConfiguration {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
-    pub webhooks: Option<Vec<crate::api::admissionregistration::v1beta1::Webhook>>,
+    pub webhooks: Vec<crate::api::admissionregistration::v1beta1::Webhook>,
 }
 
 // Begin admissionregistration.k8s.io/v1beta1/MutatingWebhookConfiguration
@@ -464,7 +464,7 @@ impl<'de> crate::serde::Deserialize<'de> for MutatingWebhookConfiguration {
 
                 Ok(MutatingWebhookConfiguration {
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    webhooks: value_webhooks,
+                    webhooks: value_webhooks.unwrap_or_default(),
                 })
             }
         }
@@ -487,13 +487,13 @@ impl crate::serde::Serialize for MutatingWebhookConfiguration {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            self.webhooks.as_ref().map_or(0, |_| 1),
+            usize::from(!self.webhooks.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if let Some(value) = &self.webhooks {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "webhooks", value)?;
+        if !self.webhooks.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "webhooks", &self.webhooks)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

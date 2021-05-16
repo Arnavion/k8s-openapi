@@ -25,7 +25,7 @@ pub struct ISCSIVolumeSource {
     pub lun: i32,
 
     /// iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
-    pub portals: Option<Vec<String>>,
+    pub portals: Vec<String>,
 
     /// ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
     pub read_only: Option<bool>,
@@ -135,7 +135,7 @@ impl<'de> crate::serde::Deserialize<'de> for ISCSIVolumeSource {
                     iqn: value_iqn.ok_or_else(|| crate::serde::de::Error::missing_field("iqn"))?,
                     iscsi_interface: value_iscsi_interface,
                     lun: value_lun.ok_or_else(|| crate::serde::de::Error::missing_field("lun"))?,
-                    portals: value_portals,
+                    portals: value_portals.unwrap_or_default(),
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,
                     target_portal: value_target_portal.ok_or_else(|| crate::serde::de::Error::missing_field("targetPortal"))?,
@@ -173,7 +173,7 @@ impl crate::serde::Serialize for ISCSIVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.initiator_name.as_ref().map_or(0, |_| 1) +
             self.iscsi_interface.as_ref().map_or(0, |_| 1) +
-            self.portals.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.portals.is_empty()) +
             self.read_only.as_ref().map_or(0, |_| 1) +
             self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
@@ -194,8 +194,8 @@ impl crate::serde::Serialize for ISCSIVolumeSource {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "iscsiInterface", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lun", &self.lun)?;
-        if let Some(value) = &self.portals {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "portals", value)?;
+        if !self.portals.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "portals", &self.portals)?;
         }
         if let Some(value) = &self.read_only {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;

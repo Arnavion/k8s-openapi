@@ -6,7 +6,7 @@ pub struct CertificateSigningRequestStatus {
     pub certificate: Option<crate::ByteString>,
 
     /// Conditions applied to the request, such as approval or denial.
-    pub conditions: Option<Vec<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>>,
+    pub conditions: Vec<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestStatus {
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestStatus {
 
                 Ok(CertificateSigningRequestStatus {
                     certificate: value_certificate,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                 })
             }
         }
@@ -86,13 +86,13 @@ impl crate::serde::Serialize for CertificateSigningRequestStatus {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestStatus",
             self.certificate.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1),
+            usize::from(!self.conditions.is_empty()),
         )?;
         if let Some(value) = &self.certificate {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "certificate", value)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

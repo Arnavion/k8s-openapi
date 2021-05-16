@@ -23,22 +23,18 @@ fn list() {
 			.find(|deployment| deployment.metadata.name.as_deref() == Some("coredns"))
 			.expect("couldn't find dns deployment");
 
-		let dns_deployment_spec =
+		let mut dns_deployment_spec =
 			dns_deployment
 			.spec.expect("couldn't get dns deployment spec");
 
-		let mut dns_deployment_spec_selector_match_labels =
-			dns_deployment_spec
-			.selector
-			.match_labels.expect("couldn't get dns deployment spec selector match labels");
-		assert_eq!(dns_deployment_spec_selector_match_labels.remove("k8s-app"), Some("kube-dns".to_string()));
+		assert_eq!(dns_deployment_spec.selector.match_labels.remove("k8s-app"), Some("kube-dns".to_string()));
 
 		let dns_deployment_spec_template = dns_deployment_spec.template;
 
 		let mut dns_deployment_spec_template_metadata_labels =
 			dns_deployment_spec_template
 			.metadata.expect("couldn't get dns deployment spec template metadata")
-			.labels.expect("couldn't get dns deployment spec template metadata labels");
+			.labels;
 		assert_eq!(dns_deployment_spec_template_metadata_labels.remove("k8s-app"), Some("kube-dns".to_string()));
 
 		let dns_container_liveness_probe_http_get_action =

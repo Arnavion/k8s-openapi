@@ -10,7 +10,7 @@ pub struct JobStatus {
     pub completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The latest available observations of an object's current state. When a job fails, one of the conditions will have type == "Failed". More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-    pub conditions: Option<Vec<crate::api::batch::v1::JobCondition>>,
+    pub conditions: Vec<crate::api::batch::v1::JobCondition>,
 
     /// The number of pods which reached phase Failed.
     pub failed: Option<i32>,
@@ -95,7 +95,7 @@ impl<'de> crate::serde::Deserialize<'de> for JobStatus {
                 Ok(JobStatus {
                     active: value_active,
                     completion_time: value_completion_time,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     failed: value_failed,
                     start_time: value_start_time,
                     succeeded: value_succeeded,
@@ -124,7 +124,7 @@ impl crate::serde::Serialize for JobStatus {
             "JobStatus",
             self.active.as_ref().map_or(0, |_| 1) +
             self.completion_time.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
             self.failed.as_ref().map_or(0, |_| 1) +
             self.start_time.as_ref().map_or(0, |_| 1) +
             self.succeeded.as_ref().map_or(0, |_| 1),
@@ -135,8 +135,8 @@ impl crate::serde::Serialize for JobStatus {
         if let Some(value) = &self.completion_time {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", value)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         if let Some(value) = &self.failed {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "failed", value)?;

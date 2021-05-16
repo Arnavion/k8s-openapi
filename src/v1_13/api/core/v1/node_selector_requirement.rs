@@ -10,7 +10,7 @@ pub struct NodeSelectorRequirement {
     pub operator: String,
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
-    pub values: Option<Vec<String>>,
+    pub values: Vec<String>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorRequirement {
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSelectorRequirement {
                 Ok(NodeSelectorRequirement {
                     key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
                     operator: value_operator.ok_or_else(|| crate::serde::de::Error::missing_field("operator"))?,
-                    values: value_values,
+                    values: value_values.unwrap_or_default(),
                 })
             }
         }
@@ -96,12 +96,12 @@ impl crate::serde::Serialize for NodeSelectorRequirement {
         let mut state = serializer.serialize_struct(
             "NodeSelectorRequirement",
             2 +
-            self.values.as_ref().map_or(0, |_| 1),
+            usize::from(!self.values.is_empty()),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &self.operator)?;
-        if let Some(value) = &self.values {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", value)?;
+        if !self.values.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", &self.values)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

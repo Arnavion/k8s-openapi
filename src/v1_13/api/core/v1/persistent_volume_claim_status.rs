@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimStatus {
     /// AccessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-    pub access_modes: Option<Vec<String>>,
+    pub access_modes: Vec<String>,
 
     /// Represents the actual resources of the underlying volume.
-    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
-    pub conditions: Option<Vec<crate::api::core::v1::PersistentVolumeClaimCondition>>,
+    pub conditions: Vec<crate::api::core::v1::PersistentVolumeClaimCondition>,
 
     /// Phase represents the current phase of PersistentVolumeClaim.
     pub phase: Option<String>,
@@ -79,9 +79,9 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimStatus {
                 }
 
                 Ok(PersistentVolumeClaimStatus {
-                    access_modes: value_access_modes,
-                    capacity: value_capacity,
-                    conditions: value_conditions,
+                    access_modes: value_access_modes.unwrap_or_default(),
+                    capacity: value_capacity.unwrap_or_default(),
+                    conditions: value_conditions.unwrap_or_default(),
                     phase: value_phase,
                 })
             }
@@ -104,19 +104,19 @@ impl crate::serde::Serialize for PersistentVolumeClaimStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimStatus",
-            self.access_modes.as_ref().map_or(0, |_| 1) +
-            self.capacity.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.access_modes.is_empty()) +
+            usize::from(!self.capacity.is_empty()) +
+            usize::from(!self.conditions.is_empty()) +
             self.phase.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.access_modes {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+        if !self.access_modes.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &self.access_modes)?;
         }
-        if let Some(value) = &self.capacity {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+        if !self.capacity.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &self.capacity)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         if let Some(value) = &self.phase {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;

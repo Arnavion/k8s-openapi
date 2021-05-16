@@ -7,7 +7,7 @@ pub struct PodAffinityTerm {
     pub label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
-    pub namespaces: Option<Vec<String>>,
+    pub namespaces: Vec<String>,
 
     /// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
     pub topology_key: String,
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodAffinityTerm {
 
                 Ok(PodAffinityTerm {
                     label_selector: value_label_selector,
-                    namespaces: value_namespaces,
+                    namespaces: value_namespaces.unwrap_or_default(),
                     topology_key: value_topology_key.ok_or_else(|| crate::serde::de::Error::missing_field("topologyKey"))?,
                 })
             }
@@ -97,13 +97,13 @@ impl crate::serde::Serialize for PodAffinityTerm {
             "PodAffinityTerm",
             1 +
             self.label_selector.as_ref().map_or(0, |_| 1) +
-            self.namespaces.as_ref().map_or(0, |_| 1),
+            usize::from(!self.namespaces.is_empty()),
         )?;
         if let Some(value) = &self.label_selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;
         }
-        if let Some(value) = &self.namespaces {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+        if !self.namespaces.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", &self.namespaces)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKey", &self.topology_key)?;
         crate::serde::ser::SerializeStruct::end(state)

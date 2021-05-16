@@ -7,7 +7,7 @@ pub struct StatefulSetStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a statefulset's current state.
-    pub conditions: Option<Vec<crate::api::apps::v1::StatefulSetCondition>>,
+    pub conditions: Vec<crate::api::apps::v1::StatefulSetCondition>,
 
     /// currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision.
     pub current_replicas: Option<i32>,
@@ -115,7 +115,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
 
                 Ok(StatefulSetStatus {
                     collision_count: value_collision_count,
-                    conditions: value_conditions,
+                    conditions: value_conditions.unwrap_or_default(),
                     current_replicas: value_current_replicas,
                     current_revision: value_current_revision,
                     observed_generation: value_observed_generation,
@@ -151,7 +151,7 @@ impl crate::serde::Serialize for StatefulSetStatus {
             "StatefulSetStatus",
             1 +
             self.collision_count.as_ref().map_or(0, |_| 1) +
-            self.conditions.as_ref().map_or(0, |_| 1) +
+            usize::from(!self.conditions.is_empty()) +
             self.current_replicas.as_ref().map_or(0, |_| 1) +
             self.current_revision.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
@@ -162,8 +162,8 @@ impl crate::serde::Serialize for StatefulSetStatus {
         if let Some(value) = &self.collision_count {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
-        if let Some(value) = &self.conditions {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        if !self.conditions.is_empty() {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         }
         if let Some(value) = &self.current_replicas {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", value)?;
