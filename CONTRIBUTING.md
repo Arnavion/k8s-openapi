@@ -72,6 +72,8 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
 
+1. `/k8s-openapi-tests-macro-deps/Cargo.toml`: Add a new feature for the new version. It should enable the corresponding feature of the `k8s-openapi` crate.
+
 1. `/test.sh`: Add `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
 
 1. `/`: Create a cluster and run the tests against it in record mode.

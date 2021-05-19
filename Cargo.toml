@@ -54,7 +54,8 @@ v1_17 = []
 v1_18 = []
 v1_19 = []
 v1_20 = []
+v1_21 = []
 
 [package.metadata.docs.rs]
 # docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
-features = ["v1_20"]
+features = ["v1_21"]
