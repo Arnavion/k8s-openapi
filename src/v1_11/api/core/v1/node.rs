@@ -1034,7 +1034,7 @@ impl crate::Resource for Node {
 }
 
 impl crate::ListableResource for Node {
-    const LIST_KIND: &'static str = concat!("Node", "List");
+    const LIST_KIND: &'static str = "NodeList";
 }
 
 impl crate::Metadata for Node {

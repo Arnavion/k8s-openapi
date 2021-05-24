@@ -386,7 +386,7 @@ impl crate::Resource for PriorityClass {
 }
 
 impl crate::ListableResource for PriorityClass {
-    const LIST_KIND: &'static str = concat!("PriorityClass", "List");
+    const LIST_KIND: &'static str = "PriorityClassList";
 }
 
 impl crate::Metadata for PriorityClass {

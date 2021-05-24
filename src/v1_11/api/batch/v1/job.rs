@@ -688,7 +688,7 @@ impl crate::Resource for Job {
 }
 
 impl crate::ListableResource for Job {
-    const LIST_KIND: &'static str = concat!("Job", "List");
+    const LIST_KIND: &'static str = "JobList";
 }
 
 impl crate::Metadata for Job {

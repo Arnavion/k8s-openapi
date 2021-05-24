@@ -676,7 +676,7 @@ impl crate::Resource for ReplicationController {
 }
 
 impl crate::ListableResource for ReplicationController {
-    const LIST_KIND: &'static str = concat!("ReplicationController", "List");
+    const LIST_KIND: &'static str = "ReplicationControllerList";
 }
 
 impl crate::Metadata for ReplicationController {

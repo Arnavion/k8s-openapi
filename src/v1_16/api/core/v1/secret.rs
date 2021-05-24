@@ -499,7 +499,7 @@ impl crate::Resource for Secret {
 }
 
 impl crate::ListableResource for Secret {
-    const LIST_KIND: &'static str = concat!("Secret", "List");
+    const LIST_KIND: &'static str = "SecretList";
 }
 
 impl crate::Metadata for Secret {

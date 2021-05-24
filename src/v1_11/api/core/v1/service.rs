@@ -1185,7 +1185,7 @@ impl crate::Resource for Service {
 }
 
 impl crate::ListableResource for Service {
-    const LIST_KIND: &'static str = concat!("Service", "List");
+    const LIST_KIND: &'static str = "ServiceList";
 }
 
 impl crate::Metadata for Service {

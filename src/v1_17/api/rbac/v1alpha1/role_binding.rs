@@ -484,7 +484,7 @@ impl crate::Resource for RoleBinding {
 }
 
 impl crate::ListableResource for RoleBinding {
-    const LIST_KIND: &'static str = concat!("RoleBinding", "List");
+    const LIST_KIND: &'static str = "RoleBindingList";
 }
 
 impl crate::Metadata for RoleBinding {

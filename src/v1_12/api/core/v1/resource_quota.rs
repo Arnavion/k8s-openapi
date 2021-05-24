@@ -688,7 +688,7 @@ impl crate::Resource for ResourceQuota {
 }
 
 impl crate::ListableResource for ResourceQuota {
-    const LIST_KIND: &'static str = concat!("ResourceQuota", "List");
+    const LIST_KIND: &'static str = "ResourceQuotaList";
 }
 
 impl crate::Metadata for ResourceQuota {

@@ -377,7 +377,7 @@ impl crate::Resource for CSINode {
 }
 
 impl crate::ListableResource for CSINode {
-    const LIST_KIND: &'static str = concat!("CSINode", "List");
+    const LIST_KIND: &'static str = "CSINodeList";
 }
 
 impl crate::Metadata for CSINode {

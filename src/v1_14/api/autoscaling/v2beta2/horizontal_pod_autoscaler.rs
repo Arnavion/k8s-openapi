@@ -688,7 +688,7 @@ impl crate::Resource for HorizontalPodAutoscaler {
 }
 
 impl crate::ListableResource for HorizontalPodAutoscaler {
-    const LIST_KIND: &'static str = concat!("HorizontalPodAutoscaler", "List");
+    const LIST_KIND: &'static str = "HorizontalPodAutoscalerList";
 }
 
 impl crate::Metadata for HorizontalPodAutoscaler {

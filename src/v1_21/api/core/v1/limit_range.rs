@@ -481,7 +481,7 @@ impl crate::Resource for LimitRange {
 }
 
 impl crate::ListableResource for LimitRange {
-    const LIST_KIND: &'static str = concat!("LimitRange", "List");
+    const LIST_KIND: &'static str = "LimitRangeList";
 }
 
 impl crate::Metadata for LimitRange {

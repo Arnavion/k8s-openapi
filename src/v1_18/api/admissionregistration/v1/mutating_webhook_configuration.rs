@@ -377,7 +377,7 @@ impl crate::Resource for MutatingWebhookConfiguration {
 }
 
 impl crate::ListableResource for MutatingWebhookConfiguration {
-    const LIST_KIND: &'static str = concat!("MutatingWebhookConfiguration", "List");
+    const LIST_KIND: &'static str = "MutatingWebhookConfigurationList";
 }
 
 impl crate::Metadata for MutatingWebhookConfiguration {

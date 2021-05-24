@@ -687,7 +687,7 @@ impl crate::Resource for PodDisruptionBudget {
 }
 
 impl crate::ListableResource for PodDisruptionBudget {
-    const LIST_KIND: &'static str = concat!("PodDisruptionBudget", "List");
+    const LIST_KIND: &'static str = "PodDisruptionBudgetList";
 }
 
 impl crate::Metadata for PodDisruptionBudget {

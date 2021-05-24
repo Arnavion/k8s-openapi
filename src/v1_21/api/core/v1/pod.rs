@@ -1782,7 +1782,7 @@ impl crate::Resource for Pod {
 }
 
 impl crate::ListableResource for Pod {
-    const LIST_KIND: &'static str = concat!("Pod", "List");
+    const LIST_KIND: &'static str = "PodList";
 }
 
 impl crate::Metadata for Pod {

@@ -676,7 +676,7 @@ impl crate::Resource for CronJob {
 }
 
 impl crate::ListableResource for CronJob {
-    const LIST_KIND: &'static str = concat!("CronJob", "List");
+    const LIST_KIND: &'static str = "CronJobList";
 }
 
 impl crate::Metadata for CronJob {

@@ -377,7 +377,7 @@ impl crate::Resource for CSIDriver {
 }
 
 impl crate::ListableResource for CSIDriver {
-    const LIST_KIND: &'static str = concat!("CSIDriver", "List");
+    const LIST_KIND: &'static str = "CSIDriverList";
 }
 
 impl crate::Metadata for CSIDriver {

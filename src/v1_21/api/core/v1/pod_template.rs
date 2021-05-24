@@ -481,7 +481,7 @@ impl crate::Resource for PodTemplate {
 }
 
 impl crate::ListableResource for PodTemplate {
-    const LIST_KIND: &'static str = concat!("PodTemplate", "List");
+    const LIST_KIND: &'static str = "PodTemplateList";
 }
 
 impl crate::Metadata for PodTemplate {

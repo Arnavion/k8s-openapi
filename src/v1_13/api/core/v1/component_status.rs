@@ -174,7 +174,7 @@ impl crate::Resource for ComponentStatus {
 }
 
 impl crate::ListableResource for ComponentStatus {
-    const LIST_KIND: &'static str = concat!("ComponentStatus", "List");
+    const LIST_KIND: &'static str = "ComponentStatusList";
 }
 
 impl crate::Metadata for ComponentStatus {

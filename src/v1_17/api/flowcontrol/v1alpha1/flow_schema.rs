@@ -554,7 +554,7 @@ impl crate::Resource for FlowSchema {
 }
 
 impl crate::ListableResource for FlowSchema {
-    const LIST_KIND: &'static str = concat!("FlowSchema", "List");
+    const LIST_KIND: &'static str = "FlowSchemaList";
 }
 
 impl crate::Metadata for FlowSchema {

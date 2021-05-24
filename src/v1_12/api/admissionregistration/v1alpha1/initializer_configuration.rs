@@ -377,7 +377,7 @@ impl crate::Resource for InitializerConfiguration {
 }
 
 impl crate::ListableResource for InitializerConfiguration {
-    const LIST_KIND: &'static str = concat!("InitializerConfiguration", "List");
+    const LIST_KIND: &'static str = "InitializerConfigurationList";
 }
 
 impl crate::Metadata for InitializerConfiguration {

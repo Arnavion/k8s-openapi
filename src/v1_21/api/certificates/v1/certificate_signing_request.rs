@@ -721,7 +721,7 @@ impl crate::Resource for CertificateSigningRequest {
 }
 
 impl crate::ListableResource for CertificateSigningRequest {
-    const LIST_KIND: &'static str = concat!("CertificateSigningRequest", "List");
+    const LIST_KIND: &'static str = "CertificateSigningRequestList";
 }
 
 impl crate::Metadata for CertificateSigningRequest {

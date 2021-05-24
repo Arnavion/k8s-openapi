@@ -376,7 +376,7 @@ impl crate::Resource for AuditSink {
 }
 
 impl crate::ListableResource for AuditSink {
-    const LIST_KIND: &'static str = concat!("AuditSink", "List");
+    const LIST_KIND: &'static str = "AuditSinkList";
 }
 
 impl crate::Metadata for AuditSink {

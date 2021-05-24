@@ -678,7 +678,7 @@ impl crate::Resource for StatefulSet {
 }
 
 impl crate::ListableResource for StatefulSet {
-    const LIST_KIND: &'static str = concat!("StatefulSet", "List");
+    const LIST_KIND: &'static str = "StatefulSetList";
 }
 
 impl crate::Metadata for StatefulSet {

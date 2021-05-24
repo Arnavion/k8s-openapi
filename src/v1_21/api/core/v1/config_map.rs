@@ -487,7 +487,7 @@ impl crate::Resource for ConfigMap {
 }
 
 impl crate::ListableResource for ConfigMap {
-    const LIST_KIND: &'static str = concat!("ConfigMap", "List");
+    const LIST_KIND: &'static str = "ConfigMapList";
 }
 
 impl crate::Metadata for ConfigMap {

@@ -553,7 +553,7 @@ impl crate::Resource for CustomResourceDefinition {
 }
 
 impl crate::ListableResource for CustomResourceDefinition {
-    const LIST_KIND: &'static str = concat!("CustomResourceDefinition", "List");
+    const LIST_KIND: &'static str = "CustomResourceDefinitionList";
 }
 
 impl crate::Metadata for CustomResourceDefinition {

@@ -504,7 +504,7 @@ impl crate::Resource for Endpoints {
 }
 
 impl crate::ListableResource for Endpoints {
-    const LIST_KIND: &'static str = concat!("Endpoints", "List");
+    const LIST_KIND: &'static str = "EndpointsList";
 }
 
 impl crate::Metadata for Endpoints {

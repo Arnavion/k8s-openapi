@@ -532,7 +532,7 @@ impl crate::Resource for Event {
 }
 
 impl crate::ListableResource for Event {
-    const LIST_KIND: &'static str = concat!("Event", "List");
+    const LIST_KIND: &'static str = "EventList";
 }
 
 impl crate::Metadata for Event {

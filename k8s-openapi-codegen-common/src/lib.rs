@@ -325,6 +325,7 @@ pub fn run(
 								format!("{:?}", ""),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
+								definition.list_kind.as_ref().map(|kind| format!("{:?}", kind)),
 							)
 						}
 						else {
@@ -333,6 +334,7 @@ pub fn run(
 								format!("{:?}", single_group_version_kind.group),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
+								definition.list_kind.as_ref().map(|kind| format!("{:?}", kind)),
 							)
 						}),
 					Some((_, true, false)) => return Err(format!("{} has an apiVersion property but not a kind property", definition_path).into()),
@@ -394,22 +396,22 @@ pub fn run(
 			}
 
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
-				(Some((api_version, group, kind, version)), Some((metadata_ty, templates::PropertyRequired::Required))) => Some(templates::ResourceMetadata {
+				(Some((api_version, group, kind, version, list_kind)), Some((metadata_ty, templates::PropertyRequired::Required))) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
 					version,
-					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: Some(metadata_ty),
+					list_kind: list_kind.as_deref(),
 				}),
 
-				(Some((api_version, group, kind, version)), None) => Some(templates::ResourceMetadata {
+				(Some((api_version, group, kind, version, list_kind)), None) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
 					version,
-					is_listable: definition.has_corresponding_list_type,
 					metadata_ty: None,
+					list_kind: list_kind.as_deref(),
 				}),
 
 				(Some(_), Some(_)) => return Err(format!("definition {} has optional metadata", definition_path).into()),
@@ -589,8 +591,8 @@ pub fn run(
 				group: "<T as crate::Resource>::GROUP",
 				kind: "<T as crate::ListableResource>::LIST_KIND",
 				version: "<T as crate::Resource>::VERSION",
-				is_listable: false,
 				metadata_ty: Some(&metadata_rust_type),
+				list_kind: None,
 			};
 
 			templates::r#struct::generate(

@@ -102,8 +102,8 @@ pub struct Schema {
 	pub kind: SchemaKind,
 	pub kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
 
-	/// Used to store whether a definition with this schema has a corresponding list type.
-	pub has_corresponding_list_type: bool,
+	/// Used to store the definition path of the corresponding list type, if any.
+	pub list_kind: Option<String>,
 }
 
 #[cfg(feature = "serde")]
@@ -173,7 +173,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			description: value.description,
 			kind,
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
-			has_corresponding_list_type: false,
+			list_kind: None,
 		})
 	}
 }

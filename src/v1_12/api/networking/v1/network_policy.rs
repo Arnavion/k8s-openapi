@@ -493,7 +493,7 @@ impl crate::Resource for NetworkPolicy {
 }
 
 impl crate::ListableResource for NetworkPolicy {
-    const LIST_KIND: &'static str = concat!("NetworkPolicy", "List");
+    const LIST_KIND: &'static str = "NetworkPolicyList";
 }
 
 impl crate::Metadata for NetworkPolicy {

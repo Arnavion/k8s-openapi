@@ -377,7 +377,7 @@ impl crate::Resource for ValidatingWebhookConfiguration {
 }
 
 impl crate::ListableResource for ValidatingWebhookConfiguration {
-    const LIST_KIND: &'static str = concat!("ValidatingWebhookConfiguration", "List");
+    const LIST_KIND: &'static str = "ValidatingWebhookConfigurationList";
 }
 
 impl crate::Metadata for ValidatingWebhookConfiguration {

@@ -487,7 +487,7 @@ impl crate::Resource for ServiceAccount {
 }
 
 impl crate::ListableResource for ServiceAccount {
-    const LIST_KIND: &'static str = concat!("ServiceAccount", "List");
+    const LIST_KIND: &'static str = "ServiceAccountList";
 }
 
 impl crate::Metadata for ServiceAccount {

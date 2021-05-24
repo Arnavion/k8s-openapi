@@ -499,7 +499,7 @@ impl crate::Resource for EndpointSlice {
 }
 
 impl crate::ListableResource for EndpointSlice {
-    const LIST_KIND: &'static str = concat!("EndpointSlice", "List");
+    const LIST_KIND: &'static str = "EndpointSliceList";
 }
 
 impl crate::Metadata for EndpointSlice {

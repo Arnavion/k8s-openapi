@@ -481,7 +481,7 @@ impl crate::Resource for Role {
 }
 
 impl crate::ListableResource for Role {
-    const LIST_KIND: &'static str = concat!("Role", "List");
+    const LIST_KIND: &'static str = "RoleList";
 }
 
 impl crate::Metadata for Role {

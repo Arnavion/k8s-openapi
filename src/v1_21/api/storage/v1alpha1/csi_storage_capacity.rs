@@ -506,7 +506,7 @@ impl crate::Resource for CSIStorageCapacity {
 }
 
 impl crate::ListableResource for CSIStorageCapacity {
-    const LIST_KIND: &'static str = concat!("CSIStorageCapacity", "List");
+    const LIST_KIND: &'static str = "CSIStorageCapacityList";
 }
 
 impl crate::Metadata for CSIStorageCapacity {

@@ -5,7 +5,7 @@ pub(crate) fn generate(
 	map_namespace: &impl crate::MapNamespace,
 	resource_metadata: &super::ResourceMetadata<'_>,
 ) -> Result<(), crate::Error> {
-	if resource_metadata.is_listable {
+	if let Some(list_kind) = resource_metadata.list_kind {
 		let local = crate::map_namespace_local_to_string(map_namespace)?;
 
 		let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
@@ -20,7 +20,7 @@ pub(crate) fn generate(
 			type_generics_impl = type_generics_impl,
 			type_generics_type = type_generics_type,
 			type_generics_where = type_generics_where,
-			list_kind = format!("concat!({}, \"List\")", resource_metadata.kind),
+			list_kind = list_kind,
 		)?;
 	}
 

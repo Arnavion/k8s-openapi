@@ -676,7 +676,7 @@ impl crate::Resource for Deployment {
 }
 
 impl crate::ListableResource for Deployment {
-    const LIST_KIND: &'static str = concat!("Deployment", "List");
+    const LIST_KIND: &'static str = "DeploymentList";
 }
 
 impl crate::Metadata for Deployment {

@@ -370,7 +370,7 @@ impl crate::Resource for VolumeAttachment {
 }
 
 impl crate::ListableResource for VolumeAttachment {
-    const LIST_KIND: &'static str = concat!("VolumeAttachment", "List");
+    const LIST_KIND: &'static str = "VolumeAttachmentList";
 }
 
 impl crate::Metadata for VolumeAttachment {

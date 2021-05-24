@@ -365,7 +365,7 @@ impl crate::Resource for IngressClass {
 }
 
 impl crate::ListableResource for IngressClass {
-    const LIST_KIND: &'static str = concat!("IngressClass", "List");
+    const LIST_KIND: &'static str = "IngressClassList";
 }
 
 impl crate::Metadata for IngressClass {

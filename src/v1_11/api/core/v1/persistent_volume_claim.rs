@@ -688,7 +688,7 @@ impl crate::Resource for PersistentVolumeClaim {
 }
 
 impl crate::ListableResource for PersistentVolumeClaim {
-    const LIST_KIND: &'static str = concat!("PersistentVolumeClaim", "List");
+    const LIST_KIND: &'static str = "PersistentVolumeClaimList";
 }
 
 impl crate::Metadata for PersistentVolumeClaim {

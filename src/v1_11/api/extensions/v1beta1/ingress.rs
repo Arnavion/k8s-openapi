@@ -688,7 +688,7 @@ impl crate::Resource for Ingress {
 }
 
 impl crate::ListableResource for Ingress {
-    const LIST_KIND: &'static str = concat!("Ingress", "List");
+    const LIST_KIND: &'static str = "IngressList";
 }
 
 impl crate::Metadata for Ingress {

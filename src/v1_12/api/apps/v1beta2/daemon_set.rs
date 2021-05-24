@@ -688,7 +688,7 @@ impl crate::Resource for DaemonSet {
 }
 
 impl crate::ListableResource for DaemonSet {
-    const LIST_KIND: &'static str = concat!("DaemonSet", "List");
+    const LIST_KIND: &'static str = "DaemonSetList";
 }
 
 impl crate::Metadata for DaemonSet {

@@ -484,7 +484,7 @@ impl crate::Resource for ControllerRevision {
 }
 
 impl crate::ListableResource for ControllerRevision {
-    const LIST_KIND: &'static str = concat!("ControllerRevision", "List");
+    const LIST_KIND: &'static str = "ControllerRevisionList";
 }
 
 impl crate::Metadata for ControllerRevision {

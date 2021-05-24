@@ -542,7 +542,7 @@ impl crate::Resource for PriorityLevelConfiguration {
 }
 
 impl crate::ListableResource for PriorityLevelConfiguration {
-    const LIST_KIND: &'static str = concat!("PriorityLevelConfiguration", "List");
+    const LIST_KIND: &'static str = "PriorityLevelConfigurationList";
 }
 
 impl crate::Metadata for PriorityLevelConfiguration {

@@ -87,7 +87,7 @@ pub(crate) struct ResourceMetadata<'a> {
 	pub(crate) group: &'a str,
 	pub(crate) kind: &'a str,
 	pub(crate) version: &'a str,
-	pub(crate) is_listable: bool,
+	pub(crate) list_kind: Option<&'a str>,
 	pub(crate) metadata_ty: Option<&'a str>,
 }
 

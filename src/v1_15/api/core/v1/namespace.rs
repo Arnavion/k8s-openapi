@@ -559,7 +559,7 @@ impl crate::Resource for Namespace {
 }
 
 impl crate::ListableResource for Namespace {
-    const LIST_KIND: &'static str = concat!("Namespace", "List");
+    const LIST_KIND: &'static str = "NamespaceList";
 }
 
 impl crate::Metadata for Namespace {

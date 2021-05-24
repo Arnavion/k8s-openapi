@@ -93,7 +93,7 @@ pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Resul
 		description: Some("Common parameters for all delete and delete-collection operations.".to_owned()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::DeleteOptional(delete_optional_properties)),
 		kubernetes_group_kind_versions: vec![],
-		has_corresponding_list_type: false,
+		list_kind: None,
 	});
 
 	Ok(())
@@ -127,7 +127,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 					can_be_default: None,
 				}),
 				kubernetes_group_kind_versions: vec![],
-				has_corresponding_list_type: false,
+				list_kind: None,
 			},
 		});
 
@@ -188,7 +188,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 			description: Some(format!("Common parameters for all {} operations.", description)),
 			kind: crate::swagger20::SchemaKind::Ty(ty(optional_definition)),
 			kubernetes_group_kind_versions: vec![],
-			has_corresponding_list_type: false,
+			list_kind: None,
 		});
 	}
 
@@ -228,7 +228,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 						can_be_default: None,
 					}),
 					kubernetes_group_kind_versions: vec![],
-					has_corresponding_list_type: false,
+					list_kind: None,
 				},
 			}));
 			operation.parameters.push(std::sync::Arc::new(crate::swagger20::Parameter {
@@ -242,7 +242,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 						can_be_default: None,
 					}),
 					kubernetes_group_kind_versions: vec![],
-					has_corresponding_list_type: false,
+					list_kind: None,
 				},
 			}));
 
@@ -281,7 +281,7 @@ pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagge
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: vec![],
-								has_corresponding_list_type: false,
+								list_kind: None,
 							},
 						}));
 						found = true;
@@ -378,14 +378,14 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		description: Some("Common parameters for all list operations.".to_string()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListOptional(list_optional_definition)),
 		kubernetes_group_kind_versions: vec![],
-		has_corresponding_list_type: false,
+		list_kind: None,
 	});
 
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.WatchOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all watch operations.".to_string()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchOptional(watch_optional_definition)),
 		kubernetes_group_kind_versions: vec![],
-		has_corresponding_list_type: false,
+		list_kind: None,
 	});
 
 	let list_optional_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
@@ -399,7 +399,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				can_be_default: None,
 			}),
 			kubernetes_group_kind_versions: vec![],
-			has_corresponding_list_type: false,
+			list_kind: None,
 		},
 	});
 
@@ -414,7 +414,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				can_be_default: None,
 			}),
 			kubernetes_group_kind_versions: vec![],
-			has_corresponding_list_type: false,
+			list_kind: None,
 		},
 	});
 
@@ -482,7 +482,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 					can_be_default: None,
 				}),
 				kubernetes_group_kind_versions: vec![],
-				has_corresponding_list_type: false,
+				list_kind: None,
 			});
 		}
 		else {
@@ -597,7 +597,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 				return Err(format!("definition {} looks like a list but doesn't have an items property", definition_path).into());
 			};
 
-		let item_ref_path =
+		let (item_ref_path, list_kind) =
 			if let crate::swagger20::SchemaKind::Ref(item_ref_path) = &item_schema.kind {
 				let item_schema =
 					spec.definitions.get(&crate::swagger20::DefinitionPath(item_ref_path.path.clone()))
@@ -626,13 +626,13 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 						"defintion {} looks like a list but its group-version-kind does not correspond to its item's group-version-kind", definition_path).into());
 				}
 
-				item_ref_path.clone()
+				(item_ref_path.clone(), list_kubernetes_group_kind_version.kind.clone())
 			}
 			else {
 				return Err(format!("definition {} looks like a list but its items property is not a ref", definition_path).into());
 			};
 
-		list_definition_paths.push((definition_path.clone(), item_ref_path));
+		list_definition_paths.push((definition_path.clone(), item_ref_path, list_kind));
 
 		if let Some((_, list_property_names)) = &list_properties {
 			let property_names: std::collections::BTreeSet<_> = properties.keys().cloned().collect();
@@ -655,11 +655,11 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 									can_be_default: None,
 								}),
 								kubernetes_group_kind_versions: vec![],
-								has_corresponding_list_type: false,
+								list_kind: None,
 							}),
 						}),
 						kubernetes_group_kind_versions: vec![],
-						has_corresponding_list_type: false,
+						list_kind: None,
 					},
 					true,
 				));
@@ -680,23 +680,23 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 			description: Some("List is a list of resources.".to_owned()),
 			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListDef { metadata: Box::new(metadata_schema_kind) }),
 			kubernetes_group_kind_versions: vec![],
-			has_corresponding_list_type: false,
+			list_kind: None,
 		});
 
 
 	// Remove all list types
 
-	for (definition_path, item_ref_path) in &list_definition_paths {
+	for (definition_path, item_ref_path, list_kind) in &list_definition_paths {
 		let item_definition = spec.definitions.get_mut(&crate::swagger20::DefinitionPath(item_ref_path.path.clone())).unwrap();
-		item_definition.has_corresponding_list_type = true;
+		item_definition.list_kind = Some(list_kind.clone());
 
-		let _ = spec.definitions.remove(&definition_path);
+		let _ = spec.definitions.remove(definition_path);
 	}
 
 
 	// Replace references to all list types with refs to `k8s_openapi::List<T>`
 
-	for (definition_path, item_ref_path) in list_definition_paths {
+	for (definition_path, item_ref_path, _) in list_definition_paths {
 		for definition in spec.definitions.values_mut() {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
 				for (field_value_schema, _) in properties.values_mut() {
@@ -1125,7 +1125,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 				description: Some(description.to_owned()),
 				kind: crate::swagger20::SchemaKind::Ty(ty),
 				kubernetes_group_kind_versions: vec![],
-				has_corresponding_list_type: false,
+				list_kind: None,
 			});
 	}
 

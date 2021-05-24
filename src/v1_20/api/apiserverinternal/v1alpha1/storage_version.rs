@@ -555,7 +555,7 @@ impl crate::Resource for StorageVersion {
 }
 
 impl crate::ListableResource for StorageVersion {
-    const LIST_KIND: &'static str = concat!("StorageVersion", "List");
+    const LIST_KIND: &'static str = "StorageVersionList";
 }
 
 impl crate::Metadata for StorageVersion {

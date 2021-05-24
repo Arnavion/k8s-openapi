@@ -491,7 +491,7 @@ impl crate::Resource for PodPreset {
 }
 
 impl crate::ListableResource for PodPreset {
-    const LIST_KIND: &'static str = concat!("PodPreset", "List");
+    const LIST_KIND: &'static str = "PodPresetList";
 }
 
 impl crate::Metadata for PodPreset {

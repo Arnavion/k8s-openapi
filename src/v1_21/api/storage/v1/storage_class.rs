@@ -385,7 +385,7 @@ impl crate::Resource for StorageClass {
 }
 
 impl crate::ListableResource for StorageClass {
-    const LIST_KIND: &'static str = concat!("StorageClass", "List");
+    const LIST_KIND: &'static str = "StorageClassList";
 }
 
 impl crate::Metadata for StorageClass {

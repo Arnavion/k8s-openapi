@@ -542,7 +542,7 @@ impl crate::Resource for PersistentVolume {
 }
 
 impl crate::ListableResource for PersistentVolume {
-    const LIST_KIND: &'static str = concat!("PersistentVolume", "List");
+    const LIST_KIND: &'static str = "PersistentVolumeList";
 }
 
 impl crate::Metadata for PersistentVolume {

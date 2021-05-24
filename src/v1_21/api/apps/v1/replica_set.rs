@@ -676,7 +676,7 @@ impl crate::Resource for ReplicaSet {
 }
 
 impl crate::ListableResource for ReplicaSet {
-    const LIST_KIND: &'static str = concat!("ReplicaSet", "List");
+    const LIST_KIND: &'static str = "ReplicaSetList";
 }
 
 impl crate::Metadata for ReplicaSet {

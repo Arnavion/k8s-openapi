@@ -368,7 +368,7 @@ impl crate::Resource for ClusterRoleBinding {
 }
 
 impl crate::ListableResource for ClusterRoleBinding {
-    const LIST_KIND: &'static str = concat!("ClusterRoleBinding", "List");
+    const LIST_KIND: &'static str = "ClusterRoleBindingList";
 }
 
 impl crate::Metadata for ClusterRoleBinding {

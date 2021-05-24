@@ -493,7 +493,7 @@ impl crate::Resource for Lease {
 }
 
 impl crate::ListableResource for Lease {
-    const LIST_KIND: &'static str = concat!("Lease", "List");
+    const LIST_KIND: &'static str = "LeaseList";
 }
 
 impl crate::Metadata for Lease {

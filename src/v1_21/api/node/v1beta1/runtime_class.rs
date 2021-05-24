@@ -371,7 +371,7 @@ impl crate::Resource for RuntimeClass {
 }
 
 impl crate::ListableResource for RuntimeClass {
-    const LIST_KIND: &'static str = concat!("RuntimeClass", "List");
+    const LIST_KIND: &'static str = "RuntimeClassList";
 }
 
 impl crate::Metadata for RuntimeClass {

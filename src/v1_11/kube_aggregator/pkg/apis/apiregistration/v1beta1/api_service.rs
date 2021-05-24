@@ -553,7 +553,7 @@ impl crate::Resource for APIService {
 }
 
 impl crate::ListableResource for APIService {
-    const LIST_KIND: &'static str = concat!("APIService", "List");
+    const LIST_KIND: &'static str = "APIServiceList";
 }
 
 impl crate::Metadata for APIService {

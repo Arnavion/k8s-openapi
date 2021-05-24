@@ -368,7 +368,7 @@ impl crate::Resource for ClusterRole {
 }
 
 impl crate::ListableResource for ClusterRole {
-    const LIST_KIND: &'static str = concat!("ClusterRole", "List");
+    const LIST_KIND: &'static str = "ClusterRoleList";
 }
 
 impl crate::Metadata for ClusterRole {

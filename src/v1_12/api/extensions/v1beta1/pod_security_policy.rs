@@ -377,7 +377,7 @@ impl crate::Resource for PodSecurityPolicy {
 }
 
 impl crate::ListableResource for PodSecurityPolicy {
-    const LIST_KIND: &'static str = concat!("PodSecurityPolicy", "List");
+    const LIST_KIND: &'static str = "PodSecurityPolicyList";
 }
 
 impl crate::Metadata for PodSecurityPolicy {
