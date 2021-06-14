@@ -55,6 +55,8 @@ impl crate::Resource for SelfSubjectRulesReview {
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "SelfSubjectRulesReview";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "selfsubjectrulesreviews";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::Metadata for SelfSubjectRulesReview {

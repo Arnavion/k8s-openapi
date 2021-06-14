@@ -496,6 +496,8 @@ impl crate::Resource for Secret {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Secret";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "secrets";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for Secret {

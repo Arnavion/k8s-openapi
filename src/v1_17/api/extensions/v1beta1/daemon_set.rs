@@ -685,6 +685,8 @@ impl crate::Resource for DaemonSet {
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "DaemonSet";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "daemonsets";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for DaemonSet {

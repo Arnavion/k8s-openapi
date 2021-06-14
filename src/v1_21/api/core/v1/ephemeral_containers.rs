@@ -210,6 +210,8 @@ impl crate::Resource for EphemeralContainers {
     const GROUP: &'static str = "";
     const KIND: &'static str = "EphemeralContainers";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "ephemeralcontainers";
+    type Scope = crate::SubResourceScope;
 }
 
 impl crate::Metadata for EphemeralContainers {

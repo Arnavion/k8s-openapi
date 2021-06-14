@@ -685,6 +685,8 @@ impl crate::Resource for Ingress {
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "Ingress";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "ingresses";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for Ingress {

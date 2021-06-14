@@ -11,6 +11,8 @@ pub(crate) fn generate(
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
 
+	let (url_path_segment, scope) = resource_metadata.url_path_segment_and_scope;
+
 	writeln!(
 		writer,
 		include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/impl_resource.rs")),
@@ -23,6 +25,8 @@ pub(crate) fn generate(
 		group = resource_metadata.group,
 		kind = resource_metadata.kind,
 		version = resource_metadata.version,
+		url_path_segment = url_path_segment,
+		scope = scope,
 	)?;
 
 	Ok(())

@@ -362,6 +362,8 @@ impl crate::Resource for MutatingWebhookConfiguration {
     const GROUP: &'static str = "admissionregistration.k8s.io";
     const KIND: &'static str = "MutatingWebhookConfiguration";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "mutatingwebhookconfigurations";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for MutatingWebhookConfiguration {

@@ -374,6 +374,8 @@ impl crate::Resource for PodSecurityPolicy {
     const GROUP: &'static str = "extensions";
     const KIND: &'static str = "PodSecurityPolicy";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "podsecuritypolicies";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for PodSecurityPolicy {

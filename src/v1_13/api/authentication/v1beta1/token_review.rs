@@ -55,6 +55,8 @@ impl crate::Resource for TokenReview {
     const GROUP: &'static str = "authentication.k8s.io";
     const KIND: &'static str = "TokenReview";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "tokenreviews";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::Metadata for TokenReview {

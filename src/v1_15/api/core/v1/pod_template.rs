@@ -490,6 +490,8 @@ impl crate::Resource for PodTemplate {
     const GROUP: &'static str = "";
     const KIND: &'static str = "PodTemplate";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "podtemplates";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for PodTemplate {

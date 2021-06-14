@@ -406,6 +406,8 @@ impl crate::Resource for Scale {
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "Scale";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "scale";
+    type Scope = crate::SubResourceScope;
 }
 
 impl crate::Metadata for Scale {

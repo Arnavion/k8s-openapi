@@ -374,6 +374,8 @@ impl crate::Resource for RuntimeClass {
     const GROUP: &'static str = "node.k8s.io";
     const KIND: &'static str = "RuntimeClass";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "runtimeclasses";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for RuntimeClass {

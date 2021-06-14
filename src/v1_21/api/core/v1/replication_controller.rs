@@ -673,6 +673,8 @@ impl crate::Resource for ReplicationController {
     const GROUP: &'static str = "";
     const KIND: &'static str = "ReplicationController";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "replicationcontrollers";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ReplicationController {

@@ -362,6 +362,8 @@ impl crate::Resource for ValidatingWebhookConfiguration {
     const GROUP: &'static str = "admissionregistration.k8s.io";
     const KIND: &'static str = "ValidatingWebhookConfiguration";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "validatingwebhookconfigurations";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for ValidatingWebhookConfiguration {

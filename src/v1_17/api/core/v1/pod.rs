@@ -1791,6 +1791,8 @@ impl crate::Resource for Pod {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Pod";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "pods";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for Pod {

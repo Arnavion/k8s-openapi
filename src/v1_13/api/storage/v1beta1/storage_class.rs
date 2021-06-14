@@ -394,6 +394,8 @@ impl crate::Resource for StorageClass {
     const GROUP: &'static str = "storage.k8s.io";
     const KIND: &'static str = "StorageClass";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "storageclasses";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for StorageClass {

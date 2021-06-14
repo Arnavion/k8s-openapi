@@ -478,6 +478,8 @@ impl crate::Resource for Role {
     const GROUP: &'static str = "rbac.authorization.k8s.io";
     const KIND: &'static str = "Role";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "roles";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for Role {

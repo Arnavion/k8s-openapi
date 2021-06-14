@@ -365,6 +365,8 @@ impl crate::Resource for ClusterRoleBinding {
     const GROUP: &'static str = "rbac.authorization.k8s.io";
     const KIND: &'static str = "ClusterRoleBinding";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "clusterrolebindings";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for ClusterRoleBinding {

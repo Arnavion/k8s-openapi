@@ -484,6 +484,8 @@ impl crate::Resource for ServiceAccount {
     const GROUP: &'static str = "";
     const KIND: &'static str = "ServiceAccount";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "serviceaccounts";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ServiceAccount {

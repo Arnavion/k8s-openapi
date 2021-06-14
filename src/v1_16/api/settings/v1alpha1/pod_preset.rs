@@ -488,6 +488,8 @@ impl crate::Resource for PodPreset {
     const GROUP: &'static str = "settings.k8s.io";
     const KIND: &'static str = "PodPreset";
     const VERSION: &'static str = "v1alpha1";
+    const URL_PATH_SEGMENT: &'static str = "podpresets";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for PodPreset {

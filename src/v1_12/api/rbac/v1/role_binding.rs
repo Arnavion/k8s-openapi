@@ -481,6 +481,8 @@ impl crate::Resource for RoleBinding {
     const GROUP: &'static str = "rbac.authorization.k8s.io";
     const KIND: &'static str = "RoleBinding";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "rolebindings";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for RoleBinding {

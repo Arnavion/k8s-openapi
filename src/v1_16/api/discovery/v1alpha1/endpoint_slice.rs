@@ -496,6 +496,8 @@ impl crate::Resource for EndpointSlice {
     const GROUP: &'static str = "discovery.k8s.io";
     const KIND: &'static str = "EndpointSlice";
     const VERSION: &'static str = "v1alpha1";
+    const URL_PATH_SEGMENT: &'static str = "endpointslices";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for EndpointSlice {

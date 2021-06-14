@@ -27,6 +27,8 @@ impl crate::Resource for Status {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Status";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "status";
+    type Scope = crate::SubResourceScope;
 }
 
 impl crate::Metadata for Status {

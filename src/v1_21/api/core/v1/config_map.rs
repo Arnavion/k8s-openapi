@@ -484,6 +484,8 @@ impl crate::Resource for ConfigMap {
     const GROUP: &'static str = "";
     const KIND: &'static str = "ConfigMap";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "configmaps";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ConfigMap {

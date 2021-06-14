@@ -55,6 +55,8 @@ impl crate::Resource for SubjectAccessReview {
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "SubjectAccessReview";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "subjectaccessreviews";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::Metadata for SubjectAccessReview {

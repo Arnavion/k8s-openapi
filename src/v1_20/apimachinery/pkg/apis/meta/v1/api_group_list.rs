@@ -12,6 +12,8 @@ impl crate::Resource for APIGroupList {
     const GROUP: &'static str = "";
     const KIND: &'static str = "APIGroupList";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl<'de> crate::serde::Deserialize<'de> for APIGroupList {

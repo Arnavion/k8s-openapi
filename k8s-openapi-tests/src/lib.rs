@@ -476,6 +476,8 @@ mod patch;
 
 mod pod;
 
+mod resource;
+
 mod special_idents;
 
 mod time;

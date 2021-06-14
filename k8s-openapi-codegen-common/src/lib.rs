@@ -353,6 +353,9 @@ pub fn run(
 				&template_properties,
 			)?;
 
+			let mut namespace_or_cluster_scoped_url_path_segment_and_scope = vec![];
+			let mut subresource_url_path_segment_and_scope = vec![];
+
 			if !definition.kubernetes_group_kind_versions.is_empty() {
 				let mut kubernetes_group_kind_versions: Vec<_> = definition.kubernetes_group_kind_versions.iter().collect();
 				kubernetes_group_kind_versions.sort();
@@ -384,6 +387,41 @@ pub fn run(
 									optional_feature)?;
 							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
 							run_result.num_generated_apis += 1;
+
+							// If this is a CRUD operation, use it to determine the resource's URL path segment and scope.
+							match operation.kubernetes_action {
+								Some(swagger20::KubernetesAction::Delete) |
+								Some(swagger20::KubernetesAction::Get) |
+								Some(swagger20::KubernetesAction::Post) |
+								Some(swagger20::KubernetesAction::Put) => (),
+								_ => continue,
+							}
+							let mut components = operation.path.rsplit('/');
+							let components = (
+								components.next().expect("str::rsplit returns at least one component"),
+								components.next(),
+								components.next(),
+								components.next(),
+							);
+
+							let (url_path_segment_, scope_, url_path_segment_and_scope) = match components {
+								("{name}", Some(url_path_segment), Some("{namespace}"), Some("namespaces")) =>
+									(format!("{:?}", url_path_segment), format!("{}NamespaceResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+
+								("{name}", Some(url_path_segment), _, _) =>
+									(format!("{:?}", url_path_segment), format!("{}ClusterResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+
+								(url_path_segment, Some("{name}"), _, _) =>
+									(format!("{:?}", url_path_segment), format!("{}SubResourceScope", local), &mut subresource_url_path_segment_and_scope),
+
+								(url_path_segment, Some("{namespace}"), Some("namespaces"), _) =>
+									(format!("{:?}", url_path_segment), format!("{}NamespaceResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+
+								(url_path_segment, _, _, _) =>
+									(format!("{:?}", url_path_segment), format!("{}ClusterResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+							};
+
+							url_path_segment_and_scope.push((url_path_segment_, scope_));
 						}
 
 						writeln!(out)?;
@@ -395,26 +433,76 @@ pub fn run(
 				*operations = operations_by_gkv.into_iter().flat_map(|(_, operations)| operations).collect();
 			}
 
+			match &**definition_path {
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" |
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroupList" |
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIResourceList" |
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIVersions" =>
+					namespace_or_cluster_scoped_url_path_segment_and_scope.push((r#""""#.to_owned(), format!("{}ClusterResourceScope", local))),
+				"io.k8s.apimachinery.pkg.apis.meta.v1.Status" =>
+					subresource_url_path_segment_and_scope.push((r#""status""#.to_owned(), format!("{}SubResourceScope", local))),
+				_ => (),
+			}
+
+			namespace_or_cluster_scoped_url_path_segment_and_scope.dedup();
+			subresource_url_path_segment_and_scope.dedup();
+
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
-				(Some((api_version, group, kind, version, list_kind)), Some((metadata_ty, templates::PropertyRequired::Required))) => Some(templates::ResourceMetadata {
+				(
+					Some((api_version, group, kind, version, list_kind)),
+					Some((metadata_ty, templates::PropertyRequired::Required)),
+				) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
 					version,
+					list_kind: list_kind.as_deref(),
 					metadata_ty: Some(metadata_ty),
-					list_kind: list_kind.as_deref(),
+					url_path_segment_and_scope: match (&*namespace_or_cluster_scoped_url_path_segment_and_scope, &*subresource_url_path_segment_and_scope) {
+						([(url_path_segment, scope)], _) => (&**url_path_segment, &**scope),
+						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
+
+						([], []) => return Err(format!(
+							"definition {} is a Resource but its URL path segment and scope could not be inferred",
+							definition_path).into()),
+						([_, ..], _) => return Err(format!(
+							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
+							definition_path, namespace_or_cluster_scoped_url_path_segment_and_scope).into()),
+						([], [_, ..]) => return Err(format!(
+							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
+							definition_path, subresource_url_path_segment_and_scope).into()),
+					},
 				}),
 
-				(Some((api_version, group, kind, version, list_kind)), None) => Some(templates::ResourceMetadata {
+				(Some(_), Some((_, templates::PropertyRequired::Optional))) |
+				(Some(_), Some((_, templates::PropertyRequired::OptionalDefault))) =>
+					return Err(format!("definition {} has optional metadata", definition_path).into()),
+
+				(
+					Some((api_version, group, kind, version, list_kind)),
+					None,
+				) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
 					kind,
 					version,
-					metadata_ty: None,
 					list_kind: list_kind.as_deref(),
-				}),
+					metadata_ty: None,
+					url_path_segment_and_scope: match (&*namespace_or_cluster_scoped_url_path_segment_and_scope, &*subresource_url_path_segment_and_scope) {
+						([(url_path_segment, scope)], _) => (&**url_path_segment, &**scope),
+						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
 
-				(Some(_), Some(_)) => return Err(format!("definition {} has optional metadata", definition_path).into()),
+						([], []) => return Err(format!(
+							"definition {} is a Resource but its URL path segment and scope could not be inferred",
+							definition_path).into()),
+						([_, _, ..], _) => return Err(format!(
+							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
+							definition_path, namespace_or_cluster_scoped_url_path_segment_and_scope).into()),
+						([], [_, _, ..]) => return Err(format!(
+							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
+							definition_path, subresource_url_path_segment_and_scope).into()),
+					},
+				}),
 
 				(None, _) => None,
 			};
@@ -591,8 +679,9 @@ pub fn run(
 				group: "<T as crate::Resource>::GROUP",
 				kind: "<T as crate::ListableResource>::LIST_KIND",
 				version: "<T as crate::Resource>::VERSION",
-				metadata_ty: Some(&metadata_rust_type),
 				list_kind: None,
+				metadata_ty: Some(&metadata_rust_type),
+				url_path_segment_and_scope: (r#""""#, "<T as crate::Resource>::Scope"),
 			};
 
 			templates::r#struct::generate(

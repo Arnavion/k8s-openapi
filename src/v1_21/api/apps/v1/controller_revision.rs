@@ -481,6 +481,8 @@ impl crate::Resource for ControllerRevision {
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "ControllerRevision";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "controllerrevisions";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ControllerRevision {

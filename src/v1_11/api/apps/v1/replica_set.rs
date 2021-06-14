@@ -685,6 +685,8 @@ impl crate::Resource for ReplicaSet {
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "ReplicaSet";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "replicasets";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ReplicaSet {

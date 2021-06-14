@@ -673,6 +673,8 @@ impl crate::Resource for PersistentVolumeClaim {
     const GROUP: &'static str = "";
     const KIND: &'static str = "PersistentVolumeClaim";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "persistentvolumeclaims";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for PersistentVolumeClaim {

@@ -15,6 +15,8 @@ impl<T> crate::Resource for List<T> where T: crate::ListableResource {
     const GROUP: &'static str = <T as crate::Resource>::GROUP;
     const KIND: &'static str = <T as crate::ListableResource>::LIST_KIND;
     const VERSION: &'static str = <T as crate::Resource>::VERSION;
+    const URL_PATH_SEGMENT: &'static str = "";
+    type Scope = <T as crate::Resource>::Scope;
 }
 
 impl<T> crate::Metadata for List<T> where T: crate::ListableResource {

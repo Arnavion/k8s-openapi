@@ -367,6 +367,8 @@ impl crate::Resource for VolumeAttachment {
     const GROUP: &'static str = "storage.k8s.io";
     const KIND: &'static str = "VolumeAttachment";
     const VERSION: &'static str = "v1alpha1";
+    const URL_PATH_SEGMENT: &'static str = "volumeattachments";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for VolumeAttachment {

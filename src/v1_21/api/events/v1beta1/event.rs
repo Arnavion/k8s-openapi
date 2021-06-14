@@ -517,6 +517,8 @@ impl crate::Resource for Event {
     const GROUP: &'static str = "events.k8s.io";
     const KIND: &'static str = "Event";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "events";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for Event {

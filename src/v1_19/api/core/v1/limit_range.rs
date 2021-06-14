@@ -490,6 +490,8 @@ impl crate::Resource for LimitRange {
     const GROUP: &'static str = "";
     const KIND: &'static str = "LimitRange";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "limitranges";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for LimitRange {

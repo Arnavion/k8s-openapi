@@ -89,6 +89,7 @@ pub(crate) struct ResourceMetadata<'a> {
 	pub(crate) version: &'a str,
 	pub(crate) list_kind: Option<&'a str>,
 	pub(crate) metadata_ty: Option<&'a str>,
+	pub(crate) url_path_segment_and_scope: (&'a str, &'a str),
 }
 
 #[derive(Clone, Copy)]

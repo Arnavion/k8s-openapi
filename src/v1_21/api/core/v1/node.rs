@@ -1019,6 +1019,8 @@ impl crate::Resource for Node {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Node";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "nodes";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for Node {

@@ -107,6 +107,8 @@ impl crate::Resource for Binding {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Binding";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "bindings";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::Metadata for Binding {

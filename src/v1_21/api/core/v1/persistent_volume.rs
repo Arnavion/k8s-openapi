@@ -539,6 +539,8 @@ impl crate::Resource for PersistentVolume {
     const GROUP: &'static str = "";
     const KIND: &'static str = "PersistentVolume";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "persistentvolumes";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for PersistentVolume {

@@ -171,6 +171,8 @@ impl crate::Resource for ComponentStatus {
     const GROUP: &'static str = "";
     const KIND: &'static str = "ComponentStatus";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "componentstatuses";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for ComponentStatus {

@@ -673,6 +673,8 @@ impl crate::Resource for ResourceQuota {
     const GROUP: &'static str = "";
     const KIND: &'static str = "ResourceQuota";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "resourcequotas";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for ResourceQuota {

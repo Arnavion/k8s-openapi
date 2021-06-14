@@ -687,6 +687,8 @@ impl crate::Resource for StatefulSet {
     const GROUP: &'static str = "apps";
     const KIND: &'static str = "StatefulSet";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "statefulsets";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::ListableResource for StatefulSet {

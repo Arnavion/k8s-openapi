@@ -544,6 +544,8 @@ impl crate::Resource for Namespace {
     const GROUP: &'static str = "";
     const KIND: &'static str = "Namespace";
     const VERSION: &'static str = "v1";
+    const URL_PATH_SEGMENT: &'static str = "namespaces";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for Namespace {

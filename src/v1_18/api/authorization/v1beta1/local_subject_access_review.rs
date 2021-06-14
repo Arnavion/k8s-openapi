@@ -62,6 +62,8 @@ impl crate::Resource for LocalSubjectAccessReview {
     const GROUP: &'static str = "authorization.k8s.io";
     const KIND: &'static str = "LocalSubjectAccessReview";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "localsubjectaccessreviews";
+    type Scope = crate::NamespaceResourceScope;
 }
 
 impl crate::Metadata for LocalSubjectAccessReview {

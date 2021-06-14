@@ -66,6 +66,8 @@ impl crate::Resource for Eviction {
     const GROUP: &'static str = "policy";
     const KIND: &'static str = "Eviction";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "eviction";
+    type Scope = crate::SubResourceScope;
 }
 
 impl crate::Metadata for Eviction {

@@ -550,6 +550,8 @@ impl crate::Resource for APIService {
     const GROUP: &'static str = "apiregistration.k8s.io";
     const KIND: &'static str = "APIService";
     const VERSION: &'static str = "v1beta1";
+    const URL_PATH_SEGMENT: &'static str = "apiservices";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for APIService {

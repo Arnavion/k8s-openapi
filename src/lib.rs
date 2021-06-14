@@ -519,6 +519,21 @@ pub trait Resource {
 
     /// The version of the resource.
     const VERSION: &'static str;
+
+    /// The URL path segment used to construct URLs related to this resource.
+    ///
+    /// For cluster- and namespaced-scoped resources, this is the plural name of the resource that is followed by the resource name.
+    /// For example, [`api::core::v1::Pod`]'s value is `"pods"` and its URLs look like `.../pods/{name}`.
+    ///
+    /// For subresources, this is the subresource name that comes after the parent resource's name.
+    /// For example, [`api::authentication::v1::TokenRequest`]'s value is `"token"`, and its URLs look like `.../serviceaccounts/{name}/token`.
+    const URL_PATH_SEGMENT: &'static str;
+
+    /// Indicates whether the resource is namespace-scoped or cluster-scoped or a subresource.
+    ///
+    /// If you need to restrict some generic code to resources of a specific scope, use this associated type to create a bound on the generic.
+    /// For example, `fn foo<T: k8s_openapi::Resource<Scope = k8s_openapi::ClusterResourceScope>>() { }` can only be called with cluster-scoped resources.
+    type Scope: ResourceScope;
 }
 
 /// A trait applied to all Kubernetes resources that can be part of a corresponding list.
@@ -572,6 +587,21 @@ pub fn kind<T>(_: &T) -> &'static str where T: Resource {
 pub fn version<T>(_: &T) -> &'static str where T: Resource {
     <T as Resource>::VERSION
 }
+
+/// The scope of a [`Resource`].
+pub trait ResourceScope {}
+
+/// Indicates that a [`Resource`] is cluster-scoped.
+pub struct ClusterResourceScope {}
+impl ResourceScope for ClusterResourceScope {}
+
+/// Indicates that a [`Resource`] is namespace-scoped.
+pub struct NamespaceResourceScope {}
+impl ResourceScope for NamespaceResourceScope {}
+
+/// Indicates that a [`Resource`] is neither cluster-scoped nor namespace-scoped.
+pub struct SubResourceScope {}
+impl ResourceScope for SubResourceScope {}
 
 /// The type of errors returned by the Kubernetes API functions that prepare the HTTP request.
 #[cfg(feature = "api")]

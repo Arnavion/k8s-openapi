@@ -374,6 +374,8 @@ impl crate::Resource for InitializerConfiguration {
     const GROUP: &'static str = "admissionregistration.k8s.io";
     const KIND: &'static str = "InitializerConfiguration";
     const VERSION: &'static str = "v1alpha1";
+    const URL_PATH_SEGMENT: &'static str = "initializerconfigurations";
+    type Scope = crate::ClusterResourceScope;
 }
 
 impl crate::ListableResource for InitializerConfiguration {
