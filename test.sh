@@ -99,17 +99,17 @@ export CARGO_TARGET_DIR="$PWD/target-tests-v$1"
 
 
 # Download the appropriate version of kind
-mkdir -p ~/bin
-flock -x ~/bin -c "
+mkdir -p ~/.local/bin
+flock -x ~/.local/bin -c "
 hash -r
 if ! command -v 'kind-$KIND_VERSION' >/dev/null; then
-	curl -Lo ~/bin/kind-$KIND_VERSION 'https://github.com/kubernetes-sigs/kind/releases/download/v$KIND_VERSION/kind-linux-amd64'
-	chmod +x ~/bin/kind-$KIND_VERSION
+	curl -Lo ~/.local/bin/kind-$KIND_VERSION 'https://github.com/kubernetes-sigs/kind/releases/download/v$KIND_VERSION/kind-linux-amd64'
+	chmod +x ~/.local/bin/kind-$KIND_VERSION
 fi
 "
 hash -r
 if ! command -v "kind-$KIND_VERSION" >/dev/null; then
-	PATH="$PATH:$HOME/bin"
+	PATH="$PATH:$HOME/.local/bin"
 fi
 
 
