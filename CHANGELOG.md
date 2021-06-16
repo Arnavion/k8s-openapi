@@ -1,3 +1,39 @@
+# v0.12.0 (2021-06-15)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Struct fields of type `Option<Vec<T>>` and `Option<BTreeMap<K, V>>` are now of type `Vec<T>` and `BTreeMap<K, V>` respectively. When deserializing from JSON, `null` is deserialized to an empty collection. When serializing, an empty collection is not serialized. This was done to improve ergonomics and is not expected to create problems with any existing Kubernetes objects. If you do find a Kubernetes object that meaningfully differentiates between a `null` collection and an empty one, please file a bug.
+
+- BREAKING CHANGE: Added support for Kubernetes 1.21 under the `v1_21` feature.
+
+- FEATURE: The `Resource` trait now contains two additional items. The first is an associated type `Scope: ResourceScope` that identifies whether a resource is cluster-scoped, namespace-scoped or a subresource. The second is an associated const `URL_PATH_SEGMENT: &'static str` that can be used to dynamically construct a URL for operations on the resource - for cluster- and namespace-scoped resources it is their plural name, for subresources it is the subresource name.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.15
+- v1.17.17
+- v1.18.19
+- v1.19.11
+- v1.20.7
+- v1.21.1
+
+## k8s-openapi-derive
+
+- BUGFIX: The generated code of `#[derive(CustomResourceDefinition)]` implicitly expected the crate to have added a dependency on the `http`, `serde` and `serde_json` crates. It has now been fixed to use the re-exports from the `k8s-openapi` crate instead.
+
+## k8s-openapi-codegen-common
+
+- BREAKING CHANGE: `run` now takes an impl of `RunState` for writing generated code and imports instead of two separate closures. This allows the impl of `RunState` to share state between invocations of the two functions instead of needing `RefCell`, etc.
+
+- BREAKING CHANGE: `swagger20::Type::JSONSchemaPropsOrArray`, `swagger20::Type::JSONSchemaPropsOrBool` and `swagger20::Type::JSONSchemaPropsOrStringArray` have been renamed to `swagger20::Type::JsonSchemaPropsOrArray`, `swagger20::Type::JsonSchemaPropsOrArray` and `swagger20::Type::JsonSchemaPropsOrArray` respectively to match Rust naming conventions.
+
+---
+
 # v0.11.0 (2021-01-23)
 
 - BREAKING CHANGE: This version partially reverts the change in v0.9.0 that made `k8s_openapi::apimachinery::pkg::apis::meta::v1::WatchEvent<T>` require `T: k8s_openapi::Resource`; now it only requires `T: serde::Deserialize<'de>` once more. This has been done to make it possible to use `WatchEvent` with custom user-provided resource types that do not implement `k8s_openapi::Resource`.
