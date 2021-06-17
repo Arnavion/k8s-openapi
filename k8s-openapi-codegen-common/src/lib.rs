@@ -196,22 +196,26 @@ pub fn run(
 		.into_iter()
 		.collect();
 
-	let type_feature = match &definition.kind {
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => optional_feature,
-
-		_ => None,
-	};
+	let type_feature =
+		if let swagger20::SchemaKind::Ty(
+			swagger20::Type::CreateOptional(_) |
+			swagger20::Type::DeleteOptional(_) |
+			swagger20::Type::ListOptional(_) |
+			swagger20::Type::PatchOptional(_) |
+			swagger20::Type::ReplaceOptional(_) |
+			swagger20::Type::WatchOptional(_) |
+			swagger20::Type::CreateResponse |
+			swagger20::Type::DeleteResponse |
+			swagger20::Type::ListResponse |
+			swagger20::Type::PatchResponse |
+			swagger20::Type::ReplaceResponse |
+			swagger20::Type::WatchResponse
+		) = &definition.kind {
+			optional_feature
+		}
+		else {
+			None
+		};
 
 	let mut out = state.make_writer(&namespace_parts, type_feature)?;
 
@@ -261,8 +265,13 @@ pub fn run(
 
 					let required = match (required, &schema.kind) {
 						(true, _) => templates::PropertyRequired::Required,
-						(false, swagger20::SchemaKind::Ty(swagger20::Type::Array { .. })) |
-						(false, swagger20::SchemaKind::Ty(swagger20::Type::Object { .. })) => templates::PropertyRequired::OptionalDefault,
+						(
+							false,
+							swagger20::SchemaKind::Ty(
+								swagger20::Type::Array { .. } |
+								swagger20::Type::Object { .. }
+							),
+						) => templates::PropertyRequired::OptionalDefault,
 						(false, _) => templates::PropertyRequired::Optional,
 					};
 
@@ -291,7 +300,7 @@ pub fn run(
 							) => {
 								field_type_name.push_str("Box<");
 								field_type_name.push_str(&type_name);
-								field_type_name.push_str(">");
+								field_type_name.push('>');
 							},
 
 							_ => field_type_name.push_str(&type_name),
@@ -302,7 +311,7 @@ pub fn run(
 					};
 
 					if let templates::PropertyRequired::Optional = required {
-						field_type_name.push_str(">");
+						field_type_name.push('>');
 					}
 
 					let is_flattened = matches!(&schema.kind, swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)));
@@ -361,7 +370,7 @@ pub fn run(
 				kubernetes_group_kind_versions.sort();
 
 				let mut operations_by_gkv: std::collections::BTreeMap<_, Vec<_>> = Default::default();
-				for operation in std::mem::replace(operations, vec![]) {
+				for operation in std::mem::take(operations) {
 					operations_by_gkv
 						.entry(operation.kubernetes_group_kind_version.clone())
 						.or_default()
@@ -390,10 +399,12 @@ pub fn run(
 
 							// If this is a CRUD operation, use it to determine the resource's URL path segment and scope.
 							match operation.kubernetes_action {
-								Some(swagger20::KubernetesAction::Delete) |
-								Some(swagger20::KubernetesAction::Get) |
-								Some(swagger20::KubernetesAction::Post) |
-								Some(swagger20::KubernetesAction::Put) => (),
+								Some(
+									swagger20::KubernetesAction::Delete |
+									swagger20::KubernetesAction::Get |
+									swagger20::KubernetesAction::Post |
+									swagger20::KubernetesAction::Put
+								) => (),
 								_ => continue,
 							}
 							let mut components = operation.path.rsplit('/');
@@ -404,6 +415,10 @@ pub fn run(
 								components.next(),
 							);
 
+							// TODO:
+							// The clippy lint doesn't take into account that the order of the arms is significant.
+							// Ref: https://github.com/rust-lang/rust-clippy/issues/860
+							#[allow(clippy::match_same_arms)]
 							let (url_path_segment_, scope_, url_path_segment_and_scope) = match components {
 								("{name}", Some(url_path_segment), Some("{namespace}"), Some("namespaces")) =>
 									(format!("{:?}", url_path_segment), format!("{}NamespaceResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
@@ -459,7 +474,7 @@ pub fn run(
 					list_kind: list_kind.as_deref(),
 					metadata_ty: Some(metadata_ty),
 					url_path_segment_and_scope: match (&*namespace_or_cluster_scoped_url_path_segment_and_scope, &*subresource_url_path_segment_and_scope) {
-						([(url_path_segment, scope)], _) => (&**url_path_segment, &**scope),
+						([(url_path_segment, scope)], _) |
 						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
 
 						([], []) => return Err(format!(
@@ -474,8 +489,7 @@ pub fn run(
 					},
 				}),
 
-				(Some(_), Some((_, templates::PropertyRequired::Optional))) |
-				(Some(_), Some((_, templates::PropertyRequired::OptionalDefault))) =>
+				(Some(_), Some((_, templates::PropertyRequired::Optional | templates::PropertyRequired::OptionalDefault))) =>
 					return Err(format!("definition {} has optional metadata", definition_path).into()),
 
 				(
@@ -489,7 +503,7 @@ pub fn run(
 					list_kind: list_kind.as_deref(),
 					metadata_ty: None,
 					url_path_segment_and_scope: match (&*namespace_or_cluster_scoped_url_path_segment_and_scope, &*subresource_url_path_segment_and_scope) {
-						([(url_path_segment, scope)], _) => (&**url_path_segment, &**scope),
+						([(url_path_segment, scope)], _) |
 						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
 
 						([], []) => return Err(format!(
@@ -566,9 +580,11 @@ pub fn run(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::JsonSchemaPropsOrStringArray(_)) => {
+		swagger20::SchemaKind::Ty(ty @ (
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_)
+		)) => {
 			let (namespace, json_schema_props_or) = match ty {
 				swagger20::Type::JsonSchemaPropsOrArray(namespace) => (namespace, templates::json_schema_props_or::Or::Array),
 				swagger20::Type::JsonSchemaPropsOrBool(namespace) => (namespace, templates::json_schema_props_or::Or::Bool),
@@ -766,12 +782,14 @@ pub fn run(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::CreateOptional(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::DeleteOptional(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::ListOptional(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::PatchOptional(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::ReplaceOptional(_)) |
-		swagger20::SchemaKind::Ty(ty @ swagger20::Type::WatchOptional(_)) => {
+		swagger20::SchemaKind::Ty(ty @ (
+			swagger20::Type::CreateOptional(_) |
+			swagger20::Type::DeleteOptional(_) |
+			swagger20::Type::ListOptional(_) |
+			swagger20::Type::PatchOptional(_) |
+			swagger20::Type::ReplaceOptional(_) |
+			swagger20::Type::WatchOptional(_)
+		)) => {
 			let properties = match ty {
 				swagger20::Type::CreateOptional(properties) |
 				swagger20::Type::DeleteOptional(properties) |
@@ -1007,27 +1025,36 @@ fn get_derives(
 		return Ok(None);
 	}
 
-	let derive_clone = evaluate_trait_bound(kind, true, definitions, map_namespace, |kind, _| match kind {
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Ok(false),
+	let derive_clone =
+		evaluate_trait_bound(
+			kind,
+			true,
+			definitions,
+			map_namespace,
+			|kind, _| Ok(!matches!(kind, swagger20::SchemaKind::Ty(
+				swagger20::Type::CreateResponse |
+				swagger20::Type::DeleteResponse |
+				swagger20::Type::ListResponse |
+				swagger20::Type::PatchResponse |
+				swagger20::Type::ReplaceResponse |
+				swagger20::Type::WatchResponse
+			))))?;
 
-		_ => Ok(true),
-	})?;
-
-	let derive_copy = derive_clone && evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, _| match kind {
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceOptional(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Ok(true),
-
-		_ => Ok(false),
-	})?;
+	let derive_copy =
+		derive_clone &&
+		evaluate_trait_bound(
+			kind,
+			false,
+			definitions,
+			map_namespace,
+			|kind, _| Ok(matches!(kind, swagger20::SchemaKind::Ty(
+				swagger20::Type::CreateOptional(_) |
+				swagger20::Type::DeleteOptional(_) |
+				swagger20::Type::ListOptional(_) |
+				swagger20::Type::PatchOptional(_) |
+				swagger20::Type::ReplaceOptional(_) |
+				swagger20::Type::WatchOptional(_)
+			))))?;
 
 	#[allow(clippy::match_same_arms)]
 	let is_default = evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, required| match kind {
@@ -1049,17 +1076,19 @@ fn get_derives(
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
 		// Enums without a default value
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::Patch) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Ok(false),
+		swagger20::SchemaKind::Ty(
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+			swagger20::Type::Patch |
+			swagger20::Type::WatchEvent(_) |
+			swagger20::Type::CreateResponse |
+			swagger20::Type::DeleteResponse |
+			swagger20::Type::ListResponse |
+			swagger20::Type::PatchResponse |
+			swagger20::Type::ReplaceResponse |
+			swagger20::Type::WatchResponse
+		) => Ok(false),
 
 		_ => Ok(true),
 	})?;
@@ -1068,16 +1097,20 @@ fn get_derives(
 		// IntOrString has a manual Default impl, so don't #[derive] it.
 		!matches!(kind, swagger20::SchemaKind::Ty(swagger20::Type::IntOrString));
 
-	let derive_partial_eq = evaluate_trait_bound(kind, true, definitions, map_namespace, |kind, _| match kind {
-		swagger20::SchemaKind::Ty(swagger20::Type::CreateResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::DeleteResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ListResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::PatchResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::ReplaceResponse) |
-		swagger20::SchemaKind::Ty(swagger20::Type::WatchResponse) => Ok(false),
-
-		_ => Ok(true),
-	})?;
+	let derive_partial_eq =
+		evaluate_trait_bound(
+			kind,
+			true,
+			definitions,
+			map_namespace,
+			|kind, _| Ok(!matches!(kind, swagger20::SchemaKind::Ty(
+				swagger20::Type::CreateResponse |
+				swagger20::Type::DeleteResponse |
+				swagger20::Type::ListResponse |
+				swagger20::Type::PatchResponse |
+				swagger20::Type::ReplaceResponse |
+				swagger20::Type::WatchResponse
+			))))?;
 
 	// The choice of deriving Eq, Ord and PartialOrd is deliberately more conservative than the choice of deriving PartialEq,
 	// so as to not change dramatically between Kubernetes versions. For example, ObjectMeta is Ord in v1.15 but not in v1.16 because
@@ -1087,10 +1120,10 @@ fn get_derives(
 
 	let derive_eq =
 		derive_partial_eq &&
-		matches!(kind,
-			swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) |
-			swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) })
-		);
+		matches!(kind, swagger20::SchemaKind::Ty(
+			swagger20::Type::IntOrString |
+			swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }
+		));
 
 	let derive_partial_ord =
 		derive_partial_eq &&
@@ -1155,7 +1188,7 @@ fn evaluate_trait_bound(
 			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => {
 				#[allow(clippy::option_if_let_else)]
 				let trait_bound =
-					if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.to_owned())) {
+					if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.clone())) {
 						let mut visited = visited.clone();
 						evaluate_trait_bound_inner(
 							&std::borrow::Cow::Borrowed(&target.kind),
@@ -1184,9 +1217,11 @@ fn evaluate_trait_bound(
 					f,
 				),
 
-			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(namespace)) |
-			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(namespace)) |
-			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(namespace)) => {
+			swagger20::SchemaKind::Ty(
+				swagger20::Type::JsonSchemaPropsOrArray(namespace) |
+				swagger20::Type::JsonSchemaPropsOrBool(namespace) |
+				swagger20::Type::JsonSchemaPropsOrStringArray(namespace)
+			) => {
 				let json_schema_props_ref_path = swagger20::RefPath {
 					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
 					can_be_default: None,
@@ -1392,9 +1427,11 @@ fn get_rust_borrow_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_)
+		) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
@@ -1468,9 +1505,11 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrArray(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrBool(_)) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOrStringArray(_)) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_)
+		) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
@@ -1835,10 +1874,11 @@ pub fn write_operation(
 				if parameter.location == swagger20::ParameterLocation::Query {
 					if parameter.required {
 						match parameter.schema.kind {
-							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
-							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-							swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
-								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+							swagger20::SchemaKind::Ty(
+								swagger20::Type::Boolean |
+								swagger20::Type::Integer { .. } |
+								swagger20::Type::Number { .. }
+							) => writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{});"#, indent, parameter.name, parameter_name)?,
@@ -1849,10 +1889,11 @@ pub fn write_operation(
 					else {
 						writeln!(out, "{}    if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
 						match parameter.schema.kind {
-							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
-							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-							swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
-								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+							swagger20::SchemaKind::Ty(
+								swagger20::Type::Boolean |
+								swagger20::Type::Integer { .. } |
+								swagger20::Type::Number { .. }
+							) => writeln!(out, r#"{}        __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?,

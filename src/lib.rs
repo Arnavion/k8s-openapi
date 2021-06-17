@@ -709,7 +709,7 @@ impl<T> ResponseBody<T> where T: Response {
     ///
     /// This function panics if `cnt` is greater than the length of the internal buffer.
     pub fn advance(&mut self, cnt: usize) {
-        bytes::Buf::advance(&mut self.buf, cnt)
+        bytes::Buf::advance(&mut self.buf, cnt);
     }
 }
 

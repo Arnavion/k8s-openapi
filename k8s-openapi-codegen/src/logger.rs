@@ -6,11 +6,11 @@ impl log::Log for Logger {
 	}
 
 	fn log(&self, record: &log::Record<'_>) {
-		THREAD_LOCAL_LOGGER.with(|thread_local_logger| if let Some(logger) = thread_local_logger.borrow().as_ref() { logger.log(record); })
+		THREAD_LOCAL_LOGGER.with(|thread_local_logger| if let Some(logger) = thread_local_logger.borrow().as_ref() { logger.log(record); });
 	}
 
 	fn flush(&self) {
-		THREAD_LOCAL_LOGGER.with(|thread_local_logger| if let Some(logger) = thread_local_logger.borrow().as_ref() { logger.flush(); })
+		THREAD_LOCAL_LOGGER.with(|thread_local_logger| if let Some(logger) = thread_local_logger.borrow().as_ref() { logger.flush(); });
 	}
 }
 

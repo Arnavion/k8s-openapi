@@ -495,14 +495,10 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	}
 
 	for operation in &spec.operations {
-		match operation.kubernetes_action {
-			Some(crate::swagger20::KubernetesAction::Watch) |
-			Some(crate::swagger20::KubernetesAction::WatchList) =>
-				if !converted_watch_operations.contains(&operation.id) {
-					return Err(format!("found a watch operation that wasn't synthesized from a list operation: {:?}", operation).into());
-				},
-
-			_ => (),
+		if let Some(crate::swagger20::KubernetesAction::Watch | crate::swagger20::KubernetesAction::WatchList) = operation.kubernetes_action {
+			if !converted_watch_operations.contains(&operation.id) {
+				return Err(format!("found a watch operation that wasn't synthesized from a list operation: {:?}", operation).into());
+			}
 		}
 	}
 
