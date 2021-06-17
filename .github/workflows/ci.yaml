@@ -68,6 +68,24 @@ jobs:
         OP: "${{ matrix.op }}"
 
 
+  k8s-openapi-coddgen-common:
+    runs-on: 'ubuntu-20.04'
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        op:
+        - 'clippy'
+
+    steps:
+    - uses: 'actions/checkout@v2'
+    - name: 'Run'
+      run: ./ci/k8s-openapi-codegen-common.sh
+      env:
+        OP: "${{ matrix.op }}"
+
+
   k8s-openapi-derive:
     runs-on: 'ubuntu-20.04'
 
