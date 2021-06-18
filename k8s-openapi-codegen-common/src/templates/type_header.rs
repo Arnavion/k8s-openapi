@@ -28,7 +28,7 @@ pub(crate) fn generate(
 			partial_eq = if partial_eq { ", PartialEq" } else { "" },
 			partial_ord = if partial_ord { ", PartialOrd" } else { "" },
 			json_schema = if json_schema { "#[cfg_attr(feature = \"schema\", derive(JsonSchema), schemars(rename_all = \"camelCase\"))]" } else { "" },
-            use_json_schema = if json_schema { "#[cfg(feature = \"schema\")]\nuse schemars::JsonSchema;\n" } else { "" },
+ 			use_json_schema = if json_schema { "#[cfg(feature = \"schema\")]\nuse schemars::JsonSchema;\n" } else { "" },
 		))
 		.unwrap_or_default();
 
