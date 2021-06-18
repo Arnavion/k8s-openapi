@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.rbac.v1.AggregationRule
 
 /// AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AggregationRule {
     /// ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>::new"))]
     pub cluster_role_selectors: Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 

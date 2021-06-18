@@ -1,18 +1,23 @@
 // Generated from definition io.k8s.api.core.v1.ServiceAccount
 
 /// ServiceAccount binds together: * a name, understood by users, and perhaps by peripheral systems, for an identity * a principal that can be authenticated and authorized * a set of secrets
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceAccount {
     /// AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level.
     pub automount_service_account_token: Option<bool>,
 
     /// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::LocalObjectReference>::new"))]
     pub image_pull_secrets: Vec<crate::api::core::v1::LocalObjectReference>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ObjectReference>::new"))]
     pub secrets: Vec<crate::api::core::v1::ObjectReference>,
 }
 

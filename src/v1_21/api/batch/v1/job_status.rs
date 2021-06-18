@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.batch.v1.JobStatus
 
 /// JobStatus represents the current state of a Job.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct JobStatus {
     /// The number of actively running pods.
     pub active: Option<i32>,
@@ -13,6 +16,7 @@ pub struct JobStatus {
     pub completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The latest available observations of an object's current state. When a Job fails, one of the conditions will have type "Failed" and status true. When a Job is suspended, one of the conditions will have type "Suspended" and status true; when the Job is resumed, the status of this condition will become false. When a Job is completed, one of the conditions will have type "Complete" and status true. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::batch::v1::JobCondition>::new"))]
     pub conditions: Vec<crate::api::batch::v1::JobCondition>,
 
     /// The number of pods which reached phase Failed.

@@ -1,18 +1,24 @@
 // Generated from definition io.k8s.api.core.v1.PodStatus
 
 /// PodStatus represents information about the status of a pod. Status may trail the actual state of a system, especially if the node that hosts the pod cannot contact the control plane.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodStatus {
     /// Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::PodCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::PodCondition>,
 
     /// The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ContainerStatus>::new"))]
     pub container_statuses: Vec<crate::api::core::v1::ContainerStatus>,
 
     /// IP address of the host to which the pod is assigned. Empty if not yet scheduled.
     pub host_ip: Option<String>,
 
     /// The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ContainerStatus>::new"))]
     pub init_container_statuses: Vec<crate::api::core::v1::ContainerStatus>,
 
     /// A human readable message indicating details about why the pod is in this condition.

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.MutatingWebhookConfiguration
 
 /// MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object. Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct MutatingWebhookConfiguration {
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::admissionregistration::v1beta1::MutatingWebhook>::new"))]
     pub webhooks: Vec<crate::api::admissionregistration::v1beta1::MutatingWebhook>,
 }
 

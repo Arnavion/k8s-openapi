@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService
 
 /// APIService represents a server for a particular GroupVersion. Name must be "version.group".
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct APIService {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apiserverinternal.v1alpha1.StorageVersionCondition
 
 /// Describes the state of the storageVersion at a certain point.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StorageVersionCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

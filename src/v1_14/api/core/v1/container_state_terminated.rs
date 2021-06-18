@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ContainerStateTerminated
 
 /// ContainerStateTerminated is a terminated state of a container.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ContainerStateTerminated {
     /// Container's ID in the format 'docker://\<container_id\>'
     pub container_id: Option<String>,

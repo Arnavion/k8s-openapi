@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.authorization.v1beta1.NonResourceRule
 
 /// NonResourceRule holds information that describes a rule for the non-resource
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NonResourceRule {
     /// NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub non_resource_urls: Vec<String>,
 
     /// Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub verbs: Vec<String>,
 }
 

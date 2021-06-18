@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.List
 
 /// List is a list of resources.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct List<T> where T: crate::ListableResource {
     /// List of objects.
     pub items: Vec<T>,

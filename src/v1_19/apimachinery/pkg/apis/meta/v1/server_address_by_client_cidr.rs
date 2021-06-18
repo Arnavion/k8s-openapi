@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.ServerAddressByClientCIDR
 
 /// ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServerAddressByClientCIDR {
     /// The CIDR with which clients can match their IP to figure out the server address that they should use.
     pub client_cidr: String,

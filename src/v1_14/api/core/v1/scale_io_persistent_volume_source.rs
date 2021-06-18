@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ScaleIOPersistentVolumeSource
 
 /// ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ScaleIOPersistentVolumeSource {
     /// Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs"
     pub fs_type: Option<String>,

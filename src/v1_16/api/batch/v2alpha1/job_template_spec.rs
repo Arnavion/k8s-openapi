@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.batch.v2alpha1.JobTemplateSpec
 
 /// JobTemplateSpec describes the data a Job should have when created from a template
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct JobTemplateSpec {
     /// Standard object's metadata of the jobs created from this template. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,

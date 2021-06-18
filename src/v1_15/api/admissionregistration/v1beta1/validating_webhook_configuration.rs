@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.ValidatingWebhookConfiguration
 
 /// ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ValidatingWebhookConfiguration {
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::admissionregistration::v1beta1::ValidatingWebhook>::new"))]
     pub webhooks: Vec<crate::api::admissionregistration::v1beta1::ValidatingWebhook>,
 }
 

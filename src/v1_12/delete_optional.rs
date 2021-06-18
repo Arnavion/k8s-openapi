@@ -2,7 +2,10 @@
 
 /// Common parameters for all delete and delete-collection operations.
 #[cfg(feature = "api")]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DeleteOptional<'a> {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<&'a str>,

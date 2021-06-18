@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.networking.v1.IngressSpec
 
 /// IngressSpec describes the Ingress the user wishes to exist.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressSpec {
     /// DefaultBackend is the backend that should handle requests that don't match any rule. If Rules are not specified, DefaultBackend must be specified. If DefaultBackend is not set, the handling of requests that do not match any of the rules will be up to the Ingress controller.
     pub default_backend: Option<crate::api::networking::v1::IngressBackend>,
@@ -10,9 +13,11 @@ pub struct IngressSpec {
     pub ingress_class_name: Option<String>,
 
     /// A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::networking::v1::IngressRule>::new"))]
     pub rules: Vec<crate::api::networking::v1::IngressRule>,
 
     /// TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::networking::v1::IngressTLS>::new"))]
     pub tls: Vec<crate::api::networking::v1::IngressTLS>,
 }
 

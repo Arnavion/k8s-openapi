@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.NodeStatus
 
 /// NodeStatus is information about the current status of a node.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeStatus {
     /// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NodeAddress>::new"))]
     pub addresses: Vec<crate::api::core::v1::NodeAddress>,
 
     /// Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
@@ -13,6 +17,7 @@ pub struct NodeStatus {
     pub capacity: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NodeCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::NodeCondition>,
 
     /// Status of the config assigned to the node via the dynamic Kubelet config feature.
@@ -22,6 +27,7 @@ pub struct NodeStatus {
     pub daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints>,
 
     /// List of container images on this node
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ContainerImage>::new"))]
     pub images: Vec<crate::api::core::v1::ContainerImage>,
 
     /// Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info
@@ -31,9 +37,11 @@ pub struct NodeStatus {
     pub phase: Option<String>,
 
     /// List of volumes that are attached to the node.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::AttachedVolume>::new"))]
     pub volumes_attached: Vec<crate::api::core::v1::AttachedVolume>,
 
     /// List of attachable volumes in use (mounted) by the node.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub volumes_in_use: Vec<String>,
 }
 

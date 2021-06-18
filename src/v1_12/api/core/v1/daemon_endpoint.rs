@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.DaemonEndpoint
 
 /// DaemonEndpoint contains information about a single Daemon endpoint.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonEndpoint {
     /// Port number of the given endpoint.
     pub port: i32,

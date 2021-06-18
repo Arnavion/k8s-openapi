@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.QuobyteVolumeSource
 
 /// Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct QuobyteVolumeSource {
     /// Group to map volume access to Default is no group
     pub group: Option<String>,

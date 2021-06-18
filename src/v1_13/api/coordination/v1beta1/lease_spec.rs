@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.coordination.v1beta1.LeaseSpec
 
 /// LeaseSpec is a specification of a Lease.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LeaseSpec {
     /// acquireTime is a time when the current lease was acquired.
     pub acquire_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeSystemInfo
 
 /// NodeSystemInfo is a set of ids/uuids to uniquely identify the node.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeSystemInfo {
     /// The Architecture reported by the node
     pub architecture: String,

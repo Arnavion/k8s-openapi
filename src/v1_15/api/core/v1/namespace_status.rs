@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NamespaceStatus
 
 /// NamespaceStatus is information about the current status of a Namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NamespaceStatus {
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub phase: Option<String>,

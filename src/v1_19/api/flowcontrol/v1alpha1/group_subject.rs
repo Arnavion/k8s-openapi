@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.GroupSubject
 
 /// GroupSubject holds detailed information for group-kind subject.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct GroupSubject {
     /// name is the user group that matches, or "*" to match all user groups. See https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.
     pub name: String,

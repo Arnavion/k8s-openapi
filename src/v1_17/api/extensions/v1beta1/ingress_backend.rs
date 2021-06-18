@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.IngressBackend
 
 /// IngressBackend describes all endpoints for a given service and port.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressBackend {
     /// Specifies the name of the referenced service.
     pub service_name: String,
 
     /// Specifies the port of the referenced service.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub service_port: crate::apimachinery::pkg::util::intstr::IntOrString,
 }
 

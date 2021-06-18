@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PodDNSConfigOption
 
 /// PodDNSConfigOption defines DNS resolver options of a pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodDNSConfigOption {
     /// Required.
     pub name: Option<String>,

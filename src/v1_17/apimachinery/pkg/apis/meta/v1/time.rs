@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.Time
 
 /// Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
 impl<'de> crate::serde::Deserialize<'de> for Time {

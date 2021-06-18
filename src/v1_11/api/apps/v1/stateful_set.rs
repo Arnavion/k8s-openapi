@@ -4,7 +4,10 @@
 ///  - Network: A single stable DNS and hostname.
 ///  - Storage: As many VolumeClaims as requested.
 /// The StatefulSet guarantees that a given network identity will always map to the same storage identity.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StatefulSet {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

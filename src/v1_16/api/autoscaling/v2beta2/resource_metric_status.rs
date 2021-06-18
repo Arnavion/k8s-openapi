@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.ResourceMetricStatus
 
 /// ResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ResourceMetricStatus {
     /// current contains the current value for the given metric
     pub current: crate::api::autoscaling::v2beta2::MetricValueStatus,

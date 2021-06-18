@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.apps.v1.DaemonSetStatus
 
 /// DaemonSetStatus represents the current status of a daemon set.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSetStatus {
     /// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a DaemonSet's current state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::apps::v1::DaemonSetCondition>::new"))]
     pub conditions: Vec<crate::api::apps::v1::DaemonSetCondition>,
 
     /// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/

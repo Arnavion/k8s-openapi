@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1.DaemonSet
 
 /// DaemonSet represents the configuration of a daemon set.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSet {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

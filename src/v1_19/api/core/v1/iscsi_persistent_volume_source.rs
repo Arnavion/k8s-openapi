@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ISCSIPersistentVolumeSource
 
 /// ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ISCSIPersistentVolumeSource {
     /// whether support iSCSI Discovery CHAP authentication
     pub chap_auth_discovery: Option<bool>,
@@ -25,6 +28,7 @@ pub struct ISCSIPersistentVolumeSource {
     pub lun: i32,
 
     /// iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub portals: Vec<String>,
 
     /// ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.

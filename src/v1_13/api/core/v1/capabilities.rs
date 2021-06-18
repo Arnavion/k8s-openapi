@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.core.v1.Capabilities
 
 /// Adds and removes POSIX capabilities from running containers.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Capabilities {
     /// Added capabilities
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub add: Vec<String>,
 
     /// Removed capabilities
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub drop: Vec<String>,
 }
 

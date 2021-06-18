@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authorization.v1beta1.NonResourceAttributes
 
 /// NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NonResourceAttributes {
     /// Path is the URL path of the request
     pub path: Option<String>,

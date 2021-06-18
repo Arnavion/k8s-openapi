@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.HorizontalPodAutoscalerSpec
 
 /// HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerSpec {
     /// maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
     pub max_replicas: i32,
 
     /// metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::autoscaling::v2beta2::MetricSpec>::new"))]
     pub metrics: Vec<crate::api::autoscaling::v2beta2::MetricSpec>,
 
     /// minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod.

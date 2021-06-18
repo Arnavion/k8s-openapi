@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.auditregistration.v1alpha1.Policy
 
 /// Policy defines the configuration of how audit events are logged
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Policy {
     /// The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required
     pub level: String,
 
     /// Stages is a list of stages for which events are created.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub stages: Vec<String>,
 }
 

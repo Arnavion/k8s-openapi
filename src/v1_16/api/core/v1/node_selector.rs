@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.NodeSelector
 
 /// A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeSelector {
     /// Required. A list of node selector terms. The terms are ORed.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NodeSelectorTerm>::new"))]
     pub node_selector_terms: Vec<crate::api::core::v1::NodeSelectorTerm>,
 }
 

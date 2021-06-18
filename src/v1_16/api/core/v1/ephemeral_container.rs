@@ -1,18 +1,25 @@
 // Generated from definition io.k8s.api.core.v1.EphemeralContainer
 
 /// An EphemeralContainer is a container that may be added temporarily to an existing pod for user-initiated activities such as debugging. Ephemeral containers have no resource or scheduling guarantees, and they will not be restarted when they exit or when a pod is removed or restarted. If an ephemeral container causes a pod to exceed its resource allocation, the pod may be evicted. Ephemeral containers may not be added by directly updating the pod spec. They must be added via the pod's ephemeralcontainers subresource, and they will appear in the pod spec once added. This is an alpha feature enabled by the EphemeralContainers feature flag.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EphemeralContainer {
     /// Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub args: Vec<String>,
 
     /// Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub command: Vec<String>,
 
     /// List of environment variables to set in the container. Cannot be updated.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EnvVar>::new"))]
     pub env: Vec<crate::api::core::v1::EnvVar>,
 
     /// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EnvFromSource>::new"))]
     pub env_from: Vec<crate::api::core::v1::EnvFromSource>,
 
     /// Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
@@ -31,6 +38,7 @@ pub struct EphemeralContainer {
     pub name: String,
 
     /// Ports are not allowed for ephemeral containers.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ContainerPort>::new"))]
     pub ports: Vec<crate::api::core::v1::ContainerPort>,
 
     /// Probes are not allowed for ephemeral containers.
@@ -64,9 +72,11 @@ pub struct EphemeralContainer {
     pub tty: Option<bool>,
 
     /// volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::VolumeDevice>::new"))]
     pub volume_devices: Vec<crate::api::core::v1::VolumeDevice>,
 
     /// Pod volumes to mount into the container's filesystem. Cannot be updated.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::VolumeMount>::new"))]
     pub volume_mounts: Vec<crate::api::core::v1::VolumeMount>,
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.HorizontalPodAutoscalerCondition
 
 /// HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerCondition {
     /// lastTransitionTime is the last time the condition transitioned from one status to another
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

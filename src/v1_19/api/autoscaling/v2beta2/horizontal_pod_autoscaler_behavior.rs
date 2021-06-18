@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.HorizontalPodAutoscalerBehavior
 
 /// HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerBehavior {
     /// scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
     pub scale_down: Option<crate::api::autoscaling::v2beta2::HPAScalingRules>,

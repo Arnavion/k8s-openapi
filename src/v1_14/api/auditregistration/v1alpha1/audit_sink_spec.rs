@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.auditregistration.v1alpha1.AuditSinkSpec
 
 /// AuditSinkSpec holds the spec for the audit sink
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AuditSinkSpec {
     /// Policy defines the policy for selecting which events should be sent to the webhook required
     pub policy: crate::api::auditregistration::v1alpha1::Policy,

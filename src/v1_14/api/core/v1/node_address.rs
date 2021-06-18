@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeAddress
 
 /// NodeAddress contains information for the node's address.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeAddress {
     /// The node address.
     pub address: String,

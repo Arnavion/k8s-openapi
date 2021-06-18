@@ -1,18 +1,23 @@
 // Generated from definition io.k8s.api.core.v1.HTTPGetAction
 
 /// HTTPGetAction describes an action based on HTTP Get requests.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HTTPGetAction {
     /// Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
     pub host: Option<String>,
 
     /// Custom headers to set in the request. HTTP allows repeated headers.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::HTTPHeader>::new"))]
     pub http_headers: Vec<crate::api::core::v1::HTTPHeader>,
 
     /// Path to access on the HTTP server.
     pub path: Option<String>,
 
     /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
 
     /// Scheme to use for connecting to the host. Defaults to HTTP.

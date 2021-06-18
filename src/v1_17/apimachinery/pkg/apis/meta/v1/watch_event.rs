@@ -7,7 +7,10 @@
 ///  * If Type is Deleted: the state of the object immediately before deletion.
 ///  * If Type is Error: *Status is recommended; other types may make sense
 ///    depending on context.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub enum WatchEvent<T> {
     Added(T),
     Deleted(T),

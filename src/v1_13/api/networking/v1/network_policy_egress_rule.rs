@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.networking.v1.NetworkPolicyEgressRule
 
 /// NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NetworkPolicyEgressRule {
     /// List of destination ports for outgoing traffic. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::networking::v1::NetworkPolicyPort>::new"))]
     pub ports: Vec<crate::api::networking::v1::NetworkPolicyPort>,
 
     /// List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::networking::v1::NetworkPolicyPeer>::new"))]
     pub to: Vec<crate::api::networking::v1::NetworkPolicyPeer>,
 }
 

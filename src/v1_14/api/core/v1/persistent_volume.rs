@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolume
 
 /// PersistentVolume (PV) is a storage resource provisioned by an administrator. It is analogous to a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolume {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

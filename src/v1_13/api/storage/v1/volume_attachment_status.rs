@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.storage.v1.VolumeAttachmentStatus
 
 /// VolumeAttachmentStatus is the status of a VolumeAttachment request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeAttachmentStatus {
     /// The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     pub attach_error: Option<crate::api::storage::v1::VolumeError>,

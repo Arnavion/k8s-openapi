@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.OwnerReference
 
 /// OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct OwnerReference {
     /// API version of the referent.
     pub api_version: String,

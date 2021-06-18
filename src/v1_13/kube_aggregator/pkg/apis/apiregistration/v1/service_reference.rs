@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.ServiceReference
 
 /// ServiceReference holds a reference to Service.legacy.k8s.io
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceReference {
     /// Name is the name of the service
     pub name: Option<String>,

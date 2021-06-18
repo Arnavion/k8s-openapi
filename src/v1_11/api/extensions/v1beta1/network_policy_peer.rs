@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyPeer
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicyPeer is deprecated by networking/v1/NetworkPolicyPeer.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     pub ip_block: Option<crate::api::extensions::v1beta1::IPBlock>,

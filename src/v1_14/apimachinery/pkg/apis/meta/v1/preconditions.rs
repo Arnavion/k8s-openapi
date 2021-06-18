@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.Preconditions
 
 /// Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Preconditions {
     /// Specifies the target ResourceVersion
     pub resource_version: Option<String>,

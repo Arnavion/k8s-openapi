@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.DeploymentRollback
 
 /// DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DeploymentRollback {
     /// Required: This must match the Name of a deployment.
     pub name: String,

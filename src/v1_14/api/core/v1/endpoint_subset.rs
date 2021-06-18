@@ -8,15 +8,21 @@
 /// The resulting set of endpoints can be viewed as:
 ///     a: \[ 10.10.1.1:8675, 10.10.2.2:8675 \],
 ///     b: \[ 10.10.1.1:309, 10.10.2.2:309 \]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointSubset {
     /// IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EndpointAddress>::new"))]
     pub addresses: Vec<crate::api::core::v1::EndpointAddress>,
 
     /// IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EndpointAddress>::new"))]
     pub not_ready_addresses: Vec<crate::api::core::v1::EndpointAddress>,
 
     /// Port numbers available on the related IP addresses.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EndpointPort>::new"))]
     pub ports: Vec<crate::api::core::v1::EndpointPort>,
 }
 

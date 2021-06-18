@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.RBDPersistentVolumeSource
 
 /// Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct RBDPersistentVolumeSource {
     /// Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#rbd
     pub fs_type: Option<String>,
@@ -13,6 +16,7 @@ pub struct RBDPersistentVolumeSource {
     pub keyring: Option<String>,
 
     /// A collection of Ceph monitors. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub monitors: Vec<String>,
 
     /// The rados pool name. Default is rbd. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it

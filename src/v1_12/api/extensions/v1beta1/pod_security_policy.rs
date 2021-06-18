@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.PodSecurityPolicy
 
 /// PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated: use PodSecurityPolicy from policy API Group instead.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodSecurityPolicy {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

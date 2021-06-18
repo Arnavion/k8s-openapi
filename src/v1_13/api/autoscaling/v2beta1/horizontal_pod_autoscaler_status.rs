@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.HorizontalPodAutoscalerStatus
 
 /// HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerStatus {
     /// conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition>::new"))]
     pub conditions: Vec<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition>,
 
     /// currentMetrics is the last read state of the metrics used by this autoscaler.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::autoscaling::v2beta1::MetricStatus>::new"))]
     pub current_metrics: Vec<crate::api::autoscaling::v2beta1::MetricStatus>,
 
     /// currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.

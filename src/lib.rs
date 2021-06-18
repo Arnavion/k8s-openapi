@@ -468,11 +468,14 @@ pub use serde_json;
 pub use serde_value;
 #[cfg(feature = "api")]
 pub use url;
+#[cfg(feature = "schema")]
+pub use schemars::JsonSchema;
 
 /// A wrapper around a list of bytes.
 ///
 /// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.
 #[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 pub struct ByteString(pub Vec<u8>);
 
 impl<'de> serde::Deserialize<'de> for ByteString {
@@ -800,5 +803,25 @@ pub mod percent_encoding2 {
 
 #[cfg(feature = "v1_21")] mod v1_21;
 #[cfg(feature = "v1_21")] pub use self::v1_21::*;
+
+#[cfg(feature = "schema")]
+pub(crate) fn int_or_string_schema(
+    _gen: &mut schemars::gen::SchemaGenerator,
+) -> schemars::schema::Schema {
+    serde_json::from_value(serde_json::json!({
+        "x-kubernetes-int-or-string": true
+    }))
+    .unwrap()
+}
+
+#[cfg(feature = "schema")]
+pub(crate) fn fields_v1_schema(
+    _gen: &mut schemars::gen::SchemaGenerator,
+) -> schemars::schema::Schema {
+    serde_json::from_value(serde_json::json!({
+        "type": "object",
+    }))
+    .unwrap()
+}
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

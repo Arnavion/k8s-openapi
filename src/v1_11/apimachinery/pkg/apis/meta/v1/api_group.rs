@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup
 
 /// APIGroup contains the name, the supported versions, and the preferred version of a group.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct APIGroup {
     /// name is the name of the group.
     pub name: String,
@@ -10,9 +13,11 @@ pub struct APIGroup {
     pub preferred_version: Option<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>,
 
     /// a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>::new"))]
     pub server_address_by_client_cidrs: Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>,
 
     /// versions are the versions supported in this group.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>::new"))]
     pub versions: Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>,
 }
 

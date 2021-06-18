@@ -3,18 +3,23 @@
 /// StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
 ///
 /// StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StorageClass {
     /// AllowVolumeExpansion shows whether the storage class allow volume expand
     pub allow_volume_expansion: Option<bool>,
 
     /// Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::TopologySelectorTerm>::new"))]
     pub allowed_topologies: Vec<crate::api::core::v1::TopologySelectorTerm>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub mount_options: Vec<String>,
 
     /// Parameters holds the parameters for the provisioner that should create volumes of this storage class.

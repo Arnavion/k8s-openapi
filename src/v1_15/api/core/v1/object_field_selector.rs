@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ObjectFieldSelector
 
 /// ObjectFieldSelector selects an APIVersioned field of an object.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ObjectFieldSelector {
     /// Version of the schema the FieldPath is written in terms of, defaults to "v1".
     pub api_version: Option<String>,

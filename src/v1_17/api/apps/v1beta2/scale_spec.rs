@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1beta2.ScaleSpec
 
 /// ScaleSpec describes the attributes of a scale subresource
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ScaleSpec {
     /// desired number of instances for the scaled object.
     pub replicas: Option<i32>,

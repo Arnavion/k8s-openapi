@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.MetricStatus
 
 /// MetricStatus describes the last-read state of a single metric.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct MetricStatus {
     /// container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
     pub container_resource: Option<crate::api::autoscaling::v2beta1::ContainerResourceMetricStatus>,

@@ -1,6 +1,9 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.DaemonSetUpdateStrategy
 
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSetUpdateStrategy {
     /// Rolling update config params. Present only if type = "RollingUpdate".
     pub rolling_update: Option<crate::api::extensions::v1beta1::RollingUpdateDaemonSet>,

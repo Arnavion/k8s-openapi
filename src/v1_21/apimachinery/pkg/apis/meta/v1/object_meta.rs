@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta
 
 /// ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ObjectMeta {
     /// Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
     pub annotations: std::collections::BTreeMap<String, String>,
@@ -23,6 +26,7 @@ pub struct ObjectMeta {
     pub deletion_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub finalizers: Vec<String>,
 
     /// GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
@@ -39,6 +43,7 @@ pub struct ObjectMeta {
     pub labels: std::collections::BTreeMap<String, String>,
 
     /// ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like "ci-cd". The set of fields is always in the version that the workflow used when modifying the object.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>::new"))]
     pub managed_fields: Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>,
 
     /// Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -50,6 +55,7 @@ pub struct ObjectMeta {
     pub namespace: Option<String>,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>::new"))]
     pub owner_references: Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>,
 
     /// An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.

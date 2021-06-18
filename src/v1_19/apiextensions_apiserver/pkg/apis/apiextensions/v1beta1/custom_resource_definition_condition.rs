@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionCondition
 
 /// CustomResourceDefinitionCondition contains details for the current condition of this pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CustomResourceDefinitionCondition {
     /// lastTransitionTime last time the condition transitioned from one status to another.
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

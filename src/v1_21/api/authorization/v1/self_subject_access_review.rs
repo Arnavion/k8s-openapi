@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authorization.v1.SelfSubjectAccessReview
 
 /// SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SelfSubjectAccessReview {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

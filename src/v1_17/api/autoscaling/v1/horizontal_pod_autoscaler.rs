@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v1.HorizontalPodAutoscaler
 
 /// configuration of a horizontal pod autoscaler.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscaler {
     /// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

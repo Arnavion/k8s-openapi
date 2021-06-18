@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authentication.v1.TokenRequestStatus
 
 /// TokenRequestStatus is the result of a token request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenRequestStatus {
     /// ExpirationTimestamp is the time of expiration of the returned token.
     pub expiration_timestamp: crate::apimachinery::pkg::apis::meta::v1::Time,

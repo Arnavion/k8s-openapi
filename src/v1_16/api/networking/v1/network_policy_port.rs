@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.networking.v1.NetworkPolicyPort
 
 /// NetworkPolicyPort describes a port to allow traffic on
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NetworkPolicyPort {
     /// The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.

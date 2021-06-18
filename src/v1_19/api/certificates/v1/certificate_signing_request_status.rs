@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.certificates.v1.CertificateSigningRequestStatus
 
 /// CertificateSigningRequestStatus contains conditions used to indicate approved/denied/failed status of the request, and the issued certificate.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequestStatus {
     /// certificate is populated with an issued certificate by the signer after an Approved condition is present. This field is set via the /status subresource. Once populated, this field is immutable.
     ///
@@ -28,6 +31,7 @@ pub struct CertificateSigningRequestStatus {
     pub certificate: Option<crate::ByteString>,
 
     /// conditions applied to the request. Known conditions are "Approved", "Denied", and "Failed".
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::certificates::v1::CertificateSigningRequestCondition>::new"))]
     pub conditions: Vec<crate::api::certificates::v1::CertificateSigningRequestCondition>,
 }
 

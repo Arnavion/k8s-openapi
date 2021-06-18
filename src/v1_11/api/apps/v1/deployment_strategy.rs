@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1.DeploymentStrategy
 
 /// DeploymentStrategy describes how to replace existing pods with new ones.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DeploymentStrategy {
     /// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     pub rolling_update: Option<crate::api::apps::v1::RollingUpdateDeployment>,

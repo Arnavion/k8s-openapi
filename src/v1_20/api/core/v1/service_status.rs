@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.ServiceStatus
 
 /// ServiceStatus represents the current status of a service.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceStatus {
     /// Current service state
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::Condition>::new"))]
     pub conditions: Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>,
 
     /// LoadBalancer contains the current status of the load-balancer, if one is present.

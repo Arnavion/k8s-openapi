@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeSpec
 
 /// NodeSpec describes the attributes that a node is created with.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeSpec {
     /// If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field
     pub config_source: Option<crate::api::core::v1::NodeConfigSource>,
@@ -13,12 +16,14 @@ pub struct NodeSpec {
     pub pod_cidr: Option<String>,
 
     /// podCIDRs represents the IP ranges assigned to the node for usage by Pods on that node. If this field is specified, the 0th entry must match the podCIDR field. It may contain at most 1 value for each of IPv4 and IPv6.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub pod_cidrs: Vec<String>,
 
     /// ID of the node assigned by the cloud provider in the format: \<ProviderName\>://\<ProviderSpecificNodeID\>
     pub provider_id: Option<String>,
 
     /// If specified, the node's taints.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Taint>::new"))]
     pub taints: Vec<crate::api::core::v1::Taint>,
 
     /// Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration

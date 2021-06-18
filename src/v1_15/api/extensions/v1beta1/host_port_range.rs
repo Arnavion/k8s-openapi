@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.HostPortRange
 
 /// HostPortRange defines a range of host ports that will be enabled by a policy for pods to use.  It requires both the start and end to be defined. Deprecated: use HostPortRange from policy API Group instead.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HostPortRange {
     /// max is the end of the range, inclusive.
     pub max: i32,

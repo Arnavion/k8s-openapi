@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.WebhookClientConfig
 
 /// WebhookClientConfig contains the information to make a TLS connection with the webhook
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WebhookClientConfig {
     /// `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
     pub ca_bundle: Option<crate::ByteString>,

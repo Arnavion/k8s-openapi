@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ObjectReference
 
 /// ObjectReference contains enough information to let you inspect or modify the referred object.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ObjectReference {
     /// API version of the referent.
     pub api_version: Option<String>,

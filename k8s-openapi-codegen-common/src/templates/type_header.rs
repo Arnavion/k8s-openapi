@@ -18,8 +18,8 @@ pub(crate) fn generate(
 
 	let derives =
 		derives
-		.map(|Derives { clone, copy, default, eq, ord, partial_eq, partial_ord }| format!(
-			"#[derive({clone}{copy}Debug{default}{eq}{ord}{partial_eq}{partial_ord})]\n",
+		.map(|Derives { clone, copy, default, eq, ord, partial_eq, partial_ord, json_schema }| format!(
+			"{use_json_schema}#[derive({clone}{copy}Debug{default}{eq}{ord}{partial_eq}{partial_ord})]\n{json_schema}\n",
 			clone = if clone { "Clone, " } else { "" },
 			copy = if copy { "Copy, " } else { "" },
 			default = if default { ", Default" } else { "" },
@@ -27,6 +27,8 @@ pub(crate) fn generate(
 			ord = if ord { ", Ord" } else { "" },
 			partial_eq = if partial_eq { ", PartialEq" } else { "" },
 			partial_ord = if partial_ord { ", PartialOrd" } else { "" },
+			json_schema = if json_schema { "#[cfg_attr(feature = \"schema\", derive(JsonSchema), schemars(rename_all = \"camelCase\"))]" } else { "" },
+            use_json_schema = if json_schema { "#[cfg(feature = \"schema\")]\nuse schemars::JsonSchema;\n" } else { "" },
 		))
 		.unwrap_or_default();
 
@@ -52,4 +54,5 @@ pub(crate) struct Derives {
 	pub(crate) ord: bool,
 	pub(crate) partial_eq: bool,
 	pub(crate) partial_ord: bool,
+	pub(crate) json_schema: bool,
 }

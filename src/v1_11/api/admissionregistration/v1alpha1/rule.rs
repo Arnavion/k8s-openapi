@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.admissionregistration.v1alpha1.Rule
 
 /// Rule is a tuple of APIGroups, APIVersion, and Resources.It is recommended to make sure that all the tuple expansions are valid.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Rule {
     /// APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub api_groups: Vec<String>,
 
     /// APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub api_versions: Vec<String>,
 
     /// Resources is a list of resources this rule applies to.
@@ -16,6 +21,7 @@ pub struct Rule {
     /// If wildcard is present, the validation rule will ensure resources do not overlap with each other.
     ///
     /// Depending on the enclosing object, subresources might not be allowed. Required.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub resources: Vec<String>,
 }
 

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.auditregistration.v1alpha1.Webhook
 
 /// Webhook holds the configuration of the webhook
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Webhook {
     /// ClientConfig holds the connection parameters for the webhook required
     pub client_config: crate::api::auditregistration::v1alpha1::WebhookClientConfig,

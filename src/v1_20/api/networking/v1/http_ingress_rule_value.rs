@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.networking.v1.HTTPIngressRuleValue
 
 /// HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example: http://\<host\>/\<path\>?\<searchpart\> -\> backend where where parts of the url correspond to RFC 3986, this resource will be used to match against everything after the last '/' and before the first '?' or '#'.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HTTPIngressRuleValue {
     /// A collection of paths that map requests to backends.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::networking::v1::HTTPIngressPath>::new"))]
     pub paths: Vec<crate::api::networking::v1::HTTPIngressPath>,
 }
 

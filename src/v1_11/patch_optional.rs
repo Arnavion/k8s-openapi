@@ -2,7 +2,10 @@
 
 /// Common parameters for all patch operations.
 #[cfg(feature = "api")]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PatchOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,

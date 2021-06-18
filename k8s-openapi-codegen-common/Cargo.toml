@@ -21,3 +21,4 @@ include = [
 [dependencies]
 http = "0.2"
 serde = { version = "1", features = ["derive", "rc"], optional = true }
+regex = "1.5"

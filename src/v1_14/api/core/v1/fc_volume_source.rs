@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.FCVolumeSource
 
 /// Represents a Fibre Channel volume. Fibre Channel volumes can only be mounted as read/write once. Fibre Channel volumes support ownership management and SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct FCVolumeSource {
     /// Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     pub fs_type: Option<String>,
@@ -13,9 +16,11 @@ pub struct FCVolumeSource {
     pub read_only: Option<bool>,
 
     /// Optional: FC target worldwide names (WWNs)
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub target_wwns: Vec<String>,
 
     /// Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub wwids: Vec<String>,
 }
 

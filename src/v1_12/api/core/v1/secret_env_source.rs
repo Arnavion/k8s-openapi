@@ -3,7 +3,10 @@
 /// SecretEnvSource selects a Secret to populate the environment variables with.
 ///
 /// The contents of the target Secret's Data field will represent the key-value pairs as environment variables.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SecretEnvSource {
     /// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
     pub name: Option<String>,

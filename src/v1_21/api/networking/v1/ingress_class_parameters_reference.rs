@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.networking.v1.IngressClassParametersReference
 
 /// IngressClassParametersReference identifies an API object. This can be used to specify a cluster or namespace-scoped resource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressClassParametersReference {
     /// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
     pub api_group: Option<String>,

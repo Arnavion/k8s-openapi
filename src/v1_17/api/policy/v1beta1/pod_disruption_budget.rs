@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.policy.v1beta1.PodDisruptionBudget
 
 /// PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodDisruptionBudget {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

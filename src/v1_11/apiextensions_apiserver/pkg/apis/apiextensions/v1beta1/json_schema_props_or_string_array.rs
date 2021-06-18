@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray
 
 /// JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub enum JSONSchemaPropsOrStringArray {
     Schema(Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
     Strings(Vec<String>),

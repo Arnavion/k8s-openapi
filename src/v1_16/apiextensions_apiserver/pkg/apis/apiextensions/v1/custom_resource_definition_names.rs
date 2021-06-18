@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinitionNames
 
 /// CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CustomResourceDefinitionNames {
     /// categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub categories: Vec<String>,
 
     /// kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom resource instances will use this value as the `kind` attribute in API calls.
@@ -16,6 +20,7 @@ pub struct CustomResourceDefinitionNames {
     pub plural: String,
 
     /// shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get \<shortname\>`. It must be all lowercase.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub short_names: Vec<String>,
 
     /// singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.

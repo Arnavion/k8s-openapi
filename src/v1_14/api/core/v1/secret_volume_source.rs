@@ -3,12 +3,16 @@
 /// Adapts a Secret into a volume.
 ///
 /// The contents of the target Secret's Data field will be presented in a volume as files using the keys in the Data field as the file names. Secret volumes support ownership management and SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SecretVolumeSource {
     /// Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     pub default_mode: Option<i32>,
 
     /// If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::KeyToPath>::new"))]
     pub items: Vec<crate::api::core::v1::KeyToPath>,
 
     /// Specify whether the Secret or it's keys must be defined

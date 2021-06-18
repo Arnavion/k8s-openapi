@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PodSpec
 
 /// PodSpec is a description of a pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodSpec {
     /// Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
     pub active_deadline_seconds: Option<i64>,
@@ -13,6 +16,7 @@ pub struct PodSpec {
     pub automount_service_account_token: Option<bool>,
 
     /// List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Container>::new"))]
     pub containers: Vec<crate::api::core::v1::Container>,
 
     /// Specifies the DNS parameters of a pod. Parameters specified here will be merged to the generated DNS configuration based on DNSPolicy.
@@ -25,6 +29,7 @@ pub struct PodSpec {
     pub enable_service_links: Option<bool>,
 
     /// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::HostAlias>::new"))]
     pub host_aliases: Vec<crate::api::core::v1::HostAlias>,
 
     /// Use the host's ipc namespace. Optional: Default to false.
@@ -40,9 +45,11 @@ pub struct PodSpec {
     pub hostname: Option<String>,
 
     /// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::LocalObjectReference>::new"))]
     pub image_pull_secrets: Vec<crate::api::core::v1::LocalObjectReference>,
 
     /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Container>::new"))]
     pub init_containers: Vec<crate::api::core::v1::Container>,
 
     /// NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
@@ -58,6 +65,7 @@ pub struct PodSpec {
     pub priority_class_name: Option<String>,
 
     /// If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://github.com/kubernetes/community/blob/master/keps/sig-network/0007-pod-ready%2B%2B.md
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::PodReadinessGate>::new"))]
     pub readiness_gates: Vec<crate::api::core::v1::PodReadinessGate>,
 
     /// Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
@@ -88,9 +96,11 @@ pub struct PodSpec {
     pub termination_grace_period_seconds: Option<i64>,
 
     /// If specified, the pod's tolerations.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Toleration>::new"))]
     pub tolerations: Vec<crate::api::core::v1::Toleration>,
 
     /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Volume>::new"))]
     pub volumes: Vec<crate::api::core::v1::Volume>,
 }
 

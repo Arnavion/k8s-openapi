@@ -1,12 +1,17 @@
 // Generated from definition io.k8s.api.core.v1.NodeSelectorTerm
 
 /// A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeSelectorTerm {
     /// A list of node selector requirements by node's labels.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NodeSelectorRequirement>::new"))]
     pub match_expressions: Vec<crate::api::core::v1::NodeSelectorRequirement>,
 
     /// A list of node selector requirements by node's fields.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NodeSelectorRequirement>::new"))]
     pub match_fields: Vec<crate::api::core::v1::NodeSelectorRequirement>,
 }
 

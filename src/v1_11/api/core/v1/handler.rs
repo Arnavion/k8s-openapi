@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Handler
 
 /// Handler defines a specific action that should be taken
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Handler {
     /// One and only one of the following should be specified. Exec specifies the action to take.
     pub exec: Option<crate::api::core::v1::ExecAction>,

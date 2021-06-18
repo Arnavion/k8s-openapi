@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.authentication.v1.TokenRequestSpec
 
 /// TokenRequestSpec contains client provided parameters of a token request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenRequestSpec {
     /// Audiences are the intendend audiences of the token. A recipient of a token must identitfy themself with an identifier in the list of audiences of the token, and otherwise should reject the token. A token issued for multiple audiences may be used to authenticate against any of the audiences listed but implies a high degree of trust between the target audiences.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub audiences: Vec<String>,
 
     /// BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.

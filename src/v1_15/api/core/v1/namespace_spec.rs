@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.NamespaceSpec
 
 /// NamespaceSpec describes the attributes on a Namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NamespaceSpec {
     /// Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub finalizers: Vec<String>,
 }
 

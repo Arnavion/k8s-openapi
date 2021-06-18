@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.flowcontrol.v1beta1.PriorityLevelConfigurationStatus
 
 /// PriorityLevelConfigurationStatus represents the current state of a "request-priority".
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PriorityLevelConfigurationStatus {
     /// `conditions` is the current state of "request-priority".
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationCondition>::new"))]
     pub conditions: Vec<crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationCondition>,
 }
 

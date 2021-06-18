@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps
 
 /// JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct JSONSchemaProps {
     pub ref_path: Option<String>,
 
@@ -11,8 +14,10 @@ pub struct JSONSchemaProps {
 
     pub additional_properties: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub all_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub any_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
     /// default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. CustomResourceDefinitions with defaults must be created using the v1 (or newer) CustomResourceDefinition API.
@@ -24,6 +29,7 @@ pub struct JSONSchemaProps {
 
     pub description: Option<String>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>::new"))]
     pub enum_: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
     pub example: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
@@ -65,6 +71,7 @@ pub struct JSONSchemaProps {
 
     pub nullable: Option<bool>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub one_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
     pub pattern: Option<String>,
@@ -73,6 +80,7 @@ pub struct JSONSchemaProps {
 
     pub properties: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub required: Vec<String>,
 
     pub title: Option<String>,
@@ -101,6 +109,7 @@ pub struct JSONSchemaProps {
     /// This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to "map". Also, the values specified for this attribute must be a scalar typed field of the child structure (no nesting is supported).
     ///
     /// The properties specified must either be required or have a default value, to ensure those properties are present for all list items.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub x_kubernetes_list_map_keys: Vec<String>,
 
     /// x-kubernetes-list-type annotates an array to further describe its topology. This extension must only be used on lists and may have 3 possible values:

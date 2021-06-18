@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta
 
 /// ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ObjectMeta {
     /// Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
     pub annotations: std::collections::BTreeMap<String, String>,
@@ -23,6 +26,7 @@ pub struct ObjectMeta {
     pub deletion_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub finalizers: Vec<String>,
 
     /// GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
@@ -52,6 +56,7 @@ pub struct ObjectMeta {
     pub namespace: Option<String>,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>::new"))]
     pub owner_references: Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>,
 
     /// An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.

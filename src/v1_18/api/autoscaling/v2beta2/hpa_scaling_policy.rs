@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.HPAScalingPolicy
 
 /// HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HPAScalingPolicy {
     /// PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
     pub period_seconds: i32,

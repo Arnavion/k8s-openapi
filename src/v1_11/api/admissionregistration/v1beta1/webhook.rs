@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.Webhook
 
 /// Webhook describes an admission webhook and the resources and operations it applies to.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Webhook {
     /// ClientConfig defines how to communicate with the hook. Required
     pub client_config: crate::api::admissionregistration::v1beta1::WebhookClientConfig,
@@ -46,6 +49,7 @@ pub struct Webhook {
     pub namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::admissionregistration::v1beta1::RuleWithOperations>::new"))]
     pub rules: Vec<crate::api::admissionregistration::v1beta1::RuleWithOperations>,
 }
 

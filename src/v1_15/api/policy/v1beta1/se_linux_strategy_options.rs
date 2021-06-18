@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.policy.v1beta1.SELinuxStrategyOptions
 
 /// SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SELinuxStrategyOptions {
     /// rule is the strategy that will dictate the allowable labels that may be set.
     pub rule: String,

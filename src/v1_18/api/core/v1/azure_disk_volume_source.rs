@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.AzureDiskVolumeSource
 
 /// AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AzureDiskVolumeSource {
     /// Host Caching mode: None, Read Only, Read Write.
     pub caching_mode: Option<String>,

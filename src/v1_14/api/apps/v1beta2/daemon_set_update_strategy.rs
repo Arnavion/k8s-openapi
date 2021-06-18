@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1beta2.DaemonSetUpdateStrategy
 
 /// DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSetUpdateStrategy {
     /// Rolling update config params. Present only if type = "RollingUpdate".
     pub rolling_update: Option<crate::api::apps::v1beta2::RollingUpdateDaemonSet>,

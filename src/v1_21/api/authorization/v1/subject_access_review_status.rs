@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authorization.v1.SubjectAccessReviewStatus
 
 /// SubjectAccessReviewStatus
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SubjectAccessReviewStatus {
     /// Allowed is required. True if the action would be allowed, false otherwise.
     pub allowed: bool,

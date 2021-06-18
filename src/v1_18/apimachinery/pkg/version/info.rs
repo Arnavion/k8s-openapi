@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.version.Info
 
 /// Info contains versioning information. how we'll want to distribute that information.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Info {
     pub build_date: String,
 

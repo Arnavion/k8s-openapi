@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Pod
 
 /// Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Pod {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.WeightedPodAffinityTerm
 
 /// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WeightedPodAffinityTerm {
     /// Required. A pod affinity term, associated with the corresponding weight.
     pub pod_affinity_term: crate::api::core::v1::PodAffinityTerm,

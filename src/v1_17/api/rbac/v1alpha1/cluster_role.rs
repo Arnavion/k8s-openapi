@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.rbac.v1alpha1.ClusterRole
 
 /// ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ClusterRole {
     /// AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
     pub aggregation_rule: Option<crate::api::rbac::v1alpha1::AggregationRule>,
@@ -10,6 +13,7 @@ pub struct ClusterRole {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this ClusterRole
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::rbac::v1alpha1::PolicyRule>::new"))]
     pub rules: Vec<crate::api::rbac::v1alpha1::PolicyRule>,
 }
 

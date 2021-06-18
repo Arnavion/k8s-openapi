@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.IngressBackend
 
 /// IngressBackend describes all endpoints for a given service and port.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressBackend {
     /// Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified.
     pub resource: Option<crate::api::core::v1::TypedLocalObjectReference>,
@@ -10,6 +13,7 @@ pub struct IngressBackend {
     pub service_name: Option<String>,
 
     /// Specifies the port of the referenced service.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub service_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 }
 

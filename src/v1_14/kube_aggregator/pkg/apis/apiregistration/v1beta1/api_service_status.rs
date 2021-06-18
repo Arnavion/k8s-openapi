@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceStatus
 
 /// APIServiceStatus contains derived information about an API server
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct APIServiceStatus {
     /// Current service state of apiService.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceCondition>::new"))]
     pub conditions: Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceCondition>,
 }
 

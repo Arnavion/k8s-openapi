@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequestSpec
 
 /// This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequestSpec {
     /// Extra information about the requesting user. See user.Info interface for details.
     pub extra: std::collections::BTreeMap<String, Vec<String>>,
 
     /// Group information about the requesting user. See user.Info interface for details.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub groups: Vec<String>,
 
     /// Base64-encoded PKCS#10 CSR data
@@ -17,6 +21,7 @@ pub struct CertificateSigningRequestSpec {
 
     /// allowedUsages specifies a set of usage contexts the key will be valid for. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3
     ///      https://tools.ietf.org/html/rfc5280#section-4.2.1.12
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub usages: Vec<String>,
 
     /// Information about the requesting user. See user.Info interface for details.

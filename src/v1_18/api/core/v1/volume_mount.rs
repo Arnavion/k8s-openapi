@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.VolumeMount
 
 /// VolumeMount describes a mounting of a Volume within a container.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeMount {
     /// Path within the container at which the volume should be mounted.  Must not contain ':'.
     pub mount_path: String,

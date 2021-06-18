@@ -23,6 +23,34 @@ pub(crate) fn generate(
 				}
 			}
 
+			{
+				if field_type_name.contains("IntOrString") {
+					writeln!(
+						&mut fields,
+						"    #[cfg_attr(feature = \"schema\", schemars(schema_with = \"crate::int_or_string_schema\"))]",
+					)?;
+				}
+
+				if field_type_name.contains("FieldsV1") {
+					writeln!(
+						&mut fields,
+						"    #[cfg_attr(feature = \"schema\", schemars(schema_with = \"crate::fields_v1_schema\"))]",
+					)?;
+				}
+
+				if !type_name.contains("List") {
+					let re = regex::Regex::new(r"^Vec<(?P<type_name>.+)>$").unwrap();
+					if let Some(matches) = re.captures(field_type_name) {
+						let type_name = &matches["type_name"];
+						writeln!(
+							&mut fields,
+							"    #[cfg_attr(feature = \"schema\", schemars(default = \"Vec::<{type_name}>::new\"))]",
+							type_name = type_name
+						)?;
+					}
+				}
+			}
+
 			writeln!(&mut fields,
 				"    {vis}{field_name}: {field_type_name},",
 				vis = vis,

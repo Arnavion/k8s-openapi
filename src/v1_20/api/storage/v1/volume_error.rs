@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.storage.v1.VolumeError
 
 /// VolumeError captures an error encountered during a volume operation.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeError {
     /// String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.
     pub message: Option<String>,

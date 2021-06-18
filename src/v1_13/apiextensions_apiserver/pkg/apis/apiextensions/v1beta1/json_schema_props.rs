@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps
 
 /// JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct JSONSchemaProps {
     pub ref_path: Option<String>,
 
@@ -11,8 +14,10 @@ pub struct JSONSchemaProps {
 
     pub additional_properties: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub all_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub any_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
     pub default: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
@@ -23,6 +28,7 @@ pub struct JSONSchemaProps {
 
     pub description: Option<String>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>::new"))]
     pub enum_: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
     pub example: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
@@ -59,6 +65,7 @@ pub struct JSONSchemaProps {
 
     pub not: Option<Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>::new"))]
     pub one_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
     pub pattern: Option<String>,
@@ -67,6 +74,7 @@ pub struct JSONSchemaProps {
 
     pub properties: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
 
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub required: Vec<String>,
 
     pub title: Option<String>,

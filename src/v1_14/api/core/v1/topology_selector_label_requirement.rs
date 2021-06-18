@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.core.v1.TopologySelectorLabelRequirement
 
 /// A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TopologySelectorLabelRequirement {
     /// The label key that the selector applies to.
     pub key: String,
 
     /// An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub values: Vec<String>,
 }
 

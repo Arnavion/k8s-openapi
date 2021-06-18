@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Sysctl
 
 /// Sysctl defines a kernel parameter to be set
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Sysctl {
     /// Name of a property to set
     pub name: String,

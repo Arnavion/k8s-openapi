@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.AzureFilePersistentVolumeSource
 
 /// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AzureFilePersistentVolumeSource {
     /// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,

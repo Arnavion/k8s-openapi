@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.WebhookConversion
 
 /// WebhookConversion describes how to call a conversion webhook
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WebhookConversion {
     /// clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
     pub client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig>,
 
     /// conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub conversion_review_versions: Vec<String>,
 }
 

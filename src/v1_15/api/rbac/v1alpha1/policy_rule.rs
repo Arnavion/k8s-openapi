@@ -1,21 +1,29 @@
 // Generated from definition io.k8s.api.rbac.v1alpha1.PolicyRule
 
 /// PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PolicyRule {
     /// APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub api_groups: Vec<String>,
 
     /// NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path This name is intentionally different than the internal type so that the DefaultConvert works nicely and because the ordering may be different. Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub non_resource_urls: Vec<String>,
 
     /// ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub resource_names: Vec<String>,
 
     /// Resources is a list of resources this rule applies to.  ResourceAll represents all resources.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub resources: Vec<String>,
 
     /// Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.  VerbAll represents all kinds.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub verbs: Vec<String>,
 }
 

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.policy.v1beta1.FSGroupStrategyOptions
 
 /// FSGroupStrategyOptions defines the strategy type and options used to create the strategy.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct FSGroupStrategyOptions {
     /// ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::policy::v1beta1::IDRange>::new"))]
     pub ranges: Vec<crate::api::policy::v1beta1::IDRange>,
 
     /// rule is the strategy that will dictate what FSGroup is used in the SecurityContext.

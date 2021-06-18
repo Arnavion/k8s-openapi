@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.discovery.v1alpha1.Endpoint
 
 /// Endpoint represents a single logical "backend" implementing a service.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Endpoint {
     /// addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. This allows for cases like dual-stack (IPv4 and IPv6) networking. Consumers (e.g. kube-proxy) must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub addresses: Vec<String>,
 
     /// conditions contains information about the current status of the endpoint.

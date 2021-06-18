@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apiserverinternal.v1alpha1.StorageVersionSpec
 
 /// StorageVersionSpec is an empty spec.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StorageVersionSpec(pub crate::serde_json::Value);
 
 impl<'de> crate::serde::Deserialize<'de> for StorageVersionSpec {

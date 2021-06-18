@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EnvVarSource
 
 /// EnvVarSource represents a source for the value of an EnvVar.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
     pub config_map_key_ref: Option<crate::api::core::v1::ConfigMapKeySelector>,

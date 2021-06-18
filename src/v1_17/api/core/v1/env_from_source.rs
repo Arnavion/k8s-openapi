@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EnvFromSource
 
 /// EnvFromSource represents the source of a set of ConfigMaps
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EnvFromSource {
     /// The ConfigMap to select from
     pub config_map_ref: Option<crate::api::core::v1::ConfigMapEnvSource>,

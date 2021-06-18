@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EphemeralVolumeSource
 
 /// Represents an ephemeral volume that is handled by a normal storage driver.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EphemeralVolumeSource {
     /// Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `\<pod name\>-\<volume name\>` where `\<volume name\>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long).
     ///

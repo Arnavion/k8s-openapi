@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.SessionAffinityConfig
 
 /// SessionAffinityConfig represents the configurations of session affinity.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SessionAffinityConfig {
     /// clientIP contains the configurations of Client IP based session affinity.
     pub client_ip: Option<crate::api::core::v1::ClientIPConfig>,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.batch.v1.CronJobSpec
 
 /// CronJobSpec describes how the job execution will look like and when it will actually run.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CronJobSpec {
     /// Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow" (default): allows CronJobs to run concurrently; - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running job and replaces it with a new one
     pub concurrency_policy: Option<String>,

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.admissionregistration.v1.ValidatingWebhook
 
 /// ValidatingWebhook describes an admission webhook and the resources and operations it applies to.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ValidatingWebhook {
     /// AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub admission_review_versions: Vec<String>,
 
     /// ClientConfig defines how to communicate with the hook. Required
@@ -61,6 +65,7 @@ pub struct ValidatingWebhook {
     pub object_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::admissionregistration::v1::RuleWithOperations>::new"))]
     pub rules: Vec<crate::api::admissionregistration::v1::RuleWithOperations>,
 
     /// SideEffects states whether this webhook has side effects. Acceptable values are: None, NoneOnDryRun (webhooks created via v1beta1 may also specify Some or Unknown). Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some.

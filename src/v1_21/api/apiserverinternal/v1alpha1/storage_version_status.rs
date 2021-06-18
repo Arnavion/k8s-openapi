@@ -1,15 +1,20 @@
 // Generated from definition io.k8s.api.apiserverinternal.v1alpha1.StorageVersionStatus
 
 /// API server instances report the versions they can decode and the version they encode objects to when persisting objects in the backend.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StorageVersionStatus {
     /// If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
     pub common_encoding_version: Option<String>,
 
     /// The latest available observations of the storageVersion's state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>::new"))]
     pub conditions: Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>,
 
     /// The reported versions per API server instance.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>::new"))]
     pub storage_versions: Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>,
 }
 

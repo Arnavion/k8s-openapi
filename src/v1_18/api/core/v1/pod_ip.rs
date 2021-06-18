@@ -2,7 +2,10 @@
 
 /// IP address information for entries in the (plural) PodIPs field. Each entry includes:
 ///    IP: An IP address allocated to the pod. Routable at least within the cluster.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodIP {
     /// ip is an IP address (IPv4 or IPv6) assigned to the pod
     pub ip: Option<String>,

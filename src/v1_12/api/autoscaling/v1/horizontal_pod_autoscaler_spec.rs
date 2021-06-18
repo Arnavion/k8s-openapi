@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v1.HorizontalPodAutoscalerSpec
 
 /// specification of a horizontal pod autoscaler.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerSpec {
     /// upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
     pub max_replicas: i32,

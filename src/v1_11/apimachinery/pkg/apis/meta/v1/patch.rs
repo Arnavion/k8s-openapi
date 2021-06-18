@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.Patch
 
 /// Patch is provided to give a concrete name and type to the Kubernetes PATCH request body.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub enum Patch {
     Json(Vec<crate::serde_json::Value>),
     Merge(crate::serde_json::Value),

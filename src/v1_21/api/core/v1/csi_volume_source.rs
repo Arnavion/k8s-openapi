@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.CSIVolumeSource
 
 /// Represents a source location of a volume to mount, managed by an external CSI driver
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CSIVolumeSource {
     /// Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
     pub driver: String,

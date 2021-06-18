@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeClaimTemplate
 
 /// PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeClaimTemplate {
     /// May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
     pub metadata: Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>,

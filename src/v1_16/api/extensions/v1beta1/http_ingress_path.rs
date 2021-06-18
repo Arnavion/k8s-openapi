@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.HTTPIngressPath
 
 /// HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are forwarded to the backend.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HTTPIngressPath {
     /// Backend defines the referenced service endpoint to which the traffic will be forwarded to.
     pub backend: crate::api::extensions::v1beta1::IngressBackend,

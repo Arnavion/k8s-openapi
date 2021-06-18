@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.SELinuxOptions
 
 /// SELinuxOptions are the labels to be applied to the container
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SELinuxOptions {
     /// Level is SELinux level label that applies to the container.
     pub level: Option<String>,

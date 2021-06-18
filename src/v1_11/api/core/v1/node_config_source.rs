@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeConfigSource
 
 /// NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeConfigSource {
     /// ConfigMap is a reference to a Node's ConfigMap
     pub config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource>,

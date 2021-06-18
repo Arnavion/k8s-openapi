@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PodReadinessGate
 
 /// PodReadinessGate contains the reference to a pod condition
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodReadinessGate {
     /// ConditionType refers to a condition in the pod's condition list with matching type.
     pub condition_type: String,

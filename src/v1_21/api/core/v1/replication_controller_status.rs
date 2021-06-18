@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.core.v1.ReplicationControllerStatus
 
 /// ReplicationControllerStatus represents the current status of a replication controller.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ReplicationControllerStatus {
     /// The number of available replicas (ready for at least minReadySeconds) for this replication controller.
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replication controller's current state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ReplicationControllerCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::ReplicationControllerCondition>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replication controller.

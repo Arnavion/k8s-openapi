@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.authentication.v1.TokenReviewStatus
 
 /// TokenReviewStatus is the result of the token authentication request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenReviewStatus {
     /// Audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "true", the token is valid against the audience of the Kubernetes API server.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub audiences: Vec<String>,
 
     /// Authenticated indicates that the token was associated with a known user.

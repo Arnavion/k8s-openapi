@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.settings.v1alpha1.PodPreset
 
 /// PodPreset is a policy resource that defines additional runtime requirements for a Pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodPreset {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

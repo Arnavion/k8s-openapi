@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.PriorityLevelConfigurationCondition
 
 /// PriorityLevelConfigurationCondition defines the condition of priority level.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PriorityLevelConfigurationCondition {
     /// `lastTransitionTime` is the last time the condition transitioned from one status to another.
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.authentication.v1.UserInfo
 
 /// UserInfo holds the information about the user needed to implement the user.Info interface.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct UserInfo {
     /// Any additional information provided by the authenticator.
     pub extra: std::collections::BTreeMap<String, Vec<String>>,
 
     /// The names of groups this user is a part of.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub groups: Vec<String>,
 
     /// A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.DaemonSetSpec
 
 /// DaemonSetSpec is the specification of a daemon set.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSetSpec {
     /// The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
     pub min_ready_seconds: Option<i32>,

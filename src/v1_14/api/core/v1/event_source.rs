@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EventSource
 
 /// EventSource contains information for an event.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EventSource {
     /// Component from which the event is generated.
     pub component: Option<String>,

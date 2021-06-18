@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1beta1.UserSubject
 
 /// UserSubject holds detailed information for user-kind subject.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct UserSubject {
     /// `name` is the username that matches, or "*" to match all usernames. Required.
     pub name: String,

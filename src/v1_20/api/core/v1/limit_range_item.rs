@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.LimitRangeItem
 
 /// LimitRangeItem defines a min/max usage limit for any resource that matches on kind.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LimitRangeItem {
     /// Default resource requirement limit value by resource name if resource limit is omitted.
     pub default: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,

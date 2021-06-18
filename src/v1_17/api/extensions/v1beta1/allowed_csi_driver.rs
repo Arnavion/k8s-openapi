@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.AllowedCSIDriver
 
 /// AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AllowedCSIDriver {
     /// Name is the registered name of the CSI driver
     pub name: String,

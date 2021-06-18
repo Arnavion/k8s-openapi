@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.networking.v1.IngressServiceBackend
 
 /// IngressServiceBackend references a Kubernetes Service as a Backend.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressServiceBackend {
     /// Name is the referenced service. The service must exist in the same namespace as the Ingress object.
     pub name: String,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.PriorityLevelConfigurationSpec
 
 /// PriorityLevelConfigurationSpec specifies the configuration of a priority level.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PriorityLevelConfigurationSpec {
     /// `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
     pub limited: Option<crate::api::flowcontrol::v1alpha1::LimitedPriorityLevelConfiguration>,

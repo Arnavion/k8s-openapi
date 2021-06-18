@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.apps.v1.ReplicaSetStatus
 
 /// ReplicaSetStatus represents the current status of a ReplicaSet.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ReplicaSetStatus {
     /// The number of available replicas (ready for at least minReadySeconds) for this replica set.
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replica set's current state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::apps::v1::ReplicaSetCondition>::new"))]
     pub conditions: Vec<crate::api::apps::v1::ReplicaSetCondition>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replicaset.

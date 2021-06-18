@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.discovery.v1beta1.EndpointPort
 
 /// EndpointPort represents a Port used by an EndpointSlice
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointPort {
     /// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol.
     pub app_protocol: Option<String>,

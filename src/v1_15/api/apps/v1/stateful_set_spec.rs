@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1.StatefulSetSpec
 
 /// A StatefulSetSpec is the specification of a StatefulSet.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StatefulSetSpec {
     /// podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.
     pub pod_management_policy: Option<String>,
@@ -25,6 +28,7 @@ pub struct StatefulSetSpec {
     pub update_strategy: Option<crate::api::apps::v1::StatefulSetUpdateStrategy>,
 
     /// volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::PersistentVolumeClaim>::new"))]
     pub volume_claim_templates: Vec<crate::api::core::v1::PersistentVolumeClaim>,
 }
 

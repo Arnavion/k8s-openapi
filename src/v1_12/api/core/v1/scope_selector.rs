@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.ScopeSelector
 
 /// A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ScopeSelector {
     /// A list of scope selector requirements by scope of the resources.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ScopedResourceSelectorRequirement>::new"))]
     pub match_expressions: Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>,
 }
 

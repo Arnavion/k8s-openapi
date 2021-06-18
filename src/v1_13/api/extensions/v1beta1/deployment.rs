@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.Deployment
 
 /// DEPRECATED - This group version of Deployment is deprecated by apps/v1beta2/Deployment. See the release notes for more information. Deployment enables declarative updates for Pods and ReplicaSets.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Deployment {
     /// Standard object metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

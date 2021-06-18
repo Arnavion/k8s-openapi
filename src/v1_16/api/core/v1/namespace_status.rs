@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.NamespaceStatus
 
 /// NamespaceStatus is information about the current status of a Namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NamespaceStatus {
     /// Represents the latest available observations of a namespace's current state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::NamespaceCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::NamespaceCondition>,
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/

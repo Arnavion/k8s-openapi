@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NamespaceCondition
 
 /// NamespaceCondition contains details about state of namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NamespaceCondition {
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 

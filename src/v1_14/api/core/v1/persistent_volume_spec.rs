@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeSpec
 
 /// PersistentVolumeSpec is the specification of a persistent volume.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeSpec {
     /// AccessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub access_modes: Vec<String>,
 
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
@@ -55,6 +59,7 @@ pub struct PersistentVolumeSpec {
     pub local: Option<crate::api::core::v1::LocalVolumeSource>,
 
     /// A list of mount options, e.g. \["ro", "soft"\]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub mount_options: Vec<String>,
 
     /// NFS represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs

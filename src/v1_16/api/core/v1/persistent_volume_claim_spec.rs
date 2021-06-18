@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeClaimSpec
 
 /// PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeClaimSpec {
     /// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub access_modes: Vec<String>,
 
     /// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.

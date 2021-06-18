@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.HostPathVolumeSource
 
 /// Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HostPathVolumeSource {
     /// Path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
     pub path: String,

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.IPBlock
 
 /// DEPRECATED 1.9 - This group version of IPBlock is deprecated by networking/v1/IPBlock. IPBlock describes a particular CIDR (Ex. "192.168.1.1/24") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IPBlock {
     /// CIDR is a string representing the IP Block Valid examples are "192.168.1.1/24"
     pub cidr: String,
 
     /// Except is a slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" Except values will be rejected if they are outside the CIDR range
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub except: Vec<String>,
 }
 

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.admissionregistration.v1alpha1.InitializerConfiguration
 
 /// InitializerConfiguration describes the configuration of initializers.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct InitializerConfiguration {
     /// Initializers is a list of resources and their default initializers Order-sensitive. When merging multiple InitializerConfigurations, we sort the initializers from different InitializerConfigurations by the name of the InitializerConfigurations; the order of the initializers from the same InitializerConfiguration is preserved.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::admissionregistration::v1alpha1::Initializer>::new"))]
     pub initializers: Vec<crate::api::admissionregistration::v1alpha1::Initializer>,
 
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.

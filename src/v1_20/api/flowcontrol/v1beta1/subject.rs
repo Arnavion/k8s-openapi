@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1beta1.Subject
 
 /// Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Subject {
     pub group: Option<crate::api::flowcontrol::v1beta1::GroupSubject>,
 

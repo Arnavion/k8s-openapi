@@ -1,15 +1,20 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeClaimStatus
 
 /// PersistentVolumeClaimStatus is the current status of a persistent volume claim.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeClaimStatus {
     /// AccessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub access_modes: Vec<String>,
 
     /// Represents the actual resources of the underlying volume.
     pub capacity: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
 
     /// Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::PersistentVolumeClaimCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::PersistentVolumeClaimCondition>,
 
     /// Phase represents the current phase of PersistentVolumeClaim.

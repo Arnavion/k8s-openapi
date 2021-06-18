@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.rbac.v1.RoleRef
 
 /// RoleRef contains information that points to the role being used
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct RoleRef {
     /// APIGroup is the group for the resource being referenced
     pub api_group: String,

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.core.v1.TCPSocketAction
 
 /// TCPSocketAction describes an action based on opening a socket
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TCPSocketAction {
     /// Optional: Host name to connect to, defaults to the pod IP.
     pub host: Option<String>,
 
     /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
 }
 

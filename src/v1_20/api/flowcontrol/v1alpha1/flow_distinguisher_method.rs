@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.FlowDistinguisherMethod
 
 /// FlowDistinguisherMethod specifies the method of a flow distinguisher.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct FlowDistinguisherMethod {
     /// `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     pub type_: String,

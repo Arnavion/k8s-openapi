@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v1.ScaleStatus
 
 /// ScaleStatus represents the current status of a scale subresource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ScaleStatus {
     /// actual number of observed instances of the scaled object.
     pub replicas: i32,

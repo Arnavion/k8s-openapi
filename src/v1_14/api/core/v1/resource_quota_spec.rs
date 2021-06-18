@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ResourceQuotaSpec
 
 /// ResourceQuotaSpec defines the desired hard limits to enforce for Quota.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ResourceQuotaSpec {
     /// hard is the set of desired hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
     pub hard: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
@@ -10,6 +13,7 @@ pub struct ResourceQuotaSpec {
     pub scope_selector: Option<crate::api::core::v1::ScopeSelector>,
 
     /// A collection of filters that must match each object tracked by a quota. If not specified, the quota matches all objects.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub scopes: Vec<String>,
 }
 

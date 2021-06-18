@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.PriorityLevelConfigurationReference
 
 /// PriorityLevelConfigurationReference contains information that points to the "request-priority" being used.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PriorityLevelConfigurationReference {
     /// `name` is the name of the priority level configuration being referenced Required.
     pub name: String,

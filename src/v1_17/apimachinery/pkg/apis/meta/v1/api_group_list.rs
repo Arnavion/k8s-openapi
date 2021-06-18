@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.APIGroupList
 
 /// APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct APIGroupList {
     /// groups is a list of APIGroup.
     pub groups: Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>,

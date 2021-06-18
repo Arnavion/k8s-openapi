@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ResourceRequirements
 
 /// ResourceRequirements describes the compute resource requirements.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ResourceRequirements {
     /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     pub limits: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,

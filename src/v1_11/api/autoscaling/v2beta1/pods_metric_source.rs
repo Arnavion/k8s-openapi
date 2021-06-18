@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.PodsMetricSource
 
 /// PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodsMetricSource {
     /// metricName is the name of the metric in question
     pub metric_name: String,

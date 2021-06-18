@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.ContainerImage
 
 /// Describe a container image
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ContainerImage {
     /// Names by which this image is known. e.g. \["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"\]
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub names: Vec<String>,
 
     /// The size of the image in bytes.

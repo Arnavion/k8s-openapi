@@ -1,18 +1,23 @@
 // Generated from definition io.k8s.api.discovery.v1alpha1.EndpointSlice
 
 /// EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointSlice {
     /// addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. Default is IP
     pub address_type: Option<String>,
 
     /// endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::discovery::v1alpha1::Endpoint>::new"))]
     pub endpoints: Vec<crate::api::discovery::v1alpha1::Endpoint>,
 
     /// Standard object's metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::discovery::v1alpha1::EndpointPort>::new"))]
     pub ports: Vec<crate::api::discovery::v1alpha1::EndpointPort>,
 }
 

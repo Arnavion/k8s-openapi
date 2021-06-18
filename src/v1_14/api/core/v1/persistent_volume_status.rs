@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeStatus
 
 /// PersistentVolumeStatus is the current status of a persistent volume.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeStatus {
     /// A human-readable message indicating details about why the volume is in this state.
     pub message: Option<String>,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.FlowSchemaSpec
 
 /// FlowSchemaSpec describes how the FlowSchema's specification looks like.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct FlowSchemaSpec {
     /// `distinguisherMethod` defines how to compute the flow distinguisher for requests that match this schema. `nil` specifies that the distinguisher is disabled and thus will always be the empty string.
     pub distinguisher_method: Option<crate::api::flowcontrol::v1alpha1::FlowDistinguisherMethod>,
@@ -13,6 +16,7 @@ pub struct FlowSchemaSpec {
     pub priority_level_configuration: crate::api::flowcontrol::v1alpha1::PriorityLevelConfigurationReference,
 
     /// `rules` describes which requests will match this flow schema. This FlowSchema matches a request if and only if at least one member of rules matches the request. if it is an empty slice, there will be no requests matching the FlowSchema.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::flowcontrol::v1alpha1::PolicyRulesWithSubjects>::new"))]
     pub rules: Vec<crate::api::flowcontrol::v1alpha1::PolicyRulesWithSubjects>,
 }
 

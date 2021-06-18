@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EphemeralVolumeSource
 
 /// Represents an ephemeral volume that is handled by a normal storage driver.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EphemeralVolumeSource {
     /// Specifies a read-only configuration for the volume. Defaults to false (read/write).
     pub read_only: Option<bool>,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.batch.v1.JobCondition
 
 /// JobCondition describes current state of a job.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct JobCondition {
     /// Last time the condition was checked.
     pub last_probe_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

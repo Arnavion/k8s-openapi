@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.VolumeProjection
 
 /// Projection that may be projected along with other supported volume types
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeProjection {
     /// information about the configMap data to project
     pub config_map: Option<crate::api::core::v1::ConfigMapProjection>,

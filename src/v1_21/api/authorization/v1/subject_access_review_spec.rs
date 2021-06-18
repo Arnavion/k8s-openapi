@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.authorization.v1.SubjectAccessReviewSpec
 
 /// SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SubjectAccessReviewSpec {
     /// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     pub extra: std::collections::BTreeMap<String, Vec<String>>,
 
     /// Groups is the groups you're testing for.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub groups: Vec<String>,
 
     /// NonResourceAttributes describes information for a non-resource access request

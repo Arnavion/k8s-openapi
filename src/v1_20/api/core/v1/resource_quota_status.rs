@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ResourceQuotaStatus
 
 /// ResourceQuotaStatus defines the enforced hard limits and observed use.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ResourceQuotaStatus {
     /// Hard is the set of enforced hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
     pub hard: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,

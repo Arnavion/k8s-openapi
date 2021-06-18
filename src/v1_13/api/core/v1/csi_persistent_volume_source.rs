@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.CSIPersistentVolumeSource
 
 /// Represents storage that is managed by an external CSI volume driver (Beta feature)
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CSIPersistentVolumeSource {
     /// ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     pub controller_publish_secret_ref: Option<crate::api::core::v1::SecretReference>,

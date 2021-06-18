@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.networking.v1.ServiceBackendPort
 
 /// ServiceBackendPort is the service port being referenced.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceBackendPort {
     /// Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
     pub name: Option<String>,

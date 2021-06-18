@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.auditregistration.v1alpha1.WebhookThrottleConfig
 
 /// WebhookThrottleConfig holds the configuration for throttling events
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WebhookThrottleConfig {
     /// ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
     pub burst: Option<i64>,

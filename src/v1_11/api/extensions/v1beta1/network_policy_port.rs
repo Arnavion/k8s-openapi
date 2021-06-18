@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyPort
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicyPort is deprecated by networking/v1/NetworkPolicyPort.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NetworkPolicyPort {
     /// If specified, the port on the given protocol.  This can either be a numerical or named port on a pod.  If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
+    #[cfg_attr(feature = "schema", schemars(schema_with = "crate::int_or_string_schema"))]
     pub port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// Optional.  The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.flowcontrol.v1beta1.FlowSchemaStatus
 
 /// FlowSchemaStatus represents the current state of a FlowSchema.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct FlowSchemaStatus {
     /// `conditions` is a list of the current states of FlowSchema.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::flowcontrol::v1beta1::FlowSchemaCondition>::new"))]
     pub conditions: Vec<crate::api::flowcontrol::v1beta1::FlowSchemaCondition>,
 }
 

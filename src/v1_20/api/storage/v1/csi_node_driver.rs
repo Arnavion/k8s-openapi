@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.storage.v1.CSINodeDriver
 
 /// CSINodeDriver holds information about the specification of one CSI driver installed on a node
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CSINodeDriver {
     /// allocatable represents the volume resources of a node that are available for scheduling. This field is beta.
     pub allocatable: Option<crate::api::storage::v1::VolumeNodeResources>,
@@ -13,6 +16,7 @@ pub struct CSINodeDriver {
     pub node_id: String,
 
     /// topologyKeys is the list of keys supported by the driver. When a driver is initialized on a cluster, it provides a set of topology keys that it understands (e.g. "company.com/zone", "company.com/region"). When a driver is initialized on a node, it provides the same topology keys along with values. Kubelet will expose these topology keys as labels on its own node object. When Kubernetes does topology aware provisioning, it can use this list to determine which labels it should retrieve from the node object and pass back to the driver. It is possible for different nodes to use different topology keys. This can be empty if driver does not support topology.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub topology_keys: Vec<String>,
 }
 

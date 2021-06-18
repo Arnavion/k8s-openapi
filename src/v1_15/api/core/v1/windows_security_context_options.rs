@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.WindowsSecurityContextOptions
 
 /// WindowsSecurityContextOptions contain Windows-specific options and credentials.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WindowsSecurityContextOptions {
     /// GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
     pub gmsa_credential_spec: Option<String>,

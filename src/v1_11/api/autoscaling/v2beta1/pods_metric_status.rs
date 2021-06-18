@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.PodsMetricStatus
 
 /// PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodsMetricStatus {
     /// currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
     pub current_average_value: crate::apimachinery::pkg::api::resource::Quantity,

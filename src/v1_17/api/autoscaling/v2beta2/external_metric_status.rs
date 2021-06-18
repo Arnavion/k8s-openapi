@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.ExternalMetricStatus
 
 /// ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ExternalMetricStatus {
     /// current contains the current value for the given metric
     pub current: crate::api::autoscaling::v2beta2::MetricValueStatus,

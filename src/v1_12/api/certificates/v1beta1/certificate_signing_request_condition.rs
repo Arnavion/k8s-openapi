@@ -1,6 +1,9 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequestCondition
 
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequestCondition {
     /// timestamp for the last update to this condition
     pub last_update_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

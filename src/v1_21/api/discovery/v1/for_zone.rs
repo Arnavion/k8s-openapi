@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.discovery.v1.ForZone
 
 /// ForZone provides information about which zones should consume this endpoint.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ForZone {
     /// name represents the name of the zone.
     pub name: String,

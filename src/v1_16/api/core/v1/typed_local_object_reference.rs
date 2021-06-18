@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.TypedLocalObjectReference
 
 /// TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TypedLocalObjectReference {
     /// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
     pub api_group: Option<String>,

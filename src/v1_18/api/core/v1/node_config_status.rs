@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeConfigStatus
 
 /// NodeConfigStatus describes the status of the config assigned by Node.Spec.ConfigSource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeConfigStatus {
     /// Active reports the checkpointed config the node is actively using. Active will represent either the current version of the Assigned config, or the current LastKnownGood config, depending on whether attempting to use the Assigned config results in an error.
     pub active: Option<crate::api::core::v1::NodeConfigSource>,

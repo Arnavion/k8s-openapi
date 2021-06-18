@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.TopologySpreadConstraint
 
 /// TopologySpreadConstraint specifies how to spread matching pods among the given topology.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TopologySpreadConstraint {
     /// LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
     pub label_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,

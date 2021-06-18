@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.events.v1beta1.Event
 
 /// Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system. Events have a limited retention time and triggers and messages may evolve with time.  Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason.  Events should be treated as informative, best-effort, supplemental data.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Event {
     /// action is what action was taken/failed regarding to the regarding object. It is machine-readable. This field can have at most 128 characters.
     pub action: Option<String>,

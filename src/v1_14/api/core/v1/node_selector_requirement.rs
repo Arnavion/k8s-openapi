@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeSelectorRequirement
 
 /// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeSelectorRequirement {
     /// The label key that the selector applies to.
     pub key: String,
@@ -10,6 +13,7 @@ pub struct NodeSelectorRequirement {
     pub operator: String,
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub values: Vec<String>,
 }
 

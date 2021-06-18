@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.storage.v1.TokenRequest
 
 /// TokenRequest contains parameters of a service account token.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenRequest {
     /// Audience is the intended audience of the token in "TokenRequestSpec". It will default to the audiences of kube apiserver.
     pub audience: String,

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.certificates.v1.CertificateSigningRequestSpec
 
 /// CertificateSigningRequestSpec contains the certificate request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequestSpec {
     /// extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     pub extra: std::collections::BTreeMap<String, Vec<String>>,
 
     /// groups contains group membership of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub groups: Vec<String>,
 
     /// request contains an x509 certificate signing request encoded in a "CERTIFICATE REQUEST" PEM block. When serialized as JSON or YAML, the data is additionally base64-encoded.
@@ -52,6 +56,7 @@ pub struct CertificateSigningRequestSpec {
     ///  "code signing", "email protection", "s/mime",
     ///  "ipsec end system", "ipsec tunnel", "ipsec user",
     ///  "timestamping", "ocsp signing", "microsoft sgc", "netscape sgc"
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub usages: Vec<String>,
 
     /// username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.

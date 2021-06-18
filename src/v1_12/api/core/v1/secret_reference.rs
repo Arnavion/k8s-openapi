@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.SecretReference
 
 /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SecretReference {
     /// Name is unique within a namespace to reference a secret resource.
     pub name: Option<String>,

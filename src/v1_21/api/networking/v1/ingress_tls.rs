@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.networking.v1.IngressTLS
 
 /// IngressTLS describes the transport layer security associated with an Ingress.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressTLS {
     /// Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub hosts: Vec<String>,
 
     /// SecretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.

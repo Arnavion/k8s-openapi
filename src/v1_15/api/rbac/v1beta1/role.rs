@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.rbac.v1beta1.Role
 
 /// Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Role {
     /// Standard object's metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this Role
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::rbac::v1beta1::PolicyRule>::new"))]
     pub rules: Vec<crate::api::rbac::v1beta1::PolicyRule>,
 }
 

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.storage.v1.VolumeAttachmentSpec
 
 /// VolumeAttachmentSpec is the specification of a VolumeAttachment request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeAttachmentSpec {
     /// Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
     pub attacher: String,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Event
 
 /// Event is a report of an event somewhere in the cluster.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Event {
     /// What action was taken/failed regarding to the Regarding object.
     pub action: Option<String>,

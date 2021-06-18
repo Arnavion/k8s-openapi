@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.SeccompProfile
 
 /// SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SeccompProfile {
     /// localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
     pub localhost_profile: Option<String>,

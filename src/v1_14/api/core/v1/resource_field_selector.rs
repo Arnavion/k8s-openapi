@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ResourceFieldSelector
 
 /// ResourceFieldSelector represents container resources (cpu, memory) and their output format
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ResourceFieldSelector {
     /// Container name: required for volumes, optional for env vars
     pub container_name: Option<String>,

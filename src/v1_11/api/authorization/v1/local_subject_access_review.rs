@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authorization.v1.LocalSubjectAccessReview
 
 /// LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LocalSubjectAccessReview {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

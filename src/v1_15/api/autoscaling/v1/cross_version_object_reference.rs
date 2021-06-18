@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v1.CrossVersionObjectReference
 
 /// CrossVersionObjectReference contains enough information to let you identify the referred resource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CrossVersionObjectReference {
     /// API version of the referent
     pub api_version: Option<String>,

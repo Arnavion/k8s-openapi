@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.VolumeDevice
 
 /// volumeDevice describes a mapping of a raw block device within a container.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeDevice {
     /// devicePath is the path inside of the container that the device will be mapped to.
     pub device_path: String,

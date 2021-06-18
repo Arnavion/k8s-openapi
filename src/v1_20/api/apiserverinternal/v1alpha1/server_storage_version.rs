@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.apiserverinternal.v1alpha1.ServerStorageVersion
 
 /// An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServerStorageVersion {
     /// The ID of the reporting API server.
     pub api_server_id: Option<String>,
 
     /// The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub decodable_versions: Vec<String>,
 
     /// The API server encodes the object to this version when persisting it in the backend (e.g., etcd).

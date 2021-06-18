@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.LimitRangeSpec
 
 /// LimitRangeSpec defines a min/max usage limit for resources that match on kind.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LimitRangeSpec {
     /// Limits is the list of LimitRangeItem objects that are enforced.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::LimitRangeItem>::new"))]
     pub limits: Vec<crate::api::core::v1::LimitRangeItem>,
 }
 

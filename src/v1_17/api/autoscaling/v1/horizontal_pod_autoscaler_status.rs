@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v1.HorizontalPodAutoscalerStatus
 
 /// current status of a horizontal pod autoscaler
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HorizontalPodAutoscalerStatus {
     /// current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.
     pub current_cpu_utilization_percentage: Option<i32>,

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.node.v1beta1.Overhead
 
 /// Overhead structure represents the resource overhead associated with running a pod.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Overhead {
     /// PodFixed represents the fixed resource overhead associated with running a pod.
     pub pod_fixed: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,

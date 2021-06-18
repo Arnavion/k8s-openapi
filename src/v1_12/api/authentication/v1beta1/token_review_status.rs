@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authentication.v1beta1.TokenReviewStatus
 
 /// TokenReviewStatus is the result of the token authentication request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenReviewStatus {
     /// Authenticated indicates that the token was associated with a known user.
     pub authenticated: Option<bool>,

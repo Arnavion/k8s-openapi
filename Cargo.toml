@@ -37,11 +37,14 @@ serde = "1"
 serde_json = "1"
 serde-value = "0.7"
 url = { version = "2", optional = true }
+schemars = { version = "0.8", features = ["chrono", "bytes"], optional = true }
 
 [features]
 default = ["api"]
 
 api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
+
+schema = ["schemars"]
 
 # Each feature corresponds to a supported version of Kubernetes
 v1_11 = []

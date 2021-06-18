@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.EphemeralContainers
 
 /// A list of ephemeral containers used with the Pod ephemeralcontainers subresource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EphemeralContainers {
     /// A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EphemeralContainer>::new"))]
     pub ephemeral_containers: Vec<crate::api::core::v1::EphemeralContainer>,
 
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

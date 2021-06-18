@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authentication.v1.TokenReviewSpec
 
 /// TokenReviewSpec is a description of the token authentication request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenReviewSpec {
     /// Token is the opaque bearer token.
     pub token: Option<String>,

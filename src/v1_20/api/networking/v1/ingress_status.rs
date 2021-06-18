@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.networking.v1.IngressStatus
 
 /// IngressStatus describe the current state of the Ingress.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IngressStatus {
     /// LoadBalancer contains the current status of the load-balancer.
     pub load_balancer: Option<crate::api::core::v1::LoadBalancerStatus>,

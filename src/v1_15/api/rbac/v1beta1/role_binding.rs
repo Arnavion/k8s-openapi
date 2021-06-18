@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.rbac.v1beta1.RoleBinding
 
 /// RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct RoleBinding {
     /// Standard object's metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
@@ -10,6 +13,7 @@ pub struct RoleBinding {
     pub role_ref: crate::api::rbac::v1beta1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::rbac::v1beta1::Subject>::new"))]
     pub subjects: Vec<crate::api::rbac::v1beta1::Subject>,
 }
 

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequest
 
 /// Describes a certificate signing request
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequest {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

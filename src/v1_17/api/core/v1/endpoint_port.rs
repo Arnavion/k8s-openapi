@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EndpointPort
 
 /// EndpointPort is a tuple that describes a single port.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointPort {
     /// The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.
     pub name: Option<String>,

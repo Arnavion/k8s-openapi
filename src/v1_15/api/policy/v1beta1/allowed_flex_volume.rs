@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.policy.v1beta1.AllowedFlexVolume
 
 /// AllowedFlexVolume represents a single Flexvolume that is allowed to be used.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AllowedFlexVolume {
     /// driver is the name of the Flexvolume driver.
     pub driver: String,

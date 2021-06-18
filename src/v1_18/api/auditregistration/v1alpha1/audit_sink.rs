@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.auditregistration.v1alpha1.AuditSink
 
 /// AuditSink represents a cluster level audit sink
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AuditSink {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

@@ -1,12 +1,16 @@
 // Generated from definition io.k8s.api.core.v1.ServiceSpec
 
 /// ServiceSpec describes the attributes that a user creates on a service.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceSpec {
     /// clusterIP is the IP address of the service and is usually assigned randomly by the master. If an address is specified manually and is not in use by others, it will be allocated to the service; otherwise, creation of the service will fail. This field can not be changed through updates. Valid values are "None", empty string (""), or a valid IP address. "None" can be specified for headless services when proxying is not required. Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
     pub cluster_ip: Option<String>,
 
     /// externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service.  These IPs are not managed by Kubernetes.  The user is responsible for ensuring that traffic arrives at a node with this IP.  A common example is external load-balancers that are not part of the Kubernetes system.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub external_ips: Vec<String>,
 
     /// externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
@@ -25,9 +29,11 @@ pub struct ServiceSpec {
     pub load_balancer_ip: Option<String>,
 
     /// If specified and supported by the platform, this will restrict traffic through the cloud-provider load-balancer will be restricted to the specified client IPs. This field will be ignored if the cloud-provider does not support the feature." More info: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub load_balancer_source_ranges: Vec<String>,
 
     /// The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ServicePort>::new"))]
     pub ports: Vec<crate::api::core::v1::ServicePort>,
 
     /// publishNotReadyAddresses, when set to true, indicates that DNS implementations must publish the notReadyAddresses of subsets for the Endpoints associated with the Service. The default value is false. The primary use case for setting this field is to use a StatefulSet's Headless Service to propagate SRV records for its Pods without respect to their readiness for purpose of peer discovery.

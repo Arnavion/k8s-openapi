@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.LocalVolumeSource
 
 /// Local represents directly-attached storage with node affinity (Beta feature)
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LocalVolumeSource {
     /// Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a fileystem if unspecified.
     pub fs_type: Option<String>,

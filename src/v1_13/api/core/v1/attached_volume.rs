@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.AttachedVolume
 
 /// AttachedVolume describes a volume attached to a node
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct AttachedVolume {
     /// DevicePath represents the device path where the volume should be available
     pub device_path: String,

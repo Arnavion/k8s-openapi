@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.RollbackConfig
 
 /// DEPRECATED.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct RollbackConfig {
     /// The revision to rollback to. If set to 0, rollback to the last revision.
     pub revision: Option<i64>,

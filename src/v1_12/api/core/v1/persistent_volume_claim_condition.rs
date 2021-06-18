@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeClaimCondition
 
 /// PersistentVolumeClaimCondition contails details about state of pvc
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PersistentVolumeClaimCondition {
     /// Last time we probed the condition.
     pub last_probe_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

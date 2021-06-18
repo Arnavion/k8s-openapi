@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement
 
 /// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LabelSelectorRequirement {
     /// key is the label key that the selector applies to.
     pub key: String,
@@ -10,6 +13,7 @@ pub struct LabelSelectorRequirement {
     pub operator: String,
 
     /// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub values: Vec<String>,
 }
 

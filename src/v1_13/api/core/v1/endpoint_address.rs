@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EndpointAddress
 
 /// EndpointAddress is a tuple that describes single IP address.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointAddress {
     /// The Hostname of this endpoint
     pub hostname: Option<String>,

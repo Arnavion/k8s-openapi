@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeCondition
 
 /// NodeCondition contains condition information for a node.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeCondition {
     /// Last time we got an update on a given condition.
     pub last_heartbeat_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.DownwardAPIProjection
 
 /// Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::DownwardAPIVolumeFile>::new"))]
     pub items: Vec<crate::api::core::v1::DownwardAPIVolumeFile>,
 }
 

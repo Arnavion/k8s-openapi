@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1beta2.DaemonSetCondition
 
 /// DaemonSetCondition describes the state of a DaemonSet at a certain point.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DaemonSetCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

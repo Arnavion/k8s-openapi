@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.VolumeNodeAffinity
 
 /// VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct VolumeNodeAffinity {
     /// Required specifies hard node constraints that must be met.
     pub required: Option<crate::api::core::v1::NodeSelector>,

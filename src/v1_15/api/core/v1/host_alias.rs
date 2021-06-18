@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.HostAlias
 
 /// HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HostAlias {
     /// Hostnames for the above IP address.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub hostnames: Vec<String>,
 
     /// IP address of the host file entry.

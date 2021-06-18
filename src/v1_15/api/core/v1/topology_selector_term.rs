@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.TopologySelectorTerm
 
 /// A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TopologySelectorTerm {
     /// A list of topology selector requirements by labels.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::TopologySelectorLabelRequirement>::new"))]
     pub match_label_expressions: Vec<crate::api::core::v1::TopologySelectorLabelRequirement>,
 }
 

@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionNames
 
 /// CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CustomResourceDefinitionNames {
     /// Categories is a list of grouped resources custom resources belong to (e.g. 'all')
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub categories: Vec<String>,
 
     /// Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
@@ -16,6 +20,7 @@ pub struct CustomResourceDefinitionNames {
     pub plural: String,
 
     /// ShortNames are short names for the resource.  It must be all lowercase.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub short_names: Vec<String>,
 
     /// Singular is the singular name of the resource.  It must be all lowercase  Defaults to lowercased \<kind\>

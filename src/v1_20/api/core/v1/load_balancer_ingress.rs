@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.LoadBalancerIngress
 
 /// LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LoadBalancerIngress {
     /// Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
     pub hostname: Option<String>,
@@ -10,6 +13,7 @@ pub struct LoadBalancerIngress {
     pub ip: Option<String>,
 
     /// Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::PortStatus>::new"))]
     pub ports: Vec<crate::api::core::v1::PortStatus>,
 }
 

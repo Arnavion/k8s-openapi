@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.HTTPHeader
 
 /// HTTPHeader describes a custom header to be used in HTTP probes
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct HTTPHeader {
     /// The header field name
     pub name: String,

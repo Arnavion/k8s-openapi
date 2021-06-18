@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.apps.v1beta1.DeploymentStatus
 
 /// DeploymentStatus is the most recently observed status of the Deployment.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct DeploymentStatus {
     /// Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     pub available_replicas: Option<i32>,
@@ -10,6 +13,7 @@ pub struct DeploymentStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a deployment's current state.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::apps::v1beta1::DeploymentCondition>::new"))]
     pub conditions: Vec<crate::api::apps::v1beta1::DeploymentCondition>,
 
     /// The generation observed by the deployment controller.

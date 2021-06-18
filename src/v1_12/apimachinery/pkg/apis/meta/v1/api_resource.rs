@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.APIResource
 
 /// APIResource specifies the name of a resource and whether it is namespaced.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct APIResource {
     /// categories is a list of the grouped resources this resource belongs to (e.g. 'all')
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub categories: Vec<String>,
 
     /// group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale".
@@ -19,12 +23,14 @@ pub struct APIResource {
     pub namespaced: bool,
 
     /// shortNames is a list of suggested short names of the resource.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub short_names: Vec<String>,
 
     /// singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.
     pub singular_name: String,
 
     /// verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub verbs: Vec<String>,
 
     /// version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)".

@@ -2,7 +2,10 @@
 
 ///
 ///  Storage version of a specific resource.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct StorageVersion {
     /// The name is \<group\>.\<resource\>.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,

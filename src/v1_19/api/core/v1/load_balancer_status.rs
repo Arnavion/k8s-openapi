@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.LoadBalancerStatus
 
 /// LoadBalancerStatus represents the status of a load-balancer.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LoadBalancerStatus {
     /// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::LoadBalancerIngress>::new"))]
     pub ingress: Vec<crate::api::core::v1::LoadBalancerIngress>,
 }
 

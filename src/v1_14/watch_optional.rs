@@ -2,7 +2,10 @@
 
 /// Common parameters for all watch operations.
 #[cfg(feature = "api")]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct WatchOptional<'a> {
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
     pub field_selector: Option<&'a str>,

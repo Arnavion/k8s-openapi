@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ScopedResourceSelectorRequirement
 
 /// A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ScopedResourceSelectorRequirement {
     /// Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     pub operator: String,
@@ -10,6 +13,7 @@ pub struct ScopedResourceSelectorRequirement {
     pub scope_name: String,
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub values: Vec<String>,
 }
 

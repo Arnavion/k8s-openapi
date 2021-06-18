@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ConfigMapNodeConfigSource
 
 /// ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ConfigMapNodeConfigSource {
     /// KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
     pub kubelet_config_key: String,

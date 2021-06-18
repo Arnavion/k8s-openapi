@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.core.v1.ComponentStatus
 
 /// ComponentStatus (and ComponentStatusList) holds the cluster validation info.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ComponentStatus {
     /// List of component conditions observed
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ComponentCondition>::new"))]
     pub conditions: Vec<crate::api::core::v1::ComponentCondition>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata

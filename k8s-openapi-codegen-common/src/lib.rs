@@ -1131,6 +1131,11 @@ fn get_derives(
 
 	let derive_ord = derive_partial_ord && derive_eq;
 
+    let derive_json_schema = !matches!(
+        kind,
+        swagger20::SchemaKind::Ty(swagger20::Type::IntOrString)
+    );
+
 	Ok(Some(templates::type_header::Derives {
 		clone: derive_clone,
 		copy: derive_copy,
@@ -1139,6 +1144,7 @@ fn get_derives(
 		ord: derive_ord,
 		partial_eq: derive_partial_eq,
 		partial_ord: derive_partial_ord,
+		json_schema: derive_json_schema,
 	}))
 }
 

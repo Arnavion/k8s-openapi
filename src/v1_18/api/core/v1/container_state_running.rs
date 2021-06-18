@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.ContainerStateRunning
 
 /// ContainerStateRunning is a running state of a container.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ContainerStateRunning {
     /// Time at which the container was last (re-)started
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,

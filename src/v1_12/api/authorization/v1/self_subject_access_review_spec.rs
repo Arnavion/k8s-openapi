@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authorization.v1.SelfSubjectAccessReviewSpec
 
 /// SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SelfSubjectAccessReviewSpec {
     /// NonResourceAttributes describes information for a non-resource access request
     pub non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes>,

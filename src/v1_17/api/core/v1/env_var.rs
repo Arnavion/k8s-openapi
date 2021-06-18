@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.EnvVar
 
 /// EnvVar represents an environment variable present in a Container.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EnvVar {
     /// Name of the environment variable. Must be a C_IDENTIFIER.
     pub name: String,

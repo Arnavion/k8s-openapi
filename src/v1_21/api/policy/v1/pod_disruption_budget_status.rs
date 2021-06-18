@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.policy.v1.PodDisruptionBudgetStatus
 
 /// PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodDisruptionBudgetStatus {
     /// Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute
     ///               the number of allowed disruptions. Therefore no disruptions are
@@ -12,6 +15,7 @@ pub struct PodDisruptionBudgetStatus {
     /// - SufficientPods: There are more pods than required by the PodDisruptionBudget.
     ///                   The condition will be True, and the number of allowed
     ///                   disruptions are provided by the disruptionsAllowed property.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::apimachinery::pkg::apis::meta::v1::Condition>::new"))]
     pub conditions: Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>,
 
     /// current number of healthy pods

@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1alpha1.LimitResponse
 
 /// LimitResponse defines how to handle requests that can not be executed right now.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LimitResponse {
     /// `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`.
     pub queuing: Option<crate::api::flowcontrol::v1alpha1::QueuingConfiguration>,

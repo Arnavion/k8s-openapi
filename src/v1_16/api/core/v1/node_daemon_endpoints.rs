@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.NodeDaemonEndpoints
 
 /// NodeDaemonEndpoints lists ports opened by daemons running on the Node.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct NodeDaemonEndpoints {
     /// Endpoint on which Kubelet is listening.
     pub kubelet_endpoint: Option<crate::api::core::v1::DaemonEndpoint>,

@@ -1,21 +1,28 @@
 // Generated from definition io.k8s.api.settings.v1alpha1.PodPresetSpec
 
 /// PodPresetSpec is a description of a pod preset.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodPresetSpec {
     /// Env defines the collection of EnvVar to inject into containers.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EnvVar>::new"))]
     pub env: Vec<crate::api::core::v1::EnvVar>,
 
     /// EnvFrom defines the collection of EnvFromSource to inject into containers.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::EnvFromSource>::new"))]
     pub env_from: Vec<crate::api::core::v1::EnvFromSource>,
 
     /// Selector is a label query over a set of resources, in this case pods. Required.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// VolumeMounts defines the collection of VolumeMount to inject into containers.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::VolumeMount>::new"))]
     pub volume_mounts: Vec<crate::api::core::v1::VolumeMount>,
 
     /// Volumes defines the collection of Volume to inject into the pod.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Volume>::new"))]
     pub volumes: Vec<crate::api::core::v1::Volume>,
 }
 

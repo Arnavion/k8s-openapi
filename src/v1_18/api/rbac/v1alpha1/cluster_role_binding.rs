@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.rbac.v1alpha1.ClusterRoleBinding
 
 /// ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoleBinding, and will no longer be served in v1.20.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ClusterRoleBinding {
     /// Standard object's metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
@@ -10,6 +13,7 @@ pub struct ClusterRoleBinding {
     pub role_ref: crate::api::rbac::v1alpha1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::rbac::v1alpha1::Subject>::new"))]
     pub subjects: Vec<crate::api::rbac::v1alpha1::Subject>,
 }
 

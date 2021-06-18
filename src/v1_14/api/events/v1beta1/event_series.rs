@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.events.v1beta1.EventSeries
 
 /// EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EventSeries {
     /// Number of occurrences in this series up to the last heartbeat time
     pub count: i32,

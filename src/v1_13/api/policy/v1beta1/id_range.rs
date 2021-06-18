@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.policy.v1beta1.IDRange
 
 /// IDRange provides a min/max of an allowed range of IDs.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct IDRange {
     /// max is the end of the range, inclusive.
     pub max: i64,

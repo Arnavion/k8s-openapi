@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.flowcontrol.v1beta1.ServiceAccountSubject
 
 /// ServiceAccountSubject holds detailed information for service-account-kind subject.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ServiceAccountSubject {
     /// `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
     pub name: String,

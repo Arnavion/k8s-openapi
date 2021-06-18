@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.authentication.v1beta1.TokenReview
 
 /// TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenReview {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 

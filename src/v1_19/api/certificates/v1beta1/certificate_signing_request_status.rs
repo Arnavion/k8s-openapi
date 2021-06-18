@@ -1,11 +1,15 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequestStatus
 
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CertificateSigningRequestStatus {
     /// If request was approved, the controller will place the issued certificate here.
     pub certificate: Option<crate::ByteString>,
 
     /// Conditions applied to the request, such as approval or denial.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>::new"))]
     pub conditions: Vec<crate::api::certificates::v1beta1::CertificateSigningRequestCondition>,
 }
 

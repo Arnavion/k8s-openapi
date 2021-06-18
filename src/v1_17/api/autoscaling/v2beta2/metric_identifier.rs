@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta2.MetricIdentifier
 
 /// MetricIdentifier defines the name and optionally selector for a metric
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct MetricIdentifier {
     /// name is the name of the given metric
     pub name: String,

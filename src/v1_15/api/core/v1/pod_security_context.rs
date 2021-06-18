@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.PodSecurityContext
 
 /// PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct PodSecurityContext {
     /// A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
     ///
@@ -23,9 +26,11 @@ pub struct PodSecurityContext {
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 
     /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<i64>::new"))]
     pub supplemental_groups: Vec<i64>,
 
     /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::Sysctl>::new"))]
     pub sysctls: Vec<crate::api::core::v1::Sysctl>,
 
     /// Windows security options.

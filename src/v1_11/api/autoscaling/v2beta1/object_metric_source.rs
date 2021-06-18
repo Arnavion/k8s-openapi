@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.ObjectMetricSource
 
 /// ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct ObjectMetricSource {
     /// metricName is the name of the metric in question.
     pub metric_name: String,

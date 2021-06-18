@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.LocalObjectReference
 
 /// LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct LocalObjectReference {
     /// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
     pub name: Option<String>,

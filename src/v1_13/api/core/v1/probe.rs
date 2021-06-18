@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Probe
 
 /// Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Probe {
     /// One and only one of the following should be specified. Exec specifies the action to take.
     pub exec: Option<crate::api::core::v1::ExecAction>,

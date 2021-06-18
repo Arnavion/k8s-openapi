@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.SecretKeySelector
 
 /// SecretKeySelector selects a key of a Secret.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct SecretKeySelector {
     /// The key of the secret to select from.  Must be a valid secret key.
     pub key: String,

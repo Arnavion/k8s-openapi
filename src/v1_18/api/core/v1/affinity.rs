@@ -1,7 +1,10 @@
 // Generated from definition io.k8s.api.core.v1.Affinity
 
 /// Affinity is a group of affinity scheduling rules.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct Affinity {
     /// Describes node affinity scheduling rules for the pod.
     pub node_affinity: Option<crate::api::core::v1::NodeAffinity>,

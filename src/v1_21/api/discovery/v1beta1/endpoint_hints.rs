@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.discovery.v1beta1.EndpointHints
 
 /// EndpointHints provides hints describing how an endpoint should be consumed.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct EndpointHints {
     /// forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::discovery::v1beta1::ForZone>::new"))]
     pub for_zones: Vec<crate::api::discovery::v1beta1::ForZone>,
 }
 

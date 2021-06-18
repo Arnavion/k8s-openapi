@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.authentication.v1.TokenReviewSpec
 
 /// TokenReviewSpec is a description of the token authentication request.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct TokenReviewSpec {
     /// Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<String>::new"))]
     pub audiences: Vec<String>,
 
     /// Token is the opaque bearer token.

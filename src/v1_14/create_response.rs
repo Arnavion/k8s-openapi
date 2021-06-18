@@ -2,7 +2,10 @@
 
 /// The common response type for all create API operations.
 #[cfg(feature = "api")]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Debug)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub enum CreateResponse<T> where T: crate::serde::de::DeserializeOwned {
     Ok(T),
     Created(T),

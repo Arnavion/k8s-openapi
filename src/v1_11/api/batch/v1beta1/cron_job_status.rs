@@ -1,9 +1,13 @@
 // Generated from definition io.k8s.api.batch.v1beta1.CronJobStatus
 
 /// CronJobStatus represents the current state of a cron job.
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub struct CronJobStatus {
     /// A list of pointers to currently running jobs.
+    #[cfg_attr(feature = "schema", schemars(default = "Vec::<crate::api::core::v1::ObjectReference>::new"))]
     pub active: Vec<crate::api::core::v1::ObjectReference>,
 
     /// Information when was the last time the job was successfully scheduled.

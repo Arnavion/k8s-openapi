@@ -2,7 +2,10 @@
 
 /// The common response type for all list API operations.
 #[cfg(feature = "api")]
+#[cfg(feature = "schema")]
+use schemars::JsonSchema;
 #[derive(Debug)]
+#[cfg_attr(feature = "schema", derive(JsonSchema), schemars(rename_all = "camelCase"))]
 pub enum ListResponse<T> where T: crate::serde::de::DeserializeOwned + crate::ListableResource {
     Ok(crate::List<T>),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
