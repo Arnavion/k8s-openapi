@@ -49,7 +49,10 @@ impl std::fmt::Display for Error {
 }
 
 fn main() -> Result<(), Error> {
-	let Options { versions: requested_versions } = structopt::StructOpt::from_args();
+	let Options { 
+		versions: requested_versions,
+		skip_client: skip_client_generation,
+	} = structopt::StructOpt::from_args();
 
 	{
 		let logger = logger::Logger;
@@ -102,7 +105,7 @@ fn main() -> Result<(), Error> {
 
 					let spec_url = overriden_spec_url.as_deref().unwrap_or_else(|| version.spec_url());
 
-					run(version, spec_url, &out_dir_base, &client)?;
+					run(version, spec_url, overriden_spec_url.is_some(), skip_client_generation, &out_dir_base, &client)?;
 
 					Ok(())
 				}
@@ -138,6 +141,15 @@ struct Options {
 	/// based on their OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
 	#[structopt(long = "generate", value_name = "VERSION")]
 	versions: Vec<RequestedVersion>,
+	/// This flag allows completely skip client functions generation.
+	/// It can be used for following reasons:
+	/// - You use a custom spec, which contains non-builtin resources, such as
+	///   CRD, and k8s-openapi-codegen fails on these resources without this flag.
+	/// - You want to reduce generated code amount
+	///
+	/// Note however that `k8s-openapi` is generated without this flag.
+	#[structopt(long = "skip-client")]
+	skip_client: bool,
 }
 
 struct RequestedVersion {
@@ -183,6 +195,8 @@ impl std::str::FromStr for RequestedVersion {
 fn run(
 	supported_version: supported_version::SupportedVersion,
 	spec_url: &str,
+	spec_is_custom: bool,
+	skip_client_generation: bool,
 	out_dir_base: &std::path::Path,
 	client: &reqwest::blocking::Client,
 ) -> Result<(), Error> {
@@ -205,7 +219,8 @@ fn run(
 	};
 
 	log::info!("Applying fixups...");
-	supported_version.fixup(&mut spec)?;
+	supported_version.fixup(&mut spec, skip_client_generation)?;
+	
 
 	let expected_num_generated_types: usize = spec.definitions.len();
 	let expected_num_generated_apis: usize = spec.operations.len();
@@ -245,8 +260,11 @@ fn run(
 		let run_result = k8s_openapi_codegen_common::run(
 			&spec.definitions,
 			&mut spec.operations,
+			skip_client_generation,
 			definition_path,
-			&MapNamespace,
+			&MapNamespace {
+				custom_spec: spec_is_custom
+			},
 			"pub ",
 			Some("api"),
 			run_state,
@@ -258,7 +276,7 @@ fn run(
 	}
 
 	// Top-level operations
-	{
+	if !skip_client_generation {
 		let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
 
 		spec.operations.sort_by(|o1, o2| o1.id.cmp(&o2.id));
@@ -272,7 +290,9 @@ fn run(
 			k8s_openapi_codegen_common::write_operation(
 				&mut mod_root_file,
 				&operation,
-				&MapNamespace,
+				&MapNamespace {
+					custom_spec: spec_is_custom
+				},
 				"pub ",
 				None,
 				Some("api"),
@@ -291,7 +311,7 @@ fn run(
 		return Err("Did not generate or skip expected number of types".into());
 	}
 
-	if num_generated_apis != expected_num_generated_apis {
+	if !skip_client_generation && num_generated_apis != expected_num_generated_apis {
 		return Err("Did not generate expected number of API functions".into());
 	}
 
@@ -300,13 +320,20 @@ fn run(
 	Ok(())
 }
 
-struct MapNamespace;
+struct MapNamespace {
+	custom_spec: bool
+}
 
 impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
 	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>> {
-		match path_parts {
-			["io", "k8s", rest @ ..] => Some(std::iter::once("crate").chain(rest.iter().copied()).collect()),
-			_ => None,
+		if let ["io", "k8s", rest @ ..] = path_parts {
+			return Some(std::iter::once("crate").chain(rest.iter().copied()).collect())
+		}
+		if self.custom_spec {
+			// custom spec can contain types from other namespaces
+			Some(["crate", "special"].iter().copied().chain(path_parts.iter().copied()).collect())
+		} else {
+		None
 		}
 	}
 }

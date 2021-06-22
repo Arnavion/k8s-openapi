@@ -1,3 +1,5 @@
+use crate::fixups::Fixup;
+
 pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_11,
 	SupportedVersion::V1_12,
@@ -76,97 +78,102 @@ impl SupportedVersion {
 		}
 	}
 
-	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec, skip_client_generation: bool) -> Result<(), crate::Error> {
 		#[allow(clippy::match_same_arms)]
-		let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
+		let upstream_bugs_fixups: &[&'static dyn Fixup] = match self {
 			SupportedVersion::V1_11 => &[
-				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
+				&crate::fixups::upstream_bugs::DeploymentRollbackCreateResponseType,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
+				&crate::fixups::upstream_bugs::optional_properties::CrdStatus,
+				&crate::fixups::upstream_bugs::optional_properties::PdbStatus,
+				&crate::fixups::upstream_bugs::RawExtensionTy,
+				&crate::fixups::upstream_bugs::RemoveCompatRefs,
 			],
 
 			SupportedVersion::V1_12 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
+				&crate::fixups::upstream_bugs::optional_properties::CrdStatus,
+				&crate::fixups::upstream_bugs::RawExtensionTy,
+				&crate::fixups::upstream_bugs::RemoveCompatRefs,
 			],
 
 			SupportedVersion::V1_13 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
+				&crate::fixups::upstream_bugs::optional_properties::CrdStatus,
+				&crate::fixups::upstream_bugs::RawExtensionTy,
+				&crate::fixups::upstream_bugs::RemoveCompatRefs,
 			],
 
 			SupportedVersion::V1_14 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
+				&crate::fixups::upstream_bugs::optional_properties::CrdStatus,
+				&crate::fixups::upstream_bugs::RawExtensionTy,
 			],
 
 			SupportedVersion::V1_15 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::raw_extension_ty,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
+				&crate::fixups::upstream_bugs::optional_properties::CrdStatus,
+				&crate::fixups::upstream_bugs::RawExtensionTy,
 			],
 
 			SupportedVersion::V1_16 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 
 			SupportedVersion::V1_17 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 
 			SupportedVersion::V1_18 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 
 			SupportedVersion::V1_19 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 
 			SupportedVersion::V1_20 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 
 			SupportedVersion::V1_21 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				&crate::fixups::upstream_bugs::ConnectOptionsGvk,
+				&crate::fixups::upstream_bugs::optional_properties::ContainerImage,
 			],
 		};
 
-		let special_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = &[
-			crate::fixups::special::json_ty::json_schema_props_or_array,
-			crate::fixups::special::json_ty::json_schema_props_or_bool,
-			crate::fixups::special::json_ty::json_schema_props_or_string_array,
-			crate::fixups::special::create_delete_optional,
-			crate::fixups::special::create_optionals,
-			crate::fixups::special::patch,
-			crate::fixups::special::remove_delete_collection_operations_query_parameters,
-			crate::fixups::special::remove_delete_operations_query_parameters,
-			crate::fixups::special::separate_watch_from_list_operations,
-			crate::fixups::special::watch_event,
-			crate::fixups::special::list, // Must run after separate_watch_from_list_operations
-			crate::fixups::special::response_types,
-			crate::fixups::special::resource_metadata_not_optional,
+		let special_fixups: &[&'static dyn Fixup] = &[
+			&crate::fixups::special::json_ty::JsonSchemaPropsOrArray,
+			&crate::fixups::special::json_ty::JsonSchemaPropsOrBool,
+			&crate::fixups::special::json_ty::JsonSchemaPropsOrStringArray,
+			&crate::fixups::special::CreateDeleteOptional,
+			&crate::fixups::special::CreateOptionals,
+			&crate::fixups::special::Patch,
+			&crate::fixups::special::RemoveDeleteCollectionOperationsQueryParameters,
+			&crate::fixups::special::RemoveDeleteOperationsQueryParameters,
+			&crate::fixups::special::SeparateWatchFromListOperations,
+			&crate::fixups::special::WatchEvent,
+			&crate::fixups::special::List, // Must run after separate_watch_from_list_operations
+			&crate::fixups::special::ResponseTypes,
+			&crate::fixups::special::ResourceMetadataNotOptional,
 		];
 
-		for fixup in upstream_bugs_fixups.iter().chain(special_fixups) {
-			fixup(spec)?;
+		let _ = skip_client_generation;
+
+		for fixup in upstream_bugs_fixups.iter().chain(special_fixups).copied() {
+			if skip_client_generation && fixup.requires_client_generation() {
+				continue;
+			}
+			fixup.fixup(spec)?;
 		}
 
 		Ok(())

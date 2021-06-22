@@ -158,6 +158,9 @@ impl<T> RunState for &'_ mut T where T: RunState {
 /// - `operations`: The list of operations parsed from the OpenAPI spec that should be emitted as API functions.
 ///   Note that this value will be mutated to remove the operations that are determined to be associated with the type currently being generated.
 ///
+/// - `skip_operations_generation`: if enabled, no functions will be emitted, only structs. `operations` is still used
+///   to infer resource metadata such as name and scope.
+///
 /// - `definition_path`: The specific definition path out of the `definitions` collection that should be emitted.
 ///
 /// - `map_namespace`: An instance of the [`MapNamespace`] trait that controls how OpenAPI namespaces of the definitions are mapped to rust namespaces.
@@ -172,6 +175,7 @@ impl<T> RunState for &'_ mut T where T: RunState {
 pub fn run(
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	operations: &mut Vec<swagger20::Operation>,
+	skip_operations_generation: bool,
 	definition_path: &swagger20::DefinitionPath,
 	map_namespace: &impl MapNamespace,
 	vis: &str,
@@ -386,7 +390,8 @@ pub fn run(
 							kubernetes_group_kind_version.group, kubernetes_group_kind_version.version, kubernetes_group_kind_version.kind)?;
 
 						for operation in operations {
-							let (operation_optional_parameters_name, operation_result_name) =
+							if !skip_operations_generation {
+								let (operation_optional_parameters_name, operation_result_name) =
 								write_operation(
 									&mut out,
 									&operation,
@@ -394,9 +399,9 @@ pub fn run(
 									vis,
 									Some(type_name),
 									optional_feature)?;
-							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
-							run_result.num_generated_apis += 1;
-
+									state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
+									run_result.num_generated_apis += 1;
+							}
 							// If this is a CRUD operation, use it to determine the resource's URL path segment and scope.
 							match operation.kubernetes_action {
 								Some(
