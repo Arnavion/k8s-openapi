@@ -11,7 +11,7 @@ pub use self::paths::*;
 
 /// The value of an `x-kubernetes-group-version-kind` annotation on a type or an operation.
 #[derive(Clone, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct KubernetesGroupKindVersion {
 	pub group: String,
 	pub kind: String,

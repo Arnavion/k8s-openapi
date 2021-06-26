@@ -32,7 +32,7 @@ pub enum NumberFormat {
 
 /// The name of a property of a schema type with a `"properties"` map.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct PropertyName(pub String);
 
 impl std::ops::Deref for PropertyName {
@@ -88,6 +88,16 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 	}
 }
 
+#[cfg(all(feature = "serde", feature = "schema"))]
+impl serde::Serialize for RefPath {
+	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	where
+		S: serde::Serializer,
+	{
+		serializer.serialize_str(&format!("#/definitions/{}", &self.path))
+	}
+}
+
 impl RefPath {
 	pub(crate) fn references_scope(&self, map_namespace: &impl crate::MapNamespace) -> bool {
 		let path_parts: Vec<_> = self.path.split('.').collect();
@@ -107,35 +117,41 @@ pub struct Schema {
 }
 
 #[cfg(feature = "serde")]
+#[derive(Debug, Default, serde::Deserialize, serde::Serialize)]
+struct InnerSchema {
+	// This must be before description to make schema inlining pattern easier.
+	#[serde(rename = "$ref", skip_serializing_if = "Option::is_none")]
+	ref_path: Option<RefPath>,
+
+	#[serde(rename = "additionalProperties", skip_serializing_if = "Option::is_none")]
+	additional_properties: Option<Box<Schema>>,
+
+	#[serde(skip_serializing_if = "Option::is_none")]
+	description: Option<String>,
+
+	#[serde(skip_serializing_if = "Option::is_none")]
+	format: Option<String>,
+
+	#[serde(skip_serializing_if = "Option::is_none")]
+	items: Option<Box<Schema>>,
+
+	#[serde(default, rename = "x-kubernetes-group-version-kind", skip_serializing_if = "Vec::is_empty")]
+	kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
+
+	#[serde(skip_serializing_if = "Option::is_none")]
+	properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
+
+	#[serde(default, skip_serializing_if = "Vec::is_empty")]
+	required: Vec<PropertyName>,
+
+	#[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+	ty: Option<String>,
+}
+
+#[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
 impl<'de> serde::Deserialize<'de> for Schema {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		#[derive(Debug, serde::Deserialize)]
-		struct InnerSchema {
-			#[serde(rename = "additionalProperties")]
-			additional_properties: Option<Box<Schema>>,
-
-			description: Option<String>,
-
-			format: Option<String>,
-
-			items: Option<Box<Schema>>,
-
-			#[serde(default, rename = "x-kubernetes-group-version-kind")]
-			kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
-
-			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
-
-			#[serde(rename = "$ref")]
-			ref_path: Option<RefPath>,
-
-			#[serde(default)]
-			required: Vec<PropertyName>,
-
-			#[serde(rename = "type")]
-			ty: Option<String>,
-		}
-
 		let mut value: InnerSchema = serde::Deserialize::deserialize(deserializer)?;
 
 		let kind =
@@ -175,6 +191,104 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
 			list_kind: None,
 		})
+	}
+}
+
+#[cfg(all(feature = "serde", feature = "schema"))]
+impl serde::Serialize for Schema {
+	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	where
+		S: serde::Serializer,
+	{
+		let mut inner = InnerSchema {
+			description: self.description.clone(),
+			kubernetes_group_kind_versions: self.kubernetes_group_kind_versions.clone(),
+			..InnerSchema::default()
+		};
+		match &self.kind {
+			SchemaKind::Ref(ref_path) => {
+				inner.ref_path = Some(ref_path.clone());
+			},
+
+			SchemaKind::Properties(properties) => {
+				let mut required: Vec<PropertyName> = Vec::new();
+				inner.ty = Some("object".to_owned());
+				inner.properties = Some(properties.clone().into_iter().map(|(name, (schema, req))| {
+					if req {
+						required.push(name.clone());
+					}
+					(name, schema)
+				}).collect());
+				inner.required = required;
+			}
+
+			SchemaKind::Ty(ty) => {
+				match ty {
+					Type::Any => {
+						inner.ty = Some("object".to_owned());
+					}
+					// TODO
+					Type::JsonSchemaPropsOrArray(_) |
+					Type::JsonSchemaPropsOrBool(_) |
+					Type::JsonSchemaPropsOrStringArray(_) => {
+						inner.ty = Some("object".to_owned());
+					}
+
+					Type::Array { items } => {
+						inner.ty = Some("array".to_owned());
+						inner.items = Some(items.clone());
+					}
+
+					Type::Boolean => {
+						inner.ty = Some("boolean".to_owned());
+					}
+
+					Type::Integer { format } => {
+						inner.ty = Some("integer".to_owned());
+						match format {
+							IntegerFormat::Int32 => {
+								inner.format = Some("int32".to_owned());
+							}
+							IntegerFormat::Int64 => {
+								inner.format = Some("int64".to_owned());
+							}
+						}
+					}
+
+					Type::Number { format } => {
+						inner.ty = Some("number".to_owned());
+						match format {
+							NumberFormat::Double => {
+								inner.format = Some("double".to_owned());
+							}
+						}
+					}
+
+					Type::Object { additional_properties } => {
+						inner.ty = Some("object".to_owned());
+						inner.additional_properties = Some(additional_properties.clone());
+					}
+
+					Type::String { format } => {
+						inner.ty = Some("string".to_owned());
+						inner.format = match format {
+							Some(StringFormat::Byte) => Some("byte".to_owned()),
+							Some(StringFormat::DateTime) => Some("date-time".to_owned()),
+							None => None,
+						};
+					}
+
+					Type::IntOrString => {
+						inner.ty = Some("string".to_owned());
+						inner.format = Some("int-or-string".to_owned());
+					}
+
+					_ => unreachable!("serialize {:?}", self.kind),
+				}
+			},
+		}
+
+		inner.serialize(serializer)
 	}
 }
 

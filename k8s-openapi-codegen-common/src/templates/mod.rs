@@ -22,6 +22,9 @@ pub(crate) mod query_string_optional;
 
 pub(crate) mod r#struct;
 
+#[cfg(feature = "schema")]
+pub(crate) mod schema;
+
 pub(crate) mod type_alias;
 
 pub(crate) mod type_header;

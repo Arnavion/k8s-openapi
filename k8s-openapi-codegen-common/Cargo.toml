@@ -21,3 +21,8 @@ include = [
 [dependencies]
 http = "0.2"
 serde = { version = "1", features = ["derive", "rc"], optional = true }
+serde_json = { version = "1", optional = true }
+regex = { version = "1", optional = true }
+
+[features]
+schema = ["serde_json", "regex"]

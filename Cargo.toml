@@ -42,6 +42,7 @@ url = { version = "2", optional = true }
 default = ["api"]
 
 api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
+schema = [] # Include schema.
 
 # Each feature corresponds to a supported version of Kubernetes
 v1_11 = []

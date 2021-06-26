@@ -14,6 +14,7 @@
     clippy::upper_case_acronyms,
     clippy::use_self,
 )]
+#![cfg_attr(feature = "schema", recursion_limit = "256")]
 
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
 //!
@@ -802,3 +803,9 @@ pub mod percent_encoding2 {
 #[cfg(feature = "v1_21")] pub use self::v1_21::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
+
+#[cfg(feature = "schema")]
+pub(crate) fn schema_ref_with_description(mut schema: serde_json::Value, description: &'static str) -> serde_json::Value {
+	schema.as_object_mut().expect("schema object").insert("description".to_owned(), serde_json::json!(description));
+	schema
+}

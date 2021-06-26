@@ -67,6 +67,13 @@ impl From<std::io::Error> for Error {
 	}
 }
 
+#[cfg(feature = "schema")]
+impl From<serde_json::Error> for Error {
+	fn from(err: serde_json::Error) -> Self {
+		Error(err.into())
+	}
+}
+
 impl std::fmt::Display for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
@@ -997,6 +1004,38 @@ pub fn run(
 
 			run_result.num_generated_type_aliases += 1;
 		},
+	}
+
+	#[cfg(all(feature = "serde", feature = "schema"))]
+	match &definition.kind {
+		swagger20::SchemaKind::Properties(_) |
+		swagger20::SchemaKind::Ty(
+			swagger20::Type::Object { .. } |
+			swagger20::Type::String { .. } |
+			swagger20::Type::Any |
+			swagger20::Type::IntOrString |
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_)
+		) => {
+			// Inline schema and override the description if present.
+			let re = regex::Regex::new(r##"\{\n\s*"\$ref": "#/definitions/io\.k8s\.([^"]+)"(?:,\n\s*"description": "(.+)")?\n\s*\}"##).unwrap();
+			let schema = serde_json::to_string_pretty(&definition)?;
+			let schema = re.replace_all(&schema, |caps: &regex::Captures<'_>| {
+				let path = caps[1].replace("-", "_").replace(".", "::");
+				if let Some(description) = caps.get(2) {
+					format!(
+						r#"crate::schema_ref_with_description(crate::{}::schema(), "{}")"#,
+						&path,
+						description.as_str()
+					)
+				} else {
+					format!(r#"crate::{}::schema()"#, &path)
+				}
+			});
+			templates::schema::generate(&mut out, type_name, &schema)?;
+		},
+		_ => {}
 	}
 
 	state.finish(out);
