@@ -106,3 +106,32 @@ impl crate::serde::Serialize for KeyToPath {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl KeyToPath {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Maps a string key to a path within a volume.",
+          "properties": {
+            "key": {
+              "description": "The key to project.",
+              "type": "string"
+            },
+            "mode": {
+              "description": "Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "path": {
+              "description": "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "key",
+            "path"
+          ],
+          "type": "object"
+        })
+    }
+}

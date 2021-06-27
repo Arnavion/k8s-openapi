@@ -102,3 +102,31 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionVersion {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "name": {
+              "description": "Name is the version name, e.g. “v1”, “v2beta1”, etc.",
+              "type": "string"
+            },
+            "served": {
+              "description": "Served is a flag enabling/disabling this version from being served via REST APIs",
+              "type": "boolean"
+            },
+            "storage": {
+              "description": "Storage flags the version as storage version. There must be exactly one flagged as storage version.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "served",
+            "storage"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -96,3 +96,32 @@ impl crate::serde::Serialize for NonResourceRule {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NonResourceRule {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NonResourceRule holds information that describes a rule for the non-resource",
+          "properties": {
+            "nonResourceURLs": {
+              "description": "NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  \"*\" means all.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "verbs": {
+              "description": "Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  \"*\" means all.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "verbs"
+          ],
+          "type": "object"
+        })
+    }
+}

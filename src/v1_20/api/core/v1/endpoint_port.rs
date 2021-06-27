@@ -122,3 +122,35 @@ impl crate::serde::Serialize for EndpointPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EndpointPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EndpointPort is a tuple that describes a single port.",
+          "properties": {
+            "appProtocol": {
+              "description": "The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.",
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.",
+              "type": "string"
+            },
+            "port": {
+              "description": "The port number of the endpoint.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "protocol": {
+              "description": "The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "port"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -137,3 +137,31 @@ impl crate::serde::Serialize for LeaseSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LeaseSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "LeaseSpec is a specification of a Lease.",
+          "properties": {
+            "acquireTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "acquireTime is a time when the current lease was acquired."),
+            "holderIdentity": {
+              "description": "holderIdentity contains the identity of the holder of a current lease.",
+              "type": "string"
+            },
+            "leaseDurationSeconds": {
+              "description": "leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measure against time of last observed RenewTime.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "leaseTransitions": {
+              "description": "leaseTransitions is the number of transitions of a lease between holders.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "renewTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "renewTime is a time when the current holder of a lease has last updated the lease.")
+          },
+          "type": "object"
+        })
+    }
+}

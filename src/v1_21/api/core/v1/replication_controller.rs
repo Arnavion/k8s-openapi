@@ -809,3 +809,36 @@ impl crate::serde::Serialize for ReplicationController {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ReplicationController {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ReplicationController represents the configuration of a replication controller.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "ReplicationController",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
+            "spec": crate::schema_ref_with_description(crate::api::core::v1::ReplicationControllerSpec::schema(), "Spec defines the specification of the desired behavior of the replication controller. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"),
+            "status": crate::schema_ref_with_description(crate::api::core::v1::ReplicationControllerStatus::schema(), "Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

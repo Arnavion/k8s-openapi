@@ -96,3 +96,29 @@ impl crate::serde::Serialize for IPBlock {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl IPBlock {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "IPBlock describes a particular CIDR (Ex. \"192.168.1.1/24\") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.",
+          "properties": {
+            "cidr": {
+              "description": "CIDR is a string representing the IP Block Valid examples are \"192.168.1.1/24\"",
+              "type": "string"
+            },
+            "except": {
+              "description": "Except is a slice of CIDRs that should not be included within an IP Block Valid examples are \"192.168.1.1/24\" Except values will be rejected if they are outside the CIDR range",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "cidr"
+          ],
+          "type": "object"
+        })
+    }
+}

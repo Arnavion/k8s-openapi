@@ -96,3 +96,27 @@ impl crate::serde::Serialize for Initializer {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Initializer {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Initializer describes the name and the failure policy of an initializer, and what resources it applies to.",
+          "properties": {
+            "name": {
+              "description": "Name is the identifier of the initializer. It will be added to the object that needs to be initialized. Name should be fully qualified, e.g., alwayspullimages.kubernetes.io, where \"alwayspullimages\" is the name of the webhook, and kubernetes.io is the name of the organization. Required",
+              "type": "string"
+            },
+            "rules": {
+              "description": "Rules describes what resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.",
+              "items": crate::api::admissionregistration::v1alpha1::Rule::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

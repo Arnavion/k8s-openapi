@@ -181,3 +181,46 @@ impl crate::serde::Serialize for CustomResourceDefinitionSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceDefinitionSpec describes how a user wants their resource to appear",
+          "properties": {
+            "additionalPrinterColumns": {
+              "description": "AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Optional, the global columns for all versions. Top-level and per-version columns are mutually exclusive.",
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition::schema(),
+              "type": "array"
+            },
+            "conversion": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceConversion::schema(), "`conversion` defines conversion settings for the CRD."),
+            "group": {
+              "description": "Group is the group this resource belongs in",
+              "type": "string"
+            },
+            "names": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames::schema(), "Names are the names used to describe this custom resource"),
+            "scope": {
+              "description": "Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced",
+              "type": "string"
+            },
+            "subresources": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources::schema(), "Subresources describes the subresources for CustomResource Optional, the global subresources for all versions. Top-level and per-version subresources are mutually exclusive."),
+            "validation": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation::schema(), "Validation describes the validation methods for CustomResources Optional, the global validation schema for all versions. Top-level and per-version schemas are mutually exclusive."),
+            "version": {
+              "description": "Version is the version this resource belongs in Should be always first item in Versions field if provided. Optional, but at least one of Version or Versions must be set. Deprecated: Please use `Versions`.",
+              "type": "string"
+            },
+            "versions": {
+              "description": "Versions is the list of all supported versions for this resource. If Version field is provided, this field is optional. Validation: All versions must use the same validation schema for now. i.e., top level Validation field is applied to all of these versions. Order: The version name will be used to compute the order. If the version string is \"kube-like\", it will sort above non \"kube-like\" version strings, which are ordered lexicographically. \"Kube-like\" versions start with a \"v\", then are followed by a number (the major version), then optionally the string \"alpha\" or \"beta\" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.",
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "group",
+            "names",
+            "scope"
+          ],
+          "type": "object"
+        })
+    }
+}

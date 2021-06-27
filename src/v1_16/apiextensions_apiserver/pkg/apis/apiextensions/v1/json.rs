@@ -29,3 +29,13 @@ impl crate::serde::Serialize for JSON {
         serializer.serialize_newtype_struct("JSON", &self.0)
     }
 }
+
+#[cfg(feature = "schema")]
+impl JSON {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.",
+          "type": "object"
+        })
+    }
+}

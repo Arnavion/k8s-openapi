@@ -106,3 +106,34 @@ impl crate::serde::Serialize for LabelSelectorRequirement {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LabelSelectorRequirement {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
+          "properties": {
+            "key": {
+              "description": "key is the label key that the selector applies to.",
+              "type": "string"
+            },
+            "operator": {
+              "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
+              "type": "string"
+            },
+            "values": {
+              "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "key",
+            "operator"
+          ],
+          "type": "object"
+        })
+    }
+}

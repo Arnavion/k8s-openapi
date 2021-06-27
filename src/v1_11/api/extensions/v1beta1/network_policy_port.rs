@@ -98,3 +98,20 @@ impl crate::serde::Serialize for NetworkPolicyPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NetworkPolicyPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DEPRECATED 1.9 - This group version of NetworkPolicyPort is deprecated by networking/v1/NetworkPolicyPort.",
+          "properties": {
+            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "If specified, the port on the given protocol.  This can either be a numerical or named port on a pod.  If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched."),
+            "protocol": {
+              "description": "Optional.  The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

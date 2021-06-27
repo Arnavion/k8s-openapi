@@ -111,3 +111,18 @@ impl crate::serde::Serialize for Handler {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Handler {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Handler defines a specific action that should be taken",
+          "properties": {
+            "exec": crate::schema_ref_with_description(crate::api::core::v1::ExecAction::schema(), "One and only one of the following should be specified. Exec specifies the action to take."),
+            "httpGet": crate::schema_ref_with_description(crate::api::core::v1::HTTPGetAction::schema(), "HTTPGet specifies the http request to perform."),
+            "tcpSocket": crate::schema_ref_with_description(crate::api::core::v1::TCPSocketAction::schema(), "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported")
+          },
+          "type": "object"
+        })
+    }
+}

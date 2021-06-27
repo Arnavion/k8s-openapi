@@ -103,3 +103,26 @@ impl crate::serde::Serialize for ObjectMetricSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ObjectMetricSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
+          "properties": {
+            "metricName": {
+              "description": "metricName is the name of the metric in question.",
+              "type": "string"
+            },
+            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::CrossVersionObjectReference::schema(), "target is the described Kubernetes object."),
+            "targetValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetValue is the target value of the metric (as a quantity).")
+          },
+          "required": [
+            "metricName",
+            "target",
+            "targetValue"
+          ],
+          "type": "object"
+        })
+    }
+}

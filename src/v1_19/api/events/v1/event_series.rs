@@ -93,3 +93,25 @@ impl crate::serde::Serialize for EventSeries {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EventSeries {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time. How often to update the EventSeries is up to the event reporters. The default event reporter in \"k8s.io/client-go/tools/events/event_broadcaster.go\" shows how this struct is updated on heartbeats and can guide customized reporter implementations.",
+          "properties": {
+            "count": {
+              "description": "count is the number of occurrences in this series up to the last heartbeat time.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "lastObservedTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "lastObservedTime is the time when last Event from the series was seen before last heartbeat.")
+          },
+          "required": [
+            "count",
+            "lastObservedTime"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -497,3 +497,36 @@ impl crate::serde::Serialize for CSINode {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CSINode {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need to create the CSINode object directly. As long as they use the node-driver-registrar sidecar container, the kubelet will automatically populate the CSINode object for the CSI driver as part of kubelet plugin registration. CSINode has the same name as a node. If the object is missing, it means either there are no CSI Drivers available on the node, or the Kubelet version is low enough that it doesn't create this object. CSINode has an OwnerReference that points to the corresponding node object.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "storage.k8s.io",
+              "kind": "CSINode",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "metadata.name must be the Kubernetes node name."),
+            "spec": crate::schema_ref_with_description(crate::api::storage::v1beta1::CSINodeSpec::schema(), "spec is the specification of CSINode")
+          },
+          "required": [
+            "metadata",
+            "spec"
+          ],
+          "type": "object"
+        })
+    }
+}

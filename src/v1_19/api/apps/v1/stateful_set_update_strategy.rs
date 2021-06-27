@@ -98,3 +98,20 @@ impl crate::serde::Serialize for StatefulSetUpdateStrategy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StatefulSetUpdateStrategy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.",
+          "properties": {
+            "rollingUpdate": crate::schema_ref_with_description(crate::api::apps::v1::RollingUpdateStatefulSetStrategy::schema(), "RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType."),
+            "type": {
+              "description": "Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

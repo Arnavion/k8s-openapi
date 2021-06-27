@@ -103,3 +103,26 @@ impl crate::serde::Serialize for ObjectMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ObjectMetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
+          "properties": {
+            "currentValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentValue is the current value of the metric (as a quantity)."),
+            "metricName": {
+              "description": "metricName is the name of the metric in question.",
+              "type": "string"
+            },
+            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::CrossVersionObjectReference::schema(), "target is the described Kubernetes object.")
+          },
+          "required": [
+            "currentValue",
+            "metricName",
+            "target"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -98,3 +98,25 @@ impl crate::serde::Serialize for DownwardAPIVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DownwardAPIVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DownwardAPIVolumeSource represents a volume containing downward API info. Downward API volumes support ownership management and SELinux relabeling.",
+          "properties": {
+            "defaultMode": {
+              "description": "Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "items": {
+              "description": "Items is a list of downward API volume file",
+              "items": crate::api::core::v1::DownwardAPIVolumeFile::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -109,3 +109,30 @@ impl crate::serde::Serialize for ConfigMapKeySelector {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ConfigMapKeySelector {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Selects a key from a ConfigMap.",
+          "properties": {
+            "key": {
+              "description": "The key to select.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the ConfigMap or it's key must be defined",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object"
+        })
+    }
+}

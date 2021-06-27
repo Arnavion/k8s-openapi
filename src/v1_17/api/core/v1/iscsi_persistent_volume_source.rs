@@ -207,3 +207,65 @@ impl crate::serde::Serialize for ISCSIPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ISCSIPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.",
+          "properties": {
+            "chapAuthDiscovery": {
+              "description": "whether support iSCSI Discovery CHAP authentication",
+              "type": "boolean"
+            },
+            "chapAuthSession": {
+              "description": "whether support iSCSI Session CHAP authentication",
+              "type": "boolean"
+            },
+            "fsType": {
+              "description": "Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#iscsi",
+              "type": "string"
+            },
+            "initiatorName": {
+              "description": "Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.",
+              "type": "string"
+            },
+            "iqn": {
+              "description": "Target iSCSI Qualified Name.",
+              "type": "string"
+            },
+            "iscsiInterface": {
+              "description": "iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).",
+              "type": "string"
+            },
+            "lun": {
+              "description": "iSCSI Target Lun number.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "portals": {
+              "description": "iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "readOnly": {
+              "description": "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.",
+              "type": "boolean"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "CHAP Secret for iSCSI target and initiator authentication"),
+            "targetPortal": {
+              "description": "iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "iqn",
+            "lun",
+            "targetPortal"
+          ],
+          "type": "object"
+        })
+    }
+}

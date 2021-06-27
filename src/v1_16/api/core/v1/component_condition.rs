@@ -119,3 +119,35 @@ impl crate::serde::Serialize for ComponentCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ComponentCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Information about the condition of a component.",
+          "properties": {
+            "error": {
+              "description": "Condition error code for a component. For example, a health check error code.",
+              "type": "string"
+            },
+            "message": {
+              "description": "Message about the condition for a component. For example, information about a health check.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition for a component. Valid values for \"Healthy\": \"True\", \"False\", or \"Unknown\".",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of condition for a component. Valid value: \"Healthy\"",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

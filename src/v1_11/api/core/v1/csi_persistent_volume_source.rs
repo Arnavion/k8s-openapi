@@ -171,3 +171,45 @@ impl crate::serde::Serialize for CSIPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CSIPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents storage that is managed by an external CSI volume driver (Beta feature)",
+          "properties": {
+            "controllerPublishSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
+            "driver": {
+              "description": "Driver is the name of the driver to use for this volume. Required.",
+              "type": "string"
+            },
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\".",
+              "type": "string"
+            },
+            "nodePublishSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
+            "nodeStageSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
+            "readOnly": {
+              "description": "Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).",
+              "type": "boolean"
+            },
+            "volumeAttributes": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Attributes of the volume to publish.",
+              "type": "object"
+            },
+            "volumeHandle": {
+              "description": "VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "driver",
+            "volumeHandle"
+          ],
+          "type": "object"
+        })
+    }
+}

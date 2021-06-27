@@ -124,3 +124,19 @@ impl crate::serde::Serialize for EnvVarSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EnvVarSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EnvVarSource represents a source for the value of an EnvVar.",
+          "properties": {
+            "configMapKeyRef": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapKeySelector::schema(), "Selects a key of a ConfigMap."),
+            "fieldRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectFieldSelector::schema(), "Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs."),
+            "resourceFieldRef": crate::schema_ref_with_description(crate::api::core::v1::ResourceFieldSelector::schema(), "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported."),
+            "secretKeyRef": crate::schema_ref_with_description(crate::api::core::v1::SecretKeySelector::schema(), "Selects a key of a secret in the pod's namespace")
+          },
+          "type": "object"
+        })
+    }
+}

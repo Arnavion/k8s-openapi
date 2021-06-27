@@ -145,3 +145,37 @@ impl crate::serde::Serialize for PodCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodCondition contains details for the current condition of this pod.",
+          "properties": {
+            "lastProbeTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time we probed the condition."),
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "Human-readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Unique, one-word, CamelCase reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status is the status of the condition. Can be True, False, Unknown. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type is the type of the condition. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

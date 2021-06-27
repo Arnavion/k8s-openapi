@@ -98,3 +98,23 @@ impl crate::serde::Serialize for SecretReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SecretReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace",
+          "properties": {
+            "name": {
+              "description": "Name is unique within a namespace to reference a secret resource.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace defines the space within which the secret name must be unique.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

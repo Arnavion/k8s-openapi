@@ -85,3 +85,16 @@ impl crate::serde::Serialize for SessionAffinityConfig {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SessionAffinityConfig {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SessionAffinityConfig represents the configurations of session affinity.",
+          "properties": {
+            "clientIP": crate::schema_ref_with_description(crate::api::core::v1::ClientIPConfig::schema(), "clientIP contains the configurations of Client IP based session affinity.")
+          },
+          "type": "object"
+        })
+    }
+}

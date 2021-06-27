@@ -98,3 +98,23 @@ impl crate::serde::Serialize for Preconditions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Preconditions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.",
+          "properties": {
+            "resourceVersion": {
+              "description": "Specifies the target ResourceVersion",
+              "type": "string"
+            },
+            "uid": {
+              "description": "Specifies the target UID.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

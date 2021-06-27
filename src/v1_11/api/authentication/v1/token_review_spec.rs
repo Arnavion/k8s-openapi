@@ -85,3 +85,19 @@ impl crate::serde::Serialize for TokenReviewSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TokenReviewSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TokenReviewSpec is a description of the token authentication request.",
+          "properties": {
+            "token": {
+              "description": "Token is the opaque bearer token.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

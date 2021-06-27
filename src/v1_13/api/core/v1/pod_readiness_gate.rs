@@ -83,3 +83,22 @@ impl crate::serde::Serialize for PodReadinessGate {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodReadinessGate {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodReadinessGate contains the reference to a pod condition",
+          "properties": {
+            "conditionType": {
+              "description": "ConditionType refers to a condition in the pod's condition list with matching type.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "conditionType"
+          ],
+          "type": "object"
+        })
+    }
+}

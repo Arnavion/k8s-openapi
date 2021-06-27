@@ -84,3 +84,18 @@ impl crate::serde::Serialize for SelfSubjectRulesReviewSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SelfSubjectRulesReviewSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "namespace": {
+              "description": "Namespace to evaluate rules for. Required.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -96,3 +96,26 @@ impl crate::serde::Serialize for PhotonPersistentDiskVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PhotonPersistentDiskVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a Photon Controller persistent disk resource.",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.",
+              "type": "string"
+            },
+            "pdID": {
+              "description": "ID that identifies Photon Controller persistent disk",
+              "type": "string"
+            }
+          },
+          "required": [
+            "pdID"
+          ],
+          "type": "object"
+        })
+    }
+}

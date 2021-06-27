@@ -93,3 +93,25 @@ impl crate::serde::Serialize for WeightedPodAffinityTerm {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl WeightedPodAffinityTerm {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)",
+          "properties": {
+            "podAffinityTerm": crate::schema_ref_with_description(crate::api::core::v1::PodAffinityTerm::schema(), "Required. A pod affinity term, associated with the corresponding weight."),
+            "weight": {
+              "description": "weight associated with matching the corresponding podAffinityTerm, in the range 1-100.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "podAffinityTerm",
+            "weight"
+          ],
+          "type": "object"
+        })
+    }
+}

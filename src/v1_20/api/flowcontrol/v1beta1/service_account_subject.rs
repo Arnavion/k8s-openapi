@@ -93,3 +93,27 @@ impl crate::serde::Serialize for ServiceAccountSubject {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceAccountSubject {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceAccountSubject holds detailed information for service-account-kind subject.",
+          "properties": {
+            "name": {
+              "description": "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "`namespace` is the namespace of matching ServiceAccount objects. Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "namespace"
+          ],
+          "type": "object"
+        })
+    }
+}

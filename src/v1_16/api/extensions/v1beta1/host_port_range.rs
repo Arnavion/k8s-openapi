@@ -93,3 +93,29 @@ impl crate::serde::Serialize for HostPortRange {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HostPortRange {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HostPortRange defines a range of host ports that will be enabled by a policy for pods to use.  It requires both the start and end to be defined. Deprecated: use HostPortRange from policy API Group instead.",
+          "properties": {
+            "max": {
+              "description": "max is the end of the range, inclusive.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "min": {
+              "description": "min is the start of the range, inclusive.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "max",
+            "min"
+          ],
+          "type": "object"
+        })
+    }
+}

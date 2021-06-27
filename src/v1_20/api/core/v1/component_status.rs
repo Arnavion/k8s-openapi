@@ -297,3 +297,39 @@ impl crate::serde::Serialize for ComponentStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ComponentStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ComponentStatus (and ComponentStatusList) holds the cluster validation info. Deprecated: This API is deprecated in v1.19+",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "ComponentStatus",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "conditions": {
+              "description": "List of component conditions observed",
+              "items": crate::api::core::v1::ComponentCondition::schema(),
+              "type": "array"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

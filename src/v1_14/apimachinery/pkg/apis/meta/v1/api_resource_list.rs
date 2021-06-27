@@ -122,3 +122,43 @@ impl crate::serde::Serialize for APIResourceList {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl APIResourceList {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "APIResourceList",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "groupVersion": {
+              "description": "groupVersion is the group and version this APIResourceList is for.",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "resources": {
+              "description": "resources contains the name of the resources and if they are namespaced.",
+              "items": crate::apimachinery::pkg::apis::meta::v1::APIResource::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "groupVersion",
+            "resources"
+          ],
+          "type": "object"
+        })
+    }
+}

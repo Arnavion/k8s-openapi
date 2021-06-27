@@ -96,3 +96,26 @@ impl crate::serde::Serialize for LocalVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LocalVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Local represents directly-attached storage with node affinity (Beta feature)",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default value is to auto-select a fileystem if unspecified.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        })
+    }
+}

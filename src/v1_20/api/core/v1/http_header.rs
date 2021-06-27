@@ -93,3 +93,27 @@ impl crate::serde::Serialize for HTTPHeader {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HTTPHeader {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HTTPHeader describes a custom header to be used in HTTP probes",
+          "properties": {
+            "name": {
+              "description": "The header field name",
+              "type": "string"
+            },
+            "value": {
+              "description": "The header field value",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "value"
+          ],
+          "type": "object"
+        })
+    }
+}

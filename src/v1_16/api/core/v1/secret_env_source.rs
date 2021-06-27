@@ -100,3 +100,23 @@ impl crate::serde::Serialize for SecretEnvSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SecretEnvSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SecretEnvSource selects a Secret to populate the environment variables with.\n\nThe contents of the target Secret's Data field will represent the key-value pairs as environment variables.",
+          "properties": {
+            "name": {
+              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the Secret must be defined",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

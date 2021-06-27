@@ -106,3 +106,31 @@ impl crate::serde::Serialize for CrossVersionObjectReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CrossVersionObjectReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CrossVersionObjectReference contains enough information to let you identify the referred resource.",
+          "properties": {
+            "apiVersion": {
+              "description": "API version of the referent",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds\"",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

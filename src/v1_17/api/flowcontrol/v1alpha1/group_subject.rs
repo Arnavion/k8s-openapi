@@ -83,3 +83,22 @@ impl crate::serde::Serialize for GroupSubject {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl GroupSubject {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "GroupSubject holds detailed information for group-kind subject.",
+          "properties": {
+            "name": {
+              "description": "name is the user group that matches, or \"*\" to match all user groups. See https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

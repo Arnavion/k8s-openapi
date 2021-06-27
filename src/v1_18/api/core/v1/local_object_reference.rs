@@ -85,3 +85,19 @@ impl crate::serde::Serialize for LocalObjectReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LocalObjectReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
+          "properties": {
+            "name": {
+              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -93,3 +93,29 @@ impl crate::serde::Serialize for IDRange {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl IDRange {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "IDRange provides a min/max of an allowed range of IDs.",
+          "properties": {
+            "max": {
+              "description": "max is the end of the range, inclusive.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "min": {
+              "description": "min is the start of the range, inclusive.",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "max",
+            "min"
+          ],
+          "type": "object"
+        })
+    }
+}

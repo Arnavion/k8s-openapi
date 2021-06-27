@@ -98,3 +98,23 @@ impl crate::serde::Serialize for ServiceReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceReference holds a reference to Service.legacy.k8s.io",
+          "properties": {
+            "name": {
+              "description": "Name is the name of the service",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace is the namespace of the service",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

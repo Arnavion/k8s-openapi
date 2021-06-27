@@ -163,3 +163,43 @@ impl crate::serde::Serialize for ResourceAttributes {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ResourceAttributes {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface",
+          "properties": {
+            "group": {
+              "description": "Group is the API Group of the Resource.  \"*\" means all.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name is the name of the resource being requested for a \"get\" or deleted for a \"delete\". \"\" (empty) means all.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace is the namespace of the action being requested.  Currently, there is no distinction between no namespace and all namespaces \"\" (empty) is defaulted for LocalSubjectAccessReviews \"\" (empty) is empty for cluster-scoped resources \"\" (empty) means \"all\" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview",
+              "type": "string"
+            },
+            "resource": {
+              "description": "Resource is one of the existing resource types.  \"*\" means all.",
+              "type": "string"
+            },
+            "subresource": {
+              "description": "Subresource is one of the existing resource types.  \"\" means none.",
+              "type": "string"
+            },
+            "verb": {
+              "description": "Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy.  \"*\" means all.",
+              "type": "string"
+            },
+            "version": {
+              "description": "Version is the API Version of the Resource.  \"*\" means all.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

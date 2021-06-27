@@ -98,3 +98,26 @@ impl crate::serde::Serialize for SeccompProfile {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SeccompProfile {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.",
+          "properties": {
+            "localhostProfile": {
+              "description": "localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is \"Localhost\".",
+              "type": "string"
+            },
+            "type": {
+              "description": "type indicates which kind of seccomp profile will be applied. Valid options are:\n\nLocalhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

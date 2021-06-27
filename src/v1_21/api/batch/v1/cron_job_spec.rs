@@ -158,3 +158,47 @@ impl crate::serde::Serialize for CronJobSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CronJobSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CronJobSpec describes how the job execution will look like and when it will actually run.",
+          "properties": {
+            "concurrencyPolicy": {
+              "description": "Specifies how to treat concurrent executions of a Job. Valid values are: - \"Allow\" (default): allows CronJobs to run concurrently; - \"Forbid\": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - \"Replace\": cancels currently running job and replaces it with a new one",
+              "type": "string"
+            },
+            "failedJobsHistoryLimit": {
+              "description": "The number of failed finished jobs to retain. Value must be non-negative integer. Defaults to 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "jobTemplate": crate::schema_ref_with_description(crate::api::batch::v1::JobTemplateSpec::schema(), "Specifies the job that will be created when executing a CronJob."),
+            "schedule": {
+              "description": "The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.",
+              "type": "string"
+            },
+            "startingDeadlineSeconds": {
+              "description": "Optional deadline in seconds for starting the job if it misses scheduled time for any reason.  Missed jobs executions will be counted as failed ones.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "successfulJobsHistoryLimit": {
+              "description": "The number of successful finished jobs to retain. Value must be non-negative integer. Defaults to 3.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "suspend": {
+              "description": "This flag tells the controller to suspend subsequent executions, it does not apply to already started executions.  Defaults to false.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "jobTemplate",
+            "schedule"
+          ],
+          "type": "object"
+        })
+    }
+}

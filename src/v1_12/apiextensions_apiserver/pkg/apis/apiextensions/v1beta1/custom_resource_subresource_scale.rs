@@ -106,3 +106,31 @@ impl crate::serde::Serialize for CustomResourceSubresourceScale {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceSubresourceScale {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceSubresourceScale defines how to serve the scale subresource for CustomResources.",
+          "properties": {
+            "labelSelectorPath": {
+              "description": "LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. Must be set to work with HPA. If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.",
+              "type": "string"
+            },
+            "specReplicasPath": {
+              "description": "SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .spec. If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET.",
+              "type": "string"
+            },
+            "statusReplicasPath": {
+              "description": "StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource will default to 0.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "specReplicasPath",
+            "statusReplicasPath"
+          ],
+          "type": "object"
+        })
+    }
+}

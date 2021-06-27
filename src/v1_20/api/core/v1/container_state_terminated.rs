@@ -161,3 +161,42 @@ impl crate::serde::Serialize for ContainerStateTerminated {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerStateTerminated {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerStateTerminated is a terminated state of a container.",
+          "properties": {
+            "containerID": {
+              "description": "Container's ID in the format 'docker://<container_id>'",
+              "type": "string"
+            },
+            "exitCode": {
+              "description": "Exit status from the last termination of the container",
+              "format": "int32",
+              "type": "integer"
+            },
+            "finishedAt": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time at which the container last terminated"),
+            "message": {
+              "description": "Message regarding the last termination of the container",
+              "type": "string"
+            },
+            "reason": {
+              "description": "(brief) reason from the last termination of the container",
+              "type": "string"
+            },
+            "signal": {
+              "description": "Signal from the last termination of the container",
+              "format": "int32",
+              "type": "integer"
+            },
+            "startedAt": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time at which previous execution of the container started")
+          },
+          "required": [
+            "exitCode"
+          ],
+          "type": "object"
+        })
+    }
+}

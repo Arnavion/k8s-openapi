@@ -93,3 +93,27 @@ impl crate::serde::Serialize for AttachedVolume {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AttachedVolume {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AttachedVolume describes a volume attached to a node",
+          "properties": {
+            "devicePath": {
+              "description": "DevicePath represents the device path where the volume should be available",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the attached volume",
+              "type": "string"
+            }
+          },
+          "required": [
+            "devicePath",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

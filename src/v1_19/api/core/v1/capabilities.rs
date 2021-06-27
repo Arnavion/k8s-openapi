@@ -98,3 +98,29 @@ impl crate::serde::Serialize for Capabilities {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Capabilities {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Adds and removes POSIX capabilities from running containers.",
+          "properties": {
+            "add": {
+              "description": "Added capabilities",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "drop": {
+              "description": "Removed capabilities",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

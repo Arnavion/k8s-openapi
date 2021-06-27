@@ -116,3 +116,34 @@ impl crate::serde::Serialize for ContainerResourceMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerResourceMetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing a single container in each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.",
+          "properties": {
+            "container": {
+              "description": "container is the name of the container in the pods of the scaling target",
+              "type": "string"
+            },
+            "currentAverageUtilization": {
+              "description": "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "currentAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification."),
+            "name": {
+              "description": "name is the name of the resource in question.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "container",
+            "currentAverageValue",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

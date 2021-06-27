@@ -98,3 +98,20 @@ impl crate::serde::Serialize for NetworkPolicyPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NetworkPolicyPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NetworkPolicyPort describes a port to allow traffic on",
+          "properties": {
+            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers."),
+            "protocol": {
+              "description": "The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

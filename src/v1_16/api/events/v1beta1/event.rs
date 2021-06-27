@@ -781,3 +781,71 @@ impl crate::serde::Serialize for Event {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Event {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "events.k8s.io",
+              "kind": "Event",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "action": {
+              "description": "What action was taken/failed regarding to the regarding object.",
+              "type": "string"
+            },
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "deprecatedCount": {
+              "description": "Deprecated field assuring backward compatibility with core.v1 Event type",
+              "format": "int32",
+              "type": "integer"
+            },
+            "deprecatedFirstTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
+            "deprecatedLastTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
+            "deprecatedSource": crate::schema_ref_with_description(crate::api::core::v1::EventSource::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
+            "eventTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "Required. Time when this Event was first observed."),
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
+            "note": {
+              "description": "Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Why the action was taken.",
+              "type": "string"
+            },
+            "regarding": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object."),
+            "related": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object."),
+            "reportingController": {
+              "description": "Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.",
+              "type": "string"
+            },
+            "reportingInstance": {
+              "description": "ID of the controller instance, e.g. `kubelet-xyzf`.",
+              "type": "string"
+            },
+            "series": crate::schema_ref_with_description(crate::api::events::v1beta1::EventSeries::schema(), "Data about the Event series this event represents or nil if it's a singleton Event."),
+            "type": {
+              "description": "Type of this event (Normal, Warning), new types could be added in the future.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "eventTime",
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

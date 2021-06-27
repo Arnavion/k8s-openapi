@@ -132,3 +132,36 @@ impl crate::serde::Serialize for CustomResourceDefinitionCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceDefinitionCondition contains details for the current condition of this pod.",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "message is a human-readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "reason is a unique, one-word, CamelCase reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "status is the status of the condition. Can be True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "type is the type of the condition. Types include Established, NamesAccepted and Terminating.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

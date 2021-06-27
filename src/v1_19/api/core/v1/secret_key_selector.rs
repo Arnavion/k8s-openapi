@@ -109,3 +109,30 @@ impl crate::serde::Serialize for SecretKeySelector {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SecretKeySelector {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SecretKeySelector selects a key of a Secret.",
+          "properties": {
+            "key": {
+              "description": "The key of the secret to select from.  Must be a valid secret key.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the Secret or its key must be defined",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object"
+        })
+    }
+}

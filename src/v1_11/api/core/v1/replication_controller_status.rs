@@ -148,3 +148,48 @@ impl crate::serde::Serialize for ReplicationControllerStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ReplicationControllerStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ReplicationControllerStatus represents the current status of a replication controller.",
+          "properties": {
+            "availableReplicas": {
+              "description": "The number of available replicas (ready for at least minReadySeconds) for this replication controller.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "conditions": {
+              "description": "Represents the latest available observations of a replication controller's current state.",
+              "items": crate::api::core::v1::ReplicationControllerCondition::schema(),
+              "type": "array"
+            },
+            "fullyLabeledReplicas": {
+              "description": "The number of pods that have labels matching the labels of the pod template of the replication controller.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "observedGeneration": {
+              "description": "ObservedGeneration reflects the generation of the most recently observed replication controller.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "readyReplicas": {
+              "description": "The number of ready replicas for this replication controller.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "replicas": {
+              "description": "Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "replicas"
+          ],
+          "type": "object"
+        })
+    }
+}

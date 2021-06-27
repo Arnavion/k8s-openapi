@@ -83,3 +83,23 @@ impl crate::serde::Serialize for DaemonEndpoint {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DaemonEndpoint {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DaemonEndpoint contains information about a single Daemon endpoint.",
+          "properties": {
+            "Port": {
+              "description": "Port number of the given endpoint.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "Port"
+          ],
+          "type": "object"
+        })
+    }
+}

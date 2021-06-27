@@ -98,3 +98,21 @@ impl crate::serde::Serialize for CronJobStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CronJobStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CronJobStatus represents the current state of a cron job.",
+          "properties": {
+            "active": {
+              "description": "A list of pointers to currently running jobs.",
+              "items": crate::api::core::v1::ObjectReference::schema(),
+              "type": "array"
+            },
+            "lastScheduleTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Information when was the last time the job was successfully scheduled.")
+          },
+          "type": "object"
+        })
+    }
+}

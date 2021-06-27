@@ -93,3 +93,21 @@ impl crate::serde::Serialize for AuditSinkSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AuditSinkSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AuditSinkSpec holds the spec for the audit sink",
+          "properties": {
+            "policy": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::Policy::schema(), "Policy defines the policy for selecting which events should be sent to the webhook required"),
+            "webhook": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::Webhook::schema(), "Webhook to send events required")
+          },
+          "required": [
+            "policy",
+            "webhook"
+          ],
+          "type": "object"
+        })
+    }
+}

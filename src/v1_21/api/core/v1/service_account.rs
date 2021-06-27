@@ -630,3 +630,48 @@ impl crate::serde::Serialize for ServiceAccount {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceAccount {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceAccount binds together: * a name, understood by users, and perhaps by peripheral systems, for an identity * a principal that can be authenticated and authorized * a set of secrets",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "ServiceAccount",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "automountServiceAccountToken": {
+              "description": "AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level.",
+              "type": "boolean"
+            },
+            "imagePullSecrets": {
+              "description": "ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod",
+              "items": crate::api::core::v1::LocalObjectReference::schema(),
+              "type": "array"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
+            "secrets": {
+              "description": "Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret",
+              "items": crate::api::core::v1::ObjectReference::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

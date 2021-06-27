@@ -109,3 +109,33 @@ impl crate::serde::Serialize for PolicyRulesWithSubjects {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PolicyRulesWithSubjects {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PolicyRulesWithSubjects prescribes a test that applies to a request to an apiserver. The test considers the subject making the request, the verb being requested, and the resource to be acted upon. This PolicyRulesWithSubjects matches a request if and only if both (a) at least one member of subjects matches the request and (b) at least one member of resourceRules or nonResourceRules matches the request.",
+          "properties": {
+            "nonResourceRules": {
+              "description": "`nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.",
+              "items": crate::api::flowcontrol::v1alpha1::NonResourcePolicyRule::schema(),
+              "type": "array"
+            },
+            "resourceRules": {
+              "description": "`resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.",
+              "items": crate::api::flowcontrol::v1alpha1::ResourcePolicyRule::schema(),
+              "type": "array"
+            },
+            "subjects": {
+              "description": "subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.",
+              "items": crate::api::flowcontrol::v1alpha1::Subject::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "subjects"
+          ],
+          "type": "object"
+        })
+    }
+}

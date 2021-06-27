@@ -163,3 +163,37 @@ impl crate::serde::Serialize for PersistentVolumeClaimSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeClaimSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes",
+          "properties": {
+            "accessModes": {
+              "description": "AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "dataSource": crate::schema_ref_with_description(crate::api::core::v1::TypedLocalObjectReference::schema(), "This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change."),
+            "resources": crate::schema_ref_with_description(crate::api::core::v1::ResourceRequirements::schema(), "Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources"),
+            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "A label query over volumes to consider for binding."),
+            "storageClassName": {
+              "description": "Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1",
+              "type": "string"
+            },
+            "volumeMode": {
+              "description": "volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is an alpha feature and may change in the future.",
+              "type": "string"
+            },
+            "volumeName": {
+              "description": "VolumeName is the binding reference to the PersistentVolume backing this claim.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

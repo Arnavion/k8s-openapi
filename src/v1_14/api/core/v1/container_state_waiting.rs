@@ -98,3 +98,23 @@ impl crate::serde::Serialize for ContainerStateWaiting {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerStateWaiting {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerStateWaiting is a waiting state of a container.",
+          "properties": {
+            "message": {
+              "description": "Message regarding why the container is not yet running.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "(brief) reason the container is not yet running.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

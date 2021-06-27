@@ -119,3 +119,36 @@ impl crate::serde::Serialize for ServiceReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceReference holds a reference to Service.legacy.k8s.io",
+          "properties": {
+            "name": {
+              "description": "name is the name of the service. Required",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "namespace is the namespace of the service. Required",
+              "type": "string"
+            },
+            "path": {
+              "description": "path is an optional URL path at which the webhook will be contacted.",
+              "type": "string"
+            },
+            "port": {
+              "description": "port is an optional service port at which the webhook will be contacted. `port` should be a valid port number (1-65535, inclusive). Defaults to 443 for backward compatibility.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "name",
+            "namespace"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -85,3 +85,16 @@ impl crate::serde::Serialize for CustomResourceValidation {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceValidation {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceValidation is a list of validation methods for CustomResources.",
+          "properties": {
+            "openAPIV3Schema": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(), "OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.")
+          },
+          "type": "object"
+        })
+    }
+}

@@ -174,3 +174,47 @@ impl crate::serde::Serialize for Endpoint {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Endpoint {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Endpoint represents a single logical \"backend\" implementing a service.",
+          "properties": {
+            "addresses": {
+              "description": "addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "conditions": crate::schema_ref_with_description(crate::api::discovery::v1::EndpointConditions::schema(), "conditions contains information about the current status of the endpoint."),
+            "deprecatedTopology": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "deprecatedTopology contains topology information part of the v1beta1 API. This field is deprecated, and will be removed when the v1beta1 API is removed (no sooner than kubernetes v1.24).  While this field can hold values, it is not writable through the v1 API, and any attempts to write to it will be silently ignored. Topology information can be found in the zone and nodeName fields instead.",
+              "type": "object"
+            },
+            "hints": crate::schema_ref_with_description(crate::api::discovery::v1::EndpointHints::schema(), "hints contains information associated with how an endpoint should be consumed."),
+            "hostname": {
+              "description": "hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must be lowercase and pass DNS Label (RFC 1123) validation.",
+              "type": "string"
+            },
+            "nodeName": {
+              "description": "nodeName represents the name of the Node hosting this endpoint. This can be used to determine endpoints local to a Node. This field can be enabled with the EndpointSliceNodeName feature gate.",
+              "type": "string"
+            },
+            "targetRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "targetRef is a reference to a Kubernetes object that represents this endpoint."),
+            "zone": {
+              "description": "zone is the name of the Zone this endpoint exists in.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "addresses"
+          ],
+          "type": "object"
+        })
+    }
+}

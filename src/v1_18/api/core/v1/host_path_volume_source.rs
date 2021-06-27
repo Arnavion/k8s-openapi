@@ -96,3 +96,26 @@ impl crate::serde::Serialize for HostPathVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HostPathVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.",
+          "properties": {
+            "path": {
+              "description": "Path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type for HostPath Volume Defaults to \"\" More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        })
+    }
+}

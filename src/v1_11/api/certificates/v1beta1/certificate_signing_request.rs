@@ -727,3 +727,36 @@ impl crate::serde::Serialize for CertificateSigningRequest {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequest {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Describes a certificate signing request",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "certificates.k8s.io",
+              "kind": "CertificateSigningRequest",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
+            "spec": crate::schema_ref_with_description(crate::api::certificates::v1beta1::CertificateSigningRequestSpec::schema(), "The certificate request itself and any additional information."),
+            "status": crate::schema_ref_with_description(crate::api::certificates::v1beta1::CertificateSigningRequestStatus::schema(), "Derived information about the request.")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

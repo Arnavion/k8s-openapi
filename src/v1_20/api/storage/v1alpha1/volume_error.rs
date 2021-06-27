@@ -98,3 +98,20 @@ impl crate::serde::Serialize for VolumeError {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeError {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "VolumeError captures an error encountered during a volume operation.",
+          "properties": {
+            "message": {
+              "description": "String detailing the error encountered during Attach or Detach operation. This string maybe logged, so it should not contain sensitive information.",
+              "type": "string"
+            },
+            "time": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time the error was encountered.")
+          },
+          "type": "object"
+        })
+    }
+}

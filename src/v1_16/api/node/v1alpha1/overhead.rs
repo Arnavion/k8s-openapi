@@ -85,3 +85,20 @@ impl crate::serde::Serialize for Overhead {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Overhead {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Overhead structure represents the resource overhead associated with running a pod.",
+          "properties": {
+            "podFixed": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "PodFixed represents the fixed resource overhead associated with running a pod.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

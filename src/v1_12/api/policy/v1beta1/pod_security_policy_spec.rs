@@ -338,3 +338,117 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodSecurityPolicySpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodSecurityPolicySpec defines the policy enforced.",
+          "properties": {
+            "allowPrivilegeEscalation": {
+              "description": "allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.",
+              "type": "boolean"
+            },
+            "allowedCapabilities": {
+              "description": "allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "allowedFlexVolumes": {
+              "description": "allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the \"volumes\" field.",
+              "items": crate::api::policy::v1beta1::AllowedFlexVolume::schema(),
+              "type": "array"
+            },
+            "allowedHostPaths": {
+              "description": "allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.",
+              "items": crate::api::policy::v1beta1::AllowedHostPath::schema(),
+              "type": "array"
+            },
+            "allowedProcMountTypes": {
+              "description": "AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "allowedUnsafeSysctls": {
+              "description": "allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.\n\nExamples: e.g. \"foo/*\" allows \"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "defaultAddCapabilities": {
+              "description": "defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "defaultAllowPrivilegeEscalation": {
+              "description": "defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.",
+              "type": "boolean"
+            },
+            "forbiddenSysctls": {
+              "description": "forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.\n\nExamples: e.g. \"foo/*\" forbids \"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" forbids \"foo.bar\", \"foo.baz\", etc.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "fsGroup": crate::schema_ref_with_description(crate::api::policy::v1beta1::FSGroupStrategyOptions::schema(), "fsGroup is the strategy that will dictate what fs group is used by the SecurityContext."),
+            "hostIPC": {
+              "description": "hostIPC determines if the policy allows the use of HostIPC in the pod spec.",
+              "type": "boolean"
+            },
+            "hostNetwork": {
+              "description": "hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.",
+              "type": "boolean"
+            },
+            "hostPID": {
+              "description": "hostPID determines if the policy allows the use of HostPID in the pod spec.",
+              "type": "boolean"
+            },
+            "hostPorts": {
+              "description": "hostPorts determines which host port ranges are allowed to be exposed.",
+              "items": crate::api::policy::v1beta1::HostPortRange::schema(),
+              "type": "array"
+            },
+            "privileged": {
+              "description": "privileged determines if a pod can request to be run as privileged.",
+              "type": "boolean"
+            },
+            "readOnlyRootFilesystem": {
+              "description": "readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to.",
+              "type": "boolean"
+            },
+            "requiredDropCapabilities": {
+              "description": "requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "runAsUser": crate::schema_ref_with_description(crate::api::policy::v1beta1::RunAsUserStrategyOptions::schema(), "runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set."),
+            "seLinux": crate::schema_ref_with_description(crate::api::policy::v1beta1::SELinuxStrategyOptions::schema(), "seLinux is the strategy that will dictate the allowable labels that may be set."),
+            "supplementalGroups": crate::schema_ref_with_description(crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions::schema(), "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext."),
+            "volumes": {
+              "description": "volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "fsGroup",
+            "runAsUser",
+            "seLinux",
+            "supplementalGroups"
+          ],
+          "type": "object"
+        })
+    }
+}

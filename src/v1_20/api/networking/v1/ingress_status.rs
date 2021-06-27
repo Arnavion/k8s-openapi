@@ -85,3 +85,16 @@ impl crate::serde::Serialize for IngressStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl IngressStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "IngressStatus describe the current state of the Ingress.",
+          "properties": {
+            "loadBalancer": crate::schema_ref_with_description(crate::api::core::v1::LoadBalancerStatus::schema(), "LoadBalancer contains the current status of the load-balancer.")
+          },
+          "type": "object"
+        })
+    }
+}

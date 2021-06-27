@@ -135,3 +135,26 @@ impl crate::serde::Serialize for MetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl MetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "MetricStatus describes the last-read state of a single metric.",
+          "properties": {
+            "external": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::ExternalMetricStatus::schema(), "external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster)."),
+            "object": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::ObjectMetricStatus::schema(), "object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object)."),
+            "pods": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::PodsMetricStatus::schema(), "pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value."),
+            "resource": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::ResourceMetricStatus::schema(), "resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source."),
+            "type": {
+              "description": "type is the type of metric source.  It will be one of \"Object\", \"Pods\" or \"Resource\", each corresponds to a matching field in the object.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

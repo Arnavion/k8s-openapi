@@ -150,3 +150,44 @@ impl crate::serde::Serialize for LimitRangeItem {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LimitRangeItem {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "LimitRangeItem defines a min/max usage limit for any resource that matches on kind.",
+          "properties": {
+            "default": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Default resource requirement limit value by resource name if resource limit is omitted.",
+              "type": "object"
+            },
+            "defaultRequest": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.",
+              "type": "object"
+            },
+            "max": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Max usage constraints on this kind by resource name.",
+              "type": "object"
+            },
+            "maxLimitRequestRatio": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.",
+              "type": "object"
+            },
+            "min": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Min usage constraints on this kind by resource name.",
+              "type": "object"
+            },
+            "type": {
+              "description": "Type of resource that this limit applies to.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

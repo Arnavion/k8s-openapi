@@ -122,3 +122,34 @@ impl crate::serde::Serialize for VsphereVirtualDiskVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VsphereVirtualDiskVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a vSphere volume resource.",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.",
+              "type": "string"
+            },
+            "storagePolicyID": {
+              "description": "Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.",
+              "type": "string"
+            },
+            "storagePolicyName": {
+              "description": "Storage Policy Based Management (SPBM) profile name.",
+              "type": "string"
+            },
+            "volumePath": {
+              "description": "Path that identifies vSphere volume vmdk",
+              "type": "string"
+            }
+          },
+          "required": [
+            "volumePath"
+          ],
+          "type": "object"
+        })
+    }
+}

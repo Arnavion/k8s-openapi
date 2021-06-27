@@ -132,3 +132,36 @@ impl crate::serde::Serialize for StatefulSetCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StatefulSetCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "StatefulSetCondition describes the state of a statefulset at a certain point.",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "A human readable message indicating details about the transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "The reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition, one of True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of statefulset condition.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

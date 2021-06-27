@@ -93,3 +93,24 @@ impl crate::serde::Serialize for TokenRequestStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TokenRequestStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TokenRequestStatus is the result of a token request.",
+          "properties": {
+            "expirationTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "ExpirationTimestamp is the time of expiration of the returned token."),
+            "token": {
+              "description": "Token is the opaque bearer token.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "expirationTimestamp",
+            "token"
+          ],
+          "type": "object"
+        })
+    }
+}

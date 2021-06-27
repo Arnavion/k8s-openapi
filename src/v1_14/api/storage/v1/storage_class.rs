@@ -577,3 +577,70 @@ impl crate::serde::Serialize for StorageClass {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StorageClass {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.\n\nStorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "storage.k8s.io",
+              "kind": "StorageClass",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "allowVolumeExpansion": {
+              "description": "AllowVolumeExpansion shows whether the storage class allow volume expand",
+              "type": "boolean"
+            },
+            "allowedTopologies": {
+              "description": "Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.",
+              "items": crate::api::core::v1::TopologySelectorTerm::schema(),
+              "type": "array"
+            },
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
+            "mountOptions": {
+              "description": "Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [\"ro\", \"soft\"]. Not validated - mount of the PVs will simply fail if one is invalid.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "parameters": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Parameters holds the parameters for the provisioner that should create volumes of this storage class.",
+              "type": "object"
+            },
+            "provisioner": {
+              "description": "Provisioner indicates the type of the provisioner.",
+              "type": "string"
+            },
+            "reclaimPolicy": {
+              "description": "Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.",
+              "type": "string"
+            },
+            "volumeBindingMode": {
+              "description": "VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "metadata",
+            "provisioner"
+          ],
+          "type": "object"
+        })
+    }
+}

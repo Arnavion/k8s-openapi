@@ -98,3 +98,24 @@ impl crate::serde::Serialize for ServiceBackendPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceBackendPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceBackendPort is the service port being referenced.",
+          "properties": {
+            "name": {
+              "description": "Name is the name of the port on the Service. This is a mutually exclusive setting with \"Number\".",
+              "type": "string"
+            },
+            "number": {
+              "description": "Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with \"Name\".",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

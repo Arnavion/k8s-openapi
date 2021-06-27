@@ -93,3 +93,21 @@ impl crate::serde::Serialize for PodsMetricSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodsMetricSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.",
+          "properties": {
+            "metric": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), "metric identifies the target metric by name and selector"),
+            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricTarget::schema(), "target specifies the target value for the given metric")
+          },
+          "required": [
+            "metric",
+            "target"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -98,3 +98,24 @@ impl crate::serde::Serialize for FSGroupStrategyOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl FSGroupStrategyOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "FSGroupStrategyOptions defines the strategy type and options used to create the strategy. Deprecated: use FSGroupStrategyOptions from policy API Group instead.",
+          "properties": {
+            "ranges": {
+              "description": "ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs.",
+              "items": crate::api::extensions::v1beta1::IDRange::schema(),
+              "type": "array"
+            },
+            "rule": {
+              "description": "rule is the strategy that will dictate what FSGroup is used in the SecurityContext.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

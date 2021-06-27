@@ -85,3 +85,16 @@ impl crate::serde::Serialize for ServiceStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServiceStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServiceStatus represents the current status of a service.",
+          "properties": {
+            "loadBalancer": crate::schema_ref_with_description(crate::api::core::v1::LoadBalancerStatus::schema(), "LoadBalancer contains the current status of the load-balancer, if one is present.")
+          },
+          "type": "object"
+        })
+    }
+}

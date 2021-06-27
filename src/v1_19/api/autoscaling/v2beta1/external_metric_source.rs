@@ -122,3 +122,25 @@ impl crate::serde::Serialize for ExternalMetricSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ExternalMetricSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster). Exactly one \"target\" type should be set.",
+          "properties": {
+            "metricName": {
+              "description": "metricName is the name of the metric in question.",
+              "type": "string"
+            },
+            "metricSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "metricSelector is used to identify a specific time series within a given metric."),
+            "targetAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue."),
+            "targetValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.")
+          },
+          "required": [
+            "metricName"
+          ],
+          "type": "object"
+        })
+    }
+}

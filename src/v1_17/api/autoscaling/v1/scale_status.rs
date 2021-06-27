@@ -96,3 +96,27 @@ impl crate::serde::Serialize for ScaleStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ScaleStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ScaleStatus represents the current status of a scale subresource.",
+          "properties": {
+            "replicas": {
+              "description": "actual number of observed instances of the scaled object.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "selector": {
+              "description": "label query over pods that should match the replicas count. This is same as the label selector but in the string format to avoid introspection by clients. The string will be in the same format as the query-param syntax. More info about label selectors: http://kubernetes.io/docs/user-guide/labels#label-selectors",
+              "type": "string"
+            }
+          },
+          "required": [
+            "replicas"
+          ],
+          "type": "object"
+        })
+    }
+}

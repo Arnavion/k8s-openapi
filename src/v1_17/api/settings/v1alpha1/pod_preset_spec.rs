@@ -137,3 +137,36 @@ impl crate::serde::Serialize for PodPresetSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodPresetSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodPresetSpec is a description of a pod preset.",
+          "properties": {
+            "env": {
+              "description": "Env defines the collection of EnvVar to inject into containers.",
+              "items": crate::api::core::v1::EnvVar::schema(),
+              "type": "array"
+            },
+            "envFrom": {
+              "description": "EnvFrom defines the collection of EnvFromSource to inject into containers.",
+              "items": crate::api::core::v1::EnvFromSource::schema(),
+              "type": "array"
+            },
+            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Selector is a label query over a set of resources, in this case pods. Required."),
+            "volumeMounts": {
+              "description": "VolumeMounts defines the collection of VolumeMount to inject into containers.",
+              "items": crate::api::core::v1::VolumeMount::schema(),
+              "type": "array"
+            },
+            "volumes": {
+              "description": "Volumes defines the collection of Volume to inject into the pod.",
+              "items": crate::api::core::v1::Volume::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

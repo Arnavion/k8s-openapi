@@ -135,3 +135,38 @@ impl crate::serde::Serialize for FlexPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl FlexPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "FlexPersistentVolumeSource represents a generic persistent volume resource that is provisioned/attached using an exec based plugin.",
+          "properties": {
+            "driver": {
+              "description": "Driver is the name of the driver to use for this volume.",
+              "type": "string"
+            },
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default filesystem depends on FlexVolume script.",
+              "type": "string"
+            },
+            "options": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Optional: Extra command options if any.",
+              "type": "object"
+            },
+            "readOnly": {
+              "description": "Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
+              "type": "boolean"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.")
+          },
+          "required": [
+            "driver"
+          ],
+          "type": "object"
+        })
+    }
+}

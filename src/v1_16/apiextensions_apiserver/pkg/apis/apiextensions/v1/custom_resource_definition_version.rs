@@ -142,3 +142,39 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionVersion {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceDefinitionVersion describes a version for CRD.",
+          "properties": {
+            "additionalPrinterColumns": {
+              "description": "additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.",
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition::schema(),
+              "type": "array"
+            },
+            "name": {
+              "description": "name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at `/apis/<group>/<version>/...` if `served` is true.",
+              "type": "string"
+            },
+            "schema": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceValidation::schema(), "schema describes the schema used for validation, pruning, and defaulting of this version of the custom resource."),
+            "served": {
+              "description": "served is a flag enabling/disabling this version from being served via REST APIs",
+              "type": "boolean"
+            },
+            "storage": {
+              "description": "storage indicates this version should be used when persisting custom resources to storage. There must be exactly one version with storage=true.",
+              "type": "boolean"
+            },
+            "subresources": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources::schema(), "subresources specify what subresources this version of the defined custom resource have.")
+          },
+          "required": [
+            "name",
+            "served",
+            "storage"
+          ],
+          "type": "object"
+        })
+    }
+}

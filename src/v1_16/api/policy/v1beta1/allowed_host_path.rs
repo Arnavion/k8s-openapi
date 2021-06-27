@@ -100,3 +100,23 @@ impl crate::serde::Serialize for AllowedHostPath {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AllowedHostPath {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods to use. It requires the path prefix to be defined.",
+          "properties": {
+            "pathPrefix": {
+              "description": "pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.\n\nExamples: `/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

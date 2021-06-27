@@ -132,3 +132,36 @@ impl crate::serde::Serialize for APIServiceCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl APIServiceCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "APIServiceCondition describes the state of an APIService at a particular point",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "Human-readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Unique, one-word, CamelCase reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status is the status of the condition. Can be True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type is the type of the condition.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -124,3 +124,19 @@ impl crate::serde::Serialize for VolumeProjection {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeProjection {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Projection that may be projected along with other supported volume types",
+          "properties": {
+            "configMap": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapProjection::schema(), "information about the configMap data to project"),
+            "downwardAPI": crate::schema_ref_with_description(crate::api::core::v1::DownwardAPIProjection::schema(), "information about the downwardAPI data to project"),
+            "secret": crate::schema_ref_with_description(crate::api::core::v1::SecretProjection::schema(), "information about the secret data to project"),
+            "serviceAccountToken": crate::schema_ref_with_description(crate::api::core::v1::ServiceAccountTokenProjection::schema(), "information about the serviceAccountToken data to project")
+          },
+          "type": "object"
+        })
+    }
+}

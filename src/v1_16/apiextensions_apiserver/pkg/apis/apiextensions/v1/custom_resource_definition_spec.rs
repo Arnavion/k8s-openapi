@@ -139,3 +139,40 @@ impl crate::serde::Serialize for CustomResourceDefinitionSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceDefinitionSpec describes how a user wants their resource to appear",
+          "properties": {
+            "conversion": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion::schema(), "conversion defines conversion settings for the CRD."),
+            "group": {
+              "description": "group is the API group of the defined custom resource. The custom resources are served under `/apis/<group>/...`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`).",
+              "type": "string"
+            },
+            "names": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames::schema(), "names specify the resource and kind names for the custom resource."),
+            "preserveUnknownFields": {
+              "description": "preserveUnknownFields indicates that object fields which are not specified in the OpenAPI schema should be preserved when persisting to storage. apiVersion, kind, metadata and known fields inside metadata are always preserved. This field is deprecated in favor of setting `x-preserve-unknown-fields` to true in `spec.versions[*].schema.openAPIV3Schema`. See https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields for details.",
+              "type": "boolean"
+            },
+            "scope": {
+              "description": "scope indicates whether the defined custom resource is cluster- or namespace-scoped. Allowed values are `Cluster` and `Namespaced`. Default is `Namespaced`.",
+              "type": "string"
+            },
+            "versions": {
+              "description": "versions is the list of all API versions of the defined custom resource. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is \"kube-like\", it will sort above non \"kube-like\" version strings, which are ordered lexicographically. \"Kube-like\" versions start with a \"v\", then are followed by a number (the major version), then optionally the string \"alpha\" or \"beta\" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.",
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "group",
+            "names",
+            "scope",
+            "versions"
+          ],
+          "type": "object"
+        })
+    }
+}

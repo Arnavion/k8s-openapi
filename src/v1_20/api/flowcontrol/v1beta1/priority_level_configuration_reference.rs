@@ -83,3 +83,22 @@ impl crate::serde::Serialize for PriorityLevelConfigurationReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PriorityLevelConfigurationReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PriorityLevelConfigurationReference contains information that points to the \"request-priority\" being used.",
+          "properties": {
+            "name": {
+              "description": "`name` is the name of the priority level configuration being referenced Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

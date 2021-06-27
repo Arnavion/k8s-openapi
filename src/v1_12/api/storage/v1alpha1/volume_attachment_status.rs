@@ -122,3 +122,31 @@ impl crate::serde::Serialize for VolumeAttachmentStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeAttachmentStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "VolumeAttachmentStatus is the status of a VolumeAttachment request.",
+          "properties": {
+            "attachError": crate::schema_ref_with_description(crate::api::storage::v1alpha1::VolumeError::schema(), "The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher."),
+            "attached": {
+              "description": "Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.",
+              "type": "boolean"
+            },
+            "attachmentMetadata": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.",
+              "type": "object"
+            },
+            "detachError": crate::schema_ref_with_description(crate::api::storage::v1alpha1::VolumeError::schema(), "The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.")
+          },
+          "required": [
+            "attached"
+          ],
+          "type": "object"
+        })
+    }
+}

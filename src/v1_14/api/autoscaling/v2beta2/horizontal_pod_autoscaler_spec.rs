@@ -119,3 +119,35 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HorizontalPodAutoscalerSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.",
+          "properties": {
+            "maxReplicas": {
+              "description": "maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "metrics": {
+              "description": "metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.",
+              "items": crate::api::autoscaling::v2beta2::MetricSpec::schema(),
+              "type": "array"
+            },
+            "minReplicas": {
+              "description": "minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "scaleTargetRef": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(), "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.")
+          },
+          "required": [
+            "maxReplicas",
+            "scaleTargetRef"
+          ],
+          "type": "object"
+        })
+    }
+}

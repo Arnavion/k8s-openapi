@@ -96,3 +96,21 @@ impl crate::serde::Serialize for ExternalDocumentation {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ExternalDocumentation {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ExternalDocumentation allows referencing an external resource for extended documentation.",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

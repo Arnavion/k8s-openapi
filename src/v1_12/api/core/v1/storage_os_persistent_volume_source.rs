@@ -137,3 +137,32 @@ impl crate::serde::Serialize for StorageOSPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StorageOSPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a StorageOS persistent volume resource.",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
+              "type": "boolean"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted."),
+            "volumeName": {
+              "description": "VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.",
+              "type": "string"
+            },
+            "volumeNamespace": {
+              "description": "VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to \"default\" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

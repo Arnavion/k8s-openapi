@@ -98,3 +98,25 @@ impl crate::serde::Serialize for NodeSelectorTerm {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeSelectorTerm {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.",
+          "properties": {
+            "matchExpressions": {
+              "description": "A list of node selector requirements by node's labels.",
+              "items": crate::api::core::v1::NodeSelectorRequirement::schema(),
+              "type": "array"
+            },
+            "matchFields": {
+              "description": "A list of node selector requirements by node's fields.",
+              "items": crate::api::core::v1::NodeSelectorRequirement::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

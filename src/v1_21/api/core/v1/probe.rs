@@ -189,3 +189,48 @@ impl crate::serde::Serialize for Probe {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Probe {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
+          "properties": {
+            "exec": crate::schema_ref_with_description(crate::api::core::v1::ExecAction::schema(), "One and only one of the following should be specified. Exec specifies the action to take."),
+            "failureThreshold": {
+              "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "httpGet": crate::schema_ref_with_description(crate::api::core::v1::HTTPGetAction::schema(), "HTTPGet specifies the http request to perform."),
+            "initialDelaySeconds": {
+              "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+              "format": "int32",
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "successThreshold": {
+              "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "tcpSocket": crate::schema_ref_with_description(crate::api::core::v1::TCPSocketAction::schema(), "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported"),
+            "terminationGracePeriodSeconds": {
+              "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -132,3 +132,36 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HorizontalPodAutoscalerCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the last time the condition transitioned from one status to another"),
+            "message": {
+              "description": "message is a human-readable explanation containing details about the transition",
+              "type": "string"
+            },
+            "reason": {
+              "description": "reason is the reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "status is the status of the condition (True, False, Unknown)",
+              "type": "string"
+            },
+            "type": {
+              "description": "type describes the current condition",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

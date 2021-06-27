@@ -119,3 +119,35 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HorizontalPodAutoscalerSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "specification of a horizontal pod autoscaler.",
+          "properties": {
+            "maxReplicas": {
+              "description": "upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "minReplicas": {
+              "description": "lower limit for the number of pods that can be set by the autoscaler, default 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "scaleTargetRef": crate::schema_ref_with_description(crate::api::autoscaling::v1::CrossVersionObjectReference::schema(), "reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource."),
+            "targetCPUUtilizationPercentage": {
+              "description": "target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "maxReplicas",
+            "scaleTargetRef"
+          ],
+          "type": "object"
+        })
+    }
+}

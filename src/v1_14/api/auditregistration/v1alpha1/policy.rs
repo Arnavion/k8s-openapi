@@ -96,3 +96,29 @@ impl crate::serde::Serialize for Policy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Policy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Policy defines the configuration of how audit events are logged",
+          "properties": {
+            "level": {
+              "description": "The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required",
+              "type": "string"
+            },
+            "stages": {
+              "description": "Stages is a list of stages for which events are created.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "level"
+          ],
+          "type": "object"
+        })
+    }
+}

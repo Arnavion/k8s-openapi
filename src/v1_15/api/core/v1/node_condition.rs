@@ -145,3 +145,37 @@ impl crate::serde::Serialize for NodeCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NodeCondition contains condition information for a node.",
+          "properties": {
+            "lastHeartbeatTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time we got an update on a given condition."),
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transit from one status to another."),
+            "message": {
+              "description": "Human readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "(brief) reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition, one of True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of node condition.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

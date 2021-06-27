@@ -93,3 +93,27 @@ impl crate::serde::Serialize for ServerAddressByClientCIDR {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServerAddressByClientCIDR {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.",
+          "properties": {
+            "clientCIDR": {
+              "description": "The CIDR with which clients can match their IP to figure out the server address that they should use.",
+              "type": "string"
+            },
+            "serverAddress": {
+              "description": "Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "clientCIDR",
+            "serverAddress"
+          ],
+          "type": "object"
+        })
+    }
+}

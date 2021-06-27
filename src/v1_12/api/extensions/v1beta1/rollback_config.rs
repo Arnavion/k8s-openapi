@@ -85,3 +85,20 @@ impl crate::serde::Serialize for RollbackConfig {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl RollbackConfig {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DEPRECATED.",
+          "properties": {
+            "revision": {
+              "description": "The revision to rollback to. If set to 0, rollback to the last revision.",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

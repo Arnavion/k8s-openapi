@@ -106,3 +106,31 @@ impl crate::serde::Serialize for GlusterfsVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl GlusterfsVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.",
+          "properties": {
+            "endpoints": {
+              "description": "EndpointsName is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod",
+              "type": "string"
+            },
+            "path": {
+              "description": "Path is the Glusterfs volume path. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "endpoints",
+            "path"
+          ],
+          "type": "object"
+        })
+    }
+}

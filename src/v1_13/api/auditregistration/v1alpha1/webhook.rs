@@ -96,3 +96,20 @@ impl crate::serde::Serialize for Webhook {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Webhook {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Webhook holds the configuration of the webhook",
+          "properties": {
+            "clientConfig": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::WebhookClientConfig::schema(), "ClientConfig holds the connection parameters for the webhook required"),
+            "throttle": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::WebhookThrottleConfig::schema(), "Throttle holds the options for throttling the webhook")
+          },
+          "required": [
+            "clientConfig"
+          ],
+          "type": "object"
+        })
+    }
+}

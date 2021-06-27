@@ -122,3 +122,31 @@ impl crate::serde::Serialize for EndpointAddress {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EndpointAddress {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EndpointAddress is a tuple that describes single IP address.",
+          "properties": {
+            "hostname": {
+              "description": "The Hostname of this endpoint",
+              "type": "string"
+            },
+            "ip": {
+              "description": "The IP of this endpoint. May not be loopback (127.0.0.0/8), link-local (169.254.0.0/16), or link-local multicast ((224.0.0.0/24). IPv6 is also accepted but not fully supported on all platforms. Also, certain kubernetes components, like kube-proxy, are not IPv6 ready.",
+              "type": "string"
+            },
+            "nodeName": {
+              "description": "Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.",
+              "type": "string"
+            },
+            "targetRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "Reference to object providing the endpoint.")
+          },
+          "required": [
+            "ip"
+          ],
+          "type": "object"
+        })
+    }
+}

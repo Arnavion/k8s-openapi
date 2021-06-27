@@ -93,3 +93,27 @@ impl crate::serde::Serialize for NodeAddress {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeAddress {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NodeAddress contains information for the node's address.",
+          "properties": {
+            "address": {
+              "description": "The node address.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Node address type, one of Hostname, ExternalIP or InternalIP.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "address",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

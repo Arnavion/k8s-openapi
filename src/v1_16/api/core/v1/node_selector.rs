@@ -83,3 +83,23 @@ impl crate::serde::Serialize for NodeSelector {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeSelector {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.",
+          "properties": {
+            "nodeSelectorTerms": {
+              "description": "Required. A list of node selector terms. The terms are ORed.",
+              "items": crate::api::core::v1::NodeSelectorTerm::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "nodeSelectorTerms"
+          ],
+          "type": "object"
+        })
+    }
+}

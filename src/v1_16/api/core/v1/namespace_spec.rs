@@ -85,3 +85,22 @@ impl crate::serde::Serialize for NamespaceSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NamespaceSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NamespaceSpec describes the attributes on a Namespace.",
+          "properties": {
+            "finalizers": {
+              "description": "Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

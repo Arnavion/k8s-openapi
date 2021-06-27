@@ -111,3 +111,27 @@ impl crate::serde::Serialize for PersistentVolumeStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeStatus is the current status of a persistent volume.",
+          "properties": {
+            "message": {
+              "description": "A human-readable message indicating details about why the volume is in this state.",
+              "type": "string"
+            },
+            "phase": {
+              "description": "Phase indicates if a volume is available, bound to a claim, or released by a claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#phase",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Reason is a brief CamelCase string that describes any failure and is meant for machine parsing and tidy display in the CLI.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

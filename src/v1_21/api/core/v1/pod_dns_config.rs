@@ -111,3 +111,34 @@ impl crate::serde::Serialize for PodDNSConfig {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodDNSConfig {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.",
+          "properties": {
+            "nameservers": {
+              "description": "A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "options": {
+              "description": "A list of DNS resolver options. This will be merged with the base options generated from DNSPolicy. Duplicated entries will be removed. Resolution options given in Options will override those that appear in the base DNSPolicy.",
+              "items": crate::api::core::v1::PodDNSConfigOption::schema(),
+              "type": "array"
+            },
+            "searches": {
+              "description": "A list of DNS search domains for host-name lookup. This will be appended to the base search paths generated from DNSPolicy. Duplicated search paths will be removed.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

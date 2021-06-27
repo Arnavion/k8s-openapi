@@ -83,3 +83,22 @@ impl crate::serde::Serialize for Initializer {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Initializer {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Initializer is information about an initializer that has not yet completed.",
+          "properties": {
+            "name": {
+              "description": "name of the process that is responsible for initializing this object.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

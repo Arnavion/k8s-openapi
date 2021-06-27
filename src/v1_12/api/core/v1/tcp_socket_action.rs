@@ -96,3 +96,23 @@ impl crate::serde::Serialize for TCPSocketAction {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TCPSocketAction {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TCPSocketAction describes an action based on opening a socket",
+          "properties": {
+            "host": {
+              "description": "Optional: Host name to connect to, defaults to the pod IP.",
+              "type": "string"
+            },
+            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.")
+          },
+          "required": [
+            "port"
+          ],
+          "type": "object"
+        })
+    }
+}

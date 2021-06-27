@@ -85,3 +85,20 @@ impl crate::serde::Serialize for AggregationRule {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AggregationRule {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole",
+          "properties": {
+            "clusterRoleSelectors": {
+              "description": "ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added",
+              "items": crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

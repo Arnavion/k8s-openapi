@@ -148,3 +148,48 @@ impl crate::serde::Serialize for ReplicaSetStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ReplicaSetStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ReplicaSetStatus represents the current status of a ReplicaSet.",
+          "properties": {
+            "availableReplicas": {
+              "description": "The number of available replicas (ready for at least minReadySeconds) for this replica set.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "conditions": {
+              "description": "Represents the latest available observations of a replica set's current state.",
+              "items": crate::api::apps::v1beta2::ReplicaSetCondition::schema(),
+              "type": "array"
+            },
+            "fullyLabeledReplicas": {
+              "description": "The number of pods that have labels matching the labels of the pod template of the replicaset.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "observedGeneration": {
+              "description": "ObservedGeneration reflects the generation of the most recently observed ReplicaSet.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "readyReplicas": {
+              "description": "The number of ready replicas for this replica set.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "replicas": {
+              "description": "Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "replicas"
+          ],
+          "type": "object"
+        })
+    }
+}

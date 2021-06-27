@@ -148,3 +148,42 @@ impl crate::serde::Serialize for CephFSPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CephFSPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.",
+          "properties": {
+            "monitors": {
+              "description": "Required: Monitors is a collection of Ceph monitors More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "path": {
+              "description": "Optional: Used as the mounted root, rather than the full Ceph tree, default is /",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it",
+              "type": "boolean"
+            },
+            "secretFile": {
+              "description": "Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it",
+              "type": "string"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it"),
+            "user": {
+              "description": "Optional: User is the rados user name, default is admin More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it",
+              "type": "string"
+            }
+          },
+          "required": [
+            "monitors"
+          ],
+          "type": "object"
+        })
+    }
+}

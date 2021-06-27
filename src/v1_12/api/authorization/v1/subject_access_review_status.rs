@@ -122,3 +122,34 @@ impl crate::serde::Serialize for SubjectAccessReviewStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SubjectAccessReviewStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SubjectAccessReviewStatus",
+          "properties": {
+            "allowed": {
+              "description": "Allowed is required. True if the action would be allowed, false otherwise.",
+              "type": "boolean"
+            },
+            "denied": {
+              "description": "Denied is optional. True if the action would be denied, otherwise false. If both allowed is false and denied is false, then the authorizer has no opinion on whether to authorize the action. Denied may not be true if Allowed is true.",
+              "type": "boolean"
+            },
+            "evaluationError": {
+              "description": "EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Reason is optional.  It indicates why a request was allowed or denied.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "allowed"
+          ],
+          "type": "object"
+        })
+    }
+}

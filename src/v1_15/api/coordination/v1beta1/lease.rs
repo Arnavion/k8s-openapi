@@ -616,3 +616,35 @@ impl crate::serde::Serialize for Lease {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Lease {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Lease defines a lease concept.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "coordination.k8s.io",
+              "kind": "Lease",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
+            "spec": crate::schema_ref_with_description(crate::api::coordination::v1beta1::LeaseSpec::schema(), "Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

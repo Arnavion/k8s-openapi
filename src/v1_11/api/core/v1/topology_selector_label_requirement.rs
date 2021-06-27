@@ -93,3 +93,30 @@ impl crate::serde::Serialize for TopologySelectorLabelRequirement {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TopologySelectorLabelRequirement {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.",
+          "properties": {
+            "key": {
+              "description": "The label key that the selector applies to.",
+              "type": "string"
+            },
+            "values": {
+              "description": "An array of string values. One value must match the label to be selected. Each entry in Values is ORed.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "key",
+            "values"
+          ],
+          "type": "object"
+        })
+    }
+}

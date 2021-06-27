@@ -150,3 +150,42 @@ impl crate::serde::Serialize for SubjectAccessReviewSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SubjectAccessReviewSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
+          "properties": {
+            "extra": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.",
+              "type": "object"
+            },
+            "groups": {
+              "description": "Groups is the groups you're testing for.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "nonResourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1::NonResourceAttributes::schema(), "NonResourceAttributes describes information for a non-resource access request"),
+            "resourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1::ResourceAttributes::schema(), "ResourceAuthorizationAttributes describes information for a resource access request"),
+            "uid": {
+              "description": "UID information about the requesting user.",
+              "type": "string"
+            },
+            "user": {
+              "description": "User is the user you're testing for. If you specify \"User\" but not \"Groups\", then is it interpreted as \"What if User were not a member of any groups",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -98,3 +98,24 @@ impl crate::serde::Serialize for NamespaceStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NamespaceStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NamespaceStatus is information about the current status of a Namespace.",
+          "properties": {
+            "conditions": {
+              "description": "Represents the latest available observations of a namespace's current state.",
+              "items": crate::api::core::v1::NamespaceCondition::schema(),
+              "type": "array"
+            },
+            "phase": {
+              "description": "Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

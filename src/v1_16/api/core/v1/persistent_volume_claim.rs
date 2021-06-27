@@ -821,3 +821,36 @@ impl crate::serde::Serialize for PersistentVolumeClaim {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeClaim {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeClaim is a user's request for and claim to a persistent volume",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "PersistentVolumeClaim",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
+            "spec": crate::schema_ref_with_description(crate::api::core::v1::PersistentVolumeClaimSpec::schema(), "Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims"),
+            "status": crate::schema_ref_with_description(crate::api::core::v1::PersistentVolumeClaimStatus::schema(), "Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

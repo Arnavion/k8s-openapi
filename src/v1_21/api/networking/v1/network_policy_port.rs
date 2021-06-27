@@ -111,3 +111,25 @@ impl crate::serde::Serialize for NetworkPolicyPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NetworkPolicyPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NetworkPolicyPort describes a port to allow traffic on",
+          "properties": {
+            "endPort": {
+              "description": "If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate \"NetworkPolicyEndPort\".",
+              "format": "int32",
+              "type": "integer"
+            },
+            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched."),
+            "protocol": {
+              "description": "The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

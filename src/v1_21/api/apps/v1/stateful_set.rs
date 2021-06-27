@@ -811,3 +811,36 @@ impl crate::serde::Serialize for StatefulSet {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StatefulSet {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n - Network: A single stable DNS and hostname.\n - Storage: As many VolumeClaims as requested.\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "apps",
+              "kind": "StatefulSet",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
+            "spec": crate::schema_ref_with_description(crate::api::apps::v1::StatefulSetSpec::schema(), "Spec defines the desired identities of pods in this set."),
+            "status": crate::schema_ref_with_description(crate::api::apps::v1::StatefulSetStatus::schema(), "Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

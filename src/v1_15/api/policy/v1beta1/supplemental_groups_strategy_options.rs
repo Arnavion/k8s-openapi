@@ -98,3 +98,24 @@ impl crate::serde::Serialize for SupplementalGroupsStrategyOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SupplementalGroupsStrategyOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy.",
+          "properties": {
+            "ranges": {
+              "description": "ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end. Required for MustRunAs.",
+              "items": crate::api::policy::v1beta1::IDRange::schema(),
+              "type": "array"
+            },
+            "rule": {
+              "description": "rule is the strategy that will dictate what supplemental groups is used in the SecurityContext.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

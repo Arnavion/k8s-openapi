@@ -109,3 +109,30 @@ impl crate::serde::Serialize for PortworxVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PortworxVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PortworxVolumeSource represents a Portworx volume resource.",
+          "properties": {
+            "fsType": {
+              "description": "FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\". Implicitly inferred to be \"ext4\" if unspecified.",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
+              "type": "boolean"
+            },
+            "volumeID": {
+              "description": "VolumeID uniquely identifies a Portworx volume",
+              "type": "string"
+            }
+          },
+          "required": [
+            "volumeID"
+          ],
+          "type": "object"
+        })
+    }
+}

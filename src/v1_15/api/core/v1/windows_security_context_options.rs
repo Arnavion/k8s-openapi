@@ -98,3 +98,23 @@ impl crate::serde::Serialize for WindowsSecurityContextOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl WindowsSecurityContextOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "WindowsSecurityContextOptions contain Windows-specific options and credentials.",
+          "properties": {
+            "gmsaCredentialSpec": {
+              "description": "GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.",
+              "type": "string"
+            },
+            "gmsaCredentialSpecName": {
+              "description": "GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -129,3 +129,34 @@ impl crate::serde::Serialize for NamespaceCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NamespaceCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NamespaceCondition contains details about state of namespace.",
+          "properties": {
+            "lastTransitionTime": crate::apimachinery::pkg::apis::meta::v1::Time::schema(),
+            "message": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition, one of True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of namespace controller condition.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

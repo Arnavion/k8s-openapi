@@ -83,3 +83,22 @@ impl crate::serde::Serialize for AllowedFlexVolume {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AllowedFlexVolume {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use AllowedFlexVolume from policy API Group instead.",
+          "properties": {
+            "driver": {
+              "description": "driver is the name of the Flexvolume driver.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "driver"
+          ],
+          "type": "object"
+        })
+    }
+}

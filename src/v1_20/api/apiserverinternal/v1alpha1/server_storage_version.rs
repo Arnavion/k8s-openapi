@@ -111,3 +111,30 @@ impl crate::serde::Serialize for ServerStorageVersion {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ServerStorageVersion {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.",
+          "properties": {
+            "apiServerID": {
+              "description": "The ID of the reporting API server.",
+              "type": "string"
+            },
+            "decodableVersions": {
+              "description": "The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "encodingVersion": {
+              "description": "The API server encodes the object to this version when persisting it in the backend (e.g., etcd).",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

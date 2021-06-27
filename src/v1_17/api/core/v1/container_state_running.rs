@@ -85,3 +85,16 @@ impl crate::serde::Serialize for ContainerStateRunning {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerStateRunning {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerStateRunning is a running state of a container.",
+          "properties": {
+            "startedAt": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time at which the container was last (re-)started")
+          },
+          "type": "object"
+        })
+    }
+}

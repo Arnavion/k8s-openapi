@@ -498,3 +498,41 @@ impl crate::serde::Serialize for ClusterRole {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ClusterRole {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "rbac.authorization.k8s.io",
+              "kind": "ClusterRole",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "aggregationRule": crate::schema_ref_with_description(crate::api::rbac::v1beta1::AggregationRule::schema(), "AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller."),
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata."),
+            "rules": {
+              "description": "Rules holds all the PolicyRules for this ClusterRole",
+              "items": crate::api::rbac::v1beta1::PolicyRule::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "metadata",
+            "rules"
+          ],
+          "type": "object"
+        })
+    }
+}

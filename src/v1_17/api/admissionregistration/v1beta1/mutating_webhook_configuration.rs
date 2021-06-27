@@ -500,3 +500,39 @@ impl crate::serde::Serialize for MutatingWebhookConfiguration {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl MutatingWebhookConfiguration {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object. Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "admissionregistration.k8s.io",
+              "kind": "MutatingWebhookConfiguration",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata."),
+            "webhooks": {
+              "description": "Webhooks is a list of webhooks and the affected resources and operations.",
+              "items": crate::api::admissionregistration::v1beta1::MutatingWebhook::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

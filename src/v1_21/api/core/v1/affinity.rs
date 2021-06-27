@@ -111,3 +111,18 @@ impl crate::serde::Serialize for Affinity {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Affinity {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Affinity is a group of affinity scheduling rules.",
+          "properties": {
+            "nodeAffinity": crate::schema_ref_with_description(crate::api::core::v1::NodeAffinity::schema(), "Describes node affinity scheduling rules for the pod."),
+            "podAffinity": crate::schema_ref_with_description(crate::api::core::v1::PodAffinity::schema(), "Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s))."),
+            "podAntiAffinity": crate::schema_ref_with_description(crate::api::core::v1::PodAntiAffinity::schema(), "Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).")
+          },
+          "type": "object"
+        })
+    }
+}

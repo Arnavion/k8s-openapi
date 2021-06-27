@@ -124,3 +124,31 @@ impl crate::serde::Serialize for TokenReviewStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TokenReviewStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TokenReviewStatus is the result of the token authentication request.",
+          "properties": {
+            "audiences": {
+              "description": "Audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is \"true\", the token is valid against the audience of the Kubernetes API server.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "authenticated": {
+              "description": "Authenticated indicates that the token was associated with a known user.",
+              "type": "boolean"
+            },
+            "error": {
+              "description": "Error indicates that the token couldn't be checked",
+              "type": "string"
+            },
+            "user": crate::schema_ref_with_description(crate::api::authentication::v1beta1::UserInfo::schema(), "User is the UserInfo associated with the provided token.")
+          },
+          "type": "object"
+        })
+    }
+}

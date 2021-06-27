@@ -98,3 +98,20 @@ impl crate::serde::Serialize for IngressClassSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl IngressClassSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "IngressClassSpec provides information about the class of an Ingress.",
+          "properties": {
+            "controller": {
+              "description": "Controller refers to the name of the controller that should handle this class. This allows for different \"flavors\" that are controlled by the same controller. For example, you may have different Parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. \"acme.io/ingress-controller\". This field is immutable.",
+              "type": "string"
+            },
+            "parameters": crate::schema_ref_with_description(crate::api::networking::v1::IngressClassParametersReference::schema(), "Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.")
+          },
+          "type": "object"
+        })
+    }
+}

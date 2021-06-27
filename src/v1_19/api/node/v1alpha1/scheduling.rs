@@ -98,3 +98,27 @@ impl crate::serde::Serialize for Scheduling {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Scheduling {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.",
+          "properties": {
+            "nodeSelector": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.",
+              "type": "object"
+            },
+            "tolerations": {
+              "description": "tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.",
+              "items": crate::api::core::v1::Toleration::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

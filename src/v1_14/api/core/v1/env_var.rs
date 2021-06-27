@@ -109,3 +109,27 @@ impl crate::serde::Serialize for EnvVar {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EnvVar {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EnvVar represents an environment variable present in a Container.",
+          "properties": {
+            "name": {
+              "description": "Name of the environment variable. Must be a C_IDENTIFIER.",
+              "type": "string"
+            },
+            "value": {
+              "description": "Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to \"\".",
+              "type": "string"
+            },
+            "valueFrom": crate::schema_ref_with_description(crate::api::core::v1::EnvVarSource::schema(), "Source for the environment variable's value. Cannot be used if value is not empty.")
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -132,3 +132,39 @@ impl crate::serde::Serialize for QuobyteVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl QuobyteVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.",
+          "properties": {
+            "group": {
+              "description": "Group to map volume access to Default is no group",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "ReadOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.",
+              "type": "boolean"
+            },
+            "registry": {
+              "description": "Registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes",
+              "type": "string"
+            },
+            "user": {
+              "description": "User to map volume access to Defaults to serivceaccount user",
+              "type": "string"
+            },
+            "volume": {
+              "description": "Volume is a string that references an already created Quobyte volume by name.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "registry",
+            "volume"
+          ],
+          "type": "object"
+        })
+    }
+}

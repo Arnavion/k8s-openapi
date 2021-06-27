@@ -98,3 +98,27 @@ impl crate::serde::Serialize for ContainerImage {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerImage {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Describe a container image",
+          "properties": {
+            "names": {
+              "description": "Names by which this image is known. e.g. [\"k8s.gcr.io/hyperkube:v1.0.7\", \"dockerhub.io/google_containers/hyperkube:v1.0.7\"]",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "sizeBytes": {
+              "description": "The size of the image in bytes.",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

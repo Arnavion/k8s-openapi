@@ -98,3 +98,25 @@ impl crate::serde::Serialize for WebhookThrottleConfig {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl WebhookThrottleConfig {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "WebhookThrottleConfig holds the configuration for throttling events",
+          "properties": {
+            "burst": {
+              "description": "ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS",
+              "format": "int64",
+              "type": "integer"
+            },
+            "qps": {
+              "description": "ThrottleQPS maximum number of batches per second default 10 QPS",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

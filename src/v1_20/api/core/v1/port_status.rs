@@ -108,3 +108,31 @@ impl crate::serde::Serialize for PortStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PortStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "error": {
+              "description": "Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use\n  CamelCase names\n- cloud provider specific error values must have names that comply with the\n  format foo.example.com/CamelCase.",
+              "type": "string"
+            },
+            "port": {
+              "description": "Port is the port number of the service port of which status is recorded here",
+              "format": "int32",
+              "type": "integer"
+            },
+            "protocol": {
+              "description": "Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"",
+              "type": "string"
+            }
+          },
+          "required": [
+            "port",
+            "protocol"
+          ],
+          "type": "object"
+        })
+    }
+}

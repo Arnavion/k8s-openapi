@@ -129,3 +129,28 @@ impl crate::serde::Serialize for ObjectMetricSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ObjectMetricSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
+          "properties": {
+            "averageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "averageValue is the target value of the average of the metric across all relevant pods (as a quantity)"),
+            "metricName": {
+              "description": "metricName is the name of the metric in question.",
+              "type": "string"
+            },
+            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics."),
+            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::CrossVersionObjectReference::schema(), "target is the described Kubernetes object."),
+            "targetValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetValue is the target value of the metric (as a quantity).")
+          },
+          "required": [
+            "metricName",
+            "target",
+            "targetValue"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -111,3 +111,21 @@ impl crate::serde::Serialize for IngressBackend {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl IngressBackend {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "IngressBackend describes all endpoints for a given service and port.",
+          "properties": {
+            "resource": crate::schema_ref_with_description(crate::api::core::v1::TypedLocalObjectReference::schema(), "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified."),
+            "serviceName": {
+              "description": "Specifies the name of the referenced service.",
+              "type": "string"
+            },
+            "servicePort": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Specifies the port of the referenced service.")
+          },
+          "type": "object"
+        })
+    }
+}

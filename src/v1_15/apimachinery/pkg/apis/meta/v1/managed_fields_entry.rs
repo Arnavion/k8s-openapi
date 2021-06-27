@@ -137,3 +137,29 @@ impl crate::serde::Serialize for ManagedFieldsEntry {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ManagedFieldsEntry {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.",
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.",
+              "type": "string"
+            },
+            "fields": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Fields::schema(), "Fields identifies a set of fields."),
+            "manager": {
+              "description": "Manager is an identifier of the workflow managing these fields.",
+              "type": "string"
+            },
+            "operation": {
+              "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.",
+              "type": "string"
+            },
+            "time": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'")
+          },
+          "type": "object"
+        })
+    }
+}

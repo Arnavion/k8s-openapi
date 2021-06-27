@@ -93,3 +93,24 @@ impl crate::serde::Serialize for ResourceMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ResourceMetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.",
+          "properties": {
+            "current": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricValueStatus::schema(), "current contains the current value for the given metric"),
+            "name": {
+              "description": "Name is the name of the resource in question.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "current",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

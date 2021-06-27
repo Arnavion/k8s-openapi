@@ -109,3 +109,31 @@ impl crate::serde::Serialize for EndpointPort {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EndpointPort {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EndpointPort is a tuple that describes a single port.",
+          "properties": {
+            "name": {
+              "description": "The name of this port (corresponds to ServicePort.Name). Must be a DNS_LABEL. Optional only if one port is defined.",
+              "type": "string"
+            },
+            "port": {
+              "description": "The port number of the endpoint.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "protocol": {
+              "description": "The IP protocol for this port. Must be UDP or TCP. Default is TCP.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "port"
+          ],
+          "type": "object"
+        })
+    }
+}

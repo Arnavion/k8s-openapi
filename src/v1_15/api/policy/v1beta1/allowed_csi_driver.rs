@@ -83,3 +83,22 @@ impl crate::serde::Serialize for AllowedCSIDriver {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AllowedCSIDriver {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.",
+          "properties": {
+            "name": {
+              "description": "Name is the registered name of the CSI driver",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -242,3 +242,46 @@ impl crate::serde::Serialize for DeploymentRollback {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DeploymentRollback {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "apps",
+              "kind": "DeploymentRollback",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "name": {
+              "description": "Required: This must match the Name of a deployment.",
+              "type": "string"
+            },
+            "rollbackTo": crate::schema_ref_with_description(crate::api::apps::v1beta1::RollbackConfig::schema(), "The config of this deployment rollback."),
+            "updatedAnnotations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "The annotations to be updated to a deployment",
+              "type": "object"
+            }
+          },
+          "required": [
+            "name",
+            "rollbackTo"
+          ],
+          "type": "object"
+        })
+    }
+}

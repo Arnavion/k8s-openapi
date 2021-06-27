@@ -96,3 +96,24 @@ impl crate::serde::Serialize for Initializers {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Initializers {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Initializers tracks the progress of initialization.",
+          "properties": {
+            "pending": {
+              "description": "Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.",
+              "items": crate::apimachinery::pkg::apis::meta::v1::Initializer::schema(),
+              "type": "array"
+            },
+            "result": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Status::schema(), "If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.")
+          },
+          "required": [
+            "pending"
+          ],
+          "type": "object"
+        })
+    }
+}

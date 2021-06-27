@@ -137,3 +137,32 @@ impl crate::serde::Serialize for PriorityLevelConfigurationCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PriorityLevelConfigurationCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PriorityLevelConfigurationCondition defines the condition of priority level.",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "`lastTransitionTime` is the last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "`message` is a human-readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "`reason` is a unique, one-word, CamelCase reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "`status` is the status of the condition. Can be True, False, Unknown. Required.",
+              "type": "string"
+            },
+            "type": {
+              "description": "`type` is the type of the condition. Required.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

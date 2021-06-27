@@ -85,3 +85,16 @@ impl crate::serde::Serialize for NodeDaemonEndpoints {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeDaemonEndpoints {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NodeDaemonEndpoints lists ports opened by daemons running on the Node.",
+          "properties": {
+            "kubeletEndpoint": crate::schema_ref_with_description(crate::api::core::v1::DaemonEndpoint::schema(), "Endpoint on which Kubelet is listening.")
+          },
+          "type": "object"
+        })
+    }
+}

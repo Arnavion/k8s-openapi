@@ -124,3 +124,31 @@ impl crate::serde::Serialize for SELinuxOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SELinuxOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SELinuxOptions are the labels to be applied to the container",
+          "properties": {
+            "level": {
+              "description": "Level is SELinux level label that applies to the container.",
+              "type": "string"
+            },
+            "role": {
+              "description": "Role is a SELinux role label that applies to the container.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type is a SELinux type label that applies to the container.",
+              "type": "string"
+            },
+            "user": {
+              "description": "User is a SELinux user label that applies to the container.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

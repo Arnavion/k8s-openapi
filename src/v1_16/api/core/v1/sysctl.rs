@@ -93,3 +93,27 @@ impl crate::serde::Serialize for Sysctl {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Sysctl {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Sysctl defines a kernel parameter to be set",
+          "properties": {
+            "name": {
+              "description": "Name of a property to set",
+              "type": "string"
+            },
+            "value": {
+              "description": "Value of a property to set",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "value"
+          ],
+          "type": "object"
+        })
+    }
+}

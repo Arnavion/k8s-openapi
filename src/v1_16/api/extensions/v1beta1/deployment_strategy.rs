@@ -98,3 +98,20 @@ impl crate::serde::Serialize for DeploymentStrategy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DeploymentStrategy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DeploymentStrategy describes how to replace existing pods with new ones.",
+          "properties": {
+            "rollingUpdate": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollingUpdateDeployment::schema(), "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate."),
+            "type": {
+              "description": "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -98,3 +98,23 @@ impl crate::serde::Serialize for NonResourceAttributes {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NonResourceAttributes {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface",
+          "properties": {
+            "path": {
+              "description": "Path is the URL path of the request",
+              "type": "string"
+            },
+            "verb": {
+              "description": "Verb is the standard HTTP verb",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

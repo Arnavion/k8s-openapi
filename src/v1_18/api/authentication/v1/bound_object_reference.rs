@@ -124,3 +124,31 @@ impl crate::serde::Serialize for BoundObjectReference {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl BoundObjectReference {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "BoundObjectReference is a reference to an object that a token is bound to.",
+          "properties": {
+            "apiVersion": {
+              "description": "API version of the referent.",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind of the referent. Valid kinds are 'Pod' and 'Secret'.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the referent.",
+              "type": "string"
+            },
+            "uid": {
+              "description": "UID of the referent.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

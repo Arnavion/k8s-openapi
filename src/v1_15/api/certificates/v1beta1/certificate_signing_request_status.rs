@@ -97,3 +97,24 @@ impl crate::serde::Serialize for CertificateSigningRequestStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "certificate": {
+              "description": "If request was approved, the controller will place the issued certificate here.",
+              "format": "byte",
+              "type": "string"
+            },
+            "conditions": {
+              "description": "Conditions applied to the request, such as approval or denial.",
+              "items": crate::api::certificates::v1beta1::CertificateSigningRequestCondition::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

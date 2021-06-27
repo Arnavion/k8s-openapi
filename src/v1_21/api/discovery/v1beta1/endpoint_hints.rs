@@ -85,3 +85,20 @@ impl crate::serde::Serialize for EndpointHints {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EndpointHints {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EndpointHints provides hints describing how an endpoint should be consumed.",
+          "properties": {
+            "forZones": {
+              "description": "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.",
+              "items": crate::api::discovery::v1beta1::ForZone::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -106,3 +106,34 @@ impl crate::serde::Serialize for ScopedResourceSelectorRequirement {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ScopedResourceSelectorRequirement {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.",
+          "properties": {
+            "operator": {
+              "description": "Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.",
+              "type": "string"
+            },
+            "scopeName": {
+              "description": "The name of the scope that the selector applies to.",
+              "type": "string"
+            },
+            "values": {
+              "description": "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "operator",
+            "scopeName"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -145,3 +145,37 @@ impl crate::serde::Serialize for DeploymentCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DeploymentCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DeploymentCondition describes the state of a deployment at a certain point.",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "The last time this condition was updated."),
+            "message": {
+              "description": "A human readable message indicating details about the transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "The reason for the condition's last transition.",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition, one of True, False, Unknown.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of deployment condition.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

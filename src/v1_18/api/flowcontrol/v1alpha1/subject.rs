@@ -119,3 +119,25 @@ impl crate::serde::Serialize for Subject {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Subject {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.",
+          "properties": {
+            "group": crate::api::flowcontrol::v1alpha1::GroupSubject::schema(),
+            "kind": {
+              "description": "Required",
+              "type": "string"
+            },
+            "serviceAccount": crate::api::flowcontrol::v1alpha1::ServiceAccountSubject::schema(),
+            "user": crate::api::flowcontrol::v1alpha1::UserSubject::schema()
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        })
+    }
+}

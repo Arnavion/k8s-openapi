@@ -85,3 +85,20 @@ impl crate::serde::Serialize for APIServiceStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl APIServiceStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "APIServiceStatus contains derived information about an API server",
+          "properties": {
+            "conditions": {
+              "description": "Current service state of apiService.",
+              "items": crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

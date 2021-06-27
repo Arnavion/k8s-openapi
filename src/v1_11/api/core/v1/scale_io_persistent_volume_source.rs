@@ -194,3 +194,57 @@ impl crate::serde::Serialize for ScaleIOPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ScaleIOPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.",
+              "type": "string"
+            },
+            "gateway": {
+              "description": "The host address of the ScaleIO API Gateway.",
+              "type": "string"
+            },
+            "protectionDomain": {
+              "description": "The name of the ScaleIO Protection Domain for the configured storage.",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
+              "type": "boolean"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail."),
+            "sslEnabled": {
+              "description": "Flag to enable/disable SSL communication with Gateway, default false",
+              "type": "boolean"
+            },
+            "storageMode": {
+              "description": "Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.",
+              "type": "string"
+            },
+            "storagePool": {
+              "description": "The ScaleIO Storage Pool associated with the protection domain.",
+              "type": "string"
+            },
+            "system": {
+              "description": "The name of the storage system as configured in ScaleIO.",
+              "type": "string"
+            },
+            "volumeName": {
+              "description": "The name of a volume already created in the ScaleIO system that is associated with this volume source.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "gateway",
+            "secretRef",
+            "system"
+          ],
+          "type": "object"
+        })
+    }
+}

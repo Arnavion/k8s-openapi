@@ -83,3 +83,23 @@ impl crate::serde::Serialize for CSINodeSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CSINodeSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CSINodeSpec holds information about the specification of all CSI drivers installed on a node",
+          "properties": {
+            "drivers": {
+              "description": "drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.",
+              "items": crate::api::storage::v1::CSINodeDriver::schema(),
+              "type": "array"
+            }
+          },
+          "required": [
+            "drivers"
+          ],
+          "type": "object"
+        })
+    }
+}

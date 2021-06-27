@@ -98,3 +98,25 @@ impl crate::serde::Serialize for ResourceQuotaStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ResourceQuotaStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ResourceQuotaStatus defines the enforced hard limits and observed use.",
+          "properties": {
+            "hard": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Hard is the set of enforced hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/",
+              "type": "object"
+            },
+            "used": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Used is the current observed total usage of the resource in the namespace.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

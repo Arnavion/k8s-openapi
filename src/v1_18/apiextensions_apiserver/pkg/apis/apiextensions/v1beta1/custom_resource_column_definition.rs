@@ -142,3 +142,45 @@ impl crate::serde::Serialize for CustomResourceColumnDefinition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceColumnDefinition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceColumnDefinition specifies a column for server side printing.",
+          "properties": {
+            "JSONPath": {
+              "description": "JSONPath is a simple JSON path (i.e. with array notation) which is evaluated against each custom resource to produce the value for this column.",
+              "type": "string"
+            },
+            "description": {
+              "description": "description is a human readable description of this column.",
+              "type": "string"
+            },
+            "format": {
+              "description": "format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.",
+              "type": "string"
+            },
+            "name": {
+              "description": "name is a human readable name for the column.",
+              "type": "string"
+            },
+            "priority": {
+              "description": "priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a priority greater than 0.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "type": {
+              "description": "type is an OpenAPI type definition for this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "JSONPath",
+            "name",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

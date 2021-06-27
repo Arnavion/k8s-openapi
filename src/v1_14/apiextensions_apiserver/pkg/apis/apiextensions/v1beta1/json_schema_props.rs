@@ -516,3 +516,132 @@ impl crate::serde::Serialize for JSONSchemaProps {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl JSONSchemaProps {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).",
+          "properties": {
+            "$ref": {
+              "type": "string"
+            },
+            "$schema": {
+              "type": "string"
+            },
+            "additionalItems": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool::schema(),
+            "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool::schema(),
+            "allOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "anyOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "default": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(),
+            "definitions": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "dependencies": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray::schema(),
+              "type": "object"
+            },
+            "description": {
+              "type": "string"
+            },
+            "enum": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(),
+              "type": "array"
+            },
+            "example": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(),
+            "exclusiveMaximum": {
+              "type": "boolean"
+            },
+            "exclusiveMinimum": {
+              "type": "boolean"
+            },
+            "externalDocs": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation::schema(),
+            "format": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray::schema(),
+            "maxItems": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maxLength": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maxProperties": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maximum": {
+              "format": "double",
+              "type": "number"
+            },
+            "minItems": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minLength": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minProperties": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minimum": {
+              "format": "double",
+              "type": "number"
+            },
+            "multipleOf": {
+              "format": "double",
+              "type": "number"
+            },
+            "not": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+            "nullable": {
+              "type": "boolean"
+            },
+            "oneOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "pattern": {
+              "type": "string"
+            },
+            "patternProperties": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "properties": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "required": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "uniqueItems": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

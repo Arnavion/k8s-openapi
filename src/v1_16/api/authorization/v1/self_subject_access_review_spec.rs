@@ -98,3 +98,17 @@ impl crate::serde::Serialize for SelfSubjectAccessReviewSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SelfSubjectAccessReviewSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
+          "properties": {
+            "nonResourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1::NonResourceAttributes::schema(), "NonResourceAttributes describes information for a non-resource access request"),
+            "resourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1::ResourceAttributes::schema(), "ResourceAuthorizationAttributes describes information for a resource access request")
+          },
+          "type": "object"
+        })
+    }
+}

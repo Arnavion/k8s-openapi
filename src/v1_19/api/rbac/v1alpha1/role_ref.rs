@@ -103,3 +103,32 @@ impl crate::serde::Serialize for RoleRef {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl RoleRef {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "RoleRef contains information that points to the role being used",
+          "properties": {
+            "apiGroup": {
+              "description": "APIGroup is the group for the resource being referenced",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is the type of resource being referenced",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name is the name of resource being referenced",
+              "type": "string"
+            }
+          },
+          "required": [
+            "apiGroup",
+            "kind",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

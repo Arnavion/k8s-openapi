@@ -106,3 +106,31 @@ impl crate::serde::Serialize for AzureFileVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl AzureFileVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "AzureFile represents an Azure File Service mount on the host and bind mount to the pod.",
+          "properties": {
+            "readOnly": {
+              "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
+              "type": "boolean"
+            },
+            "secretName": {
+              "description": "the name of secret that contains Azure Storage Account Name and Key",
+              "type": "string"
+            },
+            "shareName": {
+              "description": "Share Name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "secretName",
+            "shareName"
+          ],
+          "type": "object"
+        })
+    }
+}

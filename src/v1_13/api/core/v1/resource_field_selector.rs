@@ -109,3 +109,27 @@ impl crate::serde::Serialize for ResourceFieldSelector {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ResourceFieldSelector {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ResourceFieldSelector represents container resources (cpu, memory) and their output format",
+          "properties": {
+            "containerName": {
+              "description": "Container name: required for volumes, optional for env vars",
+              "type": "string"
+            },
+            "divisor": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "Specifies the output format of the exposed resources, defaults to \"1\""),
+            "resource": {
+              "description": "Required: resource to select",
+              "type": "string"
+            }
+          },
+          "required": [
+            "resource"
+          ],
+          "type": "object"
+        })
+    }
+}

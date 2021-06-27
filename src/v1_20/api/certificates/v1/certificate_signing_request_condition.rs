@@ -155,3 +155,37 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object",
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time."),
+            "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastUpdateTime is the time of the last update to this condition"),
+            "message": {
+              "description": "message contains a human readable message with details about the request state",
+              "type": "string"
+            },
+            "reason": {
+              "description": "reason indicates a brief reason for the request state",
+              "type": "string"
+            },
+            "status": {
+              "description": "status of the condition, one of True, False, Unknown. Approved, Denied, and Failed conditions may not be \"False\" or \"Unknown\".",
+              "type": "string"
+            },
+            "type": {
+              "description": "type of the condition. Known conditions are \"Approved\", \"Denied\", and \"Failed\".\n\nAn \"Approved\" condition is added via the /approval subresource, indicating the request was approved and should be issued by the signer.\n\nA \"Denied\" condition is added via the /approval subresource, indicating the request was denied and should not be issued by the signer.\n\nA \"Failed\" condition is added via the /status subresource, indicating the signer failed to issue the certificate.\n\nApproved and Denied conditions are mutually exclusive. Approved, Denied, and Failed conditions cannot be removed once added.\n\nOnly one condition of a given type is allowed.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

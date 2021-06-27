@@ -98,3 +98,17 @@ impl crate::serde::Serialize for CustomResourceSubresources {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceSubresources {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceSubresources defines the status and scale subresources for CustomResources.",
+          "properties": {
+            "scale": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale::schema(), "Scale denotes the scale subresource for CustomResources"),
+            "status": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus::schema(), "Status denotes the status subresource for CustomResources")
+          },
+          "type": "object"
+        })
+    }
+}

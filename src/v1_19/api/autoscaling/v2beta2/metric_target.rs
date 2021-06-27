@@ -122,3 +122,29 @@ impl crate::serde::Serialize for MetricTarget {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl MetricTarget {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "MetricTarget defines the target value, average value, or average utilization of a specific metric",
+          "properties": {
+            "averageUtilization": {
+              "description": "averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type",
+              "format": "int32",
+              "type": "integer"
+            },
+            "averageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "averageValue is the target value of the average of the metric across all relevant pods (as a quantity)"),
+            "type": {
+              "description": "type represents whether the metric type is Utilization, Value, or AverageValue",
+              "type": "string"
+            },
+            "value": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "value is the target value of the metric (as a quantity).")
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

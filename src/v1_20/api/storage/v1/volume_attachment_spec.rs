@@ -103,3 +103,29 @@ impl crate::serde::Serialize for VolumeAttachmentSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeAttachmentSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "VolumeAttachmentSpec is the specification of a VolumeAttachment request.",
+          "properties": {
+            "attacher": {
+              "description": "Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().",
+              "type": "string"
+            },
+            "nodeName": {
+              "description": "The node that the volume should be attached to.",
+              "type": "string"
+            },
+            "source": crate::schema_ref_with_description(crate::api::storage::v1::VolumeAttachmentSource::schema(), "Source represents the volume that should be attached.")
+          },
+          "required": [
+            "attacher",
+            "nodeName",
+            "source"
+          ],
+          "type": "object"
+        })
+    }
+}

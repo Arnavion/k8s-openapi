@@ -98,3 +98,23 @@ impl crate::serde::Serialize for LoadBalancerIngress {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl LoadBalancerIngress {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.",
+          "properties": {
+            "hostname": {
+              "description": "Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)",
+              "type": "string"
+            },
+            "ip": {
+              "description": "IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

@@ -821,3 +821,36 @@ impl crate::serde::Serialize for HorizontalPodAutoscaler {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HorizontalPodAutoscaler {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "autoscaling",
+              "kind": "HorizontalPodAutoscaler",
+              "version": "v2beta2"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
+            "spec": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerSpec::schema(), "spec is the specification for the behaviour of the autoscaler. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status."),
+            "status": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerStatus::schema(), "status is the current information about the autoscaler.")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

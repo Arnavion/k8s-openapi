@@ -122,3 +122,31 @@ impl crate::serde::Serialize for CinderPersistentVolumeSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CinderPersistentVolumeSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting to a container. The volume must also be in the same region as the kubelet. Cinder volumes support ownership management and SELinux relabeling.",
+          "properties": {
+            "fsType": {
+              "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md",
+              "type": "boolean"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "Optional: points to a secret object containing parameters used to connect to OpenStack."),
+            "volumeID": {
+              "description": "volume id used to identify the volume in cinder More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md",
+              "type": "string"
+            }
+          },
+          "required": [
+            "volumeID"
+          ],
+          "type": "object"
+        })
+    }
+}

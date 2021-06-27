@@ -191,3 +191,71 @@ impl crate::serde::Serialize for DaemonSetStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DaemonSetStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DaemonSetStatus represents the current status of a daemon set.",
+          "properties": {
+            "collisionCount": {
+              "description": "Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "conditions": {
+              "description": "Represents the latest available observations of a DaemonSet's current state.",
+              "items": crate::api::apps::v1::DaemonSetCondition::schema(),
+              "type": "array"
+            },
+            "currentNumberScheduled": {
+              "description": "The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+              "format": "int32",
+              "type": "integer"
+            },
+            "desiredNumberScheduled": {
+              "description": "The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+              "format": "int32",
+              "type": "integer"
+            },
+            "numberAvailable": {
+              "description": "The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)",
+              "format": "int32",
+              "type": "integer"
+            },
+            "numberMisscheduled": {
+              "description": "The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+              "format": "int32",
+              "type": "integer"
+            },
+            "numberReady": {
+              "description": "The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "numberUnavailable": {
+              "description": "The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)",
+              "format": "int32",
+              "type": "integer"
+            },
+            "observedGeneration": {
+              "description": "The most recent generation observed by the daemon set controller.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "updatedNumberScheduled": {
+              "description": "The total number of nodes that are running updated daemon pod",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "currentNumberScheduled",
+            "desiredNumberScheduled",
+            "numberMisscheduled",
+            "numberReady"
+          ],
+          "type": "object"
+        })
+    }
+}

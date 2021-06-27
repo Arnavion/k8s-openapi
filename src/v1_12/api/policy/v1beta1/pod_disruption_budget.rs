@@ -820,3 +820,36 @@ impl crate::serde::Serialize for PodDisruptionBudget {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodDisruptionBudget {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "policy",
+              "kind": "PodDisruptionBudget",
+              "version": "v1beta1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
+            "spec": crate::schema_ref_with_description(crate::api::policy::v1beta1::PodDisruptionBudgetSpec::schema(), "Specification of the desired behavior of the PodDisruptionBudget."),
+            "status": crate::schema_ref_with_description(crate::api::policy::v1beta1::PodDisruptionBudgetStatus::schema(), "Most recently observed status of the PodDisruptionBudget.")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

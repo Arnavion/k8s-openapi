@@ -147,3 +147,35 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time."),
+            "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "timestamp for the last update to this condition"),
+            "message": {
+              "description": "human readable message with details about the request state",
+              "type": "string"
+            },
+            "reason": {
+              "description": "brief reason for the request state",
+              "type": "string"
+            },
+            "status": {
+              "description": "Status of the condition, one of True, False, Unknown. Approved, Denied, and Failed conditions may not be \"False\" or \"Unknown\". Defaults to \"True\". If unset, should be treated as \"True\".",
+              "type": "string"
+            },
+            "type": {
+              "description": "type of the condition. Known conditions include \"Approved\", \"Denied\", and \"Failed\".",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

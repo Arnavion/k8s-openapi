@@ -115,3 +115,18 @@ impl crate::serde::Serialize for NetworkPolicyPeer {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NetworkPolicyPeer {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed",
+          "properties": {
+            "ipBlock": crate::schema_ref_with_description(crate::api::networking::v1::IPBlock::schema(), "IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be."),
+            "namespaceSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.\n\nIf PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector."),
+            "podSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.\n\nIf NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.")
+          },
+          "type": "object"
+        })
+    }
+}

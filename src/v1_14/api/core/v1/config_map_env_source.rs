@@ -100,3 +100,23 @@ impl crate::serde::Serialize for ConfigMapEnvSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ConfigMapEnvSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.\n\nThe contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.",
+          "properties": {
+            "name": {
+              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the ConfigMap must be defined",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

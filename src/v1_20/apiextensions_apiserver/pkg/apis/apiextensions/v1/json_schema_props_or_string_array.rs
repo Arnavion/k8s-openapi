@@ -39,3 +39,13 @@ impl crate::serde::Serialize for JSONSchemaPropsOrStringArray {
         }
     }
 }
+
+#[cfg(feature = "schema")]
+impl JSONSchemaPropsOrStringArray {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.",
+          "type": "object"
+        })
+    }
+}

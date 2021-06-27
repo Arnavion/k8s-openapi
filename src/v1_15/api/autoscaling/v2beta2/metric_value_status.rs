@@ -111,3 +111,22 @@ impl crate::serde::Serialize for MetricValueStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl MetricValueStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "MetricValueStatus holds the current value for a metric",
+          "properties": {
+            "averageUtilization": {
+              "description": "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "averageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)"),
+            "value": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "value is the current value of the metric (as a quantity).")
+          },
+          "type": "object"
+        })
+    }
+}

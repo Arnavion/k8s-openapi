@@ -103,3 +103,34 @@ impl crate::serde::Serialize for HPAScalingPolicy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl HPAScalingPolicy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "HPAScalingPolicy is a single policy which must hold true for a specified past interval.",
+          "properties": {
+            "periodSeconds": {
+              "description": "PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).",
+              "format": "int32",
+              "type": "integer"
+            },
+            "type": {
+              "description": "Type is used to specify the scaling policy.",
+              "type": "string"
+            },
+            "value": {
+              "description": "Value contains the amount of change which is permitted by the policy. It must be greater than zero",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "periodSeconds",
+            "type",
+            "value"
+          ],
+          "type": "object"
+        })
+    }
+}

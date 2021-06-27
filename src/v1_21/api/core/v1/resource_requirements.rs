@@ -98,3 +98,25 @@ impl crate::serde::Serialize for ResourceRequirements {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ResourceRequirements {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ResourceRequirements describes the compute resource requirements.",
+          "properties": {
+            "limits": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+              "type": "object"
+            },
+            "requests": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

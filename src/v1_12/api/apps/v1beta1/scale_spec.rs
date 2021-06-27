@@ -85,3 +85,20 @@ impl crate::serde::Serialize for ScaleSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ScaleSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ScaleSpec describes the attributes of a scale subresource",
+          "properties": {
+            "replicas": {
+              "description": "desired number of instances for the scaled object.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

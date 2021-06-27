@@ -83,3 +83,22 @@ impl crate::serde::Serialize for FlowDistinguisherMethod {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl FlowDistinguisherMethod {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "FlowDistinguisherMethod specifies the method of a flow distinguisher.",
+          "properties": {
+            "type": {
+              "description": "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -85,3 +85,20 @@ impl crate::serde::Serialize for RollingUpdateStatefulSetStrategy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl RollingUpdateStatefulSetStrategy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.",
+          "properties": {
+            "partition": {
+              "description": "Partition indicates the ordinal at which the StatefulSet should be partitioned.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

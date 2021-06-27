@@ -85,3 +85,19 @@ impl crate::serde::Serialize for EndpointConditions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EndpointConditions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EndpointConditions represents the current condition of an endpoint.",
+          "properties": {
+            "ready": {
+              "description": "ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

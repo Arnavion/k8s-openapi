@@ -329,3 +329,40 @@ impl crate::serde::Serialize for EphemeralContainers {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EphemeralContainers {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A list of ephemeral containers used with the Pod ephemeralcontainers subresource.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "EphemeralContainers",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "ephemeralContainers": {
+              "description": "A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.",
+              "items": crate::api::core::v1::EphemeralContainer::schema(),
+              "type": "array"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema()
+          },
+          "required": [
+            "ephemeralContainers",
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

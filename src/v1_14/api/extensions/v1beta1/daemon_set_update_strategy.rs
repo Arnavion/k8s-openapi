@@ -97,3 +97,19 @@ impl crate::serde::Serialize for DaemonSetUpdateStrategy {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DaemonSetUpdateStrategy {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "rollingUpdate": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollingUpdateDaemonSet::schema(), "Rolling update config params. Present only if type = \"RollingUpdate\"."),
+            "type": {
+              "description": "Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is OnDelete.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

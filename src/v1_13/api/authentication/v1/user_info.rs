@@ -124,3 +124,40 @@ impl crate::serde::Serialize for UserInfo {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl UserInfo {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "UserInfo holds the information about the user needed to implement the user.Info interface.",
+          "properties": {
+            "extra": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Any additional information provided by the authenticator.",
+              "type": "object"
+            },
+            "groups": {
+              "description": "The names of groups this user is a part of.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "uid": {
+              "description": "A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.",
+              "type": "string"
+            },
+            "username": {
+              "description": "The name that uniquely identifies this user among all active users.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

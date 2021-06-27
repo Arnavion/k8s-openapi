@@ -192,3 +192,59 @@ impl crate::serde::Serialize for CertificateSigningRequestSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.",
+          "properties": {
+            "extra": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Extra information about the requesting user. See user.Info interface for details.",
+              "type": "object"
+            },
+            "groups": {
+              "description": "Group information about the requesting user. See user.Info interface for details.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "request": {
+              "description": "Base64-encoded PKCS#10 CSR data",
+              "format": "byte",
+              "type": "string"
+            },
+            "signerName": {
+              "description": "Requested signer for the request. It is a qualified name in the form: `scope-hostname.io/name`. If empty, it will be defaulted:\n 1. If it's a kubelet client certificate, it is assigned\n    \"kubernetes.io/kube-apiserver-client-kubelet\".\n 2. If it's a kubelet serving certificate, it is assigned\n    \"kubernetes.io/kubelet-serving\".\n 3. Otherwise, it is assigned \"kubernetes.io/legacy-unknown\".\nDistribution of trust for signers happens out of band. You can select on this field using `spec.signerName`.",
+              "type": "string"
+            },
+            "uid": {
+              "description": "UID information about the requesting user. See user.Info interface for details.",
+              "type": "string"
+            },
+            "usages": {
+              "description": "allowedUsages specifies a set of usage contexts the key will be valid for. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3\n     https://tools.ietf.org/html/rfc5280#section-4.2.1.12\nValid values are:\n \"signing\",\n \"digital signature\",\n \"content commitment\",\n \"key encipherment\",\n \"key agreement\",\n \"data encipherment\",\n \"cert sign\",\n \"crl sign\",\n \"encipher only\",\n \"decipher only\",\n \"any\",\n \"server auth\",\n \"client auth\",\n \"code signing\",\n \"email protection\",\n \"s/mime\",\n \"ipsec end system\",\n \"ipsec tunnel\",\n \"ipsec user\",\n \"timestamping\",\n \"ocsp signing\",\n \"microsoft sgc\",\n \"netscape sgc\"",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "username": {
+              "description": "Information about the requesting user. See user.Info interface for details.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "request"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -111,3 +111,24 @@ impl crate::serde::Serialize for TokenReviewStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TokenReviewStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TokenReviewStatus is the result of the token authentication request.",
+          "properties": {
+            "authenticated": {
+              "description": "Authenticated indicates that the token was associated with a known user.",
+              "type": "boolean"
+            },
+            "error": {
+              "description": "Error indicates that the token couldn't be checked",
+              "type": "string"
+            },
+            "user": crate::schema_ref_with_description(crate::api::authentication::v1beta1::UserInfo::schema(), "User is the UserInfo associated with the provided token.")
+          },
+          "type": "object"
+        })
+    }
+}

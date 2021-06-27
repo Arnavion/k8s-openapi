@@ -119,3 +119,26 @@ impl crate::serde::Serialize for ExternalMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ExternalMetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.",
+          "properties": {
+            "currentAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentAverageValue is the current value of metric averaged over autoscaled pods."),
+            "currentValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentValue is the current value of the metric (as a quantity)"),
+            "metricName": {
+              "description": "metricName is the name of a metric used for autoscaling in metric system.",
+              "type": "string"
+            },
+            "metricSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "metricSelector is used to identify a specific time series within a given metric.")
+          },
+          "required": [
+            "currentValue",
+            "metricName"
+          ],
+          "type": "object"
+        })
+    }
+}

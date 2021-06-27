@@ -121,3 +121,30 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "properties": {
+            "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "timestamp for the last update to this condition"),
+            "message": {
+              "description": "human readable message with details about the request state",
+              "type": "string"
+            },
+            "reason": {
+              "description": "brief reason for the request state",
+              "type": "string"
+            },
+            "type": {
+              "description": "request approval state, currently Approved or Denied.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

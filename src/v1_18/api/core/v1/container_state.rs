@@ -111,3 +111,18 @@ impl crate::serde::Serialize for ContainerState {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerState {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.",
+          "properties": {
+            "running": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateRunning::schema(), "Details about a running container"),
+            "terminated": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateTerminated::schema(), "Details about a terminated container"),
+            "waiting": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateWaiting::schema(), "Details about a waiting container")
+          },
+          "type": "object"
+        })
+    }
+}

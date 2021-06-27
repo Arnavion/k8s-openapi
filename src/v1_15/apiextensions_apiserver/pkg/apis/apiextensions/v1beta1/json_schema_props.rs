@@ -565,3 +565,144 @@ impl crate::serde::Serialize for JSONSchemaProps {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl JSONSchemaProps {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).",
+          "properties": {
+            "$ref": {
+              "type": "string"
+            },
+            "$schema": {
+              "type": "string"
+            },
+            "additionalItems": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool::schema(),
+            "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool::schema(),
+            "allOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "anyOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "default": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(), "default is a default value for undefined object fields. Defaulting is an alpha feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false."),
+            "definitions": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "dependencies": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray::schema(),
+              "type": "object"
+            },
+            "description": {
+              "type": "string"
+            },
+            "enum": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(),
+              "type": "array"
+            },
+            "example": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON::schema(),
+            "exclusiveMaximum": {
+              "type": "boolean"
+            },
+            "exclusiveMinimum": {
+              "type": "boolean"
+            },
+            "externalDocs": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation::schema(),
+            "format": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray::schema(),
+            "maxItems": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maxLength": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maxProperties": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "maximum": {
+              "format": "double",
+              "type": "number"
+            },
+            "minItems": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minLength": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minProperties": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "minimum": {
+              "format": "double",
+              "type": "number"
+            },
+            "multipleOf": {
+              "format": "double",
+              "type": "number"
+            },
+            "not": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+            "nullable": {
+              "type": "boolean"
+            },
+            "oneOf": {
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "array"
+            },
+            "pattern": {
+              "type": "string"
+            },
+            "patternProperties": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "properties": {
+              "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(),
+              "type": "object"
+            },
+            "required": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "uniqueItems": {
+              "type": "boolean"
+            },
+            "x-kubernetes-embedded-resource": {
+              "description": "x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata).",
+              "type": "boolean"
+            },
+            "x-kubernetes-int-or-string": {
+              "description": "x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns:\n\n1) anyOf:\n   - type: integer\n   - type: string\n2) allOf:\n   - anyOf:\n     - type: integer\n     - type: string\n   - ... zero or more",
+              "type": "boolean"
+            },
+            "x-kubernetes-preserve-unknown-fields": {
+              "description": "x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

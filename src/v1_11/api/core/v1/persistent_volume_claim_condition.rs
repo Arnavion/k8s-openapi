@@ -143,3 +143,35 @@ impl crate::serde::Serialize for PersistentVolumeClaimCondition {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeClaimCondition {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeClaimCondition contails details about state of pvc",
+          "properties": {
+            "lastProbeTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time we probed the condition."),
+            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "message": {
+              "description": "Human-readable message indicating details about last transition.",
+              "type": "string"
+            },
+            "reason": {
+              "description": "Unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports \"ResizeStarted\" that means the underlying persistent volume is being resized.",
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "type"
+          ],
+          "type": "object"
+        })
+    }
+}

@@ -29,3 +29,13 @@ impl crate::serde::Serialize for StorageVersionSpec {
         serializer.serialize_newtype_struct("StorageVersionSpec", &self.0)
     }
 }
+
+#[cfg(feature = "schema")]
+impl StorageVersionSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "StorageVersionSpec is an empty spec.",
+          "type": "object"
+        })
+    }
+}

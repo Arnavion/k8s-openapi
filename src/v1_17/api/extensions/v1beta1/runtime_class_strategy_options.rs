@@ -96,3 +96,29 @@ impl crate::serde::Serialize for RuntimeClassStrategyOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl RuntimeClassStrategyOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "RuntimeClassStrategyOptions define the strategy that will dictate the allowable RuntimeClasses for a pod.",
+          "properties": {
+            "allowedRuntimeClassNames": {
+              "description": "allowedRuntimeClassNames is a whitelist of RuntimeClass names that may be specified on a pod. A value of \"*\" means that any RuntimeClass name is allowed, and must be the only item in the list. An empty list requires the RuntimeClassName field to be unset.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "defaultRuntimeClassName": {
+              "description": "defaultRuntimeClassName is the default RuntimeClassName to set on the pod. The default MUST be allowed by the allowedRuntimeClassNames list. A value of nil does not mutate the Pod.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "allowedRuntimeClassNames"
+          ],
+          "type": "object"
+        })
+    }
+}

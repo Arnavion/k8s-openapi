@@ -96,3 +96,27 @@ impl crate::serde::Serialize for RunAsUserStrategyOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl RunAsUserStrategyOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "RunAsUserStrategyOptions defines the strategy type and any options used to create the strategy.",
+          "properties": {
+            "ranges": {
+              "description": "ranges are the allowed ranges of uids that may be used. If you would like to force a single uid then supply a single range with the same start and end. Required for MustRunAs.",
+              "items": crate::api::policy::v1beta1::IDRange::schema(),
+              "type": "array"
+            },
+            "rule": {
+              "description": "rule is the strategy that will dictate the allowable RunAsUser values that may be set.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "rule"
+          ],
+          "type": "object"
+        })
+    }
+}

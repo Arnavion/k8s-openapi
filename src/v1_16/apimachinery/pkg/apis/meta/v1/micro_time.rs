@@ -29,3 +29,14 @@ impl crate::serde::Serialize for MicroTime {
         serializer.serialize_newtype_struct("MicroTime", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Micros, true))
     }
 }
+
+#[cfg(feature = "schema")]
+impl MicroTime {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "MicroTime is version of Time with microsecond level precision.",
+          "format": "date-time",
+          "type": "string"
+        })
+    }
+}

@@ -132,3 +132,39 @@ impl crate::serde::Serialize for VolumeMount {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeMount {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "VolumeMount describes a mounting of a Volume within a container.",
+          "properties": {
+            "mountPath": {
+              "description": "Path within the container at which the volume should be mounted.  Must not contain ':'.",
+              "type": "string"
+            },
+            "mountPropagation": {
+              "description": "mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.",
+              "type": "string"
+            },
+            "name": {
+              "description": "This must match the Name of a Volume.",
+              "type": "string"
+            },
+            "readOnly": {
+              "description": "Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.",
+              "type": "boolean"
+            },
+            "subPath": {
+              "description": "Path within the volume from which the container's volume should be mounted. Defaults to \"\" (volume's root).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "mountPath",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

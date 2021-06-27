@@ -96,3 +96,20 @@ impl crate::serde::Serialize for PersistentVolumeClaimTemplate {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeClaimTemplate {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.",
+          "properties": {
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation."),
+            "spec": crate::schema_ref_with_description(crate::api::core::v1::PersistentVolumeClaimSpec::schema(), "The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.")
+          },
+          "required": [
+            "spec"
+          ],
+          "type": "object"
+        })
+    }
+}

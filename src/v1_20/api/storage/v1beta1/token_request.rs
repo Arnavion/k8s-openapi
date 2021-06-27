@@ -96,3 +96,27 @@ impl crate::serde::Serialize for TokenRequest {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl TokenRequest {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "TokenRequest contains parameters of a service account token.",
+          "properties": {
+            "audience": {
+              "description": "Audience is the intended audience of the token in \"TokenRequestSpec\". It will default to the audiences of kube apiserver.",
+              "type": "string"
+            },
+            "expirationSeconds": {
+              "description": "ExpirationSeconds is the duration of validity of the token in \"TokenRequestSpec\". It has the same default value of \"ExpirationSeconds\" in \"TokenRequestSpec\"",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "audience"
+          ],
+          "type": "object"
+        })
+    }
+}

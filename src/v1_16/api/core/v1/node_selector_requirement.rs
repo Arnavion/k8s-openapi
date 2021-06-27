@@ -106,3 +106,34 @@ impl crate::serde::Serialize for NodeSelectorRequirement {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeSelectorRequirement {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
+          "properties": {
+            "key": {
+              "description": "The label key that the selector applies to.",
+              "type": "string"
+            },
+            "operator": {
+              "description": "Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.",
+              "type": "string"
+            },
+            "values": {
+              "description": "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "key",
+            "operator"
+          ],
+          "type": "object"
+        })
+    }
+}

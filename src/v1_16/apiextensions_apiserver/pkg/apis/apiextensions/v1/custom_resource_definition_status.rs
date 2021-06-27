@@ -106,3 +106,32 @@ impl crate::serde::Serialize for CustomResourceDefinitionStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceDefinitionStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition",
+          "properties": {
+            "acceptedNames": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames::schema(), "acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec."),
+            "conditions": {
+              "description": "conditions indicate state for particular aspects of a CustomResourceDefinition",
+              "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionCondition::schema(),
+              "type": "array"
+            },
+            "storedVersions": {
+              "description": "storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "acceptedNames",
+            "storedVersions"
+          ],
+          "type": "object"
+        })
+    }
+}

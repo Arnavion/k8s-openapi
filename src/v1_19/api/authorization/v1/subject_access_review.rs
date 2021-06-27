@@ -184,3 +184,37 @@ impl crate::serde::Serialize for SubjectAccessReview {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SubjectAccessReview {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SubjectAccessReview checks whether or not a user or group can perform an action.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "authorization.k8s.io",
+              "kind": "SubjectAccessReview",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
+            "spec": crate::schema_ref_with_description(crate::api::authorization::v1::SubjectAccessReviewSpec::schema(), "Spec holds information about the request being evaluated"),
+            "status": crate::schema_ref_with_description(crate::api::authorization::v1::SubjectAccessReviewStatus::schema(), "Status is filled in by the server and indicates whether the request is allowed or not")
+          },
+          "required": [
+            "metadata",
+            "spec"
+          ],
+          "type": "object"
+        })
+    }
+}

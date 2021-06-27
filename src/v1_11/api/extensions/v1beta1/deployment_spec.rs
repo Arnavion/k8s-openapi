@@ -187,3 +187,46 @@ impl crate::serde::Serialize for DeploymentSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DeploymentSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DeploymentSpec is the specification of the desired behavior of the Deployment.",
+          "properties": {
+            "minReadySeconds": {
+              "description": "Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)",
+              "format": "int32",
+              "type": "integer"
+            },
+            "paused": {
+              "description": "Indicates that the deployment is paused and will not be processed by the deployment controller.",
+              "type": "boolean"
+            },
+            "progressDeadlineSeconds": {
+              "description": "The maximum time in seconds for a deployment to make progress before it is considered to be failed. The deployment controller will continue to process failed deployments and a condition with a ProgressDeadlineExceeded reason will be surfaced in the deployment status. Note that progress will not be estimated during the time a deployment is paused. This is set to the max value of int32 (i.e. 2147483647) by default, which means \"no deadline\".",
+              "format": "int32",
+              "type": "integer"
+            },
+            "replicas": {
+              "description": "Number of desired pods. This is a pointer to distinguish between explicit zero and not specified. Defaults to 1.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "revisionHistoryLimit": {
+              "description": "The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "rollbackTo": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollbackConfig::schema(), "DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback is done."),
+            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment."),
+            "strategy": crate::schema_ref_with_description(crate::api::extensions::v1beta1::DeploymentStrategy::schema(), "The deployment strategy to use to replace existing pods with new ones."),
+            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "Template describes the pods that will be created.")
+          },
+          "required": [
+            "template"
+          ],
+          "type": "object"
+        })
+    }
+}

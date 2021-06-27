@@ -154,3 +154,53 @@ impl crate::serde::Serialize for Info {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Info {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Info contains versioning information. how we'll want to distribute that information.",
+          "properties": {
+            "buildDate": {
+              "type": "string"
+            },
+            "compiler": {
+              "type": "string"
+            },
+            "gitCommit": {
+              "type": "string"
+            },
+            "gitTreeState": {
+              "type": "string"
+            },
+            "gitVersion": {
+              "type": "string"
+            },
+            "goVersion": {
+              "type": "string"
+            },
+            "major": {
+              "type": "string"
+            },
+            "minor": {
+              "type": "string"
+            },
+            "platform": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "buildDate",
+            "compiler",
+            "gitCommit",
+            "gitTreeState",
+            "gitVersion",
+            "goVersion",
+            "major",
+            "minor",
+            "platform"
+          ],
+          "type": "object"
+        })
+    }
+}

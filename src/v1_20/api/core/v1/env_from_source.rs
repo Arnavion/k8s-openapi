@@ -111,3 +111,21 @@ impl crate::serde::Serialize for EnvFromSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EnvFromSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EnvFromSource represents the source of a set of ConfigMaps",
+          "properties": {
+            "configMapRef": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapEnvSource::schema(), "The ConfigMap to select from"),
+            "prefix": {
+              "description": "An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.",
+              "type": "string"
+            },
+            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretEnvSource::schema(), "The Secret to select from")
+          },
+          "type": "object"
+        })
+    }
+}

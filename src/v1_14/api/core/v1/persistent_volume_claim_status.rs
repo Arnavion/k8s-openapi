@@ -124,3 +124,36 @@ impl crate::serde::Serialize for PersistentVolumeClaimStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PersistentVolumeClaimStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PersistentVolumeClaimStatus is the current status of a persistent volume claim.",
+          "properties": {
+            "accessModes": {
+              "description": "AccessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "capacity": {
+              "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
+              "description": "Represents the actual resources of the underlying volume.",
+              "type": "object"
+            },
+            "conditions": {
+              "description": "Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.",
+              "items": crate::api::core::v1::PersistentVolumeClaimCondition::schema(),
+              "type": "array"
+            },
+            "phase": {
+              "description": "Phase represents the current phase of PersistentVolumeClaim.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

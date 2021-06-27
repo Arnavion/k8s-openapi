@@ -98,3 +98,17 @@ impl crate::serde::Serialize for CustomResourceSubresources {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CustomResourceSubresources {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "CustomResourceSubresources defines the status and scale subresources for CustomResources.",
+          "properties": {
+            "scale": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale::schema(), "scale indicates the custom resource should serve a `/scale` subresource that returns an `autoscaling/v1` Scale object."),
+            "status": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus::schema(), "status indicates the custom resource should serve a `/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.")
+          },
+          "type": "object"
+        })
+    }
+}

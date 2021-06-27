@@ -98,3 +98,21 @@ impl crate::serde::Serialize for EventSeries {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl EventSeries {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time.",
+          "properties": {
+            "count": {
+              "description": "Number of occurrences in this series up to the last heartbeat time",
+              "format": "int32",
+              "type": "integer"
+            },
+            "lastObservedTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "Time of the last occurrence observed")
+          },
+          "type": "object"
+        })
+    }
+}

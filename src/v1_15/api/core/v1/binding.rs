@@ -226,3 +226,36 @@ impl crate::serde::Serialize for Binding {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Binding {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "",
+              "kind": "Binding",
+              "version": "v1"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
+            "target": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "The target object that you want to bind to the standard object.")
+          },
+          "required": [
+            "metadata",
+            "target"
+          ],
+          "type": "object"
+        })
+    }
+}

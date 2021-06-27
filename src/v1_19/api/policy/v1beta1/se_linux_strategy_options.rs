@@ -96,3 +96,23 @@ impl crate::serde::Serialize for SELinuxStrategyOptions {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl SELinuxStrategyOptions {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.",
+          "properties": {
+            "rule": {
+              "description": "rule is the strategy that will dictate the allowable labels that may be set.",
+              "type": "string"
+            },
+            "seLinuxOptions": crate::schema_ref_with_description(crate::api::core::v1::SELinuxOptions::schema(), "seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/")
+          },
+          "required": [
+            "rule"
+          ],
+          "type": "object"
+        })
+    }
+}

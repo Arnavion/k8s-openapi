@@ -85,3 +85,20 @@ impl crate::serde::Serialize for DownwardAPIProjection {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl DownwardAPIProjection {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.",
+          "properties": {
+            "items": {
+              "description": "Items is a list of DownwardAPIVolume file",
+              "items": crate::api::core::v1::DownwardAPIVolumeFile::schema(),
+              "type": "array"
+            }
+          },
+          "type": "object"
+        })
+    }
+}

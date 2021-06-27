@@ -149,3 +149,55 @@ impl crate::serde::Serialize for CertificateSigningRequestSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl CertificateSigningRequestSpec {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.",
+          "properties": {
+            "extra": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Extra information about the requesting user. See user.Info interface for details.",
+              "type": "object"
+            },
+            "groups": {
+              "description": "Group information about the requesting user. See user.Info interface for details.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "request": {
+              "description": "Base64-encoded PKCS#10 CSR data",
+              "format": "byte",
+              "type": "string"
+            },
+            "uid": {
+              "description": "UID information about the requesting user. See user.Info interface for details.",
+              "type": "string"
+            },
+            "usages": {
+              "description": "allowedUsages specifies a set of usage contexts the key will be valid for. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3\n     https://tools.ietf.org/html/rfc5280#section-4.2.1.12",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "username": {
+              "description": "Information about the requesting user. See user.Info interface for details.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "request"
+          ],
+          "type": "object"
+        })
+    }
+}

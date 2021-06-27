@@ -106,3 +106,25 @@ impl crate::serde::Serialize for PodsMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl PodsMetricStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).",
+          "properties": {
+            "currentAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)"),
+            "metricName": {
+              "description": "metricName is the name of the metric in question",
+              "type": "string"
+            },
+            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.")
+          },
+          "required": [
+            "currentAverageValue",
+            "metricName"
+          ],
+          "type": "object"
+        })
+    }
+}

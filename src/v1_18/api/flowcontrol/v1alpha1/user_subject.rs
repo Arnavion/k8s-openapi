@@ -83,3 +83,22 @@ impl crate::serde::Serialize for UserSubject {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl UserSubject {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "UserSubject holds detailed information for user-kind subject.",
+          "properties": {
+            "name": {
+              "description": "`name` is the username that matches, or \"*\" to match all usernames. Required.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

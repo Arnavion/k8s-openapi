@@ -93,3 +93,27 @@ impl crate::serde::Serialize for VolumeDevice {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl VolumeDevice {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "volumeDevice describes a mapping of a raw block device within a container.",
+          "properties": {
+            "devicePath": {
+              "description": "devicePath is the path inside of the container that the device will be mapped to.",
+              "type": "string"
+            },
+            "name": {
+              "description": "name must match the name of a persistentVolumeClaim in the pod",
+              "type": "string"
+            }
+          },
+          "required": [
+            "devicePath",
+            "name"
+          ],
+          "type": "object"
+        })
+    }
+}

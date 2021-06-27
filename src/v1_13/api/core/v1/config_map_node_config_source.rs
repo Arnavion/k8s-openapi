@@ -129,3 +129,40 @@ impl crate::serde::Serialize for ConfigMapNodeConfigSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ConfigMapNodeConfigSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.",
+          "properties": {
+            "kubeletConfigKey": {
+              "description": "KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.",
+              "type": "string"
+            },
+            "name": {
+              "description": "Name is the metadata.name of the referenced ConfigMap. This field is required in all cases.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace is the metadata.namespace of the referenced ConfigMap. This field is required in all cases.",
+              "type": "string"
+            },
+            "resourceVersion": {
+              "description": "ResourceVersion is the metadata.ResourceVersion of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.",
+              "type": "string"
+            },
+            "uid": {
+              "description": "UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kubeletConfigKey",
+            "name",
+            "namespace"
+          ],
+          "type": "object"
+        })
+    }
+}

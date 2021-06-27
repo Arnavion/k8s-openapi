@@ -96,3 +96,26 @@ impl crate::serde::Serialize for ObjectFieldSelector {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ObjectFieldSelector {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ObjectFieldSelector selects an APIVersioned field of an object.",
+          "properties": {
+            "apiVersion": {
+              "description": "Version of the schema the FieldPath is written in terms of, defaults to \"v1\".",
+              "type": "string"
+            },
+            "fieldPath": {
+              "description": "Path of the field to select in the specified API version.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "fieldPath"
+          ],
+          "type": "object"
+        })
+    }
+}

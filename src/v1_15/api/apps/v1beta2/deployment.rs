@@ -821,3 +821,36 @@ impl crate::serde::Serialize for Deployment {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl Deployment {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "DEPRECATED - This group version of Deployment is deprecated by apps/v1/Deployment. See the release notes for more information. Deployment enables declarative updates for Pods and ReplicaSets.",
+          "x-kubernetes-group-version-kind": [
+            {
+              "group": "apps",
+              "kind": "Deployment",
+              "version": "v1beta2"
+            }
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+              "type": "string"
+            },
+            "kind": {
+              "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+              "type": "string"
+            },
+            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object metadata."),
+            "spec": crate::schema_ref_with_description(crate::api::apps::v1beta2::DeploymentSpec::schema(), "Specification of the desired behavior of the Deployment."),
+            "status": crate::schema_ref_with_description(crate::api::apps::v1beta2::DeploymentStatus::schema(), "Most recently observed status of the Deployment.")
+          },
+          "required": [
+            "metadata"
+          ],
+          "type": "object"
+        })
+    }
+}

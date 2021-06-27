@@ -85,3 +85,16 @@ impl crate::serde::Serialize for NodeConfigSource {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl NodeConfigSource {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.",
+          "properties": {
+            "configMap": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapNodeConfigSource::schema(), "ConfigMap is a reference to a Node's ConfigMap")
+          },
+          "type": "object"
+        })
+    }
+}

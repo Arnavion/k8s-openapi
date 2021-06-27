@@ -162,3 +162,49 @@ impl crate::serde::Serialize for ContainerStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schema")]
+impl ContainerStatus {
+    pub fn schema() -> serde_json::Value {
+        serde_json::json!({
+          "description": "ContainerStatus contains details for the current status of this container.",
+          "properties": {
+            "containerID": {
+              "description": "Container's ID in the format 'docker://<container_id>'.",
+              "type": "string"
+            },
+            "image": {
+              "description": "The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images",
+              "type": "string"
+            },
+            "imageID": {
+              "description": "ImageID of the container's image.",
+              "type": "string"
+            },
+            "lastState": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's last termination condition."),
+            "name": {
+              "description": "This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.",
+              "type": "string"
+            },
+            "ready": {
+              "description": "Specifies whether the container has passed its readiness probe.",
+              "type": "boolean"
+            },
+            "restartCount": {
+              "description": "The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "state": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's current condition.")
+          },
+          "required": [
+            "image",
+            "imageID",
+            "name",
+            "ready",
+            "restartCount"
+          ],
+          "type": "object"
+        })
+    }
+}
