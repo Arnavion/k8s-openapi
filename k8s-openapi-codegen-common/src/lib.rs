@@ -1019,18 +1019,24 @@ pub fn run(
 			swagger20::Type::JsonSchemaPropsOrStringArray(_)
 		) => {
 			// Inline schema and override the description if present.
-			let re = regex::Regex::new(r##"\{\n\s*"\$ref": "#/definitions/io\.k8s\.([^"]+)"(?:,\n\s*"description": "(.+)")?\n\s*\}"##).unwrap();
+			let re = regex::Regex::new(r##"\{\n\s*"\$ref": "#/definitions/([^"]+)"(?:,\n\s*"description": "(.+)")?\n\s*\}"##).unwrap();
 			let schema = serde_json::to_string_pretty(&definition)?;
 			let schema = re.replace_all(&schema, |caps: &regex::Captures<'_>| {
-				let path = caps[1].replace("-", "_").replace(".", "::");
+				let path = get_fully_qualified_type_name(
+					&swagger20::RefPath {
+						path: caps[1].to_owned(),
+						can_be_default: None,
+					},
+					map_namespace
+				);
 				if let Some(description) = caps.get(2) {
 					format!(
-						r#"crate::schema_ref_with_description(crate::{}::schema(), "{}")"#,
+						r#"crate::schema_ref_with_description({}::schema(), "{}")"#,
 						&path,
 						description.as_str()
 					)
 				} else {
-					format!(r#"crate::{}::schema()"#, &path)
+					format!(r#"{}::schema()"#, &path)
 				}
 			});
 			templates::schema::generate(&mut out, type_name, &schema)?;
