@@ -94,7 +94,7 @@ impl serde::Serialize for RefPath {
 	where
 		S: serde::Serializer,
 	{
-		serializer.serialize_str(&format!("#/definitions/{}", &self.path))
+		format_args!("#/definitions/{}", &self.path).serialize(serializer)
 	}
 }
 
