@@ -809,3 +809,9 @@ pub(crate) fn schema_ref_with_description(mut schema: serde_json::Value, descrip
 	schema.as_object_mut().expect("schema object").insert("description".to_owned(), serde_json::json!(description));
 	schema
 }
+
+#[cfg(feature = "schema")]
+pub trait Schema {
+	/// JSON Schema with all references inlined.
+	fn schema() -> serde_json::Value;
+}

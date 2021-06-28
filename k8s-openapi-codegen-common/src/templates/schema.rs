@@ -6,8 +6,8 @@ pub(crate) fn generate(
 	let lines = schema[2..schema.len()-1].lines().map(|s| format!("        {}", s)).collect::<Vec<_>>().join("\n");
 	writeln!(writer)?;
 	writeln!(writer, r#"#[cfg(feature = "schema")]"#)?;
-	writeln!(writer, r#"impl {type_name} {{"#, type_name = type_name)?;
-	writeln!(writer, r"    pub fn schema() -> serde_json::Value {{")?;
+	writeln!(writer, r#"impl crate::Schema for {type_name} {{"#, type_name = type_name)?;
+	writeln!(writer, r"    fn schema() -> serde_json::Value {{")?;
 	writeln!(writer, r"        serde_json::json!({{")?;
 	writeln!(writer, r"{}", lines)?;
 	writeln!(writer, r"        }})")?;
