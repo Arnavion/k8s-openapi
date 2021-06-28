@@ -115,8 +115,8 @@ impl crate::serde::Serialize for SecretProjection {
 }
 
 #[cfg(feature = "schema")]
-impl SecretProjection {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecretProjection {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Adapts a secret into a projected volume.\n\nThe contents of the target Secret's Data field will be presented in a projected volume as files using the keys in the Data field as the file names. Note that this is identical to a secret volume source without the default mode.",
           "properties": {

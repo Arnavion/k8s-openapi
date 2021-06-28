@@ -645,8 +645,8 @@ impl crate::serde::Serialize for Secret {
 }
 
 #[cfg(feature = "schema")]
-impl Secret {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Secret {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Secret holds secret data of a certain type. The total bytes of the values in the Data field must be less than MaxSecretSize bytes.",
           "x-kubernetes-group-version-kind": [

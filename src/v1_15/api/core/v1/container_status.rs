@@ -164,8 +164,8 @@ impl crate::serde::Serialize for ContainerStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerStatus contains details for the current status of this container.",
           "properties": {

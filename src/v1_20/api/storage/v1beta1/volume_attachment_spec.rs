@@ -105,8 +105,8 @@ impl crate::serde::Serialize for VolumeAttachmentSpec {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeAttachmentSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeAttachmentSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeAttachmentSpec is the specification of a VolumeAttachment request.",
           "properties": {

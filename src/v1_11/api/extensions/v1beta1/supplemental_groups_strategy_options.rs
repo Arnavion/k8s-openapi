@@ -100,8 +100,8 @@ impl crate::serde::Serialize for SupplementalGroupsStrategyOptions {
 }
 
 #[cfg(feature = "schema")]
-impl SupplementalGroupsStrategyOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SupplementalGroupsStrategyOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy. Deprecated: use SupplementalGroupsStrategyOptions from policy API Group instead.",
           "properties": {

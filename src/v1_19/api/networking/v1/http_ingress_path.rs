@@ -121,8 +121,8 @@ impl crate::serde::Serialize for HTTPIngressPath {
 }
 
 #[cfg(feature = "schema")]
-impl HTTPIngressPath {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HTTPIngressPath {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.",
           "properties": {

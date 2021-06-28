@@ -105,8 +105,8 @@ impl crate::serde::Serialize for HPAScalingPolicy {
 }
 
 #[cfg(feature = "schema")]
-impl HPAScalingPolicy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HPAScalingPolicy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HPAScalingPolicy is a single policy which must hold true for a specified past interval.",
           "properties": {

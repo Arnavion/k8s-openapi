@@ -100,8 +100,8 @@ impl crate::serde::Serialize for WebhookThrottleConfig {
 }
 
 #[cfg(feature = "schema")]
-impl WebhookThrottleConfig {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for WebhookThrottleConfig {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "WebhookThrottleConfig holds the configuration for throttling events",
           "properties": {

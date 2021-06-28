@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ContainerImage {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerImage {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerImage {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Describe a container image",
           "properties": {

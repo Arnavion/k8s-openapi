@@ -108,8 +108,8 @@ impl crate::serde::Serialize for PodsMetricStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PodsMetricStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodsMetricStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).",
           "properties": {

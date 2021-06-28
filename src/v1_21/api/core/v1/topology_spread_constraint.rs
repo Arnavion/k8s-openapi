@@ -121,8 +121,8 @@ impl crate::serde::Serialize for TopologySpreadConstraint {
 }
 
 #[cfg(feature = "schema")]
-impl TopologySpreadConstraint {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TopologySpreadConstraint {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TopologySpreadConstraint specifies how to spread matching pods among the given topology.",
           "properties": {

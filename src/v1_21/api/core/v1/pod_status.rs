@@ -247,8 +247,8 @@ impl crate::serde::Serialize for PodStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PodStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodStatus represents information about the status of a pod. Status may trail the actual state of a system, especially if the node that hosts the pod cannot contact the control plane.",
           "properties": {

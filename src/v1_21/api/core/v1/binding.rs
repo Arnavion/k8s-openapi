@@ -228,8 +228,8 @@ impl crate::serde::Serialize for Binding {
 }
 
 #[cfg(feature = "schema")]
-impl Binding {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Binding {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead.",
           "x-kubernetes-group-version-kind": [

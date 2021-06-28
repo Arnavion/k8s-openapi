@@ -126,8 +126,8 @@ impl crate::serde::Serialize for VolumeProjection {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeProjection {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeProjection {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Projection that may be projected along with other supported volume types",
           "properties": {

@@ -823,8 +823,8 @@ impl crate::serde::Serialize for DaemonSet {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSet {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSet {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED - This group version of DaemonSet is deprecated by apps/v1beta2/DaemonSet. See the release notes for more information. DaemonSet represents the configuration of a daemon set.",
           "x-kubernetes-group-version-kind": [

@@ -606,8 +606,8 @@ impl crate::serde::Serialize for LimitRange {
 }
 
 #[cfg(feature = "schema")]
-impl LimitRange {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LimitRange {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LimitRange sets resource usage limits for each kind of resource in a Namespace.",
           "x-kubernetes-group-version-kind": [

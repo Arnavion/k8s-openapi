@@ -98,8 +98,8 @@ impl crate::serde::Serialize for LocalVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl LocalVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LocalVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Local represents directly-attached storage with node affinity (Beta feature)",
           "properties": {

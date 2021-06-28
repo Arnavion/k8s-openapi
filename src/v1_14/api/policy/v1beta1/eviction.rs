@@ -190,8 +190,8 @@ impl crate::serde::Serialize for Eviction {
 }
 
 #[cfg(feature = "schema")]
-impl Eviction {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Eviction {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Eviction evicts a pod from its node subject to certain policies and safety constraints. This is a subresource of Pod.  A request to cause such an eviction is created by POSTing to .../pods/<pod name>/evictions.",
           "x-kubernetes-group-version-kind": [

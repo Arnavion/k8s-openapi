@@ -134,8 +134,8 @@ impl crate::serde::Serialize for StatefulSetCondition {
 }
 
 #[cfg(feature = "schema")]
-impl StatefulSetCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StatefulSetCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StatefulSetCondition describes the state of a statefulset at a certain point.",
           "properties": {

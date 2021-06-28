@@ -87,8 +87,8 @@ impl crate::serde::Serialize for IngressStatus {
 }
 
 #[cfg(feature = "schema")]
-impl IngressStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressStatus describe the current state of the Ingress.",
           "properties": {

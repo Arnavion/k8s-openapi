@@ -95,8 +95,8 @@ impl crate::serde::Serialize for IDRange {
 }
 
 #[cfg(feature = "schema")]
-impl IDRange {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IDRange {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IDRange provides a min/max of an allowed range of IDs. Deprecated: use IDRange from policy API Group instead.",
           "properties": {

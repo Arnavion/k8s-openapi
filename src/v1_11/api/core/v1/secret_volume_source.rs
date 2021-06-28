@@ -128,8 +128,8 @@ impl crate::serde::Serialize for SecretVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl SecretVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecretVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Adapts a Secret into a volume.\n\nThe contents of the target Secret's Data field will be presented in a volume as files using the keys in the Data field as the file names. Secret volumes support ownership management and SELinux relabeling.",
           "properties": {

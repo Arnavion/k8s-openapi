@@ -100,8 +100,8 @@ impl crate::serde::Serialize for VolumeError {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeError {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeError {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeError captures an error encountered during a volume operation.",
           "properties": {

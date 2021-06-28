@@ -98,8 +98,8 @@ impl crate::serde::Serialize for IngressServiceBackend {
 }
 
 #[cfg(feature = "schema")]
-impl IngressServiceBackend {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressServiceBackend {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressServiceBackend references a Kubernetes Service as a Backend.",
           "properties": {

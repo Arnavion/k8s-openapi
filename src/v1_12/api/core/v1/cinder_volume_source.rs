@@ -124,8 +124,8 @@ impl crate::serde::Serialize for CinderVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl CinderVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CinderVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting to a container. The volume must also be in the same region as the kubelet. Cinder volumes support ownership management and SELinux relabeling.",
           "properties": {

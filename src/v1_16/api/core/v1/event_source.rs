@@ -100,8 +100,8 @@ impl crate::serde::Serialize for EventSource {
 }
 
 #[cfg(feature = "schema")]
-impl EventSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EventSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EventSource contains information for an event.",
           "properties": {

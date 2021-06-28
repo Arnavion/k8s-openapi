@@ -100,8 +100,8 @@ impl crate::serde::Serialize for Scheduling {
 }
 
 #[cfg(feature = "schema")]
-impl Scheduling {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Scheduling {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.",
           "properties": {

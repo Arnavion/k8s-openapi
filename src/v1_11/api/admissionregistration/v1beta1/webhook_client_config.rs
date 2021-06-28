@@ -125,8 +125,8 @@ impl crate::serde::Serialize for WebhookClientConfig {
 }
 
 #[cfg(feature = "schema")]
-impl WebhookClientConfig {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for WebhookClientConfig {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "WebhookClientConfig contains the information to make a TLS connection with the webhook",
           "properties": {

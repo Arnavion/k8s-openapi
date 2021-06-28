@@ -150,8 +150,8 @@ impl crate::serde::Serialize for ReplicationControllerStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicationControllerStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicationControllerStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicationControllerStatus represents the current status of a replication controller.",
           "properties": {

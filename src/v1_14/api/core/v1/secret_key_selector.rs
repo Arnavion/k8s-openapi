@@ -111,8 +111,8 @@ impl crate::serde::Serialize for SecretKeySelector {
 }
 
 #[cfg(feature = "schema")]
-impl SecretKeySelector {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecretKeySelector {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SecretKeySelector selects a key of a Secret.",
           "properties": {

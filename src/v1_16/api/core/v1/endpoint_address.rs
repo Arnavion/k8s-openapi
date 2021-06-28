@@ -124,8 +124,8 @@ impl crate::serde::Serialize for EndpointAddress {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointAddress {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointAddress {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointAddress is a tuple that describes single IP address.",
           "properties": {

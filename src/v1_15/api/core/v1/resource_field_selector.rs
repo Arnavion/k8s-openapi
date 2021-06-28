@@ -111,8 +111,8 @@ impl crate::serde::Serialize for ResourceFieldSelector {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceFieldSelector {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceFieldSelector {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceFieldSelector represents container resources (cpu, memory) and their output format",
           "properties": {

@@ -134,8 +134,8 @@ impl crate::serde::Serialize for APIServiceCondition {
 }
 
 #[cfg(feature = "schema")]
-impl APIServiceCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIServiceCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIServiceCondition describes the state of an APIService at a particular point",
           "properties": {

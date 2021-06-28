@@ -134,8 +134,8 @@ impl crate::serde::Serialize for DaemonSetSpec {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSetSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSetSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DaemonSetSpec is the specification of a daemon set.",
           "properties": {

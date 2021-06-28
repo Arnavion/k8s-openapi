@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ServiceBackendPort {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceBackendPort {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceBackendPort {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceBackendPort is the service port being referenced.",
           "properties": {

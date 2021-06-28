@@ -631,8 +631,8 @@ impl crate::serde::Serialize for ConfigMap {
 }
 
 #[cfg(feature = "schema")]
-impl ConfigMap {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ConfigMap {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ConfigMap holds configuration data for pods to consume.",
           "x-kubernetes-group-version-kind": [

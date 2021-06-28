@@ -811,8 +811,8 @@ impl crate::serde::Serialize for CronJob {
 }
 
 #[cfg(feature = "schema")]
-impl CronJob {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CronJob {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CronJob represents the configuration of a single cron job.",
           "x-kubernetes-group-version-kind": [

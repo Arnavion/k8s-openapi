@@ -331,8 +331,8 @@ impl crate::serde::Serialize for EphemeralContainers {
 }
 
 #[cfg(feature = "schema")]
-impl EphemeralContainers {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EphemeralContainers {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A list of ephemeral containers used with the Pod ephemeralcontainers subresource.",
           "x-kubernetes-group-version-kind": [

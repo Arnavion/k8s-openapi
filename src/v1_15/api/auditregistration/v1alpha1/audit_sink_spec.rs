@@ -95,8 +95,8 @@ impl crate::serde::Serialize for AuditSinkSpec {
 }
 
 #[cfg(feature = "schema")]
-impl AuditSinkSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AuditSinkSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AuditSinkSpec holds the spec for the audit sink",
           "properties": {

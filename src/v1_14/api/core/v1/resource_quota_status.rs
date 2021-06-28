@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ResourceQuotaStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceQuotaStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceQuotaStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceQuotaStatus defines the enforced hard limits and observed use.",
           "properties": {

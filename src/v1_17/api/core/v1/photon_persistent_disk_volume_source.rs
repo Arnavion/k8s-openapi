@@ -98,8 +98,8 @@ impl crate::serde::Serialize for PhotonPersistentDiskVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl PhotonPersistentDiskVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PhotonPersistentDiskVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Photon Controller persistent disk resource.",
           "properties": {

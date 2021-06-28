@@ -113,8 +113,8 @@ impl crate::serde::Serialize for CustomResourceDefinitionStatus {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceDefinitionStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceDefinitionStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition",
           "properties": {

@@ -152,8 +152,8 @@ impl crate::serde::Serialize for LimitRangeItem {
 }
 
 #[cfg(feature = "schema")]
-impl LimitRangeItem {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LimitRangeItem {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LimitRangeItem defines a min/max usage limit for any resource that matches on kind.",
           "properties": {

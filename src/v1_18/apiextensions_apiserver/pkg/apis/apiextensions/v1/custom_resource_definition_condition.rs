@@ -134,8 +134,8 @@ impl crate::serde::Serialize for CustomResourceDefinitionCondition {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceDefinitionCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceDefinitionCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceDefinitionCondition contains details for the current condition of this pod.",
           "properties": {

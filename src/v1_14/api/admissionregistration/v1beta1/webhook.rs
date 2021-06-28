@@ -203,8 +203,8 @@ impl crate::serde::Serialize for Webhook {
 }
 
 #[cfg(feature = "schema")]
-impl Webhook {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Webhook {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Webhook describes an admission webhook and the resources and operations it applies to.",
           "properties": {

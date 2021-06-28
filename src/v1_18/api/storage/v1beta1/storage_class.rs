@@ -579,8 +579,8 @@ impl crate::serde::Serialize for StorageClass {
 }
 
 #[cfg(feature = "schema")]
-impl StorageClass {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageClass {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.\n\nStorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.",
           "x-kubernetes-group-version-kind": [

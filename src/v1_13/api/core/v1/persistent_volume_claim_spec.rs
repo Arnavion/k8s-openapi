@@ -165,8 +165,8 @@ impl crate::serde::Serialize for PersistentVolumeClaimSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeClaimSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeClaimSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes",
           "properties": {

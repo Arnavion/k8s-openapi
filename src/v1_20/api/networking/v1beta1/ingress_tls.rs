@@ -100,8 +100,8 @@ impl crate::serde::Serialize for IngressTLS {
 }
 
 #[cfg(feature = "schema")]
-impl IngressTLS {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressTLS {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressTLS describes the transport layer security associated with an Ingress.",
           "properties": {

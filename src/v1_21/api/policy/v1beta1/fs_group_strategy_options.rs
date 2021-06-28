@@ -100,8 +100,8 @@ impl crate::serde::Serialize for FSGroupStrategyOptions {
 }
 
 #[cfg(feature = "schema")]
-impl FSGroupStrategyOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FSGroupStrategyOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FSGroupStrategyOptions defines the strategy type and options used to create the strategy.",
           "properties": {

@@ -823,8 +823,8 @@ impl crate::serde::Serialize for Job {
 }
 
 #[cfg(feature = "schema")]
-impl Job {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Job {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Job represents the configuration of a single job.",
           "x-kubernetes-group-version-kind": [

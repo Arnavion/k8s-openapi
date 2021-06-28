@@ -137,8 +137,8 @@ impl crate::serde::Serialize for ServicePort {
 }
 
 #[cfg(feature = "schema")]
-impl ServicePort {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServicePort {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServicePort contains information on service's port.",
           "properties": {

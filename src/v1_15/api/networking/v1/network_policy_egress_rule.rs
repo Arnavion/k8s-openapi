@@ -100,8 +100,8 @@ impl crate::serde::Serialize for NetworkPolicyEgressRule {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicyEgressRule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicyEgressRule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8",
           "properties": {

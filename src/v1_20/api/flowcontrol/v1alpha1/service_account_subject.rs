@@ -95,8 +95,8 @@ impl crate::serde::Serialize for ServiceAccountSubject {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceAccountSubject {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceAccountSubject {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceAccountSubject holds detailed information for service-account-kind subject.",
           "properties": {

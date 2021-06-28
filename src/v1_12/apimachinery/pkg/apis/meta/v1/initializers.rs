@@ -98,8 +98,8 @@ impl crate::serde::Serialize for Initializers {
 }
 
 #[cfg(feature = "schema")]
-impl Initializers {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Initializers {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Initializers tracks the progress of initialization.",
           "properties": {

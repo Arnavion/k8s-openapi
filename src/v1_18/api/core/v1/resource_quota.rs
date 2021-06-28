@@ -823,8 +823,8 @@ impl crate::serde::Serialize for ResourceQuota {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceQuota {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceQuota {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceQuota sets aggregate quota restrictions enforced per namespace",
           "x-kubernetes-group-version-kind": [

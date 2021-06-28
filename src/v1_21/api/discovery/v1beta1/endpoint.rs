@@ -170,8 +170,8 @@ impl crate::serde::Serialize for Endpoint {
 }
 
 #[cfg(feature = "schema")]
-impl Endpoint {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Endpoint {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Endpoint represents a single logical \"backend\" implementing a service.",
           "properties": {

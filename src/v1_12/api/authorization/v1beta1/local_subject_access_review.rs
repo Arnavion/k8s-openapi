@@ -193,8 +193,8 @@ impl crate::serde::Serialize for LocalSubjectAccessReview {
 }
 
 #[cfg(feature = "schema")]
-impl LocalSubjectAccessReview {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LocalSubjectAccessReview {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.",
           "x-kubernetes-group-version-kind": [

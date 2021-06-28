@@ -502,8 +502,8 @@ impl crate::serde::Serialize for IngressClass {
 }
 
 #[cfg(feature = "schema")]
-impl IngressClass {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressClass {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The `ingressclass.kubernetes.io/is-default-class` annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.",
           "x-kubernetes-group-version-kind": [

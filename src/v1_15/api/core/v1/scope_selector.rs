@@ -87,8 +87,8 @@ impl crate::serde::Serialize for ScopeSelector {
 }
 
 #[cfg(feature = "schema")]
-impl ScopeSelector {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ScopeSelector {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.",
           "properties": {

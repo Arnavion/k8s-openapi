@@ -98,8 +98,8 @@ impl crate::serde::Serialize for PriorityLevelConfigurationSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PriorityLevelConfigurationSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PriorityLevelConfigurationSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PriorityLevelConfigurationSpec specifies the configuration of a priority level.",
           "properties": {

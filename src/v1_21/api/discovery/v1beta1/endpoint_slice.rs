@@ -626,8 +626,8 @@ impl crate::serde::Serialize for EndpointSlice {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointSlice {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointSlice {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.",
           "x-kubernetes-group-version-kind": [

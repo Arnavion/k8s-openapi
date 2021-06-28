@@ -100,8 +100,8 @@ impl crate::serde::Serialize for JobTemplateSpec {
 }
 
 #[cfg(feature = "schema")]
-impl JobTemplateSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for JobTemplateSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "JobTemplateSpec describes the data a Job should have when created from a template",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for NetworkPolicyIngressRule {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicyIngressRule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicyIngressRule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED 1.9 - This group version of NetworkPolicyIngressRule is deprecated by networking/v1/NetworkPolicyIngressRule. This NetworkPolicyIngressRule matches traffic if and only if the traffic matches both ports AND from.",
           "properties": {

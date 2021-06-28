@@ -193,8 +193,8 @@ impl crate::serde::Serialize for CertificateSigningRequestSpec {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequestSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequestSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CertificateSigningRequestSpec contains the certificate request.",
           "properties": {

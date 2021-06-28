@@ -103,8 +103,8 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerBehavior {
 }
 
 #[cfg(feature = "schema")]
-impl HorizontalPodAutoscalerBehavior {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HorizontalPodAutoscalerBehavior {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).",
           "properties": {

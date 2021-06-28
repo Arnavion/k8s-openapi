@@ -131,8 +131,8 @@ impl crate::serde::Serialize for ObjectMetricStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ObjectMetricStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ObjectMetricStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
           "properties": {

@@ -189,8 +189,8 @@ impl crate::serde::Serialize for DeploymentSpec {
 }
 
 #[cfg(feature = "schema")]
-impl DeploymentSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeploymentSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DeploymentSpec is the specification of the desired behavior of the Deployment.",
           "properties": {

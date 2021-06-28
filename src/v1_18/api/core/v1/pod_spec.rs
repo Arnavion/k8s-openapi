@@ -514,8 +514,8 @@ impl crate::serde::Serialize for PodSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PodSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodSpec is a description of a pod.",
           "properties": {

@@ -108,8 +108,8 @@ impl crate::serde::Serialize for LabelSelectorRequirement {
 }
 
 #[cfg(feature = "schema")]
-impl LabelSelectorRequirement {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LabelSelectorRequirement {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
           "properties": {

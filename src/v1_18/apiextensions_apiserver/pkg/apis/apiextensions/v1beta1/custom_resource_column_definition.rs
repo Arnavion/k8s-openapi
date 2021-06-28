@@ -144,8 +144,8 @@ impl crate::serde::Serialize for CustomResourceColumnDefinition {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceColumnDefinition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceColumnDefinition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceColumnDefinition specifies a column for server side printing.",
           "properties": {

@@ -121,8 +121,8 @@ impl crate::serde::Serialize for GlusterfsPersistentVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl GlusterfsPersistentVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for GlusterfsPersistentVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.",
           "properties": {

@@ -113,8 +113,8 @@ impl crate::serde::Serialize for ServerStorageVersion {
 }
 
 #[cfg(feature = "schema")]
-impl ServerStorageVersion {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServerStorageVersion {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.",
           "properties": {

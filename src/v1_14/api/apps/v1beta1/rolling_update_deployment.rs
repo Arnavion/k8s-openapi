@@ -100,8 +100,8 @@ impl crate::serde::Serialize for RollingUpdateDeployment {
 }
 
 #[cfg(feature = "schema")]
-impl RollingUpdateDeployment {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RollingUpdateDeployment {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Spec to control the desired behavior of rolling update.",
           "properties": {

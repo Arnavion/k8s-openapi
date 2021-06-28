@@ -95,8 +95,8 @@ impl crate::serde::Serialize for PreferredSchedulingTerm {
 }
 
 #[cfg(feature = "schema")]
-impl PreferredSchedulingTerm {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PreferredSchedulingTerm {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).",
           "properties": {

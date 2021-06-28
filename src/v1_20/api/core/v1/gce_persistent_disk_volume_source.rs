@@ -126,8 +126,8 @@ impl crate::serde::Serialize for GCEPersistentDiskVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl GCEPersistentDiskVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for GCEPersistentDiskVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Persistent Disk resource in Google Compute Engine.\n\nA GCE PD must exist before mounting to a container. The disk must also be in the same GCE project and zone as the kubelet. A GCE PD can only be mounted as read/write once or read-only many times. GCE PDs support ownership management and SELinux relabeling.",
           "properties": {

@@ -104,8 +104,8 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceDefinitionVersion {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceDefinitionVersion {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "name": {

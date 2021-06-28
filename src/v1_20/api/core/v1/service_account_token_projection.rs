@@ -111,8 +111,8 @@ impl crate::serde::Serialize for ServiceAccountTokenProjection {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceAccountTokenProjection {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceAccountTokenProjection {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceAccountTokenProjection represents a projected service account token volume. This projection can be used to insert a service account token into the pods runtime filesystem for use against APIs (Kubernetes API Server or otherwise).",
           "properties": {

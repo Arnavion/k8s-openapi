@@ -208,8 +208,8 @@ impl crate::serde::Serialize for PodSecurityContext {
 }
 
 #[cfg(feature = "schema")]
-impl PodSecurityContext {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodSecurityContext {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.",
           "properties": {

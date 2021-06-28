@@ -783,8 +783,8 @@ impl crate::serde::Serialize for Event {
 }
 
 #[cfg(feature = "schema")]
-impl Event {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Event {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system.",
           "x-kubernetes-group-version-kind": [

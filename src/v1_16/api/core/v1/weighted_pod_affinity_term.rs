@@ -95,8 +95,8 @@ impl crate::serde::Serialize for WeightedPodAffinityTerm {
 }
 
 #[cfg(feature = "schema")]
-impl WeightedPodAffinityTerm {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for WeightedPodAffinityTerm {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)",
           "properties": {

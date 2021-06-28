@@ -1917,8 +1917,8 @@ impl crate::serde::Serialize for Pod {
 }
 
 #[cfg(feature = "schema")]
-impl Pod {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Pod {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.",
           "x-kubernetes-group-version-kind": [

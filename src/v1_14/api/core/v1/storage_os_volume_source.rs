@@ -139,8 +139,8 @@ impl crate::serde::Serialize for StorageOSVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl StorageOSVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageOSVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a StorageOS persistent volume resource.",
           "properties": {

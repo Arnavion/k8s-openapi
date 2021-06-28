@@ -124,8 +124,8 @@ impl crate::serde::Serialize for DownwardAPIVolumeFile {
 }
 
 #[cfg(feature = "schema")]
-impl DownwardAPIVolumeFile {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DownwardAPIVolumeFile {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DownwardAPIVolumeFile represents information to create the file containing the pod field",
           "properties": {

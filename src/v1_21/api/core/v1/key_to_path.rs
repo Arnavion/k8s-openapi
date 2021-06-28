@@ -108,8 +108,8 @@ impl crate::serde::Serialize for KeyToPath {
 }
 
 #[cfg(feature = "schema")]
-impl KeyToPath {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for KeyToPath {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Maps a string key to a path within a volume.",
           "properties": {

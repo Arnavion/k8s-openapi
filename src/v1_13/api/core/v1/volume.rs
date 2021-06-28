@@ -436,8 +436,8 @@ impl crate::serde::Serialize for Volume {
 }
 
 #[cfg(feature = "schema")]
-impl Volume {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Volume {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Volume represents a named volume in a pod that may be accessed by any container in the pod.",
           "properties": {

@@ -189,8 +189,8 @@ impl crate::serde::Serialize for StatefulSetStatus {
 }
 
 #[cfg(feature = "schema")]
-impl StatefulSetStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StatefulSetStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StatefulSetStatus represents the current state of a StatefulSet.",
           "properties": {

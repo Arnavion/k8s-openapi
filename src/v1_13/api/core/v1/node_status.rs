@@ -217,8 +217,8 @@ impl crate::serde::Serialize for NodeStatus {
 }
 
 #[cfg(feature = "schema")]
-impl NodeStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeStatus is information about the current status of a node.",
           "properties": {

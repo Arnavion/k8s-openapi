@@ -193,8 +193,8 @@ impl crate::serde::Serialize for DaemonSetStatus {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSetStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSetStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DaemonSetStatus represents the current status of a daemon set.",
           "properties": {

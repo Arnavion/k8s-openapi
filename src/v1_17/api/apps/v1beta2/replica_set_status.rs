@@ -150,8 +150,8 @@ impl crate::serde::Serialize for ReplicaSetStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicaSetStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicaSetStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicaSetStatus represents the current status of a ReplicaSet.",
           "properties": {

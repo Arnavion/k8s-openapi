@@ -147,8 +147,8 @@ impl crate::serde::Serialize for VolumeMount {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeMount {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeMount {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeMount describes a mounting of a Volume within a container.",
           "properties": {

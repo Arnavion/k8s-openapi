@@ -95,8 +95,8 @@ impl crate::serde::Serialize for PodsMetricSource {
 }
 
 #[cfg(feature = "schema")]
-impl PodsMetricSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodsMetricSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.",
           "properties": {

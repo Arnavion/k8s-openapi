@@ -606,8 +606,8 @@ impl crate::serde::Serialize for Role {
 }
 
 #[cfg(feature = "schema")]
-impl Role {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Role {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 Role, and will no longer be served in v1.20.",
           "x-kubernetes-group-version-kind": [

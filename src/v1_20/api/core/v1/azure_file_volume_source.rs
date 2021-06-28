@@ -108,8 +108,8 @@ impl crate::serde::Serialize for AzureFileVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl AzureFileVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AzureFileVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AzureFile represents an Azure File Service mount on the host and bind mount to the pod.",
           "properties": {

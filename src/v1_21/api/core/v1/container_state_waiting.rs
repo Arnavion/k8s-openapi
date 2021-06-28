@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ContainerStateWaiting {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerStateWaiting {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerStateWaiting {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerStateWaiting is a waiting state of a container.",
           "properties": {

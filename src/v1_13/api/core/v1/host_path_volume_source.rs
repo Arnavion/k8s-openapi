@@ -98,8 +98,8 @@ impl crate::serde::Serialize for HostPathVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl HostPathVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HostPathVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.",
           "properties": {

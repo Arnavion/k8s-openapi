@@ -100,8 +100,8 @@ impl crate::serde::Serialize for NonResourceAttributes {
 }
 
 #[cfg(feature = "schema")]
-impl NonResourceAttributes {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NonResourceAttributes {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface",
           "properties": {

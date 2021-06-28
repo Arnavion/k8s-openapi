@@ -86,8 +86,8 @@ impl crate::serde::Serialize for SelfSubjectRulesReviewSpec {
 }
 
 #[cfg(feature = "schema")]
-impl SelfSubjectRulesReviewSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SelfSubjectRulesReviewSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "namespace": {

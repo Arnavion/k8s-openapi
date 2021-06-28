@@ -133,8 +133,8 @@ impl crate::serde::Serialize for APIServiceCondition {
 }
 
 #[cfg(feature = "schema")]
-impl APIServiceCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIServiceCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),

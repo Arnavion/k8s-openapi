@@ -144,8 +144,8 @@ impl crate::serde::Serialize for StorageVersionCondition {
 }
 
 #[cfg(feature = "schema")]
-impl StorageVersionCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageVersionCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Describes the state of the storageVersion at a certain point.",
           "properties": {

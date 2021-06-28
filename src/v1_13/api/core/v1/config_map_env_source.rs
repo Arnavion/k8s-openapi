@@ -102,8 +102,8 @@ impl crate::serde::Serialize for ConfigMapEnvSource {
 }
 
 #[cfg(feature = "schema")]
-impl ConfigMapEnvSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ConfigMapEnvSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.\n\nThe contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.",
           "properties": {

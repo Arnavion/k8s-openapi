@@ -95,8 +95,8 @@ impl crate::serde::Serialize for GroupVersionForDiscovery {
 }
 
 #[cfg(feature = "schema")]
-impl GroupVersionForDiscovery {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for GroupVersionForDiscovery {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensibility.",
           "properties": {

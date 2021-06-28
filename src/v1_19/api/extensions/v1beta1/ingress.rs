@@ -823,8 +823,8 @@ impl crate::serde::Serialize for Ingress {
 }
 
 #[cfg(feature = "schema")]
-impl Ingress {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Ingress {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc. DEPRECATED - This group version of Ingress is deprecated by networking.k8s.io/v1beta1 Ingress. See the release notes for more information.",
           "x-kubernetes-group-version-kind": [

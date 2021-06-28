@@ -631,8 +631,8 @@ impl crate::serde::Serialize for JSONSchemaProps {
 }
 
 #[cfg(feature = "schema")]
-impl JSONSchemaProps {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for JSONSchemaProps {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).",
           "properties": {

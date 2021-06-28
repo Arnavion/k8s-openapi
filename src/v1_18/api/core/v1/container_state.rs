@@ -113,8 +113,8 @@ impl crate::serde::Serialize for ContainerState {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerState {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerState {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.",
           "properties": {

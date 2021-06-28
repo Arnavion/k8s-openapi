@@ -95,8 +95,8 @@ impl crate::serde::Serialize for AttachedVolume {
 }
 
 #[cfg(feature = "schema")]
-impl AttachedVolume {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AttachedVolume {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AttachedVolume describes a volume attached to a node",
           "properties": {

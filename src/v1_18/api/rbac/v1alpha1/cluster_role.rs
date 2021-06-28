@@ -503,8 +503,8 @@ impl crate::serde::Serialize for ClusterRole {
 }
 
 #[cfg(feature = "schema")]
-impl ClusterRole {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ClusterRole {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.",
           "x-kubernetes-group-version-kind": [

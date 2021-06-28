@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ResourceRequirements {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceRequirements {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceRequirements {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceRequirements describes the compute resource requirements.",
           "properties": {

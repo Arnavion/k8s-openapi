@@ -31,8 +31,8 @@ impl crate::serde::Serialize for MicroTime {
 }
 
 #[cfg(feature = "schema")]
-impl MicroTime {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MicroTime {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MicroTime is version of Time with microsecond level precision.",
           "format": "date-time",

@@ -106,8 +106,8 @@ impl crate::serde::Serialize for LimitedPriorityLevelConfiguration {
 }
 
 #[cfg(feature = "schema")]
-impl LimitedPriorityLevelConfiguration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LimitedPriorityLevelConfiguration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:\n * How are requests for this priority level limited?\n * What should be done with requests that exceed the limit?",
           "properties": {

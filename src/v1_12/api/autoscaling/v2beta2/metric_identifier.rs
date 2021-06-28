@@ -98,8 +98,8 @@ impl crate::serde::Serialize for MetricIdentifier {
 }
 
 #[cfg(feature = "schema")]
-impl MetricIdentifier {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MetricIdentifier {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MetricIdentifier defines the name and optionally selector for a metric",
           "properties": {

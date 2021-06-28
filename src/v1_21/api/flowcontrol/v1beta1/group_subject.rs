@@ -85,8 +85,8 @@ impl crate::serde::Serialize for GroupSubject {
 }
 
 #[cfg(feature = "schema")]
-impl GroupSubject {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for GroupSubject {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "GroupSubject holds detailed information for group-kind subject.",
           "properties": {

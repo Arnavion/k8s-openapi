@@ -111,8 +111,8 @@ impl crate::serde::Serialize for PortworxVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl PortworxVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PortworxVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PortworxVolumeSource represents a Portworx volume resource.",
           "properties": {

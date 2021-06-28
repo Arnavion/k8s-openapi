@@ -113,8 +113,8 @@ impl crate::serde::Serialize for QueuingConfiguration {
 }
 
 #[cfg(feature = "schema")]
-impl QueuingConfiguration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for QueuingConfiguration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "QueuingConfiguration holds the configuration parameters for queuing",
           "properties": {

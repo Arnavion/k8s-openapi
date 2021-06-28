@@ -134,8 +134,8 @@ impl crate::serde::Serialize for IngressClassParametersReference {
 }
 
 #[cfg(feature = "schema")]
-impl IngressClassParametersReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressClassParametersReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressClassParametersReference identifies an API object. This can be used to specify a cluster or namespace-scoped resource.",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for PodAffinity {
 }
 
 #[cfg(feature = "schema")]
-impl PodAffinity {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodAffinity {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Pod affinity is a group of inter pod affinity scheduling rules.",
           "properties": {

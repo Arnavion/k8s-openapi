@@ -124,8 +124,8 @@ impl crate::serde::Serialize for MetricTarget {
 }
 
 #[cfg(feature = "schema")]
-impl MetricTarget {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MetricTarget {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MetricTarget defines the target value, average value, or average utilization of a specific metric",
           "properties": {

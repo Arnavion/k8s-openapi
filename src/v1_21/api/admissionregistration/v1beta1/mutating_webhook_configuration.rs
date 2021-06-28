@@ -490,8 +490,8 @@ impl crate::serde::Serialize for MutatingWebhookConfiguration {
 }
 
 #[cfg(feature = "schema")]
-impl MutatingWebhookConfiguration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MutatingWebhookConfiguration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object. Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.",
           "x-kubernetes-group-version-kind": [

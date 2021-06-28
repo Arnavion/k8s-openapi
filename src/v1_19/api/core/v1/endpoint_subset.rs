@@ -120,8 +120,8 @@ impl crate::serde::Serialize for EndpointSubset {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointSubset {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointSubset {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointSubset is a group of addresses with a common set of ports. The expanded set of endpoints is the Cartesian product of Addresses x Ports. For example, given:\n  {\n    Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n    Ports:     [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n  }\nThe resulting set of endpoints can be viewed as:\n    a: [ 10.10.1.1:8675, 10.10.2.2:8675 ],\n    b: [ 10.10.1.1:309, 10.10.2.2:309 ]",
           "properties": {

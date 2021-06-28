@@ -113,8 +113,8 @@ impl crate::serde::Serialize for EnvFromSource {
 }
 
 #[cfg(feature = "schema")]
-impl EnvFromSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EnvFromSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EnvFromSource represents the source of a set of ConfigMaps",
           "properties": {

@@ -606,8 +606,8 @@ impl crate::serde::Serialize for Lease {
 }
 
 #[cfg(feature = "schema")]
-impl Lease {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Lease {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Lease defines a lease concept.",
           "x-kubernetes-group-version-kind": [

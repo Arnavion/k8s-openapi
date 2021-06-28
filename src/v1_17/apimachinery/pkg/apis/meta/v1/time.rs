@@ -31,8 +31,8 @@ impl crate::serde::Serialize for Time {
 }
 
 #[cfg(feature = "schema")]
-impl Time {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Time {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
           "format": "date-time",

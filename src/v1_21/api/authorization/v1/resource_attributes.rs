@@ -165,8 +165,8 @@ impl crate::serde::Serialize for ResourceAttributes {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceAttributes {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceAttributes {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface",
           "properties": {

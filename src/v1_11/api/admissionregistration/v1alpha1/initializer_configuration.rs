@@ -502,8 +502,8 @@ impl crate::serde::Serialize for InitializerConfiguration {
 }
 
 #[cfg(feature = "schema")]
-impl InitializerConfiguration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for InitializerConfiguration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "InitializerConfiguration describes the configuration of initializers.",
           "x-kubernetes-group-version-kind": [

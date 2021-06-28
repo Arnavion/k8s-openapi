@@ -85,8 +85,8 @@ impl crate::serde::Serialize for ForZone {
 }
 
 #[cfg(feature = "schema")]
-impl ForZone {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ForZone {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ForZone provides information about which zones should consume this endpoint.",
           "properties": {

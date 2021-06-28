@@ -121,8 +121,8 @@ impl crate::serde::Serialize for Subject {
 }
 
 #[cfg(feature = "schema")]
-impl Subject {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Subject {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Subject contains a reference to the object or user identities a role binding applies to.  This can either hold a direct API object reference, or a value for non-objects such as user and group names.",
           "properties": {

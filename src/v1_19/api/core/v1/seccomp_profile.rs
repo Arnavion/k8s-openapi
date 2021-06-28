@@ -100,8 +100,8 @@ impl crate::serde::Serialize for SeccompProfile {
 }
 
 #[cfg(feature = "schema")]
-impl SeccompProfile {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SeccompProfile {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.",
           "properties": {

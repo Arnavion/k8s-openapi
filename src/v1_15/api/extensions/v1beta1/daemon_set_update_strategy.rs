@@ -99,8 +99,8 @@ impl crate::serde::Serialize for DaemonSetUpdateStrategy {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSetUpdateStrategy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSetUpdateStrategy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "rollingUpdate": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollingUpdateDaemonSet::schema(), "Rolling update config params. Present only if type = \"RollingUpdate\"."),

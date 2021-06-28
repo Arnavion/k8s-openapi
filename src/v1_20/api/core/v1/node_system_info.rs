@@ -175,8 +175,8 @@ impl crate::serde::Serialize for NodeSystemInfo {
 }
 
 #[cfg(feature = "schema")]
-impl NodeSystemInfo {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeSystemInfo {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeSystemInfo is a set of ids/uuids to uniquely identify the node.",
           "properties": {

@@ -152,8 +152,8 @@ impl crate::serde::Serialize for DeleteOptions {
 }
 
 #[cfg(feature = "schema")]
-impl DeleteOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeleteOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DeleteOptions may be provided when deleting an API object.",
           "x-kubernetes-group-version-kind": [

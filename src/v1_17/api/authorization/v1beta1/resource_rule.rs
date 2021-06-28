@@ -125,8 +125,8 @@ impl crate::serde::Serialize for ResourceRule {
 }
 
 #[cfg(feature = "schema")]
-impl ResourceRule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ResourceRule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ResourceRule is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for SelfSubjectAccessReviewSpec {
 }
 
 #[cfg(feature = "schema")]
-impl SelfSubjectAccessReviewSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SelfSubjectAccessReviewSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
           "properties": {

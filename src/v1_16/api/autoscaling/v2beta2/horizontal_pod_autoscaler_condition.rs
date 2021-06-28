@@ -134,8 +134,8 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerCondition {
 }
 
 #[cfg(feature = "schema")]
-impl HorizontalPodAutoscalerCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HorizontalPodAutoscalerCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.",
           "properties": {

@@ -490,8 +490,8 @@ impl crate::serde::Serialize for PodSecurityPolicy {
 }
 
 #[cfg(feature = "schema")]
-impl PodSecurityPolicy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodSecurityPolicy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated in 1.21.",
           "x-kubernetes-group-version-kind": [

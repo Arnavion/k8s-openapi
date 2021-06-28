@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ServiceStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceStatus represents the current status of a service.",
           "properties": {

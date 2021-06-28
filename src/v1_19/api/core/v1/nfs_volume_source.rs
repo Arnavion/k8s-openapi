@@ -108,8 +108,8 @@ impl crate::serde::Serialize for NFSVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl NFSVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NFSVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.",
           "properties": {

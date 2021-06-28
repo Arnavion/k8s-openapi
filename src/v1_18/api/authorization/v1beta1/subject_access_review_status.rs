@@ -124,8 +124,8 @@ impl crate::serde::Serialize for SubjectAccessReviewStatus {
 }
 
 #[cfg(feature = "schema")]
-impl SubjectAccessReviewStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SubjectAccessReviewStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SubjectAccessReviewStatus",
           "properties": {

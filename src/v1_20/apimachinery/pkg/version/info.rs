@@ -156,8 +156,8 @@ impl crate::serde::Serialize for Info {
 }
 
 #[cfg(feature = "schema")]
-impl Info {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Info {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Info contains versioning information. how we'll want to distribute that information.",
           "properties": {

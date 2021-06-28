@@ -100,8 +100,8 @@ impl crate::serde::Serialize for Lifecycle {
 }
 
 #[cfg(feature = "schema")]
-impl Lifecycle {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Lifecycle {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Lifecycle describes actions that the management system should take in response to container lifecycle events. For the PostStart and PreStop lifecycle handlers, management of the container blocks until the action is complete, unless the container process fails, in which case the handler is aborted.",
           "properties": {

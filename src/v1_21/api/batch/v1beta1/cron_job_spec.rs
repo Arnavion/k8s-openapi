@@ -160,8 +160,8 @@ impl crate::serde::Serialize for CronJobSpec {
 }
 
 #[cfg(feature = "schema")]
-impl CronJobSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CronJobSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CronJobSpec describes how the job execution will look like and when it will actually run.",
           "properties": {

@@ -298,8 +298,8 @@ impl crate::serde::Serialize for ObjectMeta {
 }
 
 #[cfg(feature = "schema")]
-impl ObjectMeta {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ObjectMeta {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.",
           "properties": {

@@ -124,8 +124,8 @@ impl crate::serde::Serialize for APIResourceList {
 }
 
 #[cfg(feature = "schema")]
-impl APIResourceList {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIResourceList {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced.",
           "x-kubernetes-group-version-kind": [

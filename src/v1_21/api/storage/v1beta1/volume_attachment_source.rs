@@ -100,8 +100,8 @@ impl crate::serde::Serialize for VolumeAttachmentSource {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeAttachmentSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeAttachmentSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set.",
           "properties": {

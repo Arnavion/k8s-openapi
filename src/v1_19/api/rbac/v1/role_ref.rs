@@ -105,8 +105,8 @@ impl crate::serde::Serialize for RoleRef {
 }
 
 #[cfg(feature = "schema")]
-impl RoleRef {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RoleRef {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RoleRef contains information that points to the role being used",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for NamespaceStatus {
 }
 
 #[cfg(feature = "schema")]
-impl NamespaceStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NamespaceStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NamespaceStatus is information about the current status of a Namespace.",
           "properties": {

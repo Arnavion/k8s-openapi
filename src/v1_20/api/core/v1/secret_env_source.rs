@@ -102,8 +102,8 @@ impl crate::serde::Serialize for SecretEnvSource {
 }
 
 #[cfg(feature = "schema")]
-impl SecretEnvSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecretEnvSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SecretEnvSource selects a Secret to populate the environment variables with.\n\nThe contents of the target Secret's Data field will represent the key-value pairs as environment variables.",
           "properties": {

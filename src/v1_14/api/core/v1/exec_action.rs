@@ -87,8 +87,8 @@ impl crate::serde::Serialize for ExecAction {
 }
 
 #[cfg(feature = "schema")]
-impl ExecAction {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ExecAction {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ExecAction describes a \"run in container\" action.",
           "properties": {

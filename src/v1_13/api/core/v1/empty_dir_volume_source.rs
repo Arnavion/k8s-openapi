@@ -100,8 +100,8 @@ impl crate::serde::Serialize for EmptyDirVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl EmptyDirVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EmptyDirVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.",
           "properties": {

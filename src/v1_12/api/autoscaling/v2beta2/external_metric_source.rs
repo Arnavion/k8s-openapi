@@ -95,8 +95,8 @@ impl crate::serde::Serialize for ExternalMetricSource {
 }
 
 #[cfg(feature = "schema")]
-impl ExternalMetricSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ExternalMetricSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).",
           "properties": {

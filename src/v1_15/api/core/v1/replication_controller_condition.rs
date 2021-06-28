@@ -134,8 +134,8 @@ impl crate::serde::Serialize for ReplicationControllerCondition {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicationControllerCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicationControllerCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicationControllerCondition describes the state of a replication controller at a certain point.",
           "properties": {

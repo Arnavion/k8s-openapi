@@ -147,8 +147,8 @@ impl crate::serde::Serialize for PodCondition {
 }
 
 #[cfg(feature = "schema")]
-impl PodCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodCondition contains details for the current condition of this pod.",
           "properties": {

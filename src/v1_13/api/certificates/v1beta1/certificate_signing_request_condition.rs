@@ -123,8 +123,8 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequestCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequestCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "timestamp for the last update to this condition"),

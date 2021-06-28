@@ -134,8 +134,8 @@ impl crate::serde::Serialize for ReplicaSetCondition {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicaSetCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicaSetCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicaSetCondition describes the state of a replica set at a certain point.",
           "properties": {

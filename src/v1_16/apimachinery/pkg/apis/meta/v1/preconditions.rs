@@ -100,8 +100,8 @@ impl crate::serde::Serialize for Preconditions {
 }
 
 #[cfg(feature = "schema")]
-impl Preconditions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Preconditions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.",
           "properties": {

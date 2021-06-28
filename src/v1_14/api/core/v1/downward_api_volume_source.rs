@@ -100,8 +100,8 @@ impl crate::serde::Serialize for DownwardAPIVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl DownwardAPIVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DownwardAPIVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DownwardAPIVolumeSource represents a volume containing downward API info. Downward API volumes support ownership management and SELinux relabeling.",
           "properties": {

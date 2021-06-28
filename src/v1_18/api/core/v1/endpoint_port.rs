@@ -124,8 +124,8 @@ impl crate::serde::Serialize for EndpointPort {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointPort {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointPort {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointPort is a tuple that describes a single port.",
           "properties": {

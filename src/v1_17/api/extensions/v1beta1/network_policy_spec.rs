@@ -124,8 +124,8 @@ impl crate::serde::Serialize for NetworkPolicySpec {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicySpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicySpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED 1.9 - This group version of NetworkPolicySpec is deprecated by networking/v1/NetworkPolicySpec.",
           "properties": {

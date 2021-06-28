@@ -102,8 +102,8 @@ impl crate::serde::Serialize for AllowedHostPath {
 }
 
 #[cfg(feature = "schema")]
-impl AllowedHostPath {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AllowedHostPath {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods to use. It requires the path prefix to be defined. Deprecated: use AllowedHostPath from policy API Group instead.",
           "properties": {

@@ -98,8 +98,8 @@ impl crate::serde::Serialize for NonResourceRule {
 }
 
 #[cfg(feature = "schema")]
-impl NonResourceRule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NonResourceRule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NonResourceRule holds information that describes a rule for the non-resource",
           "properties": {

@@ -617,8 +617,8 @@ impl crate::serde::Serialize for Endpoints {
 }
 
 #[cfg(feature = "schema")]
-impl Endpoints {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Endpoints {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Endpoints is a collection of endpoints that implement the actual service. Example:\n  Name: \"mysvc\",\n  Subsets: [\n    {\n      Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n      Ports: [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n    },\n    {\n      Addresses: [{\"ip\": \"10.10.3.3\"}],\n      Ports: [{\"name\": \"a\", \"port\": 93}, {\"name\": \"b\", \"port\": 76}]\n    },\n ]",
           "x-kubernetes-group-version-kind": [

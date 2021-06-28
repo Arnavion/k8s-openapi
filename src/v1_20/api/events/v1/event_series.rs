@@ -95,8 +95,8 @@ impl crate::serde::Serialize for EventSeries {
 }
 
 #[cfg(feature = "schema")]
-impl EventSeries {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EventSeries {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time. How often to update the EventSeries is up to the event reporters. The default event reporter in \"k8s.io/client-go/tools/events/event_broadcaster.go\" shows how this struct is updated on heartbeats and can guide customized reporter implementations.",
           "properties": {

@@ -616,8 +616,8 @@ impl crate::serde::Serialize for PodPreset {
 }
 
 #[cfg(feature = "schema")]
-impl PodPreset {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodPreset {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodPreset is a policy resource that defines additional runtime requirements for a Pod.",
           "x-kubernetes-group-version-kind": [

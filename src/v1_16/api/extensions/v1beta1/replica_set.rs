@@ -823,8 +823,8 @@ impl crate::serde::Serialize for ReplicaSet {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicaSet {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicaSet {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED - This group version of ReplicaSet is deprecated by apps/v1beta2/ReplicaSet. See the release notes for more information. ReplicaSet ensures that a specified number of pod replicas are running at any given time.",
           "x-kubernetes-group-version-kind": [

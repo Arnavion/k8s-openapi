@@ -677,8 +677,8 @@ impl crate::serde::Serialize for PriorityLevelConfiguration {
 }
 
 #[cfg(feature = "schema")]
-impl PriorityLevelConfiguration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PriorityLevelConfiguration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PriorityLevelConfiguration represents the configuration of a priority level.",
           "x-kubernetes-group-version-kind": [

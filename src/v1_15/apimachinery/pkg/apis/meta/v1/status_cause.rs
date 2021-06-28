@@ -117,8 +117,8 @@ impl crate::serde::Serialize for StatusCause {
 }
 
 #[cfg(feature = "schema")]
-impl StatusCause {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StatusCause {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.",
           "properties": {

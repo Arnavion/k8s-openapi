@@ -235,8 +235,8 @@ impl crate::serde::Serialize for ValidatingWebhook {
 }
 
 #[cfg(feature = "schema")]
-impl ValidatingWebhook {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ValidatingWebhook {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ValidatingWebhook describes an admission webhook and the resources and operations it applies to.",
           "properties": {

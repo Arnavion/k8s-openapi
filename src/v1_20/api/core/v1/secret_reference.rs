@@ -100,8 +100,8 @@ impl crate::serde::Serialize for SecretReference {
 }
 
 #[cfg(feature = "schema")]
-impl SecretReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecretReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace",
           "properties": {

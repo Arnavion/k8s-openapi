@@ -811,8 +811,8 @@ impl crate::serde::Serialize for HorizontalPodAutoscaler {
 }
 
 #[cfg(feature = "schema")]
-impl HorizontalPodAutoscaler {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HorizontalPodAutoscaler {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "configuration of a horizontal pod autoscaler.",
           "x-kubernetes-group-version-kind": [

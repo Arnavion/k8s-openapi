@@ -1308,8 +1308,8 @@ impl crate::serde::Serialize for Service {
 }
 
 #[cfg(feature = "schema")]
-impl Service {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Service {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.",
           "x-kubernetes-group-version-kind": [

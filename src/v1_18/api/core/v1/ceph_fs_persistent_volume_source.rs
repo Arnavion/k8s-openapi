@@ -150,8 +150,8 @@ impl crate::serde::Serialize for CephFSPersistentVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl CephFSPersistentVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CephFSPersistentVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.",
           "properties": {

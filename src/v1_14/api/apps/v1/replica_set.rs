@@ -823,8 +823,8 @@ impl crate::serde::Serialize for ReplicaSet {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicaSet {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicaSet {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicaSet ensures that a specified number of pod replicas are running at any given time.",
           "x-kubernetes-group-version-kind": [

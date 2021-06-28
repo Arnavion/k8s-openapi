@@ -177,8 +177,8 @@ impl crate::serde::Serialize for APIResource {
 }
 
 #[cfg(feature = "schema")]
-impl APIResource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIResource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIResource specifies the name of a resource and whether it is namespaced.",
           "properties": {

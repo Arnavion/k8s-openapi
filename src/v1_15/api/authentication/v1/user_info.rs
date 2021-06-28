@@ -126,8 +126,8 @@ impl crate::serde::Serialize for UserInfo {
 }
 
 #[cfg(feature = "schema")]
-impl UserInfo {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for UserInfo {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "UserInfo holds the information about the user needed to implement the user.Info interface.",
           "properties": {

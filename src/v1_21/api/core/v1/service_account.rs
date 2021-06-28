@@ -632,8 +632,8 @@ impl crate::serde::Serialize for ServiceAccount {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceAccount {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceAccount {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceAccount binds together: * a name, understood by users, and perhaps by peripheral systems, for an identity * a principal that can be authenticated and authorized * a set of secrets",
           "x-kubernetes-group-version-kind": [

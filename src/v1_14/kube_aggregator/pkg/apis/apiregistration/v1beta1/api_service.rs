@@ -688,8 +688,8 @@ impl crate::serde::Serialize for APIService {
 }
 
 #[cfg(feature = "schema")]
-impl APIService {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIService {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIService represents a server for a particular GroupVersion. Name must be \"version.group\".",
           "x-kubernetes-group-version-kind": [

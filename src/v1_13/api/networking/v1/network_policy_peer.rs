@@ -117,8 +117,8 @@ impl crate::serde::Serialize for NetworkPolicyPeer {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicyPeer {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicyPeer {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed",
           "properties": {

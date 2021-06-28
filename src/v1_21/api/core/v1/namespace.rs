@@ -682,8 +682,8 @@ impl crate::serde::Serialize for Namespace {
 }
 
 #[cfg(feature = "schema")]
-impl Namespace {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Namespace {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Namespace provides a scope for Names. Use of multiple namespaces is optional.",
           "x-kubernetes-group-version-kind": [

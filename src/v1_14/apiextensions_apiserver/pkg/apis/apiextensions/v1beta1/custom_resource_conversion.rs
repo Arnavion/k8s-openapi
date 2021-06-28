@@ -111,8 +111,8 @@ impl crate::serde::Serialize for CustomResourceConversion {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceConversion {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceConversion {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceConversion describes how to convert different versions of a CR.",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for RollingUpdateDaemonSet {
 }
 
 #[cfg(feature = "schema")]
-impl RollingUpdateDaemonSet {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RollingUpdateDaemonSet {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Spec to control the desired behavior of daemon set rolling update.",
           "properties": {

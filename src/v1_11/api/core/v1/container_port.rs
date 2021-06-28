@@ -137,8 +137,8 @@ impl crate::serde::Serialize for ContainerPort {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerPort {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerPort {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerPort represents a network port in a single container.",
           "properties": {

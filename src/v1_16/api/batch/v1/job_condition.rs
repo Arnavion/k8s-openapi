@@ -147,8 +147,8 @@ impl crate::serde::Serialize for JobCondition {
 }
 
 #[cfg(feature = "schema")]
-impl JobCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for JobCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "JobCondition describes current state of a job.",
           "properties": {

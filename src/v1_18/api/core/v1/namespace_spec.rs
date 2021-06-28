@@ -87,8 +87,8 @@ impl crate::serde::Serialize for NamespaceSpec {
 }
 
 #[cfg(feature = "schema")]
-impl NamespaceSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NamespaceSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NamespaceSpec describes the attributes on a Namespace.",
           "properties": {

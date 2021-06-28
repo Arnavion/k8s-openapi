@@ -132,8 +132,8 @@ impl crate::serde::Serialize for RuleWithOperations {
 }
 
 #[cfg(feature = "schema")]
-impl RuleWithOperations {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RuleWithOperations {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RuleWithOperations is a tuple of Operations and Resources. It is recommended to make sure that all the tuple expansions are valid.",
           "properties": {

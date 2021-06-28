@@ -618,8 +618,8 @@ impl crate::serde::Serialize for NetworkPolicy {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NetworkPolicy describes what network traffic is allowed for a set of Pods",
           "x-kubernetes-group-version-kind": [

@@ -124,8 +124,8 @@ impl crate::serde::Serialize for FlowSchemaSpec {
 }
 
 #[cfg(feature = "schema")]
-impl FlowSchemaSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlowSchemaSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlowSchemaSpec describes how the FlowSchema's specification looks like.",
           "properties": {

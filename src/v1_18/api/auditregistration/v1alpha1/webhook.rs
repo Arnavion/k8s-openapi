@@ -98,8 +98,8 @@ impl crate::serde::Serialize for Webhook {
 }
 
 #[cfg(feature = "schema")]
-impl Webhook {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Webhook {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Webhook holds the configuration of the webhook",
           "properties": {

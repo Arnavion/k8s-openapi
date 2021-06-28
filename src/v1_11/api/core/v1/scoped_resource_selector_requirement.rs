@@ -108,8 +108,8 @@ impl crate::serde::Serialize for ScopedResourceSelectorRequirement {
 }
 
 #[cfg(feature = "schema")]
-impl ScopedResourceSelectorRequirement {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ScopedResourceSelectorRequirement {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.",
           "properties": {

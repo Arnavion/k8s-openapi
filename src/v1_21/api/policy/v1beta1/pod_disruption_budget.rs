@@ -810,8 +810,8 @@ impl crate::serde::Serialize for PodDisruptionBudget {
 }
 
 #[cfg(feature = "schema")]
-impl PodDisruptionBudget {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodDisruptionBudget {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods",
           "x-kubernetes-group-version-kind": [

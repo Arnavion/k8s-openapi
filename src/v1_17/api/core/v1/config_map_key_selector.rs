@@ -111,8 +111,8 @@ impl crate::serde::Serialize for ConfigMapKeySelector {
 }
 
 #[cfg(feature = "schema")]
-impl ConfigMapKeySelector {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ConfigMapKeySelector {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Selects a key from a ConfigMap.",
           "properties": {

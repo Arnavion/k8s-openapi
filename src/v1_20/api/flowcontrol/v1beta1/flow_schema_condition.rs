@@ -139,8 +139,8 @@ impl crate::serde::Serialize for FlowSchemaCondition {
 }
 
 #[cfg(feature = "schema")]
-impl FlowSchemaCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlowSchemaCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlowSchemaCondition describes conditions for a FlowSchema.",
           "properties": {

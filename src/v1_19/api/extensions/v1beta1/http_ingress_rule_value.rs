@@ -85,8 +85,8 @@ impl crate::serde::Serialize for HTTPIngressRuleValue {
 }
 
 #[cfg(feature = "schema")]
-impl HTTPIngressRuleValue {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HTTPIngressRuleValue {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example: http://<host>/<path>?<searchpart> -> backend where where parts of the url correspond to RFC 3986, this resource will be used to match against everything after the last '/' and before the first '?' or '#'.",
           "properties": {

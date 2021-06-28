@@ -186,8 +186,8 @@ impl crate::serde::Serialize for SelfSubjectAccessReview {
 }
 
 #[cfg(feature = "schema")]
-impl SelfSubjectAccessReview {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SelfSubjectAccessReview {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means \"in all namespaces\".  Self is a special case, because users should always be able to check whether they can perform an action",
           "x-kubernetes-group-version-kind": [

@@ -114,8 +114,8 @@ impl crate::serde::Serialize for APIGroupList {
 }
 
 #[cfg(feature = "schema")]
-impl APIGroupList {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIGroupList {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.",
           "x-kubernetes-group-version-kind": [

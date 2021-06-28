@@ -87,8 +87,8 @@ impl crate::serde::Serialize for EndpointHints {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointHints {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointHints {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointHints provides hints describing how an endpoint should be consumed.",
           "properties": {

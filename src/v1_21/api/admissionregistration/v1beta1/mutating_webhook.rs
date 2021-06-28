@@ -254,8 +254,8 @@ impl crate::serde::Serialize for MutatingWebhook {
 }
 
 #[cfg(feature = "schema")]
-impl MutatingWebhook {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MutatingWebhook {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MutatingWebhook describes an admission webhook and the resources and operations it applies to.",
           "properties": {

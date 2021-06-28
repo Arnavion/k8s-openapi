@@ -113,8 +113,8 @@ impl crate::serde::Serialize for IngressBackend {
 }
 
 #[cfg(feature = "schema")]
-impl IngressBackend {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressBackend {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressBackend describes all endpoints for a given service and port.",
           "properties": {

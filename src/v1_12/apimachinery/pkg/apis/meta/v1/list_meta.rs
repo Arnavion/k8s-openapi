@@ -113,8 +113,8 @@ impl crate::serde::Serialize for ListMeta {
 }
 
 #[cfg(feature = "schema")]
-impl ListMeta {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ListMeta {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
           "properties": {

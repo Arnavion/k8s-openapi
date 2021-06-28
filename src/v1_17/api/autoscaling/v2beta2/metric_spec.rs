@@ -137,8 +137,8 @@ impl crate::serde::Serialize for MetricSpec {
 }
 
 #[cfg(feature = "schema")]
-impl MetricSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MetricSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).",
           "properties": {

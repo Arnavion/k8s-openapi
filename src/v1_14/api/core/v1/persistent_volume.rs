@@ -689,8 +689,8 @@ impl crate::serde::Serialize for PersistentVolume {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolume {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolume {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolume (PV) is a storage resource provisioned by an administrator. It is analogous to a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes",
           "x-kubernetes-group-version-kind": [

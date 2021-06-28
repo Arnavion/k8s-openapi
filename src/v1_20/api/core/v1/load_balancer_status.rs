@@ -87,8 +87,8 @@ impl crate::serde::Serialize for LoadBalancerStatus {
 }
 
 #[cfg(feature = "schema")]
-impl LoadBalancerStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LoadBalancerStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LoadBalancerStatus represents the status of a load-balancer.",
           "properties": {

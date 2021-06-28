@@ -118,8 +118,8 @@ impl crate::serde::Serialize for SubjectRulesReviewStatus {
 }
 
 #[cfg(feature = "schema")]
-impl SubjectRulesReviewStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SubjectRulesReviewStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SubjectRulesReviewStatus contains the result of a rules check. This check can be incomplete depending on the set of authorizers the server is configured with and any errors experienced during evaluation. Because authorization rules are additive, if a rule appears in a list it's safe to assume the subject has that permission, even if that list is incomplete.",
           "properties": {

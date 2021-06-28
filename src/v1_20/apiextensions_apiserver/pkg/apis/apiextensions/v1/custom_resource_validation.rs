@@ -87,8 +87,8 @@ impl crate::serde::Serialize for CustomResourceValidation {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceValidation {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceValidation {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceValidation is a list of validation methods for CustomResources.",
           "properties": {

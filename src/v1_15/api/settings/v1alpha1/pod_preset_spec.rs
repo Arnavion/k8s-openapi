@@ -139,8 +139,8 @@ impl crate::serde::Serialize for PodPresetSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PodPresetSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodPresetSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodPresetSpec is a description of a pod preset.",
           "properties": {

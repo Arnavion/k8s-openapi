@@ -85,8 +85,8 @@ impl crate::serde::Serialize for DaemonEndpoint {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonEndpoint {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonEndpoint {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DaemonEndpoint contains information about a single Daemon endpoint.",
           "properties": {

@@ -173,8 +173,8 @@ impl crate::serde::Serialize for CSIPersistentVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl CSIPersistentVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CSIPersistentVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents storage that is managed by an external CSI volume driver (Beta feature)",
           "properties": {

@@ -147,8 +147,8 @@ impl crate::serde::Serialize for DeploymentCondition {
 }
 
 #[cfg(feature = "schema")]
-impl DeploymentCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeploymentCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DeploymentCondition describes the state of a deployment at a certain point.",
           "properties": {

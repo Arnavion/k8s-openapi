@@ -121,8 +121,8 @@ impl crate::serde::Serialize for CertificateSigningRequestStatus {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequestStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequestStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CertificateSigningRequestStatus contains conditions used to indicate approved/denied/failed status of the request, and the issued certificate.",
           "properties": {

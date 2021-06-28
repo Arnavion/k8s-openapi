@@ -87,8 +87,8 @@ impl crate::serde::Serialize for NodeDaemonEndpoints {
 }
 
 #[cfg(feature = "schema")]
-impl NodeDaemonEndpoints {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeDaemonEndpoints {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeDaemonEndpoints lists ports opened by daemons running on the Node.",
           "properties": {

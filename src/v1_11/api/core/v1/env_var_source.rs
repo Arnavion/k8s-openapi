@@ -126,8 +126,8 @@ impl crate::serde::Serialize for EnvVarSource {
 }
 
 #[cfg(feature = "schema")]
-impl EnvVarSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EnvVarSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EnvVarSource represents a source for the value of an EnvVar.",
           "properties": {

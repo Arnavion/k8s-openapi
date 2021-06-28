@@ -121,8 +121,8 @@ impl crate::serde::Serialize for ComponentCondition {
 }
 
 #[cfg(feature = "schema")]
-impl ComponentCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ComponentCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Information about the condition of a component.",
           "properties": {

@@ -113,8 +113,8 @@ impl crate::serde::Serialize for Handler {
 }
 
 #[cfg(feature = "schema")]
-impl Handler {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Handler {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Handler defines a specific action that should be taken",
           "properties": {

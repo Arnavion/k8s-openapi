@@ -137,8 +137,8 @@ impl crate::serde::Serialize for PolicyRule {
 }
 
 #[cfg(feature = "schema")]
-impl PolicyRule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PolicyRule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.",
           "properties": {

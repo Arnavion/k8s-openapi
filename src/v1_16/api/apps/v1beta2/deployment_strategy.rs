@@ -100,8 +100,8 @@ impl crate::serde::Serialize for DeploymentStrategy {
 }
 
 #[cfg(feature = "schema")]
-impl DeploymentStrategy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeploymentStrategy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DeploymentStrategy describes how to replace existing pods with new ones.",
           "properties": {

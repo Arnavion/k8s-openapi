@@ -87,8 +87,8 @@ impl crate::serde::Serialize for NodeConfigSource {
 }
 
 #[cfg(feature = "schema")]
-impl NodeConfigSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeConfigSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.",
           "properties": {

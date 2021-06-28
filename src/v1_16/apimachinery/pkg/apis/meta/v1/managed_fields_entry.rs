@@ -152,8 +152,8 @@ impl crate::serde::Serialize for ManagedFieldsEntry {
 }
 
 #[cfg(feature = "schema")]
-impl ManagedFieldsEntry {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ManagedFieldsEntry {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.",
           "properties": {

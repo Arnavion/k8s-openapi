@@ -729,8 +729,8 @@ impl crate::serde::Serialize for CertificateSigningRequest {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequest {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequest {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Describes a certificate signing request",
           "x-kubernetes-group-version-kind": [

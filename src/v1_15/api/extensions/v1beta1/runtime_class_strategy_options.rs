@@ -98,8 +98,8 @@ impl crate::serde::Serialize for RuntimeClassStrategyOptions {
 }
 
 #[cfg(feature = "schema")]
-impl RuntimeClassStrategyOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RuntimeClassStrategyOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RuntimeClassStrategyOptions define the strategy that will dictate the allowable RuntimeClasses for a pod.",
           "properties": {

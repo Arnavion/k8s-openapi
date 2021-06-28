@@ -126,8 +126,8 @@ impl crate::serde::Serialize for BoundObjectReference {
 }
 
 #[cfg(feature = "schema")]
-impl BoundObjectReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for BoundObjectReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "BoundObjectReference is a reference to an object that a token is bound to.",
           "properties": {

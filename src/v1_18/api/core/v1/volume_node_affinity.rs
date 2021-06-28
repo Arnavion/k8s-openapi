@@ -87,8 +87,8 @@ impl crate::serde::Serialize for VolumeNodeAffinity {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeNodeAffinity {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeNodeAffinity {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.",
           "properties": {

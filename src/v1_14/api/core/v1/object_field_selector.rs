@@ -98,8 +98,8 @@ impl crate::serde::Serialize for ObjectFieldSelector {
 }
 
 #[cfg(feature = "schema")]
-impl ObjectFieldSelector {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ObjectFieldSelector {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ObjectFieldSelector selects an APIVersioned field of an object.",
           "properties": {

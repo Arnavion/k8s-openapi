@@ -141,8 +141,8 @@ impl crate::serde::Serialize for OwnerReference {
 }
 
 #[cfg(feature = "schema")]
-impl OwnerReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for OwnerReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "OwnerReference contains enough information to let you identify an owning object. Currently, an owning object must be in the same namespace, so there is no namespace field.",
           "properties": {

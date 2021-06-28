@@ -139,8 +139,8 @@ impl crate::serde::Serialize for LeaseSpec {
 }
 
 #[cfg(feature = "schema")]
-impl LeaseSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LeaseSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LeaseSpec is a specification of a Lease.",
           "properties": {

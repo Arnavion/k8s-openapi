@@ -87,8 +87,8 @@ impl crate::serde::Serialize for Overhead {
 }
 
 #[cfg(feature = "schema")]
-impl Overhead {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Overhead {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Overhead structure represents the resource overhead associated with running a pod.",
           "properties": {

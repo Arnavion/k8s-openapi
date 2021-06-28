@@ -126,8 +126,8 @@ impl crate::serde::Serialize for ReplicationControllerSpec {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicationControllerSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicationControllerSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicationControllerSpec is the specification of a replication controller.",
           "properties": {

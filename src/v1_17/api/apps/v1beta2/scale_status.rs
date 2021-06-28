@@ -111,8 +111,8 @@ impl crate::serde::Serialize for ScaleStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ScaleStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ScaleStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ScaleStatus represents the current status of a scale subresource.",
           "properties": {

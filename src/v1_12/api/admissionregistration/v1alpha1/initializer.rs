@@ -98,8 +98,8 @@ impl crate::serde::Serialize for Initializer {
 }
 
 #[cfg(feature = "schema")]
-impl Initializer {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Initializer {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Initializer describes the name and the failure policy of an initializer, and what resources it applies to.",
           "properties": {

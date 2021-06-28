@@ -100,8 +100,8 @@ impl crate::serde::Serialize for FlockerVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl FlockerVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlockerVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.",
           "properties": {

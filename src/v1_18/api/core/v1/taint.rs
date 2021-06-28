@@ -121,8 +121,8 @@ impl crate::serde::Serialize for Taint {
 }
 
 #[cfg(feature = "schema")]
-impl Taint {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Taint {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "The node this Taint is attached to has the \"effect\" on any pod that does not tolerate the Taint.",
           "properties": {

@@ -152,8 +152,8 @@ impl crate::serde::Serialize for SubjectAccessReviewSpec {
 }
 
 #[cfg(feature = "schema")]
-impl SubjectAccessReviewSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SubjectAccessReviewSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
           "properties": {

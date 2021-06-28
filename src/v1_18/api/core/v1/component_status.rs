@@ -299,8 +299,8 @@ impl crate::serde::Serialize for ComponentStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ComponentStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ComponentStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ComponentStatus (and ComponentStatusList) holds the cluster validation info.",
           "x-kubernetes-group-version-kind": [

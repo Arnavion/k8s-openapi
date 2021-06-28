@@ -811,8 +811,8 @@ impl crate::serde::Serialize for ReplicationController {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicationController {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicationController {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicationController represents the configuration of a replication controller.",
           "x-kubernetes-group-version-kind": [

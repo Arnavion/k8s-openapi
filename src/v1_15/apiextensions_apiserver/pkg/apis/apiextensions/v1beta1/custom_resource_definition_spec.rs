@@ -196,8 +196,8 @@ impl crate::serde::Serialize for CustomResourceDefinitionSpec {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceDefinitionSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceDefinitionSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceDefinitionSpec describes how a user wants their resource to appear",
           "properties": {

@@ -95,8 +95,8 @@ impl crate::serde::Serialize for VolumeDevice {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeDevice {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeDevice {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "volumeDevice describes a mapping of a raw block device within a container.",
           "properties": {

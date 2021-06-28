@@ -147,8 +147,8 @@ impl crate::serde::Serialize for QuobyteVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl QuobyteVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for QuobyteVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.",
           "properties": {

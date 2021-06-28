@@ -673,8 +673,8 @@ impl crate::serde::Serialize for CustomResourceDefinition {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceDefinition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceDefinition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format <.spec.name>.<.spec.group>.",
           "x-kubernetes-group-version-kind": [

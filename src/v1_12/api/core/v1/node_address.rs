@@ -95,8 +95,8 @@ impl crate::serde::Serialize for NodeAddress {
 }
 
 #[cfg(feature = "schema")]
-impl NodeAddress {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeAddress {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeAddress contains information for the node's address.",
           "properties": {

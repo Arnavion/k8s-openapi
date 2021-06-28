@@ -811,8 +811,8 @@ impl crate::serde::Serialize for PersistentVolumeClaim {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeClaim {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeClaim {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeClaim is a user's request for and claim to a persistent volume",
           "x-kubernetes-group-version-kind": [

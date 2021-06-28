@@ -111,8 +111,8 @@ impl crate::serde::Serialize for RuntimeClassSpec {
 }
 
 #[cfg(feature = "schema")]
-impl RuntimeClassSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RuntimeClassSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RuntimeClassSpec is a specification of a RuntimeClass. It contains parameters that are required to describe the RuntimeClass to the Container Runtime Interface (CRI) implementation, as well as any other components that need to understand how the pod will be run. The RuntimeClassSpec is immutable.",
           "properties": {

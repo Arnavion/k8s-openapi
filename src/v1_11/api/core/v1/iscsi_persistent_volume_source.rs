@@ -209,8 +209,8 @@ impl crate::serde::Serialize for ISCSIPersistentVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl ISCSIPersistentVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ISCSIPersistentVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.",
           "properties": {

@@ -186,8 +186,8 @@ impl crate::serde::Serialize for TokenReview {
 }
 
 #[cfg(feature = "schema")]
-impl TokenReview {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TokenReview {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.",
           "x-kubernetes-group-version-kind": [

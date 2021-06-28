@@ -87,8 +87,8 @@ impl crate::serde::Serialize for ScaleSpec {
 }
 
 #[cfg(feature = "schema")]
-impl ScaleSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ScaleSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ScaleSpec describes the attributes of a scale subresource",
           "properties": {

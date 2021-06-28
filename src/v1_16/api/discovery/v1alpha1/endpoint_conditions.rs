@@ -87,8 +87,8 @@ impl crate::serde::Serialize for EndpointConditions {
 }
 
 #[cfg(feature = "schema")]
-impl EndpointConditions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EndpointConditions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EndpointConditions represents the current condition of an endpoint.",
           "properties": {

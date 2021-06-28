@@ -87,8 +87,8 @@ impl crate::serde::Serialize for VolumeNodeResources {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeNodeResources {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeNodeResources {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeNodeResources is a set of resource limits for scheduling of volumes.",
           "properties": {

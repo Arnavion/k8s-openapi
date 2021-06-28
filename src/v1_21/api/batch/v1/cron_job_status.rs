@@ -113,8 +113,8 @@ impl crate::serde::Serialize for CronJobStatus {
 }
 
 #[cfg(feature = "schema")]
-impl CronJobStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CronJobStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CronJobStatus represents the current state of a cron job.",
           "properties": {

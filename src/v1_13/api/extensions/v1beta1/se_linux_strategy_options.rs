@@ -98,8 +98,8 @@ impl crate::serde::Serialize for SELinuxStrategyOptions {
 }
 
 #[cfg(feature = "schema")]
-impl SELinuxStrategyOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SELinuxStrategyOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SELinuxStrategyOptions defines the strategy type and any options used to create the strategy. Deprecated: use SELinuxStrategyOptions from policy API Group instead.",
           "properties": {

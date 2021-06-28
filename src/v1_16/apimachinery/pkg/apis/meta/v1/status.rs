@@ -191,8 +191,8 @@ impl crate::serde::Serialize for Status {
 }
 
 #[cfg(feature = "schema")]
-impl Status {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Status {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Status is a return value for calls that don't return other objects.",
           "x-kubernetes-group-version-kind": [

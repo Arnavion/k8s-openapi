@@ -358,8 +358,8 @@ impl crate::serde::Serialize for Container {
 }
 
 #[cfg(feature = "schema")]
-impl Container {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Container {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A single application container that you want to run within a pod.",
           "properties": {

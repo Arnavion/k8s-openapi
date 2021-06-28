@@ -1169,8 +1169,8 @@ impl crate::serde::Serialize for Node {
 }
 
 #[cfg(feature = "schema")]
-impl Node {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Node {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).",
           "x-kubernetes-group-version-kind": [

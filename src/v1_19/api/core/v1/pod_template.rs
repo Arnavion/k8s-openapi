@@ -618,8 +618,8 @@ impl crate::serde::Serialize for PodTemplate {
 }
 
 #[cfg(feature = "schema")]
-impl PodTemplate {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodTemplate {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodTemplate describes a template for creating copies of a predefined pod.",
           "x-kubernetes-group-version-kind": [

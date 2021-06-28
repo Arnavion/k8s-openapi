@@ -124,8 +124,8 @@ impl crate::serde::Serialize for APIVersions {
 }
 
 #[cfg(feature = "schema")]
-impl APIVersions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIVersions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API.",
           "x-kubernetes-group-version-kind": [

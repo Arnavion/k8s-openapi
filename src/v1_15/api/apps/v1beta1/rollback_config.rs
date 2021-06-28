@@ -87,8 +87,8 @@ impl crate::serde::Serialize for RollbackConfig {
 }
 
 #[cfg(feature = "schema")]
-impl RollbackConfig {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RollbackConfig {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED.",
           "properties": {

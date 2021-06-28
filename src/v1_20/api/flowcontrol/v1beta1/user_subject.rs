@@ -85,8 +85,8 @@ impl crate::serde::Serialize for UserSubject {
 }
 
 #[cfg(feature = "schema")]
-impl UserSubject {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for UserSubject {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "UserSubject holds detailed information for user-kind subject.",
           "properties": {

@@ -119,8 +119,8 @@ impl crate::serde::Serialize for Rule {
 }
 
 #[cfg(feature = "schema")]
-impl Rule {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Rule {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Rule is a tuple of APIGroups, APIVersion, and Resources.It is recommended to make sure that all the tuple expansions are valid.",
           "properties": {

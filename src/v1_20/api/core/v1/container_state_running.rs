@@ -87,8 +87,8 @@ impl crate::serde::Serialize for ContainerStateRunning {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerStateRunning {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerStateRunning {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerStateRunning is a running state of a container.",
           "properties": {

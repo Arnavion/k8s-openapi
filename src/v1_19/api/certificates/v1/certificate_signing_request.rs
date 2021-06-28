@@ -865,8 +865,8 @@ impl crate::serde::Serialize for CertificateSigningRequest {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequest {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequest {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CertificateSigningRequest objects provide a mechanism to obtain x509 certificates by submitting a certificate signing request, and having it asynchronously approved and issued.\n\nKubelets use this API to obtain:\n 1. client certificates to authenticate to kube-apiserver (with the \"kubernetes.io/kube-apiserver-client-kubelet\" signerName).\n 2. serving certificates for TLS endpoints kube-apiserver can connect to securely (with the \"kubernetes.io/kubelet-serving\" signerName).\n\nThis API can be used to request client certificates to authenticate to kube-apiserver (with the \"kubernetes.io/kube-apiserver-client\" signerName), or to obtain certificates from custom non-Kubernetes signers.",
           "x-kubernetes-group-version-kind": [

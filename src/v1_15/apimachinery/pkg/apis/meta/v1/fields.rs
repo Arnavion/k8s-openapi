@@ -31,8 +31,8 @@ impl crate::serde::Serialize for Fields {
 }
 
 #[cfg(feature = "schema")]
-impl Fields {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Fields {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Fields stores a set of fields in a data structure like a Trie. To understand how this is used, see: https://github.com/kubernetes-sigs/structured-merge-diff",
           "type": "object"

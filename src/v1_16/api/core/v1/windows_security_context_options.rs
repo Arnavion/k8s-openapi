@@ -113,8 +113,8 @@ impl crate::serde::Serialize for WindowsSecurityContextOptions {
 }
 
 #[cfg(feature = "schema")]
-impl WindowsSecurityContextOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for WindowsSecurityContextOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "WindowsSecurityContextOptions contain Windows-specific options and credentials.",
           "properties": {

@@ -147,8 +147,8 @@ impl crate::serde::Serialize for NodeCondition {
 }
 
 #[cfg(feature = "schema")]
-impl NodeCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeCondition contains condition information for a node.",
           "properties": {

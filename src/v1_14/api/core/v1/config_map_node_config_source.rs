@@ -131,8 +131,8 @@ impl crate::serde::Serialize for ConfigMapNodeConfigSource {
 }
 
 #[cfg(feature = "schema")]
-impl ConfigMapNodeConfigSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ConfigMapNodeConfigSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.",
           "properties": {

@@ -501,8 +501,8 @@ impl crate::serde::Serialize for AuditSink {
 }
 
 #[cfg(feature = "schema")]
-impl AuditSink {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AuditSink {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AuditSink represents a cluster level audit sink",
           "x-kubernetes-group-version-kind": [

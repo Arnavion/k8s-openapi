@@ -100,8 +100,8 @@ impl crate::serde::Serialize for CustomResourceSubresources {
 }
 
 #[cfg(feature = "schema")]
-impl CustomResourceSubresources {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CustomResourceSubresources {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CustomResourceSubresources defines the status and scale subresources for CustomResources.",
           "properties": {

@@ -108,8 +108,8 @@ impl crate::serde::Serialize for TypedLocalObjectReference {
 }
 
 #[cfg(feature = "schema")]
-impl TypedLocalObjectReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TypedLocalObjectReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.",
           "properties": {

@@ -111,8 +111,8 @@ impl crate::serde::Serialize for EnvVar {
 }
 
 #[cfg(feature = "schema")]
-impl EnvVar {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EnvVar {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EnvVar represents an environment variable present in a Container.",
           "properties": {

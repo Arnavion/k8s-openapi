@@ -85,8 +85,8 @@ impl crate::serde::Serialize for CSINodeSpec {
 }
 
 #[cfg(feature = "schema")]
-impl CSINodeSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CSINodeSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CSINodeSpec holds information about the specification of all CSI drivers installed on a node",
           "properties": {

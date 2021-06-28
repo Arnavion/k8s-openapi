@@ -157,8 +157,8 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequestCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequestCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object",
           "properties": {

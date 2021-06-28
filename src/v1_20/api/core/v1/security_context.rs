@@ -217,8 +217,8 @@ impl crate::serde::Serialize for SecurityContext {
 }
 
 #[cfg(feature = "schema")]
-impl SecurityContext {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SecurityContext {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.",
           "properties": {

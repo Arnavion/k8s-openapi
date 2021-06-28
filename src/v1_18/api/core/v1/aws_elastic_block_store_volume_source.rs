@@ -126,8 +126,8 @@ impl crate::serde::Serialize for AWSElasticBlockStoreVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl AWSElasticBlockStoreVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AWSElasticBlockStoreVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Persistent Disk resource in AWS.\n\nAn AWS EBS disk must exist before mounting to a container. The disk must also be in the same AWS zone as the kubelet. An AWS EBS disk can only be mounted as read/write once. AWS EBS volumes support ownership management and SELinux relabeling.",
           "properties": {

@@ -658,8 +658,8 @@ impl crate::serde::Serialize for CSIStorageCapacity {
 }
 
 #[cfg(feature = "schema")]
-impl CSIStorageCapacity {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CSIStorageCapacity {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CSIStorageCapacity stores the result of one CSI GetCapacity call. For a given StorageClass, this describes the available capacity in a particular topology segment.  This can be used when considering where to instantiate new PersistentVolumes.\n\nFor example this can express things like: - StorageClass \"standard\" has \"1234 GiB\" available in \"topology.kubernetes.io/zone=us-east1\" - StorageClass \"localssd\" has \"10 GiB\" available in \"kubernetes.io/hostname=knode-abc123\"\n\nThe following three cases all imply that no capacity is available for a certain combination: - no object exists with suitable topology and storage class name - such an object exists, but the capacity is unset - such an object exists, but the capacity is zero\n\nThe producer of these objects can decide which approach is more suitable.\n\nThey are consumed by the kube-scheduler if the CSIStorageCapacity beta feature gate is enabled there and a CSI driver opts into capacity-aware scheduling with CSIDriver.StorageCapacity.",
           "x-kubernetes-group-version-kind": [

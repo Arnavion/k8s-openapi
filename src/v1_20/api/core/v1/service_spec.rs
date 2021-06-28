@@ -312,8 +312,8 @@ impl crate::serde::Serialize for ServiceSpec {
 }
 
 #[cfg(feature = "schema")]
-impl ServiceSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServiceSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServiceSpec describes the attributes that a user creates on a service.",
           "properties": {

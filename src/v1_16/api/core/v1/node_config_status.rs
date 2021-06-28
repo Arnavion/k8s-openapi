@@ -126,8 +126,8 @@ impl crate::serde::Serialize for NodeConfigStatus {
 }
 
 #[cfg(feature = "schema")]
-impl NodeConfigStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeConfigStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeConfigStatus describes the status of the config assigned by Node.Spec.ConfigSource.",
           "properties": {

@@ -113,8 +113,8 @@ impl crate::serde::Serialize for StorageVersionStatus {
 }
 
 #[cfg(feature = "schema")]
-impl StorageVersionStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageVersionStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "API server instances report the versions they can decode and the version they encode objects to when persisting objects in the backend.",
           "properties": {

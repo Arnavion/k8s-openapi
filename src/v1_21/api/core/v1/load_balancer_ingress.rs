@@ -113,8 +113,8 @@ impl crate::serde::Serialize for LoadBalancerIngress {
 }
 
 #[cfg(feature = "schema")]
-impl LoadBalancerIngress {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LoadBalancerIngress {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.",
           "properties": {

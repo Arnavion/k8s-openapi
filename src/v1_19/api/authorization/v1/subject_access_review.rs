@@ -186,8 +186,8 @@ impl crate::serde::Serialize for SubjectAccessReview {
 }
 
 #[cfg(feature = "schema")]
-impl SubjectAccessReview {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SubjectAccessReview {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SubjectAccessReview checks whether or not a user or group can perform an action.",
           "x-kubernetes-group-version-kind": [

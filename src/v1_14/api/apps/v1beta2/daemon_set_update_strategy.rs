@@ -100,8 +100,8 @@ impl crate::serde::Serialize for DaemonSetUpdateStrategy {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSetUpdateStrategy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSetUpdateStrategy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.",
           "properties": {

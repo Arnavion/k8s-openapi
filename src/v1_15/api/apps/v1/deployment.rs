@@ -823,8 +823,8 @@ impl crate::serde::Serialize for Deployment {
 }
 
 #[cfg(feature = "schema")]
-impl Deployment {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Deployment {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Deployment enables declarative updates for Pods and ReplicaSets.",
           "x-kubernetes-group-version-kind": [

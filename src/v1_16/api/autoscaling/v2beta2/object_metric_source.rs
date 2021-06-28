@@ -104,8 +104,8 @@ impl crate::serde::Serialize for ObjectMetricSource {
 }
 
 #[cfg(feature = "schema")]
-impl ObjectMetricSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ObjectMetricSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
           "properties": {

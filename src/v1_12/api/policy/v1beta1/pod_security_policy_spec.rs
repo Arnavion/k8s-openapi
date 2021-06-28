@@ -340,8 +340,8 @@ impl crate::serde::Serialize for PodSecurityPolicySpec {
 }
 
 #[cfg(feature = "schema")]
-impl PodSecurityPolicySpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodSecurityPolicySpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodSecurityPolicySpec defines the policy enforced.",
           "properties": {

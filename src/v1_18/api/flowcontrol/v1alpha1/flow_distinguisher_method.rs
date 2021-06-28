@@ -85,8 +85,8 @@ impl crate::serde::Serialize for FlowDistinguisherMethod {
 }
 
 #[cfg(feature = "schema")]
-impl FlowDistinguisherMethod {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlowDistinguisherMethod {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlowDistinguisherMethod specifies the method of a flow distinguisher.",
           "properties": {

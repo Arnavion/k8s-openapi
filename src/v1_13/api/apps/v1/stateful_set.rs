@@ -825,8 +825,8 @@ impl crate::serde::Serialize for StatefulSet {
 }
 
 #[cfg(feature = "schema")]
-impl StatefulSet {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StatefulSet {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n - Network: A single stable DNS and hostname.\n - Storage: As many VolumeClaims as requested.\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.",
           "x-kubernetes-group-version-kind": [

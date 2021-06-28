@@ -124,8 +124,8 @@ impl crate::serde::Serialize for VsphereVirtualDiskVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl VsphereVirtualDiskVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VsphereVirtualDiskVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a vSphere volume resource.",
           "properties": {

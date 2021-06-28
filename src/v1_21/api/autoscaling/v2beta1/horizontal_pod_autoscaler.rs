@@ -811,8 +811,8 @@ impl crate::serde::Serialize for HorizontalPodAutoscaler {
 }
 
 #[cfg(feature = "schema")]
-impl HorizontalPodAutoscaler {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HorizontalPodAutoscaler {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified.",
           "x-kubernetes-group-version-kind": [

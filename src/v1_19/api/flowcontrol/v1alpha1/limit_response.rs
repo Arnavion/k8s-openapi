@@ -98,8 +98,8 @@ impl crate::serde::Serialize for LimitResponse {
 }
 
 #[cfg(feature = "schema")]
-impl LimitResponse {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for LimitResponse {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "LimitResponse defines how to handle requests that can not be executed right now.",
           "properties": {

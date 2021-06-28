@@ -108,8 +108,8 @@ impl crate::serde::Serialize for CrossVersionObjectReference {
 }
 
 #[cfg(feature = "schema")]
-impl CrossVersionObjectReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CrossVersionObjectReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CrossVersionObjectReference contains enough information to let you identify the referred resource.",
           "properties": {

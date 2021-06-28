@@ -165,8 +165,8 @@ impl crate::serde::Serialize for ObjectReference {
 }
 
 #[cfg(feature = "schema")]
-impl ObjectReference {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ObjectReference {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ObjectReference contains enough information to let you inspect or modify the referred object.",
           "properties": {

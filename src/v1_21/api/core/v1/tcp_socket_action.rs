@@ -98,8 +98,8 @@ impl crate::serde::Serialize for TCPSocketAction {
 }
 
 #[cfg(feature = "schema")]
-impl TCPSocketAction {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TCPSocketAction {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TCPSocketAction describes an action based on opening a socket",
           "properties": {

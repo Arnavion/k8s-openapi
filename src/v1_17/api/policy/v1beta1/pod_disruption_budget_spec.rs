@@ -113,8 +113,8 @@ impl crate::serde::Serialize for PodDisruptionBudgetSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PodDisruptionBudgetSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodDisruptionBudgetSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodDisruptionBudgetSpec is a description of a PodDisruptionBudget.",
           "properties": {

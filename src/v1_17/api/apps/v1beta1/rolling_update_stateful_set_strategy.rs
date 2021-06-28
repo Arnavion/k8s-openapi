@@ -87,8 +87,8 @@ impl crate::serde::Serialize for RollingUpdateStatefulSetStrategy {
 }
 
 #[cfg(feature = "schema")]
-impl RollingUpdateStatefulSetStrategy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RollingUpdateStatefulSetStrategy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.",
           "properties": {

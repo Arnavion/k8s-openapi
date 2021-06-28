@@ -121,8 +121,8 @@ impl crate::serde::Serialize for Subject {
 }
 
 #[cfg(feature = "schema")]
-impl Subject {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Subject {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.",
           "properties": {

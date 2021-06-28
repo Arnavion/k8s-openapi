@@ -131,8 +131,8 @@ impl crate::serde::Serialize for NamespaceCondition {
 }
 
 #[cfg(feature = "schema")]
-impl NamespaceCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NamespaceCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NamespaceCondition contains details about state of namespace.",
           "properties": {

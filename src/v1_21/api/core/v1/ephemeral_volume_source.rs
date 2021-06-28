@@ -93,8 +93,8 @@ impl crate::serde::Serialize for EphemeralVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl EphemeralVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EphemeralVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents an ephemeral volume that is handled by a normal storage driver.",
           "properties": {

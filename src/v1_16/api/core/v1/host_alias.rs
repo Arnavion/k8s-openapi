@@ -100,8 +100,8 @@ impl crate::serde::Serialize for HostAlias {
 }
 
 #[cfg(feature = "schema")]
-impl HostAlias {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HostAlias {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.",
           "properties": {

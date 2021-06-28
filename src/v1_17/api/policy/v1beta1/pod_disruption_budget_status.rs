@@ -141,8 +141,8 @@ impl crate::serde::Serialize for PodDisruptionBudgetStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PodDisruptionBudgetStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodDisruptionBudgetStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.",
           "properties": {

@@ -100,8 +100,8 @@ impl crate::serde::Serialize for ProjectedVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl ProjectedVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ProjectedVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a projected volume source",
           "properties": {

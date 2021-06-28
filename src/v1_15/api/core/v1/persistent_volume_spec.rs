@@ -464,8 +464,8 @@ impl crate::serde::Serialize for PersistentVolumeSpec {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeSpec is the specification of a persistent volume.",
           "properties": {

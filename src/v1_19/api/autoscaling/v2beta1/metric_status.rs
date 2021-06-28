@@ -137,8 +137,8 @@ impl crate::serde::Serialize for MetricStatus {
 }
 
 #[cfg(feature = "schema")]
-impl MetricStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for MetricStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "MetricStatus describes the last-read state of a single metric.",
           "properties": {

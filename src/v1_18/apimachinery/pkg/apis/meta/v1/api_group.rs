@@ -150,8 +150,8 @@ impl crate::serde::Serialize for APIGroup {
 }
 
 #[cfg(feature = "schema")]
-impl APIGroup {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIGroup {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIGroup contains the name, the supported versions, and the preferred version of a group.",
           "x-kubernetes-group-version-kind": [

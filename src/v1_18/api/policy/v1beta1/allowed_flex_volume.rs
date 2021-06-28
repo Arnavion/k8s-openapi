@@ -85,8 +85,8 @@ impl crate::serde::Serialize for AllowedFlexVolume {
 }
 
 #[cfg(feature = "schema")]
-impl AllowedFlexVolume {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AllowedFlexVolume {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AllowedFlexVolume represents a single Flexvolume that is allowed to be used.",
           "properties": {

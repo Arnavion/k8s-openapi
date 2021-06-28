@@ -163,8 +163,8 @@ impl crate::serde::Serialize for ContainerStateTerminated {
 }
 
 #[cfg(feature = "schema")]
-impl ContainerStateTerminated {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ContainerStateTerminated {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ContainerStateTerminated is a terminated state of a container.",
           "properties": {

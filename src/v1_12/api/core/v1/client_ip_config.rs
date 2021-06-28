@@ -87,8 +87,8 @@ impl crate::serde::Serialize for ClientIPConfig {
 }
 
 #[cfg(feature = "schema")]
-impl ClientIPConfig {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ClientIPConfig {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ClientIPConfig represents the configurations of Client IP based session affinity.",
           "properties": {

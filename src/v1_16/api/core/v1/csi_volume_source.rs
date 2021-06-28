@@ -137,8 +137,8 @@ impl crate::serde::Serialize for CSIVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl CSIVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CSIVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a source location of a volume to mount, managed by an external CSI driver",
           "properties": {

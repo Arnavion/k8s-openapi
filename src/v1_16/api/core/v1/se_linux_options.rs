@@ -126,8 +126,8 @@ impl crate::serde::Serialize for SELinuxOptions {
 }
 
 #[cfg(feature = "schema")]
-impl SELinuxOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for SELinuxOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "SELinuxOptions are the labels to be applied to the container",
           "properties": {

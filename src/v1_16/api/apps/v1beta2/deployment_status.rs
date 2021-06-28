@@ -178,8 +178,8 @@ impl crate::serde::Serialize for DeploymentStatus {
 }
 
 #[cfg(feature = "schema")]
-impl DeploymentStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeploymentStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DeploymentStatus is the most recently observed status of the Deployment.",
           "properties": {

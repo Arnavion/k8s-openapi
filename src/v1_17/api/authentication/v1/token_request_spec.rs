@@ -111,8 +111,8 @@ impl crate::serde::Serialize for TokenRequestSpec {
 }
 
 #[cfg(feature = "schema")]
-impl TokenRequestSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TokenRequestSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TokenRequestSpec contains client provided parameters of a token request.",
           "properties": {

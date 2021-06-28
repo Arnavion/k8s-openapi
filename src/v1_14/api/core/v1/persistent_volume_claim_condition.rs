@@ -145,8 +145,8 @@ impl crate::serde::Serialize for PersistentVolumeClaimCondition {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeClaimCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeClaimCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeClaimCondition contails details about state of pvc",
           "properties": {

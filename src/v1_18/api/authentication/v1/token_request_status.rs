@@ -95,8 +95,8 @@ impl crate::serde::Serialize for TokenRequestStatus {
 }
 
 #[cfg(feature = "schema")]
-impl TokenRequestStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for TokenRequestStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "TokenRequestStatus is the result of a token request.",
           "properties": {

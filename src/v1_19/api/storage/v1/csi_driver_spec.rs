@@ -148,8 +148,8 @@ impl crate::serde::Serialize for CSIDriverSpec {
 }
 
 #[cfg(feature = "schema")]
-impl CSIDriverSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CSIDriverSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "CSIDriverSpec is the specification of a CSIDriver.",
           "properties": {

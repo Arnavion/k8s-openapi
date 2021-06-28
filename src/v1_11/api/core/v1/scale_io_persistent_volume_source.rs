@@ -196,8 +196,8 @@ impl crate::serde::Serialize for ScaleIOPersistentVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl ScaleIOPersistentVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ScaleIOPersistentVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume",
           "properties": {

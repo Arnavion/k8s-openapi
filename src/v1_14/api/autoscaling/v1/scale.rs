@@ -924,8 +924,8 @@ impl crate::serde::Serialize for Scale {
 }
 
 #[cfg(feature = "schema")]
-impl Scale {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Scale {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Scale represents a scaling request for a resource.",
           "x-kubernetes-group-version-kind": [

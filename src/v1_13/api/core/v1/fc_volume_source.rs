@@ -139,8 +139,8 @@ impl crate::serde::Serialize for FCVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl FCVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FCVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Fibre Channel volume. Fibre Channel volumes can only be mounted as read/write once. Fibre Channel volumes support ownership management and SELinux relabeling.",
           "properties": {

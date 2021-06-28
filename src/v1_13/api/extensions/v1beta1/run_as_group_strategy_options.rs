@@ -98,8 +98,8 @@ impl crate::serde::Serialize for RunAsGroupStrategyOptions {
 }
 
 #[cfg(feature = "schema")]
-impl RunAsGroupStrategyOptions {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RunAsGroupStrategyOptions {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "RunAsGroupStrategyOptions defines the strategy type and any options used to create the strategy. Deprecated: use RunAsGroupStrategyOptions from policy API Group instead.",
           "properties": {

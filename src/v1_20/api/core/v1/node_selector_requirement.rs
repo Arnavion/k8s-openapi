@@ -108,8 +108,8 @@ impl crate::serde::Serialize for NodeSelectorRequirement {
 }
 
 #[cfg(feature = "schema")]
-impl NodeSelectorRequirement {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeSelectorRequirement {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
           "properties": {

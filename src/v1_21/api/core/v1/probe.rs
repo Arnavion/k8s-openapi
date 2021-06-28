@@ -191,8 +191,8 @@ impl crate::serde::Serialize for Probe {
 }
 
 #[cfg(feature = "schema")]
-impl Probe {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Probe {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
           "properties": {

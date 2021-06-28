@@ -88,8 +88,8 @@ impl crate::serde::Serialize for PodIP {
 }
 
 #[cfg(feature = "schema")]
-impl PodIP {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodIP {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IP address information for entries in the (plural) PodIPs field. Each entry includes:\n   IP: An IP address allocated to the pod. Routable at least within the cluster.",
           "properties": {

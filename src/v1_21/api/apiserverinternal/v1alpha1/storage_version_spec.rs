@@ -31,8 +31,8 @@ impl crate::serde::Serialize for StorageVersionSpec {
 }
 
 #[cfg(feature = "schema")]
-impl StorageVersionSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageVersionSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "StorageVersionSpec is an empty spec.",
           "type": "object"

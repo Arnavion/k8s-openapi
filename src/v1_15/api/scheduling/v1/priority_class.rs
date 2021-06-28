@@ -538,8 +538,8 @@ impl crate::serde::Serialize for PriorityClass {
 }
 
 #[cfg(feature = "schema")]
-impl PriorityClass {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PriorityClass {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer.",
           "x-kubernetes-group-version-kind": [

@@ -113,8 +113,8 @@ impl crate::serde::Serialize for Affinity {
 }
 
 #[cfg(feature = "schema")]
-impl Affinity {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Affinity {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Affinity is a group of affinity scheduling rules.",
           "properties": {

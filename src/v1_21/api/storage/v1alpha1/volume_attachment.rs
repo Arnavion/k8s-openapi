@@ -502,8 +502,8 @@ impl crate::serde::Serialize for VolumeAttachment {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeAttachment {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeAttachment {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeAttachment captures the intent to attach or detach the specified volume to/from the specified node.\n\nVolumeAttachment objects are non-namespaced.",
           "x-kubernetes-group-version-kind": [

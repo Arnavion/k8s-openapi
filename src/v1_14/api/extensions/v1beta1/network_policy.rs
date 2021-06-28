@@ -618,8 +618,8 @@ impl crate::serde::Serialize for NetworkPolicy {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods",
           "x-kubernetes-group-version-kind": [

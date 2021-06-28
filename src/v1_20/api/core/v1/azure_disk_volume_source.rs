@@ -147,8 +147,8 @@ impl crate::serde::Serialize for AzureDiskVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl AzureDiskVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for AzureDiskVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.",
           "properties": {

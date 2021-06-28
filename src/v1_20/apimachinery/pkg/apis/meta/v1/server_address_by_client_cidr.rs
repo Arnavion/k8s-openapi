@@ -95,8 +95,8 @@ impl crate::serde::Serialize for ServerAddressByClientCIDR {
 }
 
 #[cfg(feature = "schema")]
-impl ServerAddressByClientCIDR {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ServerAddressByClientCIDR {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.",
           "properties": {

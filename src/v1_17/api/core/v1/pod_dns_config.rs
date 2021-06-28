@@ -113,8 +113,8 @@ impl crate::serde::Serialize for PodDNSConfig {
 }
 
 #[cfg(feature = "schema")]
-impl PodDNSConfig {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PodDNSConfig {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.",
           "properties": {

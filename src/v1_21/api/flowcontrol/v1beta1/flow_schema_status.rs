@@ -87,8 +87,8 @@ impl crate::serde::Serialize for FlowSchemaStatus {
 }
 
 #[cfg(feature = "schema")]
-impl FlowSchemaStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlowSchemaStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlowSchemaStatus represents the current state of a FlowSchema.",
           "properties": {

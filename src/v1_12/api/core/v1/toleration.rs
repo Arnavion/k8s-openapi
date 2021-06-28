@@ -139,8 +139,8 @@ impl crate::serde::Serialize for Toleration {
 }
 
 #[cfg(feature = "schema")]
-impl Toleration {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Toleration {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.",
           "properties": {

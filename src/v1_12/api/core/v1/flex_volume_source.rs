@@ -137,8 +137,8 @@ impl crate::serde::Serialize for FlexVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl FlexVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlexVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.",
           "properties": {

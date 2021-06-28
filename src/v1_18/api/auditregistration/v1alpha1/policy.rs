@@ -98,8 +98,8 @@ impl crate::serde::Serialize for Policy {
 }
 
 #[cfg(feature = "schema")]
-impl Policy {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Policy {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Policy defines the configuration of how audit events are logged",
           "properties": {

@@ -115,8 +115,8 @@ impl crate::serde::Serialize for ConfigMapProjection {
 }
 
 #[cfg(feature = "schema")]
-impl ConfigMapProjection {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ConfigMapProjection {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Adapts a ConfigMap into a projected volume.\n\nThe contents of the target ConfigMap's Data field will be presented in a projected volume as files using the keys in the Data field as the file names, unless the items element is populated with specific mappings of keys to paths. Note that this is identical to a configmap volume source without the default mode.",
           "properties": {

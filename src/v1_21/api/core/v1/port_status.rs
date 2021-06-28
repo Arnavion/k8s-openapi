@@ -110,8 +110,8 @@ impl crate::serde::Serialize for PortStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PortStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PortStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "error": {

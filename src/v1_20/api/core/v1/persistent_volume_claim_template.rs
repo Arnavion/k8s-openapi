@@ -98,8 +98,8 @@ impl crate::serde::Serialize for PersistentVolumeClaimTemplate {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeClaimTemplate {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeClaimTemplate {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.",
           "properties": {

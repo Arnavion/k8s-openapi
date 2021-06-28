@@ -165,8 +165,8 @@ impl crate::serde::Serialize for NodeSpec {
 }
 
 #[cfg(feature = "schema")]
-impl NodeSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NodeSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NodeSpec describes the attributes that a node is created with.",
           "properties": {

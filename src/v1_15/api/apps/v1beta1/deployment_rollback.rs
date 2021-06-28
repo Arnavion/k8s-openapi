@@ -244,8 +244,8 @@ impl crate::serde::Serialize for DeploymentRollback {
 }
 
 #[cfg(feature = "schema")]
-impl DeploymentRollback {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DeploymentRollback {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.",
           "x-kubernetes-group-version-kind": [

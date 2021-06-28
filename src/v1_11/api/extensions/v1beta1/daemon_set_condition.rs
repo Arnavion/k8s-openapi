@@ -134,8 +134,8 @@ impl crate::serde::Serialize for DaemonSetCondition {
 }
 
 #[cfg(feature = "schema")]
-impl DaemonSetCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for DaemonSetCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "DaemonSetCondition describes the state of a DaemonSet at a certain point.",
           "properties": {

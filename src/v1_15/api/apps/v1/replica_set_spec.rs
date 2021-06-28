@@ -124,8 +124,8 @@ impl crate::serde::Serialize for ReplicaSetSpec {
 }
 
 #[cfg(feature = "schema")]
-impl ReplicaSetSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ReplicaSetSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ReplicaSetSpec is the specification of a ReplicaSet.",
           "properties": {

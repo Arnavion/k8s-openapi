@@ -113,8 +113,8 @@ impl crate::serde::Serialize for PersistentVolumeStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PersistentVolumeStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PersistentVolumeStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PersistentVolumeStatus is the current status of a persistent volume.",
           "properties": {

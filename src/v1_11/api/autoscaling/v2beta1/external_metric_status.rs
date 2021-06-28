@@ -121,8 +121,8 @@ impl crate::serde::Serialize for ExternalMetricStatus {
 }
 
 #[cfg(feature = "schema")]
-impl ExternalMetricStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ExternalMetricStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.",
           "properties": {

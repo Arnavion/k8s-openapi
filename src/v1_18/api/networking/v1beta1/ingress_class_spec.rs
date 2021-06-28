@@ -100,8 +100,8 @@ impl crate::serde::Serialize for IngressClassSpec {
 }
 
 #[cfg(feature = "schema")]
-impl IngressClassSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for IngressClassSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "IngressClassSpec provides information about the class of an Ingress.",
           "properties": {

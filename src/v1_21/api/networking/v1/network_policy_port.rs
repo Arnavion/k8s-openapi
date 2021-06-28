@@ -113,8 +113,8 @@ impl crate::serde::Serialize for NetworkPolicyPort {
 }
 
 #[cfg(feature = "schema")]
-impl NetworkPolicyPort {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for NetworkPolicyPort {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "NetworkPolicyPort describes a port to allow traffic on",
           "properties": {

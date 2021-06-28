@@ -105,8 +105,8 @@ impl crate::serde::Serialize for EventSeries {
 }
 
 #[cfg(feature = "schema")]
-impl EventSeries {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for EventSeries {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time.",
           "properties": {

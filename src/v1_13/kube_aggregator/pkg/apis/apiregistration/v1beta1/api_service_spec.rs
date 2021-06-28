@@ -157,8 +157,8 @@ impl crate::serde::Serialize for APIServiceSpec {
 }
 
 #[cfg(feature = "schema")]
-impl APIServiceSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for APIServiceSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification.",
           "properties": {

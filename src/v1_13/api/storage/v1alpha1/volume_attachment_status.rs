@@ -124,8 +124,8 @@ impl crate::serde::Serialize for VolumeAttachmentStatus {
 }
 
 #[cfg(feature = "schema")]
-impl VolumeAttachmentStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for VolumeAttachmentStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "VolumeAttachmentStatus is the status of a VolumeAttachment request.",
           "properties": {

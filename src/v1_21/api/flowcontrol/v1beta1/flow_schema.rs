@@ -677,8 +677,8 @@ impl crate::serde::Serialize for FlowSchema {
 }
 
 #[cfg(feature = "schema")]
-impl FlowSchema {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for FlowSchema {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "FlowSchema defines the schema of a group of flows. Note that a flow is made up of a set of inbound API requests with similar attributes and is identified by a pair of strings: the name of the FlowSchema and a \"flow distinguisher\".",
           "x-kubernetes-group-version-kind": [

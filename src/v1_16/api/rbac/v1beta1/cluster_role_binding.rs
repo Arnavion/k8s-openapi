@@ -500,8 +500,8 @@ impl crate::serde::Serialize for ClusterRoleBinding {
 }
 
 #[cfg(feature = "schema")]
-impl ClusterRoleBinding {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for ClusterRoleBinding {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.",
           "x-kubernetes-group-version-kind": [

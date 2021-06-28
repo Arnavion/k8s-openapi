@@ -87,8 +87,8 @@ impl crate::serde::Serialize for PriorityLevelConfigurationStatus {
 }
 
 #[cfg(feature = "schema")]
-impl PriorityLevelConfigurationStatus {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for PriorityLevelConfigurationStatus {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "PriorityLevelConfigurationStatus represents the current state of a \"request-priority\".",
           "properties": {

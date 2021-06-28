@@ -137,8 +137,8 @@ impl crate::serde::Serialize for HTTPGetAction {
 }
 
 #[cfg(feature = "schema")]
-impl HTTPGetAction {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for HTTPGetAction {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "HTTPGetAction describes an action based on HTTP Get requests.",
           "properties": {

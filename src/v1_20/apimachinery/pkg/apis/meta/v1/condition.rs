@@ -138,8 +138,8 @@ impl crate::serde::Serialize for Condition {
 }
 
 #[cfg(feature = "schema")]
-impl Condition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for Condition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Condition contains details for one aspect of the current state of this API Resource.",
           "properties": {

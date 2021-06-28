@@ -149,8 +149,8 @@ impl crate::serde::Serialize for CertificateSigningRequestCondition {
 }
 
 #[cfg(feature = "schema")]
-impl CertificateSigningRequestCondition {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for CertificateSigningRequestCondition {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
             "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time."),

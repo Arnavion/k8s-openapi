@@ -672,8 +672,8 @@ impl crate::serde::Serialize for StorageVersion {
 }
 
 #[cfg(feature = "schema")]
-impl StorageVersion {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for StorageVersion {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "\n Storage version of a specific resource.",
           "x-kubernetes-group-version-kind": [

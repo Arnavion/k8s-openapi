@@ -176,8 +176,8 @@ impl crate::serde::Serialize for JobSpec {
 }
 
 #[cfg(feature = "schema")]
-impl JobSpec {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for JobSpec {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "JobSpec describes how the job execution will look like.",
           "properties": {

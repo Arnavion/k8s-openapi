@@ -173,8 +173,8 @@ impl crate::serde::Serialize for RBDVolumeSource {
 }
 
 #[cfg(feature = "schema")]
-impl RBDVolumeSource {
-    pub fn schema() -> serde_json::Value {
+impl crate::Schema for RBDVolumeSource {
+    fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.",
           "properties": {
