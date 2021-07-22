@@ -126,7 +126,7 @@ impl crate::Schema for HTTPIngressPath {
         serde_json::json!({
           "description": "HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.",
           "properties": {
-            "backend": crate::schema_ref_with_description(crate::api::extensions::v1beta1::IngressBackend::schema(), "Backend defines the referenced service endpoint to which the traffic will be forwarded to."),
+            "backend": crate::schema_ref_with_values(crate::api::extensions::v1beta1::IngressBackend::schema(), serde_json::json!({"description": "Backend defines the referenced service endpoint to which the traffic will be forwarded to."})),
             "path": {
               "description": "Path is matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional \"path\" part of a URL as defined by RFC 3986. Paths must begin with a '/'. When unspecified, all paths from incoming requests are matched.",
               "type": "string"

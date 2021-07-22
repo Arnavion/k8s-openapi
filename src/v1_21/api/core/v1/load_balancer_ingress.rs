@@ -129,6 +129,7 @@ impl crate::Schema for LoadBalancerIngress {
             "ports": {
               "description": "Ports is a list of records of service ports If used, every port defined in the service should have an entry in it",
               "items": crate::api::core::v1::PortStatus::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

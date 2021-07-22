@@ -225,6 +225,8 @@ impl crate::Schema for NodeStatus {
             "addresses": {
               "description": "List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See http://pr.k8s.io/79391 for an example.",
               "items": crate::api::core::v1::NodeAddress::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "allocatable": {
@@ -240,16 +242,18 @@ impl crate::Schema for NodeStatus {
             "conditions": {
               "description": "Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition",
               "items": crate::api::core::v1::NodeCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
-            "config": crate::schema_ref_with_description(crate::api::core::v1::NodeConfigStatus::schema(), "Status of the config assigned to the node via the dynamic Kubelet config feature."),
-            "daemonEndpoints": crate::schema_ref_with_description(crate::api::core::v1::NodeDaemonEndpoints::schema(), "Endpoints of daemons running on the Node."),
+            "config": crate::schema_ref_with_values(crate::api::core::v1::NodeConfigStatus::schema(), serde_json::json!({"description": "Status of the config assigned to the node via the dynamic Kubelet config feature."})),
+            "daemonEndpoints": crate::schema_ref_with_values(crate::api::core::v1::NodeDaemonEndpoints::schema(), serde_json::json!({"description": "Endpoints of daemons running on the Node."})),
             "images": {
               "description": "List of container images on this node",
               "items": crate::api::core::v1::ContainerImage::schema(),
               "type": "array"
             },
-            "nodeInfo": crate::schema_ref_with_description(crate::api::core::v1::NodeSystemInfo::schema(), "Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info"),
+            "nodeInfo": crate::schema_ref_with_values(crate::api::core::v1::NodeSystemInfo::schema(), serde_json::json!({"description": "Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info"})),
             "phase": {
               "description": "NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.",
               "type": "string"

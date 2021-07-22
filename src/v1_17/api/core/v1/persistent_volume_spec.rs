@@ -476,26 +476,26 @@ impl crate::Schema for PersistentVolumeSpec {
               },
               "type": "array"
             },
-            "awsElasticBlockStore": crate::schema_ref_with_description(crate::api::core::v1::AWSElasticBlockStoreVolumeSource::schema(), "AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore"),
-            "azureDisk": crate::schema_ref_with_description(crate::api::core::v1::AzureDiskVolumeSource::schema(), "AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod."),
-            "azureFile": crate::schema_ref_with_description(crate::api::core::v1::AzureFilePersistentVolumeSource::schema(), "AzureFile represents an Azure File Service mount on the host and bind mount to the pod."),
+            "awsElasticBlockStore": crate::schema_ref_with_values(crate::api::core::v1::AWSElasticBlockStoreVolumeSource::schema(), serde_json::json!({"description": "AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore"})),
+            "azureDisk": crate::schema_ref_with_values(crate::api::core::v1::AzureDiskVolumeSource::schema(), serde_json::json!({"description": "AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod."})),
+            "azureFile": crate::schema_ref_with_values(crate::api::core::v1::AzureFilePersistentVolumeSource::schema(), serde_json::json!({"description": "AzureFile represents an Azure File Service mount on the host and bind mount to the pod."})),
             "capacity": {
               "additionalProperties": crate::apimachinery::pkg::api::resource::Quantity::schema(),
               "description": "A description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity",
               "type": "object"
             },
-            "cephfs": crate::schema_ref_with_description(crate::api::core::v1::CephFSPersistentVolumeSource::schema(), "CephFS represents a Ceph FS mount on the host that shares a pod's lifetime"),
-            "cinder": crate::schema_ref_with_description(crate::api::core::v1::CinderPersistentVolumeSource::schema(), "Cinder represents a cinder volume attached and mounted on kubelets host machine. More info: https://examples.k8s.io/mysql-cinder-pd/README.md"),
-            "claimRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding"),
-            "csi": crate::schema_ref_with_description(crate::api::core::v1::CSIPersistentVolumeSource::schema(), "CSI represents storage that is handled by an external CSI driver (Beta feature)."),
-            "fc": crate::schema_ref_with_description(crate::api::core::v1::FCVolumeSource::schema(), "FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod."),
-            "flexVolume": crate::schema_ref_with_description(crate::api::core::v1::FlexPersistentVolumeSource::schema(), "FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin."),
-            "flocker": crate::schema_ref_with_description(crate::api::core::v1::FlockerVolumeSource::schema(), "Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running"),
-            "gcePersistentDisk": crate::schema_ref_with_description(crate::api::core::v1::GCEPersistentDiskVolumeSource::schema(), "GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk"),
-            "glusterfs": crate::schema_ref_with_description(crate::api::core::v1::GlusterfsPersistentVolumeSource::schema(), "Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://examples.k8s.io/volumes/glusterfs/README.md"),
-            "hostPath": crate::schema_ref_with_description(crate::api::core::v1::HostPathVolumeSource::schema(), "HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath"),
-            "iscsi": crate::schema_ref_with_description(crate::api::core::v1::ISCSIPersistentVolumeSource::schema(), "ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin."),
-            "local": crate::schema_ref_with_description(crate::api::core::v1::LocalVolumeSource::schema(), "Local represents directly-attached storage with node affinity"),
+            "cephfs": crate::schema_ref_with_values(crate::api::core::v1::CephFSPersistentVolumeSource::schema(), serde_json::json!({"description": "CephFS represents a Ceph FS mount on the host that shares a pod's lifetime"})),
+            "cinder": crate::schema_ref_with_values(crate::api::core::v1::CinderPersistentVolumeSource::schema(), serde_json::json!({"description": "Cinder represents a cinder volume attached and mounted on kubelets host machine. More info: https://examples.k8s.io/mysql-cinder-pd/README.md"})),
+            "claimRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding"})),
+            "csi": crate::schema_ref_with_values(crate::api::core::v1::CSIPersistentVolumeSource::schema(), serde_json::json!({"description": "CSI represents storage that is handled by an external CSI driver (Beta feature)."})),
+            "fc": crate::schema_ref_with_values(crate::api::core::v1::FCVolumeSource::schema(), serde_json::json!({"description": "FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod."})),
+            "flexVolume": crate::schema_ref_with_values(crate::api::core::v1::FlexPersistentVolumeSource::schema(), serde_json::json!({"description": "FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin."})),
+            "flocker": crate::schema_ref_with_values(crate::api::core::v1::FlockerVolumeSource::schema(), serde_json::json!({"description": "Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running"})),
+            "gcePersistentDisk": crate::schema_ref_with_values(crate::api::core::v1::GCEPersistentDiskVolumeSource::schema(), serde_json::json!({"description": "GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk"})),
+            "glusterfs": crate::schema_ref_with_values(crate::api::core::v1::GlusterfsPersistentVolumeSource::schema(), serde_json::json!({"description": "Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://examples.k8s.io/volumes/glusterfs/README.md"})),
+            "hostPath": crate::schema_ref_with_values(crate::api::core::v1::HostPathVolumeSource::schema(), serde_json::json!({"description": "HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath"})),
+            "iscsi": crate::schema_ref_with_values(crate::api::core::v1::ISCSIPersistentVolumeSource::schema(), serde_json::json!({"description": "ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin."})),
+            "local": crate::schema_ref_with_values(crate::api::core::v1::LocalVolumeSource::schema(), serde_json::json!({"description": "Local represents directly-attached storage with node affinity"})),
             "mountOptions": {
               "description": "A list of mount options, e.g. [\"ro\", \"soft\"]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options",
               "items": {
@@ -503,27 +503,27 @@ impl crate::Schema for PersistentVolumeSpec {
               },
               "type": "array"
             },
-            "nfs": crate::schema_ref_with_description(crate::api::core::v1::NFSVolumeSource::schema(), "NFS represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs"),
-            "nodeAffinity": crate::schema_ref_with_description(crate::api::core::v1::VolumeNodeAffinity::schema(), "NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume."),
+            "nfs": crate::schema_ref_with_values(crate::api::core::v1::NFSVolumeSource::schema(), serde_json::json!({"description": "NFS represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs"})),
+            "nodeAffinity": crate::schema_ref_with_values(crate::api::core::v1::VolumeNodeAffinity::schema(), serde_json::json!({"description": "NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume."})),
             "persistentVolumeReclaimPolicy": {
               "description": "What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming",
               "type": "string"
             },
-            "photonPersistentDisk": crate::schema_ref_with_description(crate::api::core::v1::PhotonPersistentDiskVolumeSource::schema(), "PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine"),
-            "portworxVolume": crate::schema_ref_with_description(crate::api::core::v1::PortworxVolumeSource::schema(), "PortworxVolume represents a portworx volume attached and mounted on kubelets host machine"),
-            "quobyte": crate::schema_ref_with_description(crate::api::core::v1::QuobyteVolumeSource::schema(), "Quobyte represents a Quobyte mount on the host that shares a pod's lifetime"),
-            "rbd": crate::schema_ref_with_description(crate::api::core::v1::RBDPersistentVolumeSource::schema(), "RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md"),
-            "scaleIO": crate::schema_ref_with_description(crate::api::core::v1::ScaleIOPersistentVolumeSource::schema(), "ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes."),
+            "photonPersistentDisk": crate::schema_ref_with_values(crate::api::core::v1::PhotonPersistentDiskVolumeSource::schema(), serde_json::json!({"description": "PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine"})),
+            "portworxVolume": crate::schema_ref_with_values(crate::api::core::v1::PortworxVolumeSource::schema(), serde_json::json!({"description": "PortworxVolume represents a portworx volume attached and mounted on kubelets host machine"})),
+            "quobyte": crate::schema_ref_with_values(crate::api::core::v1::QuobyteVolumeSource::schema(), serde_json::json!({"description": "Quobyte represents a Quobyte mount on the host that shares a pod's lifetime"})),
+            "rbd": crate::schema_ref_with_values(crate::api::core::v1::RBDPersistentVolumeSource::schema(), serde_json::json!({"description": "RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md"})),
+            "scaleIO": crate::schema_ref_with_values(crate::api::core::v1::ScaleIOPersistentVolumeSource::schema(), serde_json::json!({"description": "ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes."})),
             "storageClassName": {
               "description": "Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.",
               "type": "string"
             },
-            "storageos": crate::schema_ref_with_description(crate::api::core::v1::StorageOSPersistentVolumeSource::schema(), "StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: https://examples.k8s.io/volumes/storageos/README.md"),
+            "storageos": crate::schema_ref_with_values(crate::api::core::v1::StorageOSPersistentVolumeSource::schema(), serde_json::json!({"description": "StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: https://examples.k8s.io/volumes/storageos/README.md"})),
             "volumeMode": {
               "description": "volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is a beta feature.",
               "type": "string"
             },
-            "vsphereVolume": crate::schema_ref_with_description(crate::api::core::v1::VsphereVirtualDiskVolumeSource::schema(), "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine")
+            "vsphereVolume": crate::schema_ref_with_values(crate::api::core::v1::VsphereVirtualDiskVolumeSource::schema(), serde_json::json!({"description": "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine"}))
           },
           "type": "object"
         })

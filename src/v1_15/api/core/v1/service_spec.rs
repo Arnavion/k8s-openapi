@@ -286,6 +286,13 @@ impl crate::Schema for ServiceSpec {
             "ports": {
               "description": "The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies",
               "items": crate::api::core::v1::ServicePort::schema(),
+              "x-kubernetes-list-map-keys": [
+                "port",
+                "protocol"
+              ],
+              "x-kubernetes-list-type": "map",
+              "x-kubernetes-patch-merge-key": "port",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "publishNotReadyAddresses": {
@@ -303,7 +310,7 @@ impl crate::Schema for ServiceSpec {
               "description": "Supports \"ClientIP\" and \"None\". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies",
               "type": "string"
             },
-            "sessionAffinityConfig": crate::schema_ref_with_description(crate::api::core::v1::SessionAffinityConfig::schema(), "sessionAffinityConfig contains the configurations of session affinity."),
+            "sessionAffinityConfig": crate::schema_ref_with_values(crate::api::core::v1::SessionAffinityConfig::schema(), serde_json::json!({"description": "sessionAffinityConfig contains the configurations of session affinity."})),
             "type": {
               "description": "type determines how the Service is exposed. Defaults to ClusterIP. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. \"ExternalName\" maps to the specified externalName. \"ClusterIP\" allocates a cluster-internal IP address for load-balancing to endpoints. Endpoints are determined by the selector or if that is not specified, by manual construction of an Endpoints object. If clusterIP is \"None\", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a stable IP. \"NodePort\" builds on ClusterIP and allocates a port on every node which routes to the clusterIP. \"LoadBalancer\" builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the clusterIP. More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types",
               "type": "string"

@@ -229,6 +229,8 @@ impl crate::Schema for PodStatus {
             "conditions": {
               "description": "Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions",
               "items": crate::api::core::v1::PodCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "containerStatuses": {
@@ -269,7 +271,7 @@ impl crate::Schema for PodStatus {
               "description": "A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'",
               "type": "string"
             },
-            "startTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.")
+            "startTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod."}))
           },
           "type": "object"
         })

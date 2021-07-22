@@ -95,6 +95,10 @@ impl crate::Schema for FlowSchemaStatus {
             "conditions": {
               "description": "`conditions` is a list of the current states of FlowSchema.",
               "items": crate::api::flowcontrol::v1alpha1::FlowSchemaCondition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
               "type": "array"
             }
           },

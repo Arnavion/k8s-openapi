@@ -350,6 +350,8 @@ impl crate::Schema for EphemeralContainers {
             "ephemeralContainers": {
               "description": "A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.",
               "items": crate::api::core::v1::EphemeralContainer::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "kind": {

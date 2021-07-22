@@ -121,10 +121,11 @@ impl crate::Schema for CronJobStatus {
             "active": {
               "description": "A list of pointers to currently running jobs.",
               "items": crate::api::core::v1::ObjectReference::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
-            "lastScheduleTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Information when was the last time the job was successfully scheduled."),
-            "lastSuccessfulTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Information when was the last time the job successfully completed.")
+            "lastScheduleTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Information when was the last time the job was successfully scheduled."})),
+            "lastSuccessfulTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Information when was the last time the job successfully completed."}))
           },
           "type": "object"
         })

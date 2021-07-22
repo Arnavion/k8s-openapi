@@ -108,6 +108,8 @@ impl crate::Schema for NamespaceStatus {
             "conditions": {
               "description": "Represents the latest available observations of a namespace's current state.",
               "items": crate::api::core::v1::NamespaceCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "phase": {

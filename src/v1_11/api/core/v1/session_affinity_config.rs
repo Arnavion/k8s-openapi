@@ -92,7 +92,7 @@ impl crate::Schema for SessionAffinityConfig {
         serde_json::json!({
           "description": "SessionAffinityConfig represents the configurations of session affinity.",
           "properties": {
-            "clientIP": crate::schema_ref_with_description(crate::api::core::v1::ClientIPConfig::schema(), "clientIP contains the configurations of Client IP based session affinity.")
+            "clientIP": crate::schema_ref_with_values(crate::api::core::v1::ClientIPConfig::schema(), serde_json::json!({"description": "clientIP contains the configurations of Client IP based session affinity."}))
           },
           "type": "object"
         })

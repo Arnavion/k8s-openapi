@@ -126,7 +126,7 @@ impl crate::Schema for TokenReviewStatus {
               "description": "Error indicates that the token couldn't be checked",
               "type": "string"
             },
-            "user": crate::schema_ref_with_description(crate::api::authentication::v1::UserInfo::schema(), "User is the UserInfo associated with the provided token.")
+            "user": crate::schema_ref_with_values(crate::api::authentication::v1::UserInfo::schema(), serde_json::json!({"description": "User is the UserInfo associated with the provided token."}))
           },
           "type": "object"
         })

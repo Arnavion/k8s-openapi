@@ -174,7 +174,7 @@ impl crate::Schema for CephFSVolumeSource {
               "description": "Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it",
               "type": "string"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::LocalObjectReference::schema(), "Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it"),
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::LocalObjectReference::schema(), serde_json::json!({"description": "Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it"})),
             "user": {
               "description": "Optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it",
               "type": "string"

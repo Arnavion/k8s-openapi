@@ -150,7 +150,7 @@ impl crate::Schema for CSIVolumeSource {
               "description": "Filesystem type to mount. Ex. \"ext4\", \"xfs\", \"ntfs\". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.",
               "type": "string"
             },
-            "nodePublishSecretRef": crate::schema_ref_with_description(crate::api::core::v1::LocalObjectReference::schema(), "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed."),
+            "nodePublishSecretRef": crate::schema_ref_with_values(crate::api::core::v1::LocalObjectReference::schema(), serde_json::json!({"description": "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed."})),
             "readOnly": {
               "description": "Specifies a read-only configuration for the volume. Defaults to false (read/write).",
               "type": "boolean"

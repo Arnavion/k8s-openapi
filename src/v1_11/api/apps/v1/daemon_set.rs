@@ -843,9 +843,9 @@ impl crate::Schema for DaemonSet {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::apps::v1::DaemonSetSpec::schema(), "The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status"),
-            "status": crate::schema_ref_with_description(crate::api::apps::v1::DaemonSetStatus::schema(), "The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::apps::v1::DaemonSetSpec::schema(), serde_json::json!({"description": "The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status"})),
+            "status": crate::schema_ref_with_values(crate::api::apps::v1::DaemonSetStatus::schema(), serde_json::json!({"description": "The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status"}))
           },
           "required": [
             "metadata"

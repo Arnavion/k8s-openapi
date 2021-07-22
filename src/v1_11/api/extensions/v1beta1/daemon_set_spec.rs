@@ -165,14 +165,14 @@ impl crate::Schema for DaemonSetSpec {
               "format": "int32",
               "type": "integer"
             },
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "A label query over pods that are managed by the daemon set. Must match in order to be controlled. If empty, defaulted to labels on Pod template. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors"),
-            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"),
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "A label query over pods that are managed by the daemon set. Must match in order to be controlled. If empty, defaulted to labels on Pod template. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors"})),
+            "template": crate::schema_ref_with_values(crate::api::core::v1::PodTemplateSpec::schema(), serde_json::json!({"description": "An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"})),
             "templateGeneration": {
               "description": "DEPRECATED. A sequence number representing a specific generation of the template. Populated by the system. It can be set only during the creation.",
               "format": "int64",
               "type": "integer"
             },
-            "updateStrategy": crate::schema_ref_with_description(crate::api::extensions::v1beta1::DaemonSetUpdateStrategy::schema(), "An update strategy to replace existing DaemonSet pods with new pods.")
+            "updateStrategy": crate::schema_ref_with_values(crate::api::extensions::v1beta1::DaemonSetUpdateStrategy::schema(), serde_json::json!({"description": "An update strategy to replace existing DaemonSet pods with new pods."}))
           },
           "required": [
             "template"

@@ -177,7 +177,7 @@ impl crate::Schema for ContainerStateTerminated {
               "format": "int32",
               "type": "integer"
             },
-            "finishedAt": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time at which the container last terminated"),
+            "finishedAt": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Time at which the container last terminated"})),
             "message": {
               "description": "Message regarding the last termination of the container",
               "type": "string"
@@ -191,7 +191,7 @@ impl crate::Schema for ContainerStateTerminated {
               "format": "int32",
               "type": "integer"
             },
-            "startedAt": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time at which previous execution of the container started")
+            "startedAt": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Time at which previous execution of the container started"}))
           },
           "required": [
             "exitCode"

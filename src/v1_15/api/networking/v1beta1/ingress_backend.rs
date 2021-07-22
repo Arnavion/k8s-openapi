@@ -104,7 +104,7 @@ impl crate::Schema for IngressBackend {
               "description": "Specifies the name of the referenced service.",
               "type": "string"
             },
-            "servicePort": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Specifies the port of the referenced service.")
+            "servicePort": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "Specifies the port of the referenced service."}))
           },
           "required": [
             "serviceName",

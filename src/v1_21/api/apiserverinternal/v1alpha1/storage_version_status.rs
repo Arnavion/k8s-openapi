@@ -125,11 +125,19 @@ impl crate::Schema for StorageVersionStatus {
             "conditions": {
               "description": "The latest available observations of the storageVersion's state.",
               "items": crate::api::apiserverinternal::v1alpha1::StorageVersionCondition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
               "type": "array"
             },
             "storageVersions": {
               "description": "The reported versions per API server instance.",
               "items": crate::api::apiserverinternal::v1alpha1::ServerStorageVersion::schema(),
+              "x-kubernetes-list-map-keys": [
+                "apiServerID"
+              ],
+              "x-kubernetes-list-type": "map",
               "type": "array"
             }
           },

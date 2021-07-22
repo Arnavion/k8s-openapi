@@ -843,9 +843,9 @@ impl crate::Schema for ResourceQuota {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::core::v1::ResourceQuotaSpec::schema(), "Spec defines the desired quota. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"),
-            "status": crate::schema_ref_with_description(crate::api::core::v1::ResourceQuotaStatus::schema(), "Status defines the actual enforced quota and its current usage. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::core::v1::ResourceQuotaSpec::schema(), serde_json::json!({"description": "Spec defines the desired quota. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"})),
+            "status": crate::schema_ref_with_values(crate::api::core::v1::ResourceQuotaStatus::schema(), serde_json::json!({"description": "Status defines the actual enforced quota and its current usage. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"}))
           },
           "required": [
             "metadata"

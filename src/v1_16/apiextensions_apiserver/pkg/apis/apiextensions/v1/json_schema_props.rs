@@ -629,7 +629,7 @@ impl crate::Schema for JSONSchemaProps {
               "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps::schema(),
               "type": "array"
             },
-            "default": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON::schema(), "default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false."),
+            "default": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON::schema(), serde_json::json!({"description": "default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false."})),
             "definitions": {
               "additionalProperties": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps::schema(),
               "type": "object"

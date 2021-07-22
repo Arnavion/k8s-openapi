@@ -214,11 +214,13 @@ impl crate::Schema for CertificateSigningRequestSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "request": {
               "description": "Base64-encoded PKCS#10 CSR data",
               "format": "byte",
+              "x-kubernetes-list-type": "atomic",
               "type": "string"
             },
             "signerName": {
@@ -234,6 +236,7 @@ impl crate::Schema for CertificateSigningRequestSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "username": {

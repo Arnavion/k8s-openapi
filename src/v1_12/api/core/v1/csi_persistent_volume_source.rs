@@ -178,7 +178,7 @@ impl crate::Schema for CSIPersistentVolumeSource {
         serde_json::json!({
           "description": "Represents storage that is managed by an external CSI volume driver (Beta feature)",
           "properties": {
-            "controllerPublishSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
+            "controllerPublishSecretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."})),
             "driver": {
               "description": "Driver is the name of the driver to use for this volume. Required.",
               "type": "string"
@@ -187,8 +187,8 @@ impl crate::Schema for CSIPersistentVolumeSource {
               "description": "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\".",
               "type": "string"
             },
-            "nodePublishSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
-            "nodeStageSecretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."),
+            "nodePublishSecretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."})),
+            "nodeStageSecretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed."})),
             "readOnly": {
               "description": "Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).",
               "type": "boolean"

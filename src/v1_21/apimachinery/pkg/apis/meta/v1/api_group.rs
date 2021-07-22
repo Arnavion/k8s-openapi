@@ -174,7 +174,7 @@ impl crate::Schema for APIGroup {
               "description": "name is the name of the group.",
               "type": "string"
             },
-            "preferredVersion": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery::schema(), "preferredVersion is the version preferred by the API server, which probably is the storage version."),
+            "preferredVersion": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery::schema(), serde_json::json!({"description": "preferredVersion is the version preferred by the API server, which probably is the storage version."})),
             "serverAddressByClientCIDRs": {
               "description": "a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.",
               "items": crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR::schema(),

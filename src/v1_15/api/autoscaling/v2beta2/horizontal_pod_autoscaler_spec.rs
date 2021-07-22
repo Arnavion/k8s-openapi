@@ -141,7 +141,7 @@ impl crate::Schema for HorizontalPodAutoscalerSpec {
               "format": "int32",
               "type": "integer"
             },
-            "scaleTargetRef": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(), "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.")
+            "scaleTargetRef": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(), serde_json::json!({"description": "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count."}))
           },
           "required": [
             "maxReplicas",

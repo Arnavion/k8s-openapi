@@ -367,6 +367,8 @@ impl crate::Schema for Container {
             "env": {
               "description": "List of environment variables to set in the container. Cannot be updated.",
               "items": crate::api::core::v1::EnvVar::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "envFrom": {
@@ -382,8 +384,8 @@ impl crate::Schema for Container {
               "description": "Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images",
               "type": "string"
             },
-            "lifecycle": crate::schema_ref_with_description(crate::api::core::v1::Lifecycle::schema(), "Actions that the management system should take in response to container lifecycle events. Cannot be updated."),
-            "livenessProbe": crate::schema_ref_with_description(crate::api::core::v1::Probe::schema(), "Periodic probe of container liveness. Container will be restarted if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes"),
+            "lifecycle": crate::schema_ref_with_values(crate::api::core::v1::Lifecycle::schema(), serde_json::json!({"description": "Actions that the management system should take in response to container lifecycle events. Cannot be updated."})),
+            "livenessProbe": crate::schema_ref_with_values(crate::api::core::v1::Probe::schema(), serde_json::json!({"description": "Periodic probe of container liveness. Container will be restarted if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes"})),
             "name": {
               "description": "Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.",
               "type": "string"
@@ -391,11 +393,13 @@ impl crate::Schema for Container {
             "ports": {
               "description": "List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default \"0.0.0.0\" address inside a container will be accessible from the network. Cannot be updated.",
               "items": crate::api::core::v1::ContainerPort::schema(),
+              "x-kubernetes-patch-merge-key": "containerPort",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
-            "readinessProbe": crate::schema_ref_with_description(crate::api::core::v1::Probe::schema(), "Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes"),
-            "resources": crate::schema_ref_with_description(crate::api::core::v1::ResourceRequirements::schema(), "Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources"),
-            "securityContext": crate::schema_ref_with_description(crate::api::core::v1::SecurityContext::schema(), "Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"),
+            "readinessProbe": crate::schema_ref_with_values(crate::api::core::v1::Probe::schema(), serde_json::json!({"description": "Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes"})),
+            "resources": crate::schema_ref_with_values(crate::api::core::v1::ResourceRequirements::schema(), serde_json::json!({"description": "Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources"})),
+            "securityContext": crate::schema_ref_with_values(crate::api::core::v1::SecurityContext::schema(), serde_json::json!({"description": "Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"})),
             "stdin": {
               "description": "Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.",
               "type": "boolean"
@@ -419,11 +423,15 @@ impl crate::Schema for Container {
             "volumeDevices": {
               "description": "volumeDevices is the list of block devices to be used by the container. This is an alpha feature and may change in the future.",
               "items": crate::api::core::v1::VolumeDevice::schema(),
+              "x-kubernetes-patch-merge-key": "devicePath",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "volumeMounts": {
               "description": "Pod volumes to mount into the container's filesystem. Cannot be updated.",
               "items": crate::api::core::v1::VolumeMount::schema(),
+              "x-kubernetes-patch-merge-key": "mountPath",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "workingDir": {

@@ -709,8 +709,8 @@ impl crate::Schema for APIService {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec::schema(), "Spec contains information for locating and communicating with a server"),
-            "status": crate::schema_ref_with_description(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus::schema(), "Status contains derived information about an API server")
+            "spec": crate::schema_ref_with_values(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec::schema(), serde_json::json!({"description": "Spec contains information for locating and communicating with a server"})),
+            "status": crate::schema_ref_with_values(crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus::schema(), serde_json::json!({"description": "Status contains derived information about an API server"}))
           },
           "required": [
             "metadata"

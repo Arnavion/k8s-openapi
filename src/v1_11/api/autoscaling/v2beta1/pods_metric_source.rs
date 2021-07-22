@@ -104,7 +104,7 @@ impl crate::Schema for PodsMetricSource {
               "description": "metricName is the name of the metric in question",
               "type": "string"
             },
-            "targetAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)")
+            "targetAverageValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)"}))
           },
           "required": [
             "metricName",

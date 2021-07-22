@@ -161,7 +161,7 @@ impl crate::Schema for FlexPersistentVolumeSource {
               "description": "Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
               "type": "boolean"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.")
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts."}))
           },
           "required": [
             "driver"

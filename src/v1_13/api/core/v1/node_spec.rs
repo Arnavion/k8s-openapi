@@ -157,7 +157,7 @@ impl crate::Schema for NodeSpec {
         serde_json::json!({
           "description": "NodeSpec describes the attributes that a node is created with.",
           "properties": {
-            "configSource": crate::schema_ref_with_description(crate::api::core::v1::NodeConfigSource::schema(), "If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field"),
+            "configSource": crate::schema_ref_with_values(crate::api::core::v1::NodeConfigSource::schema(), serde_json::json!({"description": "If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field"})),
             "externalID": {
               "description": "Deprecated. Not all kubelets will set this field. Remove field after 1.13. see: https://issues.k8s.io/61966",
               "type": "string"

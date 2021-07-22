@@ -118,9 +118,9 @@ impl crate::Schema for ContainerState {
         serde_json::json!({
           "description": "ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.",
           "properties": {
-            "running": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateRunning::schema(), "Details about a running container"),
-            "terminated": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateTerminated::schema(), "Details about a terminated container"),
-            "waiting": crate::schema_ref_with_description(crate::api::core::v1::ContainerStateWaiting::schema(), "Details about a waiting container")
+            "running": crate::schema_ref_with_values(crate::api::core::v1::ContainerStateRunning::schema(), serde_json::json!({"description": "Details about a running container"})),
+            "terminated": crate::schema_ref_with_values(crate::api::core::v1::ContainerStateTerminated::schema(), serde_json::json!({"description": "Details about a terminated container"})),
+            "waiting": crate::schema_ref_with_values(crate::api::core::v1::ContainerStateWaiting::schema(), serde_json::json!({"description": "Details about a waiting container"}))
           },
           "type": "object"
         })

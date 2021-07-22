@@ -129,7 +129,7 @@ impl crate::Schema for DownwardAPIVolumeFile {
         serde_json::json!({
           "description": "DownwardAPIVolumeFile represents information to create the file containing the pod field",
           "properties": {
-            "fieldRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectFieldSelector::schema(), "Required: Selects a field of the pod: only annotations, labels, name and namespace are supported."),
+            "fieldRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectFieldSelector::schema(), serde_json::json!({"description": "Required: Selects a field of the pod: only annotations, labels, name and namespace are supported."})),
             "mode": {
               "description": "Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
               "format": "int32",
@@ -139,7 +139,7 @@ impl crate::Schema for DownwardAPIVolumeFile {
               "description": "Required: Path is  the relative path name of the file to be created. Must not be absolute or contain the '..' path. Must be utf-8 encoded. The first item of the relative path must not start with '..'",
               "type": "string"
             },
-            "resourceFieldRef": crate::schema_ref_with_description(crate::api::core::v1::ResourceFieldSelector::schema(), "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.")
+            "resourceFieldRef": crate::schema_ref_with_values(crate::api::core::v1::ResourceFieldSelector::schema(), serde_json::json!({"description": "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported."}))
           },
           "required": [
             "path"

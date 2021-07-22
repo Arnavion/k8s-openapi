@@ -886,8 +886,8 @@ impl crate::Schema for CertificateSigningRequest {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::certificates::v1::CertificateSigningRequestSpec::schema(), "spec contains the certificate request, and is immutable after creation. Only the request, signerName, and usages fields can be set on creation. Other fields are derived by Kubernetes and cannot be modified by users."),
-            "status": crate::schema_ref_with_description(crate::api::certificates::v1::CertificateSigningRequestStatus::schema(), "status contains information about whether the request is approved or denied, and the certificate issued by the signer, or the failure condition indicating signer failure.")
+            "spec": crate::schema_ref_with_values(crate::api::certificates::v1::CertificateSigningRequestSpec::schema(), serde_json::json!({"description": "spec contains the certificate request, and is immutable after creation. Only the request, signerName, and usages fields can be set on creation. Other fields are derived by Kubernetes and cannot be modified by users."})),
+            "status": crate::schema_ref_with_values(crate::api::certificates::v1::CertificateSigningRequestStatus::schema(), serde_json::json!({"description": "status contains information about whether the request is approved or denied, and the certificate issued by the signer, or the failure condition indicating signer failure."}))
           },
           "required": [
             "metadata",

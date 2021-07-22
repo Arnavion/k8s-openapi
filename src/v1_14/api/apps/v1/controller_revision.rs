@@ -644,12 +644,12 @@ impl crate::Schema for ControllerRevision {
               "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
               "type": "string"
             },
-            "data": crate::schema_ref_with_description(crate::apimachinery::pkg::runtime::RawExtension::schema(), "Data is the serialized representation of the state."),
+            "data": crate::schema_ref_with_values(crate::apimachinery::pkg::runtime::RawExtension::schema(), serde_json::json!({"description": "Data is the serialized representation of the state."})),
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
             "revision": {
               "description": "Revision indicates the revision of the state represented by Data.",
               "format": "int64",

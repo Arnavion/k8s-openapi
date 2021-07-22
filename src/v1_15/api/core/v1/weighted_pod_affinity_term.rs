@@ -100,7 +100,7 @@ impl crate::Schema for WeightedPodAffinityTerm {
         serde_json::json!({
           "description": "The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)",
           "properties": {
-            "podAffinityTerm": crate::schema_ref_with_description(crate::api::core::v1::PodAffinityTerm::schema(), "Required. A pod affinity term, associated with the corresponding weight."),
+            "podAffinityTerm": crate::schema_ref_with_values(crate::api::core::v1::PodAffinityTerm::schema(), serde_json::json!({"description": "Required. A pod affinity term, associated with the corresponding weight."})),
             "weight": {
               "description": "weight associated with matching the corresponding podAffinityTerm, in the range 1-100.",
               "format": "int32",

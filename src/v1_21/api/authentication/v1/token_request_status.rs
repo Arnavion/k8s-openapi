@@ -100,7 +100,7 @@ impl crate::Schema for TokenRequestStatus {
         serde_json::json!({
           "description": "TokenRequestStatus is the result of a token request.",
           "properties": {
-            "expirationTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "ExpirationTimestamp is the time of expiration of the returned token."),
+            "expirationTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "ExpirationTimestamp is the time of expiration of the returned token."})),
             "token": {
               "description": "Token is the opaque bearer token.",
               "type": "string"

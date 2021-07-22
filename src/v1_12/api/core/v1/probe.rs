@@ -183,13 +183,13 @@ impl crate::Schema for Probe {
         serde_json::json!({
           "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
           "properties": {
-            "exec": crate::schema_ref_with_description(crate::api::core::v1::ExecAction::schema(), "One and only one of the following should be specified. Exec specifies the action to take."),
+            "exec": crate::schema_ref_with_values(crate::api::core::v1::ExecAction::schema(), serde_json::json!({"description": "One and only one of the following should be specified. Exec specifies the action to take."})),
             "failureThreshold": {
               "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
               "format": "int32",
               "type": "integer"
             },
-            "httpGet": crate::schema_ref_with_description(crate::api::core::v1::HTTPGetAction::schema(), "HTTPGet specifies the http request to perform."),
+            "httpGet": crate::schema_ref_with_values(crate::api::core::v1::HTTPGetAction::schema(), serde_json::json!({"description": "HTTPGet specifies the http request to perform."})),
             "initialDelaySeconds": {
               "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
               "format": "int32",
@@ -205,7 +205,7 @@ impl crate::Schema for Probe {
               "format": "int32",
               "type": "integer"
             },
-            "tcpSocket": crate::schema_ref_with_description(crate::api::core::v1::TCPSocketAction::schema(), "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported"),
+            "tcpSocket": crate::schema_ref_with_values(crate::api::core::v1::TCPSocketAction::schema(), serde_json::json!({"description": "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported"})),
             "timeoutSeconds": {
               "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
               "format": "int32",

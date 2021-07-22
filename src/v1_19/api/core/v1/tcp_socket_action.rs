@@ -107,7 +107,7 @@ impl crate::Schema for TCPSocketAction {
               "description": "Optional: Host name to connect to, defaults to the pod IP.",
               "type": "string"
             },
-            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.")
+            "port": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."}))
           },
           "required": [
             "port"

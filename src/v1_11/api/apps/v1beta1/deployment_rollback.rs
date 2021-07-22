@@ -268,7 +268,7 @@ impl crate::Schema for DeploymentRollback {
               "description": "Required: This must match the Name of a deployment.",
               "type": "string"
             },
-            "rollbackTo": crate::schema_ref_with_description(crate::api::apps::v1beta1::RollbackConfig::schema(), "The config of this deployment rollback."),
+            "rollbackTo": crate::schema_ref_with_values(crate::api::apps::v1beta1::RollbackConfig::schema(), serde_json::json!({"description": "The config of this deployment rollback."})),
             "updatedAnnotations": {
               "additionalProperties": {
                 "type": "string"

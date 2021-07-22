@@ -92,7 +92,7 @@ impl crate::Schema for VolumeNodeAffinity {
         serde_json::json!({
           "description": "VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.",
           "properties": {
-            "required": crate::schema_ref_with_description(crate::api::core::v1::NodeSelector::schema(), "Required specifies hard node constraints that must be met.")
+            "required": crate::schema_ref_with_values(crate::api::core::v1::NodeSelector::schema(), serde_json::json!({"description": "Required specifies hard node constraints that must be met."}))
           },
           "type": "object"
         })

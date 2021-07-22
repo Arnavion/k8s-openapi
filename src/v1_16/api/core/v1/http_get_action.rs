@@ -155,7 +155,7 @@ impl crate::Schema for HTTPGetAction {
               "description": "Path to access on the HTTP server.",
               "type": "string"
             },
-            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."),
+            "port": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."})),
             "scheme": {
               "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
               "type": "string"

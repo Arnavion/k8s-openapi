@@ -105,8 +105,8 @@ impl crate::Schema for PodTemplateSpec {
         serde_json::json!({
           "description": "PodTemplateSpec describes the data a pod should have when created from a template",
           "properties": {
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::core::v1::PodSpec::schema(), "Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::core::v1::PodSpec::schema(), serde_json::json!({"description": "Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status"}))
           },
           "type": "object"
         })

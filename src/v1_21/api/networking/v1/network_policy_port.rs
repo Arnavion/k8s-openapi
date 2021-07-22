@@ -123,7 +123,7 @@ impl crate::Schema for NetworkPolicyPort {
               "format": "int32",
               "type": "integer"
             },
-            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched."),
+            "port": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched."})),
             "protocol": {
               "description": "The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.",
               "type": "string"

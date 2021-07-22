@@ -180,7 +180,7 @@ impl crate::Schema for APIServiceSpec {
               "description": "InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead.",
               "type": "boolean"
             },
-            "service": crate::schema_ref_with_description(crate::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference::schema(), "Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled."),
+            "service": crate::schema_ref_with_values(crate::kube_aggregator::pkg::apis::apiregistration::v1::ServiceReference::schema(), serde_json::json!({"description": "Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled."})),
             "version": {
               "description": "Version is the API version this server hosts.  For example, \"v1\"",
               "type": "string"

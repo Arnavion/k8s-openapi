@@ -522,7 +522,7 @@ impl crate::Schema for AuditSink {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::AuditSinkSpec::schema(), "Spec defines the audit configuration spec")
+            "spec": crate::schema_ref_with_values(crate::api::auditregistration::v1alpha1::AuditSinkSpec::schema(), serde_json::json!({"description": "Spec defines the audit configuration spec"}))
           },
           "required": [
             "metadata"

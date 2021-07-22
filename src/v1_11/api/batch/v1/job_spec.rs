@@ -192,8 +192,8 @@ impl crate::Schema for JobSpec {
               "format": "int32",
               "type": "integer"
             },
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors"),
-            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "Describes the pod that will be created when executing a job. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/")
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors"})),
+            "template": crate::schema_ref_with_values(crate::api::core::v1::PodTemplateSpec::schema(), serde_json::json!({"description": "Describes the pod that will be created when executing a job. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/"}))
           },
           "required": [
             "template"

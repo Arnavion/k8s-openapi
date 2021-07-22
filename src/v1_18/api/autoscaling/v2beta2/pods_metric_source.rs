@@ -100,8 +100,8 @@ impl crate::Schema for PodsMetricSource {
         serde_json::json!({
           "description": "PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.",
           "properties": {
-            "metric": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), "metric identifies the target metric by name and selector"),
-            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricTarget::schema(), "target specifies the target value for the given metric")
+            "metric": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), serde_json::json!({"description": "metric identifies the target metric by name and selector"})),
+            "target": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricTarget::schema(), serde_json::json!({"description": "target specifies the target value for the given metric"}))
           },
           "required": [
             "metric",

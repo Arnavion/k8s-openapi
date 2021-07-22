@@ -429,7 +429,7 @@ impl crate::Schema for PodSecurityPolicySpec {
               },
               "type": "array"
             },
-            "fsGroup": crate::schema_ref_with_description(crate::api::policy::v1beta1::FSGroupStrategyOptions::schema(), "fsGroup is the strategy that will dictate what fs group is used by the SecurityContext."),
+            "fsGroup": crate::schema_ref_with_values(crate::api::policy::v1beta1::FSGroupStrategyOptions::schema(), serde_json::json!({"description": "fsGroup is the strategy that will dictate what fs group is used by the SecurityContext."})),
             "hostIPC": {
               "description": "hostIPC determines if the policy allows the use of HostIPC in the pod spec.",
               "type": "boolean"
@@ -462,10 +462,10 @@ impl crate::Schema for PodSecurityPolicySpec {
               },
               "type": "array"
             },
-            "runAsGroup": crate::schema_ref_with_description(crate::api::policy::v1beta1::RunAsGroupStrategyOptions::schema(), "RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled."),
-            "runAsUser": crate::schema_ref_with_description(crate::api::policy::v1beta1::RunAsUserStrategyOptions::schema(), "runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set."),
-            "seLinux": crate::schema_ref_with_description(crate::api::policy::v1beta1::SELinuxStrategyOptions::schema(), "seLinux is the strategy that will dictate the allowable labels that may be set."),
-            "supplementalGroups": crate::schema_ref_with_description(crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions::schema(), "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext."),
+            "runAsGroup": crate::schema_ref_with_values(crate::api::policy::v1beta1::RunAsGroupStrategyOptions::schema(), serde_json::json!({"description": "RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled."})),
+            "runAsUser": crate::schema_ref_with_values(crate::api::policy::v1beta1::RunAsUserStrategyOptions::schema(), serde_json::json!({"description": "runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set."})),
+            "seLinux": crate::schema_ref_with_values(crate::api::policy::v1beta1::SELinuxStrategyOptions::schema(), serde_json::json!({"description": "seLinux is the strategy that will dictate the allowable labels that may be set."})),
+            "supplementalGroups": crate::schema_ref_with_values(crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions::schema(), serde_json::json!({"description": "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext."})),
             "volumes": {
               "description": "volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.",
               "items": {

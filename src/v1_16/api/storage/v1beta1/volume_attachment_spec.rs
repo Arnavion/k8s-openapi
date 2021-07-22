@@ -118,7 +118,7 @@ impl crate::Schema for VolumeAttachmentSpec {
               "description": "The node that the volume should be attached to.",
               "type": "string"
             },
-            "source": crate::schema_ref_with_description(crate::api::storage::v1beta1::VolumeAttachmentSource::schema(), "Source represents the volume that should be attached.")
+            "source": crate::schema_ref_with_values(crate::api::storage::v1beta1::VolumeAttachmentSource::schema(), serde_json::json!({"description": "Source represents the volume that should be attached."}))
           },
           "required": [
             "attacher",

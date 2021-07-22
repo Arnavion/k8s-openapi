@@ -119,16 +119,19 @@ impl crate::Schema for PolicyRulesWithSubjects {
             "nonResourceRules": {
               "description": "`nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.",
               "items": crate::api::flowcontrol::v1beta1::NonResourcePolicyRule::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "resourceRules": {
               "description": "`resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.",
               "items": crate::api::flowcontrol::v1beta1::ResourcePolicyRule::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "subjects": {
               "description": "subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.",
               "items": crate::api::flowcontrol::v1beta1::Subject::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

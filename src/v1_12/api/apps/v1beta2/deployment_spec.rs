@@ -202,9 +202,9 @@ impl crate::Schema for DeploymentSpec {
               "format": "int32",
               "type": "integer"
             },
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels."),
-            "strategy": crate::schema_ref_with_description(crate::api::apps::v1beta2::DeploymentStrategy::schema(), "The deployment strategy to use to replace existing pods with new ones."),
-            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "Template describes the pods that will be created.")
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels."})),
+            "strategy": crate::schema_ref_with_values(crate::api::apps::v1beta2::DeploymentStrategy::schema(), serde_json::json!({"description": "The deployment strategy to use to replace existing pods with new ones."})),
+            "template": crate::schema_ref_with_values(crate::api::core::v1::PodTemplateSpec::schema(), serde_json::json!({"description": "Template describes the pods that will be created."}))
           },
           "required": [
             "selector",

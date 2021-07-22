@@ -109,7 +109,7 @@ impl crate::Schema for VolumeError {
               "description": "String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.",
               "type": "string"
             },
-            "time": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time the error was encountered.")
+            "time": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Time the error was encountered."}))
           },
           "type": "object"
         })

@@ -154,7 +154,7 @@ impl crate::Schema for PodPresetSpec {
               "items": crate::api::core::v1::EnvFromSource::schema(),
               "type": "array"
             },
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Selector is a label query over a set of resources, in this case pods. Required."),
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "Selector is a label query over a set of resources, in this case pods. Required."})),
             "volumeMounts": {
               "description": "VolumeMounts defines the collection of VolumeMount to inject into containers.",
               "items": crate::api::core::v1::VolumeMount::schema(),

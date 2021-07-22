@@ -148,7 +148,7 @@ impl crate::Schema for ManagedFieldsEntry {
               "description": "APIVersion defines the version of this resource that this field set applies to. The format is \"group/version\" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.",
               "type": "string"
             },
-            "fields": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Fields::schema(), "Fields identifies a set of fields."),
+            "fields": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Fields::schema(), serde_json::json!({"description": "Fields identifies a set of fields."})),
             "manager": {
               "description": "Manager is an identifier of the workflow managing these fields.",
               "type": "string"
@@ -157,7 +157,7 @@ impl crate::Schema for ManagedFieldsEntry {
               "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.",
               "type": "string"
             },
-            "time": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'")
+            "time": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'"}))
           },
           "type": "object"
         })

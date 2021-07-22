@@ -706,8 +706,8 @@ impl crate::Schema for CustomResourceDefinition {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec::schema(), "spec describes how the user wants the resources to appear"),
-            "status": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus::schema(), "status indicates the actual state of the CustomResourceDefinition")
+            "spec": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec::schema(), serde_json::json!({"description": "spec describes how the user wants the resources to appear"})),
+            "status": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus::schema(), serde_json::json!({"description": "status indicates the actual state of the CustomResourceDefinition"}))
           },
           "required": [
             "metadata",

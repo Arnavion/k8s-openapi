@@ -105,7 +105,7 @@ impl crate::Schema for DeploymentStrategy {
         serde_json::json!({
           "description": "DeploymentStrategy describes how to replace existing pods with new ones.",
           "properties": {
-            "rollingUpdate": crate::schema_ref_with_description(crate::api::apps::v1beta1::RollingUpdateDeployment::schema(), "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate."),
+            "rollingUpdate": crate::schema_ref_with_values(crate::api::apps::v1beta1::RollingUpdateDeployment::schema(), serde_json::json!({"description": "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate."})),
             "type": {
               "description": "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.",
               "type": "string"

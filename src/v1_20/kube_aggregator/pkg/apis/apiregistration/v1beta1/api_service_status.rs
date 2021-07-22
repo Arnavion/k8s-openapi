@@ -95,6 +95,12 @@ impl crate::Schema for APIServiceStatus {
             "conditions": {
               "description": "Current service state of apiService.",
               "items": crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceCondition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             }
           },

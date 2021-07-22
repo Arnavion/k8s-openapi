@@ -107,7 +107,7 @@ impl crate::Schema for SELinuxStrategyOptions {
               "description": "rule is the strategy that will dictate the allowable labels that may be set.",
               "type": "string"
             },
-            "seLinuxOptions": crate::schema_ref_with_description(crate::api::core::v1::SELinuxOptions::schema(), "seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/")
+            "seLinuxOptions": crate::schema_ref_with_values(crate::api::core::v1::SELinuxOptions::schema(), serde_json::json!({"description": "seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"}))
           },
           "required": [
             "rule"

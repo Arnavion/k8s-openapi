@@ -95,6 +95,10 @@ impl crate::Schema for PriorityLevelConfigurationStatus {
             "conditions": {
               "description": "`conditions` is the current state of \"request-priority\".",
               "items": crate::api::flowcontrol::v1alpha1::PriorityLevelConfigurationCondition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
               "type": "array"
             }
           },

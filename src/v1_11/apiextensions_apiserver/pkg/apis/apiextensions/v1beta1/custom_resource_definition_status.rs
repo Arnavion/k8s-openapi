@@ -113,7 +113,7 @@ impl crate::Schema for CustomResourceDefinitionStatus {
         serde_json::json!({
           "description": "CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition",
           "properties": {
-            "acceptedNames": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames::schema(), "AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec."),
+            "acceptedNames": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames::schema(), serde_json::json!({"description": "AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec."})),
             "conditions": {
               "description": "Conditions indicate state for particular aspects of a CustomResourceDefinition",
               "items": crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionCondition::schema(),

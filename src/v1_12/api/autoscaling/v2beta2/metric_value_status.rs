@@ -123,8 +123,8 @@ impl crate::Schema for MetricValueStatus {
               "format": "int32",
               "type": "integer"
             },
-            "averageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)"),
-            "value": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "value is the current value of the metric (as a quantity).")
+            "averageValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)"})),
+            "value": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "value is the current value of the metric (as a quantity)."}))
           },
           "type": "object"
         })

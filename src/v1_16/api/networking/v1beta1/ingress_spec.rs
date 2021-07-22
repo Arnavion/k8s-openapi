@@ -118,7 +118,7 @@ impl crate::Schema for IngressSpec {
         serde_json::json!({
           "description": "IngressSpec describes the Ingress the user wishes to exist.",
           "properties": {
-            "backend": crate::schema_ref_with_description(crate::api::networking::v1beta1::IngressBackend::schema(), "A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default."),
+            "backend": crate::schema_ref_with_values(crate::api::networking::v1beta1::IngressBackend::schema(), serde_json::json!({"description": "A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default."})),
             "rules": {
               "description": "A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.",
               "items": crate::api::networking::v1beta1::IngressRule::schema(),

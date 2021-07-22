@@ -133,9 +133,9 @@ impl crate::Schema for ExternalMetricSource {
               "description": "metricName is the name of the metric in question.",
               "type": "string"
             },
-            "metricSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "metricSelector is used to identify a specific time series within a given metric."),
-            "targetAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue."),
-            "targetValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.")
+            "metricSelector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "metricSelector is used to identify a specific time series within a given metric."})),
+            "targetAverageValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue."})),
+            "targetValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue."}))
           },
           "required": [
             "metricName"

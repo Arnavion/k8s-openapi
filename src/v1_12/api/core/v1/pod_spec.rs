@@ -459,7 +459,7 @@ impl crate::Schema for PodSpec {
               "format": "int64",
               "type": "integer"
             },
-            "affinity": crate::schema_ref_with_description(crate::api::core::v1::Affinity::schema(), "If specified, the pod's scheduling constraints"),
+            "affinity": crate::schema_ref_with_values(crate::api::core::v1::Affinity::schema(), serde_json::json!({"description": "If specified, the pod's scheduling constraints"})),
             "automountServiceAccountToken": {
               "description": "AutomountServiceAccountToken indicates whether a service account token should be automatically mounted.",
               "type": "boolean"
@@ -467,9 +467,11 @@ impl crate::Schema for PodSpec {
             "containers": {
               "description": "List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.",
               "items": crate::api::core::v1::Container::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
-            "dnsConfig": crate::schema_ref_with_description(crate::api::core::v1::PodDNSConfig::schema(), "Specifies the DNS parameters of a pod. Parameters specified here will be merged to the generated DNS configuration based on DNSPolicy."),
+            "dnsConfig": crate::schema_ref_with_values(crate::api::core::v1::PodDNSConfig::schema(), serde_json::json!({"description": "Specifies the DNS parameters of a pod. Parameters specified here will be merged to the generated DNS configuration based on DNSPolicy."})),
             "dnsPolicy": {
               "description": "Set DNS policy for the pod. Defaults to \"ClusterFirst\". Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'. DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy. To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.",
               "type": "string"
@@ -477,6 +479,8 @@ impl crate::Schema for PodSpec {
             "hostAliases": {
               "description": "HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.",
               "items": crate::api::core::v1::HostAlias::schema(),
+              "x-kubernetes-patch-merge-key": "ip",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "hostIPC": {
@@ -498,11 +502,15 @@ impl crate::Schema for PodSpec {
             "imagePullSecrets": {
               "description": "ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod",
               "items": crate::api::core::v1::LocalObjectReference::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "initContainers": {
               "description": "List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/",
               "items": crate::api::core::v1::Container::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "nodeName": {
@@ -542,7 +550,7 @@ impl crate::Schema for PodSpec {
               "description": "If specified, the pod will be dispatched by specified scheduler. If not specified, the pod will be dispatched by default scheduler.",
               "type": "string"
             },
-            "securityContext": crate::schema_ref_with_description(crate::api::core::v1::PodSecurityContext::schema(), "SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field."),
+            "securityContext": crate::schema_ref_with_values(crate::api::core::v1::PodSecurityContext::schema(), serde_json::json!({"description": "SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field."})),
             "serviceAccount": {
               "description": "DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.",
               "type": "string"
@@ -572,6 +580,8 @@ impl crate::Schema for PodSpec {
             "volumes": {
               "description": "List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes",
               "items": crate::api::core::v1::Volume::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge,retainKeys",
               "type": "array"
             }
           },

@@ -146,12 +146,12 @@ impl crate::Schema for CustomResourceDefinitionSpec {
         serde_json::json!({
           "description": "CustomResourceDefinitionSpec describes how a user wants their resource to appear",
           "properties": {
-            "conversion": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion::schema(), "conversion defines conversion settings for the CRD."),
+            "conversion": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion::schema(), serde_json::json!({"description": "conversion defines conversion settings for the CRD."})),
             "group": {
               "description": "group is the API group of the defined custom resource. The custom resources are served under `/apis/<group>/...`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`).",
               "type": "string"
             },
-            "names": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames::schema(), "names specify the resource and kind names for the custom resource."),
+            "names": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames::schema(), serde_json::json!({"description": "names specify the resource and kind names for the custom resource."})),
             "preserveUnknownFields": {
               "description": "preserveUnknownFields indicates that object fields which are not specified in the OpenAPI schema should be preserved when persisting to storage. apiVersion, kind, metadata and known fields inside metadata are always preserved. This field is deprecated in favor of setting `x-preserve-unknown-fields` to true in `spec.versions[*].schema.openAPIV3Schema`. See https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields for details.",
               "type": "boolean"

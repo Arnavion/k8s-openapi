@@ -118,12 +118,12 @@ impl crate::Schema for IngressBackend {
         serde_json::json!({
           "description": "IngressBackend describes all endpoints for a given service and port.",
           "properties": {
-            "resource": crate::schema_ref_with_description(crate::api::core::v1::TypedLocalObjectReference::schema(), "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified."),
+            "resource": crate::schema_ref_with_values(crate::api::core::v1::TypedLocalObjectReference::schema(), serde_json::json!({"description": "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified."})),
             "serviceName": {
               "description": "Specifies the name of the referenced service.",
               "type": "string"
             },
-            "servicePort": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "Specifies the port of the referenced service.")
+            "servicePort": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "Specifies the port of the referenced service."}))
           },
           "type": "object"
         })

@@ -131,10 +131,10 @@ impl crate::Schema for VolumeProjection {
         serde_json::json!({
           "description": "Projection that may be projected along with other supported volume types",
           "properties": {
-            "configMap": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapProjection::schema(), "information about the configMap data to project"),
-            "downwardAPI": crate::schema_ref_with_description(crate::api::core::v1::DownwardAPIProjection::schema(), "information about the downwardAPI data to project"),
-            "secret": crate::schema_ref_with_description(crate::api::core::v1::SecretProjection::schema(), "information about the secret data to project"),
-            "serviceAccountToken": crate::schema_ref_with_description(crate::api::core::v1::ServiceAccountTokenProjection::schema(), "information about the serviceAccountToken data to project")
+            "configMap": crate::schema_ref_with_values(crate::api::core::v1::ConfigMapProjection::schema(), serde_json::json!({"description": "information about the configMap data to project"})),
+            "downwardAPI": crate::schema_ref_with_values(crate::api::core::v1::DownwardAPIProjection::schema(), serde_json::json!({"description": "information about the downwardAPI data to project"})),
+            "secret": crate::schema_ref_with_values(crate::api::core::v1::SecretProjection::schema(), serde_json::json!({"description": "information about the secret data to project"})),
+            "serviceAccountToken": crate::schema_ref_with_values(crate::api::core::v1::ServiceAccountTokenProjection::schema(), serde_json::json!({"description": "information about the serviceAccountToken data to project"}))
           },
           "type": "object"
         })

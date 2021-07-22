@@ -207,8 +207,8 @@ impl crate::Schema for TokenReview {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::authentication::v1beta1::TokenReviewSpec::schema(), "Spec holds information about the request being evaluated"),
-            "status": crate::schema_ref_with_description(crate::api::authentication::v1beta1::TokenReviewStatus::schema(), "Status is filled in by the server and indicates whether the request can be authenticated.")
+            "spec": crate::schema_ref_with_values(crate::api::authentication::v1beta1::TokenReviewSpec::schema(), serde_json::json!({"description": "Spec holds information about the request being evaluated"})),
+            "status": crate::schema_ref_with_values(crate::api::authentication::v1beta1::TokenReviewStatus::schema(), serde_json::json!({"description": "Status is filled in by the server and indicates whether the request can be authenticated."}))
           },
           "required": [
             "metadata",

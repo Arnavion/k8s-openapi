@@ -330,6 +330,7 @@ impl crate::Schema for ServiceSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "externalIPs": {
@@ -357,6 +358,7 @@ impl crate::Schema for ServiceSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "ipFamilyPolicy": {
@@ -377,6 +379,13 @@ impl crate::Schema for ServiceSpec {
             "ports": {
               "description": "The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies",
               "items": crate::api::core::v1::ServicePort::schema(),
+              "x-kubernetes-list-map-keys": [
+                "port",
+                "protocol"
+              ],
+              "x-kubernetes-list-type": "map",
+              "x-kubernetes-patch-merge-key": "port",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "publishNotReadyAddresses": {
@@ -394,7 +403,7 @@ impl crate::Schema for ServiceSpec {
               "description": "Supports \"ClientIP\" and \"None\". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies",
               "type": "string"
             },
-            "sessionAffinityConfig": crate::schema_ref_with_description(crate::api::core::v1::SessionAffinityConfig::schema(), "sessionAffinityConfig contains the configurations of session affinity."),
+            "sessionAffinityConfig": crate::schema_ref_with_values(crate::api::core::v1::SessionAffinityConfig::schema(), serde_json::json!({"description": "sessionAffinityConfig contains the configurations of session affinity."})),
             "topologyKeys": {
               "description": "topologyKeys is a preference-order list of topology keys which implementations of services should use to preferentially sort endpoints when accessing this Service, it can not be used at the same time as externalTrafficPolicy=Local. Topology keys must be valid label keys and at most 16 keys may be specified. Endpoints are chosen based on the first topology key with available backends. If this field is specified and all entries have no backends that match the topology of the client, the service has no backends for that client and connections should fail. The special value \"*\" may be used to mean \"any topology\". This catch-all value, if used, only makes sense as the last value in the list. If this is not specified or empty, no topology constraints will be applied. This field is alpha-level and is only honored by servers that enable the ServiceTopology feature.",
               "items": {

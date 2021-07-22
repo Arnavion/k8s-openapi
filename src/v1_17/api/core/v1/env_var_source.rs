@@ -131,10 +131,10 @@ impl crate::Schema for EnvVarSource {
         serde_json::json!({
           "description": "EnvVarSource represents a source for the value of an EnvVar.",
           "properties": {
-            "configMapKeyRef": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapKeySelector::schema(), "Selects a key of a ConfigMap."),
-            "fieldRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectFieldSelector::schema(), "Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs."),
-            "resourceFieldRef": crate::schema_ref_with_description(crate::api::core::v1::ResourceFieldSelector::schema(), "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported."),
-            "secretKeyRef": crate::schema_ref_with_description(crate::api::core::v1::SecretKeySelector::schema(), "Selects a key of a secret in the pod's namespace")
+            "configMapKeyRef": crate::schema_ref_with_values(crate::api::core::v1::ConfigMapKeySelector::schema(), serde_json::json!({"description": "Selects a key of a ConfigMap."})),
+            "fieldRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectFieldSelector::schema(), serde_json::json!({"description": "Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs."})),
+            "resourceFieldRef": crate::schema_ref_with_values(crate::api::core::v1::ResourceFieldSelector::schema(), serde_json::json!({"description": "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported."})),
+            "secretKeyRef": crate::schema_ref_with_values(crate::api::core::v1::SecretKeySelector::schema(), serde_json::json!({"description": "Selects a key of a secret in the pod's namespace"}))
           },
           "type": "object"
         })

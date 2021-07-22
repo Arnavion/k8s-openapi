@@ -139,7 +139,7 @@ impl crate::Schema for HorizontalPodAutoscalerSpec {
         serde_json::json!({
           "description": "HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.",
           "properties": {
-            "behavior": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerBehavior::schema(), "behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used."),
+            "behavior": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::HorizontalPodAutoscalerBehavior::schema(), serde_json::json!({"description": "behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used."})),
             "maxReplicas": {
               "description": "maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.",
               "format": "int32",
@@ -155,7 +155,7 @@ impl crate::Schema for HorizontalPodAutoscalerSpec {
               "format": "int32",
               "type": "integer"
             },
-            "scaleTargetRef": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(), "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.")
+            "scaleTargetRef": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(), serde_json::json!({"description": "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count."}))
           },
           "required": [
             "maxReplicas",

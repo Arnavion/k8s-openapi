@@ -664,16 +664,18 @@ impl crate::Schema for EndpointSlice {
             "endpoints": {
               "description": "endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.",
               "items": crate::api::discovery::v1alpha1::Endpoint::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata."),
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata."})),
             "ports": {
               "description": "ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates \"all ports\". Each slice may include a maximum of 100 ports.",
               "items": crate::api::discovery::v1alpha1::EndpointPort::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

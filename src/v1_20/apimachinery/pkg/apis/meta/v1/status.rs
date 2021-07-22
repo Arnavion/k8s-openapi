@@ -212,7 +212,7 @@ impl crate::Schema for Status {
               "format": "int32",
               "type": "integer"
             },
-            "details": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::StatusDetails::schema(), "Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type."),
+            "details": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::StatusDetails::schema(), serde_json::json!({"description": "Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type."})),
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
@@ -221,7 +221,7 @@ impl crate::Schema for Status {
               "description": "A human-readable description of the status of this operation.",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ListMeta::schema(), "Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ListMeta::schema(), serde_json::json!({"description": "Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"})),
             "reason": {
               "description": "A machine-readable description of why this operation is in the \"Failure\" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.",
               "type": "string"

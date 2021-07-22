@@ -213,11 +213,13 @@ impl crate::Schema for CertificateSigningRequestSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "request": {
               "description": "request contains an x509 certificate signing request encoded in a \"CERTIFICATE REQUEST\" PEM block. When serialized as JSON or YAML, the data is additionally base64-encoded.",
               "format": "byte",
+              "x-kubernetes-list-type": "atomic",
               "type": "string"
             },
             "signerName": {
@@ -233,6 +235,7 @@ impl crate::Schema for CertificateSigningRequestSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "username": {

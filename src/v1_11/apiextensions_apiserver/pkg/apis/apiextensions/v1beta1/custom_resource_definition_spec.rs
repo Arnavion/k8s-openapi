@@ -184,13 +184,13 @@ impl crate::Schema for CustomResourceDefinitionSpec {
               "description": "Group is the group this resource belongs in",
               "type": "string"
             },
-            "names": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames::schema(), "Names are the names used to describe this custom resource"),
+            "names": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames::schema(), serde_json::json!({"description": "Names are the names used to describe this custom resource"})),
             "scope": {
               "description": "Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced",
               "type": "string"
             },
-            "subresources": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources::schema(), "Subresources describes the subresources for CustomResources"),
-            "validation": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation::schema(), "Validation describes the validation methods for CustomResources"),
+            "subresources": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources::schema(), serde_json::json!({"description": "Subresources describes the subresources for CustomResources"})),
+            "validation": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation::schema(), serde_json::json!({"description": "Validation describes the validation methods for CustomResources"})),
             "version": {
               "description": "Version is the version this resource belongs in Should be always first item in Versions field if provided. Optional, but at least one of Version or Versions must be set. Deprecated: Please use `Versions`.",
               "type": "string"

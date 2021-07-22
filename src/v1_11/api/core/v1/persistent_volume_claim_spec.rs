@@ -164,8 +164,8 @@ impl crate::Schema for PersistentVolumeClaimSpec {
               },
               "type": "array"
             },
-            "resources": crate::schema_ref_with_description(crate::api::core::v1::ResourceRequirements::schema(), "Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources"),
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "A label query over volumes to consider for binding."),
+            "resources": crate::schema_ref_with_values(crate::api::core::v1::ResourceRequirements::schema(), serde_json::json!({"description": "Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources"})),
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "A label query over volumes to consider for binding."})),
             "storageClassName": {
               "description": "Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1",
               "type": "string"

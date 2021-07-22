@@ -187,7 +187,7 @@ impl crate::Schema for SecurityContext {
               "description": "AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN",
               "type": "boolean"
             },
-            "capabilities": crate::schema_ref_with_description(crate::api::core::v1::Capabilities::schema(), "The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime."),
+            "capabilities": crate::schema_ref_with_values(crate::api::core::v1::Capabilities::schema(), serde_json::json!({"description": "The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime."})),
             "privileged": {
               "description": "Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.",
               "type": "boolean"
@@ -210,7 +210,7 @@ impl crate::Schema for SecurityContext {
               "format": "int64",
               "type": "integer"
             },
-            "seLinuxOptions": crate::schema_ref_with_description(crate::api::core::v1::SELinuxOptions::schema(), "The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.")
+            "seLinuxOptions": crate::schema_ref_with_values(crate::api::core::v1::SELinuxOptions::schema(), serde_json::json!({"description": "The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence."}))
           },
           "type": "object"
         })

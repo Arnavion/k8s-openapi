@@ -148,7 +148,7 @@ impl crate::Schema for ReplicationControllerSpec {
               "description": "Selector is a label query over pods that should match the Replicas count. If Selector is empty, it is defaulted to the labels present on the Pod template. Label keys and values that must match in order to be controlled by this replication controller, if empty defaulted to labels on Pod template. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors",
               "type": "object"
             },
-            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template")
+            "template": crate::schema_ref_with_values(crate::api::core::v1::PodTemplateSpec::schema(), serde_json::json!({"description": "Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"}))
           },
           "type": "object"
         })

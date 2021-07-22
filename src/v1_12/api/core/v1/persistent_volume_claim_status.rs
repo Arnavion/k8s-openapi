@@ -146,6 +146,8 @@ impl crate::Schema for PersistentVolumeClaimStatus {
             "conditions": {
               "description": "Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.",
               "items": crate::api::core::v1::PersistentVolumeClaimCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "phase": {

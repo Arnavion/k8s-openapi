@@ -551,9 +551,9 @@ impl crate::Schema for RuntimeClass {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
-            "overhead": crate::schema_ref_with_description(crate::api::node::v1::Overhead::schema(), "Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see\n https://kubernetes.io/docs/concepts/scheduling-eviction/pod-overhead/\nThis field is in beta starting v1.18 and is only honored by servers that enable the PodOverhead feature."),
-            "scheduling": crate::schema_ref_with_description(crate::api::node::v1::Scheduling::schema(), "Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"})),
+            "overhead": crate::schema_ref_with_values(crate::api::node::v1::Overhead::schema(), serde_json::json!({"description": "Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see\n https://kubernetes.io/docs/concepts/scheduling-eviction/pod-overhead/\nThis field is in beta starting v1.18 and is only honored by servers that enable the PodOverhead feature."})),
+            "scheduling": crate::schema_ref_with_values(crate::api::node::v1::Scheduling::schema(), serde_json::json!({"description": "Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes."}))
           },
           "required": [
             "handler",

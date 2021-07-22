@@ -346,7 +346,7 @@ impl crate::Schema for DeleteOptions {
               "description": "Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \"orphan\" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.",
               "type": "boolean"
             },
-            "preconditions": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Preconditions::schema(), "Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned."),
+            "preconditions": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Preconditions::schema(), serde_json::json!({"description": "Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned."})),
             "propagationPolicy": {
               "description": "Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.",
               "type": "string"

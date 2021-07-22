@@ -110,7 +110,7 @@ impl crate::Schema for CronJobStatus {
               "items": crate::api::core::v1::ObjectReference::schema(),
               "type": "array"
             },
-            "lastScheduleTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Information when was the last time the job was successfully scheduled.")
+            "lastScheduleTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Information when was the last time the job was successfully scheduled."}))
           },
           "type": "object"
         })

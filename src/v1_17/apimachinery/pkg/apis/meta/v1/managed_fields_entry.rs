@@ -165,7 +165,7 @@ impl crate::Schema for ManagedFieldsEntry {
               "description": "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\"",
               "type": "string"
             },
-            "fieldsV1": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::FieldsV1::schema(), "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type."),
+            "fieldsV1": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::FieldsV1::schema(), serde_json::json!({"description": "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type."})),
             "manager": {
               "description": "Manager is an identifier of the workflow managing these fields.",
               "type": "string"
@@ -174,7 +174,7 @@ impl crate::Schema for ManagedFieldsEntry {
               "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.",
               "type": "string"
             },
-            "time": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'")
+            "time": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'"}))
           },
           "type": "object"
         })

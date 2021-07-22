@@ -152,8 +152,8 @@ impl crate::Schema for JobCondition {
         serde_json::json!({
           "description": "JobCondition describes current state of a job.",
           "properties": {
-            "lastProbeTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition was checked."),
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transit from one status to another."),
+            "lastProbeTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time the condition was checked."})),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time the condition transit from one status to another."})),
             "message": {
               "description": "Human readable message indicating details about last transition.",
               "type": "string"

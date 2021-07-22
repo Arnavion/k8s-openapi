@@ -123,7 +123,7 @@ impl crate::Schema for TokenRequestSpec {
               },
               "type": "array"
             },
-            "boundObjectRef": crate::schema_ref_with_description(crate::api::authentication::v1::BoundObjectReference::schema(), "BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation."),
+            "boundObjectRef": crate::schema_ref_with_values(crate::api::authentication::v1::BoundObjectReference::schema(), serde_json::json!({"description": "BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation."})),
             "expirationSeconds": {
               "description": "ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.",
               "format": "int64",

@@ -808,10 +808,10 @@ impl crate::Schema for Event {
               "format": "int32",
               "type": "integer"
             },
-            "deprecatedFirstTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
-            "deprecatedLastTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
-            "deprecatedSource": crate::schema_ref_with_description(crate::api::core::v1::EventSource::schema(), "Deprecated field assuring backward compatibility with core.v1 Event type"),
-            "eventTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "Required. Time when this Event was first observed."),
+            "deprecatedFirstTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Deprecated field assuring backward compatibility with core.v1 Event type"})),
+            "deprecatedLastTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Deprecated field assuring backward compatibility with core.v1 Event type"})),
+            "deprecatedSource": crate::schema_ref_with_values(crate::api::core::v1::EventSource::schema(), serde_json::json!({"description": "Deprecated field assuring backward compatibility with core.v1 Event type"})),
+            "eventTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "Required. Time when this Event was first observed."})),
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
@@ -825,8 +825,8 @@ impl crate::Schema for Event {
               "description": "Why the action was taken.",
               "type": "string"
             },
-            "regarding": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object."),
-            "related": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object."),
+            "regarding": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object."})),
+            "related": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object."})),
             "reportingController": {
               "description": "Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.",
               "type": "string"
@@ -835,7 +835,7 @@ impl crate::Schema for Event {
               "description": "ID of the controller instance, e.g. `kubelet-xyzf`.",
               "type": "string"
             },
-            "series": crate::schema_ref_with_description(crate::api::events::v1beta1::EventSeries::schema(), "Data about the Event series this event represents or nil if it's a singleton Event."),
+            "series": crate::schema_ref_with_values(crate::api::events::v1beta1::EventSeries::schema(), serde_json::json!({"description": "Data about the Event series this event represents or nil if it's a singleton Event."})),
             "type": {
               "description": "Type of this event (Normal, Warning), new types could be added in the future.",
               "type": "string"

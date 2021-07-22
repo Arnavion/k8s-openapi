@@ -108,9 +108,15 @@ impl crate::Schema for ServiceStatus {
             "conditions": {
               "description": "Current service state",
               "items": crate::apimachinery::pkg::apis::meta::v1::Condition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
-            "loadBalancer": crate::schema_ref_with_description(crate::api::core::v1::LoadBalancerStatus::schema(), "LoadBalancer contains the current status of the load-balancer, if one is present.")
+            "loadBalancer": crate::schema_ref_with_values(crate::api::core::v1::LoadBalancerStatus::schema(), serde_json::json!({"description": "LoadBalancer contains the current status of the load-balancer, if one is present."}))
           },
           "type": "object"
         })

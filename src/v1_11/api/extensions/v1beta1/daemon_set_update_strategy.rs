@@ -103,7 +103,7 @@ impl crate::Schema for DaemonSetUpdateStrategy {
     fn schema() -> serde_json::Value {
         serde_json::json!({
           "properties": {
-            "rollingUpdate": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollingUpdateDaemonSet::schema(), "Rolling update config params. Present only if type = \"RollingUpdate\"."),
+            "rollingUpdate": crate::schema_ref_with_values(crate::api::extensions::v1beta1::RollingUpdateDaemonSet::schema(), serde_json::json!({"description": "Rolling update config params. Present only if type = \"RollingUpdate\"."})),
             "type": {
               "description": "Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is OnDelete.",
               "type": "string"

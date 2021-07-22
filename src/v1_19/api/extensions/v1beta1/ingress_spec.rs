@@ -131,7 +131,7 @@ impl crate::Schema for IngressSpec {
         serde_json::json!({
           "description": "IngressSpec describes the Ingress the user wishes to exist.",
           "properties": {
-            "backend": crate::schema_ref_with_description(crate::api::extensions::v1beta1::IngressBackend::schema(), "A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default."),
+            "backend": crate::schema_ref_with_values(crate::api::extensions::v1beta1::IngressBackend::schema(), serde_json::json!({"description": "A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default."})),
             "ingressClassName": {
               "description": "IngressClassName is the name of the IngressClass cluster resource. The associated IngressClass defines which controller will implement the resource. This replaces the deprecated `kubernetes.io/ingress.class` annotation. For backwards compatibility, when that annotation is set, it must be given precedence over this field. The controller may emit a warning if the field and annotation have different values. Implementations of this API should ignore Ingresses without a class specified. An IngressClass resource may be marked as default, which can be used to set a default value for this field. For more information, refer to the IngressClass documentation.",
               "type": "string"

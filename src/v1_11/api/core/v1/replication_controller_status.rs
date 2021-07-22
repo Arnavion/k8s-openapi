@@ -163,6 +163,8 @@ impl crate::Schema for ReplicationControllerStatus {
             "conditions": {
               "description": "Represents the latest available observations of a replication controller's current state.",
               "items": crate::api::core::v1::ReplicationControllerCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "fullyLabeledReplicas": {

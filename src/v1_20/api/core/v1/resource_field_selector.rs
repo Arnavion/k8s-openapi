@@ -120,7 +120,7 @@ impl crate::Schema for ResourceFieldSelector {
               "description": "Container name: required for volumes, optional for env vars",
               "type": "string"
             },
-            "divisor": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "Specifies the output format of the exposed resources, defaults to \"1\""),
+            "divisor": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "Specifies the output format of the exposed resources, defaults to \"1\""})),
             "resource": {
               "description": "Required: resource to select",
               "type": "string"

@@ -110,7 +110,7 @@ impl crate::Schema for NodeAffinity {
               "items": crate::api::core::v1::PreferredSchedulingTerm::schema(),
               "type": "array"
             },
-            "requiredDuringSchedulingIgnoredDuringExecution": crate::schema_ref_with_description(crate::api::core::v1::NodeSelector::schema(), "If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.")
+            "requiredDuringSchedulingIgnoredDuringExecution": crate::schema_ref_with_values(crate::api::core::v1::NodeSelector::schema(), serde_json::json!({"description": "If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node."}))
           },
           "type": "object"
         })

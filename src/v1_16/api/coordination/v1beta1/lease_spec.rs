@@ -144,7 +144,7 @@ impl crate::Schema for LeaseSpec {
         serde_json::json!({
           "description": "LeaseSpec is a specification of a Lease.",
           "properties": {
-            "acquireTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "acquireTime is a time when the current lease was acquired."),
+            "acquireTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "acquireTime is a time when the current lease was acquired."})),
             "holderIdentity": {
               "description": "holderIdentity contains the identity of the holder of a current lease.",
               "type": "string"
@@ -159,7 +159,7 @@ impl crate::Schema for LeaseSpec {
               "format": "int32",
               "type": "integer"
             },
-            "renewTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "renewTime is a time when the current holder of a lease has last updated the lease.")
+            "renewTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "renewTime is a time when the current holder of a lease has last updated the lease."}))
           },
           "type": "object"
         })

@@ -93,6 +93,7 @@ impl crate::Schema for HTTPIngressRuleValue {
             "paths": {
               "description": "A collection of paths that map requests to backends.",
               "items": crate::api::networking::v1::HTTPIngressPath::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

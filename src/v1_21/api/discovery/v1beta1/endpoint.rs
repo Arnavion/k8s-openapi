@@ -180,10 +180,11 @@ impl crate::Schema for Endpoint {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
-            "conditions": crate::schema_ref_with_description(crate::api::discovery::v1beta1::EndpointConditions::schema(), "conditions contains information about the current status of the endpoint."),
-            "hints": crate::schema_ref_with_description(crate::api::discovery::v1beta1::EndpointHints::schema(), "hints contains information associated with how an endpoint should be consumed."),
+            "conditions": crate::schema_ref_with_values(crate::api::discovery::v1beta1::EndpointConditions::schema(), serde_json::json!({"description": "conditions contains information about the current status of the endpoint."})),
+            "hints": crate::schema_ref_with_values(crate::api::discovery::v1beta1::EndpointHints::schema(), serde_json::json!({"description": "hints contains information associated with how an endpoint should be consumed."})),
             "hostname": {
               "description": "hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must be lowercase and pass DNS Label (RFC 1123) validation.",
               "type": "string"
@@ -192,7 +193,7 @@ impl crate::Schema for Endpoint {
               "description": "nodeName represents the name of the Node hosting this endpoint. This can be used to determine endpoints local to a Node. This field can be enabled with the EndpointSliceNodeName feature gate.",
               "type": "string"
             },
-            "targetRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "targetRef is a reference to a Kubernetes object that represents this endpoint."),
+            "targetRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "targetRef is a reference to a Kubernetes object that represents this endpoint."})),
             "topology": {
               "additionalProperties": {
                 "type": "string"

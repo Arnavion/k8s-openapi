@@ -141,6 +141,7 @@ impl crate::Schema for ResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
             "clusterScope": {
@@ -152,6 +153,7 @@ impl crate::Schema for ResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
             "resources": {
@@ -159,6 +161,7 @@ impl crate::Schema for ResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
             "verbs": {
@@ -166,6 +169,7 @@ impl crate::Schema for ResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             }
           },

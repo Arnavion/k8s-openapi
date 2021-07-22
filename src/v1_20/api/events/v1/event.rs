@@ -808,10 +808,10 @@ impl crate::Schema for Event {
               "format": "int32",
               "type": "integer"
             },
-            "deprecatedFirstTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type."),
-            "deprecatedLastTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type."),
-            "deprecatedSource": crate::schema_ref_with_description(crate::api::core::v1::EventSource::schema(), "deprecatedSource is the deprecated field assuring backward compatibility with core.v1 Event type."),
-            "eventTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "eventTime is the time when this Event was first observed. It is required."),
+            "deprecatedFirstTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type."})),
+            "deprecatedLastTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type."})),
+            "deprecatedSource": crate::schema_ref_with_values(crate::api::core::v1::EventSource::schema(), serde_json::json!({"description": "deprecatedSource is the deprecated field assuring backward compatibility with core.v1 Event type."})),
+            "eventTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "eventTime is the time when this Event was first observed. It is required."})),
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
@@ -825,8 +825,8 @@ impl crate::Schema for Event {
               "description": "reason is why the action was taken. It is human-readable. This field cannot be empty for new Events and it can have at most 128 characters.",
               "type": "string"
             },
-            "regarding": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "regarding contains the object this Event is about. In most cases it's an Object reporting controller implements, e.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object."),
-            "related": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "related is the optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object."),
+            "regarding": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "regarding contains the object this Event is about. In most cases it's an Object reporting controller implements, e.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object."})),
+            "related": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "related is the optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object."})),
             "reportingController": {
               "description": "reportingController is the name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`. This field cannot be empty for new Events.",
               "type": "string"
@@ -835,7 +835,7 @@ impl crate::Schema for Event {
               "description": "reportingInstance is the ID of the controller instance, e.g. `kubelet-xyzf`. This field cannot be empty for new Events and it can have at most 128 characters.",
               "type": "string"
             },
-            "series": crate::schema_ref_with_description(crate::api::events::v1::EventSeries::schema(), "series is data about the Event series this event represents or nil if it's a singleton Event."),
+            "series": crate::schema_ref_with_values(crate::api::events::v1::EventSeries::schema(), serde_json::json!({"description": "series is data about the Event series this event represents or nil if it's a singleton Event."})),
             "type": {
               "description": "type is the type of this event (Normal, Warning), new types could be added in the future. It is machine-readable. This field cannot be empty for new Events.",
               "type": "string"

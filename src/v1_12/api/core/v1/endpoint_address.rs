@@ -141,7 +141,7 @@ impl crate::Schema for EndpointAddress {
               "description": "Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.",
               "type": "string"
             },
-            "targetRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "Reference to object providing the endpoint.")
+            "targetRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "Reference to object providing the endpoint."}))
           },
           "required": [
             "ip"

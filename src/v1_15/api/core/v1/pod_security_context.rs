@@ -206,7 +206,7 @@ impl crate::Schema for PodSecurityContext {
               "format": "int64",
               "type": "integer"
             },
-            "seLinuxOptions": crate::schema_ref_with_description(crate::api::core::v1::SELinuxOptions::schema(), "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container."),
+            "seLinuxOptions": crate::schema_ref_with_values(crate::api::core::v1::SELinuxOptions::schema(), serde_json::json!({"description": "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container."})),
             "supplementalGroups": {
               "description": "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.",
               "items": {
@@ -220,7 +220,7 @@ impl crate::Schema for PodSecurityContext {
               "items": crate::api::core::v1::Sysctl::schema(),
               "type": "array"
             },
-            "windowsOptions": crate::schema_ref_with_description(crate::api::core::v1::WindowsSecurityContextOptions::schema(), "Windows security options.")
+            "windowsOptions": crate::schema_ref_with_values(crate::api::core::v1::WindowsSecurityContextOptions::schema(), serde_json::json!({"description": "Windows security options."}))
           },
           "type": "object"
         })

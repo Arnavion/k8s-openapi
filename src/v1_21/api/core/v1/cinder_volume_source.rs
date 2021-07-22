@@ -137,7 +137,7 @@ impl crate::Schema for CinderVolumeSource {
               "description": "Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
               "type": "boolean"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::LocalObjectReference::schema(), "Optional: points to a secret object containing parameters used to connect to OpenStack."),
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::LocalObjectReference::schema(), serde_json::json!({"description": "Optional: points to a secret object containing parameters used to connect to OpenStack."})),
             "volumeID": {
               "description": "volume id used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
               "type": "string"

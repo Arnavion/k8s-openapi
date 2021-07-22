@@ -752,9 +752,9 @@ impl crate::Schema for Scale {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata."),
-            "spec": crate::schema_ref_with_description(crate::api::apps::v1beta2::ScaleSpec::schema(), "defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status."),
-            "status": crate::schema_ref_with_description(crate::api::apps::v1beta2::ScaleStatus::schema(), "current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only.")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata."})),
+            "spec": crate::schema_ref_with_values(crate::api::apps::v1beta2::ScaleSpec::schema(), serde_json::json!({"description": "defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status."})),
+            "status": crate::schema_ref_with_values(crate::api::apps::v1beta2::ScaleStatus::schema(), serde_json::json!({"description": "current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only."}))
           },
           "required": [
             "metadata"

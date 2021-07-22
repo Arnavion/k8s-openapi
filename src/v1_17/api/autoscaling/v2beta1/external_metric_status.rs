@@ -126,13 +126,13 @@ impl crate::Schema for ExternalMetricStatus {
         serde_json::json!({
           "description": "ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.",
           "properties": {
-            "currentAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentAverageValue is the current value of metric averaged over autoscaled pods."),
-            "currentValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentValue is the current value of the metric (as a quantity)"),
+            "currentAverageValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "currentAverageValue is the current value of metric averaged over autoscaled pods."})),
+            "currentValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "currentValue is the current value of the metric (as a quantity)"})),
             "metricName": {
               "description": "metricName is the name of a metric used for autoscaling in metric system.",
               "type": "string"
             },
-            "metricSelector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "metricSelector is used to identify a specific time series within a given metric.")
+            "metricSelector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "metricSelector is used to identify a specific time series within a given metric."}))
           },
           "required": [
             "currentValue",

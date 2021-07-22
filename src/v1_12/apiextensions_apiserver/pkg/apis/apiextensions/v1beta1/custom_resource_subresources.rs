@@ -105,8 +105,8 @@ impl crate::Schema for CustomResourceSubresources {
         serde_json::json!({
           "description": "CustomResourceSubresources defines the status and scale subresources for CustomResources.",
           "properties": {
-            "scale": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale::schema(), "Scale denotes the scale subresource for CustomResources"),
-            "status": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus::schema(), "Status denotes the status subresource for CustomResources")
+            "scale": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceScale::schema(), serde_json::json!({"description": "Scale denotes the scale subresource for CustomResources"})),
+            "status": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus::schema(), serde_json::json!({"description": "Status denotes the status subresource for CustomResources"}))
           },
           "type": "object"
         })

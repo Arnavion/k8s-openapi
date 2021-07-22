@@ -152,7 +152,7 @@ impl crate::Schema for StorageOSPersistentVolumeSource {
               "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
               "type": "boolean"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted."),
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted."})),
             "volumeName": {
               "description": "VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.",
               "type": "string"

@@ -115,6 +115,8 @@ impl crate::Schema for LabelSelectorRequirement {
           "properties": {
             "key": {
               "description": "key is the label key that the selector applies to.",
+              "x-kubernetes-patch-merge-key": "key",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "string"
             },
             "operator": {

@@ -104,6 +104,7 @@ impl crate::Schema for LabelSelector {
     fn schema() -> serde_json::Value {
         serde_json::json!({
           "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.",
+          "x-kubernetes-map-type": "atomic",
           "properties": {
             "matchExpressions": {
               "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",

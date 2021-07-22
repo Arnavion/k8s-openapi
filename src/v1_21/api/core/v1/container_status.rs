@@ -194,7 +194,7 @@ impl crate::Schema for ContainerStatus {
               "description": "ImageID of the container's image.",
               "type": "string"
             },
-            "lastState": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's last termination condition."),
+            "lastState": crate::schema_ref_with_values(crate::api::core::v1::ContainerState::schema(), serde_json::json!({"description": "Details about the container's last termination condition."})),
             "name": {
               "description": "This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.",
               "type": "string"
@@ -212,7 +212,7 @@ impl crate::Schema for ContainerStatus {
               "description": "Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.",
               "type": "boolean"
             },
-            "state": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's current condition.")
+            "state": crate::schema_ref_with_values(crate::api::core::v1::ContainerState::schema(), serde_json::json!({"description": "Details about the container's current condition."}))
           },
           "required": [
             "image",

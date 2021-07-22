@@ -105,8 +105,8 @@ impl crate::Schema for JobTemplateSpec {
         serde_json::json!({
           "description": "JobTemplateSpec describes the data a Job should have when created from a template",
           "properties": {
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata of the jobs created from this template. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::batch::v1::JobSpec::schema(), "Specification of the desired behavior of the job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata of the jobs created from this template. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::batch::v1::JobSpec::schema(), serde_json::json!({"description": "Specification of the desired behavior of the job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status"}))
           },
           "type": "object"
         })

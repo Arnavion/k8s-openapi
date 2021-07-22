@@ -105,8 +105,8 @@ impl crate::Schema for SelfSubjectAccessReviewSpec {
         serde_json::json!({
           "description": "SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
           "properties": {
-            "nonResourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1beta1::NonResourceAttributes::schema(), "NonResourceAttributes describes information for a non-resource access request"),
-            "resourceAttributes": crate::schema_ref_with_description(crate::api::authorization::v1beta1::ResourceAttributes::schema(), "ResourceAuthorizationAttributes describes information for a resource access request")
+            "nonResourceAttributes": crate::schema_ref_with_values(crate::api::authorization::v1beta1::NonResourceAttributes::schema(), serde_json::json!({"description": "NonResourceAttributes describes information for a non-resource access request"})),
+            "resourceAttributes": crate::schema_ref_with_values(crate::api::authorization::v1beta1::ResourceAttributes::schema(), serde_json::json!({"description": "ResourceAuthorizationAttributes describes information for a resource access request"}))
           },
           "type": "object"
         })

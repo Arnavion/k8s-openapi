@@ -152,8 +152,8 @@ impl crate::Schema for PodCondition {
         serde_json::json!({
           "description": "PodCondition contains details for the current condition of this pod.",
           "properties": {
-            "lastProbeTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time we probed the condition."),
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transitioned from one status to another."),
+            "lastProbeTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time we probed the condition."})),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time the condition transitioned from one status to another."})),
             "message": {
               "description": "Human-readable message indicating details about last transition.",
               "type": "string"

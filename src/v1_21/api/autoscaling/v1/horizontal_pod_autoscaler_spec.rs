@@ -136,7 +136,7 @@ impl crate::Schema for HorizontalPodAutoscalerSpec {
               "format": "int32",
               "type": "integer"
             },
-            "scaleTargetRef": crate::schema_ref_with_description(crate::api::autoscaling::v1::CrossVersionObjectReference::schema(), "reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource."),
+            "scaleTargetRef": crate::schema_ref_with_values(crate::api::autoscaling::v1::CrossVersionObjectReference::schema(), serde_json::json!({"description": "reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource."})),
             "targetCPUUtilizationPercentage": {
               "description": "target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.",
               "format": "int32",

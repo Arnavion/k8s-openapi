@@ -104,7 +104,7 @@ impl crate::Schema for ResourceMetricSource {
               "description": "name is the name of the resource in question.",
               "type": "string"
             },
-            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricTarget::schema(), "target specifies the target value for the given metric")
+            "target": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricTarget::schema(), serde_json::json!({"description": "target specifies the target value for the given metric"}))
           },
           "required": [
             "name",

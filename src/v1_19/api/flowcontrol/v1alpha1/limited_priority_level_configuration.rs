@@ -116,7 +116,7 @@ impl crate::Schema for LimitedPriorityLevelConfiguration {
               "format": "int32",
               "type": "integer"
             },
-            "limitResponse": crate::schema_ref_with_description(crate::api::flowcontrol::v1alpha1::LimitResponse::schema(), "`limitResponse` indicates what to do with requests that can not be executed right now")
+            "limitResponse": crate::schema_ref_with_values(crate::api::flowcontrol::v1alpha1::LimitResponse::schema(), serde_json::json!({"description": "`limitResponse` indicates what to do with requests that can not be executed right now"}))
           },
           "type": "object"
         })

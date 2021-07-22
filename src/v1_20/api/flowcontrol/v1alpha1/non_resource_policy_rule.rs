@@ -111,6 +111,7 @@ impl crate::Schema for NonResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
             "verbs": {
@@ -118,6 +119,7 @@ impl crate::Schema for NonResourcePolicyRule {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             }
           },

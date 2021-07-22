@@ -105,7 +105,7 @@ impl crate::Schema for EventSeries {
               "format": "int32",
               "type": "integer"
             },
-            "lastObservedTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "lastObservedTime is the time when last Event from the series was seen before last heartbeat.")
+            "lastObservedTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "lastObservedTime is the time when last Event from the series was seen before last heartbeat."}))
           },
           "required": [
             "count",

@@ -139,7 +139,7 @@ impl crate::Schema for CustomResourceDefinitionCondition {
         serde_json::json!({
           "description": "CustomResourceDefinitionCondition contains details for the current condition of this pod.",
           "properties": {
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime last time the condition transitioned from one status to another."),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "lastTransitionTime last time the condition transitioned from one status to another."})),
             "message": {
               "description": "message is a human-readable message indicating details about last transition.",
               "type": "string"

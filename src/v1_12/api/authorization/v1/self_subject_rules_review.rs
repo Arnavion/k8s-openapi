@@ -207,8 +207,8 @@ impl crate::Schema for SelfSubjectRulesReview {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::authorization::v1::SelfSubjectRulesReviewSpec::schema(), "Spec holds information about the request being evaluated."),
-            "status": crate::schema_ref_with_description(crate::api::authorization::v1::SubjectRulesReviewStatus::schema(), "Status is filled in by the server and indicates the set of actions a user can perform.")
+            "spec": crate::schema_ref_with_values(crate::api::authorization::v1::SelfSubjectRulesReviewSpec::schema(), serde_json::json!({"description": "Spec holds information about the request being evaluated."})),
+            "status": crate::schema_ref_with_values(crate::api::authorization::v1::SubjectRulesReviewStatus::schema(), serde_json::json!({"description": "Status is filled in by the server and indicates the set of actions a user can perform."}))
           },
           "required": [
             "metadata",

@@ -174,6 +174,7 @@ impl crate::Schema for CSIDriverSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             }
           },

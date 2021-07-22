@@ -92,7 +92,7 @@ impl crate::Schema for NodeDaemonEndpoints {
         serde_json::json!({
           "description": "NodeDaemonEndpoints lists ports opened by daemons running on the Node.",
           "properties": {
-            "kubeletEndpoint": crate::schema_ref_with_description(crate::api::core::v1::DaemonEndpoint::schema(), "Endpoint on which Kubelet is listening.")
+            "kubeletEndpoint": crate::schema_ref_with_values(crate::api::core::v1::DaemonEndpoint::schema(), serde_json::json!({"description": "Endpoint on which Kubelet is listening."}))
           },
           "type": "object"
         })

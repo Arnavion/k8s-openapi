@@ -100,7 +100,7 @@ impl crate::Schema for PodsMetricStatus {
         serde_json::json!({
           "description": "PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).",
           "properties": {
-            "currentAverageValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)"),
+            "currentAverageValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)"})),
             "metricName": {
               "description": "metricName is the name of the metric in question",
               "type": "string"

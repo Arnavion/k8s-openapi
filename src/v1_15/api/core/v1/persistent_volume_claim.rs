@@ -843,9 +843,9 @@ impl crate::Schema for PersistentVolumeClaim {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::core::v1::PersistentVolumeClaimSpec::schema(), "Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims"),
-            "status": crate::schema_ref_with_description(crate::api::core::v1::PersistentVolumeClaimStatus::schema(), "Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::core::v1::PersistentVolumeClaimSpec::schema(), serde_json::json!({"description": "Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims"})),
+            "status": crate::schema_ref_with_values(crate::api::core::v1::PersistentVolumeClaimStatus::schema(), serde_json::json!({"description": "Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims"}))
           },
           "required": [
             "metadata"

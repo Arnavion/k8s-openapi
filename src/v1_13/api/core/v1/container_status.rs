@@ -181,7 +181,7 @@ impl crate::Schema for ContainerStatus {
               "description": "ImageID of the container's image.",
               "type": "string"
             },
-            "lastState": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's last termination condition."),
+            "lastState": crate::schema_ref_with_values(crate::api::core::v1::ContainerState::schema(), serde_json::json!({"description": "Details about the container's last termination condition."})),
             "name": {
               "description": "This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.",
               "type": "string"
@@ -195,7 +195,7 @@ impl crate::Schema for ContainerStatus {
               "format": "int32",
               "type": "integer"
             },
-            "state": crate::schema_ref_with_description(crate::api::core::v1::ContainerState::schema(), "Details about the container's current condition.")
+            "state": crate::schema_ref_with_values(crate::api::core::v1::ContainerState::schema(), serde_json::json!({"description": "Details about the container's current condition."}))
           },
           "required": [
             "image",

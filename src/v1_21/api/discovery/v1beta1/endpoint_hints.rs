@@ -95,6 +95,7 @@ impl crate::Schema for EndpointHints {
             "forZones": {
               "description": "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.",
               "items": crate::api::discovery::v1beta1::ForZone::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

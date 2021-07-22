@@ -696,9 +696,9 @@ impl crate::Schema for VolumeAttachment {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"),
-            "spec": crate::schema_ref_with_description(crate::api::storage::v1::VolumeAttachmentSpec::schema(), "Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system."),
-            "status": crate::schema_ref_with_description(crate::api::storage::v1::VolumeAttachmentStatus::schema(), "Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"})),
+            "spec": crate::schema_ref_with_values(crate::api::storage::v1::VolumeAttachmentSpec::schema(), serde_json::json!({"description": "Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system."})),
+            "status": crate::schema_ref_with_values(crate::api::storage::v1::VolumeAttachmentStatus::schema(), serde_json::json!({"description": "Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher."}))
           },
           "required": [
             "metadata",

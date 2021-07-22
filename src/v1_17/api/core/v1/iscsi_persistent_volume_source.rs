@@ -254,7 +254,7 @@ impl crate::Schema for ISCSIPersistentVolumeSource {
               "description": "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.",
               "type": "boolean"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "CHAP Secret for iSCSI target and initiator authentication"),
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "CHAP Secret for iSCSI target and initiator authentication"})),
             "targetPortal": {
               "description": "iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).",
               "type": "string"

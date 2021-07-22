@@ -143,7 +143,7 @@ impl crate::Schema for Condition {
         serde_json::json!({
           "description": "Condition contains details for one aspect of the current state of this API Resource.",
           "properties": {
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable."),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable."})),
             "message": {
               "description": "message is a human readable message indicating details about the transition. This may be an empty string.",
               "type": "string"

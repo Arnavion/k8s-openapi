@@ -106,11 +106,16 @@ impl crate::Schema for CertificateSigningRequestStatus {
             "certificate": {
               "description": "If request was approved, the controller will place the issued certificate here.",
               "format": "byte",
+              "x-kubernetes-list-type": "atomic",
               "type": "string"
             },
             "conditions": {
               "description": "Conditions applied to the request, such as approval or denial.",
               "items": crate::api::certificates::v1beta1::CertificateSigningRequestCondition::schema(),
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map",
               "type": "array"
             }
           },

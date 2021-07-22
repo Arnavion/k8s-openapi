@@ -206,6 +206,8 @@ impl crate::Schema for DaemonSetStatus {
             "conditions": {
               "description": "Represents the latest available observations of a DaemonSet's current state.",
               "items": crate::api::apps::v1beta2::DaemonSetCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "currentNumberScheduled": {

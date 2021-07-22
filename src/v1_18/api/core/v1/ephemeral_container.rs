@@ -393,6 +393,8 @@ impl crate::Schema for EphemeralContainer {
             "env": {
               "description": "List of environment variables to set in the container. Cannot be updated.",
               "items": crate::api::core::v1::EnvVar::schema(),
+              "x-kubernetes-patch-merge-key": "name",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "envFrom": {
@@ -408,8 +410,8 @@ impl crate::Schema for EphemeralContainer {
               "description": "Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images",
               "type": "string"
             },
-            "lifecycle": crate::schema_ref_with_description(crate::api::core::v1::Lifecycle::schema(), "Lifecycle is not allowed for ephemeral containers."),
-            "livenessProbe": crate::schema_ref_with_description(crate::api::core::v1::Probe::schema(), "Probes are not allowed for ephemeral containers."),
+            "lifecycle": crate::schema_ref_with_values(crate::api::core::v1::Lifecycle::schema(), serde_json::json!({"description": "Lifecycle is not allowed for ephemeral containers."})),
+            "livenessProbe": crate::schema_ref_with_values(crate::api::core::v1::Probe::schema(), serde_json::json!({"description": "Probes are not allowed for ephemeral containers."})),
             "name": {
               "description": "Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among all containers, init containers and ephemeral containers.",
               "type": "string"
@@ -419,10 +421,10 @@ impl crate::Schema for EphemeralContainer {
               "items": crate::api::core::v1::ContainerPort::schema(),
               "type": "array"
             },
-            "readinessProbe": crate::schema_ref_with_description(crate::api::core::v1::Probe::schema(), "Probes are not allowed for ephemeral containers."),
-            "resources": crate::schema_ref_with_description(crate::api::core::v1::ResourceRequirements::schema(), "Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod."),
-            "securityContext": crate::schema_ref_with_description(crate::api::core::v1::SecurityContext::schema(), "SecurityContext is not allowed for ephemeral containers."),
-            "startupProbe": crate::schema_ref_with_description(crate::api::core::v1::Probe::schema(), "Probes are not allowed for ephemeral containers."),
+            "readinessProbe": crate::schema_ref_with_values(crate::api::core::v1::Probe::schema(), serde_json::json!({"description": "Probes are not allowed for ephemeral containers."})),
+            "resources": crate::schema_ref_with_values(crate::api::core::v1::ResourceRequirements::schema(), serde_json::json!({"description": "Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod."})),
+            "securityContext": crate::schema_ref_with_values(crate::api::core::v1::SecurityContext::schema(), serde_json::json!({"description": "SecurityContext is not allowed for ephemeral containers."})),
+            "startupProbe": crate::schema_ref_with_values(crate::api::core::v1::Probe::schema(), serde_json::json!({"description": "Probes are not allowed for ephemeral containers."})),
             "stdin": {
               "description": "Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.",
               "type": "boolean"
@@ -450,11 +452,15 @@ impl crate::Schema for EphemeralContainer {
             "volumeDevices": {
               "description": "volumeDevices is the list of block devices to be used by the container.",
               "items": crate::api::core::v1::VolumeDevice::schema(),
+              "x-kubernetes-patch-merge-key": "devicePath",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "volumeMounts": {
               "description": "Pod volumes to mount into the container's filesystem. Cannot be updated.",
               "items": crate::api::core::v1::VolumeMount::schema(),
+              "x-kubernetes-patch-merge-key": "mountPath",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "workingDir": {

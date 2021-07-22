@@ -127,6 +127,7 @@ impl crate::Schema for ServerStorageVersion {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             },
             "encodingVersion": {

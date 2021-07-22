@@ -144,7 +144,7 @@ impl crate::Schema for FlowSchemaCondition {
         serde_json::json!({
           "description": "FlowSchemaCondition describes conditions for a FlowSchema.",
           "properties": {
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "`lastTransitionTime` is the last time the condition transitioned from one status to another."),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "`lastTransitionTime` is the last time the condition transitioned from one status to another."})),
             "message": {
               "description": "`message` is a human-readable message indicating details about last transition.",
               "type": "string"

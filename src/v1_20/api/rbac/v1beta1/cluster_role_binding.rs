@@ -520,8 +520,8 @@ impl crate::Schema for ClusterRoleBinding {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata."),
-            "roleRef": crate::schema_ref_with_description(crate::api::rbac::v1beta1::RoleRef::schema(), "RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error."),
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata."})),
+            "roleRef": crate::schema_ref_with_values(crate::api::rbac::v1beta1::RoleRef::schema(), serde_json::json!({"description": "RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error."})),
             "subjects": {
               "description": "Subjects holds references to the objects the role applies to.",
               "items": crate::api::rbac::v1beta1::Subject::schema(),

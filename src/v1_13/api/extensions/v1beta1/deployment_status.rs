@@ -196,6 +196,8 @@ impl crate::Schema for DeploymentStatus {
             "conditions": {
               "description": "Represents the latest available observations of a deployment's current state.",
               "items": crate::api::extensions::v1beta1::DeploymentCondition::schema(),
+              "x-kubernetes-patch-merge-key": "type",
+              "x-kubernetes-patch-strategy": "merge",
               "type": "array"
             },
             "observedGeneration": {

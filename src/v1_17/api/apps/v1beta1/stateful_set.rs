@@ -846,8 +846,8 @@ impl crate::Schema for StatefulSet {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::apps::v1beta1::StatefulSetSpec::schema(), "Spec defines the desired identities of pods in this set."),
-            "status": crate::schema_ref_with_description(crate::api::apps::v1beta1::StatefulSetStatus::schema(), "Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.")
+            "spec": crate::schema_ref_with_values(crate::api::apps::v1beta1::StatefulSetSpec::schema(), serde_json::json!({"description": "Spec defines the desired identities of pods in this set."})),
+            "status": crate::schema_ref_with_values(crate::api::apps::v1beta1::StatefulSetStatus::schema(), serde_json::json!({"description": "Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time."}))
           },
           "required": [
             "metadata"

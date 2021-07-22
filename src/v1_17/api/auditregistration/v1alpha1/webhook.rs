@@ -103,8 +103,8 @@ impl crate::Schema for Webhook {
         serde_json::json!({
           "description": "Webhook holds the configuration of the webhook",
           "properties": {
-            "clientConfig": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::WebhookClientConfig::schema(), "ClientConfig holds the connection parameters for the webhook required"),
-            "throttle": crate::schema_ref_with_description(crate::api::auditregistration::v1alpha1::WebhookThrottleConfig::schema(), "Throttle holds the options for throttling the webhook")
+            "clientConfig": crate::schema_ref_with_values(crate::api::auditregistration::v1alpha1::WebhookClientConfig::schema(), serde_json::json!({"description": "ClientConfig holds the connection parameters for the webhook required"})),
+            "throttle": crate::schema_ref_with_values(crate::api::auditregistration::v1alpha1::WebhookThrottleConfig::schema(), serde_json::json!({"description": "Throttle holds the options for throttling the webhook"}))
           },
           "required": [
             "clientConfig"

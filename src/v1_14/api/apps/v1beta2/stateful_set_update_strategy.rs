@@ -105,7 +105,7 @@ impl crate::Schema for StatefulSetUpdateStrategy {
         serde_json::json!({
           "description": "StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.",
           "properties": {
-            "rollingUpdate": crate::schema_ref_with_description(crate::api::apps::v1beta2::RollingUpdateStatefulSetStrategy::schema(), "RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType."),
+            "rollingUpdate": crate::schema_ref_with_values(crate::api::apps::v1beta2::RollingUpdateStatefulSetStrategy::schema(), serde_json::json!({"description": "RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType."})),
             "type": {
               "description": "Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.",
               "type": "string"

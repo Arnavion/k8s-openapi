@@ -92,7 +92,7 @@ impl crate::Schema for ServiceStatus {
         serde_json::json!({
           "description": "ServiceStatus represents the current status of a service.",
           "properties": {
-            "loadBalancer": crate::schema_ref_with_description(crate::api::core::v1::LoadBalancerStatus::schema(), "LoadBalancer contains the current status of the load-balancer, if one is present.")
+            "loadBalancer": crate::schema_ref_with_values(crate::api::core::v1::LoadBalancerStatus::schema(), serde_json::json!({"description": "LoadBalancer contains the current status of the load-balancer, if one is present."}))
           },
           "type": "object"
         })

@@ -507,8 +507,8 @@ impl crate::Schema for CSINode {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "metadata.name must be the Kubernetes node name."),
-            "spec": crate::schema_ref_with_description(crate::api::storage::v1::CSINodeSpec::schema(), "spec is the specification of CSINode")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "metadata.name must be the Kubernetes node name."})),
+            "spec": crate::schema_ref_with_values(crate::api::storage::v1::CSINodeSpec::schema(), serde_json::json!({"description": "spec is the specification of CSINode"}))
           },
           "required": [
             "metadata",

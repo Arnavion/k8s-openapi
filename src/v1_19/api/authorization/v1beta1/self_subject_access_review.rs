@@ -207,8 +207,8 @@ impl crate::Schema for SelfSubjectAccessReview {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::authorization::v1beta1::SelfSubjectAccessReviewSpec::schema(), "Spec holds information about the request being evaluated.  user and groups must be empty"),
-            "status": crate::schema_ref_with_description(crate::api::authorization::v1beta1::SubjectAccessReviewStatus::schema(), "Status is filled in by the server and indicates whether the request is allowed or not")
+            "spec": crate::schema_ref_with_values(crate::api::authorization::v1beta1::SelfSubjectAccessReviewSpec::schema(), serde_json::json!({"description": "Spec holds information about the request being evaluated.  user and groups must be empty"})),
+            "status": crate::schema_ref_with_values(crate::api::authorization::v1beta1::SubjectAccessReviewStatus::schema(), serde_json::json!({"description": "Status is filled in by the server and indicates whether the request is allowed or not"}))
           },
           "required": [
             "metadata",

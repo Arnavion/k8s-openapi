@@ -166,7 +166,7 @@ impl crate::Schema for HorizontalPodAutoscalerStatus {
               "format": "int32",
               "type": "integer"
             },
-            "lastScaleTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed."),
+            "lastScaleTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed."})),
             "observedGeneration": {
               "description": "observedGeneration is the most recent generation observed by this autoscaler.",
               "format": "int64",

@@ -216,6 +216,7 @@ impl crate::Schema for CSIDriverSpec {
             "tokenRequests": {
               "description": "TokenRequests indicates the CSI driver needs pods' service account tokens it is mounting volume for to do necessary authentication. Kubelet will pass the tokens in VolumeContext in the CSI NodePublishVolume calls. The CSI driver should parse and validate the following VolumeContext: \"csi.storage.k8s.io/serviceAccount.tokens\": {\n  \"<audience>\": {\n    \"token\": <token>,\n    \"expirationTimestamp\": <expiration timestamp in RFC3339>,\n  },\n  ...\n}\n\nNote: Audience in each TokenRequest should be different and at most one token is empty string. To receive a new token after expiry, RequiresRepublish can be used to trigger NodePublishVolume periodically.\n\nThis is an alpha feature and only available when the CSIServiceAccountToken feature is enabled.",
               "items": crate::api::storage::v1::TokenRequest::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "volumeLifecycleModes": {
@@ -223,6 +224,7 @@ impl crate::Schema for CSIDriverSpec {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "set",
               "type": "array"
             }
           },

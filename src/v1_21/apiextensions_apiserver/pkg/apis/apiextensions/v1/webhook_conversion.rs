@@ -103,7 +103,7 @@ impl crate::Schema for WebhookConversion {
         serde_json::json!({
           "description": "WebhookConversion describes how to call a conversion webhook",
           "properties": {
-            "clientConfig": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig::schema(), "clientConfig is the instructions for how to call the webhook if strategy is `Webhook`."),
+            "clientConfig": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig::schema(), serde_json::json!({"description": "clientConfig is the instructions for how to call the webhook if strategy is `Webhook`."})),
             "conversionReviewVersions": {
               "description": "conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.",
               "items": {

@@ -110,6 +110,7 @@ impl crate::Schema for IngressTLS {
               "items": {
                 "type": "string"
               },
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             },
             "secretName": {

@@ -100,8 +100,8 @@ impl crate::Schema for PodsMetricStatus {
         serde_json::json!({
           "description": "PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).",
           "properties": {
-            "current": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricValueStatus::schema(), "current contains the current value for the given metric"),
-            "metric": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), "metric identifies the target metric by name and selector")
+            "current": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricValueStatus::schema(), serde_json::json!({"description": "current contains the current value for the given metric"})),
+            "metric": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), serde_json::json!({"description": "metric identifies the target metric by name and selector"}))
           },
           "required": [
             "current",

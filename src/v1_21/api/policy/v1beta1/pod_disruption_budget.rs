@@ -831,8 +831,8 @@ impl crate::Schema for PodDisruptionBudget {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::policy::v1beta1::PodDisruptionBudgetSpec::schema(), "Specification of the desired behavior of the PodDisruptionBudget."),
-            "status": crate::schema_ref_with_description(crate::api::policy::v1beta1::PodDisruptionBudgetStatus::schema(), "Most recently observed status of the PodDisruptionBudget.")
+            "spec": crate::schema_ref_with_values(crate::api::policy::v1beta1::PodDisruptionBudgetSpec::schema(), serde_json::json!({"description": "Specification of the desired behavior of the PodDisruptionBudget."})),
+            "status": crate::schema_ref_with_values(crate::api::policy::v1beta1::PodDisruptionBudgetStatus::schema(), serde_json::json!({"description": "Most recently observed status of the PodDisruptionBudget."}))
           },
           "required": [
             "metadata"

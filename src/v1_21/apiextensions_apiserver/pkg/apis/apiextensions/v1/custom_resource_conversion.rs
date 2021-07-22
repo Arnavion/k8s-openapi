@@ -108,7 +108,7 @@ impl crate::Schema for CustomResourceConversion {
               "description": "strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information\n  is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.",
               "type": "string"
             },
-            "webhook": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion::schema(), "webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.")
+            "webhook": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion::schema(), serde_json::json!({"description": "webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`."}))
           },
           "required": [
             "strategy"

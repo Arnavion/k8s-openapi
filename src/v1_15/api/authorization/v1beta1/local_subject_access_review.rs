@@ -214,8 +214,8 @@ impl crate::Schema for LocalSubjectAccessReview {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::authorization::v1beta1::SubjectAccessReviewSpec::schema(), "Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted."),
-            "status": crate::schema_ref_with_description(crate::api::authorization::v1beta1::SubjectAccessReviewStatus::schema(), "Status is filled in by the server and indicates whether the request is allowed or not")
+            "spec": crate::schema_ref_with_values(crate::api::authorization::v1beta1::SubjectAccessReviewSpec::schema(), serde_json::json!({"description": "Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted."})),
+            "status": crate::schema_ref_with_values(crate::api::authorization::v1beta1::SubjectAccessReviewStatus::schema(), serde_json::json!({"description": "Status is filled in by the server and indicates whether the request is allowed or not"}))
           },
           "required": [
             "metadata",

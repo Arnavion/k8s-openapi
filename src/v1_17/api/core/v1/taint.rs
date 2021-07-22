@@ -134,7 +134,7 @@ impl crate::Schema for Taint {
               "description": "Required. The taint key to be applied to a node.",
               "type": "string"
             },
-            "timeAdded": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints."),
+            "timeAdded": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints."})),
             "value": {
               "description": "Required. The taint value corresponding to the taint key.",
               "type": "string"

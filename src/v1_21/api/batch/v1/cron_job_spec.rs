@@ -174,7 +174,7 @@ impl crate::Schema for CronJobSpec {
               "format": "int32",
               "type": "integer"
             },
-            "jobTemplate": crate::schema_ref_with_description(crate::api::batch::v1::JobTemplateSpec::schema(), "Specifies the job that will be created when executing a CronJob."),
+            "jobTemplate": crate::schema_ref_with_values(crate::api::batch::v1::JobTemplateSpec::schema(), serde_json::json!({"description": "Specifies the job that will be created when executing a CronJob."})),
             "schedule": {
               "description": "The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.",
               "type": "string"

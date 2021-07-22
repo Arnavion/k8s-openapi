@@ -123,7 +123,7 @@ impl crate::Schema for EventSeries {
               "format": "int32",
               "type": "integer"
             },
-            "lastObservedTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "Time of the last occurrence observed"),
+            "lastObservedTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "Time of the last occurrence observed"})),
             "state": {
               "description": "State of this Series: Ongoing or Finished Deprecated. Planned removal for 1.18",
               "type": "string"

@@ -105,7 +105,7 @@ impl crate::Schema for NetworkPolicyPort {
         serde_json::json!({
           "description": "NetworkPolicyPort describes a port to allow traffic on",
           "properties": {
-            "port": crate::schema_ref_with_description(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers."),
+            "port": crate::schema_ref_with_values(crate::apimachinery::pkg::util::intstr::IntOrString::schema(), serde_json::json!({"description": "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers."})),
             "protocol": {
               "description": "The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.",
               "type": "string"

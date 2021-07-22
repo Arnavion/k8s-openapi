@@ -152,8 +152,8 @@ impl crate::Schema for NodeCondition {
         serde_json::json!({
           "description": "NodeCondition contains condition information for a node.",
           "properties": {
-            "lastHeartbeatTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time we got an update on a given condition."),
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "Last time the condition transit from one status to another."),
+            "lastHeartbeatTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time we got an update on a given condition."})),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "Last time the condition transit from one status to another."})),
             "message": {
               "description": "Human readable message indicating details about last transition.",
               "type": "string"

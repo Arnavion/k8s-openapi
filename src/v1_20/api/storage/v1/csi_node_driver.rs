@@ -126,7 +126,7 @@ impl crate::Schema for CSINodeDriver {
         serde_json::json!({
           "description": "CSINodeDriver holds information about the specification of one CSI driver installed on a node",
           "properties": {
-            "allocatable": crate::schema_ref_with_description(crate::api::storage::v1::VolumeNodeResources::schema(), "allocatable represents the volume resources of a node that are available for scheduling. This field is beta."),
+            "allocatable": crate::schema_ref_with_values(crate::api::storage::v1::VolumeNodeResources::schema(), serde_json::json!({"description": "allocatable represents the volume resources of a node that are available for scheduling. This field is beta."})),
             "name": {
               "description": "This is the name of the CSI driver that this object refers to. This MUST be the same name returned by the CSI GetPluginName() call for that driver.",
               "type": "string"

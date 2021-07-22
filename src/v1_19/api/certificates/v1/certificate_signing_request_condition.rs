@@ -162,8 +162,8 @@ impl crate::Schema for CertificateSigningRequestCondition {
         serde_json::json!({
           "description": "CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object",
           "properties": {
-            "lastTransitionTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time."),
-            "lastUpdateTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "lastUpdateTime is the time of the last update to this condition"),
+            "lastTransitionTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time."})),
+            "lastUpdateTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "lastUpdateTime is the time of the last update to this condition"})),
             "message": {
               "description": "message contains a human readable message with details about the request state",
               "type": "string"

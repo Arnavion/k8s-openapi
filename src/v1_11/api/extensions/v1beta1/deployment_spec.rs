@@ -218,10 +218,10 @@ impl crate::Schema for DeploymentSpec {
               "format": "int32",
               "type": "integer"
             },
-            "rollbackTo": crate::schema_ref_with_description(crate::api::extensions::v1beta1::RollbackConfig::schema(), "DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback is done."),
-            "selector": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), "Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment."),
-            "strategy": crate::schema_ref_with_description(crate::api::extensions::v1beta1::DeploymentStrategy::schema(), "The deployment strategy to use to replace existing pods with new ones."),
-            "template": crate::schema_ref_with_description(crate::api::core::v1::PodTemplateSpec::schema(), "Template describes the pods that will be created.")
+            "rollbackTo": crate::schema_ref_with_values(crate::api::extensions::v1beta1::RollbackConfig::schema(), serde_json::json!({"description": "DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback is done."})),
+            "selector": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::LabelSelector::schema(), serde_json::json!({"description": "Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment."})),
+            "strategy": crate::schema_ref_with_values(crate::api::extensions::v1beta1::DeploymentStrategy::schema(), serde_json::json!({"description": "The deployment strategy to use to replace existing pods with new ones.", "x-kubernetes-patch-strategy": "retainKeys"})),
+            "template": crate::schema_ref_with_values(crate::api::core::v1::PodTemplateSpec::schema(), serde_json::json!({"description": "Template describes the pods that will be created."}))
           },
           "required": [
             "template"

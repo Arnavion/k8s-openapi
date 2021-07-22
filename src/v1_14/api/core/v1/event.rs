@@ -809,24 +809,24 @@ impl crate::Schema for Event {
               "format": "int32",
               "type": "integer"
             },
-            "eventTime": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), "Time when this Event was first observed."),
-            "firstTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)"),
-            "involvedObject": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "The object that this event is about."),
+            "eventTime": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::MicroTime::schema(), serde_json::json!({"description": "Time when this Event was first observed."})),
+            "firstTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)"})),
+            "involvedObject": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "The object that this event is about."})),
             "kind": {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "lastTimestamp": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), "The time at which the most recent occurrence of this event was recorded."),
+            "lastTimestamp": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::Time::schema(), serde_json::json!({"description": "The time at which the most recent occurrence of this event was recorded."})),
             "message": {
               "description": "A human-readable description of the status of this operation.",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"),
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"})),
             "reason": {
               "description": "This should be a short, machine understandable string that gives the reason for the transition into the object's current status.",
               "type": "string"
             },
-            "related": crate::schema_ref_with_description(crate::api::core::v1::ObjectReference::schema(), "Optional secondary object for more complex actions."),
+            "related": crate::schema_ref_with_values(crate::api::core::v1::ObjectReference::schema(), serde_json::json!({"description": "Optional secondary object for more complex actions."})),
             "reportingComponent": {
               "description": "Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.",
               "type": "string"
@@ -835,8 +835,8 @@ impl crate::Schema for Event {
               "description": "ID of the controller instance, e.g. `kubelet-xyzf`.",
               "type": "string"
             },
-            "series": crate::schema_ref_with_description(crate::api::core::v1::EventSeries::schema(), "Data about the Event series this event represents or nil if it's a singleton Event."),
-            "source": crate::schema_ref_with_description(crate::api::core::v1::EventSource::schema(), "The component reporting this event. Should be a short machine understandable string."),
+            "series": crate::schema_ref_with_values(crate::api::core::v1::EventSeries::schema(), serde_json::json!({"description": "Data about the Event series this event represents or nil if it's a singleton Event."})),
+            "source": crate::schema_ref_with_values(crate::api::core::v1::EventSource::schema(), serde_json::json!({"description": "The component reporting this event. Should be a short machine understandable string."})),
             "type": {
               "description": "Type of this event (Normal, Warning), new types could be added in the future",
               "type": "string"

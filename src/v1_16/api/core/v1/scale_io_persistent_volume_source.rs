@@ -217,7 +217,7 @@ impl crate::Schema for ScaleIOPersistentVolumeSource {
               "description": "Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.",
               "type": "boolean"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretReference::schema(), "SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail."),
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretReference::schema(), serde_json::json!({"description": "SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail."})),
             "sslEnabled": {
               "description": "Flag to enable/disable SSL communication with Gateway, default false",
               "type": "boolean"

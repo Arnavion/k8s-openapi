@@ -750,8 +750,8 @@ impl crate::Schema for CertificateSigningRequest {
               "type": "string"
             },
             "metadata": crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(),
-            "spec": crate::schema_ref_with_description(crate::api::certificates::v1beta1::CertificateSigningRequestSpec::schema(), "The certificate request itself and any additional information."),
-            "status": crate::schema_ref_with_description(crate::api::certificates::v1beta1::CertificateSigningRequestStatus::schema(), "Derived information about the request.")
+            "spec": crate::schema_ref_with_values(crate::api::certificates::v1beta1::CertificateSigningRequestSpec::schema(), serde_json::json!({"description": "The certificate request itself and any additional information."})),
+            "status": crate::schema_ref_with_values(crate::api::certificates::v1beta1::CertificateSigningRequestStatus::schema(), serde_json::json!({"description": "Derived information about the request."}))
           },
           "required": [
             "metadata"

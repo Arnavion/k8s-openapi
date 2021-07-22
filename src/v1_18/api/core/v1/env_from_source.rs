@@ -118,12 +118,12 @@ impl crate::Schema for EnvFromSource {
         serde_json::json!({
           "description": "EnvFromSource represents the source of a set of ConfigMaps",
           "properties": {
-            "configMapRef": crate::schema_ref_with_description(crate::api::core::v1::ConfigMapEnvSource::schema(), "The ConfigMap to select from"),
+            "configMapRef": crate::schema_ref_with_values(crate::api::core::v1::ConfigMapEnvSource::schema(), serde_json::json!({"description": "The ConfigMap to select from"})),
             "prefix": {
               "description": "An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.",
               "type": "string"
             },
-            "secretRef": crate::schema_ref_with_description(crate::api::core::v1::SecretEnvSource::schema(), "The Secret to select from")
+            "secretRef": crate::schema_ref_with_values(crate::api::core::v1::SecretEnvSource::schema(), serde_json::json!({"description": "The Secret to select from"}))
           },
           "type": "object"
         })

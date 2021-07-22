@@ -114,8 +114,8 @@ impl crate::Schema for ObjectMetricSource {
               "description": "metricName is the name of the metric in question.",
               "type": "string"
             },
-            "target": crate::schema_ref_with_description(crate::api::autoscaling::v2beta1::CrossVersionObjectReference::schema(), "target is the described Kubernetes object."),
-            "targetValue": crate::schema_ref_with_description(crate::apimachinery::pkg::api::resource::Quantity::schema(), "targetValue is the target value of the metric (as a quantity).")
+            "target": crate::schema_ref_with_values(crate::api::autoscaling::v2beta1::CrossVersionObjectReference::schema(), serde_json::json!({"description": "target is the described Kubernetes object."})),
+            "targetValue": crate::schema_ref_with_values(crate::apimachinery::pkg::api::resource::Quantity::schema(), serde_json::json!({"description": "targetValue is the target value of the metric (as a quantity)."}))
           },
           "required": [
             "metricName",

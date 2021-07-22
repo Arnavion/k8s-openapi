@@ -92,7 +92,7 @@ impl crate::Schema for CustomResourceValidation {
         serde_json::json!({
           "description": "CustomResourceValidation is a list of validation methods for CustomResources.",
           "properties": {
-            "openAPIV3Schema": crate::schema_ref_with_description(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(), "OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.")
+            "openAPIV3Schema": crate::schema_ref_with_values(crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps::schema(), serde_json::json!({"description": "OpenAPIV3Schema is the OpenAPI v3 schema to be validated against."}))
           },
           "type": "object"
         })

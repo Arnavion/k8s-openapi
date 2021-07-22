@@ -115,6 +115,7 @@ impl crate::Schema for Scheduling {
             "tolerations": {
               "description": "tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.",
               "items": crate::api::core::v1::Toleration::schema(),
+              "x-kubernetes-list-type": "atomic",
               "type": "array"
             }
           },

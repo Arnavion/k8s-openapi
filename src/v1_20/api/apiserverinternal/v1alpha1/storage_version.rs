@@ -704,9 +704,9 @@ impl crate::Schema for StorageVersion {
               "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
               "type": "string"
             },
-            "metadata": crate::schema_ref_with_description(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), "The name is <group>.<resource>."),
-            "spec": crate::schema_ref_with_description(crate::api::apiserverinternal::v1alpha1::StorageVersionSpec::schema(), "Spec is an empty spec. It is here to comply with Kubernetes API style."),
-            "status": crate::schema_ref_with_description(crate::api::apiserverinternal::v1alpha1::StorageVersionStatus::schema(), "API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.")
+            "metadata": crate::schema_ref_with_values(crate::apimachinery::pkg::apis::meta::v1::ObjectMeta::schema(), serde_json::json!({"description": "The name is <group>.<resource>."})),
+            "spec": crate::schema_ref_with_values(crate::api::apiserverinternal::v1alpha1::StorageVersionSpec::schema(), serde_json::json!({"description": "Spec is an empty spec. It is here to comply with Kubernetes API style."})),
+            "status": crate::schema_ref_with_values(crate::api::apiserverinternal::v1alpha1::StorageVersionStatus::schema(), serde_json::json!({"description": "API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend."}))
           },
           "required": [
             "metadata",

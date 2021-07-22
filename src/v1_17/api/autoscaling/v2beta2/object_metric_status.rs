@@ -109,9 +109,9 @@ impl crate::Schema for ObjectMetricStatus {
         serde_json::json!({
           "description": "ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
           "properties": {
-            "current": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricValueStatus::schema(), "current contains the current value for the given metric"),
+            "current": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricValueStatus::schema(), serde_json::json!({"description": "current contains the current value for the given metric"})),
             "describedObject": crate::api::autoscaling::v2beta2::CrossVersionObjectReference::schema(),
-            "metric": crate::schema_ref_with_description(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), "metric identifies the target metric by name and selector")
+            "metric": crate::schema_ref_with_values(crate::api::autoscaling::v2beta2::MetricIdentifier::schema(), serde_json::json!({"description": "metric identifies the target metric by name and selector"}))
           },
           "required": [
             "current",
