@@ -92,6 +92,7 @@ pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Resul
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.DeleteOptional".to_owned()), crate::swagger20::Schema {
 		description: Some("Common parameters for all delete and delete-collection operations.".to_owned()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::DeleteOptional(delete_optional_properties)),
+		kubernetes_extensions: Default::default(),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
 	});
@@ -126,6 +127,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 					path: type_name.to_owned(),
 					can_be_default: None,
 				}),
+				kubernetes_extensions: Default::default(),
 				kubernetes_group_kind_versions: vec![],
 				list_kind: None,
 			},
@@ -187,6 +189,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 		spec.definitions.insert(crate::swagger20::DefinitionPath(type_name.to_string()), crate::swagger20::Schema {
 			description: Some(format!("Common parameters for all {} operations.", description)),
 			kind: crate::swagger20::SchemaKind::Ty(ty(optional_definition)),
+			kubernetes_extensions: Default::default(),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
 		});
@@ -227,6 +230,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 						path: "io.k8s.DeleteOptional".to_owned(),
 						can_be_default: None,
 					}),
+					kubernetes_extensions: Default::default(),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
 				},
@@ -241,6 +245,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 						path: "io.k8s.ListOptional".to_owned(),
 						can_be_default: None,
 					}),
+					kubernetes_extensions: Default::default(),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
 				},
@@ -280,6 +285,7 @@ pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagge
 									path: "io.k8s.DeleteOptional".to_owned(),
 									can_be_default: None,
 								}),
+								kubernetes_extensions: Default::default(),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
 							},
@@ -377,6 +383,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.ListOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all list operations.".to_string()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListOptional(list_optional_definition)),
+		kubernetes_extensions: Default::default(),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
 	});
@@ -384,6 +391,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.WatchOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all watch operations.".to_string()),
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchOptional(watch_optional_definition)),
+		kubernetes_extensions: Default::default(),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
 	});
@@ -398,6 +406,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				path: "io.k8s.ListOptional".to_owned(),
 				can_be_default: None,
 			}),
+			kubernetes_extensions: Default::default(),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
 		},
@@ -413,6 +422,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				path: "io.k8s.WatchOptional".to_owned(),
 				can_be_default: None,
 			}),
+			kubernetes_extensions: Default::default(),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
 		},
@@ -481,6 +491,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 					path: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned(),
 					can_be_default: None,
 				}),
+				kubernetes_extensions: Default::default(),
 				kubernetes_group_kind_versions: vec![],
 				list_kind: None,
 			});
@@ -650,10 +661,12 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 									path: "T".to_owned(),
 									can_be_default: None,
 								}),
+								kubernetes_extensions: Default::default(),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
 							}),
 						}),
+						kubernetes_extensions: Default::default(),
 						kubernetes_group_kind_versions: vec![],
 						list_kind: None,
 					},
@@ -675,6 +688,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 		crate::swagger20::Schema {
 			description: Some("List is a list of resources.".to_owned()),
 			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListDef { metadata: Box::new(metadata_schema_kind) }),
+			kubernetes_extensions: Default::default(),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
 		});
@@ -1120,6 +1134,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 			crate::swagger20::Schema {
 				description: Some(description.to_owned()),
 				kind: crate::swagger20::SchemaKind::Ty(ty),
+				kubernetes_extensions: Default::default(),
 				kubernetes_group_kind_versions: vec![],
 				list_kind: None,
 			});

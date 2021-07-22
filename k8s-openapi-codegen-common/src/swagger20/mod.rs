@@ -32,6 +32,64 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 	}
 }
 
+#[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+// Kubernetes schema extensions.
+pub struct KubernetesExtensions {
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-embedded-resource", skip_serializing_if = "Option::is_none"))]
+	kubernetes_embedded_resource: Option<bool>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-int-or-string", skip_serializing_if = "Option::is_none"))]
+	kubernetes_int_or_string: Option<bool>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-list-map-keys", skip_serializing_if = "Option::is_none"))]
+	kubernetes_list_map_keys: Option<Vec<String>>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-list-type", skip_serializing_if = "Option::is_none"))]
+	kubernetes_list_type: Option<KubernetesListType>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-map-type", skip_serializing_if = "Option::is_none"))]
+	kubernetes_map_type: Option<KubernetesMapType>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-patch-merge-key", skip_serializing_if = "Option::is_none"))]
+	kubernetes_patch_merge_key: Option<String>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-patch-strategy", skip_serializing_if = "Option::is_none"))]
+	kubernetes_patch_strategy: Option<String>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-preserve-unknown-fields", skip_serializing_if = "Option::is_none"))]
+	kubernetes_preserve_unknown_fields: Option<bool>,
+
+	#[cfg_attr(feature = "serde", serde(rename = "x-kubernetes-unions", skip_serializing_if = "Option::is_none"))]
+	kubernetes_unions: Option<Vec<KubernetesUnion>>,
+}
+
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+/// The value of `x-kubernetes-unions` extension.
+pub struct KubernetesUnion {
+	discriminator: String,
+	#[cfg_attr(feature = "serde", serde(rename = "fields-to-discriminateBy"))]
+	fields_to_discriminate_by: std::collections::BTreeMap<String, String>,
+}
+
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize), serde(rename_all = "lowercase"))]
+/// The value of `x-kubernetes-list-type` extension.
+pub enum KubernetesListType {
+	Atomic,
+	Set,
+	Map,
+}
+
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize), serde(rename_all = "lowercase"))]
+/// The value of `x-kubernetes-map-type` extension.
+pub enum KubernetesMapType {
+	Granular,
+	Atomic,
+}
+
 /// The whole `Spec` object. An OpenAPI spec JSON file can be deserialized into this type.
 #[derive(Debug)]
 pub struct Spec {

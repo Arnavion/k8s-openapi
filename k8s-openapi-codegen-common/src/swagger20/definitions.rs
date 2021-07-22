@@ -111,6 +111,7 @@ pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
 	pub kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
+	pub kubernetes_extensions: super::KubernetesExtensions,
 
 	/// Used to store the definition path of the corresponding list type, if any.
 	pub list_kind: Option<String>,
@@ -119,7 +120,7 @@ pub struct Schema {
 #[cfg(feature = "serde")]
 #[derive(Debug, Default, serde::Deserialize, serde::Serialize)]
 struct InnerSchema {
-	// This must be before description to make schema inlining pattern easier.
+	// This must be first to make schema inlining pattern easier.
 	#[serde(rename = "$ref", skip_serializing_if = "Option::is_none")]
 	ref_path: Option<RefPath>,
 
@@ -135,6 +136,9 @@ struct InnerSchema {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	items: Option<Box<Schema>>,
 
+	#[serde(default, flatten)]
+	kubernetes_extensions: super::KubernetesExtensions,
+
 	#[serde(default, rename = "x-kubernetes-group-version-kind", skip_serializing_if = "Vec::is_empty")]
 	kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
 
@@ -147,6 +151,7 @@ struct InnerSchema {
 	#[serde(rename = "type", skip_serializing_if = "Option::is_none")]
 	ty: Option<String>,
 }
+
 
 #[cfg(feature = "serde")]
 #[allow(clippy::use_self)]
@@ -189,6 +194,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			description: value.description,
 			kind,
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
+			kubernetes_extensions: value.kubernetes_extensions,
 			list_kind: None,
 		})
 	}
@@ -203,6 +209,7 @@ impl serde::Serialize for Schema {
 		let mut inner = InnerSchema {
 			description: self.description.clone(),
 			kubernetes_group_kind_versions: self.kubernetes_group_kind_versions.clone(),
+			kubernetes_extensions: self.kubernetes_extensions.clone(),
 			..InnerSchema::default()
 		};
 		match &self.kind {

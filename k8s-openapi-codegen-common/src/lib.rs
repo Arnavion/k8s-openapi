@@ -1018,10 +1018,11 @@ pub fn run(
 			swagger20::Type::JsonSchemaPropsOrBool(_) |
 			swagger20::Type::JsonSchemaPropsOrStringArray(_)
 		) => {
-			// Inline schema and override the description if present.
-			let re = regex::Regex::new(r##"\{\n\s*"\$ref": "#/definitions/([^"]+)"(?:,\n\s*"description": "(.+)")?\n\s*\}"##).unwrap();
+			// Inline schema and override any values.
+			let re_ref = regex::Regex::new(r##"\{\n\s*"\$ref": "#/definitions/([^"]+)"(?:,\n\s*((?s:.)+?))?\n\s*\}"##).unwrap();
+			let re_lf_spaces = regex::Regex::new(r"\n\s*").unwrap();
 			let schema = serde_json::to_string_pretty(&definition)?;
-			let schema = re.replace_all(&schema, |caps: &regex::Captures<'_>| {
+			let schema = re_ref.replace_all(&schema, |caps: &regex::Captures<'_>| {
 				let path = get_fully_qualified_type_name(
 					&swagger20::RefPath {
 						path: caps[1].to_owned(),
@@ -1029,11 +1030,11 @@ pub fn run(
 					},
 					map_namespace
 				);
-				if let Some(description) = caps.get(2) {
+				if let Some(rest) = caps.get(2) {
 					format!(
-						r#"crate::schema_ref_with_description({}::schema(), "{}")"#,
+						"crate::schema_ref_with_values({}::schema(), serde_json::json!({{{}}}))",
 						&path,
-						description.as_str()
+						re_lf_spaces.replace(rest.as_str(), " ")
 					)
 				} else {
 					format!(r#"{}::schema()"#, &path)
