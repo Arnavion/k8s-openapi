@@ -33,9 +33,9 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 1. `/k8s-openapi-codegen/`: Use `cargo run` to regenerate the bindings. Inspect the diff. This combined with the changelog may indicate new fixups that could be backported to older versions.
 
-1. `/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map enties for the new version.
+1. `/test.sh`: Update `K8S_VERSIONS` and `KIND_VERSIONS` map entries for the new version.
 
-1. `/`: Use `./test.sh '...' create-cluster '...'; K8S_RECORD=1 ./test.sh '...' run-tests` to create a cluster and run the tests against it in record mode.
+1. `/`: Use `./test.sh '...' create-node-image '...'; ./test.sh '...' create-cluster '...'; K8S_RECORD=1 ./test.sh '...' run-tests` to create a cluster and run the tests against it in record mode.
 
 1. `/`: Use `./test.sh '...' delete-cluster; ./test.sh '...' run-tests` to delete the cluster and run the tests in replay mode.
 
