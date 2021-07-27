@@ -1,3 +1,6 @@
+[workspace]
+members = ["k8s-openapi-codegen", "k8s-openapi-codegen-common"]
+
 [package]
 name = "k8s-openapi"
 version = "0.12.0"
