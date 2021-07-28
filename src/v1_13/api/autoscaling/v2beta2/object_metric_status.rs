@@ -102,3 +102,58 @@ impl crate::serde::Serialize for ObjectMetricStatus {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for ObjectMetricStatus {
+    fn schema_name() -> String {
+        "io.k8s.api.autoscaling.v2beta2.ObjectMetricStatus".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "current".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2beta2::MetricValueStatus>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("current contains the current value for the given metric".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "describedObject".to_owned(),
+                        __gen.subschema_for::<crate::api::autoscaling::v2beta2::CrossVersionObjectReference>(),
+                    ),
+                    (
+                        "metric".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2beta2::MetricIdentifier>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("metric identifies the target metric by name and selector".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "current",
+                    "describedObject",
+                    "metric",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}
+

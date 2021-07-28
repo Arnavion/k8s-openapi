@@ -29,3 +29,23 @@ impl crate::serde::Serialize for MicroTime {
         serializer.serialize_newtype_struct("MicroTime", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Micros, true))
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for MicroTime {
+    fn schema_name() -> String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("MicroTime is version of Time with microsecond level precision.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+            format: Some("date-time".to_owned()),
+            ..Default::default()
+        })
+    }
+}
+

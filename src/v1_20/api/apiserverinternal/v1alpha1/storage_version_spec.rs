@@ -29,3 +29,21 @@ impl crate::serde::Serialize for StorageVersionSpec {
         serializer.serialize_newtype_struct("StorageVersionSpec", &self.0)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for StorageVersionSpec {
+    fn schema_name() -> String {
+        "io.k8s.api.apiserverinternal.v1alpha1.StorageVersionSpec".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("StorageVersionSpec is an empty spec.".to_owned()),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}
+

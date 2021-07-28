@@ -70,3 +70,23 @@ impl crate::serde::Serialize for IntOrString {
         }
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for IntOrString {
+    fn schema_name() -> String {
+        "io.k8s.apimachinery.pkg.util.intstr.IntOrString".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+            format: Some("int-or-string".to_owned()),
+            ..Default::default()
+        })
+    }
+}
+

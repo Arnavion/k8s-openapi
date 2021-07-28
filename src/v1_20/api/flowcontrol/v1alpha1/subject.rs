@@ -119,3 +119,53 @@ impl crate::serde::Serialize for Subject {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for Subject {
+    fn schema_name() -> String {
+        "io.k8s.api.flowcontrol.v1alpha1.Subject".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "group".to_owned(),
+                        __gen.subschema_for::<crate::api::flowcontrol::v1alpha1::GroupSubject>(),
+                    ),
+                    (
+                        "kind".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Required".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "serviceAccount".to_owned(),
+                        __gen.subschema_for::<crate::api::flowcontrol::v1alpha1::ServiceAccountSubject>(),
+                    ),
+                    (
+                        "user".to_owned(),
+                        __gen.subschema_for::<crate::api::flowcontrol::v1alpha1::UserSubject>(),
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "kind",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}
+
