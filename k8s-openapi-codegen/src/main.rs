@@ -248,6 +248,7 @@ fn run(
 			definition_path,
 			&MapNamespace,
 			"pub ",
+			Some("schemars"),
 			Some("api"),
 			run_state,
 		)?;

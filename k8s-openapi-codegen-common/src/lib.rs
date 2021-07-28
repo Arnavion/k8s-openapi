@@ -175,6 +175,7 @@ pub fn run(
 	definition_path: &swagger20::DefinitionPath,
 	map_namespace: &impl MapNamespace,
 	vis: &str,
+	schema_feature: Option<&str>,
 	operation_feature: Option<&str>,
 	mut state: impl RunState,
 ) -> Result<RunResult, Error> {
@@ -999,6 +1000,53 @@ pub fn run(
 		},
 	}
 
+	if schema_feature.is_some() {
+		match &definition.kind {
+			swagger20::SchemaKind::Properties(_) |
+			swagger20::SchemaKind::Ty(
+				swagger20::Type::Any |
+				swagger20::Type::Array { .. } |
+				swagger20::Type::Boolean |
+				swagger20::Type::Integer { .. } |
+				swagger20::Type::IntOrString |
+				swagger20::Type::Number { .. } |
+				swagger20::Type::Object { .. } |
+				swagger20::Type::String { .. } |
+				swagger20::Type::JsonSchemaPropsOrArray(_) |
+				swagger20::Type::JsonSchemaPropsOrBool(_) |
+				swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+				swagger20::Type::Patch
+			) => {
+				templates::impl_schema::generate(
+					&mut out,
+					type_name,
+					Default::default(),
+					definition_path,
+					definition,
+					schema_feature,
+					map_namespace,
+				)?;
+			} 
+
+			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => {
+				templates::impl_schema::generate(
+					&mut out,
+					type_name,
+					templates::Generics {
+						type_part: Some("T"),
+						where_part: None,
+					},
+					definition_path,
+					definition,
+					schema_feature,
+					map_namespace,
+				)?;
+			}
+
+			_ => (),
+		}
+	}
+
 	state.finish(out);
 
 	Ok(run_result)
@@ -1294,7 +1342,7 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 		})
 }
 
-fn get_fully_qualified_type_name(
+pub(crate) fn get_fully_qualified_type_name(
 	ref_path: &swagger20::RefPath,
 	map_namespace: &impl MapNamespace,
 ) -> String {

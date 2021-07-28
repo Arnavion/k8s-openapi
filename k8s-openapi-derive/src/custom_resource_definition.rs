@@ -664,6 +664,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&MapNamespace,
 				&vis,
 				None,
+				None,
 				&mut run_state,
 			)
 			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
@@ -676,6 +677,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&swagger20::DefinitionPath(cr_list_name),
 				&MapNamespace,
 				&vis,
+				None,
 				None,
 				&mut run_state,
 			)
