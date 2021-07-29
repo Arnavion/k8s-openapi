@@ -445,7 +445,7 @@ pub fn run(
 					}
 				}
 
-				*operations = operations_by_gkv.into_iter().flat_map(|(_, operations)| operations).collect();
+				*operations = operations_by_gkv.into_values().flatten().collect();
 			}
 
 			match &**definition_path {
