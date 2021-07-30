@@ -164,7 +164,7 @@ impl<T> RunState for &'_ mut T where T: RunState {
 ///
 /// - `vis`: The visibility modifier that should be emitted on the generated code.
 ///
-/// - `optional_feature`: If specified, all API functions will be emitted with a `#[cfg(feature = "<this value>")]` attribute.
+/// - `operation_feature`: If specified, all API functions will be emitted with a `#[cfg(feature = "<this value>")]` attribute.
 ///    The attribute will also be applied to their optional parameters and response types, if any, and to common types for
 ///    optional parameters and response types that are shared by multiple operations.
 ///
@@ -175,7 +175,7 @@ pub fn run(
 	definition_path: &swagger20::DefinitionPath,
 	map_namespace: &impl MapNamespace,
 	vis: &str,
-	optional_feature: Option<&str>,
+	operation_feature: Option<&str>,
 	mut state: impl RunState,
 ) -> Result<RunResult, Error> {
 	use std::io::Write;
@@ -211,7 +211,7 @@ pub fn run(
 			swagger20::Type::ReplaceResponse |
 			swagger20::Type::WatchResponse
 		) = &definition.kind {
-			optional_feature
+			operation_feature
 		}
 		else {
 			None
@@ -393,7 +393,7 @@ pub fn run(
 									map_namespace,
 									vis,
 									Some(type_name),
-									optional_feature)?;
+									operation_feature)?;
 							state.handle_operation_types(operation_optional_parameters_name.as_deref(), operation_result_name.as_deref())?;
 							run_result.num_generated_apis += 1;
 
@@ -854,7 +854,7 @@ pub fn run(
 						vis,
 						&template_properties,
 						false,
-						optional_feature,
+						operation_feature,
 						map_namespace,
 					)?,
 
@@ -876,7 +876,7 @@ pub fn run(
 						vis,
 						&template_properties,
 						true,
-						optional_feature,
+						operation_feature,
 						map_namespace,
 					)?,
 
@@ -892,7 +892,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Create,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -904,7 +904,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Delete,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -916,7 +916,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::List,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -928,7 +928,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Patch,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -940,7 +940,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Replace,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -952,7 +952,7 @@ pub fn run(
 				type_name,
 				map_namespace,
 				templates::operation_response_common::OperationAction::Watch,
-				optional_feature,
+				operation_feature,
 			)?;
 
 			run_result.num_generated_structs += 1;
@@ -1547,7 +1547,7 @@ fn get_rust_type(
 ///
 /// - `type_name`: The name of the type that this operation is associated with, if any.
 ///
-/// - `optional_feature`: Specifies whether the API function will be emitted with a `#[cfg(feature = "<this value>")]` attribute or not.
+/// - `operation_feature`: Specifies whether the API function will be emitted with a `#[cfg(feature = "<this value>")]` attribute or not.
 ///
 /// # Returns
 ///
@@ -1561,7 +1561,7 @@ pub fn write_operation(
 	map_namespace: &impl MapNamespace,
 	vis: &str,
 	type_name: Option<&str>,
-	optional_feature: Option<&str>,
+	operation_feature: Option<&str>,
 ) -> Result<(Option<String>, Option<String>), Error> {
 	let local = map_namespace_local_to_string(map_namespace)?;
 
@@ -1749,8 +1749,8 @@ pub fn write_operation(
 		}
 	}
 
-	if let Some(optional_feature) = optional_feature {
-		writeln!(out, r#"{}#[cfg(feature = "{}")]"#, indent, optional_feature)?;
+	if let Some(operation_feature) = operation_feature {
+		writeln!(out, r#"{}#[cfg(feature = "{}")]"#, indent, operation_feature)?;
 	}
 
 	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
@@ -2003,8 +2003,8 @@ pub fn write_operation(
 			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
-		if let Some(optional_feature) = optional_feature {
-			writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
+		if let Some(operation_feature) = operation_feature {
+			writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
 		write!(out, "{}struct {}", vis, operation_optional_parameters_name)?;
@@ -2045,8 +2045,8 @@ pub fn write_operation(
 					operation_result_name, operation_fn_name)?;
 			}
 
-			if let Some(optional_feature) = optional_feature {
-				writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
+			if let Some(operation_feature) = operation_feature {
+				writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
 			}
 			writeln!(out, "#[derive(Debug)]")?;
 			writeln!(out, "{}enum {} {{", vis, operation_result_name)?;
@@ -2085,8 +2085,8 @@ pub fn write_operation(
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 
-			if let Some(optional_feature) = optional_feature {
-				writeln!(out, r#"#[cfg(feature = "{}")]"#, optional_feature)?;
+			if let Some(operation_feature) = operation_feature {
+				writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
 			}
 			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
 			writeln!(out, "    fn try_from_parts(status_code: {local}http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{", local = local)?;
