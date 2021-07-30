@@ -142,3 +142,101 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for CustomResourceDefinitionVersion {
+    fn schema_name() -> String {
+        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionVersion".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("CustomResourceDefinitionVersion describes a version for CRD.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "additionalPrinterColumns".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Top-level and per-version columns are mutually exclusive. Per-version columns must not all be set to identical values (top-level columns should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. NOTE: CRDs created prior to 1.13 populated the top-level additionalPrinterColumns field by default. To apply an update that changes to per-version additionalPrinterColumns, the top-level additionalPrinterColumns field must be explicitly set to null".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "name".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Name is the version name, e.g. “v1”, “v2beta1”, etc.".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "schema".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Schema describes the schema for CustomResource used in validation, pruning, and defaulting. Top-level and per-version schemas are mutually exclusive. Per-version schemas must not all be set to identical values (top-level validation schema should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "served".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Served is a flag enabling/disabling this version from being served via REST APIs".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "storage".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Storage flags the version as storage version. There must be exactly one flagged as storage version.".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "subresources".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Subresources describes the subresources for CustomResource Top-level and per-version subresources are mutually exclusive. Per-version subresources must not all be set to identical values (top-level subresources should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "name",
+                    "served",
+                    "storage",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

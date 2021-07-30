@@ -112,3 +112,66 @@ impl crate::serde::Serialize for APIGroupList {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for APIGroupList {
+    fn schema_name() -> String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroupList".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "apiVersion".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "groups".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("groups is a list of APIGroup.".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::APIGroup>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "kind".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "groups",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

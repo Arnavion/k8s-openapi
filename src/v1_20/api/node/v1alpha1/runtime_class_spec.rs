@@ -109,3 +109,62 @@ impl crate::serde::Serialize for RuntimeClassSpec {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for RuntimeClassSpec {
+    fn schema_name() -> String {
+        "io.k8s.api.node.v1alpha1.RuntimeClassSpec".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("RuntimeClassSpec is a specification of a RuntimeClass. It contains parameters that are required to describe the RuntimeClass to the Container Runtime Interface (CRI) implementation, as well as any other components that need to understand how the pod will be run. The RuntimeClassSpec is immutable.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "overhead".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::node::v1alpha1::Overhead>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.15, and is only honored by servers that enable the PodOverhead feature.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "runtimeHandler".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("RuntimeHandler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called \"runc\" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The RuntimeHandler must be lowercase, conform to the DNS Label (RFC 1123) requirements, and is immutable.".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "scheduling".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::node::v1alpha1::Scheduling>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "runtimeHandler",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

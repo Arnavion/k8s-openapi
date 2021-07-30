@@ -103,3 +103,64 @@ impl crate::serde::Serialize for RoleRef {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for RoleRef {
+    fn schema_name() -> String {
+        "io.k8s.api.rbac.v1.RoleRef".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("RoleRef contains information that points to the role being used".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "apiGroup".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("APIGroup is the group for the resource being referenced".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "kind".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kind is the type of resource being referenced".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "name".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Name is the name of resource being referenced".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "apiGroup",
+                    "kind",
+                    "name",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

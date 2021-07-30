@@ -85,3 +85,41 @@ impl crate::serde::Serialize for TopologySelectorTerm {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for TopologySelectorTerm {
+    fn schema_name() -> String {
+        "io.k8s.api.core.v1.TopologySelectorTerm".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "matchLabelExpressions".to_owned(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("A list of topology selector requirements by labels.".to_owned()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::TopologySelectorLabelRequirement>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                ]).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

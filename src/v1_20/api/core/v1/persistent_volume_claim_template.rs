@@ -96,3 +96,51 @@ impl crate::serde::Serialize for PersistentVolumeClaimTemplate {
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for PersistentVolumeClaimTemplate {
+    fn schema_name() -> String {
+        "io.k8s.api.core.v1.PersistentVolumeClaimTemplate".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+                properties: std::array::IntoIter::new([
+                    (
+                        "metadata".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "spec".to_owned(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PersistentVolumeClaimSpec>().into_object();
+                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.".to_owned()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ]).collect(),
+                required: std::array::IntoIter::new([
+                    "spec",
+                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

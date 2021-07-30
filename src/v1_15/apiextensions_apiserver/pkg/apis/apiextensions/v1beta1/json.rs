@@ -29,3 +29,20 @@ impl crate::serde::Serialize for JSON {
         serializer.serialize_newtype_struct("JSON", &self.0)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for JSON {
+    fn schema_name() -> String {
+        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.".to_owned()),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

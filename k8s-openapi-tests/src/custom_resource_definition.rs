@@ -1,4 +1,4 @@
-use k8s_openapi::{http, serde_json};
+use k8s_openapi::{http, schemars, serde_json};
 
 // CRD support based on the spec:
 //
@@ -30,12 +30,14 @@ fn test() {
 	#[derive(
 		Clone, Debug, PartialEq,
 		k8s_openapi_derive::CustomResourceDefinition,
+		schemars::JsonSchema,
 		serde_derive::Deserialize, serde_derive::Serialize,
 	)]
 	#[custom_resource_definition(
 		group = "k8s-openapi-tests-custom-resource-definition.com",
 		version = "v1",
 		plural = "foobars",
+		generate_schema,
 		namespaced,
 	)]
 	#[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]

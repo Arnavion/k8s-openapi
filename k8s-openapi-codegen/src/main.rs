@@ -248,6 +248,7 @@ fn run(
 			definition_path,
 			&MapNamespace,
 			"pub ",
+			k8s_openapi_codegen_common::GenerateSchema::Yes { feature: Some("schemars") },
 			Some("api"),
 			run_state,
 		)?;

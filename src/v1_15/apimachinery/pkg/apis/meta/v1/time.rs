@@ -29,3 +29,22 @@ impl crate::serde::Serialize for Time {
         serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for Time {
+    fn schema_name() -> String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.Time".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.".to_owned()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+            format: Some("date-time".to_owned()),
+            ..Default::default()
+        })
+    }
+}

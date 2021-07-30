@@ -11,6 +11,7 @@ pub(super) struct CustomResourceDefinition {
 	group: String,
 	version: String,
 	plural: String,
+	generate_schema: bool,
 	namespaced: bool,
 	has_subresources: Option<String>,
 }
@@ -25,6 +26,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let mut version = None;
 		let mut has_subresources = None;
 
+		let mut generate_schema = false;
 		let mut namespaced = false;
 
 		for attr in &input.attrs {
@@ -81,7 +83,11 @@ impl super::CustomDerive for CustomResourceDefinition {
 						},
 
 					syn::NestedMeta::Meta(syn::Meta::Path(path)) =>
-						if path.is_ident("namespaced") {
+						if path.is_ident("generate_schema") {
+							generate_schema = true;
+							continue;
+						}
+						else if path.is_ident("namespaced") {
 							namespaced = true;
 							continue;
 						}
@@ -121,13 +127,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 			group,
 			version,
 			plural,
+			generate_schema,
 			namespaced,
 			has_subresources,
 		})
 	}
 
 	fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error> {
-		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, namespaced, has_subresources } = self;
+		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, generate_schema, namespaced, has_subresources } = self;
 
 		let vis: std::borrow::Cow<'_, str> = match vis {
 			syn::Visibility::Inherited => "".into(),
@@ -663,6 +670,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&swagger20::DefinitionPath(cr_name),
 				&MapNamespace,
 				&vis,
+				if generate_schema { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },
 				None,
 				&mut run_state,
 			)
@@ -676,6 +684,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&swagger20::DefinitionPath(cr_list_name),
 				&MapNamespace,
 				&vis,
+				if generate_schema { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },
 				None,
 				&mut run_state,
 			)

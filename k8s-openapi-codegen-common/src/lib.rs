@@ -149,6 +149,17 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 }
 
+/// Whether [`run`] should generate an impl of [`schemars::JsonSchema`] for the type or not.
+#[derive(Clone, Copy, Debug)]
+pub enum GenerateSchema<'a> {
+	Yes {
+		/// An optional feature that the impl of [`schemars::JsonSchema`] will be `cfg`-gated by.
+		feature: Option<&'a str>,
+	},
+
+	No,
+}
+
 /// Each invocation of this function generates a single type specified by the `definition_path` parameter along with its associated API operation functions.
 ///
 /// # Parameters
@@ -175,6 +186,7 @@ pub fn run(
 	definition_path: &swagger20::DefinitionPath,
 	map_namespace: &impl MapNamespace,
 	vis: &str,
+	generate_schema: GenerateSchema<'_>,
 	operation_feature: Option<&str>,
 	mut state: impl RunState,
 ) -> Result<RunResult, Error> {
@@ -997,6 +1009,53 @@ pub fn run(
 
 			run_result.num_generated_type_aliases += 1;
 		},
+	}
+
+	if let GenerateSchema::Yes { feature: schema_feature } = generate_schema {
+		match &definition.kind {
+			swagger20::SchemaKind::Properties(_) |
+			swagger20::SchemaKind::Ty(
+				swagger20::Type::Any |
+				swagger20::Type::Array { .. } |
+				swagger20::Type::Boolean |
+				swagger20::Type::Integer { .. } |
+				swagger20::Type::IntOrString |
+				swagger20::Type::Number { .. } |
+				swagger20::Type::Object { .. } |
+				swagger20::Type::String { .. } |
+				swagger20::Type::JsonSchemaPropsOrArray(_) |
+				swagger20::Type::JsonSchemaPropsOrBool(_) |
+				swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+				swagger20::Type::Patch
+			) => {
+				templates::impl_schema::generate(
+					&mut out,
+					type_name,
+					Default::default(),
+					definition_path,
+					definition,
+					schema_feature,
+					map_namespace,
+				)?;
+			} 
+
+			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => {
+				templates::impl_schema::generate(
+					&mut out,
+					type_name,
+					templates::Generics {
+						type_part: Some("T"),
+						where_part: None,
+					},
+					definition_path,
+					definition,
+					schema_feature,
+					map_namespace,
+				)?;
+			}
+
+			_ => (),
+		}
 	}
 
 	state.finish(out);

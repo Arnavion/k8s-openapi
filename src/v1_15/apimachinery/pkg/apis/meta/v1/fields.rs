@@ -29,3 +29,20 @@ impl crate::serde::Serialize for Fields {
         serializer.serialize_newtype_struct("Fields", &self.0)
     }
 }
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for Fields {
+    fn schema_name() -> String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.Fields".to_owned()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(Box::new(crate::schemars::schema::Metadata {
+                description: Some("Fields stores a set of fields in a data structure like a Trie. To understand how this is used, see: https://github.com/kubernetes-sigs/structured-merge-diff".to_owned()),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

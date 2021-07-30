@@ -463,6 +463,8 @@ pub use chrono;
 pub use http;
 #[cfg(feature = "api")]
 pub use percent_encoding;
+#[cfg(feature = "schemars")]
+pub use schemars;
 pub use serde;
 pub use serde_json;
 pub use serde_value;

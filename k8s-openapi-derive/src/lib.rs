@@ -49,6 +49,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     group = "k8s-openapi-tests-custom-resource-definition.com",
 ///     version = "v1",
 ///     plural = "foobars",
+///     generate_schema,
 ///     namespaced,
 ///     has_subresources = "v1",
 /// )]
@@ -93,6 +94,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// impl<'de> k8s_openapi::serde::Deserialize<'de> for FooBar { ... }
 ///
 /// impl k8s_openapi::serde::Serialize for FooBar { ... }
+///
+/// impl k8s_openapi::schemars::JsonSchema for FooBar { ... }
 /// ```
 ///
 /// The name of this type is automatically derived from the name of the spec type by truncating the `Spec` suffix.
@@ -100,6 +103,10 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// The `group` and `version` meta items of the `#[custom_resource_definition]` attribute of the macro are used to set
 /// the "group" and "API version" in the `k8s_openapi::Resource` impl respectively. The "kind" is automatically set to be the same as the resource type name,
 /// ie `"FooBar"` in this example. The `plural` meta item is used to construct the URLs of API operations for this custom resource.
+///
+/// The `generate_schema` meta item is optional. If set, the generated custom resource type will have an impl of `schemars::JsonSchema` from the `schemars` crate.
+/// The `schemars` feature of the `k8s-openapi` crate must be enabled so that the types in that crate also have their `schemars::JsonSchema` impls enabled.
+/// You will also need to impl `schemars::JsonSchema` on the `Spec` type itself, either manually or via `#[derive(schemars::JsonSchema)]`.
 ///
 /// The `has_subresources` meta item is optional. If set, the generated custom resource type will have a `subresources` field. The value of the meta item
 /// specifies which namespace the type will be used from. For example, setting `has_subresources = "v1"` causes the field to be of the
