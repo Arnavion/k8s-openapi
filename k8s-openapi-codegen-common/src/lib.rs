@@ -145,7 +145,7 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 
 	fn finish(&mut self, writer: Self::Writer) {
-		(*self).finish(writer)
+		(*self).finish(writer);
 	}
 }
 
@@ -271,7 +271,7 @@ pub fn run(
 						}
 					}
 
-					let field_name = get_rust_ident(&name);
+					let field_name = get_rust_ident(name);
 
 					let mut field_type_name = String::new();
 
@@ -1260,7 +1260,7 @@ fn evaluate_trait_bound(
 						)
 					}
 					else {
-						f(&kind, required)
+						f(kind, required)
 					};
 				trait_bound
 			},
@@ -1299,7 +1299,7 @@ fn evaluate_trait_bound(
 					return Ok(false);
 				}
 
-				f(&kind, required)
+				f(kind, required)
 			},
 
 			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(raw_extension_ref_path)) => {
@@ -1317,7 +1317,7 @@ fn evaluate_trait_bound(
 					return Ok(false);
 				}
 
-				f(&kind, required)
+				f(kind, required)
 			},
 
 			kind => f(kind, required),
@@ -1365,7 +1365,7 @@ fn get_fully_qualified_type_name(
 			result.push_str(&*get_rust_ident(namespace_part));
 			result.push_str("::");
 		}
-		result.push_str(&path_parts[path_parts.len() - 1]);
+		result.push_str(path_parts[path_parts.len() - 1]);
 		result
 	}
 	else {

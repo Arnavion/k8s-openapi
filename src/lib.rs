@@ -7,6 +7,7 @@
     clippy::large_enum_variant,
     clippy::match_single_binding,
     clippy::missing_errors_doc,
+    clippy::module_name_repetitions,
     clippy::must_use_candidate,
     clippy::single_match_else,
     clippy::too_many_lines,
