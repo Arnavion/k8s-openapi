@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HostAlias {
     /// Hostnames for the above IP address.
-    pub hostnames: Vec<String>,
+    pub hostnames: Option<Vec<String>>,
 
     /// IP address of the host file entry.
     pub ip: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for HostAlias {
                 }
 
                 Ok(HostAlias {
-                    hostnames: value_hostnames.unwrap_or_default(),
+                    hostnames: value_hostnames,
                     ip: value_ip,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for HostAlias {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HostAlias",
-            usize::from(!self.hostnames.is_empty()) +
+            self.hostnames.as_ref().map_or(0, |_| 1) +
             self.ip.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.hostnames.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", &self.hostnames)?;
+        if let Some(value) = &self.hostnames {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", value)?;
         }
         if let Some(value) = &self.ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;

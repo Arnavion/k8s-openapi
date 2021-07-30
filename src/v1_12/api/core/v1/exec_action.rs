@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExecAction {
     /// Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
-    pub command: Vec<String>,
+    pub command: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ExecAction {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for ExecAction {
                 }
 
                 Ok(ExecAction {
-                    command: value_command.unwrap_or_default(),
+                    command: value_command,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for ExecAction {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExecAction",
-            usize::from(!self.command.is_empty()),
+            self.command.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.command.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "command", &self.command)?;
+        if let Some(value) = &self.command {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

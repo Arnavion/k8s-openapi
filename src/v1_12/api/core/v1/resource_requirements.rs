@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceRequirements {
     /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-    pub limits: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub limits: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-    pub requests: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub requests: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceRequirements {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceRequirements {
                 }
 
                 Ok(ResourceRequirements {
-                    limits: value_limits.unwrap_or_default(),
-                    requests: value_requests.unwrap_or_default(),
+                    limits: value_limits,
+                    requests: value_requests,
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for ResourceRequirements {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceRequirements",
-            usize::from(!self.limits.is_empty()) +
-            usize::from(!self.requests.is_empty()),
+            self.limits.as_ref().map_or(0, |_| 1) +
+            self.requests.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.limits.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "limits", &self.limits)?;
+        if let Some(value) = &self.limits {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "limits", value)?;
         }
-        if !self.requests.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "requests", &self.requests)?;
+        if let Some(value) = &self.requests {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "requests", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

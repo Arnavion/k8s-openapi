@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceConversion {
     /// conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Defaults to `\["v1beta1"\]`.
-    pub conversion_review_versions: Vec<String>,
+    pub conversion_review_versions: Option<Vec<String>>,
 
     /// strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
     ///   is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhookClientConfig to be set.
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
                 }
 
                 Ok(CustomResourceConversion {
-                    conversion_review_versions: value_conversion_review_versions.unwrap_or_default(),
+                    conversion_review_versions: value_conversion_review_versions,
                     strategy: value_strategy.ok_or_else(|| crate::serde::de::Error::missing_field("strategy"))?,
                     webhook_client_config: value_webhook_client_config,
                 })
@@ -97,11 +97,11 @@ impl crate::serde::Serialize for CustomResourceConversion {
         let mut state = serializer.serialize_struct(
             "CustomResourceConversion",
             1 +
-            usize::from(!self.conversion_review_versions.is_empty()) +
+            self.conversion_review_versions.as_ref().map_or(0, |_| 1) +
             self.webhook_client_config.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.conversion_review_versions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", &self.conversion_review_versions)?;
+        if let Some(value) = &self.conversion_review_versions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conversionReviewVersions", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", &self.strategy)?;
         if let Some(value) = &self.webhook_client_config {

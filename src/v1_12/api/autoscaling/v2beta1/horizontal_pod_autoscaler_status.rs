@@ -7,7 +7,7 @@ pub struct HorizontalPodAutoscalerStatus {
     pub conditions: Vec<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition>,
 
     /// currentMetrics is the last read state of the metrics used by this autoscaler.
-    pub current_metrics: Vec<crate::api::autoscaling::v2beta1::MetricStatus>,
+    pub current_metrics: Option<Vec<crate::api::autoscaling::v2beta1::MetricStatus>>,
 
     /// currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
     pub current_replicas: i32,
@@ -94,7 +94,7 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
 
                 Ok(HorizontalPodAutoscalerStatus {
                     conditions: value_conditions.ok_or_else(|| crate::serde::de::Error::missing_field("conditions"))?,
-                    current_metrics: value_current_metrics.unwrap_or_default(),
+                    current_metrics: value_current_metrics,
                     current_replicas: value_current_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("currentReplicas"))?,
                     desired_replicas: value_desired_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("desiredReplicas"))?,
                     last_scale_time: value_last_scale_time,
@@ -123,13 +123,13 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerStatus {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerStatus",
             3 +
-            usize::from(!self.current_metrics.is_empty()) +
+            self.current_metrics.as_ref().map_or(0, |_| 1) +
             self.last_scale_time.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
-        if !self.current_metrics.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentMetrics", &self.current_metrics)?;
+        if let Some(value) = &self.current_metrics {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentMetrics", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", &self.current_replicas)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "desiredReplicas", &self.desired_replicas)?;

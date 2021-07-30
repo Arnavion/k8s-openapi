@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Overhead {
     /// PodFixed represents the fixed resource overhead associated with running a pod.
-    pub pod_fixed: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub pod_fixed: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Overhead {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for Overhead {
                 }
 
                 Ok(Overhead {
-                    pod_fixed: value_pod_fixed.unwrap_or_default(),
+                    pod_fixed: value_pod_fixed,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for Overhead {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Overhead",
-            usize::from(!self.pod_fixed.is_empty()),
+            self.pod_fixed.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.pod_fixed.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podFixed", &self.pod_fixed)?;
+        if let Some(value) = &self.pod_fixed {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podFixed", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

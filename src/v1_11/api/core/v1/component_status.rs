@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ComponentStatus {
     /// List of component conditions observed
-    pub conditions: Vec<crate::api::core::v1::ComponentCondition>,
+    pub conditions: Option<Vec<crate::api::core::v1::ComponentCondition>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
@@ -262,7 +262,7 @@ impl<'de> crate::serde::Deserialize<'de> for ComponentStatus {
                 }
 
                 Ok(ComponentStatus {
-                    conditions: value_conditions.unwrap_or_default(),
+                    conditions: value_conditions,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                 })
             }
@@ -286,12 +286,12 @@ impl crate::serde::Serialize for ComponentStatus {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.conditions.is_empty()),
+            self.conditions.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         crate::serde::ser::SerializeStruct::end(state)

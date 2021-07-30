@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimSpec {
     /// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-    pub access_modes: Vec<String>,
+    pub access_modes: Option<Vec<String>>,
 
     /// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
     pub data_source: Option<crate::api::core::v1::TypedLocalObjectReference>,
@@ -100,7 +100,7 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
                 }
 
                 Ok(PersistentVolumeClaimSpec {
-                    access_modes: value_access_modes.unwrap_or_default(),
+                    access_modes: value_access_modes,
                     data_source: value_data_source,
                     resources: value_resources,
                     selector: value_selector,
@@ -131,7 +131,7 @@ impl crate::serde::Serialize for PersistentVolumeClaimSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimSpec",
-            usize::from(!self.access_modes.is_empty()) +
+            self.access_modes.as_ref().map_or(0, |_| 1) +
             self.data_source.as_ref().map_or(0, |_| 1) +
             self.resources.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
@@ -139,8 +139,8 @@ impl crate::serde::Serialize for PersistentVolumeClaimSpec {
             self.volume_mode.as_ref().map_or(0, |_| 1) +
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.access_modes.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", &self.access_modes)?;
+        if let Some(value) = &self.access_modes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
         }
         if let Some(value) = &self.data_source {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dataSource", value)?;

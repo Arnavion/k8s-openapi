@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NamespaceStatus {
     /// Represents the latest available observations of a namespace's current state.
-    pub conditions: Vec<crate::api::core::v1::NamespaceCondition>,
+    pub conditions: Option<Vec<crate::api::core::v1::NamespaceCondition>>,
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub phase: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for NamespaceStatus {
                 }
 
                 Ok(NamespaceStatus {
-                    conditions: value_conditions.unwrap_or_default(),
+                    conditions: value_conditions,
                     phase: value_phase,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for NamespaceStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NamespaceStatus",
-            usize::from(!self.conditions.is_empty()) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
             self.phase.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.phase {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;

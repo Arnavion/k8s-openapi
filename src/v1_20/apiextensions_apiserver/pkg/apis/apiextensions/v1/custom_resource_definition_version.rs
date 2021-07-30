@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionVersion {
     /// additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.
-    pub additional_printer_columns: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>,
+    pub additional_printer_columns: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceColumnDefinition>>,
 
     /// deprecated indicates this version of the custom resource API is deprecated. When set to true, API requests to this version receive a warning header in the server response. Defaults to false.
     pub deprecated: Option<bool>,
@@ -107,7 +107,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionVersion {
                 }
 
                 Ok(CustomResourceDefinitionVersion {
-                    additional_printer_columns: value_additional_printer_columns.unwrap_or_default(),
+                    additional_printer_columns: value_additional_printer_columns,
                     deprecated: value_deprecated,
                     deprecation_warning: value_deprecation_warning,
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
@@ -141,14 +141,14 @@ impl crate::serde::Serialize for CustomResourceDefinitionVersion {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionVersion",
             3 +
-            usize::from(!self.additional_printer_columns.is_empty()) +
+            self.additional_printer_columns.as_ref().map_or(0, |_| 1) +
             self.deprecated.as_ref().map_or(0, |_| 1) +
             self.deprecation_warning.as_ref().map_or(0, |_| 1) +
             self.schema.as_ref().map_or(0, |_| 1) +
             self.subresources.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.additional_printer_columns.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", &self.additional_printer_columns)?;
+        if let Some(value) = &self.additional_printer_columns {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", value)?;
         }
         if let Some(value) = &self.deprecated {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecated", value)?;

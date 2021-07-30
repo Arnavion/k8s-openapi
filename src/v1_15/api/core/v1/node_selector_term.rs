@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSelectorTerm {
     /// A list of node selector requirements by node's labels.
-    pub match_expressions: Vec<crate::api::core::v1::NodeSelectorRequirement>,
+    pub match_expressions: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
 
     /// A list of node selector requirements by node's fields.
-    pub match_fields: Vec<crate::api::core::v1::NodeSelectorRequirement>,
+    pub match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorTerm {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSelectorTerm {
                 }
 
                 Ok(NodeSelectorTerm {
-                    match_expressions: value_match_expressions.unwrap_or_default(),
-                    match_fields: value_match_fields.unwrap_or_default(),
+                    match_expressions: value_match_expressions,
+                    match_fields: value_match_fields,
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for NodeSelectorTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeSelectorTerm",
-            usize::from(!self.match_expressions.is_empty()) +
-            usize::from(!self.match_fields.is_empty()),
+            self.match_expressions.as_ref().map_or(0, |_| 1) +
+            self.match_fields.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.match_expressions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", &self.match_expressions)?;
+        if let Some(value) = &self.match_expressions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;
         }
-        if !self.match_fields.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchFields", &self.match_fields)?;
+        if let Some(value) = &self.match_fields {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchFields", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

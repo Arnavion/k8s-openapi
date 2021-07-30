@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ConfigMap {
     /// BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet.
-    pub binary_data: std::collections::BTreeMap<String, crate::ByteString>,
+    pub binary_data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
 
     /// Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process.
-    pub data: std::collections::BTreeMap<String, String>,
+    pub data: Option<std::collections::BTreeMap<String, String>>,
 
     /// Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil.
     pub immutable: Option<bool>,
@@ -583,8 +583,8 @@ impl<'de> crate::serde::Deserialize<'de> for ConfigMap {
                 }
 
                 Ok(ConfigMap {
-                    binary_data: value_binary_data.unwrap_or_default(),
-                    data: value_data.unwrap_or_default(),
+                    binary_data: value_binary_data,
+                    data: value_data,
                     immutable: value_immutable,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                 })
@@ -611,17 +611,17 @@ impl crate::serde::Serialize for ConfigMap {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.binary_data.is_empty()) +
-            usize::from(!self.data.is_empty()) +
+            self.binary_data.as_ref().map_or(0, |_| 1) +
+            self.data.as_ref().map_or(0, |_| 1) +
             self.immutable.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if !self.binary_data.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "binaryData", &self.binary_data)?;
+        if let Some(value) = &self.binary_data {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "binaryData", value)?;
         }
-        if !self.data.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", &self.data)?;
+        if let Some(value) = &self.data {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
         }
         if let Some(value) = &self.immutable {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "immutable", value)?;

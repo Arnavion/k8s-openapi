@@ -7,7 +7,7 @@ pub struct Role {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Rules holds all the PolicyRules for this Role
-    pub rules: Vec<crate::api::rbac::v1::PolicyRule>,
+    pub rules: Option<Vec<crate::api::rbac::v1::PolicyRule>>,
 }
 
 // Begin rbac.authorization.k8s.io/v1/Role
@@ -570,7 +570,7 @@ impl<'de> crate::serde::Deserialize<'de> for Role {
 
                 Ok(Role {
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    rules: value_rules.unwrap_or_default(),
+                    rules: value_rules,
                 })
             }
         }
@@ -593,13 +593,13 @@ impl crate::serde::Serialize for Role {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.rules.is_empty()),
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if !self.rules.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
+        if let Some(value) = &self.rules {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -7,7 +7,7 @@ pub struct ReplicationControllerStatus {
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replication controller's current state.
-    pub conditions: Vec<crate::api::core::v1::ReplicationControllerCondition>,
+    pub conditions: Option<Vec<crate::api::core::v1::ReplicationControllerCondition>>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replication controller.
     pub fully_labeled_replicas: Option<i32>,
@@ -94,7 +94,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerStatus {
 
                 Ok(ReplicationControllerStatus {
                     available_replicas: value_available_replicas,
-                    conditions: value_conditions.unwrap_or_default(),
+                    conditions: value_conditions,
                     fully_labeled_replicas: value_fully_labeled_replicas,
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
@@ -124,7 +124,7 @@ impl crate::serde::Serialize for ReplicationControllerStatus {
             "ReplicationControllerStatus",
             1 +
             self.available_replicas.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.conditions.is_empty()) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
             self.fully_labeled_replicas.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
             self.ready_replicas.as_ref().map_or(0, |_| 1),
@@ -132,8 +132,8 @@ impl crate::serde::Serialize for ReplicationControllerStatus {
         if let Some(value) = &self.available_replicas {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
         }
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.fully_labeled_replicas {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fullyLabeledReplicas", value)?;

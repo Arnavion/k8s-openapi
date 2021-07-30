@@ -7,10 +7,10 @@ pub struct CustomResourceDefinitionStatus {
     pub accepted_names: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames>,
 
     /// conditions indicate state for particular aspects of a CustomResourceDefinition
-    pub conditions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionCondition>,
+    pub conditions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionCondition>>,
 
     /// storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.
-    pub stored_versions: Vec<String>,
+    pub stored_versions: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
@@ -73,8 +73,8 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
 
                 Ok(CustomResourceDefinitionStatus {
                     accepted_names: value_accepted_names,
-                    conditions: value_conditions.unwrap_or_default(),
-                    stored_versions: value_stored_versions.unwrap_or_default(),
+                    conditions: value_conditions,
+                    stored_versions: value_stored_versions,
                 })
             }
         }
@@ -96,17 +96,17 @@ impl crate::serde::Serialize for CustomResourceDefinitionStatus {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionStatus",
             self.accepted_names.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.conditions.is_empty()) +
-            usize::from(!self.stored_versions.is_empty()),
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.stored_versions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.accepted_names {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "acceptedNames", value)?;
         }
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
-        if !self.stored_versions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storedVersions", &self.stored_versions)?;
+        if let Some(value) = &self.stored_versions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storedVersions", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

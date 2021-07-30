@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct UserInfo {
     /// Any additional information provided by the authenticator.
-    pub extra: std::collections::BTreeMap<String, Vec<String>>,
+    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
 
     /// The names of groups this user is a part of.
-    pub groups: Vec<String>,
+    pub groups: Option<Vec<String>>,
 
     /// A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.
     pub uid: Option<String>,
@@ -79,8 +79,8 @@ impl<'de> crate::serde::Deserialize<'de> for UserInfo {
                 }
 
                 Ok(UserInfo {
-                    extra: value_extra.unwrap_or_default(),
-                    groups: value_groups.unwrap_or_default(),
+                    extra: value_extra,
+                    groups: value_groups,
                     uid: value_uid,
                     username: value_username,
                 })
@@ -104,16 +104,16 @@ impl crate::serde::Serialize for UserInfo {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "UserInfo",
-            usize::from(!self.extra.is_empty()) +
-            usize::from(!self.groups.is_empty()) +
+            self.extra.as_ref().map_or(0, |_| 1) +
+            self.groups.as_ref().map_or(0, |_| 1) +
             self.uid.as_ref().map_or(0, |_| 1) +
             self.username.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.extra.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", &self.extra)?;
+        if let Some(value) = &self.extra {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
         }
-        if !self.groups.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", &self.groups)?;
+        if let Some(value) = &self.groups {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
         }
         if let Some(value) = &self.uid {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;

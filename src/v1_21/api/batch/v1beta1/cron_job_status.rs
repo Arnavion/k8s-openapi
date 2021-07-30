@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CronJobStatus {
     /// A list of pointers to currently running jobs.
-    pub active: Vec<crate::api::core::v1::ObjectReference>,
+    pub active: Option<Vec<crate::api::core::v1::ObjectReference>>,
 
     /// Information when was the last time the job was successfully scheduled.
     pub last_schedule_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for CronJobStatus {
                 }
 
                 Ok(CronJobStatus {
-                    active: value_active.unwrap_or_default(),
+                    active: value_active,
                     last_schedule_time: value_last_schedule_time,
                     last_successful_time: value_last_successful_time,
                 })
@@ -95,12 +95,12 @@ impl crate::serde::Serialize for CronJobStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CronJobStatus",
-            usize::from(!self.active.is_empty()) +
+            self.active.as_ref().map_or(0, |_| 1) +
             self.last_schedule_time.as_ref().map_or(0, |_| 1) +
             self.last_successful_time.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.active.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "active", &self.active)?;
+        if let Some(value) = &self.active {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;
         }
         if let Some(value) = &self.last_schedule_time {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "lastScheduleTime", value)?;

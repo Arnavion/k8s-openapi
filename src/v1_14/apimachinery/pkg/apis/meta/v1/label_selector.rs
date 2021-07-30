@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LabelSelector {
     /// matchExpressions is a list of label selector requirements. The requirements are ANDed.
-    pub match_expressions: Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>,
+    pub match_expressions: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>,
 
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
-    pub match_labels: std::collections::BTreeMap<String, String>,
+    pub match_labels: Option<std::collections::BTreeMap<String, String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for LabelSelector {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for LabelSelector {
                 }
 
                 Ok(LabelSelector {
-                    match_expressions: value_match_expressions.unwrap_or_default(),
-                    match_labels: value_match_labels.unwrap_or_default(),
+                    match_expressions: value_match_expressions,
+                    match_labels: value_match_labels,
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for LabelSelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LabelSelector",
-            usize::from(!self.match_expressions.is_empty()) +
-            usize::from(!self.match_labels.is_empty()),
+            self.match_expressions.as_ref().map_or(0, |_| 1) +
+            self.match_labels.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.match_expressions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", &self.match_expressions)?;
+        if let Some(value) = &self.match_expressions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;
         }
-        if !self.match_labels.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabels", &self.match_labels)?;
+        if let Some(value) = &self.match_labels {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabels", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

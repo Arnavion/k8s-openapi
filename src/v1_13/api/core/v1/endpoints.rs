@@ -18,7 +18,7 @@ pub struct Endpoints {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
-    pub subsets: Vec<crate::api::core::v1::EndpointSubset>,
+    pub subsets: Option<Vec<crate::api::core::v1::EndpointSubset>>,
 }
 
 // Begin /v1/Endpoints
@@ -593,7 +593,7 @@ impl<'de> crate::serde::Deserialize<'de> for Endpoints {
 
                 Ok(Endpoints {
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    subsets: value_subsets.unwrap_or_default(),
+                    subsets: value_subsets,
                 })
             }
         }
@@ -616,13 +616,13 @@ impl crate::serde::Serialize for Endpoints {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.subsets.is_empty()),
+            self.subsets.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if !self.subsets.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subsets", &self.subsets)?;
+        if let Some(value) = &self.subsets {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "subsets", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

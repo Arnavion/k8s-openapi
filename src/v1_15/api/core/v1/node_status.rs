@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeStatus {
     /// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses
-    pub addresses: Vec<crate::api::core::v1::NodeAddress>,
+    pub addresses: Option<Vec<crate::api::core::v1::NodeAddress>>,
 
     /// Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
-    pub allocatable: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-    pub capacity: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition
-    pub conditions: Vec<crate::api::core::v1::NodeCondition>,
+    pub conditions: Option<Vec<crate::api::core::v1::NodeCondition>>,
 
     /// Status of the config assigned to the node via the dynamic Kubelet config feature.
     pub config: Option<crate::api::core::v1::NodeConfigStatus>,
@@ -22,7 +22,7 @@ pub struct NodeStatus {
     pub daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints>,
 
     /// List of container images on this node
-    pub images: Vec<crate::api::core::v1::ContainerImage>,
+    pub images: Option<Vec<crate::api::core::v1::ContainerImage>>,
 
     /// Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info
     pub node_info: Option<crate::api::core::v1::NodeSystemInfo>,
@@ -31,10 +31,10 @@ pub struct NodeStatus {
     pub phase: Option<String>,
 
     /// List of volumes that are attached to the node.
-    pub volumes_attached: Vec<crate::api::core::v1::AttachedVolume>,
+    pub volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>>,
 
     /// List of attachable volumes in use (mounted) by the node.
-    pub volumes_in_use: Vec<String>,
+    pub volumes_in_use: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
@@ -128,17 +128,17 @@ impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
                 }
 
                 Ok(NodeStatus {
-                    addresses: value_addresses.unwrap_or_default(),
-                    allocatable: value_allocatable.unwrap_or_default(),
-                    capacity: value_capacity.unwrap_or_default(),
-                    conditions: value_conditions.unwrap_or_default(),
+                    addresses: value_addresses,
+                    allocatable: value_allocatable,
+                    capacity: value_capacity,
+                    conditions: value_conditions,
                     config: value_config,
                     daemon_endpoints: value_daemon_endpoints,
-                    images: value_images.unwrap_or_default(),
+                    images: value_images,
                     node_info: value_node_info,
                     phase: value_phase,
-                    volumes_attached: value_volumes_attached.unwrap_or_default(),
-                    volumes_in_use: value_volumes_in_use.unwrap_or_default(),
+                    volumes_attached: value_volumes_attached,
+                    volumes_in_use: value_volumes_in_use,
                 })
             }
         }
@@ -167,29 +167,29 @@ impl crate::serde::Serialize for NodeStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeStatus",
-            usize::from(!self.addresses.is_empty()) +
-            usize::from(!self.allocatable.is_empty()) +
-            usize::from(!self.capacity.is_empty()) +
-            usize::from(!self.conditions.is_empty()) +
+            self.addresses.as_ref().map_or(0, |_| 1) +
+            self.allocatable.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
             self.config.as_ref().map_or(0, |_| 1) +
             self.daemon_endpoints.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.images.is_empty()) +
+            self.images.as_ref().map_or(0, |_| 1) +
             self.node_info.as_ref().map_or(0, |_| 1) +
             self.phase.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.volumes_attached.is_empty()) +
-            usize::from(!self.volumes_in_use.is_empty()),
+            self.volumes_attached.as_ref().map_or(0, |_| 1) +
+            self.volumes_in_use.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.addresses.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", &self.addresses)?;
+        if let Some(value) = &self.addresses {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;
         }
-        if !self.allocatable.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", &self.allocatable)?;
+        if let Some(value) = &self.allocatable {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocatable", value)?;
         }
-        if !self.capacity.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", &self.capacity)?;
+        if let Some(value) = &self.capacity {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
         }
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.config {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "config", value)?;
@@ -197,8 +197,8 @@ impl crate::serde::Serialize for NodeStatus {
         if let Some(value) = &self.daemon_endpoints {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "daemonEndpoints", value)?;
         }
-        if !self.images.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "images", &self.images)?;
+        if let Some(value) = &self.images {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "images", value)?;
         }
         if let Some(value) = &self.node_info {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeInfo", value)?;
@@ -206,11 +206,11 @@ impl crate::serde::Serialize for NodeStatus {
         if let Some(value) = &self.phase {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "phase", value)?;
         }
-        if !self.volumes_attached.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", &self.volumes_attached)?;
+        if let Some(value) = &self.volumes_attached {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesAttached", value)?;
         }
-        if !self.volumes_in_use.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", &self.volumes_in_use)?;
+        if let Some(value) = &self.volumes_in_use {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumesInUse", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

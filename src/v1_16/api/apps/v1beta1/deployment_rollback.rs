@@ -10,7 +10,7 @@ pub struct DeploymentRollback {
     pub rollback_to: crate::api::apps::v1beta1::RollbackConfig,
 
     /// The annotations to be updated to a deployment
-    pub updated_annotations: std::collections::BTreeMap<String, String>,
+    pub updated_annotations: Option<std::collections::BTreeMap<String, String>>,
 }
 
 // Begin apps/v1beta1/DeploymentRollback
@@ -206,7 +206,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentRollback {
                 Ok(DeploymentRollback {
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     rollback_to: value_rollback_to.ok_or_else(|| crate::serde::de::Error::missing_field("rollbackTo"))?,
-                    updated_annotations: value_updated_annotations.unwrap_or_default(),
+                    updated_annotations: value_updated_annotations,
                 })
             }
         }
@@ -230,14 +230,14 @@ impl crate::serde::Serialize for DeploymentRollback {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             4 +
-            usize::from(!self.updated_annotations.is_empty()),
+            self.updated_annotations.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", &self.rollback_to)?;
-        if !self.updated_annotations.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updatedAnnotations", &self.updated_annotations)?;
+        if let Some(value) = &self.updated_annotations {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updatedAnnotations", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -7,7 +7,7 @@ pub struct Initializer {
     pub name: String,
 
     /// Rules describes what resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.
-    pub rules: Vec<crate::api::admissionregistration::v1alpha1::Rule>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1alpha1::Rule>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Initializer {
@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for Initializer {
 
                 Ok(Initializer {
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    rules: value_rules.unwrap_or_default(),
+                    rules: value_rules,
                 })
             }
         }
@@ -87,11 +87,11 @@ impl crate::serde::Serialize for Initializer {
         let mut state = serializer.serialize_struct(
             "Initializer",
             1 +
-            usize::from(!self.rules.is_empty()),
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
-        if !self.rules.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
+        if let Some(value) = &self.rules {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

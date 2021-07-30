@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMeta {
     /// Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
-    pub annotations: std::collections::BTreeMap<String, String>,
+    pub annotations: Option<std::collections::BTreeMap<String, String>>,
 
     /// The name of the cluster which the object belongs to. This is used to distinguish resources with same name and namespace in different clusters. This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.
     pub cluster_name: Option<String>,
@@ -23,7 +23,7 @@ pub struct ObjectMeta {
     pub deletion_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed.
-    pub finalizers: Vec<String>,
+    pub finalizers: Option<Vec<String>>,
 
     /// GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
     ///
@@ -43,12 +43,12 @@ pub struct ObjectMeta {
     pub initializers: Option<crate::apimachinery::pkg::apis::meta::v1::Initializers>,
 
     /// Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels
-    pub labels: std::collections::BTreeMap<String, String>,
+    pub labels: Option<std::collections::BTreeMap<String, String>>,
 
     /// ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like "ci-cd". The set of fields is always in the version that the workflow used when modifying the object.
     ///
     /// This field is alpha and can be changed or removed without notice.
-    pub managed_fields: Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>,
+    pub managed_fields: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>>,
 
     /// Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names
     pub name: Option<String>,
@@ -59,7 +59,7 @@ pub struct ObjectMeta {
     pub namespace: Option<String>,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
-    pub owner_references: Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>,
+    pub owner_references: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
 
     /// An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
     ///
@@ -190,20 +190,20 @@ impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
                 }
 
                 Ok(ObjectMeta {
-                    annotations: value_annotations.unwrap_or_default(),
+                    annotations: value_annotations,
                     cluster_name: value_cluster_name,
                     creation_timestamp: value_creation_timestamp,
                     deletion_grace_period_seconds: value_deletion_grace_period_seconds,
                     deletion_timestamp: value_deletion_timestamp,
-                    finalizers: value_finalizers.unwrap_or_default(),
+                    finalizers: value_finalizers,
                     generate_name: value_generate_name,
                     generation: value_generation,
                     initializers: value_initializers,
-                    labels: value_labels.unwrap_or_default(),
-                    managed_fields: value_managed_fields.unwrap_or_default(),
+                    labels: value_labels,
+                    managed_fields: value_managed_fields,
                     name: value_name,
                     namespace: value_namespace,
-                    owner_references: value_owner_references.unwrap_or_default(),
+                    owner_references: value_owner_references,
                     resource_version: value_resource_version,
                     self_link: value_self_link,
                     uid: value_uid,
@@ -241,26 +241,26 @@ impl crate::serde::Serialize for ObjectMeta {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
-            usize::from(!self.annotations.is_empty()) +
+            self.annotations.as_ref().map_or(0, |_| 1) +
             self.cluster_name.as_ref().map_or(0, |_| 1) +
             self.creation_timestamp.as_ref().map_or(0, |_| 1) +
             self.deletion_grace_period_seconds.as_ref().map_or(0, |_| 1) +
             self.deletion_timestamp.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.finalizers.is_empty()) +
+            self.finalizers.as_ref().map_or(0, |_| 1) +
             self.generate_name.as_ref().map_or(0, |_| 1) +
             self.generation.as_ref().map_or(0, |_| 1) +
             self.initializers.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.labels.is_empty()) +
-            usize::from(!self.managed_fields.is_empty()) +
+            self.labels.as_ref().map_or(0, |_| 1) +
+            self.managed_fields.as_ref().map_or(0, |_| 1) +
             self.name.as_ref().map_or(0, |_| 1) +
             self.namespace.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.owner_references.is_empty()) +
+            self.owner_references.as_ref().map_or(0, |_| 1) +
             self.resource_version.as_ref().map_or(0, |_| 1) +
             self.self_link.as_ref().map_or(0, |_| 1) +
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.annotations.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", &self.annotations)?;
+        if let Some(value) = &self.annotations {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
         }
         if let Some(value) = &self.cluster_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
@@ -274,8 +274,8 @@ impl crate::serde::Serialize for ObjectMeta {
         if let Some(value) = &self.deletion_timestamp {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
         }
-        if !self.finalizers.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", &self.finalizers)?;
+        if let Some(value) = &self.finalizers {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
         }
         if let Some(value) = &self.generate_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
@@ -286,11 +286,11 @@ impl crate::serde::Serialize for ObjectMeta {
         if let Some(value) = &self.initializers {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", value)?;
         }
-        if !self.labels.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "labels", &self.labels)?;
+        if let Some(value) = &self.labels {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
         }
-        if !self.managed_fields.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", &self.managed_fields)?;
+        if let Some(value) = &self.managed_fields {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "managedFields", value)?;
         }
         if let Some(value) = &self.name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
@@ -298,8 +298,8 @@ impl crate::serde::Serialize for ObjectMeta {
         if let Some(value) = &self.namespace {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
         }
-        if !self.owner_references.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", &self.owner_references)?;
+        if let Some(value) = &self.owner_references {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
         }
         if let Some(value) = &self.resource_version {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;

@@ -275,16 +275,9 @@ pub fn run(
 
 					let mut field_type_name = String::new();
 
-					let required = match (required, &schema.kind) {
-						(true, _) => templates::PropertyRequired::Required,
-						(
-							false,
-							swagger20::SchemaKind::Ty(
-								swagger20::Type::Array { .. } |
-								swagger20::Type::Object { .. }
-							),
-						) => templates::PropertyRequired::OptionalDefault,
-						(false, _) => templates::PropertyRequired::Optional,
+					let required = match required {
+						true => templates::PropertyRequired::Required,
+						false => templates::PropertyRequired::Optional,
 					};
 
 					if let templates::PropertyRequired::Optional = required {

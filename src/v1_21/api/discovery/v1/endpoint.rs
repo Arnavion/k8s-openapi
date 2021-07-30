@@ -10,7 +10,7 @@ pub struct Endpoint {
     pub conditions: Option<crate::api::discovery::v1::EndpointConditions>,
 
     /// deprecatedTopology contains topology information part of the v1beta1 API. This field is deprecated, and will be removed when the v1beta1 API is removed (no sooner than kubernetes v1.24).  While this field can hold values, it is not writable through the v1 API, and any attempts to write to it will be silently ignored. Topology information can be found in the zone and nodeName fields instead.
-    pub deprecated_topology: std::collections::BTreeMap<String, String>,
+    pub deprecated_topology: Option<std::collections::BTreeMap<String, String>>,
 
     /// hints contains information associated with how an endpoint should be consumed.
     pub hints: Option<crate::api::discovery::v1::EndpointHints>,
@@ -109,7 +109,7 @@ impl<'de> crate::serde::Deserialize<'de> for Endpoint {
                 Ok(Endpoint {
                     addresses: value_addresses.ok_or_else(|| crate::serde::de::Error::missing_field("addresses"))?,
                     conditions: value_conditions,
-                    deprecated_topology: value_deprecated_topology.unwrap_or_default(),
+                    deprecated_topology: value_deprecated_topology,
                     hints: value_hints,
                     hostname: value_hostname,
                     node_name: value_node_name,
@@ -142,7 +142,7 @@ impl crate::serde::Serialize for Endpoint {
             "Endpoint",
             1 +
             self.conditions.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.deprecated_topology.is_empty()) +
+            self.deprecated_topology.as_ref().map_or(0, |_| 1) +
             self.hints.as_ref().map_or(0, |_| 1) +
             self.hostname.as_ref().map_or(0, |_| 1) +
             self.node_name.as_ref().map_or(0, |_| 1) +
@@ -153,8 +153,8 @@ impl crate::serde::Serialize for Endpoint {
         if let Some(value) = &self.conditions {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
-        if !self.deprecated_topology.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedTopology", &self.deprecated_topology)?;
+        if let Some(value) = &self.deprecated_topology {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedTopology", value)?;
         }
         if let Some(value) = &self.hints {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hints", value)?;

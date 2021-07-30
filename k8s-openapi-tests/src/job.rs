@@ -13,18 +13,18 @@ fn create() {
 						api::Container {
 							name: "k8s-openapi-tests-create-job".to_string(),
 							image: "alpine".to_string().into(),
-							command: vec![
+							command: Some(vec![
 								"sh".to_string(),
 								"-c".to_string(),
 								"exit $TEST_ARG".to_string(),
-							],
-							env: vec![
+							]),
+							env: Some(vec![
 								api::EnvVar {
 									name: "TEST_ARG".to_string(),
 									value: Some("5".to_string()),
 									..Default::default()
 								},
-							],
+							]),
 							..Default::default()
 						},
 					],
@@ -107,7 +107,8 @@ fn create() {
 				pod_list
 				.items.into_iter()
 				.find(|pod|
-					pod.metadata.owner_references.first()
+					pod.metadata.owner_references.as_ref()
+					.and_then(|owner_references| owner_references.first())
 					.map(|owner_reference| owner_reference.uid.as_ref()) == Some(&*job_uid))
 				.and_then(|job_pod| job_pod.status);
 
@@ -122,7 +123,7 @@ fn create() {
 
 		let job_pod_container_state_terminated =
 			job_pod_status
-			.container_statuses
+			.container_statuses.expect("couldn't get job pod container statuses")
 			.into_iter().next().expect("couldn't get job pod container status")
 			.state.expect("couldn't get job pod container state")
 			.terminated.expect("couldn't get job pod container termination info");

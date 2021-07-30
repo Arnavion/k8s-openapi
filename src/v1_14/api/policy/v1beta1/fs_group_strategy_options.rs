@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FSGroupStrategyOptions {
     /// ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs.
-    pub ranges: Vec<crate::api::policy::v1beta1::IDRange>,
+    pub ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>>,
 
     /// rule is the strategy that will dictate what FSGroup is used in the SecurityContext.
     pub rule: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for FSGroupStrategyOptions {
                 }
 
                 Ok(FSGroupStrategyOptions {
-                    ranges: value_ranges.unwrap_or_default(),
+                    ranges: value_ranges,
                     rule: value_rule,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for FSGroupStrategyOptions {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FSGroupStrategyOptions",
-            usize::from(!self.ranges.is_empty()) +
+            self.ranges.as_ref().map_or(0, |_| 1) +
             self.rule.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.ranges.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", &self.ranges)?;
+        if let Some(value) = &self.ranges {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
         }
         if let Some(value) = &self.rule {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", value)?;

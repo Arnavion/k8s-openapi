@@ -16,7 +16,7 @@ pub struct CSIVolumeSource {
     pub read_only: Option<bool>,
 
     /// VolumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
-    pub volume_attributes: std::collections::BTreeMap<String, String>,
+    pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
@@ -90,7 +90,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
                     fs_type: value_fs_type,
                     node_publish_secret_ref: value_node_publish_secret_ref,
                     read_only: value_read_only,
-                    volume_attributes: value_volume_attributes.unwrap_or_default(),
+                    volume_attributes: value_volume_attributes,
                 })
             }
         }
@@ -117,7 +117,7 @@ impl crate::serde::Serialize for CSIVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.node_publish_secret_ref.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.volume_attributes.is_empty()),
+            self.volume_attributes.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {
@@ -129,8 +129,8 @@ impl crate::serde::Serialize for CSIVolumeSource {
         if let Some(value) = &self.read_only {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        if !self.volume_attributes.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", &self.volume_attributes)?;
+        if let Some(value) = &self.volume_attributes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeAttributes", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

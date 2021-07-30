@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
-    pub items: Vec<crate::api::core::v1::DownwardAPIVolumeFile>,
+    pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
                 }
 
                 Ok(DownwardAPIProjection {
-                    items: value_items.unwrap_or_default(),
+                    items: value_items,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for DownwardAPIProjection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DownwardAPIProjection",
-            usize::from(!self.items.is_empty()),
+            self.items.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.items.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
+        if let Some(value) = &self.items {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIResource {
     /// categories is a list of the grouped resources this resource belongs to (e.g. 'all')
-    pub categories: Vec<String>,
+    pub categories: Option<Vec<String>>,
 
     /// group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale".
     pub group: Option<String>,
@@ -19,7 +19,7 @@ pub struct APIResource {
     pub namespaced: bool,
 
     /// shortNames is a list of suggested short names of the resource.
-    pub short_names: Vec<String>,
+    pub short_names: Option<Vec<String>>,
 
     /// singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.
     pub singular_name: String,
@@ -121,12 +121,12 @@ impl<'de> crate::serde::Deserialize<'de> for APIResource {
                 }
 
                 Ok(APIResource {
-                    categories: value_categories.unwrap_or_default(),
+                    categories: value_categories,
                     group: value_group,
                     kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     namespaced: value_namespaced.ok_or_else(|| crate::serde::de::Error::missing_field("namespaced"))?,
-                    short_names: value_short_names.unwrap_or_default(),
+                    short_names: value_short_names,
                     singular_name: value_singular_name.ok_or_else(|| crate::serde::de::Error::missing_field("singularName"))?,
                     storage_version_hash: value_storage_version_hash,
                     verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
@@ -159,14 +159,14 @@ impl crate::serde::Serialize for APIResource {
         let mut state = serializer.serialize_struct(
             "APIResource",
             5 +
-            usize::from(!self.categories.is_empty()) +
+            self.categories.as_ref().map_or(0, |_| 1) +
             self.group.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.short_names.is_empty()) +
+            self.short_names.as_ref().map_or(0, |_| 1) +
             self.storage_version_hash.as_ref().map_or(0, |_| 1) +
             self.version.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.categories.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", &self.categories)?;
+        if let Some(value) = &self.categories {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
         }
         if let Some(value) = &self.group {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
@@ -174,8 +174,8 @@ impl crate::serde::Serialize for APIResource {
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaced", &self.namespaced)?;
-        if !self.short_names.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", &self.short_names)?;
+        if let Some(value) = &self.short_names {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "singularName", &self.singular_name)?;
         if let Some(value) = &self.storage_version_hash {

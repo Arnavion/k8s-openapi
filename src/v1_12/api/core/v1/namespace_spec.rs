@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NamespaceSpec {
     /// Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
-    pub finalizers: Vec<String>,
+    pub finalizers: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NamespaceSpec {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for NamespaceSpec {
                 }
 
                 Ok(NamespaceSpec {
-                    finalizers: value_finalizers.unwrap_or_default(),
+                    finalizers: value_finalizers,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for NamespaceSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NamespaceSpec",
-            usize::from(!self.finalizers.is_empty()),
+            self.finalizers.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.finalizers.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", &self.finalizers)?;
+        if let Some(value) = &self.finalizers {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

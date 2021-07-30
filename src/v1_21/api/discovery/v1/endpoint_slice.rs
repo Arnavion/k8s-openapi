@@ -13,7 +13,7 @@ pub struct EndpointSlice {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
-    pub ports: Vec<crate::api::discovery::v1::EndpointPort>,
+    pub ports: Option<Vec<crate::api::discovery::v1::EndpointPort>>,
 }
 
 // Begin discovery.k8s.io/v1/EndpointSlice
@@ -586,7 +586,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointSlice {
                     address_type: value_address_type.ok_or_else(|| crate::serde::de::Error::missing_field("addressType"))?,
                     endpoints: value_endpoints.ok_or_else(|| crate::serde::de::Error::missing_field("endpoints"))?,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    ports: value_ports.unwrap_or_default(),
+                    ports: value_ports,
                 })
             }
         }
@@ -611,15 +611,15 @@ impl crate::serde::Serialize for EndpointSlice {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             5 +
-            usize::from(!self.ports.is_empty()),
+            self.ports.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "addressType", &self.address_type)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if !self.ports.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
+        if let Some(value) = &self.ports {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

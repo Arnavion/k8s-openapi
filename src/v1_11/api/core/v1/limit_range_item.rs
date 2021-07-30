@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LimitRangeItem {
     /// Default resource requirement limit value by resource name if resource limit is omitted.
-    pub default: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub default: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
-    pub default_request: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub default_request: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Max usage constraints on this kind by resource name.
-    pub max: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub max: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
-    pub max_limit_request_ratio: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub max_limit_request_ratio: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Min usage constraints on this kind by resource name.
-    pub min: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub min: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Type of resource that this limit applies to.
     pub type_: Option<String>,
@@ -93,11 +93,11 @@ impl<'de> crate::serde::Deserialize<'de> for LimitRangeItem {
                 }
 
                 Ok(LimitRangeItem {
-                    default: value_default.unwrap_or_default(),
-                    default_request: value_default_request.unwrap_or_default(),
-                    max: value_max.unwrap_or_default(),
-                    max_limit_request_ratio: value_max_limit_request_ratio.unwrap_or_default(),
-                    min: value_min.unwrap_or_default(),
+                    default: value_default,
+                    default_request: value_default_request,
+                    max: value_max,
+                    max_limit_request_ratio: value_max_limit_request_ratio,
+                    min: value_min,
                     type_: value_type_,
                 })
             }
@@ -122,27 +122,27 @@ impl crate::serde::Serialize for LimitRangeItem {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LimitRangeItem",
-            usize::from(!self.default.is_empty()) +
-            usize::from(!self.default_request.is_empty()) +
-            usize::from(!self.max.is_empty()) +
-            usize::from(!self.max_limit_request_ratio.is_empty()) +
-            usize::from(!self.min.is_empty()) +
+            self.default.as_ref().map_or(0, |_| 1) +
+            self.default_request.as_ref().map_or(0, |_| 1) +
+            self.max.as_ref().map_or(0, |_| 1) +
+            self.max_limit_request_ratio.as_ref().map_or(0, |_| 1) +
+            self.min.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.default.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "default", &self.default)?;
+        if let Some(value) = &self.default {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
         }
-        if !self.default_request.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRequest", &self.default_request)?;
+        if let Some(value) = &self.default_request {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultRequest", value)?;
         }
-        if !self.max.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "max", &self.max)?;
+        if let Some(value) = &self.max {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "max", value)?;
         }
-        if !self.max_limit_request_ratio.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxLimitRequestRatio", &self.max_limit_request_ratio)?;
+        if let Some(value) = &self.max_limit_request_ratio {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "maxLimitRequestRatio", value)?;
         }
-        if !self.min.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "min", &self.min)?;
+        if let Some(value) = &self.min {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "min", value)?;
         }
         if let Some(value) = &self.type_ {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;

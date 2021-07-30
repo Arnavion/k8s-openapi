@@ -4,14 +4,14 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceRule {
     /// APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
-    pub api_groups: Vec<String>,
+    pub api_groups: Option<Vec<String>>,
 
     /// ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.  "*" means all.
-    pub resource_names: Vec<String>,
+    pub resource_names: Option<Vec<String>>,
 
     /// Resources is a list of resources this rule applies to.  "*" means all in the specified apiGroups.
     ///  "*/foo" represents the subresource 'foo' for all resources in the specified apiGroups.
-    pub resources: Vec<String>,
+    pub resources: Option<Vec<String>>,
 
     /// Verb is a list of kubernetes resource API verbs, like: get, list, watch, create, update, delete, proxy.  "*" means all.
     pub verbs: Vec<String>,
@@ -80,9 +80,9 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceRule {
                 }
 
                 Ok(ResourceRule {
-                    api_groups: value_api_groups.unwrap_or_default(),
-                    resource_names: value_resource_names.unwrap_or_default(),
-                    resources: value_resources.unwrap_or_default(),
+                    api_groups: value_api_groups,
+                    resource_names: value_resource_names,
+                    resources: value_resources,
                     verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
                 })
             }
@@ -106,18 +106,18 @@ impl crate::serde::Serialize for ResourceRule {
         let mut state = serializer.serialize_struct(
             "ResourceRule",
             1 +
-            usize::from(!self.api_groups.is_empty()) +
-            usize::from(!self.resource_names.is_empty()) +
-            usize::from(!self.resources.is_empty()),
+            self.api_groups.as_ref().map_or(0, |_| 1) +
+            self.resource_names.as_ref().map_or(0, |_| 1) +
+            self.resources.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.api_groups.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", &self.api_groups)?;
+        if let Some(value) = &self.api_groups {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
         }
-        if !self.resource_names.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceNames", &self.resource_names)?;
+        if let Some(value) = &self.resource_names {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceNames", value)?;
         }
-        if !self.resources.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
+        if let Some(value) = &self.resources {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
         crate::serde::ser::SerializeStruct::end(state)

@@ -13,7 +13,7 @@ pub struct CSIDriverSpec {
     pub pod_info_on_mount: Option<bool>,
 
     /// volumeLifecycleModes defines what kind of volumes this CSI volume driver supports. The default if the list is empty is "Persistent", which is the usage defined by the CSI specification and implemented in Kubernetes via the usual PV/PVC mechanism. The other mode is "Ephemeral". In this mode, volumes are defined inline inside the pod spec with CSIVolumeSource and their lifecycle is tied to the lifecycle of that pod. A driver has to be aware of this because it is only going to get a NodePublishVolume call for such a volume. For more information about implementing this mode, see https://kubernetes-csi.github.io/docs/ephemeral-local-volumes.html A driver can support one or more of these modes and more modes may be added in the future. This field is beta.
-    pub volume_lifecycle_modes: Vec<String>,
+    pub volume_lifecycle_modes: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
@@ -77,7 +77,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
                 Ok(CSIDriverSpec {
                     attach_required: value_attach_required,
                     pod_info_on_mount: value_pod_info_on_mount,
-                    volume_lifecycle_modes: value_volume_lifecycle_modes.unwrap_or_default(),
+                    volume_lifecycle_modes: value_volume_lifecycle_modes,
                 })
             }
         }
@@ -100,7 +100,7 @@ impl crate::serde::Serialize for CSIDriverSpec {
             "CSIDriverSpec",
             self.attach_required.as_ref().map_or(0, |_| 1) +
             self.pod_info_on_mount.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.volume_lifecycle_modes.is_empty()),
+            self.volume_lifecycle_modes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_required {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "attachRequired", value)?;
@@ -108,8 +108,8 @@ impl crate::serde::Serialize for CSIDriverSpec {
         if let Some(value) = &self.pod_info_on_mount {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podInfoOnMount", value)?;
         }
-        if !self.volume_lifecycle_modes.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", &self.volume_lifecycle_modes)?;
+        if let Some(value) = &self.volume_lifecycle_modes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeLifecycleModes", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

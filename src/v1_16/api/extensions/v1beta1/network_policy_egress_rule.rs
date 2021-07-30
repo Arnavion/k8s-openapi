@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyEgressRule {
     /// List of destination ports for outgoing traffic. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
-    pub ports: Vec<crate::api::extensions::v1beta1::NetworkPolicyPort>,
+    pub ports: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPort>>,
 
     /// List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
-    pub to: Vec<crate::api::extensions::v1beta1::NetworkPolicyPeer>,
+    pub to: Option<Vec<crate::api::extensions::v1beta1::NetworkPolicyPeer>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyEgressRule {
@@ -65,8 +65,8 @@ impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyEgressRule {
                 }
 
                 Ok(NetworkPolicyEgressRule {
-                    ports: value_ports.unwrap_or_default(),
-                    to: value_to.unwrap_or_default(),
+                    ports: value_ports,
+                    to: value_to,
                 })
             }
         }
@@ -86,14 +86,14 @@ impl crate::serde::Serialize for NetworkPolicyEgressRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyEgressRule",
-            usize::from(!self.ports.is_empty()) +
-            usize::from(!self.to.is_empty()),
+            self.ports.as_ref().map_or(0, |_| 1) +
+            self.to.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.ports.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", &self.ports)?;
+        if let Some(value) = &self.ports {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
-        if !self.to.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "to", &self.to)?;
+        if let Some(value) = &self.to {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "to", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

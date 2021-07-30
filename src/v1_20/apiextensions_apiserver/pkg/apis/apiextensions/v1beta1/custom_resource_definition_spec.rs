@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionSpec {
     /// additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If present, this field configures columns for all versions. Top-level and per-version columns are mutually exclusive. If no top-level or per-version columns are specified, a single column displaying the age of the custom resource is used.
-    pub additional_printer_columns: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>,
+    pub additional_printer_columns: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>>,
 
     /// conversion defines conversion settings for the CRD.
     pub conversion: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceConversion>,
@@ -31,7 +31,7 @@ pub struct CustomResourceDefinitionSpec {
     pub version: Option<String>,
 
     /// versions is the list of all API versions of the defined custom resource. Optional if `version` is specified. The name of the first item in the `versions` list must match the `version` field if `version` and `versions` are both specified. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
-    pub versions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>,
+    pub versions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
@@ -121,7 +121,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                 }
 
                 Ok(CustomResourceDefinitionSpec {
-                    additional_printer_columns: value_additional_printer_columns.unwrap_or_default(),
+                    additional_printer_columns: value_additional_printer_columns,
                     conversion: value_conversion,
                     group: value_group.ok_or_else(|| crate::serde::de::Error::missing_field("group"))?,
                     names: value_names.ok_or_else(|| crate::serde::de::Error::missing_field("names"))?,
@@ -130,7 +130,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                     subresources: value_subresources,
                     validation: value_validation,
                     version: value_version,
-                    versions: value_versions.unwrap_or_default(),
+                    versions: value_versions,
                 })
             }
         }
@@ -159,16 +159,16 @@ impl crate::serde::Serialize for CustomResourceDefinitionSpec {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionSpec",
             3 +
-            usize::from(!self.additional_printer_columns.is_empty()) +
+            self.additional_printer_columns.as_ref().map_or(0, |_| 1) +
             self.conversion.as_ref().map_or(0, |_| 1) +
             self.preserve_unknown_fields.as_ref().map_or(0, |_| 1) +
             self.subresources.as_ref().map_or(0, |_| 1) +
             self.validation.as_ref().map_or(0, |_| 1) +
             self.version.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.versions.is_empty()),
+            self.versions.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.additional_printer_columns.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", &self.additional_printer_columns)?;
+        if let Some(value) = &self.additional_printer_columns {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalPrinterColumns", value)?;
         }
         if let Some(value) = &self.conversion {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conversion", value)?;
@@ -188,8 +188,8 @@ impl crate::serde::Serialize for CustomResourceDefinitionSpec {
         if let Some(value) = &self.version {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "version", value)?;
         }
-        if !self.versions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;
+        if let Some(value) = &self.versions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "versions", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -10,10 +10,10 @@ pub struct IngressSpec {
     pub ingress_class_name: Option<String>,
 
     /// A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.
-    pub rules: Vec<crate::api::extensions::v1beta1::IngressRule>,
+    pub rules: Option<Vec<crate::api::extensions::v1beta1::IngressRule>>,
 
     /// TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
-    pub tls: Vec<crate::api::extensions::v1beta1::IngressTLS>,
+    pub tls: Option<Vec<crate::api::extensions::v1beta1::IngressTLS>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
@@ -81,8 +81,8 @@ impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
                 Ok(IngressSpec {
                     backend: value_backend,
                     ingress_class_name: value_ingress_class_name,
-                    rules: value_rules.unwrap_or_default(),
-                    tls: value_tls.unwrap_or_default(),
+                    rules: value_rules,
+                    tls: value_tls,
                 })
             }
         }
@@ -106,8 +106,8 @@ impl crate::serde::Serialize for IngressSpec {
             "IngressSpec",
             self.backend.as_ref().map_or(0, |_| 1) +
             self.ingress_class_name.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.rules.is_empty()) +
-            usize::from(!self.tls.is_empty()),
+            self.rules.as_ref().map_or(0, |_| 1) +
+            self.tls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.backend {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "backend", value)?;
@@ -115,11 +115,11 @@ impl crate::serde::Serialize for IngressSpec {
         if let Some(value) = &self.ingress_class_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingressClassName", value)?;
         }
-        if !self.rules.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
+        if let Some(value) = &self.rules {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
-        if !self.tls.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tls", &self.tls)?;
+        if let Some(value) = &self.tls {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tls", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

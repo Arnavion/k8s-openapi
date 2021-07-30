@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaSpec {
     /// hard is the set of desired hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
-    pub hard: std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>,
+    pub hard: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// scopeSelector is also a collection of filters like scopes that must match each object tracked by a quota but expressed using ScopeSelectorOperator in combination with possible values. For a resource to match, both scopes AND scopeSelector (if specified in spec), must be matched.
     pub scope_selector: Option<crate::api::core::v1::ScopeSelector>,
 
     /// A collection of filters that must match each object tracked by a quota. If not specified, the quota matches all objects.
-    pub scopes: Vec<String>,
+    pub scopes: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaSpec {
@@ -72,9 +72,9 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaSpec {
                 }
 
                 Ok(ResourceQuotaSpec {
-                    hard: value_hard.unwrap_or_default(),
+                    hard: value_hard,
                     scope_selector: value_scope_selector,
-                    scopes: value_scopes.unwrap_or_default(),
+                    scopes: value_scopes,
                 })
             }
         }
@@ -95,18 +95,18 @@ impl crate::serde::Serialize for ResourceQuotaSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceQuotaSpec",
-            usize::from(!self.hard.is_empty()) +
+            self.hard.as_ref().map_or(0, |_| 1) +
             self.scope_selector.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.scopes.is_empty()),
+            self.scopes.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.hard.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hard", &self.hard)?;
+        if let Some(value) = &self.hard {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hard", value)?;
         }
         if let Some(value) = &self.scope_selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scopeSelector", value)?;
         }
-        if !self.scopes.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scopes", &self.scopes)?;
+        if let Some(value) = &self.scopes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scopes", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

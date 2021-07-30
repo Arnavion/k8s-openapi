@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct InitializerConfiguration {
     /// Initializers is a list of resources and their default initializers Order-sensitive. When merging multiple InitializerConfigurations, we sort the initializers from different InitializerConfigurations by the name of the InitializerConfigurations; the order of the initializers from the same InitializerConfiguration is preserved.
-    pub initializers: Vec<crate::api::admissionregistration::v1alpha1::Initializer>,
+    pub initializers: Option<Vec<crate::api::admissionregistration::v1alpha1::Initializer>>,
 
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
@@ -465,7 +465,7 @@ impl<'de> crate::serde::Deserialize<'de> for InitializerConfiguration {
                 }
 
                 Ok(InitializerConfiguration {
-                    initializers: value_initializers.unwrap_or_default(),
+                    initializers: value_initializers,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
                 })
             }
@@ -489,12 +489,12 @@ impl crate::serde::Serialize for InitializerConfiguration {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.initializers.is_empty()),
+            self.initializers.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if !self.initializers.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", &self.initializers)?;
+        if let Some(value) = &self.initializers {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         crate::serde::ser::SerializeStruct::end(state)

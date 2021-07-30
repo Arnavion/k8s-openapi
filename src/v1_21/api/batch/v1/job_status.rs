@@ -13,7 +13,7 @@ pub struct JobStatus {
     pub completion_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The latest available observations of an object's current state. When a Job fails, one of the conditions will have type "Failed" and status true. When a Job is suspended, one of the conditions will have type "Suspended" and status true; when the Job is resumed, the status of this condition will become false. When a Job is completed, one of the conditions will have type "Complete" and status true. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-    pub conditions: Vec<crate::api::batch::v1::JobCondition>,
+    pub conditions: Option<Vec<crate::api::batch::v1::JobCondition>>,
 
     /// The number of pods which reached phase Failed.
     pub failed: Option<i32>,
@@ -103,7 +103,7 @@ impl<'de> crate::serde::Deserialize<'de> for JobStatus {
                     active: value_active,
                     completed_indexes: value_completed_indexes,
                     completion_time: value_completion_time,
-                    conditions: value_conditions.unwrap_or_default(),
+                    conditions: value_conditions,
                     failed: value_failed,
                     start_time: value_start_time,
                     succeeded: value_succeeded,
@@ -134,7 +134,7 @@ impl crate::serde::Serialize for JobStatus {
             self.active.as_ref().map_or(0, |_| 1) +
             self.completed_indexes.as_ref().map_or(0, |_| 1) +
             self.completion_time.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.conditions.is_empty()) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
             self.failed.as_ref().map_or(0, |_| 1) +
             self.start_time.as_ref().map_or(0, |_| 1) +
             self.succeeded.as_ref().map_or(0, |_| 1),
@@ -148,8 +148,8 @@ impl crate::serde::Serialize for JobStatus {
         if let Some(value) = &self.completion_time {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "completionTime", value)?;
         }
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.failed {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "failed", value)?;

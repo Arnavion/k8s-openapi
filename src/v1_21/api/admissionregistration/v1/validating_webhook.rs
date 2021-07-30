@@ -61,7 +61,7 @@ pub struct ValidatingWebhook {
     pub object_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
-    pub rules: Vec<crate::api::admissionregistration::v1::RuleWithOperations>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1::RuleWithOperations>>,
 
     /// SideEffects states whether this webhook has side effects. Acceptable values are: None, NoneOnDryRun (webhooks created via v1beta1 may also specify Some or Unknown). Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission chain and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some.
     pub side_effects: String,
@@ -164,7 +164,7 @@ impl<'de> crate::serde::Deserialize<'de> for ValidatingWebhook {
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     namespace_selector: value_namespace_selector,
                     object_selector: value_object_selector,
-                    rules: value_rules.unwrap_or_default(),
+                    rules: value_rules,
                     side_effects: value_side_effects.ok_or_else(|| crate::serde::de::Error::missing_field("sideEffects"))?,
                     timeout_seconds: value_timeout_seconds,
                 })
@@ -199,7 +199,7 @@ impl crate::serde::Serialize for ValidatingWebhook {
             self.match_policy.as_ref().map_or(0, |_| 1) +
             self.namespace_selector.as_ref().map_or(0, |_| 1) +
             self.object_selector.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.rules.is_empty()) +
+            self.rules.as_ref().map_or(0, |_| 1) +
             self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "admissionReviewVersions", &self.admission_review_versions)?;
@@ -217,8 +217,8 @@ impl crate::serde::Serialize for ValidatingWebhook {
         if let Some(value) = &self.object_selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "objectSelector", value)?;
         }
-        if !self.rules.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
+        if let Some(value) = &self.rules {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sideEffects", &self.side_effects)?;
         if let Some(value) = &self.timeout_seconds {

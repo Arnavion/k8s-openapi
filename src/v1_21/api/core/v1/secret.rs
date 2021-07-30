@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Secret {
     /// Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
-    pub data: std::collections::BTreeMap<String, crate::ByteString>,
+    pub data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
 
     /// Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil.
     pub immutable: Option<bool>,
@@ -13,7 +13,7 @@ pub struct Secret {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// stringData allows specifying non-binary secret data in string form. It is provided as a write-only input field for convenience. All keys and values are merged into the data field on write, overwriting any existing values. The stringData field is never output when reading from the API.
-    pub string_data: std::collections::BTreeMap<String, String>,
+    pub string_data: Option<std::collections::BTreeMap<String, String>>,
 
     /// Used to facilitate programmatic handling of secret data.
     pub type_: Option<String>,
@@ -590,10 +590,10 @@ impl<'de> crate::serde::Deserialize<'de> for Secret {
                 }
 
                 Ok(Secret {
-                    data: value_data.unwrap_or_default(),
+                    data: value_data,
                     immutable: value_immutable,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    string_data: value_string_data.unwrap_or_default(),
+                    string_data: value_string_data,
                     type_: value_type_,
                 })
             }
@@ -620,22 +620,22 @@ impl crate::serde::Serialize for Secret {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
             3 +
-            usize::from(!self.data.is_empty()) +
+            self.data.as_ref().map_or(0, |_| 1) +
             self.immutable.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.string_data.is_empty()) +
+            self.string_data.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::API_VERSION)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::KIND)?;
-        if !self.data.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", &self.data)?;
+        if let Some(value) = &self.data {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
         }
         if let Some(value) = &self.immutable {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "immutable", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if !self.string_data.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", &self.string_data)?;
+        if let Some(value) = &self.string_data {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", value)?;
         }
         if let Some(value) = &self.type_ {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;

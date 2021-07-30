@@ -11,16 +11,16 @@ fn deployment() {
 		let deployment_spec = apps::DeploymentSpec {
 			replicas: Some(1),
 			selector: meta::LabelSelector {
-				match_labels: vec![
+				match_labels: Some(vec![
 					("k8s-openapi-tests-patch-deployment-key".to_owned(), "k8s-openapi-tests-patch-deployment-value".to_owned()),
-				].into_iter().collect(),
+				].into_iter().collect()),
 				..Default::default()
 			},
 			template: api::PodTemplateSpec {
 				metadata: Some(meta::ObjectMeta {
-					labels: vec![
+					labels: Some(vec![
 						("k8s-openapi-tests-patch-deployment-key".to_owned(), "k8s-openapi-tests-patch-deployment-value".to_owned()),
-					].into_iter().collect(),
+					].into_iter().collect()),
 					..Default::default()
 				}),
 				spec: Some(api::PodSpec {

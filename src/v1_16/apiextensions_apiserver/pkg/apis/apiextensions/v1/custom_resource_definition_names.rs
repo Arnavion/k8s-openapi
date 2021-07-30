@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionNames {
     /// categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
-    pub categories: Vec<String>,
+    pub categories: Option<Vec<String>>,
 
     /// kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom resource instances will use this value as the `kind` attribute in API calls.
     pub kind: String,
@@ -16,7 +16,7 @@ pub struct CustomResourceDefinitionNames {
     pub plural: String,
 
     /// shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get \<shortname\>`. It must be all lowercase.
-    pub short_names: Vec<String>,
+    pub short_names: Option<Vec<String>>,
 
     /// singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.
     pub singular: Option<String>,
@@ -93,11 +93,11 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
                 }
 
                 Ok(CustomResourceDefinitionNames {
-                    categories: value_categories.unwrap_or_default(),
+                    categories: value_categories,
                     kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
                     list_kind: value_list_kind,
                     plural: value_plural.ok_or_else(|| crate::serde::de::Error::missing_field("plural"))?,
-                    short_names: value_short_names.unwrap_or_default(),
+                    short_names: value_short_names,
                     singular: value_singular,
                 })
             }
@@ -123,21 +123,21 @@ impl crate::serde::Serialize for CustomResourceDefinitionNames {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionNames",
             2 +
-            usize::from(!self.categories.is_empty()) +
+            self.categories.as_ref().map_or(0, |_| 1) +
             self.list_kind.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.short_names.is_empty()) +
+            self.short_names.as_ref().map_or(0, |_| 1) +
             self.singular.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.categories.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", &self.categories)?;
+        if let Some(value) = &self.categories {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         if let Some(value) = &self.list_kind {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "listKind", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "plural", &self.plural)?;
-        if !self.short_names.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", &self.short_names)?;
+        if let Some(value) = &self.short_names {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
         }
         if let Some(value) = &self.singular {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "singular", value)?;

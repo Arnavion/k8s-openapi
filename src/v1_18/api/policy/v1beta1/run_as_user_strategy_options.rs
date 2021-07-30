@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RunAsUserStrategyOptions {
     /// ranges are the allowed ranges of uids that may be used. If you would like to force a single uid then supply a single range with the same start and end. Required for MustRunAs.
-    pub ranges: Vec<crate::api::policy::v1beta1::IDRange>,
+    pub ranges: Option<Vec<crate::api::policy::v1beta1::IDRange>>,
 
     /// rule is the strategy that will dictate the allowable RunAsUser values that may be set.
     pub rule: String,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for RunAsUserStrategyOptions {
                 }
 
                 Ok(RunAsUserStrategyOptions {
-                    ranges: value_ranges.unwrap_or_default(),
+                    ranges: value_ranges,
                     rule: value_rule.ok_or_else(|| crate::serde::de::Error::missing_field("rule"))?,
                 })
             }
@@ -87,10 +87,10 @@ impl crate::serde::Serialize for RunAsUserStrategyOptions {
         let mut state = serializer.serialize_struct(
             "RunAsUserStrategyOptions",
             1 +
-            usize::from(!self.ranges.is_empty()),
+            self.ranges.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.ranges.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", &self.ranges)?;
+        if let Some(value) = &self.ranges {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
         crate::serde::ser::SerializeStruct::end(state)

@@ -16,7 +16,7 @@ pub struct NodeSpec {
     pub provider_id: Option<String>,
 
     /// If specified, the node's taints.
-    pub taints: Vec<crate::api::core::v1::Taint>,
+    pub taints: Option<Vec<crate::api::core::v1::Taint>>,
 
     /// Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration
     pub unschedulable: Option<bool>,
@@ -97,7 +97,7 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSpec {
                     external_id: value_external_id,
                     pod_cidr: value_pod_cidr,
                     provider_id: value_provider_id,
-                    taints: value_taints.unwrap_or_default(),
+                    taints: value_taints,
                     unschedulable: value_unschedulable,
                 })
             }
@@ -126,7 +126,7 @@ impl crate::serde::Serialize for NodeSpec {
             self.external_id.as_ref().map_or(0, |_| 1) +
             self.pod_cidr.as_ref().map_or(0, |_| 1) +
             self.provider_id.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.taints.is_empty()) +
+            self.taints.as_ref().map_or(0, |_| 1) +
             self.unschedulable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_source {
@@ -141,8 +141,8 @@ impl crate::serde::Serialize for NodeSpec {
         if let Some(value) = &self.provider_id {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "providerID", value)?;
         }
-        if !self.taints.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "taints", &self.taints)?;
+        if let Some(value) = &self.taints {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "taints", value)?;
         }
         if let Some(value) = &self.unschedulable {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "unschedulable", value)?;

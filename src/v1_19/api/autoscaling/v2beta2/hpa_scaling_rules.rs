@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HPAScalingRules {
     /// policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
-    pub policies: Vec<crate::api::autoscaling::v2beta2::HPAScalingPolicy>,
+    pub policies: Option<Vec<crate::api::autoscaling::v2beta2::HPAScalingPolicy>>,
 
     /// selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
     pub select_policy: Option<String>,
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for HPAScalingRules {
                 }
 
                 Ok(HPAScalingRules {
-                    policies: value_policies.unwrap_or_default(),
+                    policies: value_policies,
                     select_policy: value_select_policy,
                     stabilization_window_seconds: value_stabilization_window_seconds,
                 })
@@ -95,12 +95,12 @@ impl crate::serde::Serialize for HPAScalingRules {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HPAScalingRules",
-            usize::from(!self.policies.is_empty()) +
+            self.policies.as_ref().map_or(0, |_| 1) +
             self.select_policy.as_ref().map_or(0, |_| 1) +
             self.stabilization_window_seconds.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.policies.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policies", &self.policies)?;
+        if let Some(value) = &self.policies {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policies", value)?;
         }
         if let Some(value) = &self.select_policy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selectPolicy", value)?;

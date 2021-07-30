@@ -7,10 +7,10 @@ pub struct StorageVersionStatus {
     pub common_encoding_version: Option<String>,
 
     /// The latest available observations of the storageVersion's state.
-    pub conditions: Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>,
+    pub conditions: Option<Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>>,
 
     /// The reported versions per API server instance.
-    pub storage_versions: Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>,
+    pub storage_versions: Option<Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for StorageVersionStatus {
@@ -73,8 +73,8 @@ impl<'de> crate::serde::Deserialize<'de> for StorageVersionStatus {
 
                 Ok(StorageVersionStatus {
                     common_encoding_version: value_common_encoding_version,
-                    conditions: value_conditions.unwrap_or_default(),
-                    storage_versions: value_storage_versions.unwrap_or_default(),
+                    conditions: value_conditions,
+                    storage_versions: value_storage_versions,
                 })
             }
         }
@@ -96,17 +96,17 @@ impl crate::serde::Serialize for StorageVersionStatus {
         let mut state = serializer.serialize_struct(
             "StorageVersionStatus",
             self.common_encoding_version.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.conditions.is_empty()) +
-            usize::from(!self.storage_versions.is_empty()),
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.storage_versions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.common_encoding_version {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "commonEncodingVersion", value)?;
         }
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
-        if !self.storage_versions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersions", &self.storage_versions)?;
+        if let Some(value) = &self.storage_versions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "storageVersions", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

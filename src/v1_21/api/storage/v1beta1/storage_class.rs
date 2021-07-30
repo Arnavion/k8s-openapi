@@ -9,16 +9,16 @@ pub struct StorageClass {
     pub allow_volume_expansion: Option<bool>,
 
     /// Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
-    pub allowed_topologies: Vec<crate::api::core::v1::TopologySelectorTerm>,
+    pub allowed_topologies: Option<Vec<crate::api::core::v1::TopologySelectorTerm>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
-    pub mount_options: Vec<String>,
+    pub mount_options: Option<Vec<String>>,
 
     /// Parameters holds the parameters for the provisioner that should create volumes of this storage class.
-    pub parameters: std::collections::BTreeMap<String, String>,
+    pub parameters: Option<std::collections::BTreeMap<String, String>>,
 
     /// Provisioner indicates the type of the provisioner.
     pub provisioner: String,
@@ -498,10 +498,10 @@ impl<'de> crate::serde::Deserialize<'de> for StorageClass {
 
                 Ok(StorageClass {
                     allow_volume_expansion: value_allow_volume_expansion,
-                    allowed_topologies: value_allowed_topologies.unwrap_or_default(),
+                    allowed_topologies: value_allowed_topologies,
                     metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    mount_options: value_mount_options.unwrap_or_default(),
-                    parameters: value_parameters.unwrap_or_default(),
+                    mount_options: value_mount_options,
+                    parameters: value_parameters,
                     provisioner: value_provisioner.ok_or_else(|| crate::serde::de::Error::missing_field("provisioner"))?,
                     reclaim_policy: value_reclaim_policy,
                     volume_binding_mode: value_volume_binding_mode,
@@ -534,9 +534,9 @@ impl crate::serde::Serialize for StorageClass {
             <Self as crate::Resource>::KIND,
             4 +
             self.allow_volume_expansion.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.allowed_topologies.is_empty()) +
-            usize::from(!self.mount_options.is_empty()) +
-            usize::from(!self.parameters.is_empty()) +
+            self.allowed_topologies.as_ref().map_or(0, |_| 1) +
+            self.mount_options.as_ref().map_or(0, |_| 1) +
+            self.parameters.as_ref().map_or(0, |_| 1) +
             self.reclaim_policy.as_ref().map_or(0, |_| 1) +
             self.volume_binding_mode.as_ref().map_or(0, |_| 1),
         )?;
@@ -545,15 +545,15 @@ impl crate::serde::Serialize for StorageClass {
         if let Some(value) = &self.allow_volume_expansion {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", value)?;
         }
-        if !self.allowed_topologies.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", &self.allowed_topologies)?;
+        if let Some(value) = &self.allowed_topologies {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
-        if !self.mount_options.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", &self.mount_options)?;
+        if let Some(value) = &self.mount_options {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
         }
-        if !self.parameters.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", &self.parameters)?;
+        if let Some(value) = &self.parameters {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "provisioner", &self.provisioner)?;
         if let Some(value) = &self.reclaim_policy {

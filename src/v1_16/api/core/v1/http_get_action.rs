@@ -7,7 +7,7 @@ pub struct HTTPGetAction {
     pub host: Option<String>,
 
     /// Custom headers to set in the request. HTTP allows repeated headers.
-    pub http_headers: Vec<crate::api::core::v1::HTTPHeader>,
+    pub http_headers: Option<Vec<crate::api::core::v1::HTTPHeader>>,
 
     /// Path to access on the HTTP server.
     pub path: Option<String>,
@@ -87,7 +87,7 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
 
                 Ok(HTTPGetAction {
                     host: value_host,
-                    http_headers: value_http_headers.unwrap_or_default(),
+                    http_headers: value_http_headers,
                     path: value_path,
                     port: value_port.ok_or_else(|| crate::serde::de::Error::missing_field("port"))?,
                     scheme: value_scheme,
@@ -115,15 +115,15 @@ impl crate::serde::Serialize for HTTPGetAction {
             "HTTPGetAction",
             1 +
             self.host.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.http_headers.is_empty()) +
+            self.http_headers.as_ref().map_or(0, |_| 1) +
             self.path.as_ref().map_or(0, |_| 1) +
             self.scheme.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
         }
-        if !self.http_headers.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "httpHeaders", &self.http_headers)?;
+        if let Some(value) = &self.http_headers {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "httpHeaders", value)?;
         }
         if let Some(value) = &self.path {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LoadBalancerStatus {
     /// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
-    pub ingress: Vec<crate::api::core::v1::LoadBalancerIngress>,
+    pub ingress: Option<Vec<crate::api::core::v1::LoadBalancerIngress>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerStatus {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for LoadBalancerStatus {
                 }
 
                 Ok(LoadBalancerStatus {
-                    ingress: value_ingress.unwrap_or_default(),
+                    ingress: value_ingress,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for LoadBalancerStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LoadBalancerStatus",
-            usize::from(!self.ingress.is_empty()),
+            self.ingress.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.ingress.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", &self.ingress)?;
+        if let Some(value) = &self.ingress {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

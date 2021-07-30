@@ -46,7 +46,7 @@ pub struct Webhook {
     pub namespace_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
-    pub rules: Vec<crate::api::admissionregistration::v1beta1::RuleWithOperations>,
+    pub rules: Option<Vec<crate::api::admissionregistration::v1beta1::RuleWithOperations>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for Webhook {
@@ -120,7 +120,7 @@ impl<'de> crate::serde::Deserialize<'de> for Webhook {
                     failure_policy: value_failure_policy,
                     name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
                     namespace_selector: value_namespace_selector,
-                    rules: value_rules.unwrap_or_default(),
+                    rules: value_rules,
                 })
             }
         }
@@ -146,7 +146,7 @@ impl crate::serde::Serialize for Webhook {
             2 +
             self.failure_policy.as_ref().map_or(0, |_| 1) +
             self.namespace_selector.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.rules.is_empty()),
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.failure_policy {
@@ -156,8 +156,8 @@ impl crate::serde::Serialize for Webhook {
         if let Some(value) = &self.namespace_selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
         }
-        if !self.rules.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", &self.rules)?;
+        if let Some(value) = &self.rules {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressTLS {
     /// Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
-    pub hosts: Vec<String>,
+    pub hosts: Option<Vec<String>>,
 
     /// SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
     pub secret_name: Option<String>,
@@ -65,7 +65,7 @@ impl<'de> crate::serde::Deserialize<'de> for IngressTLS {
                 }
 
                 Ok(IngressTLS {
-                    hosts: value_hosts.unwrap_or_default(),
+                    hosts: value_hosts,
                     secret_name: value_secret_name,
                 })
             }
@@ -86,11 +86,11 @@ impl crate::serde::Serialize for IngressTLS {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressTLS",
-            usize::from(!self.hosts.is_empty()) +
+            self.hosts.as_ref().map_or(0, |_| 1) +
             self.secret_name.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.hosts.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hosts", &self.hosts)?;
+        if let Some(value) = &self.hosts {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hosts", value)?;
         }
         if let Some(value) = &self.secret_name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "secretName", value)?;

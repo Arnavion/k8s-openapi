@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIServiceStatus {
     /// Current service state of apiService.
-    pub conditions: Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>,
+    pub conditions: Option<Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for APIServiceStatus {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for APIServiceStatus {
                 }
 
                 Ok(APIServiceStatus {
-                    conditions: value_conditions.unwrap_or_default(),
+                    conditions: value_conditions,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for APIServiceStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIServiceStatus",
-            usize::from(!self.conditions.is_empty()),
+            self.conditions.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.conditions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

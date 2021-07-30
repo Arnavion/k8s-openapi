@@ -10,7 +10,7 @@ pub struct ScopedResourceSelectorRequirement {
     pub scope_name: String,
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    pub values: Vec<String>,
+    pub values: Option<Vec<String>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for ScopedResourceSelectorRequirement {
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ScopedResourceSelectorRequirement {
                 Ok(ScopedResourceSelectorRequirement {
                     operator: value_operator.ok_or_else(|| crate::serde::de::Error::missing_field("operator"))?,
                     scope_name: value_scope_name.ok_or_else(|| crate::serde::de::Error::missing_field("scopeName"))?,
-                    values: value_values.unwrap_or_default(),
+                    values: value_values,
                 })
             }
         }
@@ -96,12 +96,12 @@ impl crate::serde::Serialize for ScopedResourceSelectorRequirement {
         let mut state = serializer.serialize_struct(
             "ScopedResourceSelectorRequirement",
             2 +
-            usize::from(!self.values.is_empty()),
+            self.values.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &self.operator)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "scopeName", &self.scope_name)?;
-        if !self.values.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", &self.values)?;
+        if let Some(value) = &self.values {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "values", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

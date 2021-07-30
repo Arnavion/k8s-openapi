@@ -10,7 +10,7 @@ pub struct FlexPersistentVolumeSource {
     pub fs_type: Option<String>,
 
     /// Optional: Extra command options if any.
-    pub options: std::collections::BTreeMap<String, String>,
+    pub options: Option<std::collections::BTreeMap<String, String>>,
 
     /// Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,
@@ -88,7 +88,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlexPersistentVolumeSource {
                 Ok(FlexPersistentVolumeSource {
                     driver: value_driver.ok_or_else(|| crate::serde::de::Error::missing_field("driver"))?,
                     fs_type: value_fs_type,
-                    options: value_options.unwrap_or_default(),
+                    options: value_options,
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,
                 })
@@ -115,7 +115,7 @@ impl crate::serde::Serialize for FlexPersistentVolumeSource {
             "FlexPersistentVolumeSource",
             1 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.options.is_empty()) +
+            self.options.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
             self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
@@ -123,8 +123,8 @@ impl crate::serde::Serialize for FlexPersistentVolumeSource {
         if let Some(value) = &self.fs_type {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
-        if !self.options.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "options", &self.options)?;
+        if let Some(value) = &self.options {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
         }
         if let Some(value) = &self.read_only {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;

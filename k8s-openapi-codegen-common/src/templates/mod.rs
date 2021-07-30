@@ -80,6 +80,11 @@ pub(crate) struct Property<'a> {
 pub(crate) enum PropertyRequired {
 	Required,
 	Optional,
+
+	// TODO:
+	// This was added in 6cff2149f3334a220f1827b6740fcac54783b6c3 but then stopped being used because of
+	// https://github.com/Arnavion/k8s-openapi/issues/103
+	#[allow(unused)]
 	OptionalDefault,
 }
 

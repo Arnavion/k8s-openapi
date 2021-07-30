@@ -11,20 +11,20 @@ pub struct JSONSchemaProps {
 
     pub additional_properties: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
 
-    pub all_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub all_of: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub any_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub any_of: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
     /// default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. CustomResourceDefinitions with defaults must be created using the v1 (or newer) CustomResourceDefinition API.
     pub default: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
-    pub definitions: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub definitions: Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub dependencies: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>,
+    pub dependencies: Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>>,
 
     pub description: Option<String>,
 
-    pub enum_: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
+    pub enum_: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>>,
 
     pub example: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
@@ -62,15 +62,15 @@ pub struct JSONSchemaProps {
 
     pub nullable: Option<bool>,
 
-    pub one_of: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub one_of: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
     pub pattern: Option<String>,
 
-    pub pattern_properties: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub pattern_properties: Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub properties: std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+    pub properties: Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub required: Vec<String>,
+    pub required: Option<Vec<String>>,
 
     pub title: Option<String>,
 
@@ -96,7 +96,7 @@ pub struct JSONSchemaProps {
     /// x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by specifying the keys used as the index of the map.
     ///
     /// This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to "map". Also, the values specified for this attribute must be a scalar typed field of the child structure (no nesting is supported).
-    pub x_kubernetes_list_map_keys: Vec<String>,
+    pub x_kubernetes_list_map_keys: Option<Vec<String>>,
 
     /// x-kubernetes-list-type annotates an array to further describe its topology. This extension must only be used on lists and may have 3 possible values:
     ///
@@ -337,13 +337,13 @@ impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
                     schema: value_schema,
                     additional_items: value_additional_items,
                     additional_properties: value_additional_properties,
-                    all_of: value_all_of.unwrap_or_default(),
-                    any_of: value_any_of.unwrap_or_default(),
+                    all_of: value_all_of,
+                    any_of: value_any_of,
                     default: value_default,
-                    definitions: value_definitions.unwrap_or_default(),
-                    dependencies: value_dependencies.unwrap_or_default(),
+                    definitions: value_definitions,
+                    dependencies: value_dependencies,
                     description: value_description,
-                    enum_: value_enum_.unwrap_or_default(),
+                    enum_: value_enum_,
                     example: value_example,
                     exclusive_maximum: value_exclusive_maximum,
                     exclusive_minimum: value_exclusive_minimum,
@@ -362,17 +362,17 @@ impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
                     multiple_of: value_multiple_of,
                     not: value_not,
                     nullable: value_nullable,
-                    one_of: value_one_of.unwrap_or_default(),
+                    one_of: value_one_of,
                     pattern: value_pattern,
-                    pattern_properties: value_pattern_properties.unwrap_or_default(),
-                    properties: value_properties.unwrap_or_default(),
-                    required: value_required.unwrap_or_default(),
+                    pattern_properties: value_pattern_properties,
+                    properties: value_properties,
+                    required: value_required,
                     title: value_title,
                     type_: value_type_,
                     unique_items: value_unique_items,
                     x_kubernetes_embedded_resource: value_x_kubernetes_embedded_resource,
                     x_kubernetes_int_or_string: value_x_kubernetes_int_or_string,
-                    x_kubernetes_list_map_keys: value_x_kubernetes_list_map_keys.unwrap_or_default(),
+                    x_kubernetes_list_map_keys: value_x_kubernetes_list_map_keys,
                     x_kubernetes_list_type: value_x_kubernetes_list_type,
                     x_kubernetes_preserve_unknown_fields: value_x_kubernetes_preserve_unknown_fields,
                 })
@@ -438,13 +438,13 @@ impl crate::serde::Serialize for JSONSchemaProps {
             self.schema.as_ref().map_or(0, |_| 1) +
             self.additional_items.as_ref().map_or(0, |_| 1) +
             self.additional_properties.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.all_of.is_empty()) +
-            usize::from(!self.any_of.is_empty()) +
+            self.all_of.as_ref().map_or(0, |_| 1) +
+            self.any_of.as_ref().map_or(0, |_| 1) +
             self.default.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.definitions.is_empty()) +
-            usize::from(!self.dependencies.is_empty()) +
+            self.definitions.as_ref().map_or(0, |_| 1) +
+            self.dependencies.as_ref().map_or(0, |_| 1) +
             self.description.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.enum_.is_empty()) +
+            self.enum_.as_ref().map_or(0, |_| 1) +
             self.example.as_ref().map_or(0, |_| 1) +
             self.exclusive_maximum.as_ref().map_or(0, |_| 1) +
             self.exclusive_minimum.as_ref().map_or(0, |_| 1) +
@@ -463,17 +463,17 @@ impl crate::serde::Serialize for JSONSchemaProps {
             self.multiple_of.as_ref().map_or(0, |_| 1) +
             self.not.as_ref().map_or(0, |_| 1) +
             self.nullable.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.one_of.is_empty()) +
+            self.one_of.as_ref().map_or(0, |_| 1) +
             self.pattern.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.pattern_properties.is_empty()) +
-            usize::from(!self.properties.is_empty()) +
-            usize::from(!self.required.is_empty()) +
+            self.pattern_properties.as_ref().map_or(0, |_| 1) +
+            self.properties.as_ref().map_or(0, |_| 1) +
+            self.required.as_ref().map_or(0, |_| 1) +
             self.title.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1) +
             self.unique_items.as_ref().map_or(0, |_| 1) +
             self.x_kubernetes_embedded_resource.as_ref().map_or(0, |_| 1) +
             self.x_kubernetes_int_or_string.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.x_kubernetes_list_map_keys.is_empty()) +
+            self.x_kubernetes_list_map_keys.as_ref().map_or(0, |_| 1) +
             self.x_kubernetes_list_type.as_ref().map_or(0, |_| 1) +
             self.x_kubernetes_preserve_unknown_fields.as_ref().map_or(0, |_| 1),
         )?;
@@ -489,26 +489,26 @@ impl crate::serde::Serialize for JSONSchemaProps {
         if let Some(value) = &self.additional_properties {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
         }
-        if !self.all_of.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", &self.all_of)?;
+        if let Some(value) = &self.all_of {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
         }
-        if !self.any_of.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", &self.any_of)?;
+        if let Some(value) = &self.any_of {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
         }
         if let Some(value) = &self.default {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
         }
-        if !self.definitions.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", &self.definitions)?;
+        if let Some(value) = &self.definitions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
         }
-        if !self.dependencies.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", &self.dependencies)?;
+        if let Some(value) = &self.dependencies {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
         }
         if let Some(value) = &self.description {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }
-        if !self.enum_.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "enum", &self.enum_)?;
+        if let Some(value) = &self.enum_ {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
         }
         if let Some(value) = &self.example {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
@@ -564,20 +564,20 @@ impl crate::serde::Serialize for JSONSchemaProps {
         if let Some(value) = &self.nullable {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nullable", value)?;
         }
-        if !self.one_of.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", &self.one_of)?;
+        if let Some(value) = &self.one_of {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
         }
         if let Some(value) = &self.pattern {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
         }
-        if !self.pattern_properties.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", &self.pattern_properties)?;
+        if let Some(value) = &self.pattern_properties {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
         }
-        if !self.properties.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "properties", &self.properties)?;
+        if let Some(value) = &self.properties {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
         }
-        if !self.required.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "required", &self.required)?;
+        if let Some(value) = &self.required {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
         }
         if let Some(value) = &self.title {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
@@ -594,8 +594,8 @@ impl crate::serde::Serialize for JSONSchemaProps {
         if let Some(value) = &self.x_kubernetes_int_or_string {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-int-or-string", value)?;
         }
-        if !self.x_kubernetes_list_map_keys.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-map-keys", &self.x_kubernetes_list_map_keys)?;
+        if let Some(value) = &self.x_kubernetes_list_map_keys {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-map-keys", value)?;
         }
         if let Some(value) = &self.x_kubernetes_list_type {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "x-kubernetes-list-type", value)?;

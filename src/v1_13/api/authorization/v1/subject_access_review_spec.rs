@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SubjectAccessReviewSpec {
     /// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-    pub extra: std::collections::BTreeMap<String, Vec<String>>,
+    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
 
     /// Groups is the groups you're testing for.
-    pub groups: Vec<String>,
+    pub groups: Option<Vec<String>>,
 
     /// NonResourceAttributes describes information for a non-resource access request
     pub non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes>,
@@ -93,8 +93,8 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewSpec {
                 }
 
                 Ok(SubjectAccessReviewSpec {
-                    extra: value_extra.unwrap_or_default(),
-                    groups: value_groups.unwrap_or_default(),
+                    extra: value_extra,
+                    groups: value_groups,
                     non_resource_attributes: value_non_resource_attributes,
                     resource_attributes: value_resource_attributes,
                     uid: value_uid,
@@ -122,18 +122,18 @@ impl crate::serde::Serialize for SubjectAccessReviewSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SubjectAccessReviewSpec",
-            usize::from(!self.extra.is_empty()) +
-            usize::from(!self.groups.is_empty()) +
+            self.extra.as_ref().map_or(0, |_| 1) +
+            self.groups.as_ref().map_or(0, |_| 1) +
             self.non_resource_attributes.as_ref().map_or(0, |_| 1) +
             self.resource_attributes.as_ref().map_or(0, |_| 1) +
             self.uid.as_ref().map_or(0, |_| 1) +
             self.user.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.extra.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", &self.extra)?;
+        if let Some(value) = &self.extra {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
         }
-        if !self.groups.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", &self.groups)?;
+        if let Some(value) = &self.groups {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
         }
         if let Some(value) = &self.non_resource_attributes {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;

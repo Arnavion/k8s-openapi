@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPresetSpec {
     /// Env defines the collection of EnvVar to inject into containers.
-    pub env: Vec<crate::api::core::v1::EnvVar>,
+    pub env: Option<Vec<crate::api::core::v1::EnvVar>>,
 
     /// EnvFrom defines the collection of EnvFromSource to inject into containers.
-    pub env_from: Vec<crate::api::core::v1::EnvFromSource>,
+    pub env_from: Option<Vec<crate::api::core::v1::EnvFromSource>>,
 
     /// Selector is a label query over a set of resources, in this case pods. Required.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// VolumeMounts defines the collection of VolumeMount to inject into containers.
-    pub volume_mounts: Vec<crate::api::core::v1::VolumeMount>,
+    pub volume_mounts: Option<Vec<crate::api::core::v1::VolumeMount>>,
 
     /// Volumes defines the collection of Volume to inject into the pod.
-    pub volumes: Vec<crate::api::core::v1::Volume>,
+    pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for PodPresetSpec {
@@ -86,11 +86,11 @@ impl<'de> crate::serde::Deserialize<'de> for PodPresetSpec {
                 }
 
                 Ok(PodPresetSpec {
-                    env: value_env.unwrap_or_default(),
-                    env_from: value_env_from.unwrap_or_default(),
+                    env: value_env,
+                    env_from: value_env_from,
                     selector: value_selector,
-                    volume_mounts: value_volume_mounts.unwrap_or_default(),
-                    volumes: value_volumes.unwrap_or_default(),
+                    volume_mounts: value_volume_mounts,
+                    volumes: value_volumes,
                 })
             }
         }
@@ -113,26 +113,26 @@ impl crate::serde::Serialize for PodPresetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodPresetSpec",
-            usize::from(!self.env.is_empty()) +
-            usize::from(!self.env_from.is_empty()) +
+            self.env.as_ref().map_or(0, |_| 1) +
+            self.env_from.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
-            usize::from(!self.volume_mounts.is_empty()) +
-            usize::from(!self.volumes.is_empty()),
+            self.volume_mounts.as_ref().map_or(0, |_| 1) +
+            self.volumes.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.env.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "env", &self.env)?;
+        if let Some(value) = &self.env {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
         }
-        if !self.env_from.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", &self.env_from)?;
+        if let Some(value) = &self.env_from {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
         }
         if let Some(value) = &self.selector {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
-        if !self.volume_mounts.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", &self.volume_mounts)?;
+        if let Some(value) = &self.volume_mounts {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
         }
-        if !self.volumes.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", &self.volumes)?;
+        if let Some(value) = &self.volumes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

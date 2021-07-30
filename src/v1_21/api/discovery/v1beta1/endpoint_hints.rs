@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointHints {
     /// forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.
-    pub for_zones: Vec<crate::api::discovery::v1beta1::ForZone>,
+    pub for_zones: Option<Vec<crate::api::discovery::v1beta1::ForZone>>,
 }
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointHints {
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointHints {
                 }
 
                 Ok(EndpointHints {
-                    for_zones: value_for_zones.unwrap_or_default(),
+                    for_zones: value_for_zones,
                 })
             }
         }
@@ -77,10 +77,10 @@ impl crate::serde::Serialize for EndpointHints {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EndpointHints",
-            usize::from(!self.for_zones.is_empty()),
+            self.for_zones.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.for_zones.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "forZones", &self.for_zones)?;
+        if let Some(value) = &self.for_zones {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "forZones", value)?;
         }
         crate::serde::ser::SerializeStruct::end(state)
     }

@@ -106,10 +106,10 @@ fn test() {
 
 
 		let open_api_v3_schema = apiextensions::JSONSchemaProps {
-			properties: vec![
+			properties: Some(vec![
 				("spec".to_string(), apiextensions::JSONSchemaProps {
 					type_: Some("object".to_owned()),
-					properties: vec![
+					properties: Some(vec![
 						("prop1".to_string(), apiextensions::JSONSchemaProps {
 							type_: Some("string".to_string()),
 							..Default::default()
@@ -127,14 +127,14 @@ fn test() {
 							type_: Some("integer".to_string()),
 							..Default::default()
 						}),
-					].into_iter().collect(),
-					required: vec![
+					].into_iter().collect()),
+					required: Some(vec![
 						"prop1".to_string(),
 						"prop2".to_string(),
-					],
+					]),
 					..Default::default()
 				}),
-			].into_iter().collect(),
+			].into_iter().collect()),
 			..Default::default()
 		};
 		// v1 (1.16+) requires "type" to be set. But with v1beta1 on 1.11 and below, creating the CRD fails because
@@ -154,7 +154,7 @@ fn test() {
 			names: apiextensions::CustomResourceDefinitionNames {
 				kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
 				plural: plural.to_owned(),
-				short_names: vec!["fb".to_owned()],
+				short_names: Some(vec!["fb".to_owned()]),
 				singular: Some("foobar".to_owned()),
 				..Default::default()
 			},

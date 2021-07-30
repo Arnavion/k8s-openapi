@@ -6,7 +6,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SecretProjection {
     /// If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-    pub items: Vec<crate::api::core::v1::KeyToPath>,
+    pub items: Option<Vec<crate::api::core::v1::KeyToPath>>,
 
     /// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
     pub name: Option<String>,
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for SecretProjection {
                 }
 
                 Ok(SecretProjection {
-                    items: value_items.unwrap_or_default(),
+                    items: value_items,
                     name: value_name,
                     optional: value_optional,
                 })
@@ -97,12 +97,12 @@ impl crate::serde::Serialize for SecretProjection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SecretProjection",
-            usize::from(!self.items.is_empty()) +
+            self.items.as_ref().map_or(0, |_| 1) +
             self.name.as_ref().map_or(0, |_| 1) +
             self.optional.as_ref().map_or(0, |_| 1),
         )?;
-        if !self.items.is_empty() {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
+        if let Some(value) = &self.items {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
         if let Some(value) = &self.name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
