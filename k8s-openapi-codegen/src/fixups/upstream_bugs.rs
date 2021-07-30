@@ -49,6 +49,44 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
 	}
 }
 
+// Path operation "connectCoreV1GetNamespacedPodExec" claims to take `command: string` parameter in the query string.
+// This is not a single string but an array of strings, encoded as multiple query string parameters.
+pub(crate) fn pod_exec_command_parameter_type(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut found = false;
+
+	if let Some(operation) = spec.operations.iter_mut().find(|operation| operation.id == "connectCoreV1GetNamespacedPodExec") {
+		if let Some(parameter) = operation.parameters.iter_mut().find(|p| p.name == "command") {
+			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::String { format: None }) = parameter.schema.kind {
+				*parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+					location: parameter.location,
+					name: parameter.name.clone(),
+					required: parameter.required,
+					schema: crate::swagger20::Schema {
+						kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Array {
+							items: Box::new(crate::swagger20::Schema {
+								description: None,
+								kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::String { format: None }),
+								kubernetes_group_kind_versions: vec![],
+								list_kind: None,
+							}),
+						}),
+						..(parameter.schema.clone())
+					},
+				});
+
+				found = true;
+			}
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied connectCoreV1GetNamespacedPodExec command parameter type override".into())
+	}
+}
+
 // The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
 //
 // Ref: https://github.com/kubernetes/kubernetes/pull/63837

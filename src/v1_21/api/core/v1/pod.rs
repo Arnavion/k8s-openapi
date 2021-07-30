@@ -236,7 +236,9 @@ impl Pod {
         );
         let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
-            __query_pairs.append_pair("command", command);
+            for command in command {
+                __query_pairs.append_pair("command", command);
+            }
         }
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
@@ -266,7 +268,7 @@ impl Pod {
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
-    pub command: Option<&'a str>,
+    pub command: Option<&'a [String]>,
     /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
     /// Redirect the standard error stream of the pod for this call. Defaults to true.

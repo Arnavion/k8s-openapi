@@ -1925,7 +1925,17 @@ pub fn write_operation(
 			for (parameter_name, parameter_type, parameter) in &parameters {
 				if parameter.location == swagger20::ParameterLocation::Query {
 					if parameter.required {
-						match parameter.schema.kind {
+						match &parameter.schema.kind {
+							swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) => match &items.kind {
+								swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+									writeln!(out, "{}    for {} in {} {{", indent, parameter_name, parameter_name)?;
+									writeln!(out, r#"{}        __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?;
+									writeln!(out, "{}    }}", indent)?;
+								},
+
+								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+							},
+
 							swagger20::SchemaKind::Ty(
 								swagger20::Type::Boolean |
 								swagger20::Type::Integer { .. } |
@@ -1940,7 +1950,17 @@ pub fn write_operation(
 					}
 					else {
 						writeln!(out, "{}    if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
-						match parameter.schema.kind {
+						match &parameter.schema.kind {
+							swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) => match &items.kind {
+								swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+									writeln!(out, "{}        for {} in {} {{", indent, parameter_name, parameter_name)?;
+									writeln!(out, r#"{}            __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?;
+									writeln!(out, "{}        }}", indent)?;
+								},
+
+								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+							},
+
 							swagger20::SchemaKind::Ty(
 								swagger20::Type::Boolean |
 								swagger20::Type::Integer { .. } |

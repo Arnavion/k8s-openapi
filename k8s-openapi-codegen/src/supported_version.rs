@@ -84,6 +84,7 @@ impl SupportedVersion {
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
 				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 				crate::fixups::upstream_bugs::remove_compat_refs,
 			],
@@ -92,6 +93,7 @@ impl SupportedVersion {
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 				crate::fixups::upstream_bugs::remove_compat_refs,
 			],
@@ -100,6 +102,7 @@ impl SupportedVersion {
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 				crate::fixups::upstream_bugs::remove_compat_refs,
 			],
@@ -108,6 +111,7 @@ impl SupportedVersion {
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 			],
 
@@ -115,37 +119,44 @@ impl SupportedVersion {
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
 				crate::fixups::upstream_bugs::optional_properties::crdstatus,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::raw_extension_ty,
 			],
 
 			SupportedVersion::V1_16 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_17 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_18 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_19 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_20 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_21 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 		};
 
