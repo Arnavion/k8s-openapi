@@ -1385,6 +1385,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	// Eg "JSONSchemas" => "json_schemas", but "externalIPs" => "external_ips" instead of "external_i_ps".
 	// Mostly happens with plurals of abbreviations.
 	match name {
+		"clusterIPs" => return "cluster_ips".into(),
 		"externalIPs" => return "external_ips".into(),
 		"nonResourceURLs" => return "non_resource_urls".into(),
 		"podCIDRs" => return "pod_cidrs".into(),

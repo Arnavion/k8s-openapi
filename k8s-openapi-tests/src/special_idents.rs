@@ -11,6 +11,9 @@ fn special_idents() {
 	let _ = api::FCVolumeSource { target_wwns: Default::default(), ..Default::default() };
 
 	let _ = api::ServiceSpec { external_ips: Default::default(), ..Default::default() };
+	k8s_openapi::k8s_if_ge_1_20! {
+		let _ = api::ServiceSpec { cluster_ips: Default::default(), ..Default::default() };
+	}
 
 	let _ = authorization::NonResourceRule { non_resource_urls: Default::default(), ..Default::default() };
 

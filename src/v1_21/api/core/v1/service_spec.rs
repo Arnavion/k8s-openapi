@@ -12,7 +12,7 @@ pub struct ServiceSpec {
     /// ClusterIPs is a list of IP addresses assigned to this service, and are usually assigned randomly.  If an address is specified manually, is in-range (as per system configuration), and is not in use, it will be allocated to the service; otherwise creation of the service will fail. This field may not be changed through updates unless the type field is also being changed to ExternalName (which requires this field to be empty) or the type field is being changed from ExternalName (in which case this field may optionally be specified, as describe above).  Valid values are "None", empty string (""), or a valid IP address.  Setting this to "None" makes a "headless service" (no virtual IP), which is useful when direct endpoint connections are preferred and proxying is not required.  Only applies to types ClusterIP, NodePort, and LoadBalancer. If this field is specified when creating a Service of type ExternalName, creation will fail. This field will be wiped when updating a Service to type ExternalName.  If this field is not specified, it will be initialized from the clusterIP field.  If this field is specified, clients must ensure that clusterIPs\[0\] and clusterIP have the same value.
     ///
     /// Unless the "IPv6DualStack" feature gate is enabled, this field is limited to one value, which must be the same as the clusterIP field.  If the feature gate is enabled, this field may hold a maximum of two entries (dual-stack IPs, in either order).  These IPs must correspond to the values of the ipFamilies field. Both clusterIPs and ipFamilies are governed by the ipFamilyPolicy field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-    pub cluster_i_ps: Option<Vec<String>>,
+    pub cluster_ips: Option<Vec<String>>,
 
     /// externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service.  These IPs are not managed by Kubernetes.  The user is responsible for ensuring that traffic arrives at a node with this IP.  A common example is external load-balancers that are not part of the Kubernetes system.
     pub external_ips: Option<Vec<String>>,
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
         enum Field {
             Key_allocate_load_balancer_node_ports,
             Key_cluster_ip,
-            Key_cluster_i_ps,
+            Key_cluster_ips,
             Key_external_ips,
             Key_external_name,
             Key_external_traffic_policy,
@@ -110,7 +110,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
                         Ok(match v {
                             "allocateLoadBalancerNodePorts" => Field::Key_allocate_load_balancer_node_ports,
                             "clusterIP" => Field::Key_cluster_ip,
-                            "clusterIPs" => Field::Key_cluster_i_ps,
+                            "clusterIPs" => Field::Key_cluster_ips,
                             "externalIPs" => Field::Key_external_ips,
                             "externalName" => Field::Key_external_name,
                             "externalTrafficPolicy" => Field::Key_external_traffic_policy,
@@ -149,7 +149,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_allocate_load_balancer_node_ports: Option<bool> = None;
                 let mut value_cluster_ip: Option<String> = None;
-                let mut value_cluster_i_ps: Option<Vec<String>> = None;
+                let mut value_cluster_ips: Option<Vec<String>> = None;
                 let mut value_external_ips: Option<Vec<String>> = None;
                 let mut value_external_name: Option<String> = None;
                 let mut value_external_traffic_policy: Option<String> = None;
@@ -172,7 +172,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
                     match key {
                         Field::Key_allocate_load_balancer_node_ports => value_allocate_load_balancer_node_ports = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_cluster_ip => value_cluster_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cluster_i_ps => value_cluster_i_ps = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cluster_ips => value_cluster_ips = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_external_ips => value_external_ips = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_external_name => value_external_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_external_traffic_policy => value_external_traffic_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -197,7 +197,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
                 Ok(ServiceSpec {
                     allocate_load_balancer_node_ports: value_allocate_load_balancer_node_ports,
                     cluster_ip: value_cluster_ip,
-                    cluster_i_ps: value_cluster_i_ps,
+                    cluster_ips: value_cluster_ips,
                     external_ips: value_external_ips,
                     external_name: value_external_name,
                     external_traffic_policy: value_external_traffic_policy,
@@ -254,7 +254,7 @@ impl crate::serde::Serialize for ServiceSpec {
             "ServiceSpec",
             self.allocate_load_balancer_node_ports.as_ref().map_or(0, |_| 1) +
             self.cluster_ip.as_ref().map_or(0, |_| 1) +
-            self.cluster_i_ps.as_ref().map_or(0, |_| 1) +
+            self.cluster_ips.as_ref().map_or(0, |_| 1) +
             self.external_ips.as_ref().map_or(0, |_| 1) +
             self.external_name.as_ref().map_or(0, |_| 1) +
             self.external_traffic_policy.as_ref().map_or(0, |_| 1) +
@@ -279,7 +279,7 @@ impl crate::serde::Serialize for ServiceSpec {
         if let Some(value) = &self.cluster_ip {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
         }
-        if let Some(value) = &self.cluster_i_ps {
+        if let Some(value) = &self.cluster_ips {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIPs", value)?;
         }
         if let Some(value) = &self.external_ips {
