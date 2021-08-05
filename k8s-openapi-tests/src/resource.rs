@@ -24,7 +24,10 @@ fn impl_resource() {
 		}
 	}
 
-	assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1beta1::TokenReview>("tokenreviews");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1beta1::TokenReview>("tokenreviews");
+	}
+	assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1::TokenReview>("tokenreviews");
 
 	k8s_openapi::k8s_if_ge_1_16! {
 		assert_is_subresource::<k8s_openapi::api::authentication::v1::TokenRequest>("token");
@@ -32,13 +35,25 @@ fn impl_resource() {
 
 	assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1::TokenReview>("tokenreviews");
 
-	assert_is_namespace_scoped::<k8s_openapi::api::authorization::v1beta1::LocalSubjectAccessReview>("localsubjectaccessreviews");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_namespace_scoped::<k8s_openapi::api::authorization::v1beta1::LocalSubjectAccessReview>("localsubjectaccessreviews");
+	}
+	assert_is_namespace_scoped::<k8s_openapi::api::authorization::v1::LocalSubjectAccessReview>("localsubjectaccessreviews");
 
-	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SelfSubjectAccessReview>("selfsubjectaccessreviews");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SelfSubjectAccessReview>("selfsubjectaccessreviews");
+	}
+	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1::SelfSubjectAccessReview>("selfsubjectaccessreviews");
 
-	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SelfSubjectRulesReview>("selfsubjectrulesreviews");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SelfSubjectRulesReview>("selfsubjectrulesreviews");
+	}
+	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1::SelfSubjectRulesReview>("selfsubjectrulesreviews");
 
-	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SubjectAccessReview>("subjectaccessreviews");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1beta1::SubjectAccessReview>("subjectaccessreviews");
+	}
+	assert_is_cluster_scoped::<k8s_openapi::api::authorization::v1::SubjectAccessReview>("subjectaccessreviews");
 
 	assert_is_namespace_scoped::<k8s_openapi::api::authorization::v1::LocalSubjectAccessReview>("localsubjectaccessreviews");
 
@@ -54,7 +69,7 @@ fn impl_resource() {
 
 	assert_is_namespace_scoped::<k8s_openapi::api::apps::v1::DaemonSet>("daemonsets");
 
-	k8s_openapi::k8s_if_ge_1_21! {
+	k8s_openapi::k8s_if_1_21! {
 		assert_is_subresource::<k8s_openapi::api::core::v1::EphemeralContainers>("ephemeralcontainers");
 	}
 
@@ -84,7 +99,12 @@ fn impl_resource() {
 
 	assert_is_subresource::<k8s_openapi::apimachinery::pkg::apis::meta::v1::Status>("status");
 
-	assert_is_subresource::<k8s_openapi::api::policy::v1beta1::Eviction>("eviction");
+	k8s_openapi::k8s_if_le_1_21! {
+		assert_is_subresource::<k8s_openapi::api::policy::v1beta1::Eviction>("eviction");
+	}
+	k8s_openapi::k8s_if_ge_1_22! {
+		assert_is_subresource::<k8s_openapi::api::policy::v1::Eviction>("eviction");
+	}
 
 	assert_is_cluster_scoped::<k8s_openapi::List<k8s_openapi::api::core::v1::Namespace>>("");
 	assert_is_namespace_scoped::<k8s_openapi::List<k8s_openapi::api::core::v1::Pod>>("");

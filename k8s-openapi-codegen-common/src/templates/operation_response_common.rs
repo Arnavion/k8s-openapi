@@ -93,8 +93,10 @@ pub(crate) fn generate(
 			use std::fmt::Write;
 
 			writeln!(variants, "    Ok(T),")?;
+			writeln!(variants, "    Created(T),")?;
 
 			variant_match_arms.push_str(&deserialize_single(&local, "OK", type_name, "Ok")?);
+			variant_match_arms.push_str(&deserialize_single(&local, "CREATED", type_name, "Created")?);
 		},
 
 		OperationAction::Replace => {

@@ -969,7 +969,10 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 				if let crate::swagger20::OperationResponses::Map(responses) = &operation.responses {
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
-					if response_status_codes != [http::StatusCode::OK] {
+					if
+						response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] &&
+						response_status_codes != [http::StatusCode::OK] // 1.21 and earlier did not have 201
+					{
 						return Err(format!("operation {} does not have the expected response status codes of a patch operation: {:?}",
 							operation.id, response_status_codes).into());
 					}

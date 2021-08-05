@@ -49,6 +49,7 @@ declare -A K8S_VERSIONS=(
 	['1.19']='1.19.13'
 	['1.20']='1.20.9'
 	['1.21']='1.21.3'
+	['1.22']='1.22.0'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
@@ -64,6 +65,7 @@ declare -A KIND_VERSIONS=(
 	['1.19']='0.11.1'
 	['1.20']='0.11.1'
 	['1.21']='0.11.1'
+	['1.22']='0.11.1'
 )
 
 case "$1" in

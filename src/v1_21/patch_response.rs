@@ -5,6 +5,7 @@
 #[derive(Debug)]
 pub enum PatchResponse<T> where T: crate::serde::de::DeserializeOwned {
     Ok(T),
+    Created(T),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
@@ -19,6 +20,14 @@ impl<T> crate::Response for PatchResponse<T> where T: crate::serde::de::Deserial
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchResponse::Ok(result), buf.len()))
+            },
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
+                };
+                Ok((PatchResponse::Created(result), buf.len()))
             },
             _ => {
                 let (result, read) =
