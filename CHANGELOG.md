@@ -1,3 +1,42 @@
+# v0.13.0 (2021-08-09)
+
+## k8s-openapi
+
+- BREAKING CHANGE: The change from v0.12.0 to make `Option<Vec<T>>` and `Option<BTreeMap<K, V>>` fields into `Vec<T>` and `BTreeMap<K, V>` fields has been reverted, because there is at least one case where a resource type needs to be serialized with an empty `Vec` field. See https://github.com/Arnavion/k8s-openapi/issues/103
+
+- BREAKING CHANGE: Added support for Kubernetes 1.22 under the `v1_22` feature.
+
+- BREAKING CHANGE: Fixed `api::core::v1::Pod::connect_get_namespaced_pod_exec` to take its optional `command` parameter as `Option<&'a [String]>` instead of `Option<&'a str>`
+
+- BREAKING CHANGE: Fixed `api::core::v1::ServiceSpec`'s `clusterIPs` field to be correctly emitted as `cluster_ips` instead of `cluster_i_ps`
+
+- FEATURE: The new `schemars` crate feature enables impls of `schemars::JsonSchema` on all resource types.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.15
+- v1.17.17
+- v1.18.20
+- v1.19.13
+- v1.20.9
+- v1.21.3
+- v1.22.0
+
+## k8s-openapi-codegen-common
+
+- BREAKING CHANGE: `k8s_openapi_codegen_common::run` now takes an additional parameter to indicate whether the generated code of resource types should contain an impl of `schemars::JsonSchema` or not.
+
+## k8s-openapi-derive
+
+- FEATURE: The `#[derive(CustomResourceDefinition)]` custom derive now recognizes a new attribute `#[custom_resource_definition(generate_schema)]`. If this attribute is provided, the generated custom resource type will also implement `schemars::JsonSchema`. The `schemars` feature of the `k8s-openapi` crate must have been enabled.
+
+---
+
 # v0.12.0 (2021-06-15)
 
 ## k8s-openapi
