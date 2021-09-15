@@ -1633,10 +1633,9 @@ pub fn write_operation(
 		writeln!(out, "impl {} {{", type_name)?;
 	}
 
-	let parameters: Vec<_> = operation.parameters.iter().map(std::ops::Deref::deref).collect();
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
 	let parameters: Result<Vec<_>, Error> =
-		parameters.into_iter()
+		operation.parameters.iter().map(std::ops::Deref::deref)
 		.map(|parameter| {
 			let mut parameter_name = get_rust_ident(&parameter.name);
 			while previous_parameters.contains(&parameter_name) {
