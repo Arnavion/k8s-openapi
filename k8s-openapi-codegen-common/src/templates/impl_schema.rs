@@ -183,7 +183,11 @@ fn gen_type(
 	let indent = "    ".repeat(depth + 1);
 
 	match ty {
-		swagger20::Type::Any => (),
+		swagger20::Type::Any => {
+			writeln!(out,
+				"{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),",
+				indent = indent, local = local)?;
+		},
 
 		swagger20::Type::JsonSchemaPropsOrArray(v) => {
 			let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
