@@ -42,6 +42,7 @@ impl crate::schemars::JsonSchema for StorageVersionSpec {
                 description: Some("StorageVersionSpec is an empty spec.".to_owned()),
                 ..Default::default()
             })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             ..Default::default()
         })
     }

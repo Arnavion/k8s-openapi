@@ -42,6 +42,7 @@ impl crate::schemars::JsonSchema for Fields {
                 description: Some("Fields stores a set of fields in a data structure like a Trie. To understand how this is used, see: https://github.com/kubernetes-sigs/structured-merge-diff".to_owned()),
                 ..Default::default()
             })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             ..Default::default()
         })
     }

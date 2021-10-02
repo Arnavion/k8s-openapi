@@ -42,6 +42,7 @@ impl crate::schemars::JsonSchema for JSON {
                 description: Some("JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.".to_owned()),
                 ..Default::default()
             })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             ..Default::default()
         })
     }
