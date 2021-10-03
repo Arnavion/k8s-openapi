@@ -12,7 +12,7 @@ include = [
 
 [dependencies]
 base64 = "0.13"
-dirs = "3"
+dirs = "4"
 k8s-openapi = { path = "..", features = ["schemars"] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 openssl = "0.10"
