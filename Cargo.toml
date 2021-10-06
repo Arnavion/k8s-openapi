@@ -61,3 +61,12 @@ v1_22 = []
 [package.metadata.docs.rs]
 # docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
 features = ["v1_22"]
+
+[workspace]
+members = [
+    "k8s-openapi-codegen",
+    "k8s-openapi-codegen-common",
+    "k8s-openapi-derive",
+    "k8s-openapi-tests",
+    "k8s-openapi-tests-macro-deps",
+]
