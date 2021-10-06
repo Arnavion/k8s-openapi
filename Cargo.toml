@@ -63,4 +63,10 @@ v1_22 = []
 features = ["v1_22"]
 
 [workspace]
-members = ["k8s-openapi-codegen", "k8s-openapi-codegen-common", "k8s-openapi-derive", "k8s-openapi-tests", "k8s-openapi-tests-macro-deps"]
+members = [
+    "k8s-openapi-codegen",
+    "k8s-openapi-codegen-common",
+    "k8s-openapi-derive",
+    "k8s-openapi-tests",
+    "k8s-openapi-tests-macro-deps",
+]
