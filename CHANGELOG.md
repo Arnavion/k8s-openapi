@@ -1,3 +1,34 @@
+# v0.13.1 (2021-10-08)
+
+## k8s-openapi
+
+- BUGFIX: v0.13.0 added `schemars::JsonSchema` impls for resource types. For types like `k8s_openapi::apimachinery::pkg::apis::meta::v1::FieldsV1` that are objects with no defined structure, the impl incorrectly emitted the schema as `{}` instead of `{ "type": "object" }`. This has now been fixed.
+
+Corresponding Kubernetes API server versions:
+
+- v1.11.10
+- v1.12.10
+- v1.13.12
+- v1.14.10
+- v1.15.12
+- v1.16.15
+- v1.17.17
+- v1.18.20
+- v1.19.15
+- v1.20.11
+- v1.21.5
+- v1.22.2
+
+## k8s-openapi-codegen-common
+
+- BUGFIX: See the bugfix mentioned above.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.13.0 (2021-08-09)
 
 ## k8s-openapi
