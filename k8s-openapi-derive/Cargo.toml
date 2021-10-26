@@ -18,11 +18,15 @@ include = [
 ]
 
 [dependencies]
-http = "0.2"
+http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { version = "=0.13.1", path = "../k8s-openapi-codegen-common" }
-proc-macro2 = "1"
-quote = "1"
-syn = { version = "1", features = ["extra-traits"] }
+proc-macro2 = { version = "1", default-features = false, features = ["proc-macro"] }
+quote = { version = "1", default-features = false }
+syn = { version = "1", default-features = false, features = [
+	"derive", # minimal feature for writing custom derives
+	"parsing", # for syn::parse2, syn::Path::is_ident, syn::Attribute::parse_meta
+	"printing", # for syn types: quote::ToTokens
+] }
 
 [lib]
 proc-macro = true

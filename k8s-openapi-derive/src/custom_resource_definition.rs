@@ -2,7 +2,6 @@ use k8s_openapi_codegen_common::swagger20;
 
 use super::ResultExt;
 
-#[derive(Debug)]
 pub(super) struct CustomResourceDefinition {
 	ident: proc_macro2::Ident,
 	vis: syn::Visibility,
@@ -30,8 +29,13 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let mut namespaced = false;
 
 		for attr in &input.attrs {
-			if attr.style != syn::AttrStyle::Outer {
-				continue;
+			#[allow(clippy::needless_continue)]
+			{
+				if let syn::AttrStyle::Outer = attr.style {
+				}
+				else {
+					continue;
+				}
 			}
 
 			if !attr.path.is_ident("custom_resource_definition") {

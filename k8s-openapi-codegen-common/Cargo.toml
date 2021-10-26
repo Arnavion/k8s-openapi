@@ -19,5 +19,8 @@ include = [
 ]
 
 [dependencies]
-http = "0.2"
-serde = { version = "1", features = ["derive", "rc"], optional = true }
+http = { version = "0.2", default-features = false }
+serde = { version = "1", optional = true, default-features = false, features = [
+	"derive", # for #[derive(serde::Deserialize, serde::Serialize)]
+	"rc", # for Arc<Parameter>: serde::Deserialize
+] }

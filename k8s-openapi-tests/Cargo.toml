@@ -11,15 +11,23 @@ include = [
 ]
 
 [dependencies]
-base64 = "0.13"
-dirs = "4"
-k8s-openapi = { path = "..", features = ["schemars"] }
+base64 = { version = "0.13", default-features = false }
+dirs = { version = "4", default-features = false }
+k8s-openapi = { path = "..", features = [
+	"schemars", # for resource types: schemars::JsonSchema
+] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
-openssl = "0.10"
-reqwest = { version = "0.11", default-features = false, features = ["blocking", "native-tls"] }
-serde = "1"
-serde_derive = "1"
-serde_yaml = "0.8"
+openssl = { version = "0.10", default-features = false }
+reqwest = { version = "0.11", default-features = false, features = [
+	"blocking", # for reqwest::blocking
+	"native-tls", # for TLS support
+] }
+schemars = { version = "0.8", default-features = false, features = [
+	"derive", # for #[derive(schemars::JsonSchema)]
+] }
+serde = { version = "1", default-features = false }
+serde_derive = { version = "1", default-features = false }
+serde_yaml = { version = "0.8", default-features = false }
 
 [features]
 test_v1_11 = ["k8s-openapi/v1_11"]
