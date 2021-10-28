@@ -467,6 +467,8 @@ mod api_versions;
 
 mod custom_resource_definition;
 
+mod deserialize_leniency;
+
 mod deployment;
 
 mod job;

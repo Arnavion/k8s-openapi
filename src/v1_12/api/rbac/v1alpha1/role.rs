@@ -562,15 +562,15 @@ impl<'de> crate::serde::Deserialize<'de> for Role {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_rules => value_rules = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Role {
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    rules: value_rules.ok_or_else(|| crate::serde::de::Error::missing_field("rules"))?,
+                    metadata: value_metadata.unwrap_or_default(),
+                    rules: value_rules.unwrap_or_default(),
                 })
             }
         }

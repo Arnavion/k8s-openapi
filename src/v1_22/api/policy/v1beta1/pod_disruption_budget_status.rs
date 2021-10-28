@@ -97,11 +97,11 @@ impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_healthy => value_current_healthy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_desired_healthy => value_desired_healthy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current_healthy => value_current_healthy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_desired_healthy => value_desired_healthy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_disrupted_pods => value_disrupted_pods = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_disruptions_allowed => value_disruptions_allowed = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_expected_pods => value_expected_pods = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_disruptions_allowed => value_disruptions_allowed = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_expected_pods => value_expected_pods = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -109,11 +109,11 @@ impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
 
                 Ok(PodDisruptionBudgetStatus {
                     conditions: value_conditions,
-                    current_healthy: value_current_healthy.ok_or_else(|| crate::serde::de::Error::missing_field("currentHealthy"))?,
-                    desired_healthy: value_desired_healthy.ok_or_else(|| crate::serde::de::Error::missing_field("desiredHealthy"))?,
+                    current_healthy: value_current_healthy.unwrap_or_default(),
+                    desired_healthy: value_desired_healthy.unwrap_or_default(),
                     disrupted_pods: value_disrupted_pods,
-                    disruptions_allowed: value_disruptions_allowed.ok_or_else(|| crate::serde::de::Error::missing_field("disruptionsAllowed"))?,
-                    expected_pods: value_expected_pods.ok_or_else(|| crate::serde::de::Error::missing_field("expectedPods"))?,
+                    disruptions_allowed: value_disruptions_allowed.unwrap_or_default(),
+                    expected_pods: value_expected_pods.unwrap_or_default(),
                     observed_generation: value_observed_generation,
                 })
             }

@@ -76,7 +76,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlexVolumeSource {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_driver => value_driver = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_driver => value_driver = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_options => value_options = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -86,7 +86,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlexVolumeSource {
                 }
 
                 Ok(FlexVolumeSource {
-                    driver: value_driver.ok_or_else(|| crate::serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.unwrap_or_default(),
                     fs_type: value_fs_type,
                     options: value_options,
                     read_only: value_read_only,

@@ -155,10 +155,10 @@ impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_admission_review_versions => value_admission_review_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_client_config => value_client_config = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_client_config => value_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_failure_policy => value_failure_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_match_policy => value_match_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_namespace_selector => value_namespace_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_object_selector => value_object_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reinvocation_policy => value_reinvocation_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -171,10 +171,10 @@ impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
 
                 Ok(MutatingWebhook {
                     admission_review_versions: value_admission_review_versions,
-                    client_config: value_client_config.ok_or_else(|| crate::serde::de::Error::missing_field("clientConfig"))?,
+                    client_config: value_client_config.unwrap_or_default(),
                     failure_policy: value_failure_policy,
                     match_policy: value_match_policy,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     namespace_selector: value_namespace_selector,
                     object_selector: value_object_selector,
                     reinvocation_policy: value_reinvocation_policy,

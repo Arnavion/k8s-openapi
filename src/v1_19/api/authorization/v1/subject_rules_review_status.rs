@@ -71,18 +71,18 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectRulesReviewStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_evaluation_error => value_evaluation_error = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_incomplete => value_incomplete = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_non_resource_rules => value_non_resource_rules = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_resource_rules => value_resource_rules = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_incomplete => value_incomplete = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_non_resource_rules => value_non_resource_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_rules => value_resource_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(SubjectRulesReviewStatus {
                     evaluation_error: value_evaluation_error,
-                    incomplete: value_incomplete.ok_or_else(|| crate::serde::de::Error::missing_field("incomplete"))?,
-                    non_resource_rules: value_non_resource_rules.ok_or_else(|| crate::serde::de::Error::missing_field("nonResourceRules"))?,
-                    resource_rules: value_resource_rules.ok_or_else(|| crate::serde::de::Error::missing_field("resourceRules"))?,
+                    incomplete: value_incomplete.unwrap_or_default(),
+                    non_resource_rules: value_non_resource_rules.unwrap_or_default(),
+                    resource_rules: value_resource_rules.unwrap_or_default(),
                 })
             }
         }

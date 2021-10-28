@@ -64,17 +64,17 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSpec {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_attacher => value_attacher = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_node_name => value_node_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_source => value_source = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_attacher => value_attacher = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_name => value_node_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_source => value_source = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(VolumeAttachmentSpec {
-                    attacher: value_attacher.ok_or_else(|| crate::serde::de::Error::missing_field("attacher"))?,
-                    node_name: value_node_name.ok_or_else(|| crate::serde::de::Error::missing_field("nodeName"))?,
-                    source: value_source.ok_or_else(|| crate::serde::de::Error::missing_field("source"))?,
+                    attacher: value_attacher.unwrap_or_default(),
+                    node_name: value_node_name.unwrap_or_default(),
+                    source: value_source.unwrap_or_default(),
                 })
             }
         }

@@ -598,9 +598,9 @@ impl<'de> crate::serde::Deserialize<'de> for CSIStorageCapacity {
                         },
                         Field::Key_capacity => value_capacity = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_maximum_volume_size => value_maximum_volume_size = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_node_topology => value_node_topology = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_class_name => value_storage_class_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_storage_class_name => value_storage_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -608,9 +608,9 @@ impl<'de> crate::serde::Deserialize<'de> for CSIStorageCapacity {
                 Ok(CSIStorageCapacity {
                     capacity: value_capacity,
                     maximum_volume_size: value_maximum_volume_size,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                     node_topology: value_node_topology,
-                    storage_class_name: value_storage_class_name.ok_or_else(|| crate::serde::de::Error::missing_field("storageClassName"))?,
+                    storage_class_name: value_storage_class_name.unwrap_or_default(),
                 })
             }
         }

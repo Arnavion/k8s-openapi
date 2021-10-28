@@ -154,32 +154,32 @@ impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_admission_review_versions => value_admission_review_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_client_config => value_client_config = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_admission_review_versions => value_admission_review_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_client_config => value_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_failure_policy => value_failure_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_match_policy => value_match_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_namespace_selector => value_namespace_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_object_selector => value_object_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reinvocation_policy => value_reinvocation_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_side_effects => value_side_effects = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_side_effects => value_side_effects = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_timeout_seconds => value_timeout_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(MutatingWebhook {
-                    admission_review_versions: value_admission_review_versions.ok_or_else(|| crate::serde::de::Error::missing_field("admissionReviewVersions"))?,
-                    client_config: value_client_config.ok_or_else(|| crate::serde::de::Error::missing_field("clientConfig"))?,
+                    admission_review_versions: value_admission_review_versions.unwrap_or_default(),
+                    client_config: value_client_config.unwrap_or_default(),
                     failure_policy: value_failure_policy,
                     match_policy: value_match_policy,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     namespace_selector: value_namespace_selector,
                     object_selector: value_object_selector,
                     reinvocation_policy: value_reinvocation_policy,
                     rules: value_rules,
-                    side_effects: value_side_effects.ok_or_else(|| crate::serde::de::Error::missing_field("sideEffects"))?,
+                    side_effects: value_side_effects.unwrap_or_default(),
                     timeout_seconds: value_timeout_seconds,
                 })
             }

@@ -83,22 +83,22 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_conversion => value_conversion = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group => value_group = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_names => value_names = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_names => value_names = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_preserve_unknown_fields => value_preserve_unknown_fields = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scope => value_scope = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_versions => value_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_scope => value_scope = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_versions => value_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceDefinitionSpec {
                     conversion: value_conversion,
-                    group: value_group.ok_or_else(|| crate::serde::de::Error::missing_field("group"))?,
-                    names: value_names.ok_or_else(|| crate::serde::de::Error::missing_field("names"))?,
+                    group: value_group.unwrap_or_default(),
+                    names: value_names.unwrap_or_default(),
                     preserve_unknown_fields: value_preserve_unknown_fields,
-                    scope: value_scope.ok_or_else(|| crate::serde::de::Error::missing_field("scope"))?,
-                    versions: value_versions.ok_or_else(|| crate::serde::de::Error::missing_field("versions"))?,
+                    scope: value_scope.unwrap_or_default(),
+                    versions: value_versions.unwrap_or_default(),
                 })
             }
         }

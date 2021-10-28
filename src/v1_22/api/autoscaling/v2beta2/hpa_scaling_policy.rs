@@ -64,17 +64,17 @@ impl<'de> crate::serde::Deserialize<'de> for HPAScalingPolicy {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_period_seconds => value_period_seconds = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_value => value_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_period_seconds => value_period_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(HPAScalingPolicy {
-                    period_seconds: value_period_seconds.ok_or_else(|| crate::serde::de::Error::missing_field("periodSeconds"))?,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
-                    value: value_value.ok_or_else(|| crate::serde::de::Error::missing_field("value"))?,
+                    period_seconds: value_period_seconds.unwrap_or_default(),
+                    type_: value_type_.unwrap_or_default(),
+                    value: value_value.unwrap_or_default(),
                 })
             }
         }

@@ -58,14 +58,14 @@ impl<'de> crate::serde::Deserialize<'de> for RuntimeClassStrategyOptions {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_allowed_runtime_class_names => value_allowed_runtime_class_names = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_allowed_runtime_class_names => value_allowed_runtime_class_names = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_default_runtime_class_name => value_default_runtime_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RuntimeClassStrategyOptions {
-                    allowed_runtime_class_names: value_allowed_runtime_class_names.ok_or_else(|| crate::serde::de::Error::missing_field("allowedRuntimeClassNames"))?,
+                    allowed_runtime_class_names: value_allowed_runtime_class_names.unwrap_or_default(),
                     default_runtime_class_name: value_default_runtime_class_name,
                 })
             }

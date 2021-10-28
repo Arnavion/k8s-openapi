@@ -99,9 +99,9 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
                         Field::Key_progress_deadline_seconds => value_progress_deadline_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_revision_history_limit => value_revision_history_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_strategy => value_strategy = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_template => value_template = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_template => value_template = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -112,9 +112,9 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
                     progress_deadline_seconds: value_progress_deadline_seconds,
                     replicas: value_replicas,
                     revision_history_limit: value_revision_history_limit,
-                    selector: value_selector.ok_or_else(|| crate::serde::de::Error::missing_field("selector"))?,
+                    selector: value_selector.unwrap_or_default(),
                     strategy: value_strategy,
-                    template: value_template.ok_or_else(|| crate::serde::de::Error::missing_field("template"))?,
+                    template: value_template.unwrap_or_default(),
                 })
             }
         }

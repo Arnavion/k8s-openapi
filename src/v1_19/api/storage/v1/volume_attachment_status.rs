@@ -71,7 +71,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_attach_error => value_attach_error = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_attached => value_attached = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_attached => value_attached = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_attachment_metadata => value_attachment_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_detach_error => value_detach_error = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -80,7 +80,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
 
                 Ok(VolumeAttachmentStatus {
                     attach_error: value_attach_error,
-                    attached: value_attached.ok_or_else(|| crate::serde::de::Error::missing_field("attached"))?,
+                    attached: value_attached.unwrap_or_default(),
                     attachment_metadata: value_attachment_metadata,
                     detach_error: value_detach_error,
                 })

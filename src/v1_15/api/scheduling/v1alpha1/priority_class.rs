@@ -478,9 +478,9 @@ impl<'de> crate::serde::Deserialize<'de> for PriorityClass {
                         },
                         Field::Key_description => value_description = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_global_default => value_global_default = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_preemption_policy => value_preemption_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_value => value_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -488,9 +488,9 @@ impl<'de> crate::serde::Deserialize<'de> for PriorityClass {
                 Ok(PriorityClass {
                     description: value_description,
                     global_default: value_global_default,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                     preemption_policy: value_preemption_policy,
-                    value: value_value.ok_or_else(|| crate::serde::de::Error::missing_field("value"))?,
+                    value: value_value.unwrap_or_default(),
                 })
             }
         }

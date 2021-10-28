@@ -446,14 +446,14 @@ impl<'de> crate::serde::Deserialize<'de> for MutatingWebhookConfiguration {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_webhooks => value_webhooks = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(MutatingWebhookConfiguration {
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                     webhooks: value_webhooks,
                 })
             }

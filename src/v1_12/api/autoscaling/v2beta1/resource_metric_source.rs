@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceMetricSource {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_average_utilization => value_target_average_utilization = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_average_value => value_target_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceMetricSource {
                 }
 
                 Ok(ResourceMetricSource {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     target_average_utilization: value_target_average_utilization,
                     target_average_value: value_target_average_value,
                 })

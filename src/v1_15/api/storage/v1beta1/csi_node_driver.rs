@@ -64,16 +64,16 @@ impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_node_id => value_node_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_id => value_node_id = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_topology_keys => value_topology_keys = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CSINodeDriver {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    node_id: value_node_id.ok_or_else(|| crate::serde::de::Error::missing_field("nodeID"))?,
+                    name: value_name.unwrap_or_default(),
+                    node_id: value_node_id.unwrap_or_default(),
                     topology_keys: value_topology_keys,
                 })
             }

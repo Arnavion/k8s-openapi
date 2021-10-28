@@ -581,16 +581,16 @@ impl<'de> crate::serde::Deserialize<'de> for ControllerRevision {
                             }
                         },
                         Field::Key_data => value_data = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_revision => value_revision = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_revision => value_revision = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ControllerRevision {
                     data: value_data,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    revision: value_revision.ok_or_else(|| crate::serde::de::Error::missing_field("revision"))?,
+                    metadata: value_metadata.unwrap_or_default(),
+                    revision: value_revision.unwrap_or_default(),
                 })
             }
         }

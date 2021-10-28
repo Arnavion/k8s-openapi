@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
                     match key {
                         Field::Key_egress => value_egress = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_ingress => value_ingress = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pod_selector => value_pod_selector = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_pod_selector => value_pod_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_policy_types => value_policy_types = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
                 Ok(NetworkPolicySpec {
                     egress: value_egress,
                     ingress: value_ingress,
-                    pod_selector: value_pod_selector.ok_or_else(|| crate::serde::de::Error::missing_field("podSelector"))?,
+                    pod_selector: value_pod_selector.unwrap_or_default(),
                     policy_types: value_policy_types,
                 })
             }

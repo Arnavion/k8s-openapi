@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for EnvVar {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_value_from => value_value_from = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for EnvVar {
                 }
 
                 Ok(EnvVar {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     value: value_value,
                     value_from: value_value_from,
                 })

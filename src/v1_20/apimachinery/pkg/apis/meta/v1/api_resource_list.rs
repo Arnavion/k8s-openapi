@@ -83,15 +83,15 @@ impl<'de> crate::serde::Deserialize<'de> for APIResourceList {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_group_version => value_group_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_resources => value_resources = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_group_version => value_group_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(APIResourceList {
-                    group_version: value_group_version.ok_or_else(|| crate::serde::de::Error::missing_field("groupVersion"))?,
-                    resources: value_resources.ok_or_else(|| crate::serde::de::Error::missing_field("resources"))?,
+                    group_version: value_group_version.unwrap_or_default(),
+                    resources: value_resources.unwrap_or_default(),
                 })
             }
         }

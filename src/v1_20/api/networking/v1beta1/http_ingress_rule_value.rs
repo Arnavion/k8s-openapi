@@ -52,13 +52,13 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPIngressRuleValue {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_paths => value_paths = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_paths => value_paths = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(HTTPIngressRuleValue {
-                    paths: value_paths.ok_or_else(|| crate::serde::de::Error::missing_field("paths"))?,
+                    paths: value_paths.unwrap_or_default(),
                 })
             }
         }

@@ -83,9 +83,9 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_categories => value_categories = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_list_kind => value_list_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_plural => value_plural = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_plural => value_plural = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_short_names => value_short_names = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_singular => value_singular = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -94,9 +94,9 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
 
                 Ok(CustomResourceDefinitionNames {
                     categories: value_categories,
-                    kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
+                    kind: value_kind.unwrap_or_default(),
                     list_kind: value_list_kind,
-                    plural: value_plural.ok_or_else(|| crate::serde::de::Error::missing_field("plural"))?,
+                    plural: value_plural.unwrap_or_default(),
                     short_names: value_short_names,
                     singular: value_singular,
                 })

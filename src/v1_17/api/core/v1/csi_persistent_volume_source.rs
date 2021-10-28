@@ -102,13 +102,13 @@ impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
                     match key {
                         Field::Key_controller_expand_secret_ref => value_controller_expand_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_controller_publish_secret_ref => value_controller_publish_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_driver => value_driver = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_driver => value_driver = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_node_publish_secret_ref => value_node_publish_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_node_stage_secret_ref => value_node_stage_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_volume_attributes => value_volume_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_handle => value_volume_handle = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volume_handle => value_volume_handle = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -116,13 +116,13 @@ impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
                 Ok(CSIPersistentVolumeSource {
                     controller_expand_secret_ref: value_controller_expand_secret_ref,
                     controller_publish_secret_ref: value_controller_publish_secret_ref,
-                    driver: value_driver.ok_or_else(|| crate::serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.unwrap_or_default(),
                     fs_type: value_fs_type,
                     node_publish_secret_ref: value_node_publish_secret_ref,
                     node_stage_secret_ref: value_node_stage_secret_ref,
                     read_only: value_read_only,
                     volume_attributes: value_volume_attributes,
-                    volume_handle: value_volume_handle.ok_or_else(|| crate::serde::de::Error::missing_field("volumeHandle"))?,
+                    volume_handle: value_volume_handle.unwrap_or_default(),
                 })
             }
         }

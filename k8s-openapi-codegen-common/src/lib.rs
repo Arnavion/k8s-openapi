@@ -276,7 +276,9 @@ pub fn run(
 					let mut field_type_name = String::new();
 
 					let required = match required {
-						true => templates::PropertyRequired::Required,
+						true => templates::PropertyRequired::Required {
+							is_default: is_default(&schema.kind, definitions, map_namespace)?,
+						},
 						false => templates::PropertyRequired::Optional,
 					};
 
@@ -470,7 +472,7 @@ pub fn run(
 			let template_resource_metadata = match (&resource_metadata, &metadata_ty) {
 				(
 					Some((api_version, group, kind, version, list_kind)),
-					Some((metadata_ty, templates::PropertyRequired::Required)),
+					Some((metadata_ty, templates::PropertyRequired::Required { is_default: _ })),
 				) => Some(templates::ResourceMetadata {
 					api_version,
 					group,
@@ -681,7 +683,7 @@ pub fn run(
 					comment: Some("List of objects."),
 					field_name: "items".into(),
 					field_type_name: "Vec<T>".to_owned(),
-					required: templates::PropertyRequired::Required,
+					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
 				},
 
@@ -690,7 +692,7 @@ pub fn run(
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
 					field_name: "metadata".into(),
 					field_type_name: (&*metadata_rust_type).to_owned(),
-					required: templates::PropertyRequired::Required,
+					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
 				},
 			];
@@ -1192,6 +1194,49 @@ fn get_derives(
 		partial_eq: derive_partial_eq,
 		partial_ord: derive_partial_ord,
 	}))
+}
+
+fn is_default(
+	kind: &swagger20::SchemaKind,
+	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
+	map_namespace: &impl MapNamespace,
+) -> Result<bool, Error> {
+	#[allow(clippy::match_same_arms)]
+	evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, required| match kind {
+		// Option<T>::default is None regardless of T
+		_ if !required => Ok(true),
+
+		swagger20::SchemaKind::Ref(swagger20::RefPath { can_be_default: Some(can_be_default), .. }) => Ok(*can_be_default),
+
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if ref_path.references_scope(map_namespace) => Ok(false),
+
+		// metadata field in resource type created by #[derive(CustomResourceDefinition)]
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. })
+			if !ref_path.references_scope(map_namespace) && ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" => Ok(true),
+
+		// Handled by evaluate_trait_bound
+		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
+
+		// chrono::DateTime<chrono::Utc> is not Default
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
+
+		// Enums without a default value
+		swagger20::SchemaKind::Ty(
+			swagger20::Type::JsonSchemaPropsOrArray(_) |
+			swagger20::Type::JsonSchemaPropsOrBool(_) |
+			swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+			swagger20::Type::Patch |
+			swagger20::Type::WatchEvent(_) |
+			swagger20::Type::CreateResponse |
+			swagger20::Type::DeleteResponse |
+			swagger20::Type::ListResponse |
+			swagger20::Type::PatchResponse |
+			swagger20::Type::ReplaceResponse |
+			swagger20::Type::WatchResponse
+		) => Ok(false),
+
+		_ => Ok(true),
+	})
 }
 
 fn evaluate_trait_bound(

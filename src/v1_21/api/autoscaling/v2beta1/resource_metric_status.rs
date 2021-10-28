@@ -65,16 +65,16 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceMetricStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_current_average_utilization => value_current_average_utilization = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_average_value => value_current_average_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current_average_value => value_current_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ResourceMetricStatus {
                     current_average_utilization: value_current_average_utilization,
-                    current_average_value: value_current_average_value.ok_or_else(|| crate::serde::de::Error::missing_field("currentAverageValue"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    current_average_value: value_current_average_value.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
                 })
             }
         }

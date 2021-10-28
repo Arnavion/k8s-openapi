@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
                     match key {
                         Field::Key_non_resource_rules => value_non_resource_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resource_rules => value_resource_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_subjects => value_subjects = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_subjects => value_subjects = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
                 Ok(PolicyRulesWithSubjects {
                     non_resource_rules: value_non_resource_rules,
                     resource_rules: value_resource_rules,
-                    subjects: value_subjects.ok_or_else(|| crate::serde::de::Error::missing_field("subjects"))?,
+                    subjects: value_subjects.unwrap_or_default(),
                 })
             }
         }

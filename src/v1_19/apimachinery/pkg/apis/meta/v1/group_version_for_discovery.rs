@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for GroupVersionForDiscovery {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_group_version => value_group_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_version => value_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_group_version => value_group_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_version => value_version = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(GroupVersionForDiscovery {
-                    group_version: value_group_version.ok_or_else(|| crate::serde::de::Error::missing_field("groupVersion"))?,
-                    version: value_version.ok_or_else(|| crate::serde::de::Error::missing_field("version"))?,
+                    group_version: value_group_version.unwrap_or_default(),
+                    version: value_version.unwrap_or_default(),
                 })
             }
         }

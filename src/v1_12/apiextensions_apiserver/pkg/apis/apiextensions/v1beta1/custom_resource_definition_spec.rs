@@ -95,9 +95,9 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_additional_printer_columns => value_additional_printer_columns = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group => value_group = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_names => value_names = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_scope => value_scope = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_names => value_names = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scope => value_scope = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_subresources => value_subresources = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_validation => value_validation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_version => value_version = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -108,9 +108,9 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
 
                 Ok(CustomResourceDefinitionSpec {
                     additional_printer_columns: value_additional_printer_columns,
-                    group: value_group.ok_or_else(|| crate::serde::de::Error::missing_field("group"))?,
-                    names: value_names.ok_or_else(|| crate::serde::de::Error::missing_field("names"))?,
-                    scope: value_scope.ok_or_else(|| crate::serde::de::Error::missing_field("scope"))?,
+                    group: value_group.unwrap_or_default(),
+                    names: value_names.unwrap_or_default(),
+                    scope: value_scope.unwrap_or_default(),
                     subresources: value_subresources,
                     validation: value_validation,
                     version: value_version,

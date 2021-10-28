@@ -78,7 +78,7 @@ impl<'de> crate::serde::Deserialize<'de> for WebhookClientConfig {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ca_bundle => value_ca_bundle = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_ca_bundle => value_ca_bundle = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_service => value_service = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_url => value_url = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -86,7 +86,7 @@ impl<'de> crate::serde::Deserialize<'de> for WebhookClientConfig {
                 }
 
                 Ok(WebhookClientConfig {
-                    ca_bundle: value_ca_bundle.ok_or_else(|| crate::serde::de::Error::missing_field("caBundle"))?,
+                    ca_bundle: value_ca_bundle.unwrap_or_default(),
                     service: value_service,
                     url: value_url,
                 })

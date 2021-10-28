@@ -140,16 +140,16 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentRollback {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_rollback_to => value_rollback_to = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rollback_to => value_rollback_to = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_updated_annotations => value_updated_annotations = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(DeploymentRollback {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    rollback_to: value_rollback_to.ok_or_else(|| crate::serde::de::Error::missing_field("rollbackTo"))?,
+                    name: value_name.unwrap_or_default(),
+                    rollback_to: value_rollback_to.unwrap_or_default(),
                     updated_annotations: value_updated_annotations,
                 })
             }

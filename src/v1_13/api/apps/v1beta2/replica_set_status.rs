@@ -87,7 +87,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicaSetStatus {
                         Field::Key_fully_labeled_replicas => value_fully_labeled_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_ready_replicas => value_ready_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -98,7 +98,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicaSetStatus {
                     fully_labeled_replicas: value_fully_labeled_replicas,
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
-                    replicas: value_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("replicas"))?,
+                    replicas: value_replicas.unwrap_or_default(),
                 })
             }
         }

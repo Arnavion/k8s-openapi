@@ -574,18 +574,18 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointSlice {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_address_type => value_address_type = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_endpoints => value_endpoints = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_address_type => value_address_type = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_endpoints => value_endpoints = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_ports => value_ports = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(EndpointSlice {
-                    address_type: value_address_type.ok_or_else(|| crate::serde::de::Error::missing_field("addressType"))?,
-                    endpoints: value_endpoints.ok_or_else(|| crate::serde::de::Error::missing_field("endpoints"))?,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    address_type: value_address_type.unwrap_or_default(),
+                    endpoints: value_endpoints.unwrap_or_default(),
+                    metadata: value_metadata.unwrap_or_default(),
                     ports: value_ports,
                 })
             }

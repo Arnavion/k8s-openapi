@@ -588,7 +588,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccount {
                         },
                         Field::Key_automount_service_account_token => value_automount_service_account_token = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_image_pull_secrets => value_image_pull_secrets = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_secrets => value_secrets = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -597,7 +597,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccount {
                 Ok(ServiceAccount {
                     automount_service_account_token: value_automount_service_account_token,
                     image_pull_secrets: value_image_pull_secrets,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                     secrets: value_secrets,
                 })
             }

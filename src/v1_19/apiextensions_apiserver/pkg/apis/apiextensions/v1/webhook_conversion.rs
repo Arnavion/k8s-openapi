@@ -59,14 +59,14 @@ impl<'de> crate::serde::Deserialize<'de> for WebhookConversion {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_client_config => value_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conversion_review_versions => value_conversion_review_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_conversion_review_versions => value_conversion_review_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(WebhookConversion {
                     client_config: value_client_config,
-                    conversion_review_versions: value_conversion_review_versions.ok_or_else(|| crate::serde::de::Error::missing_field("conversionReviewVersions"))?,
+                    conversion_review_versions: value_conversion_review_versions.unwrap_or_default(),
                 })
             }
         }

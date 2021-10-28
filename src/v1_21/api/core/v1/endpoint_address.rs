@@ -71,7 +71,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_hostname => value_hostname = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ip => value_ip = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_ip => value_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_node_name => value_node_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_ref => value_target_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -80,7 +80,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
 
                 Ok(EndpointAddress {
                     hostname: value_hostname,
-                    ip: value_ip.ok_or_else(|| crate::serde::de::Error::missing_field("ip"))?,
+                    ip: value_ip.unwrap_or_default(),
                     node_name: value_node_name,
                     target_ref: value_target_ref,
                 })

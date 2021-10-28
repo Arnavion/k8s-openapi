@@ -87,7 +87,7 @@ impl<'de> crate::serde::Deserialize<'de> for LimitRangeItem {
                         Field::Key_max => value_max = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_max_limit_request_ratio => value_max_limit_request_ratio = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_min => value_min = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -98,7 +98,7 @@ impl<'de> crate::serde::Deserialize<'de> for LimitRangeItem {
                     max: value_max,
                     max_limit_request_ratio: value_max_limit_request_ratio,
                     min: value_min,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.unwrap_or_default(),
                 })
             }
         }

@@ -70,8 +70,8 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricSource {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_container => value_container = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_container => value_container = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_average_utilization => value_target_average_utilization = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_average_value => value_target_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -79,8 +79,8 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricSource {
                 }
 
                 Ok(ContainerResourceMetricSource {
-                    container: value_container.ok_or_else(|| crate::serde::de::Error::missing_field("container"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    container: value_container.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
                     target_average_utilization: value_target_average_utilization,
                     target_average_value: value_target_average_value,
                 })

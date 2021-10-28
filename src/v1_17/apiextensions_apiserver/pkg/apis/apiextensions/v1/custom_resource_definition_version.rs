@@ -83,10 +83,10 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionVersion {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_additional_printer_columns => value_additional_printer_columns = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_schema => value_schema = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_served => value_served = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_storage => value_storage = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_served => value_served = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage => value_storage = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_subresources => value_subresources = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -94,10 +94,10 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionVersion {
 
                 Ok(CustomResourceDefinitionVersion {
                     additional_printer_columns: value_additional_printer_columns,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     schema: value_schema,
-                    served: value_served.ok_or_else(|| crate::serde::de::Error::missing_field("served"))?,
-                    storage: value_storage.ok_or_else(|| crate::serde::de::Error::missing_field("storage"))?,
+                    served: value_served.unwrap_or_default(),
+                    storage: value_storage.unwrap_or_default(),
                     subresources: value_subresources,
                 })
             }

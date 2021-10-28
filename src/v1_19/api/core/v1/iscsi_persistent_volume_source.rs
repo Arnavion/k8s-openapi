@@ -116,13 +116,13 @@ impl<'de> crate::serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
                         Field::Key_chap_auth_session => value_chap_auth_session = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_initiator_name => value_initiator_name = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_iqn => value_iqn = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_iqn => value_iqn = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_iscsi_interface => value_iscsi_interface = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_lun => value_lun = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_lun => value_lun = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_portals => value_portals = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_portal => value_target_portal = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_target_portal => value_target_portal = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -132,13 +132,13 @@ impl<'de> crate::serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
                     chap_auth_session: value_chap_auth_session,
                     fs_type: value_fs_type,
                     initiator_name: value_initiator_name,
-                    iqn: value_iqn.ok_or_else(|| crate::serde::de::Error::missing_field("iqn"))?,
+                    iqn: value_iqn.unwrap_or_default(),
                     iscsi_interface: value_iscsi_interface,
-                    lun: value_lun.ok_or_else(|| crate::serde::de::Error::missing_field("lun"))?,
+                    lun: value_lun.unwrap_or_default(),
                     portals: value_portals,
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,
-                    target_portal: value_target_portal.ok_or_else(|| crate::serde::de::Error::missing_field("targetPortal"))?,
+                    target_portal: value_target_portal.unwrap_or_default(),
                 })
             }
         }

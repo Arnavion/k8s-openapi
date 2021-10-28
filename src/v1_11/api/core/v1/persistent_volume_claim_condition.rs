@@ -84,8 +84,8 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimCondition {
                         Field::Key_last_transition_time => value_last_transition_time = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_status => value_status = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -95,8 +95,8 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimCondition {
                     last_transition_time: value_last_transition_time,
                     message: value_message,
                     reason: value_reason,
-                    status: value_status.ok_or_else(|| crate::serde::de::Error::missing_field("status"))?,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    status: value_status.unwrap_or_default(),
+                    type_: value_type_.unwrap_or_default(),
                 })
             }
         }

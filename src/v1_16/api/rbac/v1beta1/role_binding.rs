@@ -568,16 +568,16 @@ impl<'de> crate::serde::Deserialize<'de> for RoleBinding {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_role_ref => value_role_ref = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_role_ref => value_role_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_subjects => value_subjects = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RoleBinding {
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
-                    role_ref: value_role_ref.ok_or_else(|| crate::serde::de::Error::missing_field("roleRef"))?,
+                    metadata: value_metadata.unwrap_or_default(),
+                    role_ref: value_role_ref.unwrap_or_default(),
                     subjects: value_subjects,
                 })
             }

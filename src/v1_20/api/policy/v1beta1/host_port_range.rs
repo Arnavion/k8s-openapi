@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for HostPortRange {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_max => value_max = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_min => value_min = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_max => value_max = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min => value_min = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(HostPortRange {
-                    max: value_max.ok_or_else(|| crate::serde::de::Error::missing_field("max"))?,
-                    min: value_min.ok_or_else(|| crate::serde::de::Error::missing_field("min"))?,
+                    max: value_max.unwrap_or_default(),
+                    min: value_min.unwrap_or_default(),
                 })
             }
         }

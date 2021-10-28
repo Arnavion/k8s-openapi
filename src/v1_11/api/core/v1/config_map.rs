@@ -582,7 +582,7 @@ impl<'de> crate::serde::Deserialize<'de> for ConfigMap {
                         },
                         Field::Key_binary_data => value_binary_data = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_data => value_data = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -590,7 +590,7 @@ impl<'de> crate::serde::Deserialize<'de> for ConfigMap {
                 Ok(ConfigMap {
                     binary_data: value_binary_data,
                     data: value_data,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                 })
             }
         }

@@ -77,13 +77,13 @@ impl<'de> crate::serde::Deserialize<'de> for APIGroupList {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_groups => value_groups = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_groups => value_groups = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(APIGroupList {
-                    groups: value_groups.ok_or_else(|| crate::serde::de::Error::missing_field("groups"))?,
+                    groups: value_groups.unwrap_or_default(),
                 })
             }
         }

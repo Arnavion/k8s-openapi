@@ -64,15 +64,15 @@ impl<'de> crate::serde::Deserialize<'de> for NonResourcePolicyRule {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_non_resource_urls => value_non_resource_urls = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_verbs => value_verbs = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_non_resource_urls => value_non_resource_urls = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_verbs => value_verbs = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NonResourcePolicyRule {
-                    non_resource_urls: value_non_resource_urls.ok_or_else(|| crate::serde::de::Error::missing_field("nonResourceURLs"))?,
-                    verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
+                    non_resource_urls: value_non_resource_urls.unwrap_or_default(),
+                    verbs: value_verbs.unwrap_or_default(),
                 })
             }
         }

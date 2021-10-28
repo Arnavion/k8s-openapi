@@ -95,12 +95,12 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_container_id => value_container_id = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image => value_image = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_image_id => value_image_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_image => value_image = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image_id => value_image_id = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_last_state => value_last_state = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_ready => value_ready = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_restart_count => value_restart_count = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ready => value_ready = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_restart_count => value_restart_count = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_state => value_state = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -108,12 +108,12 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStatus {
 
                 Ok(ContainerStatus {
                     container_id: value_container_id,
-                    image: value_image.ok_or_else(|| crate::serde::de::Error::missing_field("image"))?,
-                    image_id: value_image_id.ok_or_else(|| crate::serde::de::Error::missing_field("imageID"))?,
+                    image: value_image.unwrap_or_default(),
+                    image_id: value_image_id.unwrap_or_default(),
                     last_state: value_last_state,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    ready: value_ready.ok_or_else(|| crate::serde::de::Error::missing_field("ready"))?,
-                    restart_count: value_restart_count.ok_or_else(|| crate::serde::de::Error::missing_field("restartCount"))?,
+                    name: value_name.unwrap_or_default(),
+                    ready: value_ready.unwrap_or_default(),
+                    restart_count: value_restart_count.unwrap_or_default(),
                     state: value_state,
                 })
             }

@@ -83,8 +83,8 @@ impl<'de> crate::serde::Deserialize<'de> for AzureDiskVolumeSource {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_caching_mode => value_caching_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_disk_name => value_disk_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_disk_uri => value_disk_uri = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_disk_name => value_disk_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_disk_uri => value_disk_uri = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -94,8 +94,8 @@ impl<'de> crate::serde::Deserialize<'de> for AzureDiskVolumeSource {
 
                 Ok(AzureDiskVolumeSource {
                     caching_mode: value_caching_mode,
-                    disk_name: value_disk_name.ok_or_else(|| crate::serde::de::Error::missing_field("diskName"))?,
-                    disk_uri: value_disk_uri.ok_or_else(|| crate::serde::de::Error::missing_field("diskURI"))?,
+                    disk_name: value_disk_name.unwrap_or_default(),
+                    disk_uri: value_disk_uri.unwrap_or_default(),
                     fs_type: value_fs_type,
                     kind: value_kind,
                     read_only: value_read_only,

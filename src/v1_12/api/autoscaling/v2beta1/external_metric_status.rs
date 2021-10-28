@@ -71,8 +71,8 @@ impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_current_average_value => value_current_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_value => value_current_value = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric_name => value_metric_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current_value => value_current_value = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metric_name => value_metric_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metric_selector => value_metric_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -80,8 +80,8 @@ impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
 
                 Ok(ExternalMetricStatus {
                     current_average_value: value_current_average_value,
-                    current_value: value_current_value.ok_or_else(|| crate::serde::de::Error::missing_field("currentValue"))?,
-                    metric_name: value_metric_name.ok_or_else(|| crate::serde::de::Error::missing_field("metricName"))?,
+                    current_value: value_current_value.unwrap_or_default(),
+                    metric_name: value_metric_name.unwrap_or_default(),
                     metric_selector: value_metric_selector,
                 })
             }

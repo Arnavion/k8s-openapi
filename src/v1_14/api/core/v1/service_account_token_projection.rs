@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccountTokenProjection {
                     match key {
                         Field::Key_audience => value_audience = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_expiration_seconds => value_expiration_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_path => value_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_path => value_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccountTokenProjection {
                 Ok(ServiceAccountTokenProjection {
                     audience: value_audience,
                     expiration_seconds: value_expiration_seconds,
-                    path: value_path.ok_or_else(|| crate::serde::de::Error::missing_field("path"))?,
+                    path: value_path.unwrap_or_default(),
                 })
             }
         }

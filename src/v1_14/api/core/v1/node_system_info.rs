@@ -106,31 +106,31 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_architecture => value_architecture = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_boot_id => value_boot_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_container_runtime_version => value_container_runtime_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kernel_version => value_kernel_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kube_proxy_version => value_kube_proxy_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kubelet_version => value_kubelet_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_machine_id => value_machine_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_operating_system => value_operating_system = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_os_image => value_os_image = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_system_uuid => value_system_uuid = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_architecture => value_architecture = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_boot_id => value_boot_id = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_container_runtime_version => value_container_runtime_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kernel_version => value_kernel_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kube_proxy_version => value_kube_proxy_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kubelet_version => value_kubelet_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_machine_id => value_machine_id = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_operating_system => value_operating_system = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_os_image => value_os_image = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_system_uuid => value_system_uuid = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NodeSystemInfo {
-                    architecture: value_architecture.ok_or_else(|| crate::serde::de::Error::missing_field("architecture"))?,
-                    boot_id: value_boot_id.ok_or_else(|| crate::serde::de::Error::missing_field("bootID"))?,
-                    container_runtime_version: value_container_runtime_version.ok_or_else(|| crate::serde::de::Error::missing_field("containerRuntimeVersion"))?,
-                    kernel_version: value_kernel_version.ok_or_else(|| crate::serde::de::Error::missing_field("kernelVersion"))?,
-                    kube_proxy_version: value_kube_proxy_version.ok_or_else(|| crate::serde::de::Error::missing_field("kubeProxyVersion"))?,
-                    kubelet_version: value_kubelet_version.ok_or_else(|| crate::serde::de::Error::missing_field("kubeletVersion"))?,
-                    machine_id: value_machine_id.ok_or_else(|| crate::serde::de::Error::missing_field("machineID"))?,
-                    operating_system: value_operating_system.ok_or_else(|| crate::serde::de::Error::missing_field("operatingSystem"))?,
-                    os_image: value_os_image.ok_or_else(|| crate::serde::de::Error::missing_field("osImage"))?,
-                    system_uuid: value_system_uuid.ok_or_else(|| crate::serde::de::Error::missing_field("systemUUID"))?,
+                    architecture: value_architecture.unwrap_or_default(),
+                    boot_id: value_boot_id.unwrap_or_default(),
+                    container_runtime_version: value_container_runtime_version.unwrap_or_default(),
+                    kernel_version: value_kernel_version.unwrap_or_default(),
+                    kube_proxy_version: value_kube_proxy_version.unwrap_or_default(),
+                    kubelet_version: value_kubelet_version.unwrap_or_default(),
+                    machine_id: value_machine_id.unwrap_or_default(),
+                    operating_system: value_operating_system.unwrap_or_default(),
+                    os_image: value_os_image.unwrap_or_default(),
+                    system_uuid: value_system_uuid.unwrap_or_default(),
                 })
             }
         }

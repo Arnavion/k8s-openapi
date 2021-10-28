@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for GCEPersistentDiskVolumeSource {
                     match key {
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_partition => value_partition = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pd_name => value_pd_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_pd_name => value_pd_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -83,7 +83,7 @@ impl<'de> crate::serde::Deserialize<'de> for GCEPersistentDiskVolumeSource {
                 Ok(GCEPersistentDiskVolumeSource {
                     fs_type: value_fs_type,
                     partition: value_partition,
-                    pd_name: value_pd_name.ok_or_else(|| crate::serde::de::Error::missing_field("pdName"))?,
+                    pd_name: value_pd_name.unwrap_or_default(),
                     read_only: value_read_only,
                 })
             }

@@ -85,7 +85,7 @@ impl<'de> crate::serde::Deserialize<'de> for DaemonSetSpec {
                         Field::Key_min_ready_seconds => value_min_ready_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_revision_history_limit => value_revision_history_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_template => value_template = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_template => value_template = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_template_generation => value_template_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_update_strategy => value_update_strategy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -96,7 +96,7 @@ impl<'de> crate::serde::Deserialize<'de> for DaemonSetSpec {
                     min_ready_seconds: value_min_ready_seconds,
                     revision_history_limit: value_revision_history_limit,
                     selector: value_selector,
-                    template: value_template.ok_or_else(|| crate::serde::de::Error::missing_field("template"))?,
+                    template: value_template.unwrap_or_default(),
                     template_generation: value_template_generation,
                     update_strategy: value_update_strategy,
                 })

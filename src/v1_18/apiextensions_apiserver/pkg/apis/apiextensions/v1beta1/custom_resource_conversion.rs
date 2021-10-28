@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_conversion_review_versions => value_conversion_review_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_strategy => value_strategy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_strategy => value_strategy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_webhook_client_config => value_webhook_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
 
                 Ok(CustomResourceConversion {
                     conversion_review_versions: value_conversion_review_versions,
-                    strategy: value_strategy.ok_or_else(|| crate::serde::de::Error::missing_field("strategy"))?,
+                    strategy: value_strategy.unwrap_or_default(),
                     webhook_client_config: value_webhook_client_config,
                 })
             }

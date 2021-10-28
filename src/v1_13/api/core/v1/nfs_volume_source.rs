@@ -64,17 +64,17 @@ impl<'de> crate::serde::Deserialize<'de> for NFSVolumeSource {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_path => value_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_path => value_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_server => value_server = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_server => value_server = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NFSVolumeSource {
-                    path: value_path.ok_or_else(|| crate::serde::de::Error::missing_field("path"))?,
+                    path: value_path.unwrap_or_default(),
                     read_only: value_read_only,
-                    server: value_server.ok_or_else(|| crate::serde::de::Error::missing_field("server"))?,
+                    server: value_server.unwrap_or_default(),
                 })
             }
         }

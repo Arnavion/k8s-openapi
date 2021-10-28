@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointPort {
                     match key {
                         Field::Key_app_protocol => value_app_protocol = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_port => value_port = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_port => value_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_protocol => value_protocol = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointPort {
                 Ok(EndpointPort {
                     app_protocol: value_app_protocol,
                     name: value_name,
-                    port: value_port.ok_or_else(|| crate::serde::de::Error::missing_field("port"))?,
+                    port: value_port.unwrap_or_default(),
                     protocol: value_protocol,
                 })
             }

@@ -82,23 +82,23 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceColumnDefinition {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_json_path => value_json_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_json_path => value_json_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_description => value_description = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_format => value_format = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_priority => value_priority = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceColumnDefinition {
-                    json_path: value_json_path.ok_or_else(|| crate::serde::de::Error::missing_field("JSONPath"))?,
+                    json_path: value_json_path.unwrap_or_default(),
                     description: value_description,
                     format: value_format,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     priority: value_priority,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.unwrap_or_default(),
                 })
             }
         }

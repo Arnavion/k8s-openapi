@@ -59,14 +59,14 @@ impl<'de> crate::serde::Deserialize<'de> for TCPSocketAction {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_host => value_host = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_port => value_port = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_port => value_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TCPSocketAction {
                     host: value_host,
-                    port: value_port.ok_or_else(|| crate::serde::de::Error::missing_field("port"))?,
+                    port: value_port.unwrap_or_default(),
                 })
             }
         }

@@ -59,14 +59,14 @@ impl<'de> crate::serde::Deserialize<'de> for RunAsUserStrategyOptions {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_ranges => value_ranges = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rule => value_rule = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_rule => value_rule = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RunAsUserStrategyOptions {
                     ranges: value_ranges,
-                    rule: value_rule.ok_or_else(|| crate::serde::de::Error::missing_field("rule"))?,
+                    rule: value_rule.unwrap_or_default(),
                 })
             }
         }

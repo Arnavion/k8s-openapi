@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicaSetSpec {
                     match key {
                         Field::Key_min_ready_seconds => value_min_ready_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_template => value_template = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicaSetSpec {
                 Ok(ReplicaSetSpec {
                     min_ready_seconds: value_min_ready_seconds,
                     replicas: value_replicas,
-                    selector: value_selector.ok_or_else(|| crate::serde::de::Error::missing_field("selector"))?,
+                    selector: value_selector.unwrap_or_default(),
                     template: value_template,
                 })
             }

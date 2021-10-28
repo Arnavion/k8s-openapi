@@ -95,19 +95,19 @@ impl<'de> crate::serde::Deserialize<'de> for APIGroup {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_preferred_version => value_preferred_version = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_server_address_by_client_cidrs => value_server_address_by_client_cidrs = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_versions => value_versions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_versions => value_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(APIGroup {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     preferred_version: value_preferred_version,
                     server_address_by_client_cidrs: value_server_address_by_client_cidrs,
-                    versions: value_versions.ok_or_else(|| crate::serde::de::Error::missing_field("versions"))?,
+                    versions: value_versions.unwrap_or_default(),
                 })
             }
         }

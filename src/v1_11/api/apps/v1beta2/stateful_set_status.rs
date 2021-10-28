@@ -106,7 +106,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
                         Field::Key_current_revision => value_current_revision = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_ready_replicas => value_ready_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_update_revision => value_update_revision = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_updated_replicas => value_updated_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -120,7 +120,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
                     current_revision: value_current_revision,
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
-                    replicas: value_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("replicas"))?,
+                    replicas: value_replicas.unwrap_or_default(),
                     update_revision: value_update_revision,
                     updated_replicas: value_updated_replicas,
                 })

@@ -38,7 +38,7 @@ pub(crate) fn generate(
 		}
 		else {
 			match required {
-				super::PropertyRequired::Required => {
+				super::PropertyRequired::Required { is_default: _ } => {
 					writeln!(fields_string, "        {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
 
 					required_fields_num += 1;

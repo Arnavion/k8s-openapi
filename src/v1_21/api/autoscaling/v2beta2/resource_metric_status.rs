@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceMetricStatus {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_current => value_current = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current => value_current = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ResourceMetricStatus {
-                    current: value_current.ok_or_else(|| crate::serde::de::Error::missing_field("current"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    current: value_current.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
                 })
             }
         }

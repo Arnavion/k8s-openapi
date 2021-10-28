@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for IngressBackend {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_service_name => value_service_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_service_port => value_service_port = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_service_name => value_service_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_port => value_service_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(IngressBackend {
-                    service_name: value_service_name.ok_or_else(|| crate::serde::de::Error::missing_field("serviceName"))?,
-                    service_port: value_service_port.ok_or_else(|| crate::serde::de::Error::missing_field("servicePort"))?,
+                    service_name: value_service_name.unwrap_or_default(),
+                    service_port: value_service_port.unwrap_or_default(),
                 })
             }
         }

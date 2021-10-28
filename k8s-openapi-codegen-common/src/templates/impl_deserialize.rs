@@ -80,16 +80,34 @@ pub(crate) fn generate(
 			writeln!(str_to_field_match_arms, r#"                            {:?} => Field::Key_{},"#, name, field_name)?;
 
 			match required {
-				super::PropertyRequired::Required => {
+				super::PropertyRequired::Required { is_default } => {
 					writeln!(field_value_defs, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
 
-					writeln!(field_value_match_arms,
-						r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
-						field_name, field_name, local)?;
+					// The API server doesn't always validate required fields when a resource is created,
+					// so consequently required fields aren't always present when a resource is fetched.
+					//
+					// An example is in https://github.com/Arnavion/k8s-openapi/issues/110 which says it's possible
+					// to create a DaemonSet with a PodSpec that doesn't have its required fields.
+					//
+					// Since the Deserialize impl only matters for parsing the API server response, there's no point being stricter
+					// about the response than the API server is. So we can just pretend that the missing field is the default value
+					// if the field is Default-able. But if the field isn't Default-able, then there's nothing we can do but fail as usual.
+					if *is_default {
+						writeln!(field_value_match_arms,
+							r#"                        Field::Key_{} => value_{} = {}serde::de::MapAccess::next_value(&mut map)?,"#,
+							field_name, field_name, local)?;
 
-					writeln!(field_value_assignment,
-						"                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,",
-						field_name, field_name, local, name)?;
+						writeln!(field_value_assignment, "                    {}: value_{}.unwrap_or_default(),", field_name, field_name)?;
+					}
+					else {
+						writeln!(field_value_match_arms,
+							r#"                        Field::Key_{} => value_{} = Some({}serde::de::MapAccess::next_value(&mut map)?),"#,
+							field_name, field_name, local)?;
+
+						writeln!(field_value_assignment,
+							"                    {}: value_{}.ok_or_else(|| {}serde::de::Error::missing_field({:?}))?,",
+							field_name, field_name, local, name)?;
+					}
 				},
 
 				super::PropertyRequired::Optional => {

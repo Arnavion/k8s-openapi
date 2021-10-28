@@ -78,7 +78,7 @@ pub(crate) struct Property<'a> {
 
 #[derive(Clone, Copy)]
 pub(crate) enum PropertyRequired {
-	Required,
+	Required { is_default: bool },
 	Optional,
 
 	// TODO:

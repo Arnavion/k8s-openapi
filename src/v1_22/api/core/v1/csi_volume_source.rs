@@ -76,7 +76,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_driver => value_driver = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_driver => value_driver = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_node_publish_secret_ref => value_node_publish_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -86,7 +86,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
                 }
 
                 Ok(CSIVolumeSource {
-                    driver: value_driver.ok_or_else(|| crate::serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.unwrap_or_default(),
                     fs_type: value_fs_type,
                     node_publish_secret_ref: value_node_publish_secret_ref,
                     read_only: value_read_only,

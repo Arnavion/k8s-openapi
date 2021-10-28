@@ -78,9 +78,9 @@ impl<'de> crate::serde::Deserialize<'de> for QuobyteVolumeSource {
                     match key {
                         Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_registry => value_registry = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_registry => value_registry = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_user => value_user = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume => value_volume = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volume => value_volume = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -88,9 +88,9 @@ impl<'de> crate::serde::Deserialize<'de> for QuobyteVolumeSource {
                 Ok(QuobyteVolumeSource {
                     group: value_group,
                     read_only: value_read_only,
-                    registry: value_registry.ok_or_else(|| crate::serde::de::Error::missing_field("registry"))?,
+                    registry: value_registry.unwrap_or_default(),
                     user: value_user,
-                    volume: value_volume.ok_or_else(|| crate::serde::de::Error::missing_field("volume"))?,
+                    volume: value_volume.unwrap_or_default(),
                 })
             }
         }

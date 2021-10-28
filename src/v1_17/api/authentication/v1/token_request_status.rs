@@ -59,14 +59,14 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_expiration_timestamp => value_expiration_timestamp = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_token => value_token = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_token => value_token = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TokenRequestStatus {
                     expiration_timestamp: value_expiration_timestamp.ok_or_else(|| crate::serde::de::Error::missing_field("expirationTimestamp"))?,
-                    token: value_token.ok_or_else(|| crate::serde::de::Error::missing_field("token"))?,
+                    token: value_token.unwrap_or_default(),
                 })
             }
         }

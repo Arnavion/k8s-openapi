@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestCondition 
                         Field::Key_last_update_time => value_last_update_time = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestCondition 
                     last_update_time: value_last_update_time,
                     message: value_message,
                     reason: value_reason,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.unwrap_or_default(),
                 })
             }
         }

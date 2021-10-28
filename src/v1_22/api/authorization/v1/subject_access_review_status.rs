@@ -70,7 +70,7 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_allowed => value_allowed = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_allowed => value_allowed = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_denied => value_denied = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_evaluation_error => value_evaluation_error = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -79,7 +79,7 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
                 }
 
                 Ok(SubjectAccessReviewStatus {
-                    allowed: value_allowed.ok_or_else(|| crate::serde::de::Error::missing_field("allowed"))?,
+                    allowed: value_allowed.unwrap_or_default(),
                     denied: value_denied,
                     evaluation_error: value_evaluation_error,
                     reason: value_reason,

@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_audiences => value_audiences = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_audiences => value_audiences = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_bound_object_ref => value_bound_object_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_expiration_seconds => value_expiration_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
                 }
 
                 Ok(TokenRequestSpec {
-                    audiences: value_audiences.ok_or_else(|| crate::serde::de::Error::missing_field("audiences"))?,
+                    audiences: value_audiences.unwrap_or_default(),
                     bound_object_ref: value_bound_object_ref,
                     expiration_seconds: value_expiration_seconds,
                 })

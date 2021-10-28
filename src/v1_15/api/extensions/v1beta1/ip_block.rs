@@ -58,14 +58,14 @@ impl<'de> crate::serde::Deserialize<'de> for IPBlock {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_cidr => value_cidr = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_cidr => value_cidr = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_except => value_except = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(IPBlock {
-                    cidr: value_cidr.ok_or_else(|| crate::serde::de::Error::missing_field("cidr"))?,
+                    cidr: value_cidr.unwrap_or_default(),
                     except: value_except,
                 })
             }

@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
                     match key {
                         Field::Key_distinguisher_method => value_distinguisher_method = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_matching_precedence => value_matching_precedence = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_priority_level_configuration => value_priority_level_configuration = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_priority_level_configuration => value_priority_level_configuration = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
                 Ok(FlowSchemaSpec {
                     distinguisher_method: value_distinguisher_method,
                     matching_precedence: value_matching_precedence,
-                    priority_level_configuration: value_priority_level_configuration.ok_or_else(|| crate::serde::de::Error::missing_field("priorityLevelConfiguration"))?,
+                    priority_level_configuration: value_priority_level_configuration.unwrap_or_default(),
                     rules: value_rules,
                 })
             }

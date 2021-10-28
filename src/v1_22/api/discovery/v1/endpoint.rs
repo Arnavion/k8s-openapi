@@ -94,7 +94,7 @@ impl<'de> crate::serde::Deserialize<'de> for Endpoint {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_addresses => value_addresses = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_addresses => value_addresses = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_topology => value_deprecated_topology = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_hints => value_hints = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -107,7 +107,7 @@ impl<'de> crate::serde::Deserialize<'de> for Endpoint {
                 }
 
                 Ok(Endpoint {
-                    addresses: value_addresses.ok_or_else(|| crate::serde::de::Error::missing_field("addresses"))?,
+                    addresses: value_addresses.unwrap_or_default(),
                     conditions: value_conditions,
                     deprecated_topology: value_deprecated_topology,
                     hints: value_hints,

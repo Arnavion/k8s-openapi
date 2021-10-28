@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for AttachedVolume {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_device_path => value_device_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_device_path => value_device_path = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(AttachedVolume {
-                    device_path: value_device_path.ok_or_else(|| crate::serde::de::Error::missing_field("devicePath"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    device_path: value_device_path.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
                 })
             }
         }

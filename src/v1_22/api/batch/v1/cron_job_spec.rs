@@ -90,8 +90,8 @@ impl<'de> crate::serde::Deserialize<'de> for CronJobSpec {
                     match key {
                         Field::Key_concurrency_policy => value_concurrency_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_failed_jobs_history_limit => value_failed_jobs_history_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_job_template => value_job_template = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_schedule => value_schedule = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_job_template => value_job_template = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_schedule => value_schedule = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_starting_deadline_seconds => value_starting_deadline_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_successful_jobs_history_limit => value_successful_jobs_history_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_suspend => value_suspend = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -102,8 +102,8 @@ impl<'de> crate::serde::Deserialize<'de> for CronJobSpec {
                 Ok(CronJobSpec {
                     concurrency_policy: value_concurrency_policy,
                     failed_jobs_history_limit: value_failed_jobs_history_limit,
-                    job_template: value_job_template.ok_or_else(|| crate::serde::de::Error::missing_field("jobTemplate"))?,
-                    schedule: value_schedule.ok_or_else(|| crate::serde::de::Error::missing_field("schedule"))?,
+                    job_template: value_job_template.unwrap_or_default(),
+                    schedule: value_schedule.unwrap_or_default(),
                     starting_deadline_seconds: value_starting_deadline_seconds,
                     successful_jobs_history_limit: value_successful_jobs_history_limit,
                     suspend: value_suspend,

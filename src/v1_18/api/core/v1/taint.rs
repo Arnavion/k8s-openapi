@@ -70,8 +70,8 @@ impl<'de> crate::serde::Deserialize<'de> for Taint {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_effect => value_effect = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_key => value_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_effect => value_effect = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_key => value_key = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_time_added => value_time_added = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -79,8 +79,8 @@ impl<'de> crate::serde::Deserialize<'de> for Taint {
                 }
 
                 Ok(Taint {
-                    effect: value_effect.ok_or_else(|| crate::serde::de::Error::missing_field("effect"))?,
-                    key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
+                    effect: value_effect.unwrap_or_default(),
+                    key: value_key.unwrap_or_default(),
                     time_added: value_time_added,
                     value: value_value,
                 })

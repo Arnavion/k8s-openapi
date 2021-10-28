@@ -58,14 +58,14 @@ impl<'de> crate::serde::Deserialize<'de> for SELinuxStrategyOptions {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_rule => value_rule = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_rule => value_rule = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_se_linux_options => value_se_linux_options = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(SELinuxStrategyOptions {
-                    rule: value_rule.ok_or_else(|| crate::serde::de::Error::missing_field("rule"))?,
+                    rule: value_rule.unwrap_or_default(),
                     se_linux_options: value_se_linux_options,
                 })
             }

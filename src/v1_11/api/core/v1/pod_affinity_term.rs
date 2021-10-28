@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodAffinityTerm {
                     match key {
                         Field::Key_label_selector => value_label_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_namespaces => value_namespaces = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_topology_key => value_topology_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_topology_key => value_topology_key = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodAffinityTerm {
                 Ok(PodAffinityTerm {
                     label_selector: value_label_selector,
                     namespaces: value_namespaces,
-                    topology_key: value_topology_key.ok_or_else(|| crate::serde::de::Error::missing_field("topologyKey"))?,
+                    topology_key: value_topology_key.unwrap_or_default(),
                 })
             }
         }

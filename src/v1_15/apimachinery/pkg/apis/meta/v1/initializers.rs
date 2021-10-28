@@ -58,14 +58,14 @@ impl<'de> crate::serde::Deserialize<'de> for Initializers {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_pending => value_pending = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_pending => value_pending = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_result => value_result = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Initializers {
-                    pending: value_pending.ok_or_else(|| crate::serde::de::Error::missing_field("pending"))?,
+                    pending: value_pending.unwrap_or_default(),
                     result: value_result,
                 })
             }

@@ -102,12 +102,12 @@ impl<'de> crate::serde::Deserialize<'de> for APIResource {
                     match key {
                         Field::Key_categories => value_categories = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_namespaced => value_namespaced = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespaced => value_namespaced = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_short_names => value_short_names = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_singular_name => value_singular_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_verbs => value_verbs = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_singular_name => value_singular_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_verbs => value_verbs = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_version => value_version = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -116,12 +116,12 @@ impl<'de> crate::serde::Deserialize<'de> for APIResource {
                 Ok(APIResource {
                     categories: value_categories,
                     group: value_group,
-                    kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    namespaced: value_namespaced.ok_or_else(|| crate::serde::de::Error::missing_field("namespaced"))?,
+                    kind: value_kind.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
+                    namespaced: value_namespaced.unwrap_or_default(),
                     short_names: value_short_names,
-                    singular_name: value_singular_name.ok_or_else(|| crate::serde::de::Error::missing_field("singularName"))?,
-                    verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
+                    singular_name: value_singular_name.unwrap_or_default(),
+                    verbs: value_verbs.unwrap_or_default(),
                     version: value_version,
                 })
             }

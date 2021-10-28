@@ -82,10 +82,10 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_conditions => value_conditions = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_conditions => value_conditions = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_current_metrics => value_current_metrics = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_replicas => value_current_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_desired_replicas => value_desired_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current_replicas => value_current_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_desired_replicas => value_desired_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_last_scale_time => value_last_scale_time = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -93,10 +93,10 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
                 }
 
                 Ok(HorizontalPodAutoscalerStatus {
-                    conditions: value_conditions.ok_or_else(|| crate::serde::de::Error::missing_field("conditions"))?,
+                    conditions: value_conditions.unwrap_or_default(),
                     current_metrics: value_current_metrics,
-                    current_replicas: value_current_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("currentReplicas"))?,
-                    desired_replicas: value_desired_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("desiredReplicas"))?,
+                    current_replicas: value_current_replicas.unwrap_or_default(),
+                    desired_replicas: value_desired_replicas.unwrap_or_default(),
                     last_scale_time: value_last_scale_time,
                     observed_generation: value_observed_generation,
                 })

@@ -89,7 +89,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_container_id => value_container_id = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_exit_code => value_exit_code = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_exit_code => value_exit_code = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_finished_at => value_finished_at = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -101,7 +101,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
 
                 Ok(ContainerStateTerminated {
                     container_id: value_container_id,
-                    exit_code: value_exit_code.ok_or_else(|| crate::serde::de::Error::missing_field("exitCode"))?,
+                    exit_code: value_exit_code.unwrap_or_default(),
                     finished_at: value_finished_at,
                     message: value_message,
                     reason: value_reason,

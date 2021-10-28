@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for PreferredSchedulingTerm {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_preference => value_preference = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_weight => value_weight = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_preference => value_preference = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_weight => value_weight = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PreferredSchedulingTerm {
-                    preference: value_preference.ok_or_else(|| crate::serde::de::Error::missing_field("preference"))?,
-                    weight: value_weight.ok_or_else(|| crate::serde::de::Error::missing_field("weight"))?,
+                    preference: value_preference.unwrap_or_default(),
+                    weight: value_weight.unwrap_or_default(),
                 })
             }
         }

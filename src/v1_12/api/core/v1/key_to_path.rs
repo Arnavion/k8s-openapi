@@ -64,17 +64,17 @@ impl<'de> crate::serde::Deserialize<'de> for KeyToPath {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_key => value_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_key => value_key = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_mode => value_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_path => value_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_path => value_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(KeyToPath {
-                    key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
+                    key: value_key.unwrap_or_default(),
                     mode: value_mode,
-                    path: value_path.ok_or_else(|| crate::serde::de::Error::missing_field("path"))?,
+                    path: value_path.unwrap_or_default(),
                 })
             }
         }

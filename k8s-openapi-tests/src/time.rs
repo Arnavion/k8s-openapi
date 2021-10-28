@@ -4,7 +4,7 @@ use k8s_openapi::serde_json;
 fn time() {
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-	for &(input, expected_time, expected_micro_time) in &[
+	for (input, expected_time, expected_micro_time) in [
 		(
 			r#""2020-03-05T12:34:56.789012345Z""#,
 			r#""2020-03-05T12:34:56Z""#,

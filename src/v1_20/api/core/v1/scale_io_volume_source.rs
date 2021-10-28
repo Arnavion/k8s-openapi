@@ -107,14 +107,14 @@ impl<'de> crate::serde::Deserialize<'de> for ScaleIOVolumeSource {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_gateway => value_gateway = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_gateway => value_gateway = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_protection_domain => value_protection_domain = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_ssl_enabled => value_ssl_enabled = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_storage_mode => value_storage_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_storage_pool => value_storage_pool = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_system => value_system = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_system => value_system = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_volume_name => value_volume_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -122,14 +122,14 @@ impl<'de> crate::serde::Deserialize<'de> for ScaleIOVolumeSource {
 
                 Ok(ScaleIOVolumeSource {
                     fs_type: value_fs_type,
-                    gateway: value_gateway.ok_or_else(|| crate::serde::de::Error::missing_field("gateway"))?,
+                    gateway: value_gateway.unwrap_or_default(),
                     protection_domain: value_protection_domain,
                     read_only: value_read_only,
-                    secret_ref: value_secret_ref.ok_or_else(|| crate::serde::de::Error::missing_field("secretRef"))?,
+                    secret_ref: value_secret_ref.unwrap_or_default(),
                     ssl_enabled: value_ssl_enabled,
                     storage_mode: value_storage_mode,
                     storage_pool: value_storage_pool,
-                    system: value_system.ok_or_else(|| crate::serde::de::Error::missing_field("system"))?,
+                    system: value_system.unwrap_or_default(),
                     volume_name: value_volume_name,
                 })
             }

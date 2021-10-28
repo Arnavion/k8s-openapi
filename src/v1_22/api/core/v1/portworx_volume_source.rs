@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for PortworxVolumeSource {
                     match key {
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_id => value_volume_id = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volume_id => value_volume_id = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for PortworxVolumeSource {
                 Ok(PortworxVolumeSource {
                     fs_type: value_fs_type,
                     read_only: value_read_only,
-                    volume_id: value_volume_id.ok_or_else(|| crate::serde::de::Error::missing_field("volumeID"))?,
+                    volume_id: value_volume_id.unwrap_or_default(),
                 })
             }
         }

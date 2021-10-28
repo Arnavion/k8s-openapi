@@ -52,13 +52,13 @@ impl<'de> crate::serde::Deserialize<'de> for RuntimeClassSpec {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_runtime_handler => value_runtime_handler = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_runtime_handler => value_runtime_handler = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(RuntimeClassSpec {
-                    runtime_handler: value_runtime_handler.ok_or_else(|| crate::serde::de::Error::missing_field("runtimeHandler"))?,
+                    runtime_handler: value_runtime_handler.unwrap_or_default(),
                 })
             }
         }

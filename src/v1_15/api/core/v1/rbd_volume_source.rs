@@ -95,9 +95,9 @@ impl<'de> crate::serde::Deserialize<'de> for RBDVolumeSource {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image => value_image = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_image => value_image = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_keyring => value_keyring = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_monitors => value_monitors = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_monitors => value_monitors = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_pool => value_pool = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_secret_ref => value_secret_ref = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -108,9 +108,9 @@ impl<'de> crate::serde::Deserialize<'de> for RBDVolumeSource {
 
                 Ok(RBDVolumeSource {
                     fs_type: value_fs_type,
-                    image: value_image.ok_or_else(|| crate::serde::de::Error::missing_field("image"))?,
+                    image: value_image.unwrap_or_default(),
                     keyring: value_keyring,
-                    monitors: value_monitors.ok_or_else(|| crate::serde::de::Error::missing_field("monitors"))?,
+                    monitors: value_monitors.unwrap_or_default(),
                     pool: value_pool,
                     read_only: value_read_only,
                     secret_ref: value_secret_ref,

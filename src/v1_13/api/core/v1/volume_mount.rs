@@ -76,9 +76,9 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_mount_path => value_mount_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_mount_path => value_mount_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_mount_propagation => value_mount_propagation = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_sub_path => value_sub_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -86,9 +86,9 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
                 }
 
                 Ok(VolumeMount {
-                    mount_path: value_mount_path.ok_or_else(|| crate::serde::de::Error::missing_field("mountPath"))?,
+                    mount_path: value_mount_path.unwrap_or_default(),
                     mount_propagation: value_mount_propagation,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     read_only: value_read_only,
                     sub_path: value_sub_path,
                 })

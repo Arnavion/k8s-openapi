@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceRule {
                         Field::Key_api_groups => value_api_groups = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resource_names => value_resource_names = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resources => value_resources = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_verbs => value_verbs = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_verbs => value_verbs = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -83,7 +83,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceRule {
                     api_groups: value_api_groups,
                     resource_names: value_resource_names,
                     resources: value_resources,
-                    verbs: value_verbs.ok_or_else(|| crate::serde::de::Error::missing_field("verbs"))?,
+                    verbs: value_verbs.unwrap_or_default(),
                 })
             }
         }

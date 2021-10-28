@@ -460,8 +460,8 @@ impl<'de> crate::serde::Deserialize<'de> for RuntimeClass {
                                 return Err(crate::serde::de::Error::invalid_value(crate::serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::KIND));
                             }
                         },
-                        Field::Key_handler => value_handler = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_handler => value_handler = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_overhead => value_overhead = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_scheduling => value_scheduling = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -469,8 +469,8 @@ impl<'de> crate::serde::Deserialize<'de> for RuntimeClass {
                 }
 
                 Ok(RuntimeClass {
-                    handler: value_handler.ok_or_else(|| crate::serde::de::Error::missing_field("handler"))?,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    handler: value_handler.unwrap_or_default(),
+                    metadata: value_metadata.unwrap_or_default(),
                     overhead: value_overhead,
                     scheduling: value_scheduling,
                 })

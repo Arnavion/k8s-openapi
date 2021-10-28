@@ -76,7 +76,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerPort {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_container_port => value_container_port = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_container_port => value_container_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_host_ip => value_host_ip = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_host_port => value_host_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -86,7 +86,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerPort {
                 }
 
                 Ok(ContainerPort {
-                    container_port: value_container_port.ok_or_else(|| crate::serde::de::Error::missing_field("containerPort"))?,
+                    container_port: value_container_port.unwrap_or_default(),
                     host_ip: value_host_ip,
                     host_port: value_host_port,
                     name: value_name,

@@ -90,11 +90,11 @@ impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
                     match key {
                         Field::Key_ca_bundle => value_ca_bundle = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_group => value_group = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_group_priority_minimum => value_group_priority_minimum = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_group_priority_minimum => value_group_priority_minimum = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_insecure_skip_tls_verify => value_insecure_skip_tls_verify = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service => value_service = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_service => value_service = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_version => value_version = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_version_priority => value_version_priority = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_version_priority => value_version_priority = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -102,11 +102,11 @@ impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
                 Ok(APIServiceSpec {
                     ca_bundle: value_ca_bundle,
                     group: value_group,
-                    group_priority_minimum: value_group_priority_minimum.ok_or_else(|| crate::serde::de::Error::missing_field("groupPriorityMinimum"))?,
+                    group_priority_minimum: value_group_priority_minimum.unwrap_or_default(),
                     insecure_skip_tls_verify: value_insecure_skip_tls_verify,
-                    service: value_service.ok_or_else(|| crate::serde::de::Error::missing_field("service"))?,
+                    service: value_service.unwrap_or_default(),
                     version: value_version,
-                    version_priority: value_version_priority.ok_or_else(|| crate::serde::de::Error::missing_field("versionPriority"))?,
+                    version_priority: value_version_priority.unwrap_or_default(),
                 })
             }
         }

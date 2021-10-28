@@ -74,18 +74,18 @@ impl<'de> crate::serde::Deserialize<'de> for TopologySpreadConstraint {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_label_selector => value_label_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_skew => value_max_skew = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_topology_key => value_topology_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_when_unsatisfiable => value_when_unsatisfiable = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_max_skew => value_max_skew = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_topology_key => value_topology_key = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_when_unsatisfiable => value_when_unsatisfiable = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TopologySpreadConstraint {
                     label_selector: value_label_selector,
-                    max_skew: value_max_skew.ok_or_else(|| crate::serde::de::Error::missing_field("maxSkew"))?,
-                    topology_key: value_topology_key.ok_or_else(|| crate::serde::de::Error::missing_field("topologyKey"))?,
-                    when_unsatisfiable: value_when_unsatisfiable.ok_or_else(|| crate::serde::de::Error::missing_field("whenUnsatisfiable"))?,
+                    max_skew: value_max_skew.unwrap_or_default(),
+                    topology_key: value_topology_key.unwrap_or_default(),
+                    when_unsatisfiable: value_when_unsatisfiable.unwrap_or_default(),
                 })
             }
         }

@@ -67,7 +67,7 @@ impl<'de> crate::serde::Deserialize<'de> for GitRepoVolumeSource {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_directory => value_directory = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_repository => value_repository = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_repository => value_repository = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_revision => value_revision = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -75,7 +75,7 @@ impl<'de> crate::serde::Deserialize<'de> for GitRepoVolumeSource {
 
                 Ok(GitRepoVolumeSource {
                     directory: value_directory,
-                    repository: value_repository.ok_or_else(|| crate::serde::de::Error::missing_field("repository"))?,
+                    repository: value_repository.unwrap_or_default(),
                     revision: value_revision,
                 })
             }

@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for AuditSinkSpec {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_policy => value_policy = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_webhook => value_webhook = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_policy => value_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_webhook => value_webhook = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(AuditSinkSpec {
-                    policy: value_policy.ok_or_else(|| crate::serde::de::Error::missing_field("policy"))?,
-                    webhook: value_webhook.ok_or_else(|| crate::serde::de::Error::missing_field("webhook"))?,
+                    policy: value_policy.unwrap_or_default(),
+                    webhook: value_webhook.unwrap_or_default(),
                 })
             }
         }

@@ -91,29 +91,29 @@ impl<'de> crate::serde::Deserialize<'de> for Info {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_build_date => value_build_date = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_compiler => value_compiler = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_commit => value_git_commit = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_tree_state => value_git_tree_state = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_git_version => value_git_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_go_version => value_go_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_major => value_major = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_minor => value_minor = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_platform => value_platform = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_build_date => value_build_date = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_compiler => value_compiler = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_git_commit => value_git_commit = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_git_tree_state => value_git_tree_state = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_git_version => value_git_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_go_version => value_go_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_major => value_major = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_minor => value_minor = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_platform => value_platform = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Info {
-                    build_date: value_build_date.ok_or_else(|| crate::serde::de::Error::missing_field("buildDate"))?,
-                    compiler: value_compiler.ok_or_else(|| crate::serde::de::Error::missing_field("compiler"))?,
-                    git_commit: value_git_commit.ok_or_else(|| crate::serde::de::Error::missing_field("gitCommit"))?,
-                    git_tree_state: value_git_tree_state.ok_or_else(|| crate::serde::de::Error::missing_field("gitTreeState"))?,
-                    git_version: value_git_version.ok_or_else(|| crate::serde::de::Error::missing_field("gitVersion"))?,
-                    go_version: value_go_version.ok_or_else(|| crate::serde::de::Error::missing_field("goVersion"))?,
-                    major: value_major.ok_or_else(|| crate::serde::de::Error::missing_field("major"))?,
-                    minor: value_minor.ok_or_else(|| crate::serde::de::Error::missing_field("minor"))?,
-                    platform: value_platform.ok_or_else(|| crate::serde::de::Error::missing_field("platform"))?,
+                    build_date: value_build_date.unwrap_or_default(),
+                    compiler: value_compiler.unwrap_or_default(),
+                    git_commit: value_git_commit.unwrap_or_default(),
+                    git_tree_state: value_git_tree_state.unwrap_or_default(),
+                    git_version: value_git_version.unwrap_or_default(),
+                    go_version: value_go_version.unwrap_or_default(),
+                    major: value_major.unwrap_or_default(),
+                    minor: value_minor.unwrap_or_default(),
+                    platform: value_platform.unwrap_or_default(),
                 })
             }
         }

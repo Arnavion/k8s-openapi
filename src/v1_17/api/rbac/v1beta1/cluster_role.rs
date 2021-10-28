@@ -453,7 +453,7 @@ impl<'de> crate::serde::Deserialize<'de> for ClusterRole {
                             }
                         },
                         Field::Key_aggregation_rule => value_aggregation_rule = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -461,7 +461,7 @@ impl<'de> crate::serde::Deserialize<'de> for ClusterRole {
 
                 Ok(ClusterRole {
                     aggregation_rule: value_aggregation_rule,
-                    metadata: value_metadata.ok_or_else(|| crate::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.unwrap_or_default(),
                     rules: value_rules,
                 })
             }

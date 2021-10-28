@@ -83,22 +83,22 @@ impl<'de> crate::serde::Deserialize<'de> for Condition {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_last_transition_time => value_last_transition_time = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_message => value_message = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_message => value_message = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reason => value_reason = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_status => value_status = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(Condition {
                     last_transition_time: value_last_transition_time.ok_or_else(|| crate::serde::de::Error::missing_field("lastTransitionTime"))?,
-                    message: value_message.ok_or_else(|| crate::serde::de::Error::missing_field("message"))?,
+                    message: value_message.unwrap_or_default(),
                     observed_generation: value_observed_generation,
-                    reason: value_reason.ok_or_else(|| crate::serde::de::Error::missing_field("reason"))?,
-                    status: value_status.ok_or_else(|| crate::serde::de::Error::missing_field("status"))?,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    reason: value_reason.unwrap_or_default(),
+                    status: value_status.unwrap_or_default(),
+                    type_: value_type_.unwrap_or_default(),
                 })
             }
         }

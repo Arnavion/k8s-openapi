@@ -79,7 +79,7 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
                         Field::Key_host => value_host = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_http_headers => value_http_headers = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_path => value_path = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_port => value_port = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_port => value_port = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_scheme => value_scheme = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -89,7 +89,7 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
                     host: value_host,
                     http_headers: value_http_headers,
                     path: value_path,
-                    port: value_port.ok_or_else(|| crate::serde::de::Error::missing_field("port"))?,
+                    port: value_port.unwrap_or_default(),
                     scheme: value_scheme,
                 })
             }

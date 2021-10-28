@@ -125,9 +125,9 @@ impl<'de> crate::serde::Deserialize<'de> for Webhook {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_admission_review_versions => value_admission_review_versions = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_client_config => value_client_config = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_client_config => value_client_config = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_failure_policy => value_failure_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_namespace_selector => value_namespace_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_rules => value_rules = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_side_effects => value_side_effects = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -138,9 +138,9 @@ impl<'de> crate::serde::Deserialize<'de> for Webhook {
 
                 Ok(Webhook {
                     admission_review_versions: value_admission_review_versions,
-                    client_config: value_client_config.ok_or_else(|| crate::serde::de::Error::missing_field("clientConfig"))?,
+                    client_config: value_client_config.unwrap_or_default(),
                     failure_policy: value_failure_policy,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
+                    name: value_name.unwrap_or_default(),
                     namespace_selector: value_namespace_selector,
                     rules: value_rules,
                     side_effects: value_side_effects,

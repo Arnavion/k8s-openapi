@@ -64,16 +64,16 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSelectorRequirement {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_key => value_key = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_operator => value_operator = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_key => value_key = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_operator => value_operator = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_values => value_values = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NodeSelectorRequirement {
-                    key: value_key.ok_or_else(|| crate::serde::de::Error::missing_field("key"))?,
-                    operator: value_operator.ok_or_else(|| crate::serde::de::Error::missing_field("operator"))?,
+                    key: value_key.unwrap_or_default(),
+                    operator: value_operator.unwrap_or_default(),
                     values: value_values,
                 })
             }

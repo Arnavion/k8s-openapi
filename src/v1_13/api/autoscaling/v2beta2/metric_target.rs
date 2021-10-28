@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for MetricTarget {
                     match key {
                         Field::Key_average_utilization => value_average_utilization = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_average_value => value_average_value = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_value => value_value = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for MetricTarget {
                 Ok(MetricTarget {
                     average_utilization: value_average_utilization,
                     average_value: value_average_value,
-                    type_: value_type_.ok_or_else(|| crate::serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.unwrap_or_default(),
                     value: value_value,
                 })
             }

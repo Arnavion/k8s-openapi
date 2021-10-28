@@ -77,8 +77,8 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_current_cpu_utilization_percentage => value_current_cpu_utilization_percentage = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_replicas => value_current_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_desired_replicas => value_desired_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_current_replicas => value_current_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_desired_replicas => value_desired_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_last_scale_time => value_last_scale_time = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_observed_generation => value_observed_generation = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -87,8 +87,8 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
 
                 Ok(HorizontalPodAutoscalerStatus {
                     current_cpu_utilization_percentage: value_current_cpu_utilization_percentage,
-                    current_replicas: value_current_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("currentReplicas"))?,
-                    desired_replicas: value_desired_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("desiredReplicas"))?,
+                    current_replicas: value_current_replicas.unwrap_or_default(),
+                    desired_replicas: value_desired_replicas.unwrap_or_default(),
                     last_scale_time: value_last_scale_time,
                     observed_generation: value_observed_generation,
                 })

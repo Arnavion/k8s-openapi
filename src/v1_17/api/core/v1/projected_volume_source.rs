@@ -59,14 +59,14 @@ impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_default_mode => value_default_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_sources => value_sources = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_sources => value_sources = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ProjectedVolumeSource {
                     default_mode: value_default_mode,
-                    sources: value_sources.ok_or_else(|| crate::serde::de::Error::missing_field("sources"))?,
+                    sources: value_sources.unwrap_or_default(),
                 })
             }
         }

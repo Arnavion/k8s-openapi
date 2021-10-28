@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_replicas => value_replicas = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_replicas => value_replicas = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_selector => value_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target_selector => value_target_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
@@ -72,7 +72,7 @@ impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
                 }
 
                 Ok(ScaleStatus {
-                    replicas: value_replicas.ok_or_else(|| crate::serde::de::Error::missing_field("replicas"))?,
+                    replicas: value_replicas.unwrap_or_default(),
                     selector: value_selector,
                     target_selector: value_target_selector,
                 })

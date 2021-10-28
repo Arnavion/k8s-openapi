@@ -66,7 +66,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
                     match key {
                         Field::Key_container_name => value_container_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_divisor => value_divisor = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource => value_resource = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_resource => value_resource = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
                 Ok(ResourceFieldSelector {
                     container_name: value_container_name,
                     divisor: value_divisor,
-                    resource: value_resource.ok_or_else(|| crate::serde::de::Error::missing_field("resource"))?,
+                    resource: value_resource.unwrap_or_default(),
                 })
             }
         }

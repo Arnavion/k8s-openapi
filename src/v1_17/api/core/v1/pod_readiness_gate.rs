@@ -52,13 +52,13 @@ impl<'de> crate::serde::Deserialize<'de> for PodReadinessGate {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_condition_type => value_condition_type = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_condition_type => value_condition_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PodReadinessGate {
-                    condition_type: value_condition_type.ok_or_else(|| crate::serde::de::Error::missing_field("conditionType"))?,
+                    condition_type: value_condition_type.unwrap_or_default(),
                 })
             }
         }

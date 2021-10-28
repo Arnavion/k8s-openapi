@@ -121,7 +121,7 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
                     match key {
                         Field::Key_extra => value_extra = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_groups => value_groups = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_request => value_request = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_request => value_request = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_signer_name => value_signer_name = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_uid => value_uid = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_usages => value_usages = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -133,7 +133,7 @@ impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
                 Ok(CertificateSigningRequestSpec {
                     extra: value_extra,
                     groups: value_groups,
-                    request: value_request.ok_or_else(|| crate::serde::de::Error::missing_field("request"))?,
+                    request: value_request.unwrap_or_default(),
                     signer_name: value_signer_name,
                     uid: value_uid,
                     usages: value_usages,

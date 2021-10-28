@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
                         Field::Key_fs_type => value_fs_type = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_storage_policy_id => value_storage_policy_id = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_storage_policy_name => value_storage_policy_name = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_path => value_volume_path = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volume_path => value_volume_path = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
@@ -82,7 +82,7 @@ impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
                     fs_type: value_fs_type,
                     storage_policy_id: value_storage_policy_id,
                     storage_policy_name: value_storage_policy_name,
-                    volume_path: value_volume_path.ok_or_else(|| crate::serde::de::Error::missing_field("volumePath"))?,
+                    volume_path: value_volume_path.unwrap_or_default(),
                 })
             }
         }

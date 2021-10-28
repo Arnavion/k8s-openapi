@@ -82,23 +82,23 @@ impl<'de> crate::serde::Deserialize<'de> for OwnerReference {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_api_version => value_api_version = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_block_owner_deletion => value_block_owner_deletion = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_controller => value_controller = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_uid => value_uid = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(OwnerReference {
-                    api_version: value_api_version.ok_or_else(|| crate::serde::de::Error::missing_field("apiVersion"))?,
+                    api_version: value_api_version.unwrap_or_default(),
                     block_owner_deletion: value_block_owner_deletion,
                     controller: value_controller,
-                    kind: value_kind.ok_or_else(|| crate::serde::de::Error::missing_field("kind"))?,
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    uid: value_uid.ok_or_else(|| crate::serde::de::Error::missing_field("uid"))?,
+                    kind: value_kind.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
+                    uid: value_uid.unwrap_or_default(),
                 })
             }
         }

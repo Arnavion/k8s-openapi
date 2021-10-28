@@ -58,15 +58,15 @@ impl<'de> crate::serde::Deserialize<'de> for ServiceAccountSubject {
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_namespace => value_namespace = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespace => value_namespace = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ServiceAccountSubject {
-                    name: value_name.ok_or_else(|| crate::serde::de::Error::missing_field("name"))?,
-                    namespace: value_namespace.ok_or_else(|| crate::serde::de::Error::missing_field("namespace"))?,
+                    name: value_name.unwrap_or_default(),
+                    namespace: value_namespace.unwrap_or_default(),
                 })
             }
         }
