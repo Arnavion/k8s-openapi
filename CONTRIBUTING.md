@@ -137,4 +137,4 @@ Keep these in mind when dropping support for older versions:
         head -1
     ```
 
-- [Google GKE](https://cloud.google.com/kubernetes-engine/docs/release-notes#version_updates)
+- [Google GKE](https://cloud.google.com/kubernetes-engine/docs/release-schedule)
