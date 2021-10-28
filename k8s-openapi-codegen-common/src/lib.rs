@@ -968,8 +968,7 @@ pub fn run(
 		swagger20::SchemaKind::Ty(_) => {
 			let inner_type_name = get_rust_type(&definition.kind, map_namespace)?;
 
-			// Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `chrono::DateTime`
-			// that uses a variable number up to nine.
+			// Kubernetes requires MicroTime to be serialized with exactly six decimal digits.
 			//
 			// Furthermore, while Kubernetes does deserialize a Time from a string with one or more decimal digits,
 			// the format string it uses to *serialize* datetimes does not contain any decimal digits. So match that behavior just to be safe, and to have
@@ -979,28 +978,39 @@ pub fn run(
 			// - https://github.com/Arnavion/k8s-openapi/issues/63
 			// - https://github.com/deislabs/krustlet/issues/5
 			// - https://github.com/kubernetes/apimachinery/issues/88
-			let datetime_serialization_format = match (&**definition_path, &definition.kind) {
+			match (&**definition_path, &definition.kind) {
 				(
 					"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime",
 					swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }),
-				) => templates::DateTimeSerializationFormat::SixDecimalDigits,
+				) => templates::newtype_time::generate(
+					&mut out,
+					vis,
+					type_name,
+					&inner_type_name,
+					templates::DateTimeSerializationFormat::SixDecimalDigits,
+					map_namespace,
+				)?,
 
 				(
 					"io.k8s.apimachinery.pkg.apis.meta.v1.Time",
 					swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }),
-				) => templates::DateTimeSerializationFormat::ZeroDecimalDigits,
+				) => templates::newtype_time::generate(
+					&mut out,
+					vis,
+					type_name,
+					&inner_type_name,
+					templates::DateTimeSerializationFormat::ZeroDecimalDigits,
+					map_namespace,
+				)?,
 
-				_ => templates::DateTimeSerializationFormat::Default,
-			};
-
-			templates::newtype::generate(
-				&mut out,
-				vis,
-				type_name,
-				&inner_type_name,
-				datetime_serialization_format,
-				map_namespace,
-			)?;
+				_ => templates::newtype::generate(
+					&mut out,
+					vis,
+					type_name,
+					&inner_type_name,
+					map_namespace,
+				)?,
+			}
 
 			run_result.num_generated_type_aliases += 1;
 		},
@@ -1126,7 +1136,7 @@ fn get_derives(
 		// Handled by evaluate_trait_bound
 		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
 
-		// chrono::DateTime<chrono::Utc> is not Default
+		// time::OffsetDateTime is not Default
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
 		// Enums without a default value
@@ -1582,7 +1592,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
 			Ok(format!("{}ByteString", local).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
-			Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>", local = local).into()),
+			Ok(format!("{local}time::OffsetDateTime", local = local).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {

@@ -460,7 +460,6 @@
 //! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating clientsets
 //! for custom resources. See that crate's docs for more information.
 
-pub use chrono;
 #[cfg(feature = "api")]
 pub use http;
 #[cfg(feature = "api")]
@@ -470,6 +469,7 @@ pub use schemars;
 pub use serde;
 pub use serde_json;
 pub use serde_value;
+pub use time;
 #[cfg(feature = "api")]
 pub use url;
 
@@ -770,6 +770,51 @@ pub mod percent_encoding2 {
         &percent_encoding::CONTROLS
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
+}
+
+/// Extensions to the time crate
+pub mod time2 {
+    /// RFC3339 format with no subsecond digits.
+    pub const RFC3339_SUBSECONDS_ZERO: &[time::format_description::FormatItem<'_>] = &[
+        time::format_description::FormatItem::Component(time::format_description::Component::Year(time::format_description::modifier::Year::default())),
+        time::format_description::FormatItem::Literal(b"-"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Month(time::format_description::modifier::Month::default())),
+        time::format_description::FormatItem::Literal(b"-"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Day(time::format_description::modifier::Day::default())),
+        time::format_description::FormatItem::Literal(b"T"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Hour(time::format_description::modifier::Hour::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Minute(time::format_description::modifier::Minute::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Second(time::format_description::modifier::Second::default())),
+        time::format_description::FormatItem::Component(time::format_description::Component::OffsetHour(time::format_description::modifier::OffsetHour::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::OffsetMinute(time::format_description::modifier::OffsetMinute::default())),
+    ];
+
+    /// RFC3339 format with six subsecond digits.
+    pub const RFC3339_SUBSECONDS_SIX: &[time::format_description::FormatItem<'_>] = &[
+        time::format_description::FormatItem::Component(time::format_description::Component::Year(time::format_description::modifier::Year::default())),
+        time::format_description::FormatItem::Literal(b"-"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Month(time::format_description::modifier::Month::default())),
+        time::format_description::FormatItem::Literal(b"-"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Day(time::format_description::modifier::Day::default())),
+        time::format_description::FormatItem::Literal(b"T"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Hour(time::format_description::modifier::Hour::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Minute(time::format_description::modifier::Minute::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::Second(time::format_description::modifier::Second::default())),
+        time::format_description::FormatItem::Literal(b"."),
+        time::format_description::FormatItem::Component(time::format_description::Component::Subsecond({
+            let mut subsecond = time::format_description::modifier::Subsecond::default();
+            subsecond.digits = time::format_description::modifier::SubsecondDigits::Six;
+            subsecond
+        })),
+        time::format_description::FormatItem::Component(time::format_description::Component::OffsetHour(time::format_description::modifier::OffsetHour::default())),
+        time::format_description::FormatItem::Literal(b":"),
+        time::format_description::FormatItem::Component(time::format_description::Component::OffsetMinute(time::format_description::modifier::OffsetMinute::default())),
+    ];
 }
 
 #[cfg(feature = "v1_11")] mod v1_11;

@@ -32,10 +32,6 @@ base64 = { version = "0.13", default-features = false, features = [
 	"alloc", # for base64::decode_config and base64::encode_config
 ] }
 bytes = { version = "1", default-features = false}
-chrono = { version = "0.4.1", default-features = false, features = [
-	"alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
-	"serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
-] }
 http = { version = "0.2", optional = true, default-features = false }
 percent-encoding = { version = "2", optional = true, default-features = false }
 schemars = { version = "0.8", optional = true, default-features = false }
@@ -44,6 +40,10 @@ serde_json = { version = "1", default-features = false, features = [
 	"alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
 ] }
 serde-value = { version = "0.7", default-features = false }
+time = { version = "0.3.4", default-features = false, features = [
+	"formatting", # for time::OffsetDateTime::format
+	"parsing", # for time::OffsetDateTime::parse
+] }
 url = { version = "2", optional = true, default-features = false }
 
 [features]

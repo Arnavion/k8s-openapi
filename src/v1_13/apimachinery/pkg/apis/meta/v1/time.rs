@@ -2,7 +2,7 @@
 
 /// Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
+pub struct Time(pub crate::time::OffsetDateTime);
 
 impl<'de> crate::serde::Deserialize<'de> for Time {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
@@ -16,7 +16,21 @@ impl<'de> crate::serde::Deserialize<'de> for Time {
             }
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: crate::serde::Deserializer<'de> {
-                Ok(Time(crate::serde::Deserialize::deserialize(deserializer)?))
+                struct Visitor;
+
+                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+                    type Value = crate::time::OffsetDateTime;
+
+                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        f.write_str("OffsetDateTime")
+                    }
+
+                    fn visit_str<E>(self, s: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        crate::time::OffsetDateTime::parse(s, &crate::time::format_description::well_known::Rfc3339).map_err(serde::de::Error::custom)
+                    }
+                }
+
+                Ok(Time(deserializer.deserialize_str(Visitor)?))
             }
         }
 
@@ -26,7 +40,7 @@ impl<'de> crate::serde::Deserialize<'de> for Time {
 
 impl crate::serde::Serialize for Time {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
-        serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
+        serializer.serialize_newtype_struct("Time", &self.0.format(crate::time2::RFC3339_SUBSECONDS_ZERO).map_err(crate::serde::ser::Error::custom)?)
     }
 }
 

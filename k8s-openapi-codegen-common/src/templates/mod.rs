@@ -16,6 +16,8 @@ pub(crate) mod json_schema_props_or;
 
 pub(crate) mod newtype;
 
+pub(crate) mod newtype_time;
+
 pub(crate) mod operation_response_common;
 
 pub(crate) mod patch;
@@ -101,7 +103,6 @@ pub(crate) struct ResourceMetadata<'a> {
 
 #[derive(Clone, Copy)]
 pub(crate) enum DateTimeSerializationFormat {
-	Default,
 	SixDecimalDigits,
 	ZeroDecimalDigits,
 }
