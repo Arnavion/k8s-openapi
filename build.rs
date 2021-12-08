@@ -1,5 +1,5 @@
 const MIN: usize = 11;
-const MAX: usize = 22;
+const MAX: usize = 23;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
