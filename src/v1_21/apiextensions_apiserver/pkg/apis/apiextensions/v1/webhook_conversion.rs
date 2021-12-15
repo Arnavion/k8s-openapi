@@ -111,7 +111,7 @@ impl crate::schemars::JsonSchema for WebhookConversion {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "clientConfig".to_owned(),
                         {
@@ -144,7 +144,7 @@ impl crate::schemars::JsonSchema for WebhookConversion {
                         }),
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "conversionReviewVersions",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),
                 ..Default::default()

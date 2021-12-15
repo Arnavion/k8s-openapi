@@ -137,7 +137,7 @@ impl crate::schemars::JsonSchema for APIVersions {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "apiVersion".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -196,7 +196,7 @@ impl crate::schemars::JsonSchema for APIVersions {
                         }),
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "serverAddressByClientCIDRs",
                     "versions",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),

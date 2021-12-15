@@ -117,7 +117,7 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "describedObject".to_owned(),
                         __gen.subschema_for::<crate::api::autoscaling::v2beta2::CrossVersionObjectReference>(),
@@ -145,7 +145,7 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
                         },
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "describedObject",
                     "metric",
                     "target",

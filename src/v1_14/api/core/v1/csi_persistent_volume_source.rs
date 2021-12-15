@@ -186,7 +186,7 @@ impl crate::schemars::JsonSchema for CSIPersistentVolumeSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "controllerPublishSecretRef".to_owned(),
                         {
@@ -285,7 +285,7 @@ impl crate::schemars::JsonSchema for CSIPersistentVolumeSource {
                         }),
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "driver",
                     "volumeHandle",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),

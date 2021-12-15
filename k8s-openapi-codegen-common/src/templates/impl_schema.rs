@@ -107,13 +107,13 @@ fn gen_schema(
 			}
 
 			if !props.is_empty() {
-				writeln!(out, "{indent}        properties: std::array::IntoIter::new([", indent = indent)?;
+				writeln!(out, "{indent}        properties: IntoIterator::into_iter([", indent = indent)?;
 				write!(out, "{}", props)?;
 				writeln!(out, "{indent}        ]).collect(),", indent = indent)?;
 			}
 
 			if !required_props.is_empty() {
-				writeln!(out, "{indent}        required: std::array::IntoIter::new([", indent = indent)?;
+				writeln!(out, "{indent}        required: IntoIterator::into_iter([", indent = indent)?;
 				write!(out, "{}", required_props)?;
 				writeln!(out, "{indent}        ]).map(std::borrow::ToOwned::to_owned).collect(),", indent = indent)?;
 			}
@@ -380,7 +380,7 @@ fn gen_type(
 				"{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),",
 				indent = indent, local = local)?;
 			writeln!(out, "{indent}object: Some(Box::new({local}schemars::schema::ObjectValidation {{", indent = indent, local = local)?;
-			writeln!(out, "{indent}    properties: std::array::IntoIter::new([", indent = indent)?;
+			writeln!(out, "{indent}    properties: IntoIterator::into_iter([", indent = indent)?;
 			writeln!(out, "{indent}        (", indent = indent)?;
 			writeln!(out, r#"{indent}            "object".to_owned(),"#, indent = indent)?;
 			writeln!(out,  "{indent}            __gen.subschema_for::<{}>(),", crate::get_fully_qualified_type_name(ref_path, map_namespace), indent = indent)?;
@@ -397,7 +397,7 @@ fn gen_type(
 			writeln!(out, "{indent}        ),", indent = indent)?;
 			writeln!(out, "{indent}    ]).collect(),", indent = indent)?;
 
-			writeln!(out, "{indent}    required: std::array::IntoIter::new([", indent = indent)?;
+			writeln!(out, "{indent}    required: IntoIterator::into_iter([", indent = indent)?;
 			writeln!(out, r#"{indent}        "object","#, indent = indent)?;
 			writeln!(out, r#"{indent}        "type","#, indent = indent)?;
 			writeln!(out, "{indent}    ]).map(std::borrow::ToOwned::to_owned).collect(),", indent = indent)?;

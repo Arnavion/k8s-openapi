@@ -150,7 +150,7 @@ impl crate::schemars::JsonSchema for HTTPGetAction {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "host".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -211,7 +211,7 @@ impl crate::schemars::JsonSchema for HTTPGetAction {
                         }),
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "port",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),
                 ..Default::default()

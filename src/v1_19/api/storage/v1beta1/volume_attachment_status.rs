@@ -137,7 +137,7 @@ impl crate::schemars::JsonSchema for VolumeAttachmentStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "attachError".to_owned(),
                         {
@@ -192,7 +192,7 @@ impl crate::schemars::JsonSchema for VolumeAttachmentStatus {
                         },
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "attached",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),
                 ..Default::default()

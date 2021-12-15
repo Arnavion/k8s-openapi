@@ -144,7 +144,7 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "averageValue".to_owned(),
                         {
@@ -201,7 +201,7 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
                         },
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "metricName",
                     "target",
                     "targetValue",

@@ -137,7 +137,7 @@ impl crate::schemars::JsonSchema for Subject {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: std::array::IntoIter::new([
+                properties: IntoIterator::into_iter([
                     (
                         "group".to_owned(),
                         {
@@ -183,7 +183,7 @@ impl crate::schemars::JsonSchema for Subject {
                         },
                     ),
                 ]).collect(),
-                required: std::array::IntoIter::new([
+                required: IntoIterator::into_iter([
                     "kind",
                 ]).map(std::borrow::ToOwned::to_owned).collect(),
                 ..Default::default()
