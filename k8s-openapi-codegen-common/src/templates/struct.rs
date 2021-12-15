@@ -18,7 +18,7 @@ pub(crate) fn generate(
 			}
 
 			if let Some(comment) = comment {
-				for line in super::get_comment_text(comment, "") {
+				for line in crate::get_comment_text(comment, "") {
 					writeln!(&mut fields, "    ///{}", line)?;
 				}
 			}

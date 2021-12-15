@@ -8,7 +8,7 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
 	let type_comment: String =
 		type_comment
-		.map(|type_comment| super::get_comment_text(type_comment, "").map(|line| format!("///{}\n", line)).collect())
+		.map(|type_comment| crate::get_comment_text(type_comment, "").map(|line| format!("///{}\n", line)).collect())
 		.unwrap_or_default();
 
 	let type_feature_attribute =
