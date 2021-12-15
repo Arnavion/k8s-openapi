@@ -1383,12 +1383,12 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 		else {
 			let line =
 				line
-				.replace(r"\", r"\\")
-				.replace("[", r"\[")
-				.replace("]", r"\]")
-				.replace("<", r"\<")
-				.replace(">", r"\>")
-				.replace("\t", "    ");
+				.replace('\\', r"\\")
+				.replace('[', r"\[")
+				.replace(']', r"\]")
+				.replace('<', r"\<")
+				.replace('>', r"\>")
+				.replace('\t', "    ");
 
 			let line =
 				if *previous_line_was_empty && line.starts_with("    ") {
