@@ -81,7 +81,7 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// Entire buffer is valid
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "a" => (),
+		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "a" => (),
 		result => panic!(r#"expected empty buffer to return Ok("a"), but it returned {:?}"#, result),
 	}
 
@@ -92,13 +92,13 @@ fn partial_and_invalid_utf8_sequences() {
 	response_body.append_slice(b"\xff");
 
 	match response_body.parse() {
-		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
 		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
 	}
 
 	// First byte of buffer must not have been consumed, so it's still invalid
 	match response_body.parse() {
-		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
 		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
 	}
 
@@ -125,7 +125,7 @@ fn partial_and_invalid_utf8_sequences() {
 	response_body.append_slice(b"\x96");
 
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
 	}
 
@@ -136,7 +136,7 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// First three bytes are valid. Fourth byte is partial.
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
 	}
 
@@ -151,7 +151,7 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// Entire buffer is valid
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{754c}" => (),
+		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{754c}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{754c}}"), but it returned {:?}"#, result),
 	}
 
@@ -162,14 +162,14 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// First three bytes are valid. Fourth byte is invalid.
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
 	}
 
 	// First three bytes must have been consumed. Remaining byte is invalid.
 	assert_eq!(&*response_body, b"\xff");
 	match response_body.parse() {
-		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
 		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
 	}
 }

@@ -2249,7 +2249,7 @@ pub fn write_operation(
 					swagger20::SchemaKind::Ref(_) => {
 						writeln!(out, "                let result = match {}serde_json::from_slice(buf) {{", local)?;
 						writeln!(out, "                    Ok(value) => value,")?;
-						writeln!(out, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
+						writeln!(out, "                    Err(err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 						writeln!(out, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
 						writeln!(out, "                }};")?;
 						writeln!(out, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
@@ -2268,7 +2268,7 @@ pub fn write_operation(
 			writeln!(out, "                    else {{")?;
 			writeln!(out, "                        match {}serde_json::from_slice(buf) {{", local)?;
 			writeln!(out, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
-			writeln!(out, "                            Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
+			writeln!(out, "                            Err(err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 			writeln!(out, "                            Err(err) => (Err(err), 0),")?;
 			writeln!(out, "                        }}")?;
 			writeln!(out, "                    }};")?;

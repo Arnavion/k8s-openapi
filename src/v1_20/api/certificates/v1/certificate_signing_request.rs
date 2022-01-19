@@ -369,7 +369,7 @@ impl crate::Response for ReadCertificateSigningRequestResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCertificateSigningRequestResponse::Ok(result), buf.len()))
@@ -382,7 +382,7 @@ impl crate::Response for ReadCertificateSigningRequestResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -457,7 +457,7 @@ impl crate::Response for ReadCertificateSigningRequestApprovalResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCertificateSigningRequestApprovalResponse::Ok(result), buf.len()))
@@ -470,7 +470,7 @@ impl crate::Response for ReadCertificateSigningRequestApprovalResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -545,7 +545,7 @@ impl crate::Response for ReadCertificateSigningRequestStatusResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCertificateSigningRequestStatusResponse::Ok(result), buf.len()))
@@ -558,7 +558,7 @@ impl crate::Response for ReadCertificateSigningRequestStatusResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };

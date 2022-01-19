@@ -307,7 +307,7 @@ impl crate::Response for ReadAPIServiceResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAPIServiceResponse::Ok(result), buf.len()))
@@ -320,7 +320,7 @@ impl crate::Response for ReadAPIServiceResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -395,7 +395,7 @@ impl crate::Response for ReadAPIServiceStatusResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAPIServiceStatusResponse::Ok(result), buf.len()))
@@ -408,7 +408,7 @@ impl crate::Response for ReadAPIServiceStatusResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };

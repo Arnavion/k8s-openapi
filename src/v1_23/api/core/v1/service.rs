@@ -924,7 +924,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadNamespacedServiceResponse::Ok(result), buf.len()))
@@ -937,7 +937,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1018,7 +1018,7 @@ impl crate::Response for ReadNamespacedServiceStatusResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadNamespacedServiceStatusResponse::Ok(result), buf.len()))
@@ -1031,7 +1031,7 @@ impl crate::Response for ReadNamespacedServiceStatusResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };

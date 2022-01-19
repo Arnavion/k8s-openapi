@@ -103,7 +103,7 @@ impl crate::Response for GetAPIVersionsResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAPIVersionsResponse::Ok(result), buf.len()))
@@ -116,7 +116,7 @@ impl crate::Response for GetAPIVersionsResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -159,7 +159,7 @@ impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAdmissionregistrationAPIGroupResponse::Ok(result), buf.len()))
@@ -172,7 +172,7 @@ impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -215,7 +215,7 @@ impl crate::Response for GetAdmissionregistrationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAdmissionregistrationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -228,7 +228,7 @@ impl crate::Response for GetAdmissionregistrationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -271,7 +271,7 @@ impl crate::Response for GetApiextensionsAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetApiextensionsAPIGroupResponse::Ok(result), buf.len()))
@@ -284,7 +284,7 @@ impl crate::Response for GetApiextensionsAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -327,7 +327,7 @@ impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetApiextensionsV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -340,7 +340,7 @@ impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -383,7 +383,7 @@ impl crate::Response for GetApiregistrationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetApiregistrationAPIGroupResponse::Ok(result), buf.len()))
@@ -396,7 +396,7 @@ impl crate::Response for GetApiregistrationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -439,7 +439,7 @@ impl crate::Response for GetApiregistrationV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetApiregistrationV1APIResourcesResponse::Ok(result), buf.len()))
@@ -452,7 +452,7 @@ impl crate::Response for GetApiregistrationV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -495,7 +495,7 @@ impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetApiregistrationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -508,7 +508,7 @@ impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -551,7 +551,7 @@ impl crate::Response for GetAppsAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAppsAPIGroupResponse::Ok(result), buf.len()))
@@ -564,7 +564,7 @@ impl crate::Response for GetAppsAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -607,7 +607,7 @@ impl crate::Response for GetAppsV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAppsV1APIResourcesResponse::Ok(result), buf.len()))
@@ -620,7 +620,7 @@ impl crate::Response for GetAppsV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -663,7 +663,7 @@ impl crate::Response for GetAppsV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAppsV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -676,7 +676,7 @@ impl crate::Response for GetAppsV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -719,7 +719,7 @@ impl crate::Response for GetAppsV1beta2APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAppsV1beta2APIResourcesResponse::Ok(result), buf.len()))
@@ -732,7 +732,7 @@ impl crate::Response for GetAppsV1beta2APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -775,7 +775,7 @@ impl crate::Response for GetAuditregistrationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuditregistrationAPIGroupResponse::Ok(result), buf.len()))
@@ -788,7 +788,7 @@ impl crate::Response for GetAuditregistrationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -831,7 +831,7 @@ impl crate::Response for GetAuditregistrationV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuditregistrationV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -844,7 +844,7 @@ impl crate::Response for GetAuditregistrationV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -887,7 +887,7 @@ impl crate::Response for GetAuthenticationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthenticationAPIGroupResponse::Ok(result), buf.len()))
@@ -900,7 +900,7 @@ impl crate::Response for GetAuthenticationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -943,7 +943,7 @@ impl crate::Response for GetAuthenticationV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthenticationV1APIResourcesResponse::Ok(result), buf.len()))
@@ -956,7 +956,7 @@ impl crate::Response for GetAuthenticationV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -999,7 +999,7 @@ impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthenticationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1012,7 +1012,7 @@ impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1055,7 +1055,7 @@ impl crate::Response for GetAuthorizationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthorizationAPIGroupResponse::Ok(result), buf.len()))
@@ -1068,7 +1068,7 @@ impl crate::Response for GetAuthorizationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1111,7 +1111,7 @@ impl crate::Response for GetAuthorizationV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthorizationV1APIResourcesResponse::Ok(result), buf.len()))
@@ -1124,7 +1124,7 @@ impl crate::Response for GetAuthorizationV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1167,7 +1167,7 @@ impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAuthorizationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1180,7 +1180,7 @@ impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1223,7 +1223,7 @@ impl crate::Response for GetAutoscalingAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAutoscalingAPIGroupResponse::Ok(result), buf.len()))
@@ -1236,7 +1236,7 @@ impl crate::Response for GetAutoscalingAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1279,7 +1279,7 @@ impl crate::Response for GetAutoscalingV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAutoscalingV1APIResourcesResponse::Ok(result), buf.len()))
@@ -1292,7 +1292,7 @@ impl crate::Response for GetAutoscalingV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1335,7 +1335,7 @@ impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAutoscalingV2beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1348,7 +1348,7 @@ impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1391,7 +1391,7 @@ impl crate::Response for GetAutoscalingV2beta2APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetAutoscalingV2beta2APIResourcesResponse::Ok(result), buf.len()))
@@ -1404,7 +1404,7 @@ impl crate::Response for GetAutoscalingV2beta2APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1447,7 +1447,7 @@ impl crate::Response for GetBatchAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetBatchAPIGroupResponse::Ok(result), buf.len()))
@@ -1460,7 +1460,7 @@ impl crate::Response for GetBatchAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1503,7 +1503,7 @@ impl crate::Response for GetBatchV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetBatchV1APIResourcesResponse::Ok(result), buf.len()))
@@ -1516,7 +1516,7 @@ impl crate::Response for GetBatchV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1559,7 +1559,7 @@ impl crate::Response for GetBatchV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetBatchV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1572,7 +1572,7 @@ impl crate::Response for GetBatchV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1615,7 +1615,7 @@ impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetBatchV2alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -1628,7 +1628,7 @@ impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1671,7 +1671,7 @@ impl crate::Response for GetCertificatesAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCertificatesAPIGroupResponse::Ok(result), buf.len()))
@@ -1684,7 +1684,7 @@ impl crate::Response for GetCertificatesAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1727,7 +1727,7 @@ impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCertificatesV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1740,7 +1740,7 @@ impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1783,7 +1783,7 @@ impl crate::Response for GetCodeVersionResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCodeVersionResponse::Ok(result), buf.len()))
@@ -1796,7 +1796,7 @@ impl crate::Response for GetCodeVersionResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1839,7 +1839,7 @@ impl crate::Response for GetCoordinationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCoordinationAPIGroupResponse::Ok(result), buf.len()))
@@ -1852,7 +1852,7 @@ impl crate::Response for GetCoordinationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1895,7 +1895,7 @@ impl crate::Response for GetCoordinationV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCoordinationV1APIResourcesResponse::Ok(result), buf.len()))
@@ -1908,7 +1908,7 @@ impl crate::Response for GetCoordinationV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -1951,7 +1951,7 @@ impl crate::Response for GetCoordinationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCoordinationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -1964,7 +1964,7 @@ impl crate::Response for GetCoordinationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2007,7 +2007,7 @@ impl crate::Response for GetCoreAPIVersionsResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCoreAPIVersionsResponse::Ok(result), buf.len()))
@@ -2020,7 +2020,7 @@ impl crate::Response for GetCoreAPIVersionsResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2063,7 +2063,7 @@ impl crate::Response for GetCoreV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetCoreV1APIResourcesResponse::Ok(result), buf.len()))
@@ -2076,7 +2076,7 @@ impl crate::Response for GetCoreV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2119,7 +2119,7 @@ impl crate::Response for GetEventsAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetEventsAPIGroupResponse::Ok(result), buf.len()))
@@ -2132,7 +2132,7 @@ impl crate::Response for GetEventsAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2175,7 +2175,7 @@ impl crate::Response for GetEventsV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetEventsV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2188,7 +2188,7 @@ impl crate::Response for GetEventsV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2231,7 +2231,7 @@ impl crate::Response for GetExtensionsAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetExtensionsAPIGroupResponse::Ok(result), buf.len()))
@@ -2244,7 +2244,7 @@ impl crate::Response for GetExtensionsAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2287,7 +2287,7 @@ impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetExtensionsV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2300,7 +2300,7 @@ impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2343,7 +2343,7 @@ impl crate::Response for GetNetworkingAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNetworkingAPIGroupResponse::Ok(result), buf.len()))
@@ -2356,7 +2356,7 @@ impl crate::Response for GetNetworkingAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2399,7 +2399,7 @@ impl crate::Response for GetNetworkingV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNetworkingV1APIResourcesResponse::Ok(result), buf.len()))
@@ -2412,7 +2412,7 @@ impl crate::Response for GetNetworkingV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2455,7 +2455,7 @@ impl crate::Response for GetNetworkingV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNetworkingV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2468,7 +2468,7 @@ impl crate::Response for GetNetworkingV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2511,7 +2511,7 @@ impl crate::Response for GetNodeAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNodeAPIGroupResponse::Ok(result), buf.len()))
@@ -2524,7 +2524,7 @@ impl crate::Response for GetNodeAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2567,7 +2567,7 @@ impl crate::Response for GetNodeV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNodeV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -2580,7 +2580,7 @@ impl crate::Response for GetNodeV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2623,7 +2623,7 @@ impl crate::Response for GetNodeV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetNodeV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2636,7 +2636,7 @@ impl crate::Response for GetNodeV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2679,7 +2679,7 @@ impl crate::Response for GetPolicyAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetPolicyAPIGroupResponse::Ok(result), buf.len()))
@@ -2692,7 +2692,7 @@ impl crate::Response for GetPolicyAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2735,7 +2735,7 @@ impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetPolicyV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2748,7 +2748,7 @@ impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2791,7 +2791,7 @@ impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetRbacAuthorizationAPIGroupResponse::Ok(result), buf.len()))
@@ -2804,7 +2804,7 @@ impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2847,7 +2847,7 @@ impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetRbacAuthorizationV1APIResourcesResponse::Ok(result), buf.len()))
@@ -2860,7 +2860,7 @@ impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2903,7 +2903,7 @@ impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetRbacAuthorizationV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -2916,7 +2916,7 @@ impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -2959,7 +2959,7 @@ impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetRbacAuthorizationV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -2972,7 +2972,7 @@ impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3015,7 +3015,7 @@ impl crate::Response for GetSchedulingAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSchedulingAPIGroupResponse::Ok(result), buf.len()))
@@ -3028,7 +3028,7 @@ impl crate::Response for GetSchedulingAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3071,7 +3071,7 @@ impl crate::Response for GetSchedulingV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSchedulingV1APIResourcesResponse::Ok(result), buf.len()))
@@ -3084,7 +3084,7 @@ impl crate::Response for GetSchedulingV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3127,7 +3127,7 @@ impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSchedulingV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -3140,7 +3140,7 @@ impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3183,7 +3183,7 @@ impl crate::Response for GetSchedulingV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSchedulingV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -3196,7 +3196,7 @@ impl crate::Response for GetSchedulingV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3239,7 +3239,7 @@ impl crate::Response for GetSettingsAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSettingsAPIGroupResponse::Ok(result), buf.len()))
@@ -3252,7 +3252,7 @@ impl crate::Response for GetSettingsAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3295,7 +3295,7 @@ impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetSettingsV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -3308,7 +3308,7 @@ impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3351,7 +3351,7 @@ impl crate::Response for GetStorageAPIGroupResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetStorageAPIGroupResponse::Ok(result), buf.len()))
@@ -3364,7 +3364,7 @@ impl crate::Response for GetStorageAPIGroupResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3407,7 +3407,7 @@ impl crate::Response for GetStorageV1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetStorageV1APIResourcesResponse::Ok(result), buf.len()))
@@ -3420,7 +3420,7 @@ impl crate::Response for GetStorageV1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3463,7 +3463,7 @@ impl crate::Response for GetStorageV1alpha1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetStorageV1alpha1APIResourcesResponse::Ok(result), buf.len()))
@@ -3476,7 +3476,7 @@ impl crate::Response for GetStorageV1alpha1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3519,7 +3519,7 @@ impl crate::Response for GetStorageV1beta1APIResourcesResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((GetStorageV1beta1APIResourcesResponse::Ok(result), buf.len()))
@@ -3532,7 +3532,7 @@ impl crate::Response for GetStorageV1beta1APIResourcesResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3586,7 +3586,7 @@ impl crate::Response for LogFileHandlerResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };
@@ -3631,7 +3631,7 @@ impl crate::Response for LogFileListHandlerResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };

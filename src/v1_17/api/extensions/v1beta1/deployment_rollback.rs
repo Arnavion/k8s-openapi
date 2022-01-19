@@ -79,7 +79,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
             crate::http::StatusCode::OK => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
@@ -87,7 +87,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
             crate::http::StatusCode::CREATED => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNamespacedDeploymentRollbackResponse::Created(result), buf.len()))
@@ -95,7 +95,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
             crate::http::StatusCode::ACCEPTED => {
                 let result = match crate::serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNamespacedDeploymentRollbackResponse::Accepted(result), buf.len()))
@@ -108,7 +108,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                     else {
                         match crate::serde_json::from_slice(buf) {
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }
                     };

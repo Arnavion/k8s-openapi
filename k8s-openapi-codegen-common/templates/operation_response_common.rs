@@ -13,7 +13,7 @@ enum {type_name}{type_generics_type}{type_generics_where} {{
                     else {{
                         match {local}serde_json::from_slice(buf) {{
                             Ok(value) => (Ok(Some(value)), buf.len()),
-                            Err(ref err) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),
+                            Err(err) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),
                             Err(err) => (Err(err), 0),
                         }}
                     }};

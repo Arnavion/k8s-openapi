@@ -61,19 +61,27 @@ pub(crate) fn generate(
 			writeln!(variants, "    Accepted(T),")?;
 
 			writeln!(variant_match_arms, "            http::StatusCode::OK => {{")?;
-			writeln!(variant_match_arms, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
+			writeln!(variant_match_arms,
+				"                let result: {local}serde_json::Map<String, {local}serde_json::Value> = match {local}serde_json::from_slice(buf) {{",
+				local = local)?;
 			writeln!(variant_match_arms, "                    Ok(value) => value,")?;
-			writeln!(variant_match_arms, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
+			writeln!(variant_match_arms, "                    Err(err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
 			writeln!(variant_match_arms, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
 			writeln!(variant_match_arms, "                }};")?;
-			writeln!(variant_match_arms, r#"                let is_status = matches!(result.get("kind"), Some(serde_json::Value::String(s)) if s == "Status");"#)?;
+			writeln!(variant_match_arms,
+				r#"                let is_status = matches!(result.get("kind"), Some({local}serde_json::Value::String(s)) if s == "Status");"#,
+				local = local)?;
 			writeln!(variant_match_arms, "                if is_status {{")?;
-			writeln!(variant_match_arms, "                    let result = {}serde::Deserialize::deserialize(serde_json::Value::Object(result));", local)?;
+			writeln!(variant_match_arms,
+				"                    let result = {local}serde::Deserialize::deserialize({local}serde_json::Value::Object(result));",
+				local = local)?;
 			writeln!(variant_match_arms, "                    let result = result.map_err({}ResponseError::Json)?;", local)?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkStatus(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;
 			writeln!(variant_match_arms, "                else {{")?;
-			writeln!(variant_match_arms, "                    let result = {}serde::Deserialize::deserialize(serde_json::Value::Object(result));", local)?;
+			writeln!(variant_match_arms,
+				"                    let result = {local}serde::Deserialize::deserialize({local}serde_json::Value::Object(result));",
+				local = local)?;
 			writeln!(variant_match_arms, "                    let result = result.map_err({}ResponseError::Json)?;", local)?;
 			writeln!(variant_match_arms, "                    Ok(({}::OkValue(result), buf.len()))", type_name)?;
 			writeln!(variant_match_arms, "                }}")?;
@@ -115,12 +123,12 @@ pub(crate) fn generate(
 			writeln!(variants, "    Ok({}WatchEvent<T>),", metav1)?;
 
 			writeln!(variant_match_arms, "            http::StatusCode::OK => {{")?;
-			writeln!(variant_match_arms, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
+			writeln!(variant_match_arms, "                let mut deserializer = {local}serde_json::Deserializer::from_slice(buf).into_iter();", local = local)?;
 			writeln!(variant_match_arms, "                let (result, byte_offset) = match deserializer.next() {{")?;
 			writeln!(variant_match_arms, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
-			writeln!(variant_match_arms, "                    Some(Err(ref err)) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
-			writeln!(variant_match_arms, "                    Some(Err(err)) => return Err({}ResponseError::Json(err)),", local)?;
-			writeln!(variant_match_arms, "                    None => return Err({}ResponseError::NeedMoreData),", local)?;
+			writeln!(variant_match_arms, "                    Some(Err(err)) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),", local = local)?;
+			writeln!(variant_match_arms, "                    Some(Err(err)) => return Err({local}ResponseError::Json(err)),", local = local)?;
+			writeln!(variant_match_arms, "                    None => return Err({local}ResponseError::NeedMoreData),", local = local)?;
 			writeln!(variant_match_arms, "                }};")?;
 			writeln!(variant_match_arms, "                Ok(({}::Ok(result), byte_offset))", type_name)?;
 			writeln!(variant_match_arms, "            }},")?;
@@ -149,10 +157,10 @@ fn deserialize_single(local: &str, status_code: &str, type_name: &str, variant_n
 	let mut result = String::new();
 
 	writeln!(result, "            http::StatusCode::{} => {{", status_code)?;
-	writeln!(result, "                let result = match serde_json::from_slice(buf) {{")?;
+	writeln!(result, "                let result = match {local}serde_json::from_slice(buf) {{", local = local)?;
 	writeln!(result, "                    Ok(value) => value,")?;
-	writeln!(result, "                    Err(ref err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
-	writeln!(result, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
+	writeln!(result, "                    Err(err) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),", local = local)?;
+	writeln!(result, "                    Err(err) => return Err({local}ResponseError::Json(err)),", local = local)?;
 	writeln!(result, "                }};")?;
 	writeln!(result, "                Ok(({}::{}(result), buf.len()))", type_name, variant_name)?;
 	writeln!(result, "            }},")?;

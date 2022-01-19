@@ -216,7 +216,7 @@ fn run(
 		log::info!("Removing output directory {} ...", out_dir.display());
 		match std::fs::remove_dir_all(&out_dir) {
 			Ok(()) => log::trace!("OK"),
-			Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => {
+			Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
 				log::trace!("OK. Directory doesn't exist");
 
 				log::info!("Creating output directory {} ...", out_dir.display());
