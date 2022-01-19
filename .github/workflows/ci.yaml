@@ -102,3 +102,12 @@ jobs:
       run: ./ci/k8s-openapi-derive.sh
       env:
         OP: "${{ matrix.op }}"
+
+
+  style:
+    runs-on: 'ubuntu-20.04'
+
+    steps:
+    - uses: 'actions/checkout@v2'
+    - name: 'Run'
+      run: ./ci/style.sh
