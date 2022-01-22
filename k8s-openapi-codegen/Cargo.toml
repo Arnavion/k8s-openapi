@@ -9,6 +9,10 @@ edition = "2018"
 backtrace = { version = "0.3", default-features = false, features = [
 	"std", # for backtrace::Backtrace
 ] }
+clap = { version = "3", default-features = false, features = [
+	"derive", # for #[derive(clap::Parser)]
+	"std", # "`std` feature is currently required to build `clap`"
+] }
 env_logger = { version = "0.9", default-features = false }
 http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features = [
@@ -22,4 +26,3 @@ reqwest = { version = "0.11", default-features = false, features = [
 ] }
 serde = { version = "1", default-features = false }
 serde_derive = { version = "1", default-features = false }
-structopt = { version = "0.3", default-features = false }

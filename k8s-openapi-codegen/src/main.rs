@@ -21,12 +21,6 @@ use k8s_openapi_codegen_common::swagger20;
 
 struct Error(Box<dyn std::error::Error + Send + Sync>, backtrace::Backtrace);
 
-impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error + Send + Sync>> {
-	fn from(value: E) -> Self {
-		Error(value.into(), backtrace::Backtrace::new())
-	}
-}
-
 impl std::fmt::Debug for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		writeln!(f, "{}", self.0)?;
@@ -37,7 +31,6 @@ impl std::fmt::Debug for Error {
 			source = err.source();
 		}
 
-		write!(f, "{:?}", self.1)?;
 		Ok(())
 	}
 }
@@ -48,8 +41,36 @@ impl std::fmt::Display for Error {
 	}
 }
 
+impl std::error::Error for Error {
+	fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+		self.0.source()
+	}
+}
+
+macro_rules! impl_from_for_error {
+	($($ty:ty ,)*) => {
+		$(
+			impl From<$ty> for Error {
+				fn from(err: $ty) -> Self {
+					Error(err.into(), backtrace::Backtrace::new())
+				}
+			}
+		)*
+	};
+}
+
+impl_from_for_error! {
+	&'_ str,
+	String,
+	std::fmt::Error,
+	std::io::Error,
+	log::SetLoggerError,
+	reqwest::Error,
+	k8s_openapi_codegen_common::Error,
+}
+
 fn main() -> Result<(), Error> {
-	let Options { versions: requested_versions } = structopt::StructOpt::from_args();
+	let Options { versions: requested_versions } = clap::Parser::parse();
 
 	{
 		let logger = logger::Logger;
@@ -122,7 +143,7 @@ fn main() -> Result<(), Error> {
 	result
 }
 
-#[derive(structopt::StructOpt)]
+#[derive(clap::Parser)]
 struct Options {
 	/// This parameter specifies the versions of Kubernetes that the API bindings should be generated for.
 	///
@@ -136,7 +157,7 @@ struct Options {
 	///
 	/// If this parameter isn't specified, the API bindings will be generated for all supported versions,
 	/// based on their OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
-	#[structopt(long = "generate", value_name = "VERSION")]
+	#[clap(long = "generate", value_name = "VERSION")]
 	versions: Vec<RequestedVersion>,
 }
 
