@@ -366,11 +366,11 @@ impl k8s_openapi_codegen_common::RunState for RunState<'_> {
 		let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 		writeln!(parent_mod_rs)?;
 		if let Some(type_feature) = type_feature {
-			writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
+			writeln!(parent_mod_rs, r#"#[cfg(feature = {:?})]"#, type_feature)?;
 		}
 		writeln!(parent_mod_rs, "mod {};", mod_name)?;
 		if let Some(type_feature) = type_feature {
-			writeln!(parent_mod_rs, r#"#[cfg(feature = "{}")]"#, type_feature)?;
+			writeln!(parent_mod_rs, r#"#[cfg(feature = {:?})]"#, type_feature)?;
 		}
 		writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
 

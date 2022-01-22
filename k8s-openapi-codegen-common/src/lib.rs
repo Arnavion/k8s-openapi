@@ -1861,7 +1861,7 @@ pub fn write_operation(
 	}
 
 	if let Some(operation_feature) = operation_feature {
-		writeln!(out, r#"{}#[cfg(feature = "{}")]"#, indent, operation_feature)?;
+		writeln!(out, r#"{}#[cfg(feature = {:?})]"#, indent, operation_feature)?;
 	}
 
 	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
@@ -2135,7 +2135,7 @@ pub fn write_operation(
 		}
 
 		if let Some(operation_feature) = operation_feature {
-			writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
+			writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
 		write!(out, "{}struct {}", vis, operation_optional_parameters_name)?;
@@ -2177,7 +2177,7 @@ pub fn write_operation(
 			}
 
 			if let Some(operation_feature) = operation_feature {
-				writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
+				writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
 			}
 			writeln!(out, "#[derive(Debug)]")?;
 			writeln!(out, "{}enum {} {{", vis, operation_result_name)?;
@@ -2217,7 +2217,7 @@ pub fn write_operation(
 			writeln!(out)?;
 
 			if let Some(operation_feature) = operation_feature {
-				writeln!(out, r#"#[cfg(feature = "{}")]"#, operation_feature)?;
+				writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
 			}
 			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
 			writeln!(out, "    fn try_from_parts(status_code: {local}http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{", local = local)?;
