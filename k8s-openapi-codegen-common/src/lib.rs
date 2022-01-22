@@ -43,30 +43,6 @@ pub struct RunResult {
 #[derive(Debug)]
 pub struct Error(Box<dyn std::error::Error + Send + Sync>);
 
-impl From<&'_ str> for Error {
-	fn from(err: &'_ str) -> Self {
-		Error(err.into())
-	}
-}
-
-impl From<String> for Error {
-	fn from(err: String) -> Self {
-		Error(err.into())
-	}
-}
-
-impl From<std::fmt::Error> for Error {
-	fn from(err: std::fmt::Error) -> Self {
-		Error(err.into())
-	}
-}
-
-impl From<std::io::Error> for Error {
-	fn from(err: std::io::Error) -> Self {
-		Error(err.into())
-	}
-}
-
 impl std::fmt::Display for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
@@ -74,6 +50,28 @@ impl std::fmt::Display for Error {
 }
 
 impl std::error::Error for Error {
+	fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+		self.0.source()
+	}
+}
+
+macro_rules! impl_from_for_error {
+	($($ty:ty ,)*) => {
+		$(
+			impl From<$ty> for Error {
+				fn from(err: $ty) -> Self {
+					Error(err.into())
+				}
+			}
+		)*
+	};
+}
+
+impl_from_for_error! {
+	&'_ str,
+	String,
+	std::fmt::Error,
+	std::io::Error,
 }
 
 /// A mechanism for converting (the components of) an openapi path to (the components of) a Rust namespace.
