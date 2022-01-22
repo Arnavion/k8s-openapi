@@ -19,7 +19,7 @@ mod supported_version;
 
 use k8s_openapi_codegen_common::swagger20;
 
-struct Error(Box<dyn std::error::Error + Send + Sync>, backtrace::Backtrace);
+struct Error(Box<dyn std::error::Error + Send + Sync>);
 
 impl std::fmt::Debug for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -52,7 +52,7 @@ macro_rules! impl_from_for_error {
 		$(
 			impl From<$ty> for Error {
 				fn from(err: $ty) -> Self {
-					Error(err.into(), backtrace::Backtrace::new())
+					Error(err.into())
 				}
 			}
 		)*

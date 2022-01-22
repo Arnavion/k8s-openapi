@@ -6,9 +6,6 @@ publish = false
 edition = "2018"
 
 [dependencies]
-backtrace = { version = "0.3", default-features = false, features = [
-	"std", # for backtrace::Backtrace
-] }
 clap = { version = "3", default-features = false, features = [
 	"derive", # for #[derive(clap::Parser)]
 	"std", # "`std` feature is currently required to build `clap`"
