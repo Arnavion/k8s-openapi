@@ -1,3 +1,40 @@
+# v0.14.0 (2022-01-23)
+
+## k8s-openapi
+
+- BREAKING CHANGE: k8s-openapi now disables all default features of its dependencies and only enables the ones it needs. If your code was implicitly relying on some default feature being enabled of an indirect dependency re-exported from `k8s-openapi`, it will now not compile. You will need to enable the feature yourself in your own dependency.
+
+  For example, if you had `use k8s_openapi::schemars; #[derive(schemars::JsonSchema)] struct YourCode { ... }` this will no longer compile because the proc macro is only compiled when the `"derive"` feature is enabled. You will need to add an explicit dependency on the `schemars` crate in your code, with its `"derive"` feature enabled.
+
+- BREAKING CHANGE: Added support for Kubernetes 1.23 under the `v1_23` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.11, 1.12, 1.13, 1.14 and 1.15.
+
+- BUGFIX: The `serde::Deserialize` impl of some types now accepts `null` for required fields and deserializes it as the default value of that field. This is because the Kubernetes API server violates the schema and sends `null` in some cases.
+
+  For example, a user is allowed to create a `DaemonSet` whose `PodSpec` has `"containers": null`, even though `PodSpec::containers` is a required field and emitted as a `Vec`. When querying this `DaemonSpec` back from the API server, it will return `"containers": null` in the response too. Before this fix, such a response would fail to deserialize. Note that serialization is still spec-compliant as before, so such a `DaemonSet` could not have been created with this crate's types before and still cannot be created now.
+
+Corresponding Kubernetes API server versions:
+
+- v1.16.15
+- v1.17.17
+- v1.18.20
+- v1.19.16
+- v1.20.15
+- v1.21.9
+- v1.22.6
+- v1.23.2
+
+## k8s-openapi-codegen-common
+
+- BUGFIX: `k8s_openapi_codegen_common::Error` now implements `source()` correctly instead of always returning `None`.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.13.1 (2021-10-08)
 
 ## k8s-openapi
