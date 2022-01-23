@@ -147,11 +147,11 @@ impl<T> RunState for &'_ mut T where T: RunState {
 	}
 }
 
-/// Whether [`run`] should generate an impl of [`schemars::JsonSchema`] for the type or not.
+/// Whether [`run`] should generate an impl of `schemars::JsonSchema` for the type or not.
 #[derive(Clone, Copy, Debug)]
 pub enum GenerateSchema<'a> {
 	Yes {
-		/// An optional feature that the impl of [`schemars::JsonSchema`] will be `cfg`-gated by.
+		/// An optional feature that the impl of `schemars::JsonSchema` will be `cfg`-gated by.
 		feature: Option<&'a str>,
 	},
 
