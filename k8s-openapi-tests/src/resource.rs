@@ -1,38 +1,22 @@
 #[test]
 fn impl_resource() {
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_13! {
-			assert_is_cluster_scoped::<k8s_openapi::api::admissionregistration::v1alpha1::InitializerConfiguration>("initializerconfigurations");
-		}
+	k8s_openapi::k8s_if_le_1_17! {
+		assert_is_subresource::<k8s_openapi::api::apps::v1beta1::DeploymentRollback>("rollback");
 	}
 
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_17! {
-			assert_is_subresource::<k8s_openapi::api::apps::v1beta1::DeploymentRollback>("rollback");
-		}
+	k8s_openapi::k8s_if_le_1_17! {
+		assert_is_subresource::<k8s_openapi::api::apps::v1beta1::Scale>("scale");
 	}
 
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_17! {
-			assert_is_subresource::<k8s_openapi::api::apps::v1beta1::Scale>("scale");
-		}
+	k8s_openapi::k8s_if_le_1_17! {
+		assert_is_subresource::<k8s_openapi::api::apps::v1beta2::Scale>("scale");
 	}
 
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_17! {
-			assert_is_subresource::<k8s_openapi::api::apps::v1beta2::Scale>("scale");
-		}
-	}
+	assert_is_subresource::<k8s_openapi::api::authentication::v1::TokenRequest>("token");
 
 	k8s_openapi::k8s_if_le_1_21! {
 		assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1beta1::TokenReview>("tokenreviews");
 	}
-	assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1::TokenReview>("tokenreviews");
-
-	k8s_openapi::k8s_if_ge_1_16! {
-		assert_is_subresource::<k8s_openapi::api::authentication::v1::TokenRequest>("token");
-	}
-
 	assert_is_cluster_scoped::<k8s_openapi::api::authentication::v1::TokenReview>("tokenreviews");
 
 	k8s_openapi::k8s_if_le_1_21! {
@@ -77,16 +61,12 @@ fn impl_resource() {
 
 	assert_is_namespace_scoped::<k8s_openapi::api::core::v1::Pod>("pods");
 
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_17! {
-			assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::DeploymentRollback>("rollback");
-		}
+	k8s_openapi::k8s_if_le_1_17! {
+		assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::DeploymentRollback>("rollback");
 	}
 
-	k8s_openapi::k8s_if_ge_1_11! {
-		k8s_openapi::k8s_if_le_1_17! {
-			assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::Scale>("scale");
-		}
+	k8s_openapi::k8s_if_le_1_17! {
+		assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::Scale>("scale");
 	}
 
 	assert_is_cluster_scoped::<k8s_openapi::apimachinery::pkg::apis::meta::v1::APIGroupList>("");

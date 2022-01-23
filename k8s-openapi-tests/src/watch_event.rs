@@ -44,85 +44,83 @@ fn watch_pods() {
 	});
 }
 
-k8s_openapi::k8s_if_ge_1_15! {
-	#[test]
-	fn bookmark_events() {
-		use k8s_openapi::api::core::v1 as api;
-		use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
+#[test]
+fn bookmark_events() {
+	use k8s_openapi::api::core::v1 as api;
+	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-		const SUCCESS_TEST_CASES: &[&[u8]] = &[
-			// Minimal number of required fields
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-					"metadata": {
-						"resourceVersion": "123"
-					}
+	const SUCCESS_TEST_CASES: &[&[u8]] = &[
+		// Minimal number of required fields
+		br#"{
+			"type": "BOOKMARK",
+			"object": {
+				"metadata": {
+					"resourceVersion": "123"
 				}
-			}"#,
-
-			// Extra fields that should be ignored
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-					"apiVersion": "v1",
-					"kind": "Pod",
-					"metadata": {
-						"resourceVersion": "123",
-						"creationTimestamp": null
-					},
-					"spec": {
-						"containers": null
-					},
-					"status": {}
-				}
-			}"#,
-		];
-
-		const FAILURE_TEST_CASES: &[&[u8]] = &[
-			// Missing metadata
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-				}
-			}"#,
-
-			// Missing metadata.resourceVersion
-			br#"{
-				"type": "BOOKMARK",
-				"object": {
-					"metadata": {}
-				}
-			}"#,
-		];
-
-		for test_case in SUCCESS_TEST_CASES {
-			let watch_response =
-				k8s_openapi::Response::try_from_parts(
-					k8s_openapi::http::StatusCode::OK,
-					test_case,
-				)
-				.expect("expected hard-coded test case to be deserialized successfully but it failed to deserialize");
-			let watch_event = match watch_response {
-				(k8s_openapi::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == test_case.len() => watch_event,
-				watch_response => panic!("hard-coded test case did not deserialize as expected: {:?}", watch_response),
-			};
-			assert_eq!(watch_event, meta::WatchEvent::Bookmark {
-				resource_version: "123".to_owned(),
-			});
-		}
-
-		for test_case in FAILURE_TEST_CASES {
-			let err =
-				<k8s_openapi::WatchResponse::<api::Pod> as k8s_openapi::Response>::try_from_parts(
-					k8s_openapi::http::StatusCode::OK,
-					test_case,
-				)
-				.expect_err("expected hard-coded failure test case to fail to deserialize but it deserialized successfully");
-			match err {
-				k8s_openapi::ResponseError::Json(_) => (),
-				err => panic!("hard-coded test case did not fail to deserialize as expected: {:?}", err),
 			}
+		}"#,
+
+		// Extra fields that should be ignored
+		br#"{
+			"type": "BOOKMARK",
+			"object": {
+				"apiVersion": "v1",
+				"kind": "Pod",
+				"metadata": {
+					"resourceVersion": "123",
+					"creationTimestamp": null
+				},
+				"spec": {
+					"containers": null
+				},
+				"status": {}
+			}
+		}"#,
+	];
+
+	const FAILURE_TEST_CASES: &[&[u8]] = &[
+		// Missing metadata
+		br#"{
+			"type": "BOOKMARK",
+			"object": {
+			}
+		}"#,
+
+		// Missing metadata.resourceVersion
+		br#"{
+			"type": "BOOKMARK",
+			"object": {
+				"metadata": {}
+			}
+		}"#,
+	];
+
+	for test_case in SUCCESS_TEST_CASES {
+		let watch_response =
+			k8s_openapi::Response::try_from_parts(
+				k8s_openapi::http::StatusCode::OK,
+				test_case,
+			)
+			.expect("expected hard-coded test case to be deserialized successfully but it failed to deserialize");
+		let watch_event = match watch_response {
+			(k8s_openapi::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == test_case.len() => watch_event,
+			watch_response => panic!("hard-coded test case did not deserialize as expected: {:?}", watch_response),
+		};
+		assert_eq!(watch_event, meta::WatchEvent::Bookmark {
+			resource_version: "123".to_owned(),
+		});
+	}
+
+	for test_case in FAILURE_TEST_CASES {
+		let err =
+			<k8s_openapi::WatchResponse::<api::Pod> as k8s_openapi::Response>::try_from_parts(
+				k8s_openapi::http::StatusCode::OK,
+				test_case,
+			)
+			.expect_err("expected hard-coded failure test case to fail to deserialize but it deserialized successfully");
+		match err {
+			k8s_openapi::ResponseError::Json(_) => (),
+			err => panic!("hard-coded test case did not fail to deserialize as expected: {:?}", err),
 		}
 	}
 }

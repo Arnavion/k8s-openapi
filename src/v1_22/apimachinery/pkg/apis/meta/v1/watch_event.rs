@@ -132,7 +132,6 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
                             resource_version: value.metadata.resource_version.into_owned(),
                         }
                     },
-
                     WatchEventType::Error => {
                         let is_status =
                             if let crate::serde_value::Value::Map(map) = &value_object {

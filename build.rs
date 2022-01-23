@@ -1,4 +1,4 @@
-const MIN: usize = 11;
+const MIN: usize = 16;
 const MAX: usize = 23;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

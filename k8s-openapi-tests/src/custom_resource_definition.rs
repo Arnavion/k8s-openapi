@@ -1,29 +1,7 @@
 use k8s_openapi::{http, schemars, serde_json};
 
-// CRD support based on the spec:
-//
-//       | spec.validation | spec.subresources | spec.versions | spec.versions[].schema | spec.versions[].subresources
-// ------+-----------------+-------------------+---------------+------------------------+------------------------------
-// 1.11  | v1beta1         | v1beta1           | v1beta1       | No                     | No
-// 1.12  | v1beta1         | v1beta1           | v1beta1       | No                     | No
-// 1.13  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
-// 1.14  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
-// 1.15  | v1beta1         | v1beta1           | v1beta1       | v1beta1                | v1beta1
-// 1.16+ | v1beta1         | v1beta1           | v1beta1, v1   | v1beta1, v1            | v1beta1, v1
-//
-// However, despite the presence of spec.versions in v1beta1 on 1.11+, it causes problems like
-// https://github.com/kubernetes/kubernetes/issues/82443
-//
-// Thus this test uses:
-//
-// - 1.11 <= v <= 1.15 : v1beta1, spec.version,  spec.validation,      , spec.subresources
-// - 1.16 <= v         : v1,      spec.versions, spec.versions[].schema, spec.versions[].subresources
-
 #[test]
 fn test() {
-	#[cfg(k8s_apiextensions = "v1beta1")]
-	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	#[cfg(k8s_apiextensions = "v1")]
 	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
@@ -40,8 +18,7 @@ fn test() {
 		generate_schema,
 		namespaced,
 	)]
-	#[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]
-	#[cfg_attr(k8s_apiextensions = "v1", custom_resource_definition(has_subresources = "v1"))]
+	#[custom_resource_definition(has_subresources = "v1")]
 	struct FooBarSpec {
 		prop1: String,
 		prop2: Vec<bool>,
@@ -105,89 +82,40 @@ fn test() {
 		let plural = "foobars";
 
 
-		let open_api_v3_schema = apiextensions::JSONSchemaProps {
-			properties: Some(vec![
-				("spec".to_string(), apiextensions::JSONSchemaProps {
-					type_: Some("object".to_owned()),
-					properties: Some(vec![
-						("prop1".to_string(), apiextensions::JSONSchemaProps {
-							type_: Some("string".to_string()),
-							..Default::default()
-						}),
-						("prop2".to_string(), apiextensions::JSONSchemaProps {
-							type_: Some("array".to_string()),
-							items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
-								type_: Some("boolean".to_string()),
-								..Default::default()
-							}))),
-							..Default::default()
-						}),
-						("prop3".to_string(), apiextensions::JSONSchemaProps {
-							format: Some("int32".to_string()),
-							type_: Some("integer".to_string()),
-							..Default::default()
-						}),
-					].into_iter().collect()),
-					required: Some(vec![
-						"prop1".to_string(),
-						"prop2".to_string(),
-					]),
-					..Default::default()
-				}),
-			].into_iter().collect()),
-			..Default::default()
-		};
-		// v1 (1.16+) requires "type" to be set. But with v1beta1 on 1.11 and below, creating the CRD fails because
-		// only "description", "properties" and "required" can be set if the status subresource is also enabled. Thus "type" cannot be set.
-		k8s_openapi::k8s_if_ge_1_12! {
-			let open_api_v3_schema = apiextensions::JSONSchemaProps {
-				type_: Some("object".to_owned()),
-				..open_api_v3_schema
-			};
-		}
 		let custom_resource_validation = apiextensions::CustomResourceValidation {
-			open_api_v3_schema: Some(open_api_v3_schema),
-		};
-
-		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-			group: <FooBar as k8s_openapi::Resource>::GROUP.to_owned(),
-			names: apiextensions::CustomResourceDefinitionNames {
-				kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
-				plural: plural.to_owned(),
-				short_names: Some(vec!["fb".to_owned()]),
-				singular: Some("foobar".to_owned()),
-				..Default::default()
-			},
-			scope: "Namespaced".to_owned(),
-			..Default::default()
-		};
-
-		#[cfg(k8s_apiextensions = "v1beta1")]
-		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-			subresources: Some(apiextensions::CustomResourceSubresources {
-				status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
-				..Default::default()
-			}),
-			version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
-			validation: Some(custom_resource_validation),
-			..custom_resource_definition_spec
-		};
-		#[cfg(k8s_apiextensions = "v1")]
-		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-			versions: vec![
-				apiextensions::CustomResourceDefinitionVersion {
-					name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
-					schema: Some(custom_resource_validation),
-					served: true,
-					storage: true,
-					subresources: Some(apiextensions::CustomResourceSubresources {
-						status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
+			open_api_v3_schema: Some(apiextensions::JSONSchemaProps {
+				properties: Some(vec![
+					("spec".to_string(), apiextensions::JSONSchemaProps {
+						type_: Some("object".to_owned()),
+						properties: Some(vec![
+							("prop1".to_string(), apiextensions::JSONSchemaProps {
+								type_: Some("string".to_string()),
+								..Default::default()
+							}),
+							("prop2".to_string(), apiextensions::JSONSchemaProps {
+								type_: Some("array".to_string()),
+								items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
+									type_: Some("boolean".to_string()),
+									..Default::default()
+								}))),
+								..Default::default()
+							}),
+							("prop3".to_string(), apiextensions::JSONSchemaProps {
+								format: Some("int32".to_string()),
+								type_: Some("integer".to_string()),
+								..Default::default()
+							}),
+						].into_iter().collect()),
+						required: Some(vec![
+							"prop1".to_string(),
+							"prop2".to_string(),
+						]),
 						..Default::default()
 					}),
-					..Default::default()
-				},
-			].into(),
-			..custom_resource_definition_spec
+				].into_iter().collect()),
+				type_: Some("object".to_owned()),
+				..Default::default()
+			}),
 		};
 
 		let custom_resource_definition = apiextensions::CustomResourceDefinition {
@@ -195,7 +123,31 @@ fn test() {
 				name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
 				..Default::default()
 			},
-			spec: custom_resource_definition_spec.into(),
+			spec: apiextensions::CustomResourceDefinitionSpec {
+				group: <FooBar as k8s_openapi::Resource>::GROUP.to_owned(),
+				names: apiextensions::CustomResourceDefinitionNames {
+					kind: <FooBar as k8s_openapi::Resource>::KIND.to_owned(),
+					plural: plural.to_owned(),
+					short_names: Some(vec!["fb".to_owned()]),
+					singular: Some("foobar".to_owned()),
+					..Default::default()
+				},
+				scope: "Namespaced".to_owned(),
+				versions: vec![
+					apiextensions::CustomResourceDefinitionVersion {
+						name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
+						schema: Some(custom_resource_validation),
+						served: true,
+						storage: true,
+						subresources: Some(apiextensions::CustomResourceSubresources {
+							status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::Value::Object(Default::default()))),
+							..Default::default()
+						}),
+						..Default::default()
+					},
+				].into(),
+				..Default::default()
+			},
 			..Default::default()
 		};
 

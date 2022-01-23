@@ -15,11 +15,6 @@ k8s-openapi = { path = ".." }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 
 [features]
-test_v1_11 = ["k8s-openapi/v1_11"]
-test_v1_12 = ["k8s-openapi/v1_12"]
-test_v1_13 = ["k8s-openapi/v1_13"]
-test_v1_14 = ["k8s-openapi/v1_14"]
-test_v1_15 = ["k8s-openapi/v1_15"]
 test_v1_16 = ["k8s-openapi/v1_16"]
 test_v1_17 = ["k8s-openapi/v1_17"]
 test_v1_18 = ["k8s-openapi/v1_18"]

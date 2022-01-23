@@ -38,11 +38,6 @@ struct Replay {
 
 impl Client {
 	fn with<F>(test_name: &'static str, f: F) where F: FnOnce(&mut Self) {
-		#[cfg(feature = "test_v1_11")] let replays_directory = "v1-11";
-		#[cfg(feature = "test_v1_12")] let replays_directory = "v1-12";
-		#[cfg(feature = "test_v1_13")] let replays_directory = "v1-13";
-		#[cfg(feature = "test_v1_14")] let replays_directory = "v1-14";
-		#[cfg(feature = "test_v1_15")] let replays_directory = "v1-15";
 		#[cfg(feature = "test_v1_16")] let replays_directory = "v1-16";
 		#[cfg(feature = "test_v1_17")] let replays_directory = "v1-17";
 		#[cfg(feature = "test_v1_18")] let replays_directory = "v1-18";

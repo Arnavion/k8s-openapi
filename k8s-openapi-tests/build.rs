@@ -3,7 +3,7 @@
 fn main() {
 	// Assert that the DEP_K8S_OPENAPI_*_VERSION is set by the k8s-openapi crate's build script correctly.
 
-	const MIN: usize = 11;
+	const MIN: usize = 16;
 	const MAX: usize = 23;
 
 	let enabled_version = {
@@ -31,11 +31,4 @@ fn main() {
 		.parse().expect("DEP_K8S_OPENAPI_*_VERSION is malformed");
 
 	assert_eq!(actual_k8s_openapi_version, expected_k8s_openapi_version);
-
-	if actual_k8s_openapi_version >= 0x00_01_10_00 {
-		println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1""#);
-	}
-	else {
-		println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1beta1""#);
-	}
 }

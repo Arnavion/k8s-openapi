@@ -1,9 +1,4 @@
 pub(crate) const ALL: &[SupportedVersion] = &[
-	SupportedVersion::V1_11,
-	SupportedVersion::V1_12,
-	SupportedVersion::V1_13,
-	SupportedVersion::V1_14,
-	SupportedVersion::V1_15,
 	SupportedVersion::V1_16,
 	SupportedVersion::V1_17,
 	SupportedVersion::V1_18,
@@ -16,11 +11,6 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum SupportedVersion {
-	V1_11,
-	V1_12,
-	V1_13,
-	V1_14,
-	V1_15,
 	V1_16,
 	V1_17,
 	V1_18,
@@ -34,11 +24,6 @@ pub(crate) enum SupportedVersion {
 impl SupportedVersion {
 	pub(crate) fn name(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_11 => "1.11",
-			SupportedVersion::V1_12 => "1.12",
-			SupportedVersion::V1_13 => "1.13",
-			SupportedVersion::V1_14 => "1.14",
-			SupportedVersion::V1_15 => "1.15",
 			SupportedVersion::V1_16 => "1.16",
 			SupportedVersion::V1_17 => "1.17",
 			SupportedVersion::V1_18 => "1.18",
@@ -52,11 +37,6 @@ impl SupportedVersion {
 
 	pub(crate) fn mod_root(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_11 => "v1_11",
-			SupportedVersion::V1_12 => "v1_12",
-			SupportedVersion::V1_13 => "v1_13",
-			SupportedVersion::V1_14 => "v1_14",
-			SupportedVersion::V1_15 => "v1_15",
 			SupportedVersion::V1_16 => "v1_16",
 			SupportedVersion::V1_17 => "v1_17",
 			SupportedVersion::V1_18 => "v1_18",
@@ -70,11 +50,6 @@ impl SupportedVersion {
 
 	pub(crate) fn spec_url(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_11 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.10/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_12 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.12.10/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_13 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.13.12/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_14 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.14.10/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_15 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.15.12/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_16 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.16.15/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_17 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.17.17/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_18 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.18.20/api/openapi-spec/swagger.json",
@@ -89,50 +64,6 @@ impl SupportedVersion {
 	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		#[allow(clippy::match_same_arms)]
 		let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
-			SupportedVersion::V1_11 => &[
-				crate::fixups::upstream_bugs::deployment_rollback_create_response_type,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::optional_properties::poddisruptionbudgetstatus,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
-			SupportedVersion::V1_12 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
-			SupportedVersion::V1_13 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-				crate::fixups::upstream_bugs::remove_compat_refs,
-			],
-
-			SupportedVersion::V1_14 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-			],
-
-			SupportedVersion::V1_15 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::optional_properties::crdstatus,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-				crate::fixups::upstream_bugs::raw_extension_ty,
-			],
-
 			SupportedVersion::V1_16 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,

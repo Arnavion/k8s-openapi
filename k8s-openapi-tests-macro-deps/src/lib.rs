@@ -22,8 +22,7 @@
 	plural = "foobars",
 	namespaced,
 )]
-#[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]
-#[cfg_attr(k8s_apiextensions = "v1", custom_resource_definition(has_subresources = "v1"))]
+#[custom_resource_definition(has_subresources = "v1")]
 struct FooBarSpec {
 	prop1: String,
 	prop2: Vec<bool>,

@@ -627,20 +627,6 @@ pub fn run(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(raw_extension_ref_path)) => {
-			let has_bookmark_event_type = {
-				let watch_optional_schema =
-					definitions.get(&swagger20::DefinitionPath("io.k8s.WatchOptional".to_owned()))
-					.ok_or("could not find io.k8s.WatchOptional")?;
-				let watch_optional_properties =
-					if let swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(properties)) = &watch_optional_schema.kind {
-						properties
-					}
-					else {
-						return Err("io.k8s.WatchOptional has unexpected schema kind".into());
-					};
-				watch_optional_properties.contains_key(&swagger20::PropertyName("allowWatchBookmarks".to_owned()))
-			};
-
 			let error_status_rust_type = get_rust_type(
 				&swagger20::SchemaKind::Ref(swagger20::RefPath {
 					path: "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned(),
@@ -657,7 +643,6 @@ pub fn run(
 			templates::watch_event::generate(
 				&mut out,
 				type_name,
-				has_bookmark_event_type,
 				&error_status_rust_type,
 				&error_other_rust_type,
 				map_namespace,
