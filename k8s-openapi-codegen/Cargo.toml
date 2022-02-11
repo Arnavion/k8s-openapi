@@ -21,5 +21,6 @@ reqwest = { version = "0.11", default-features = false, features = [
 	"default-tls", # for TLS support
 	"json", # for reqwest::blocking::Response::json
 ] }
-serde = { version = "1", default-features = false }
-serde_derive = { version = "1", default-features = false }
+serde = { version = "1", default-features = false, features = [
+	"derive",
+] }

@@ -43,7 +43,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// #[derive(
 ///     Clone, Debug, PartialEq,
 ///     k8s_openapi_derive::CustomResourceDefinition,
-///     serde_derive::Deserialize, serde_derive::Serialize,
+///     serde::Deserialize, serde::Serialize,
 /// )]
 /// #[custom_resource_definition(
 ///     group = "k8s-openapi-tests-custom-resource-definition.com",

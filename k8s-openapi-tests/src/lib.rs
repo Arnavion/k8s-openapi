@@ -32,7 +32,7 @@ enum Client {
 	Replaying(std::iter::Enumerate<std::vec::IntoIter<Replay>>),
 }
 
-#[derive(Debug, serde_derive::Deserialize, serde_derive::Serialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 struct Replay {
 	request_url: String,
 	#[serde(with = "methodstring")]
@@ -385,7 +385,7 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
 	}
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfig {
 	clusters: Vec<KubeConfigClusterEntry>,
 	contexts: Vec<KubeConfigContextEntry>,
@@ -394,20 +394,20 @@ struct KubeConfig {
 	users: Vec<KubeConfigUserEntry>,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigClusterEntry {
 	cluster: KubeConfigCluster,
 	name: String,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigCluster {
 	#[serde(flatten)]
 	certificate_authority: CertificateAuthority,
 	server: String,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 enum CertificateAuthority {
 	#[serde(rename = "certificate-authority")]
 	File(std::path::PathBuf),
@@ -415,25 +415,25 @@ enum CertificateAuthority {
 	Inline(String),
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigContextEntry {
 	context: KubeConfigContext,
 	name: String,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigContext {
 	cluster: String,
 	user: String,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigUserEntry {
 	name: String,
 	user: KubeConfigUser,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 struct KubeConfigUser {
 	#[serde(flatten)]
 	client_certificate: ClientCertificate,
@@ -441,7 +441,7 @@ struct KubeConfigUser {
 	client_key: ClientKey,
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 enum ClientCertificate {
 	#[serde(rename = "client-certificate")]
 	File(std::path::PathBuf),
@@ -449,7 +449,7 @@ enum ClientCertificate {
 	Inline(String),
 }
 
-#[derive(serde_derive::Deserialize)]
+#[derive(serde::Deserialize)]
 enum ClientKey {
 	#[serde(rename = "client-key")]
 	File(std::path::PathBuf),
