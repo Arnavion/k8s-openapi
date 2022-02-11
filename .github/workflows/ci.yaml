@@ -5,7 +5,16 @@ on:
 - 'push'
 
 jobs:
-  k8s-openapi:
+  global:
+    runs-on: 'ubuntu-20.04'
+
+    steps:
+    - uses: 'actions/checkout@v2'
+    - name: 'Run'
+      run: ./ci/global.sh
+
+
+  per_version:
     runs-on: 'ubuntu-20.04'
 
     strategy:
@@ -22,118 +31,10 @@ jobs:
         - '1.22'
         - '1.23'
 
-        op:
-        - 'clippy'
-        - 'doc'
-        - 'lib-tests'
-        - 'tests'
-
-        without_api_feature:
-        - 'yes'
-        - 'no'
-
-        exclude:
-        - op: 'tests'
-          without_api_feature: 'yes'
-
     steps:
     - uses: 'actions/checkout@v2'
     - name: 'Run'
-      run: ./ci/k8s-openapi.sh
+      run: ./ci/per_version.sh
       env:
         VERSION: "${{ matrix.version }}"
         OP: "${{ matrix.op }}"
-        WITHOUT_API_FEATURE: "${{ matrix.without_api_feature }}"
-
-
-  k8s-openapi-codegen:
-    runs-on: 'ubuntu-20.04'
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        op:
-        - 'clippy'
-        - 'run'
-
-    steps:
-    - uses: 'actions/checkout@v2'
-    - name: 'Run'
-      run: ./ci/k8s-openapi-codegen.sh
-      env:
-        OP: "${{ matrix.op }}"
-
-
-  k8s-openapi-codegen-common:
-    runs-on: 'ubuntu-20.04'
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        op:
-        - 'clippy'
-
-    steps:
-    - uses: 'actions/checkout@v2'
-    - name: 'Run'
-      run: ./ci/k8s-openapi-codegen-common.sh
-      env:
-        OP: "${{ matrix.op }}"
-
-
-  k8s-openapi-derive:
-    runs-on: 'ubuntu-20.04'
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        op:
-        - 'clippy'
-
-    steps:
-    - uses: 'actions/checkout@v2'
-    - name: 'Run'
-      run: ./ci/k8s-openapi-derive.sh
-      env:
-        OP: "${{ matrix.op }}"
-
-
-  k8s-openapi-tests:
-    runs-on: 'ubuntu-20.04'
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        version:
-        - '1.16'
-        - '1.17'
-        - '1.18'
-        - '1.19'
-        - '1.20'
-        - '1.21'
-        - '1.22'
-        - '1.23'
-
-        op:
-        - 'clippy'
-
-    steps:
-    - uses: 'actions/checkout@v2'
-    - name: 'Run'
-      run: ./ci/k8s-openapi-tests.sh
-      env:
-        VERSION: "${{ matrix.version }}"
-        OP: "${{ matrix.op }}"
-
-
-  style:
-    runs-on: 'ubuntu-20.04'
-
-    steps:
-    - uses: 'actions/checkout@v2'
-    - name: 'Run'
-      run: ./ci/style.sh
