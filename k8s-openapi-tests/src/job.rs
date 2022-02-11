@@ -49,12 +49,9 @@ fn create() {
 	let (request, response_body) =
 		batch::Job::create_namespaced_job("default", &job, Default::default())
 		.expect("couldn't create job");
-	let job: batch::Job = {
-		let response = client.execute(request);
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::CreateResponse::Created(job) => crate::ValueResult::GotValue(job),
-			other => panic!("{:?} {}", other, status_code),
-		})
+	let job: batch::Job = match client.get_single_value(request, response_body) {
+		(k8s_openapi::CreateResponse::Created(job), _) => job,
+		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};
 
 	let job_image =
@@ -74,12 +71,9 @@ fn create() {
 	// Wait for job to fail
 	loop {
 		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default", Default::default()).expect("couldn't get job");
-		let job: batch::Job = {
-			let response = client.execute(request);
-			crate::get_single_value(response, response_body, |response, status_code| match response {
-				batch::ReadNamespacedJobResponse::Ok(job) => crate::ValueResult::GotValue(job),
-				other => panic!("{:?} {}", other, status_code),
-			})
+		let job: batch::Job = match client.get_single_value(request, response_body) {
+			(batch::ReadNamespacedJobResponse::Ok(job), _) => job,
+			(other, status_code) => panic!("{:?} {}", other, status_code),
 		};
 
 		let job_status =
@@ -96,12 +90,9 @@ fn create() {
 	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
 		let (request, response_body) = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
-		let pod_list = {
-			let response = client.execute(request);
-			crate::get_single_value(response, response_body, |response, status_code| match response {
-				k8s_openapi::ListResponse::Ok(pod_list) => crate::ValueResult::GotValue(pod_list),
-				other => panic!("{:?} {}", other, status_code),
-			})
+		let pod_list = match client.get_single_value(request, response_body) {
+			(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
+			(other, status_code) => panic!("{:?} {}", other, status_code),
 		};
 
 		let job_pod_status =
@@ -131,13 +122,9 @@ fn create() {
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
 	let (request, response_body) = batch::Job::delete_namespaced_job(&job_name, "default", Default::default()).expect("couldn't delete job");
-	{
-		let response = client.execute(request);
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::DeleteResponse::OkStatus(_) |
-			k8s_openapi::DeleteResponse::OkValue(_) => crate::ValueResult::GotValue(()),
-			other => panic!("{:?} {}", other, status_code),
-		});
+	match client.get_single_value(request, response_body) {
+		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}
 
 	// Delete all pods of the job using label selector
@@ -151,12 +138,8 @@ fn create() {
 			},
 		)
 		.expect("couldn't delete pods collection");
-	{
-		let response = client.execute(request);
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::DeleteResponse::OkStatus(_) |
-			k8s_openapi::DeleteResponse::OkValue(_) => crate::ValueResult::GotValue(()),
-			other => panic!("{:?} {}", other, status_code),
-		})
+	match client.get_single_value(request, response_body) {
+		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}
 }

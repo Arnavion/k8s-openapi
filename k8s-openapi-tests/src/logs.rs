@@ -5,19 +5,16 @@ fn get() {
 	let mut client = crate::Client::new("logs-get");
 
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-	let pod_list = {
-		let response = client.execute(request);
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::ListResponse::Ok(pod_list) => crate::ValueResult::GotValue(pod_list),
-			other => panic!("{:?} {}", other, status_code),
-		})
+	let pod_list = match client.get_single_value(request, response_body) {
+		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
+		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};
 
 	let apiserver_pod =
 		pod_list
 		.items.into_iter()
 		.filter_map(|pod| {
-			let name = pod.metadata.name.as_ref()?;
+			let name = pod.metadata.name.as_deref()?;
 			if name.starts_with("kube-apiserver-") {
 				Some(pod)
 			}
@@ -39,15 +36,13 @@ fn get() {
 		})
 		.expect("couldn't get apiserver pod logs");
 	let mut apiserver_logs = String::new();
-	let strings = {
-		let response = client.execute(request);
-		crate::get_multiple_values(response, response_body, |response, status_code| match response {
-			api::ReadNamespacedPodLogResponse::Ok(s) => crate::ValueResult::GotValue(s),
-			other => panic!("{:?} {}", other, status_code),
-		})
-	};
+	let chunks = client.get_multiple_values(request, response_body);
 	let mut found_line = false;
-	for s in strings {
+	for chunk in chunks {
+		let s = match chunk {
+			(api::ReadNamespacedPodLogResponse::Ok(s), _) => s,
+			(other, status_code) => panic!("{:?} {}", other, status_code),
+		};
 		apiserver_logs.push_str(&s);
 
 		if apiserver_logs.contains("Serving securely on [::]:6443") {

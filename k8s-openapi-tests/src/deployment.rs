@@ -8,13 +8,10 @@ fn list() {
 	let (request, response_body) =
 		apps::Deployment::list_namespaced_deployment("kube-system", Default::default())
 		.expect("couldn't list deployments");
-	let response = client.execute(request);
-	let deployment_list =
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::ListResponse::Ok(deployment_list) =>
-				crate::ValueResult::GotValue(deployment_list),
-			other => panic!("{:?} {}", other, status_code),
-		});
+	let deployment_list = match client.get_single_value(request, response_body) {
+		(k8s_openapi::ListResponse::Ok(deployment_list), _) => deployment_list,
+		(other, status_code) => panic!("{:?} {}", other, status_code),
+	};
 
 	assert_eq!(k8s_openapi::kind(&deployment_list), "DeploymentList");
 

@@ -211,9 +211,9 @@ fn run(
 
 	let out_dir = out_dir_base.join(mod_root);
 
-	let mut num_generated_structs = 0usize;
-	let mut num_generated_type_aliases = 0usize;
-	let mut num_generated_apis = 0usize;
+	let mut num_generated_structs = 0_usize;
+	let mut num_generated_type_aliases = 0_usize;
+	let mut num_generated_apis = 0_usize;
 
 	let mut spec: swagger20::Spec = {
 		log::info!("Parsing spec file at {} ...", spec_url);

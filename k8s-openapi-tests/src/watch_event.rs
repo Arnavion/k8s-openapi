@@ -7,22 +7,18 @@ fn watch_pods() {
 
 	let (request, response_body) =
 		api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
-	let response = client.execute(request);
-	let pod_watch_events =
-		crate::get_multiple_values(response, response_body, |response, status_code| match response {
-			k8s_openapi::WatchResponse::Ok(pod_watch_event) => crate::ValueResult::GotValue(pod_watch_event),
-			other => panic!("{:?} {}", other, status_code),
-		});
+	let pod_watch_events = client.get_multiple_values(request, response_body);
 
 	let apiserver_pod =
 		pod_watch_events
 		.filter_map(|pod_watch_event| {
 			let pod = match pod_watch_event {
-				meta::WatchEvent::Added(pod) => pod,
-				_ => return None,
+				(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Added(pod)), _) => pod,
+				(k8s_openapi::WatchResponse::Ok(_), _) => return None,
+				(other, status_code) => panic!("{:?} {}", other, status_code),
 			};
 
-			let name = pod.metadata.name.as_ref()?;
+			let name = pod.metadata.name.as_deref()?;
 			if name.starts_with("kube-apiserver-") {
 				Some(pod)
 			}

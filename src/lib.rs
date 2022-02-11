@@ -175,7 +175,7 @@
 //!     let mut response_body = response_body(status_code);
 //!
 //!     // Buffer used for each read from the HTTP response.
-//!     let mut buf = Box::new([0u8; 4096]);
+//!     let mut buf = Box::new([0_u8; 4096]);
 //!
 //!     let pod_list = loop {
 //!         // Read some bytes from the HTTP response into the buffer.

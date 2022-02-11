@@ -156,7 +156,30 @@ impl Client {
 		}
 	}
 
-	fn execute<'a>(&'a mut self, request: http::Request<Vec<u8>>) -> ClientResponse<'a> {
+	fn get_single_value<R>(
+		&mut self,
+		request: http::Request<Vec<u8>>,
+		response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+	) -> (R, http::StatusCode) where R: k8s_openapi::Response {
+		self.get_multiple_values(request, response_body).next().expect("unexpected EOF")
+	}
+
+	fn get_multiple_values<'a, R>(
+		&'a mut self,
+		request: http::Request<Vec<u8>>,
+		response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+	) -> impl Iterator<Item = (R, http::StatusCode)> + 'a where R: k8s_openapi::Response + 'a {
+		let response = self.execute(request);
+		let response_body = response_body(response.status_code);
+		let buf = Box::new([0_u8; 4096]);
+		MultipleValuesIterator {
+			response,
+			response_body,
+			buf,
+		}
+	}
+
+	fn execute(&mut self, request: http::Request<Vec<u8>>) -> ClientResponse<'_> {
 		let (path, method, body, content_type) = {
 			let content_type =
 				request.headers()
@@ -272,77 +295,32 @@ impl<'a> std::io::Read for ClientResponse<'a> {
 	}
 }
 
-enum ValueResult<T> {
-	GotValue(T),
-
-	#[allow(dead_code)]
-	NeedMoreData,
-}
-
-fn get_single_value<'a, R, F, T>(
+struct MultipleValuesIterator<'a, R> {
 	response: ClientResponse<'a>,
-	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
-	f: F,
-) -> T where
-	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
-	T: std::fmt::Debug,
-{
-	get_multiple_values(response, response_body, f).next().expect("unexpected EOF")
-}
-
-fn get_multiple_values<'a, R, F, T>(
-	response: ClientResponse<'a>,
-	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
-	f: F,
-) -> MultipleValuesIterator<'a, R, F, T> where
-	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
-{
-	let response_body = response_body(response.status_code);
-
-	let buf = Box::new([0u8; 4096]);
-
-	MultipleValuesIterator {
-		response,
-		f,
-		response_body,
-		buf,
-		_pd: Default::default(),
-	}
-}
-
-struct MultipleValuesIterator<'a, R, F, T> {
-	response: ClientResponse<'a>,
-	f: F,
 	response_body: k8s_openapi::ResponseBody<R>,
 	buf: Box<[u8; 4096]>,
-	_pd: std::marker::PhantomData<fn() -> T>,
 }
 
-impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where
-	R: k8s_openapi::Response,
-	F: FnMut(R, http::StatusCode) -> ValueResult<T>,
-{
-	type Item = T;
+impl<'a, R> Iterator for MultipleValuesIterator<'a, R> where R: k8s_openapi::Response {
+	type Item = (R, http::StatusCode);
 
 	fn next(&mut self) -> Option<Self::Item> {
+		// Perform one read of the response body before trying to parse it. This ensures that bodies
+		// corresponding to the `Other(Option<serde_json::Value>)` variant are fully
+		// parsed and printed in case of errors.
 		{
-			let read = std::io::Read::read(&mut self.response, &mut *self.buf).unwrap();
+			let read = std::io::Read::read(&mut self.response, &mut self.buf[..]).unwrap();
 			self.response_body.append_slice(&self.buf[..read]);
 		}
 
 		loop {
 			match self.response_body.parse() {
-				Ok(value) => match (self.f)(value, self.response_body.status_code) {
-					ValueResult::GotValue(result) => return Some(result),
-					ValueResult::NeedMoreData => (),
-				},
+				Ok(value) => return Some((value, self.response_body.status_code)),
 				Err(k8s_openapi::ResponseError::NeedMoreData) => (),
 				Err(err) => panic!("{}", err),
 			}
 
-			match std::io::Read::read(&mut self.response, &mut *self.buf).unwrap() {
+			match std::io::Read::read(&mut self.response, &mut self.buf[..]).unwrap() {
 				0 if self.response_body.is_empty() => return None,
 				0 => panic!("unexpected EOF"),
 				read => self.response_body.append_slice(&self.buf[..read]),

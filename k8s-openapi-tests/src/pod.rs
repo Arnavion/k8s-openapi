@@ -5,12 +5,10 @@ fn list() {
 	let mut client = crate::Client::new("pod-list");
 
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-	let response = client.execute(request);
-	let pod_list =
-		crate::get_single_value(response, response_body, |response, status_code| match response {
-			k8s_openapi::ListResponse::Ok(pod_list) => crate::ValueResult::GotValue(pod_list),
-			other => panic!("{:?} {}", other, status_code),
-		});
+	let pod_list = match client.get_single_value(request, response_body) {
+		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
+		(other, status_code) => panic!("{:?} {}", other, status_code),
+	};
 
 	assert_eq!(k8s_openapi::kind(&pod_list), "PodList");
 
@@ -18,7 +16,7 @@ fn list() {
 		pod_list
 		.items.into_iter()
 		.filter_map(|pod| {
-			let name = pod.metadata.name.as_ref()?;
+			let name = pod.metadata.name.as_deref()?;
 			if name.starts_with("kube-apiserver-") {
 				Some(pod)
 			}
