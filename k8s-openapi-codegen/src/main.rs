@@ -4,6 +4,7 @@
 	clippy::cognitive_complexity,
 	clippy::default_trait_access,
 	clippy::let_underscore_drop,
+	clippy::let_unit_value,
 	clippy::must_use_candidate,
 	clippy::similar_names,
 	clippy::too_many_arguments,
@@ -17,6 +18,7 @@ mod fixups;
 mod logger;
 mod supported_version;
 
+use futures_util::TryStreamExt;
 use k8s_openapi_codegen_common::swagger20;
 
 struct Error(Box<dyn std::error::Error + Send + Sync>);
@@ -64,12 +66,14 @@ impl_from_for_error! {
 	String,
 	std::fmt::Error,
 	std::io::Error,
+	k8s_openapi_codegen_common::Error,
 	log::SetLoggerError,
 	reqwest::Error,
-	k8s_openapi_codegen_common::Error,
+	tokio::task::JoinError,
 }
 
-fn main() -> Result<(), Error> {
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), Error> {
 	let Options { versions: requested_versions } = clap::Parser::parse();
 
 	{
@@ -83,11 +87,7 @@ fn main() -> Result<(), Error> {
 		log::set_max_level(logger.filter());
 	}
 
-	let client =
-		std::sync::Arc::new(
-			reqwest::blocking::ClientBuilder::new()
-			.timeout(None)
-			.build().expect("could not create reqwest client"));
+	let client = std::sync::Arc::new(reqwest::Client::new());
 
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
@@ -100,47 +100,23 @@ fn main() -> Result<(), Error> {
 			requested_versions
 		};
 
-	let threads: Vec<_> =
+	let tasks: futures_util::stream::FuturesUnordered<_> =
 		requested_versions.into_iter()
 		.map(|RequestedVersion { version, overriden_spec_url }| {
-			let version_name = version.name();
+			let out_dir_base = out_dir_base.clone();
+			let client = client.clone();
 
-			std::thread::Builder::new().name(version_name.to_owned()).spawn({
-				let out_dir_base = out_dir_base.clone();
-				let client = client.clone();
-
-				move || -> Result<(), Error> {
-					{
-						let mut builder = env_logger::Builder::new();
-						builder.format(move |buf, record| {
-							use std::io::Write;
-							writeln!(buf, "[{}] {} {}:{} {}", version_name, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
-						});
-						let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
-						builder.parse_filters(&rust_log);
-						logger::register_thread_local_logger(builder.build());
-					}
-
-					let spec_url = overriden_spec_url.as_deref().unwrap_or_else(|| version.spec_url());
-
-					run(version, spec_url, &out_dir_base, &client)?;
-
-					Ok(())
-				}
-			}).unwrap()
+			async move {
+				let task_local_logger = logger::make_local_logger(version.name());
+				let spec_url = overriden_spec_url.as_deref().unwrap_or_else(|| version.spec_url());
+				logger::TASK_LOCAL_LOGGER.scope(task_local_logger, run(version, spec_url, &out_dir_base, &client)).await?;
+				Ok::<_, Error>(())
+			}
 		})
 		.collect();
+	tasks.try_for_each(|()| std::future::ready(Ok(()))).await?;
 
-	let mut result = Ok(());
-	for thread in threads {
-		let thread_name = thread.thread().name().unwrap().to_owned();
-		if let Err(err) = thread.join().unwrap() {
-			eprintln!("[{}] {:?}", thread_name, err);
-			result = Err("one or more runs failed".into());
-		}
-	}
-
-	result
+	Ok(())
 }
 
 #[derive(clap::Parser)]
@@ -201,11 +177,11 @@ impl std::str::FromStr for RequestedVersion {
 	}
 }
 
-fn run(
+async fn run(
 	supported_version: supported_version::SupportedVersion,
 	spec_url: &str,
 	out_dir_base: &std::path::Path,
-	client: &reqwest::blocking::Client,
+	client: &reqwest::Client,
 ) -> Result<(), Error> {
 	let mod_root = supported_version.mod_root();
 
@@ -217,107 +193,116 @@ fn run(
 
 	let mut spec: swagger20::Spec = {
 		log::info!("Parsing spec file at {} ...", spec_url);
-		let response = client.get(spec_url).send()?;
+		let response = client.get(spec_url).send().await?;
 		let status = response.status();
 		if status != http::StatusCode::OK {
 			return Err(status.to_string().into());
 		}
-		response.json()?
+		response.json().await?
 	};
 
-	log::info!("Applying fixups...");
-	supported_version.fixup(&mut spec)?;
-
-	let expected_num_generated_types: usize = spec.definitions.len();
-	let expected_num_generated_apis: usize = spec.operations.len();
-
-	log::info!("OK. Spec has {} definitions and {} operations", expected_num_generated_types, expected_num_generated_apis);
-
-	loop {
-		log::info!("Removing output directory {} ...", out_dir.display());
-		match std::fs::remove_dir_all(&out_dir) {
-			Ok(()) => log::trace!("OK"),
-			Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
-				log::trace!("OK. Directory doesn't exist");
-
-				log::info!("Creating output directory {} ...", out_dir.display());
-				match std::fs::create_dir(&out_dir) {
-					Ok(()) => {
-						log::trace!("OK");
-						break;
-					},
-					Err(err) => log::warn!("Error: {}", err),
-				}
-			},
-			Err(err) => log::warn!("Error: {}", err),
+	let () = tokio::task::spawn_blocking(move || -> Result<(), Error> {
+		{
+			let thread_local_logger = logger::make_local_logger(supported_version.name());
+			logger::register_thread_local_logger(thread_local_logger);
 		}
-	}
 
-	log::info!("Generating types...");
+		log::info!("Applying fixups...");
+		supported_version.fixup(&mut spec)?;
 
-	for definition_path in spec.definitions.keys() {
-		log::trace!("Working on {} ...", definition_path);
+		let expected_num_generated_types: usize = spec.definitions.len();
+		let expected_num_generated_apis: usize = spec.operations.len();
 
-		let run_state = RunState {
-			out_dir: &out_dir,
-			parent_mod_rs_file_and_mod_name: None,
-		};
+		log::info!("OK. Spec has {} definitions and {} operations", expected_num_generated_types, expected_num_generated_apis);
 
-		let run_result = k8s_openapi_codegen_common::run(
-			&spec.definitions,
-			&mut spec.operations,
-			definition_path,
-			&MapNamespace,
-			"pub ",
-			k8s_openapi_codegen_common::GenerateSchema::Yes { feature: Some("schemars") },
-			Some("api"),
-			run_state,
-		)?;
+		loop {
+			log::info!("Removing output directory {} ...", out_dir.display());
+			match std::fs::remove_dir_all(&out_dir) {
+				Ok(()) => log::trace!("OK"),
+				Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+					log::trace!("OK. Directory doesn't exist");
 
-		num_generated_structs += run_result.num_generated_structs;
-		num_generated_type_aliases += run_result.num_generated_type_aliases;
-		num_generated_apis += run_result.num_generated_apis;
-	}
-
-	// Top-level operations
-	{
-		let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
-
-		spec.operations.sort_by(|o1, o2| o1.id.cmp(&o2.id));
-		for operation in spec.operations {
-			if let Some(swagger20::KubernetesGroupKindVersion { group, kind, version }) = operation.kubernetes_group_kind_version {
-				return Err(format!(
-					"Operation {} is associated with {}/{}/{} but did not get emitted with that definition",
-					operation.id, group, version, kind).into());
+					log::info!("Creating output directory {} ...", out_dir.display());
+					match std::fs::create_dir(&out_dir) {
+						Ok(()) => {
+							log::trace!("OK");
+							break;
+						},
+						Err(err) => log::warn!("Error: {}", err),
+					}
+				},
+				Err(err) => log::warn!("Error: {}", err),
 			}
+		}
 
-			k8s_openapi_codegen_common::write_operation(
-				&mut mod_root_file,
-				&operation,
+		log::info!("Generating types...");
+
+		for definition_path in spec.definitions.keys() {
+			log::trace!("Working on {} ...", definition_path);
+
+			let run_state = RunState {
+				out_dir: &out_dir,
+				parent_mod_rs_file_and_mod_name: None,
+			};
+
+			let run_result = k8s_openapi_codegen_common::run(
+				&spec.definitions,
+				&mut spec.operations,
+				definition_path,
 				&MapNamespace,
 				"pub ",
-				None,
+				k8s_openapi_codegen_common::GenerateSchema::Yes { feature: Some("schemars") },
 				Some("api"),
+				run_state,
 			)?;
 
-			num_generated_apis += 1;
+			num_generated_structs += run_result.num_generated_structs;
+			num_generated_type_aliases += run_result.num_generated_type_aliases;
+			num_generated_apis += run_result.num_generated_apis;
 		}
-	}
 
-	log::info!("OK");
-	log::info!("Generated {} structs", num_generated_structs);
-	log::info!("Generated {} type aliases", num_generated_type_aliases);
-	log::info!("Generated {} API functions", num_generated_apis);
+		// Top-level operations
+		{
+			let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
 
-	if num_generated_structs + num_generated_type_aliases != expected_num_generated_types {
-		return Err("Did not generate or skip expected number of types".into());
-	}
+			spec.operations.sort_by(|o1, o2| o1.id.cmp(&o2.id));
+			for operation in spec.operations {
+				if let Some(swagger20::KubernetesGroupKindVersion { group, kind, version }) = operation.kubernetes_group_kind_version {
+					return Err(format!(
+						"Operation {} is associated with {}/{}/{} but did not get emitted with that definition",
+						operation.id, group, version, kind).into());
+				}
 
-	if num_generated_apis != expected_num_generated_apis {
-		return Err("Did not generate expected number of API functions".into());
-	}
+				k8s_openapi_codegen_common::write_operation(
+					&mut mod_root_file,
+					&operation,
+					&MapNamespace,
+					"pub ",
+					None,
+					Some("api"),
+				)?;
 
-	log::info!("");
+				num_generated_apis += 1;
+			}
+		}
+
+		log::info!("OK");
+		log::info!("Generated {} structs", num_generated_structs);
+		log::info!("Generated {} type aliases", num_generated_type_aliases);
+		log::info!("Generated {} API functions", num_generated_apis);
+
+		if num_generated_structs + num_generated_type_aliases != expected_num_generated_types {
+			return Err("Did not generate or skip expected number of types".into());
+		}
+
+		if num_generated_apis != expected_num_generated_apis {
+			return Err("Did not generate expected number of API functions".into());
+		}
+
+		log::info!("");
+
+		Ok(())
+	}).await??;
 
 	Ok(())
 }
