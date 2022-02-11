@@ -177,7 +177,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				name: "name".to_owned(),
 				required: true,
 				schema: swagger20::Schema {
-					description: Some(format!("name of the {}", cr_name)),
+					description: Some(format!("name of the `{}`", cr_name)),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
@@ -209,22 +209,22 @@ impl super::CustomDerive for CustomResourceDefinition {
 			},
 			definitions: vec![
 				(swagger20::DefinitionPath(cr_name.clone()), swagger20::Schema {
-					description: Some(format!("Custom resource for {}", cr_spec_name)),
+					description: Some(format!("Custom resource for `{}`", cr_spec_name)),
 					kind: swagger20::SchemaKind::Properties(vec![
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
-							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".to_owned()),
+							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources>".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
 						}, false)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
-							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".to_owned()),
+							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
-							description: Some("Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata".to_owned()),
+							description: Some("Standard object's metadata. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata>".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta".to_owned(),
 								can_be_default: None,
@@ -233,7 +233,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							list_kind: None,
 						}, true)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
-							description: Some(format!("Specification of the {} custom resource", cr_name)),
+							description: Some(format!("Specification of the `{}` custom resource", cr_name)),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: cr_spec_name,
 								can_be_default: None,
@@ -244,7 +244,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().chain(
 						has_subresources.map(|has_subresources|
 							(swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
-								description: Some(format!("Subresources of the {} custom resource", cr_name)),
+								description: Some(format!("Subresources of the `{}` custom resource", cr_name)),
 								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
@@ -261,7 +261,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				}),
 
 				(swagger20::DefinitionPath(cr_list_name.clone()), swagger20::Schema {
-					description: Some(format!("{} is a list of {}", cr_list_name, cr_name)),
+					description: Some(format!("`{}` is a list of `{}`", cr_list_name, cr_name)),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::ListRef {
 						items: Box::new(swagger20::SchemaKind::Ref(swagger20::RefPath {
 							path: cr_name.clone(),
@@ -280,7 +280,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			].into_iter().collect(),
 			operations: vec![
 				swagger20::Operation {
-					description: Some(format!("Create a {}", cr_name)),
+					description: Some(format!("Create a `{}`", cr_name)),
 					id: format!("create{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Post,
 					kubernetes_action: Some(swagger20::KubernetesAction::Post),
@@ -299,7 +299,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Delete a {}", cr_name)),
+					description: Some(format!("Delete a `{}`", cr_name)),
 					id: format!("delete{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Delete,
 					kubernetes_action: Some(swagger20::KubernetesAction::Delete),
@@ -332,7 +332,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Delete a collection of objects of kind {}", cr_name)),
+					description: Some(format!("Delete a collection of objects of kind `{}`", cr_name)),
 					id: format!("deleteCollection{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Delete,
 					kubernetes_action: Some(swagger20::KubernetesAction::DeleteCollection),
@@ -378,7 +378,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("List objects of kind {}", cr_name)),
+					description: Some(format!("List objects of kind `{}`", cr_name)),
 					id: format!("list{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::List),
@@ -410,7 +410,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Partially update the specified {}", cr_name)),
+					description: Some(format!("Partially update the specified `{}`", cr_name)),
 					id: format!("patch{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Patch,
 					kubernetes_action: Some(swagger20::KubernetesAction::Patch),
@@ -457,7 +457,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Partially update the state of the specified {}", cr_name)),
+					description: Some(format!("Partially update the state of the specified `{}`", cr_name)),
 					id: format!("patch{}{}Status", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Patch,
 					kubernetes_action: Some(swagger20::KubernetesAction::Patch),
@@ -504,7 +504,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Read the specified {}", cr_name)),
+					description: Some(format!("Read the specified `{}`", cr_name)),
 					id: format!("read{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Get),
@@ -533,7 +533,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Read status of the specified {}", cr_name)),
+					description: Some(format!("Read status of the specified `{}`", cr_name)),
 					id: format!("read{}{}Status", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Get),
@@ -562,7 +562,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Replace the specified {}", cr_name)),
+					description: Some(format!("Replace the specified `{}`", cr_name)),
 					id: format!("replace{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Put,
 					kubernetes_action: Some(swagger20::KubernetesAction::Put),
@@ -596,7 +596,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Replace status of the specified {}", cr_name)),
+					description: Some(format!("Replace status of the specified `{}`", cr_name)),
 					id: format!("replace{}{}Status", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Put,
 					kubernetes_action: Some(swagger20::KubernetesAction::Put),
@@ -630,7 +630,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Watch objects of kind {}", cr_name)),
+					description: Some(format!("Watch objects of kind `{}`", cr_name)),
 					id: format!("watch{}{}", namespace_operation_id_component, cr_name),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Watch),
@@ -709,7 +709,7 @@ impl k8s_openapi_codegen_common::MapNamespace for MapNamespace {
 	fn map_namespace<'a>(&self, path_parts: &[&'a str]) -> Option<Vec<&'a str>> {
 		match path_parts {
 			["io", "k8s", rest @ ..] => Some(std::iter::once("k8s_openapi").chain(rest.iter().copied()).collect()),
-			path_parts => Some(path_parts.iter().copied().collect()),
+			path_parts => Some(path_parts.to_owned()),
 		}
 	}
 }

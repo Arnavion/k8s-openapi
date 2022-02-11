@@ -15,7 +15,7 @@ fn list() {
 	let apiserver_pod =
 		pod_list
 		.items.into_iter()
-		.filter_map(|pod| {
+		.find_map(|pod| {
 			let name = pod.metadata.name.as_deref()?;
 			if name.starts_with("kube-apiserver-") {
 				Some(pod)
@@ -24,7 +24,7 @@ fn list() {
 				None
 			}
 		})
-		.next().expect("couldn't find apiserver pod");
+		.expect("couldn't find apiserver pod");
 
 	let apiserver_container_spec =
 		apiserver_pod

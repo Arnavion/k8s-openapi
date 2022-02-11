@@ -34,7 +34,6 @@ fn deployment() {
 				],
 				..Default::default()
 			}),
-			..Default::default()
 		},
 		..Default::default()
 	};
@@ -148,7 +147,7 @@ fn deployment() {
 /// Patch the deployment with the given path, and assert that the patched deployment has a container with the expected image
 fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta::Patch, expected_image: &str) {
 	let (request, response_body) =
-		apps::Deployment::patch_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", &patch, Default::default())
+		apps::Deployment::patch_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
 		.expect("couldn't create patch");
 	println!("{:?}", request);
 

@@ -674,7 +674,7 @@ pub fn run(
 					name: "metadata",
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
 					field_name: "metadata".into(),
-					field_type_name: (&*metadata_rust_type).to_owned(),
+					field_type_name: (*metadata_rust_type).to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
 				},
@@ -1230,6 +1230,7 @@ fn evaluate_trait_bound(
 	mut f: impl FnMut(&swagger20::SchemaKind, bool) -> Result<bool, Error>,
 ) -> Result<bool, Error> {
 	fn evaluate_trait_bound_inner<'a>(
+		#[allow(clippy::ptr_arg)]
 		kind: &std::borrow::Cow<'a, swagger20::SchemaKind>,
 		required: bool,
 		array_follows_elements: bool,

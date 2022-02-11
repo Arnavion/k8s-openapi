@@ -13,7 +13,7 @@ fn get() {
 	let apiserver_pod =
 		pod_list
 		.items.into_iter()
-		.filter_map(|pod| {
+		.find_map(|pod| {
 			let name = pod.metadata.name.as_deref()?;
 			if name.starts_with("kube-apiserver-") {
 				Some(pod)
@@ -22,7 +22,7 @@ fn get() {
 				None
 			}
 		})
-		.next().expect("couldn't find apiserver pod");
+		.expect("couldn't find apiserver pod");
 
 	let apiserver_pod_name =
 		apiserver_pod
@@ -54,9 +54,7 @@ fn get() {
 			break;
 		}
 	}
-	if !found_line {
-		panic!("did not find expected text in apiserver pod logs: {}", apiserver_logs);
-	}
+	assert!(found_line, "did not find expected text in apiserver pod logs: {}", apiserver_logs);
 }
 
 #[test]

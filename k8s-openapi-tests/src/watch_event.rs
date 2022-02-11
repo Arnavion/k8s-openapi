@@ -7,11 +7,11 @@ fn watch_pods() {
 
 	let (request, response_body) =
 		api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
-	let pod_watch_events = client.get_multiple_values(request, response_body);
+	let mut pod_watch_events = client.get_multiple_values(request, response_body);
 
 	let apiserver_pod =
 		pod_watch_events
-		.filter_map(|pod_watch_event| {
+		.find_map(|pod_watch_event| {
 			let pod = match pod_watch_event {
 				(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Added(pod)), _) => pod,
 				(k8s_openapi::WatchResponse::Ok(_), _) => return None,
@@ -26,7 +26,7 @@ fn watch_pods() {
 				None
 			}
 		})
-		.next().expect("couldn't find apiserver pod");
+		.expect("couldn't find apiserver pod");
 
 	let apiserver_container_spec =
 		apiserver_pod

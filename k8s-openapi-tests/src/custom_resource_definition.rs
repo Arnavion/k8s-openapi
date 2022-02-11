@@ -145,7 +145,7 @@ fn test() {
 					}),
 					..Default::default()
 				},
-			].into(),
+			],
 			..Default::default()
 		},
 		..Default::default()

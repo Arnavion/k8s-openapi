@@ -14,16 +14,16 @@ pub(crate) fn generate(
 			use std::fmt::Write;
 
 			if !fields.is_empty() {
-				writeln!(&mut fields)?;
+				writeln!(fields)?;
 			}
 
 			if let Some(comment) = comment {
 				for line in crate::get_comment_text(comment, "") {
-					writeln!(&mut fields, "    ///{}", line)?;
+					writeln!(fields, "    ///{}", line)?;
 				}
 			}
 
-			writeln!(&mut fields,
+			writeln!(fields,
 				"    {vis}{field_name}: {field_type_name},",
 				vis = vis,
 				field_name = field_name,

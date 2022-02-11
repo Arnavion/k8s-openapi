@@ -101,6 +101,35 @@ jobs:
         OP: "${{ matrix.op }}"
 
 
+  k8s-openapi-tests:
+    runs-on: 'ubuntu-20.04'
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        version:
+        - '1.16'
+        - '1.17'
+        - '1.18'
+        - '1.19'
+        - '1.20'
+        - '1.21'
+        - '1.22'
+        - '1.23'
+
+        op:
+        - 'clippy'
+
+    steps:
+    - uses: 'actions/checkout@v2'
+    - name: 'Run'
+      run: ./ci/k8s-openapi-tests.sh
+      env:
+        VERSION: "${{ matrix.version }}"
+        OP: "${{ matrix.op }}"
+
+
   style:
     runs-on: 'ubuntu-20.04'
 

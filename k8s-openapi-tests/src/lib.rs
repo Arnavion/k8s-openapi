@@ -5,7 +5,11 @@
 #![allow(
 	clippy::default_trait_access,
 	clippy::indexing_slicing,
+	clippy::let_and_return,
+	clippy::let_underscore_drop,
+	clippy::let_unit_value,
 	clippy::must_use_candidate,
+	clippy::too_many_lines,
 	clippy::unseparated_literal_suffix,
 )]
 
@@ -90,9 +94,7 @@ impl Client {
 
 			let server: http::Uri = server.parse().expect("couldn't parse server URL");
 			if let Some(path_and_query) = server.path_and_query() {
-				if path_and_query != "/" {
-					panic!("server URL {} has path and query {}", server, path_and_query);
-				}
+				assert_eq!(path_and_query, "/", "server URL {} has path and query {}", server, path_and_query);
 			}
 
 			let KubeConfigUser { client_certificate, client_key } =
