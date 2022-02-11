@@ -70,7 +70,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 1. `/k8s-openapi-tests/build.rs`: Update the value of `MAX`
 
-1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
+1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::new`
 
 1. `/k8s-openapi-tests-macro-deps/Cargo.toml`: Add a new feature for the new version. It should enable the corresponding feature of the `k8s-openapi` crate.
 

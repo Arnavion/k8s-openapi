@@ -37,7 +37,7 @@ struct Replay {
 }
 
 impl Client {
-	fn with<F>(test_name: &'static str, f: F) where F: FnOnce(&mut Self) {
+	fn new(test_name: &'static str) -> Self {
 		#[cfg(feature = "test_v1_16")] let replays_directory = "v1-16";
 		#[cfg(feature = "test_v1_17")] let replays_directory = "v1-17";
 		#[cfg(feature = "test_v1_18")] let replays_directory = "v1-18";
@@ -58,116 +58,101 @@ impl Client {
 
 		let replay_filename = replays_directory.join(format!("{}.json", test_name));
 
-		let mut client =
-			if std::env::var("K8S_RECORD").is_ok() {
-				let kubeconfig: KubeConfig = {
-					let mut kubeconfig_path = dirs::home_dir().expect("can't find home directory");
-					kubeconfig_path.push(".kube");
-					kubeconfig_path.push("config");
-					let kubeconfig_file = std::fs::File::open(kubeconfig_path).expect("couldn't open kube config");
-					serde_yaml::from_reader(std::io::BufReader::new(kubeconfig_file)).expect("couldn't parse kube config")
-				};
-
-				let context = std::env::var("K8S_CONTEXT").unwrap_or(kubeconfig.current_context);
-
-				let KubeConfigContext { cluster, user } =
-					kubeconfig.contexts.into_iter()
-					.find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {}", context))
-					.context;
-
-				let KubeConfigCluster { certificate_authority, server } =
-					kubeconfig.clusters.into_iter()
-					.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {}", cluster))
-					.cluster;
-
-				let ca_certificate = {
-					let ca_cert_pem = match certificate_authority {
-						CertificateAuthority::File(path) => std::fs::read(path).expect("couldn't read CA certificate file"),
-						CertificateAuthority::Inline(data) => base64::decode(&data).expect("couldn't parse CA certificate data"),
-					};
-					let ca_cert = reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate");
-					ca_cert
-				};
-
-				let server: http::Uri = server.parse().expect("couldn't parse server URL");
-				if let Some(path_and_query) = server.path_and_query() {
-					if path_and_query != "/" {
-						panic!("server URL {} has path and query {}", server, path_and_query);
-					}
-				}
-
-				let KubeConfigUser { client_certificate, client_key } =
-					kubeconfig.users.into_iter()
-					.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {}", user))
-					.user;
-
-				let client_tls_identity = {
-					// reqwest::Identity supports from_pem, which is implemented using rustls to parse the PEM.
-					// This also requires the reqwest::blocking::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
-					//
-					// However, the client then fails to connect to kind clusters anyway, because kind clusters listen on 127.0.0.1
-					// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/ctz/hyper-rustls/issues/84
-					//
-					// So we need to use the native-tls backend, and thus Identity::from_pkcs12_der
-
-					let public_key_pem = match client_certificate {
-						ClientCertificate::File(path) => std::fs::read(path).expect("couldn't read client certificate file"),
-						ClientCertificate::Inline(data) => base64::decode(&data).expect("couldn't parse client certificate data"),
-					};
-					let public_key = openssl::x509::X509::from_pem(&public_key_pem).expect("couldn't parse client certificate data");
-
-					let private_key_pem = match client_key {
-						ClientKey::File(path) => std::fs::read(path).expect("couldn't read client key file"),
-						ClientKey::Inline(data) => base64::decode(&data).expect("couldn't parse client key data"),
-					};
-					let private_key = openssl::pkey::PKey::private_key_from_pem(&private_key_pem).expect("couldn't parse client key data");
-
-					let pkcs12 =
-						openssl::pkcs12::Pkcs12::builder()
-						.build("", "admin", &private_key, &public_key).expect("couldn't construct client identity")
-						.to_der().expect("couldn't construct client identity");
-
-					let tls_identity = reqwest::Identity::from_pkcs12_der(&pkcs12, "").expect("couldn't construct client identity");
-					tls_identity
-				};
-
-				let inner =
-					reqwest::blocking::Client::builder()
-					.use_native_tls()
-					.add_root_certificate(ca_certificate)
-					.identity(client_tls_identity)
-					.build().expect("couldn't create client");
-
-				let replay_file = std::fs::OpenOptions::new().create(true).truncate(true).write(true).open(replay_filename).expect("couldn't open replay file");
-				let recorder = std::io::BufWriter::new(replay_file);
-
-				Client::Recording {
-					inner,
-					server,
-					replays: vec![],
-					recorder,
-				}
-			}
-			else {
-				let replay_file = std::fs::OpenOptions::new().read(true).open(replay_filename).expect("couldn't open replay file");
-				let replay_file = std::io::BufReader::new(replay_file);
-				let replays: Vec<_> = serde_json::from_reader(replay_file).expect("couldn't parse replay file");
-
-				Client::Replaying(replays.into_iter().enumerate())
+		if std::env::var("K8S_RECORD").is_ok() {
+			let kubeconfig: KubeConfig = {
+				let mut kubeconfig_path = dirs::home_dir().expect("can't find home directory");
+				kubeconfig_path.push(".kube");
+				kubeconfig_path.push("config");
+				let kubeconfig_file = std::fs::File::open(kubeconfig_path).expect("couldn't open kube config");
+				serde_yaml::from_reader(std::io::BufReader::new(kubeconfig_file)).expect("couldn't parse kube config")
 			};
 
-		f(&mut client);
+			let context = std::env::var("K8S_CONTEXT").unwrap_or(kubeconfig.current_context);
 
-		match client {
-			Client::Replaying(mut replays) =>
-				if let Some((i, _)) = replays.next() {
-					panic!("Replay #{} was not consumed", i + 1);
-				},
+			let KubeConfigContext { cluster, user } =
+				kubeconfig.contexts.into_iter()
+				.find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {}", context))
+				.context;
 
-			Client::Recording { replays, mut recorder, .. } => {
-				serde_json::to_writer_pretty(&mut recorder, &replays).expect("could not save replays");
-				std::io::Write::write(&mut recorder, &[b'\n']).expect("could not save replays");
-			},
+			let KubeConfigCluster { certificate_authority, server } =
+				kubeconfig.clusters.into_iter()
+				.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {}", cluster))
+				.cluster;
+
+			let ca_certificate = {
+				let ca_cert_pem = match certificate_authority {
+					CertificateAuthority::File(path) => std::fs::read(path).expect("couldn't read CA certificate file"),
+					CertificateAuthority::Inline(data) => base64::decode(&data).expect("couldn't parse CA certificate data"),
+				};
+				let ca_cert = reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate");
+				ca_cert
+			};
+
+			let server: http::Uri = server.parse().expect("couldn't parse server URL");
+			if let Some(path_and_query) = server.path_and_query() {
+				if path_and_query != "/" {
+					panic!("server URL {} has path and query {}", server, path_and_query);
+				}
+			}
+
+			let KubeConfigUser { client_certificate, client_key } =
+				kubeconfig.users.into_iter()
+				.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {}", user))
+				.user;
+
+			let client_tls_identity = {
+				// reqwest::Identity supports from_pem, which is implemented using rustls to parse the PEM.
+				// This also requires the reqwest::blocking::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
+				//
+				// However, the client then fails to connect to kind clusters anyway, because kind clusters listen on 127.0.0.1
+				// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/ctz/hyper-rustls/issues/84
+				//
+				// So we need to use the native-tls backend, and thus Identity::from_pkcs12_der
+
+				let public_key_pem = match client_certificate {
+					ClientCertificate::File(path) => std::fs::read(path).expect("couldn't read client certificate file"),
+					ClientCertificate::Inline(data) => base64::decode(&data).expect("couldn't parse client certificate data"),
+				};
+				let public_key = openssl::x509::X509::from_pem(&public_key_pem).expect("couldn't parse client certificate data");
+
+				let private_key_pem = match client_key {
+					ClientKey::File(path) => std::fs::read(path).expect("couldn't read client key file"),
+					ClientKey::Inline(data) => base64::decode(&data).expect("couldn't parse client key data"),
+				};
+				let private_key = openssl::pkey::PKey::private_key_from_pem(&private_key_pem).expect("couldn't parse client key data");
+
+				let pkcs12 =
+					openssl::pkcs12::Pkcs12::builder()
+					.build("", "admin", &private_key, &public_key).expect("couldn't construct client identity")
+					.to_der().expect("couldn't construct client identity");
+
+				let tls_identity = reqwest::Identity::from_pkcs12_der(&pkcs12, "").expect("couldn't construct client identity");
+				tls_identity
+			};
+
+			let inner =
+				reqwest::blocking::Client::builder()
+				.use_native_tls()
+				.add_root_certificate(ca_certificate)
+				.identity(client_tls_identity)
+				.build().expect("couldn't create client");
+
+			let replay_file = std::fs::OpenOptions::new().create(true).truncate(true).write(true).open(replay_filename).expect("couldn't open replay file");
+			let recorder = std::io::BufWriter::new(replay_file);
+
+			Client::Recording {
+				inner,
+				server,
+				replays: vec![],
+				recorder,
+			}
+		}
+		else {
+			let replay_file = std::fs::OpenOptions::new().read(true).open(replay_filename).expect("couldn't open replay file");
+			let replay_file = std::io::BufReader::new(replay_file);
+			let replays: Vec<_> = serde_json::from_reader(replay_file).expect("couldn't parse replay file");
+
+			Client::Replaying(replays.into_iter().enumerate())
 		}
 	}
 
@@ -240,6 +225,23 @@ impl Client {
 		match self {
 			Client::Recording { .. } => std::thread::sleep(duration),
 			Client::Replaying(_) => (),
+		}
+	}
+}
+
+impl Drop for Client {
+	fn drop(&mut self) {
+		match self {
+			Client::Recording { replays, recorder, .. } => {
+				serde_json::to_writer_pretty(&mut *recorder, &replays).expect("could not save replays");
+				std::io::Write::write(&mut *recorder, &[b'\n']).expect("could not save replays");
+				std::io::Write::flush(&mut *recorder).expect("could not save replays");
+			},
+
+			Client::Replaying(replays) =>
+				if let Some((i, _)) = replays.next() {
+					panic!("Replay #{} was not consumed", i + 1);
+				},
 		}
 	}
 }
