@@ -13,14 +13,20 @@ include = [
 [dependencies]
 base64 = { version = "0.13", default-features = false }
 dirs = { version = "4", default-features = false }
+futures-core = { version = "0.3", default-features = false }
+futures-io = { version = "0.3", default-features = false }
+futures-util = { version = "0.3", default-features = false, features = [
+	"io", # for futures_util::StreamExt::into_async_read
+] }
 k8s-openapi = { path = "..", features = [
 	"schemars", # for resource types: schemars::JsonSchema
 ] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 openssl = { version = "0.10", default-features = false }
+pin-project = { version = "1", default-features = false }
 reqwest = { version = "0.11", default-features = false, features = [
-	"blocking", # for reqwest::blocking
 	"native-tls", # for TLS support
+	"stream", # for reqwest::Response::bytes_stream
 ] }
 schemars = { version = "0.8", default-features = false, features = [
 	"derive", # for #[derive(schemars::JsonSchema)]
@@ -28,6 +34,10 @@ schemars = { version = "0.8", default-features = false, features = [
 serde = { version = "1", default-features = false }
 serde_derive = { version = "1", default-features = false }
 serde_yaml = { version = "0.8", default-features = false }
+tokio = { version = "1", default-features = false, features = [
+	"macros", # for #[tokio::test]
+	"time", # for tokio::time::sleep
+] }
 
 [features]
 test_v1_16 = ["k8s-openapi/v1_16"]

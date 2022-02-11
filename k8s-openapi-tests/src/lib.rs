@@ -13,12 +13,17 @@
 	clippy::unseparated_literal_suffix,
 )]
 
+use std::{future::Future, pin::Pin, task::{Context, Poll}};
+
+use futures_core::Stream;
+use futures_io::AsyncRead;
+use futures_util::{StreamExt, TryStreamExt};
 use k8s_openapi::{http, serde_json};
 
 #[derive(Debug)]
 enum Client {
 	Recording {
-		inner: reqwest::blocking::Client,
+		inner: reqwest::Client,
 		server: http::Uri,
 		replays: Vec<Replay>,
 		recorder: std::io::BufWriter<std::fs::File>,
@@ -104,7 +109,7 @@ impl Client {
 
 			let client_tls_identity = {
 				// reqwest::Identity supports from_pem, which is implemented using rustls to parse the PEM.
-				// This also requires the reqwest::blocking::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
+				// This also requires the reqwest::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
 				//
 				// However, the client then fails to connect to kind clusters anyway, because kind clusters listen on 127.0.0.1
 				// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/ctz/hyper-rustls/issues/84
@@ -133,7 +138,7 @@ impl Client {
 			};
 
 			let inner =
-				reqwest::blocking::Client::builder()
+				reqwest::Client::builder()
 				.use_native_tls()
 				.add_root_certificate(ca_certificate)
 				.identity(client_tls_identity)
@@ -158,30 +163,28 @@ impl Client {
 		}
 	}
 
-	fn get_single_value<R>(
+	async fn get_single_value<R>(
 		&mut self,
 		request: http::Request<Vec<u8>>,
 		response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
 	) -> (R, http::StatusCode) where R: k8s_openapi::Response {
-		self.get_multiple_values(request, response_body).next().expect("unexpected EOF")
+		let stream = self.get_multiple_values(request, response_body);
+		futures_util::pin_mut!(stream);
+		stream.next().await.expect("unexpected EOF")
 	}
 
 	fn get_multiple_values<'a, R>(
 		&'a mut self,
 		request: http::Request<Vec<u8>>,
 		response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
-	) -> impl Iterator<Item = (R, http::StatusCode)> + 'a where R: k8s_openapi::Response + 'a {
-		let response = self.execute(request);
-		let response_body = response_body(response.status_code);
-		let buf = Box::new([0_u8; 4096]);
-		MultipleValuesIterator {
-			response,
+	) -> impl Stream<Item = (R, http::StatusCode)> + 'a where R: k8s_openapi::Response + 'a {
+		MultipleValuesStream::ExecutingRequest {
+			f: self.execute(request),
 			response_body,
-			buf,
 		}
 	}
 
-	fn execute(&mut self, request: http::Request<Vec<u8>>) -> ClientResponse<'_> {
+	async fn execute(&mut self, request: http::Request<Vec<u8>>) -> ClientResponse<'_, impl AsyncRead> {
 		let (path, method, body, content_type) = {
 			let content_type =
 				request.headers()
@@ -223,11 +226,18 @@ impl Client {
 					else {
 						request
 					};
-				let response = request.body(body).send().expect("couldn't send HTTP request");
-				replay.response_status_code = response.status().as_u16();
+				let response = request.body(body).send().await.expect("couldn't send HTTP request");
+				let response_status_code = response.status();
+
+				replay.response_status_code = response_status_code.as_u16();
+
+				let response =
+					response.bytes_stream()
+					.map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))
+					.into_async_read();
 
 				ClientResponse {
-					status_code: response.status(),
+					status_code: response_status_code,
 					body: ClientResponseBody::Recording(response, &mut replay.response_body),
 				}
 			},
@@ -246,9 +256,9 @@ impl Client {
 		}
 	}
 
-	fn sleep(&self, duration: std::time::Duration) {
+	async fn sleep(&self, duration: std::time::Duration) {
 		match self {
-			Client::Recording { .. } => std::thread::sleep(duration),
+			Client::Recording { .. } => tokio::time::sleep(duration).await,
 			Client::Replaying(_) => (),
 		}
 	}
@@ -272,60 +282,104 @@ impl Drop for Client {
 }
 
 #[derive(Debug)]
-struct ClientResponse<'a> {
+#[pin_project::pin_project]
+struct ClientResponse<'a, TResponse> {
 	status_code: http::StatusCode,
-	body: ClientResponseBody<'a>,
+	#[pin]
+	body: ClientResponseBody<'a, TResponse>,
 }
 
 #[derive(Debug)]
-enum ClientResponseBody<'a> {
-	Recording(reqwest::blocking::Response, &'a mut Vec<u8>),
+#[pin_project::pin_project(project = ClientResponseBodyProj)]
+enum ClientResponseBody<'a, TResponse> {
+	Recording(#[pin] TResponse, &'a mut Vec<u8>),
 	Replaying(std::io::Cursor<Vec<u8>>),
 }
 
-impl<'a> std::io::Read for ClientResponse<'a> {
-	fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
-		match &mut self.body {
-			ClientResponseBody::Recording(response, replay) => {
-				let read = response.read(buf)?;
+impl<'a, TResponse> AsyncRead for ClientResponse<'a, TResponse>
+where
+	TResponse: AsyncRead,
+{
+	fn poll_read(self: Pin<&mut Self>, cx: &mut Context<'_>, buf: &mut [u8]) -> Poll<std::io::Result<usize>> {
+		match self.project().body.project() {
+			ClientResponseBodyProj::Recording(response, replay) => response.poll_read(cx, buf).map(|read| {
+				let read = read?;
 				replay.extend_from_slice(&buf[0..read]);
 				Ok(read)
-			},
+			}),
 
-			ClientResponseBody::Replaying(replay) => replay.read(buf),
+			ClientResponseBodyProj::Replaying(replay) => Poll::Ready(std::io::Read::read(replay, buf)),
 		}
 	}
 }
 
-struct MultipleValuesIterator<'a, R> {
-	response: ClientResponse<'a>,
-	response_body: k8s_openapi::ResponseBody<R>,
-	buf: Box<[u8; 4096]>,
+#[pin_project::pin_project(project = MultipleValuesStreamProj)]
+enum MultipleValuesStream<'a, TResponseFuture, TResponse, R> {
+	ExecutingRequest {
+		#[pin]
+		f: TResponseFuture,
+		response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+	},
+	Response {
+		#[pin]
+		response: ClientResponse<'a, TResponse>,
+		response_body: k8s_openapi::ResponseBody<R>,
+		buf: Box<[u8; 4096]>,
+	},
 }
 
-impl<'a, R> Iterator for MultipleValuesIterator<'a, R> where R: k8s_openapi::Response {
+impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TResponseFuture, TResponse, R> where
+	TResponseFuture: Future<Output = ClientResponse<'a, TResponse>>,
+	ClientResponse<'a, TResponse>: AsyncRead,
+	R: k8s_openapi::Response,
+{
 	type Item = (R, http::StatusCode);
 
-	fn next(&mut self) -> Option<Self::Item> {
-		// Perform one read of the response body before trying to parse it. This ensures that bodies
-		// corresponding to the `Other(Option<serde_json::Value>)` variant are fully
-		// parsed and printed in case of errors.
-		{
-			let read = std::io::Read::read(&mut self.response, &mut self.buf[..]).unwrap();
-			self.response_body.append_slice(&self.buf[..read]);
-		}
-
+	fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
 		loop {
-			match self.response_body.parse() {
-				Ok(value) => return Some((value, self.response_body.status_code)),
-				Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-				Err(err) => panic!("{}", err),
-			}
+			match self.as_mut().project() {
+				MultipleValuesStreamProj::ExecutingRequest { f, response_body } => match f.poll(cx) {
+					Poll::Ready(response) => {
+						let response_body = response_body(response.status_code);
+						let buf = Box::new([0_u8; 4096]);
+						self.set(MultipleValuesStream::Response {
+							response,
+							response_body,
+							buf,
+						});
+					},
+					Poll::Pending => return Poll::Pending,
+				},
 
-			match std::io::Read::read(&mut self.response, &mut self.buf[..]).unwrap() {
-				0 if self.response_body.is_empty() => return None,
-				0 => panic!("unexpected EOF"),
-				read => self.response_body.append_slice(&self.buf[..read]),
+				MultipleValuesStreamProj::Response { mut response, response_body, buf } => {
+					// Perform one read of the response body before trying to parse it. This ensures that bodies
+					// corresponding to the `Other(Option<serde_json::Value>)` variant are fully
+					// parsed and printed in case of errors.
+					{
+						let read = match response.as_mut().poll_read(cx, &mut buf[..]) {
+							Poll::Ready(Ok(read)) => read,
+							Poll::Ready(Err(err)) => panic!("{}", err),
+							Poll::Pending => return Poll::Pending,
+						};
+						response_body.append_slice(&buf[..read]);
+					}
+
+					loop {
+						match response_body.parse() {
+							Ok(value) => return Poll::Ready(Some((value, response_body.status_code))),
+							Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+							Err(err) => panic!("{}", err),
+						}
+
+						match response.as_mut().poll_read(cx, &mut buf[..]) {
+							Poll::Ready(Ok(0)) if response_body.is_empty() => return Poll::Ready(None),
+							Poll::Ready(Ok(0)) => panic!("unexpected EOF"),
+							Poll::Ready(Ok(read)) => response_body.append_slice(&buf[..read]),
+							Poll::Ready(Err(err)) => panic!("{}", err),
+							Poll::Pending => return Poll::Pending,
+						}
+					}
+				},
 			}
 		}
 	}

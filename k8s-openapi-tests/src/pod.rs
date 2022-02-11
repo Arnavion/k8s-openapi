@@ -1,11 +1,11 @@
-#[test]
-fn list() {
+#[tokio::test]
+async fn list() {
 	use k8s_openapi::api::core::v1 as api;
 
 	let mut client = crate::Client::new("pod-list");
 
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-	let pod_list = match client.get_single_value(request, response_body) {
+	let pod_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};

@@ -1,5 +1,7 @@
-#[test]
-fn watch_pods() {
+use futures_util::StreamExt;
+
+#[tokio::test]
+async fn watch_pods() {
 	use k8s_openapi::api::core::v1 as api;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
@@ -7,25 +9,27 @@ fn watch_pods() {
 
 	let (request, response_body) =
 		api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
-	let mut pod_watch_events = client.get_multiple_values(request, response_body);
+	let pod_watch_events = client.get_multiple_values(request, response_body);
+	futures_util::pin_mut!(pod_watch_events);
 
 	let apiserver_pod =
 		pod_watch_events
-		.find_map(|pod_watch_event| {
+		.filter_map(|pod_watch_event| {
 			let pod = match pod_watch_event {
 				(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Added(pod)), _) => pod,
-				(k8s_openapi::WatchResponse::Ok(_), _) => return None,
+				(k8s_openapi::WatchResponse::Ok(_), _) => return std::future::ready(None),
 				(other, status_code) => panic!("{:?} {}", other, status_code),
 			};
 
-			let name = pod.metadata.name.as_deref()?;
-			if name.starts_with("kube-apiserver-") {
-				Some(pod)
+			let name = pod.metadata.name.as_deref();
+			if name.map(|name| name.starts_with("kube-apiserver-")).unwrap_or_default() {
+				std::future::ready(Some(pod))
 			}
 			else {
-				None
+				std::future::ready(None)
 			}
 		})
+		.next().await
 		.expect("couldn't find apiserver pod");
 
 	let apiserver_container_spec =

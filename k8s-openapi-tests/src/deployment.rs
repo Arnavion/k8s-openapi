@@ -1,5 +1,5 @@
-#[test]
-fn list() {
+#[tokio::test]
+async fn list() {
 	use k8s_openapi::api::apps::v1 as apps;
 	use k8s_openapi::apimachinery::pkg::util as util;
 
@@ -8,7 +8,7 @@ fn list() {
 	let (request, response_body) =
 		apps::Deployment::list_namespaced_deployment("kube-system", Default::default())
 		.expect("couldn't list deployments");
-	let deployment_list = match client.get_single_value(request, response_body) {
+	let deployment_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(deployment_list), _) => deployment_list,
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};

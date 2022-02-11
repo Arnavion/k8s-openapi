@@ -1,5 +1,5 @@
-#[test]
-fn create() {
+#[tokio::test]
+async fn create() {
 	use k8s_openapi::api::core::v1 as api;
 	use k8s_openapi::api::batch::v1 as batch;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
@@ -49,7 +49,7 @@ fn create() {
 	let (request, response_body) =
 		batch::Job::create_namespaced_job("default", &job, Default::default())
 		.expect("couldn't create job");
-	let job: batch::Job = match client.get_single_value(request, response_body) {
+	let job: batch::Job = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(job), _) => job,
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};
@@ -71,7 +71,7 @@ fn create() {
 	// Wait for job to fail
 	loop {
 		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default", Default::default()).expect("couldn't get job");
-		let job: batch::Job = match client.get_single_value(request, response_body) {
+		let job: batch::Job = match client.get_single_value(request, response_body).await {
 			(batch::ReadNamespacedJobResponse::Ok(job), _) => job,
 			(other, status_code) => panic!("{:?} {}", other, status_code),
 		};
@@ -84,13 +84,13 @@ fn create() {
 			break;
 		}
 
-		client.sleep(std::time::Duration::from_secs(1));
+		client.sleep(std::time::Duration::from_secs(1)).await;
 	}
 
 	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
 		let (request, response_body) = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
-		let pod_list = match client.get_single_value(request, response_body) {
+		let pod_list = match client.get_single_value(request, response_body).await {
 			(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
 			(other, status_code) => panic!("{:?} {}", other, status_code),
 		};
@@ -110,7 +110,7 @@ fn create() {
 			}
 		}
 
-		client.sleep(std::time::Duration::from_secs(1));
+		client.sleep(std::time::Duration::from_secs(1)).await;
 	};
 
 	let job_pod_container_state_terminated =
@@ -122,7 +122,7 @@ fn create() {
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
 	let (request, response_body) = batch::Job::delete_namespaced_job(&job_name, "default", Default::default()).expect("couldn't delete job");
-	match client.get_single_value(request, response_body) {
+	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}
@@ -138,7 +138,7 @@ fn create() {
 			},
 		)
 		.expect("couldn't delete pods collection");
-	match client.get_single_value(request, response_body) {
+	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}

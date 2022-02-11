@@ -1,11 +1,13 @@
-#[test]
-fn get() {
+use futures_util::StreamExt;
+
+#[tokio::test]
+async fn get() {
 	use k8s_openapi::api::core::v1 as api;
 
 	let mut client = crate::Client::new("logs-get");
 
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
-	let pod_list = match client.get_single_value(request, response_body) {
+	let pod_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};
@@ -37,8 +39,9 @@ fn get() {
 		.expect("couldn't get apiserver pod logs");
 	let mut apiserver_logs = String::new();
 	let chunks = client.get_multiple_values(request, response_body);
+	futures_util::pin_mut!(chunks);
 	let mut found_line = false;
-	for chunk in chunks {
+	while let Some(chunk) = chunks.next().await {
 		let s = match chunk {
 			(api::ReadNamespacedPodLogResponse::Ok(s), _) => s,
 			(other, status_code) => panic!("{:?} {}", other, status_code),

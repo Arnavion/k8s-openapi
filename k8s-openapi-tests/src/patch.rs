@@ -4,8 +4,8 @@ use k8s_openapi::api::core::v1 as api;
 use k8s_openapi::api::apps::v1 as apps;
 use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-#[test]
-fn deployment() {
+#[tokio::test]
+async fn deployment() {
 	let mut client = crate::Client::new("patch-deployment");
 
 	// Create deployment with container that uses alpine:3.6
@@ -48,10 +48,10 @@ fn deployment() {
 	let (request, response_body) =
 		apps::Deployment::create_namespaced_deployment("default", &deployment, Default::default())
 		.expect("couldn't create deployment");
-	match client.get_single_value(request, response_body) {
+	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(_), _) => (),
 		(other, status_code) => panic!("{:?} {}", other, status_code),
-	};
+	}
 
 
 	// Use JSON patch to patch deployment with alpine:3.7 container
@@ -67,7 +67,7 @@ fn deployment() {
 			("value".to_owned(), serde_json::Value::String("alpine:3.7".to_owned())),
 		].into_iter().collect()),
 	]);
-	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.7");
+	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.7").await;
 
 
 	// Use merge patch to patch deployment with alpine:3.8 container
@@ -91,7 +91,7 @@ fn deployment() {
 		..Default::default()
 	};
 	let patch = meta::Patch::Merge(serde_json::to_value(&patch).expect("couldn't create patch"));
-	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.8");
+	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.8").await;
 
 
 	// Use strategic merge patch to patch deployment with alpine:3.9 container
@@ -115,14 +115,14 @@ fn deployment() {
 		..Default::default()
 	};
 	let patch = meta::Patch::StrategicMerge(serde_json::to_value(&patch).expect("couldn't create patch"));
-	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.9");
+	patch_and_assert_container_has_image(&mut client, &patch, "alpine:3.9").await;
 
 
 	// Delete deployment
 	let (request, response_body) =
 		apps::Deployment::delete_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", Default::default())
 		.expect("couldn't delete deployment");
-	match client.get_single_value(request, response_body) {
+	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}
@@ -138,20 +138,20 @@ fn deployment() {
 			},
 		)
 		.expect("couldn't delete pods collection");
-	match client.get_single_value(request, response_body) {
+	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	}
 }
 
 /// Patch the deployment with the given path, and assert that the patched deployment has a container with the expected image
-fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta::Patch, expected_image: &str) {
+async fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta::Patch, expected_image: &str) {
 	let (request, response_body) =
 		apps::Deployment::patch_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
 		.expect("couldn't create patch");
 	println!("{:?}", request);
 
-	let deployment = match client.get_single_value(request, response_body) {
+	let deployment = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::PatchResponse::Ok(deployment), _) => deployment,
 		(other, status_code) => panic!("{:?} {}", other, status_code),
 	};
