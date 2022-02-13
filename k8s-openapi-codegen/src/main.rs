@@ -69,7 +69,9 @@ impl_from_for_error! {
 	k8s_openapi_codegen_common::Error,
 	log::SetLoggerError,
 	reqwest::Error,
+	serde_json::Error,
 	tokio::task::JoinError,
+	url::ParseError,
 }
 
 #[tokio::main(flavor = "current_thread")]
@@ -124,15 +126,18 @@ struct Options {
 	/// This parameter specifies the versions of Kubernetes that the API bindings should be generated for.
 	///
 	/// `--generate=1.20` means "generate bindings for Kubernetes v1.20,
-	/// based on that version's OpenAPI spec from the https://github.com/kubernetes/kubernetes repository".
+	/// using that version's OpenAPI spec from the https://github.com/kubernetes/kubernetes repository".
 	///
-	/// `--generate=1.20:https://example.org/spec.json` means "generate binding for v1.20,
-	/// based on the OpenAPI spec at https://example.org/spec.json".
+	/// `--generate=1.20:https://example.org/swagger.json` means "generate bindings for v1.20
+	/// using the OpenAPI spec at the URL https://example.org/swagger.json".
 	///
-	/// This parameter can be specified multiple times to specify multiple versions.
+	/// `--generate=1.20:file:///path/to/swagger.json` means "generate binding for v1.20,
+	/// using the OpenAPI spec in the file /path/to/swagger.json".
 	///
-	/// If this parameter isn't specified, the API bindings will be generated for all supported versions,
-	/// based on their OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
+	/// This parameter can be specified multiple times to generate bindings for multiple versions.
+	///
+	/// If this parameter isn't specified, bindings will be generated for all supported versions,
+	/// using their respective OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
 	#[clap(long = "generate", value_name = "VERSION")]
 	versions: Vec<RequestedVersion>,
 }
@@ -193,12 +198,21 @@ async fn run(
 
 	let mut spec: swagger20::Spec = {
 		log::info!("Parsing spec file at {} ...", spec_url);
-		let response = client.get(spec_url).send().await?;
-		let status = response.status();
-		if status != http::StatusCode::OK {
-			return Err(status.to_string().into());
+		let spec_url: url::Url = spec_url.parse()?;
+		if spec_url.scheme() == "file" {
+			let spec_path = spec_url.to_file_path().map_err(|()| "not a file path")?;
+			let spec_file = std::fs::File::open(&spec_path)?;
+			let spec_file = std::io::BufReader::new(spec_file);
+			serde::Deserialize::deserialize(&mut serde_json::Deserializer::from_reader(spec_file))?
 		}
-		response.json().await?
+		else {
+			let response = client.get(spec_url).send().await?;
+			let status = response.status();
+			if status != http::StatusCode::OK {
+				return Err(status.to_string().into());
+			}
+			response.json().await?
+		}
 	};
 
 	let () = tokio::task::spawn_blocking(move || -> Result<(), Error> {
