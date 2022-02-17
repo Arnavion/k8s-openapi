@@ -31,7 +31,7 @@
 # Run the tests for <version>. Set K8S_RECORD=1 if you want to run the tests in record mode.
 #
 #
-# <version> can be a single string like "1.11", or multiple versions separated by comma like "1.11,1.12",
+# <version> can be a single string like "1.50", or multiple versions separated by comma like "1.50,1.51",
 # or the string "all" to mean all versions. If more than one version is specified, the corresponding command
 # will be run against all specified versions in parallel.
 

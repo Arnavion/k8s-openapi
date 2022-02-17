@@ -143,12 +143,8 @@ impl<'de> serde::Deserialize<'de> for Schema {
 				SchemaKind::Ref(ref_path)
 			}
 			else if let Some(properties) = value.properties.take() {
-				// Starting from 1.14, the spec sets type=object for all types with properties.
-				// Earlier specs did not set it at all.
-				if let Some(ty) = value.ty.take() {
-					if ty != "object" {
-						return Err(serde::de::Error::custom(format!("schema has properties but not type=object {:?}", value)));
-					}
+				if value.ty.as_deref() != Some("object") {
+					return Err(serde::de::Error::custom(format!("schema has properties but not type=object {:?}", value)));
 				}
 
 				let required: std::collections::BTreeSet<_> = value.required.into_iter().collect();

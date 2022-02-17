@@ -749,10 +749,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 				if let crate::swagger20::OperationResponses::Map(responses) = &operation.responses {
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
-					if
-						response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED, http::StatusCode::ACCEPTED] &&
-						response_status_codes != [http::StatusCode::OK] // 1.8 and earlier did not have 201 and 202
-					{
+					if response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED, http::StatusCode::ACCEPTED] {
 						return Err(format!("operation {} does not have the expected response status codes of a create operation: {:?}",
 							operation.id, response_status_codes).into());
 					}
@@ -805,10 +802,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					if let crate::swagger20::OperationResponses::Map(responses) = &operation.responses {
 						let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 						response_status_codes.sort();
-						if
-							response_status_codes != [http::StatusCode::OK, http::StatusCode::ACCEPTED] &&
-							response_status_codes != [http::StatusCode::OK] // 1.11 and earlier did not have 202
-						{
+						if response_status_codes != [http::StatusCode::OK, http::StatusCode::ACCEPTED] {
 							return Err(format!("operation {} does not have the expected response status codes of a delete operation: {:?}",
 								operation.id, response_status_codes).into());
 						}
@@ -1023,10 +1017,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 				if let crate::swagger20::OperationResponses::Map(responses) = &operation.responses {
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
-					if
-						response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] &&
-						response_status_codes != [http::StatusCode::OK] // 1.8 and earlier did not have 201
-					{
+					if response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] {
 						return Err(format!("operation {} does not have the expected response status codes of a replace operation: {:?}",
 							operation.id, response_status_codes).into());
 					}

@@ -25,7 +25,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 # To add support for a new patch version
 
-(Eg: The repository supports v1.10.5 and you want to add support for v1.10.6)
+(Eg: The repository supports v1.50.5 and you want to add support for v1.50.6)
 
 1. `/k8s-openapi-codegen/src/supported_version.rs`: Update the `spec_url` for the corresponding `SupportedVersion`.
 
@@ -42,7 +42,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 # To add support for a new minor version
 
-(Eg: The repository supports v1.10.x and you want to add support for v1.11.0)
+(Eg: The repository supports v1.50.x and you want to add support for v1.51.0)
 
 1. `/k8s-openapi-codegen/src/supported_version.rs`: Add a new variant to the `SupportedVersion` enum. Use the appropriate `mod_root` and `spec_url`.
 

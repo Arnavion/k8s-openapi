@@ -23,10 +23,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(feature = "v1_11", doc = "v1_11")]
-#![cfg_attr(feature = "v1_12", doc = "v1_12")]
-#![cfg_attr(feature = "v1_13", doc = "v1_13")]
-#![cfg_attr(feature = "v1_14", doc = "v1_14")]
 #![cfg_attr(feature = "v1_15", doc = "v1_15")]
 #![cfg_attr(feature = "v1_16", doc = "v1_16")]
 #![cfg_attr(feature = "v1_17", doc = "v1_17")]
@@ -241,8 +237,8 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!   This feature is enabled by default, but can be disabled if your crate does not need the operation functions to save on compile time and resources.
 //!
 //! One and only one of the `v1_*` features must be enabled at the same time, otherwise the crate will not compile. This ensures that all crates in the crate graph
-//! use the same types. If it was possible for one library crate to use `api::core::v1::Pod` corresponding to v1.15 and another to use the type
-//! corresponding to v1.16, an application would not be able to use the same `Pod` value with both.
+//! use the same types. If it was possible for one library crate to use `api::core::v1::Pod` corresponding to v1.50 and another to use the type
+//! corresponding to v1.51, an application would not be able to use the same `Pod` value with both.
 //!
 //! Thus, it is recommended that only application crates must enable one of the `v1_*` features, corresponding to the version of Kubernetes
 //! that the application wants to support.
@@ -251,7 +247,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! # For application crates
 //!
 //! [dependencies]
-//! k8s-openapi = { version = "...", features = ["v1_14"] }
+//! k8s-openapi = { version = "...", features = ["v1_50"] }
 //! ```
 //!
 //! If you're writing a library crate, your crate *must not* enable any features of `k8s-openapi` directly. The choice of which feature to enable
@@ -268,7 +264,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! k8s-openapi = "..."
 //!
 //! [dev-dependencies]
-//! k8s-openapi = { version = "...", features = ["v1_14"] }
+//! k8s-openapi = { version = "...", features = ["v1_50"] }
 //! ```
 //!
 //!
@@ -279,11 +275,10 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!
 //! For example:
 //!
-//! 1. Your crate creates a custom resource definition using the apiextensions v1 API. This API is only available in Kubernetes 1.16+,
-//!    so your crate would fail to compile if a lower feature was enabled.
+//! 1. Your crate creates a service spec and wants to set the cluster IP. This field is only available in Kubernetes 1.20+,
+//!    so you want your crate to fail to compile if a lower feature was enabled.
 //!
-//! 1. Your crate creates a custom resource definition. If the `v1_16` or later feature is enabled, your crate wants to use the apiextensions v1 API,
-//!    otherwise it falls back to the v1beta1 API.
+//! 1. Your crate creates a service spec and wants to set the cluster IP, but you want it to be skipped when compiling for older versions.
 //!
 //! There are two ways for your crate to determine which feature of `k8s-openapi` is enabled:
 //!
@@ -292,54 +287,26 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      #[macro_use] extern crate k8s_openapi;
-//!
-//!      // The compile_error!() is only emitted if 1.15 or lower is selected.
-//!      k8s_if_le_1_15! {
-//!          compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.19 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_19! {
+//!          compile_error!("This crate requires the v1_20 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
+//!
+//!      ...
+//!
+//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
+//!          cluster_ips: ...,
+//!          ...
+//!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      #[macro_use] extern crate k8s_openapi;
-//!
-//!      k8s_if_le_1_15! {
-//!          use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-//!      }
-//!      k8s_if_ge_1_16! {
-//!          use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
-//!      }
-//!
-//!      // Common fields regardless of the apiextensions version
-//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!          group: ...,
-//!          names: ...,
-//!          scope: ...,
-//!          ..Default::default()
+//!      let mut service_spec = k8s_openapi::api::core::v1::ServiceSpec {
+//!          ...
 //!      };
 //!
-//!      // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
-//!      k8s_if_le_1_15! {
-//!          let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!              version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
-//!              validation: Some(custom_resource_validation),
-//!              ..custom_resource_definition_spec
-//!          };
-//!      }
-//!      // Set v1 `versions` field on v1.16 and later.
-//!      k8s_if_ge_1_16! {
-//!          let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!              versions: vec![
-//!                  apiextensions::CustomResourceDefinitionVersion {
-//!                      name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
-//!                      schema: Some(custom_resource_validation),
-//!                      served: true,
-//!                      storage: true,
-//!                      ..Default::default()
-//!                  },
-//!              ].into(),
-//!              ..custom_resource_definition_spec
-//!          };
+//!      k8s_openapi::k8s_if_ge_1_20! {
+//!          service_spec.cluster_ips = ...;
 //!      }
 //!      ```
 //!
@@ -369,15 +336,12 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!        // - MM is the major version.
 //!        // - NN is the minor version.
 //!        //
-//!        // Thus, if the v1_16 feature was enabled, k8s_openapi_version would be 0x00_01_10_00
+//!        // Thus, if the v1_20 feature was enabled, k8s_openapi_version would be 0x00_01_14_00
 //!
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
-//!        if k8s_openapi_version >= 0x00_01_10_00 {
-//!            println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1""#);
-//!        }
-//!        else {
-//!            println!(r#"cargo:rustc-cfg=k8s_apiextensions="v1beta1""#);
+//!        if k8s_openapi_version >= 0x00_01_14_00 {
+//!            println!(r#"cargo:rustc-cfg=k8s_service_spec_supports_cluster_ips"#);
 //!        }
 //!
 //!        // or emit new source code files under OUT_DIR, or anything else a build script can do.
@@ -387,46 +351,23 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these cfgs, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // Your crate's src/lib.rs
+//!      // The compile_error!() is only emitted if 1.19 or lower is selected.
+//!      #[cfg(not(k8s_service_spec_supports_cluster_ips))]
+//!      compile_error!("This crate requires the v1_20 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!
-//!      #[cfg(not(k8s_apiextensions = "v1"))]
-//!      compile_error!("This crate requires the v1_16 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      ...
+//!
+//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
+//!          cluster_ips: ...,
+//!          ...
+//!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      #[cfg(k8s_apiextensions = "v1beta1")]
-//!      use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-//!      #[cfg(k8s_apiextensions = "v1")]
-//!      use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
-//!
-//!      // Common fields regardless of the apiextensions version
-//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!          group: ...,
-//!          names: ...,
-//!          scope: ...,
-//!          ..Default::default()
-//!      };
-//!
-//!      // Set v1beta1 `version` and `validation` fields on v1.15 and earlier.
-//!      #[cfg(k8s_apiextensions = "v1beta1")]
-//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!          version: <FooBar as k8s_openapi::Resource>::VERSION.to_owned().into(),
-//!          validation: Some(custom_resource_validation),
-//!          ..custom_resource_definition_spec
-//!      };
-//!      // Set v1 `versions` field on v1.16 and later.
-//!      #[cfg(k8s_apiextensions = "v1")]
-//!      let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-//!          versions: vec![
-//!              apiextensions::CustomResourceDefinitionVersion {
-//!                  name: <FooBar as k8s_openapi::Resource>::VERSION.to_owned(),
-//!                  schema: Some(custom_resource_validation),
-//!                  served: true,
-//!                  storage: true,
-//!                  ..Default::default()
-//!              },
-//!          ].into(),
-//!          ..custom_resource_definition_spec
+//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
+//!          #[cfg(not(k8s_service_spec_supports_cluster_ips))]
+//!          cluster_ips: ...,
+//!          ...
 //!      };
 //!      ```
 //!
@@ -436,32 +377,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! The macros approach is easier to use since it doesn't require a build script.
 //!
 //! The build script method lets you emit arbitrary cfgs, emit arbitrary source code, and generally gives you more options, at the cost of needing a build script.
-//! For example, `cfg()`s can be used in places where macros cannot, such as this example for conditionally setting attrs using `cfg_attr`:
-//!
-//! ```rust,ignore
-//! #[derive(
-//!     Clone, Debug, PartialEq,
-//!     k8s_openapi_derive::CustomResourceDefinition,
-//!     serde::Deserialize, serde::Serialize,
-//! )]
-//! #[custom_resource_definition(
-//!     group = "k8s-openapi-tests-custom-resource-definition.com",
-//!     version = "v1",
-//!     plural = "foobars",
-//!     namespaced,
-//! )]
-//! #[cfg_attr(k8s_apiextensions = "v1beta1", custom_resource_definition(has_subresources = "v1beta1"))]
-//! #[cfg_attr(k8s_apiextensions = "v1", custom_resource_definition(has_subresources = "v1"))]
-//! struct FooBarSpec {
-//!     prop1: String,
-//!     prop2: Vec<bool>,
-//!     #[serde(skip_serializing_if = "Option::is_none")]
-//!     prop3: Option<i32>,
-//! }
-//! ```
-//!
-//! It isn't possible to conditionally set attributes using macros, so the entire `struct FooBarSpec` declaration would have to be duplicated and wrapped inside
-//! `k8s_if_le_1_15! { }` and `k8s_if_ge_1_16! { }` respectively.
+//! `cfg()`s can be used in places where macros cannot, such as how the second example above shows it being used on a single field in a struct literal.
 //!
 //!
 //! # Custom resource definitions

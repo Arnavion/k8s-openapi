@@ -28,7 +28,7 @@ Since all types are under the `io.k8s` namespace, this crate also removes those 
 
 ### Better handling of optional parameters, for a more Rust-like and ergonomic API
 
-Almost every API operation has optional parameters. For example, v1.13's `list_namespaced_pod` API has one required parameter (the namespace) and nine optional parameters.
+Almost every API operation has optional parameters. For example, v1.23's `list_namespaced_pod` API has one required parameter (the namespace) and eight optional parameters.
 
 The clients of other languages use language features to allow the caller to not specify all these parameters when invoking the function. The Python client's functions parse optional parameters from `**kwargs`. The C# client's functions assign default values to these parameters in the function definition.
 
@@ -36,13 +36,13 @@ Since Rust does not have such a feature, auto-generated Rust clients use `Option
 
 ```rust
 // List all pods in the kube-system namespace
-list_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
+list_namespaced_pod("kube-system", None, None, None, None, None, None, None, None);
 
 // List all pods in the kube-system namespace with label foo=bar
-list_namespaced_pod("kube-system", None, None, None, /* label_selector */ Some("foo=bar"), None, None, None, None, None);
+list_namespaced_pod("kube-system", None, None, /* label_selector */ Some("foo=bar"), None, None, None, None, None);
 ```
 
-Apart from being hard to read, you could easily make a typo and pass in `Some("foo=bar")` for one of the four other optional String parameters without any errors from the compiler.
+Apart from being hard to read, you could easily make a typo and pass in `Some("foo=bar")` for one of the five other optional String parameters without any errors from the compiler.
 
 This crate moves all optional parameters to separate structs, one for each API. Each of these structs implements `Default` and the names of the fields match the function parameter names, so that the above calls look like:
 
