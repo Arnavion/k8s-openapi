@@ -1682,7 +1682,7 @@ pub fn write_operation(
 		.map(|parameter| {
 			let mut parameter_name = get_rust_ident(&parameter.name);
 			while previous_parameters.contains(&parameter_name) {
-				parameter_name = format!("{}_", parameter_name).into();
+				parameter_name.to_mut().push('_');
 			}
 			previous_parameters.insert(parameter_name.clone());
 
