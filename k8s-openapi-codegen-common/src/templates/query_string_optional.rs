@@ -15,7 +15,7 @@ pub(crate) fn generate(
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
 
 	let operation_feature_attribute: std::borrow::Cow<'static, str> =
-		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = \"{}\")]\n", operation_feature).into());
+		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = {:?})]\n", operation_feature).into());
 
 	let mut fields_append_pair = String::new();
 

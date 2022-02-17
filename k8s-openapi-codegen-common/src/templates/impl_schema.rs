@@ -15,7 +15,7 @@ pub(crate) fn generate(
 	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
 
-	let cfg = schema_feature.map_or_else(String::new, |schema_feature| format!("#[cfg(feature = \"{}\")]\n", schema_feature));
+	let cfg = schema_feature.map_or_else(String::new, |schema_feature| format!("#[cfg(feature = {:?})]\n", schema_feature));
 
 	let mut schema = String::new();
 

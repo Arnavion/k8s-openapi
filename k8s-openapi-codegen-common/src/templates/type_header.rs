@@ -13,7 +13,7 @@ pub(crate) fn generate(
 
 	let type_feature_attribute =
 		type_feature
-		.map(|type_feature| format!("#[cfg(feature = \"{}\")]\n", type_feature))
+		.map(|type_feature| format!("#[cfg(feature = {:?})]\n", type_feature))
 		.unwrap_or_default();
 
 	let derives =

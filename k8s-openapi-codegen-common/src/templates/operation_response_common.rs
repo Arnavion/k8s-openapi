@@ -30,7 +30,7 @@ pub(crate) fn generate(
 	};
 
 	let operation_feature_attribute: std::borrow::Cow<'static, str> =
-		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = \"{}\")]\n", operation_feature).into());
+		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = {:?})]\n", operation_feature).into());
 
 	let mut variants = String::new();
 	let mut variant_match_arms = String::new();
