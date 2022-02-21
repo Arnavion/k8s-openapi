@@ -269,13 +269,21 @@ impl Drop for Client {
 		match self {
 			Client::Recording { replays, recorder, .. } => {
 				serde_json::to_writer_pretty(&mut *recorder, &replays).expect("could not save replays");
-				std::io::Write::write(&mut *recorder, &[b'\n']).expect("could not save replays");
+				std::io::Write::write(&mut *recorder, b"\n").expect("could not save replays");
 				std::io::Write::flush(&mut *recorder).expect("could not save replays");
 			},
 
 			Client::Replaying(replays) =>
 				if let Some((i, _)) = replays.next() {
-					panic!("Replay #{} was not consumed", i + 1);
+					// Skip panicking here if we're already unwinding from a panic, since the original panic is from a test
+					// and will cause the test to fail anyway. If we were to also panic here, it would be a double-panic and
+					// abort the process without printing the panic message.
+
+					// clippy wants `assert!(std::thread::panicking(), ...)`, which is technically the same but harder to comprehend.
+					#[allow(clippy::manual_assert)]
+					if !std::thread::panicking() {
+						panic!("Replay #{} was not consumed", i + 1);
+					}
 				},
 		}
 	}
