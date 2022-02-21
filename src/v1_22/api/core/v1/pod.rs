@@ -1336,28 +1336,15 @@ impl Pod {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_pod(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedPodOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodResponse>), crate::RequestError> {
-        let ReadNamespacedPodOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?",
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -1366,14 +1353,6 @@ impl Pod {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Pod::read_namespaced_pod`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedPodOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedPodResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod`]
@@ -1430,28 +1409,15 @@ impl Pod {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_pod_ephemeralcontainers(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedPodEphemeralcontainersOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodEphemeralcontainersResponse>), crate::RequestError> {
-        let ReadNamespacedPodEphemeralcontainersOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers?",
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -1460,14 +1426,6 @@ impl Pod {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Pod::read_namespaced_pod_ephemeralcontainers`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedPodEphemeralcontainersOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedPodEphemeralcontainersResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod_ephemeralcontainers`]
@@ -1539,7 +1497,6 @@ impl Pod {
             follow,
             insecure_skip_tls_verify_backend,
             limit_bytes,
-            pretty,
             previous,
             since_seconds,
             tail_lines,
@@ -1561,9 +1518,6 @@ impl Pod {
         }
         if let Some(limit_bytes) = limit_bytes {
             __query_pairs.append_pair("limitBytes", &limit_bytes.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(previous) = previous {
             __query_pairs.append_pair("previous", &previous.to_string());
@@ -1600,8 +1554,6 @@ pub struct ReadNamespacedPodLogOptional<'a> {
     pub insecure_skip_tls_verify_backend: Option<bool>,
     /// If set, the number of bytes to read from the server before terminating the log output. This may not display a complete final line of logging, and may return slightly more or slightly less than the specified limit.
     pub limit_bytes: Option<i64>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
     /// Return previous terminated container logs. Defaults to false.
     pub previous: Option<bool>,
     /// A relative time in seconds before the current time from which to show logs. If this value precedes the time a pod was started, only logs since the pod start will be returned. If this value is in the future, no logs will be returned. Only one of sinceSeconds or sinceTime may be specified.
@@ -1676,28 +1628,15 @@ impl Pod {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedPodStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodStatusResponse>), crate::RequestError> {
-        let ReadNamespacedPodStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?",
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -1706,14 +1645,6 @@ impl Pod {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Pod::read_namespaced_pod_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedPodStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedPodStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod_status`]

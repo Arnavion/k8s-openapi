@@ -329,36 +329,15 @@ impl ReplicationController {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedReplicationControllerOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerResponse>), crate::RequestError> {
-        let ReadNamespacedReplicationControllerOptional {
-            exact,
-            export,
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}?",
+        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(exact) = exact {
-            __query_pairs.append_pair("exact", &exact.to_string());
-        }
-        if let Some(export) = export {
-            __query_pairs.append_pair("export", &export.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -367,18 +346,6 @@ impl ReplicationController {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedReplicationControllerOptional<'a> {
-    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
-    pub exact: Option<bool>,
-    /// Should this value be exported.  Export strips fields that a user can not specify. Deprecated. Planned for removal in 1.18.
-    pub export: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::read_namespaced_replication_controller`]
@@ -435,28 +402,15 @@ impl ReplicationController {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedReplicationControllerStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
-        let ReadNamespacedReplicationControllerStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status?",
+        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -465,14 +419,6 @@ impl ReplicationController {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedReplicationControllerStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedReplicationControllerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::read_namespaced_replication_controller_status`]

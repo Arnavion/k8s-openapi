@@ -302,6 +302,32 @@ pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagge
 	}
 }
 
+// Read operations have `exact` and `export` parameters used for server-side export, and a `pretty` parameter to pretty-print the output.
+// The first two were removed in 1.21, were deprecated and known to be broken before that, and would've caused the response to not be able to be parsed
+// with the corresponding response type anyway. And the third is not useful for programmatic clients. So this fixup removes these parameters.
+//
+// Since almost all read operations have only these parameters, such operations have their optional parameters type eliminated entirely as a result.
+// To be precise, the only read operation that still has optional parameters is `readCoreV1NamespacedPodLog`.
+pub(crate) fn remove_read_operations_query_parameters(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut found = false;
+
+	for operation in &mut spec.operations {
+		if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Get) {
+			operation.parameters.retain(|p| match &*p.name {
+				"exact" | "export" | "pretty" => { found = true; false }
+				_ => true,
+			});
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied remove-pretty-parameter fixup".into())
+	}
+}
+
 // Some watch and watchlist operations (eg `watchCoreV1NamespacedPod` and `watchCoreV1NamespacedPodList`) are deprecated in favor of the corresponding list operation
 // (eg `listCoreV1NamespacedPod`). The watch operation is equivalent to using the list operation with `watch=true` and `field_selector=...`, and the watchlist operation
 // to using the list operation with just `watch=true`.

@@ -1,9 +1,9 @@
 
 mod certificate_signing_request;
 pub use self::certificate_signing_request::CertificateSigningRequest;
-#[cfg(feature = "api")] pub use self::certificate_signing_request::{ReadCertificateSigningRequestOptional, ReadCertificateSigningRequestResponse};
-#[cfg(feature = "api")] pub use self::certificate_signing_request::{ReadCertificateSigningRequestApprovalOptional, ReadCertificateSigningRequestApprovalResponse};
-#[cfg(feature = "api")] pub use self::certificate_signing_request::{ReadCertificateSigningRequestStatusOptional, ReadCertificateSigningRequestStatusResponse};
+#[cfg(feature = "api")] pub use self::certificate_signing_request::ReadCertificateSigningRequestResponse;
+#[cfg(feature = "api")] pub use self::certificate_signing_request::ReadCertificateSigningRequestApprovalResponse;
+#[cfg(feature = "api")] pub use self::certificate_signing_request::ReadCertificateSigningRequestStatusResponse;
 
 mod certificate_signing_request_condition;
 pub use self::certificate_signing_request_condition::CertificateSigningRequestCondition;

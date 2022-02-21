@@ -253,34 +253,13 @@ impl CustomResourceDefinition {
     /// * `name`
     ///
     ///     name of the CustomResourceDefinition
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_custom_resource_definition(
         name: &str,
-        optional: ReadCustomResourceDefinitionOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCustomResourceDefinitionResponse>), crate::RequestError> {
-        let ReadCustomResourceDefinitionOptional {
-            exact,
-            export,
-            pretty,
-        } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}?",
+        let __url = format!("/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(exact) = exact {
-            __query_pairs.append_pair("exact", &exact.to_string());
-        }
-        if let Some(export) = export {
-            __query_pairs.append_pair("export", &export.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -289,18 +268,6 @@ impl CustomResourceDefinition {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadCustomResourceDefinitionOptional<'a> {
-    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
-    pub exact: Option<bool>,
-    /// Should this value be exported.  Export strips fields that a user can not specify. Deprecated. Planned for removal in 1.18.
-    pub export: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition`]
@@ -353,26 +320,13 @@ impl CustomResourceDefinition {
     /// * `name`
     ///
     ///     name of the CustomResourceDefinition
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_custom_resource_definition_status(
         name: &str,
-        optional: ReadCustomResourceDefinitionStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCustomResourceDefinitionStatusResponse>), crate::RequestError> {
-        let ReadCustomResourceDefinitionStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status?",
+        let __url = format!("/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -381,14 +335,6 @@ impl CustomResourceDefinition {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadCustomResourceDefinitionStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadCustomResourceDefinitionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition_status`]

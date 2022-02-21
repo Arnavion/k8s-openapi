@@ -120,6 +120,7 @@ impl SupportedVersion {
 			crate::fixups::special::patch,
 			crate::fixups::special::remove_delete_collection_operations_query_parameters,
 			crate::fixups::special::remove_delete_operations_query_parameters,
+			crate::fixups::special::remove_read_operations_query_parameters,
 			crate::fixups::special::separate_watch_from_list_operations,
 			crate::fixups::special::watch_event,
 			crate::fixups::special::list, // Must run after separate_watch_from_list_operations

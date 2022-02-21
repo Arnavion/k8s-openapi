@@ -1,8 +1,8 @@
 
 mod api_service;
 pub use self::api_service::APIService;
-#[cfg(feature = "api")] pub use self::api_service::{ReadAPIServiceOptional, ReadAPIServiceResponse};
-#[cfg(feature = "api")] pub use self::api_service::{ReadAPIServiceStatusOptional, ReadAPIServiceStatusResponse};
+#[cfg(feature = "api")] pub use self::api_service::ReadAPIServiceResponse;
+#[cfg(feature = "api")] pub use self::api_service::ReadAPIServiceStatusResponse;
 
 mod api_service_condition;
 pub use self::api_service_condition::APIServiceCondition;

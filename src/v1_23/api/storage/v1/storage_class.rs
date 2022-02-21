@@ -226,26 +226,13 @@ impl StorageClass {
     /// * `name`
     ///
     ///     name of the StorageClass
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_storage_class(
         name: &str,
-        optional: ReadStorageClassOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageClassResponse>), crate::RequestError> {
-        let ReadStorageClassOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?",
+        let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -254,14 +241,6 @@ impl StorageClass {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`StorageClass::read_storage_class`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadStorageClassOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::read_storage_class`]

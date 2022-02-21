@@ -1,7 +1,7 @@
 
 mod volume_attachment;
 pub use self::volume_attachment::VolumeAttachment;
-#[cfg(feature = "api")] pub use self::volume_attachment::{ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse};
+#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentResponse;
 
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;

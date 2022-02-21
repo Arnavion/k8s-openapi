@@ -168,7 +168,7 @@ async fn test() {
 	loop {
 		let (request, response_body) =
 			apiextensions::CustomResourceDefinition::read_custom_resource_definition(
-				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP.to_owned()), Default::default())
+				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP.to_owned()))
 			.expect("couldn't get custom resource definition");
 		let custom_resource_definition = match client.get_single_value(request, response_body).await {
 			(apiextensions::ReadCustomResourceDefinitionResponse::Ok(custom_resource_definition), _) => custom_resource_definition,

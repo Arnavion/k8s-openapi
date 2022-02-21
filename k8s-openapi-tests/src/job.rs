@@ -70,7 +70,7 @@ async fn create() {
 
 	// Wait for job to fail
 	loop {
-		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default", Default::default()).expect("couldn't get job");
+		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default").expect("couldn't get job");
 		let job: batch::Job = match client.get_single_value(request, response_body).await {
 			(batch::ReadNamespacedJobResponse::Ok(job), _) => job,
 			(other, status_code) => panic!("{:?} {}", other, status_code),

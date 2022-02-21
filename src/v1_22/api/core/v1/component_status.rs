@@ -56,26 +56,13 @@ impl ComponentStatus {
     /// * `name`
     ///
     ///     name of the ComponentStatus
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_component_status(
         name: &str,
-        optional: ReadComponentStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadComponentStatusResponse>), crate::RequestError> {
-        let ReadComponentStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/componentstatuses/{name}?",
+        let __url = format!("/api/v1/componentstatuses/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -84,14 +71,6 @@ impl ComponentStatus {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ComponentStatus::read_component_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadComponentStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::read_component_status`]

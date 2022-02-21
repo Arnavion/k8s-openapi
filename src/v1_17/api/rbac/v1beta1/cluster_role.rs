@@ -209,26 +209,13 @@ impl ClusterRole {
     /// * `name`
     ///
     ///     name of the ClusterRole
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_cluster_role(
         name: &str,
-        optional: ReadClusterRoleOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadClusterRoleResponse>), crate::RequestError> {
-        let ReadClusterRoleOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name}?",
+        let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -237,14 +224,6 @@ impl ClusterRole {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ClusterRole::read_cluster_role`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadClusterRoleOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::read_cluster_role`]

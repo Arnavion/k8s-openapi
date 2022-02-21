@@ -8,7 +8,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"677\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -16,7 +16,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"677\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -24,7 +24,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -32,7 +32,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -40,7 +40,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -48,7 +48,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -56,7 +56,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -64,7 +64,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -72,7 +72,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -80,7 +80,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -88,7 +88,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -96,7 +96,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -104,7 +104,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -112,7 +112,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -120,7 +120,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -128,7 +128,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -136,7 +136,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -144,7 +144,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -152,7 +152,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,
@@ -160,7 +160,7 @@
     "response_body": "{\"kind\":\"Job\",\"apiVersion\":\"batch/v1\",\"metadata\":{\"name\":\"k8s-openapi-tests-create-job\",\"namespace\":\"default\",\"selfLink\":\"/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job\",\"uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"resourceVersion\":\"694\",\"creationTimestamp\":\"2021-02-17T23:31:17Z\",\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"parallelism\":1,\"completions\":1,\"backoffLimit\":0,\"selector\":{\"matchLabels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"controller-uid\":\"f8254823-1d9f-477a-b890-209e1f7aa62d\",\"job-name\":\"k8s-openapi-tests-create-job\"}},\"spec\":{\"containers\":[{\"name\":\"k8s-openapi-tests-create-job\",\"image\":\"alpine\",\"command\":[\"sh\",\"-c\",\"exit $TEST_ARG\"],\"env\":[{\"name\":\"TEST_ARG\",\"value\":\"5\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Never\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{},\"schedulerName\":\"default-scheduler\"}}},\"status\":{\"startTime\":\"2021-02-17T23:31:17Z\",\"active\":1}}\n"
   },
   {
-    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job?",
+    "request_url": "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,

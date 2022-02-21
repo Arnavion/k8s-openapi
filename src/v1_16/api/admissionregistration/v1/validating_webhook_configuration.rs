@@ -206,34 +206,13 @@ impl ValidatingWebhookConfiguration {
     /// * `name`
     ///
     ///     name of the ValidatingWebhookConfiguration
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_validating_webhook_configuration(
         name: &str,
-        optional: ReadValidatingWebhookConfigurationOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadValidatingWebhookConfigurationResponse>), crate::RequestError> {
-        let ReadValidatingWebhookConfigurationOptional {
-            exact,
-            export,
-            pretty,
-        } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name}?",
+        let __url = format!("/apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(exact) = exact {
-            __query_pairs.append_pair("exact", &exact.to_string());
-        }
-        if let Some(export) = export {
-            __query_pairs.append_pair("export", &export.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -242,18 +221,6 @@ impl ValidatingWebhookConfiguration {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadValidatingWebhookConfigurationOptional<'a> {
-    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'. Deprecated. Planned for removal in 1.18.
-    pub exact: Option<bool>,
-    /// Should this value be exported.  Export strips fields that a user can not specify. Deprecated. Planned for removal in 1.18.
-    pub export: Option<bool>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]

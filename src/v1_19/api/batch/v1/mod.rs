@@ -1,8 +1,8 @@
 
 mod job;
 pub use self::job::Job;
-#[cfg(feature = "api")] pub use self::job::{ReadNamespacedJobOptional, ReadNamespacedJobResponse};
-#[cfg(feature = "api")] pub use self::job::{ReadNamespacedJobStatusOptional, ReadNamespacedJobStatusResponse};
+#[cfg(feature = "api")] pub use self::job::ReadNamespacedJobResponse;
+#[cfg(feature = "api")] pub use self::job::ReadNamespacedJobStatusResponse;
 
 mod job_condition;
 pub use self::job_condition::JobCondition;

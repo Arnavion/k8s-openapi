@@ -329,28 +329,15 @@ impl Job {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedJobOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedJobResponse>), crate::RequestError> {
-        let ReadNamespacedJobOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}?",
+        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -359,14 +346,6 @@ impl Job {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::read_namespaced_job`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedJobOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job`]
@@ -423,28 +402,15 @@ impl Job {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_job_status(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedJobStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedJobStatusResponse>), crate::RequestError> {
-        let ReadNamespacedJobStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status?",
+        let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -453,14 +419,6 @@ impl Job {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`Job::read_namespaced_job_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedJobStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job_status`]

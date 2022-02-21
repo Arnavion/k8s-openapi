@@ -281,28 +281,15 @@ impl ConfigMap {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_config_map(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedConfigMapOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedConfigMapResponse>), crate::RequestError> {
-        let ReadNamespacedConfigMapOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}?",
+        let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -311,14 +298,6 @@ impl ConfigMap {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`ConfigMap::read_namespaced_config_map`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedConfigMapOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::read_namespaced_config_map`]

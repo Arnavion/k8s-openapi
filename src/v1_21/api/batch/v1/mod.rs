@@ -1,8 +1,8 @@
 
 mod cron_job;
 pub use self::cron_job::CronJob;
-#[cfg(feature = "api")] pub use self::cron_job::{ReadNamespacedCronJobOptional, ReadNamespacedCronJobResponse};
-#[cfg(feature = "api")] pub use self::cron_job::{ReadNamespacedCronJobStatusOptional, ReadNamespacedCronJobStatusResponse};
+#[cfg(feature = "api")] pub use self::cron_job::ReadNamespacedCronJobResponse;
+#[cfg(feature = "api")] pub use self::cron_job::ReadNamespacedCronJobStatusResponse;
 
 mod cron_job_spec;
 pub use self::cron_job_spec::CronJobSpec;
@@ -12,8 +12,8 @@ pub use self::cron_job_status::CronJobStatus;
 
 mod job;
 pub use self::job::Job;
-#[cfg(feature = "api")] pub use self::job::{ReadNamespacedJobOptional, ReadNamespacedJobResponse};
-#[cfg(feature = "api")] pub use self::job::{ReadNamespacedJobStatusOptional, ReadNamespacedJobStatusResponse};
+#[cfg(feature = "api")] pub use self::job::ReadNamespacedJobResponse;
+#[cfg(feature = "api")] pub use self::job::ReadNamespacedJobStatusResponse;
 
 mod job_condition;
 pub use self::job_condition::JobCondition;

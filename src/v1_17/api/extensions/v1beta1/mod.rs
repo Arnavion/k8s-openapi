@@ -10,8 +10,8 @@ pub use self::allowed_host_path::AllowedHostPath;
 
 mod daemon_set;
 pub use self::daemon_set::DaemonSet;
-#[cfg(feature = "api")] pub use self::daemon_set::{ReadNamespacedDaemonSetOptional, ReadNamespacedDaemonSetResponse};
-#[cfg(feature = "api")] pub use self::daemon_set::{ReadNamespacedDaemonSetStatusOptional, ReadNamespacedDaemonSetStatusResponse};
+#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetResponse;
+#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetStatusResponse;
 
 mod daemon_set_condition;
 pub use self::daemon_set_condition::DaemonSetCondition;
@@ -27,8 +27,8 @@ pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
 
 mod deployment;
 pub use self::deployment::Deployment;
-#[cfg(feature = "api")] pub use self::deployment::{ReadNamespacedDeploymentOptional, ReadNamespacedDeploymentResponse};
-#[cfg(feature = "api")] pub use self::deployment::{ReadNamespacedDeploymentStatusOptional, ReadNamespacedDeploymentStatusResponse};
+#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentResponse;
+#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentStatusResponse;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
@@ -66,8 +66,8 @@ pub use self::ip_block::IPBlock;
 
 mod ingress;
 pub use self::ingress::Ingress;
-#[cfg(feature = "api")] pub use self::ingress::{ReadNamespacedIngressOptional, ReadNamespacedIngressResponse};
-#[cfg(feature = "api")] pub use self::ingress::{ReadNamespacedIngressStatusOptional, ReadNamespacedIngressStatusResponse};
+#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressStatusResponse;
 
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;
@@ -86,7 +86,7 @@ pub use self::ingress_tls::IngressTLS;
 
 mod network_policy;
 pub use self::network_policy::NetworkPolicy;
-#[cfg(feature = "api")] pub use self::network_policy::{ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse};
+#[cfg(feature = "api")] pub use self::network_policy::ReadNamespacedNetworkPolicyResponse;
 
 mod network_policy_egress_rule;
 pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;
@@ -105,15 +105,15 @@ pub use self::network_policy_spec::NetworkPolicySpec;
 
 mod pod_security_policy;
 pub use self::pod_security_policy::PodSecurityPolicy;
-#[cfg(feature = "api")] pub use self::pod_security_policy::{ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse};
+#[cfg(feature = "api")] pub use self::pod_security_policy::ReadPodSecurityPolicyResponse;
 
 mod pod_security_policy_spec;
 pub use self::pod_security_policy_spec::PodSecurityPolicySpec;
 
 mod replica_set;
 pub use self::replica_set::ReplicaSet;
-#[cfg(feature = "api")] pub use self::replica_set::{ReadNamespacedReplicaSetOptional, ReadNamespacedReplicaSetResponse};
-#[cfg(feature = "api")] pub use self::replica_set::{ReadNamespacedReplicaSetStatusOptional, ReadNamespacedReplicaSetStatusResponse};
+#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetResponse;
+#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetStatusResponse;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
@@ -147,9 +147,9 @@ pub use self::se_linux_strategy_options::SELinuxStrategyOptions;
 
 mod scale;
 pub use self::scale::Scale;
-#[cfg(feature = "api")] pub use self::scale::{ReadNamespacedDeploymentScaleOptional, ReadNamespacedDeploymentScaleResponse};
-#[cfg(feature = "api")] pub use self::scale::{ReadNamespacedReplicaSetScaleOptional, ReadNamespacedReplicaSetScaleResponse};
-#[cfg(feature = "api")] pub use self::scale::{ReadNamespacedReplicationControllerDummyScaleOptional, ReadNamespacedReplicationControllerDummyScaleResponse};
+#[cfg(feature = "api")] pub use self::scale::ReadNamespacedDeploymentScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadNamespacedReplicaSetScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadNamespacedReplicationControllerDummyScaleResponse;
 
 mod scale_spec;
 pub use self::scale_spec::ScaleSpec;

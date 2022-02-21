@@ -77,7 +77,7 @@ It demonstrates the common patterns implemented by all API operation functions i
    - All delete-collection API take optional parameters using the [`DeleteOptional`] struct for delete options and the [`ListOptional`] struct for list options.
 
    Other API functions have their own `Optional` structs with fields corresponding to the specific parameters for those functions,
-   such as [`api::core::v1::ReadNamespacedPodOptional`] for [`api::core::v1::Pod::read_namespaced_pod`]
+   such as [`api::core::v1::ReadNamespacedPodLogOptional`] for [`api::core::v1::Pod::read_namespaced_pod_log`]
 
 1. The function returns an [`http::Request`] value with the URL path, query string, and request body filled out according to the parameters
    given to the function. The function does *not* execute this request. You can execute this `http::Request` using any HTTP client library you want to use.

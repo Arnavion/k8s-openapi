@@ -4,22 +4,22 @@ pub use self::aggregation_rule::AggregationRule;
 
 mod cluster_role;
 pub use self::cluster_role::ClusterRole;
-#[cfg(feature = "api")] pub use self::cluster_role::{ReadClusterRoleOptional, ReadClusterRoleResponse};
+#[cfg(feature = "api")] pub use self::cluster_role::ReadClusterRoleResponse;
 
 mod cluster_role_binding;
 pub use self::cluster_role_binding::ClusterRoleBinding;
-#[cfg(feature = "api")] pub use self::cluster_role_binding::{ReadClusterRoleBindingOptional, ReadClusterRoleBindingResponse};
+#[cfg(feature = "api")] pub use self::cluster_role_binding::ReadClusterRoleBindingResponse;
 
 mod policy_rule;
 pub use self::policy_rule::PolicyRule;
 
 mod role;
 pub use self::role::Role;
-#[cfg(feature = "api")] pub use self::role::{ReadNamespacedRoleOptional, ReadNamespacedRoleResponse};
+#[cfg(feature = "api")] pub use self::role::ReadNamespacedRoleResponse;
 
 mod role_binding;
 pub use self::role_binding::RoleBinding;
-#[cfg(feature = "api")] pub use self::role_binding::{ReadNamespacedRoleBindingOptional, ReadNamespacedRoleBindingResponse};
+#[cfg(feature = "api")] pub use self::role_binding::ReadNamespacedRoleBindingResponse;
 
 mod role_ref;
 pub use self::role_ref::RoleRef;

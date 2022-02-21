@@ -1,7 +1,7 @@
 
 mod csi_node;
 pub use self::csi_node::CSINode;
-#[cfg(feature = "api")] pub use self::csi_node::{ReadCSINodeOptional, ReadCSINodeResponse};
+#[cfg(feature = "api")] pub use self::csi_node::ReadCSINodeResponse;
 
 mod csi_node_driver;
 pub use self::csi_node_driver::CSINodeDriver;
@@ -11,12 +11,12 @@ pub use self::csi_node_spec::CSINodeSpec;
 
 mod storage_class;
 pub use self::storage_class::StorageClass;
-#[cfg(feature = "api")] pub use self::storage_class::{ReadStorageClassOptional, ReadStorageClassResponse};
+#[cfg(feature = "api")] pub use self::storage_class::ReadStorageClassResponse;
 
 mod volume_attachment;
 pub use self::volume_attachment::VolumeAttachment;
-#[cfg(feature = "api")] pub use self::volume_attachment::{ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse};
-#[cfg(feature = "api")] pub use self::volume_attachment::{ReadVolumeAttachmentStatusOptional, ReadVolumeAttachmentStatusResponse};
+#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentResponse;
+#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentStatusResponse;
 
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;

@@ -10,15 +10,15 @@ pub use self::ip_block::IPBlock;
 
 mod ingress;
 pub use self::ingress::Ingress;
-#[cfg(feature = "api")] pub use self::ingress::{ReadNamespacedIngressOptional, ReadNamespacedIngressResponse};
-#[cfg(feature = "api")] pub use self::ingress::{ReadNamespacedIngressStatusOptional, ReadNamespacedIngressStatusResponse};
+#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressStatusResponse;
 
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;
 
 mod ingress_class;
 pub use self::ingress_class::IngressClass;
-#[cfg(feature = "api")] pub use self::ingress_class::{ReadIngressClassOptional, ReadIngressClassResponse};
+#[cfg(feature = "api")] pub use self::ingress_class::ReadIngressClassResponse;
 
 mod ingress_class_parameters_reference;
 pub use self::ingress_class_parameters_reference::IngressClassParametersReference;
@@ -43,7 +43,7 @@ pub use self::ingress_tls::IngressTLS;
 
 mod network_policy;
 pub use self::network_policy::NetworkPolicy;
-#[cfg(feature = "api")] pub use self::network_policy::{ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse};
+#[cfg(feature = "api")] pub use self::network_policy::ReadNamespacedNetworkPolicyResponse;
 
 mod network_policy_egress_rule;
 pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;

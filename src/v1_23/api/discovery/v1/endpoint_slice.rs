@@ -286,28 +286,15 @@ impl EndpointSlice {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_endpoint_slice(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedEndpointSliceOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedEndpointSliceResponse>), crate::RequestError> {
-        let ReadNamespacedEndpointSliceOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices/{name}?",
+        let __url = format!("/apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -316,14 +303,6 @@ impl EndpointSlice {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`EndpointSlice::read_namespaced_endpoint_slice`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedEndpointSliceOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedEndpointSliceResponse as Response>::try_from_parts` to parse the HTTP response body of [`EndpointSlice::read_namespaced_endpoint_slice`]

@@ -300,28 +300,15 @@ impl CSIStorageCapacity {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_namespaced_csi_storage_capacity(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedCSIStorageCapacityOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedCSIStorageCapacityResponse>), crate::RequestError> {
-        let ReadNamespacedCSIStorageCapacityOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1alpha1/namespaces/{namespace}/csistoragecapacities/{name}?",
+        let __url = format!("/apis/storage.k8s.io/v1alpha1/namespaces/{namespace}/csistoragecapacities/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -330,14 +317,6 @@ impl CSIStorageCapacity {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`CSIStorageCapacity::read_namespaced_csi_storage_capacity`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedCSIStorageCapacityOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadNamespacedCSIStorageCapacityResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSIStorageCapacity::read_namespaced_csi_storage_capacity`]

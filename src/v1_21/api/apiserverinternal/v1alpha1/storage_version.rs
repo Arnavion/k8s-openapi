@@ -255,26 +255,13 @@ impl StorageVersion {
     /// * `name`
     ///
     ///     name of the StorageVersion
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_storage_version(
         name: &str,
-        optional: ReadStorageVersionOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageVersionResponse>), crate::RequestError> {
-        let ReadStorageVersionOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}?",
+        let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -283,14 +270,6 @@ impl StorageVersion {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`StorageVersion::read_storage_version`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadStorageVersionOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadStorageVersionResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read_storage_version`]
@@ -343,26 +322,13 @@ impl StorageVersion {
     /// * `name`
     ///
     ///     name of the StorageVersion
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
     pub fn read_storage_version_status(
         name: &str,
-        optional: ReadStorageVersionStatusOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageVersionStatusResponse>), crate::RequestError> {
-        let ReadStorageVersionStatusOptional {
-            pretty,
-        } = optional;
-        let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}/status?",
+        let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
         );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::get(__url);
         let __body = vec![];
@@ -371,14 +337,6 @@ impl StorageVersion {
             Err(err) => Err(crate::RequestError::Http(err)),
         }
     }
-}
-
-/// Optional parameters of [`StorageVersion::read_storage_version_status`]
-#[cfg(feature = "api")]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ReadStorageVersionStatusOptional<'a> {
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 /// Use `<ReadStorageVersionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read_storage_version_status`]

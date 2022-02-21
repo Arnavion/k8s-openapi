@@ -1,8 +1,8 @@
 
 mod cron_job;
 pub use self::cron_job::CronJob;
-#[cfg(feature = "api")] pub use self::cron_job::{ReadNamespacedCronJobOptional, ReadNamespacedCronJobResponse};
-#[cfg(feature = "api")] pub use self::cron_job::{ReadNamespacedCronJobStatusOptional, ReadNamespacedCronJobStatusResponse};
+#[cfg(feature = "api")] pub use self::cron_job::ReadNamespacedCronJobResponse;
+#[cfg(feature = "api")] pub use self::cron_job::ReadNamespacedCronJobStatusResponse;
 
 mod cron_job_spec;
 pub use self::cron_job_spec::CronJobSpec;
