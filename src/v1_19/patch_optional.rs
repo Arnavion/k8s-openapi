@@ -31,7 +31,7 @@ impl<'a> PatchOptional<'a> {
             __query_pairs.append_pair("fieldManager", value);
         }
         if let Some(value) = &self.force {
-            __query_pairs.append_pair("force", &value.to_string());
+            __query_pairs.append_pair("force", if *value { "true" } else { "false" });
         }
     }
 }

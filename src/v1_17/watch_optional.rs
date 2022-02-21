@@ -31,7 +31,7 @@ impl<'a> WatchOptional<'a> {
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
         if let Some(value) = &self.allow_watch_bookmarks {
-            __query_pairs.append_pair("allowWatchBookmarks", &value.to_string());
+            __query_pairs.append_pair("allowWatchBookmarks", if *value { "true" } else { "false" });
         }
         if let Some(value) = &self.field_selector {
             __query_pairs.append_pair("fieldSelector", value);

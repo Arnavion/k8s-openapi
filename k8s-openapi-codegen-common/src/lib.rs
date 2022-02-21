@@ -1979,11 +1979,11 @@ pub fn write_operation(
 								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
 							},
 
-							swagger20::SchemaKind::Ty(
-								swagger20::Type::Boolean |
-								swagger20::Type::Integer { .. } |
-								swagger20::Type::Number { .. }
-							) => writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) =>
+								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, if {} {{ "true" }} else {{ "false" }});"#, indent, parameter.name, parameter_name)?,
+
+							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. } | swagger20::Type::Number { .. }) =>
+								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{});"#, indent, parameter.name, parameter_name)?,
@@ -2004,11 +2004,11 @@ pub fn write_operation(
 								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
 							},
 
-							swagger20::SchemaKind::Ty(
-								swagger20::Type::Boolean |
-								swagger20::Type::Integer { .. } |
-								swagger20::Type::Number { .. }
-							) => writeln!(out, r#"{}        __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) =>
+								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, if {} {{ "true" }} else {{ "false" }});"#, indent, parameter.name, parameter_name)?,
+
+							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. } | swagger20::Type::Number { .. }) =>
+								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?,

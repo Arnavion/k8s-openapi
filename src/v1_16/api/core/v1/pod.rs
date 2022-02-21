@@ -163,16 +163,16 @@ impl Pod {
             __query_pairs.append_pair("container", container);
         }
         if let Some(stderr) = stderr {
-            __query_pairs.append_pair("stderr", &stderr.to_string());
+            __query_pairs.append_pair("stderr", if stderr { "true" } else { "false" });
         }
         if let Some(stdin) = stdin {
-            __query_pairs.append_pair("stdin", &stdin.to_string());
+            __query_pairs.append_pair("stdin", if stdin { "true" } else { "false" });
         }
         if let Some(stdout) = stdout {
-            __query_pairs.append_pair("stdout", &stdout.to_string());
+            __query_pairs.append_pair("stdout", if stdout { "true" } else { "false" });
         }
         if let Some(tty) = tty {
-            __query_pairs.append_pair("tty", &tty.to_string());
+            __query_pairs.append_pair("tty", if tty { "true" } else { "false" });
         }
         let __url = __query_pairs.finish();
 
@@ -244,16 +244,16 @@ impl Pod {
             __query_pairs.append_pair("container", container);
         }
         if let Some(stderr) = stderr {
-            __query_pairs.append_pair("stderr", &stderr.to_string());
+            __query_pairs.append_pair("stderr", if stderr { "true" } else { "false" });
         }
         if let Some(stdin) = stdin {
-            __query_pairs.append_pair("stdin", &stdin.to_string());
+            __query_pairs.append_pair("stdin", if stdin { "true" } else { "false" });
         }
         if let Some(stdout) = stdout {
-            __query_pairs.append_pair("stdout", &stdout.to_string());
+            __query_pairs.append_pair("stdout", if stdout { "true" } else { "false" });
         }
         if let Some(tty) = tty {
-            __query_pairs.append_pair("tty", &tty.to_string());
+            __query_pairs.append_pair("tty", if tty { "true" } else { "false" });
         }
         let __url = __query_pairs.finish();
 
@@ -588,16 +588,16 @@ impl Pod {
             __query_pairs.append_pair("container", container);
         }
         if let Some(stderr) = stderr {
-            __query_pairs.append_pair("stderr", &stderr.to_string());
+            __query_pairs.append_pair("stderr", if stderr { "true" } else { "false" });
         }
         if let Some(stdin) = stdin {
-            __query_pairs.append_pair("stdin", &stdin.to_string());
+            __query_pairs.append_pair("stdin", if stdin { "true" } else { "false" });
         }
         if let Some(stdout) = stdout {
-            __query_pairs.append_pair("stdout", &stdout.to_string());
+            __query_pairs.append_pair("stdout", if stdout { "true" } else { "false" });
         }
         if let Some(tty) = tty {
-            __query_pairs.append_pair("tty", &tty.to_string());
+            __query_pairs.append_pair("tty", if tty { "true" } else { "false" });
         }
         let __url = __query_pairs.finish();
 
@@ -667,16 +667,16 @@ impl Pod {
             __query_pairs.append_pair("container", container);
         }
         if let Some(stderr) = stderr {
-            __query_pairs.append_pair("stderr", &stderr.to_string());
+            __query_pairs.append_pair("stderr", if stderr { "true" } else { "false" });
         }
         if let Some(stdin) = stdin {
-            __query_pairs.append_pair("stdin", &stdin.to_string());
+            __query_pairs.append_pair("stdin", if stdin { "true" } else { "false" });
         }
         if let Some(stdout) = stdout {
-            __query_pairs.append_pair("stdout", &stdout.to_string());
+            __query_pairs.append_pair("stdout", if stdout { "true" } else { "false" });
         }
         if let Some(tty) = tty {
-            __query_pairs.append_pair("tty", &tty.to_string());
+            __query_pairs.append_pair("tty", if tty { "true" } else { "false" });
         }
         let __url = __query_pairs.finish();
 
@@ -1386,13 +1386,13 @@ impl Pod {
             __query_pairs.append_pair("container", container);
         }
         if let Some(follow) = follow {
-            __query_pairs.append_pair("follow", &follow.to_string());
+            __query_pairs.append_pair("follow", if follow { "true" } else { "false" });
         }
         if let Some(limit_bytes) = limit_bytes {
             __query_pairs.append_pair("limitBytes", &limit_bytes.to_string());
         }
         if let Some(previous) = previous {
-            __query_pairs.append_pair("previous", &previous.to_string());
+            __query_pairs.append_pair("previous", if previous { "true" } else { "false" });
         }
         if let Some(since_seconds) = since_seconds {
             __query_pairs.append_pair("sinceSeconds", &since_seconds.to_string());
@@ -1401,7 +1401,7 @@ impl Pod {
             __query_pairs.append_pair("tailLines", &tail_lines.to_string());
         }
         if let Some(timestamps) = timestamps {
-            __query_pairs.append_pair("timestamps", &timestamps.to_string());
+            __query_pairs.append_pair("timestamps", if timestamps { "true" } else { "false" });
         }
         let __url = __query_pairs.finish();
 
