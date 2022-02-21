@@ -30,19 +30,19 @@ impl<'a> WatchOptional<'a> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(value) = &self.allow_watch_bookmarks {
-            __query_pairs.append_pair("allowWatchBookmarks", if *value { "true" } else { "false" });
+        if let Some(value) = self.allow_watch_bookmarks {
+            __query_pairs.append_pair("allowWatchBookmarks", if value { "true" } else { "false" });
         }
-        if let Some(value) = &self.field_selector {
+        if let Some(value) = self.field_selector {
             __query_pairs.append_pair("fieldSelector", value);
         }
-        if let Some(value) = &self.label_selector {
+        if let Some(value) = self.label_selector {
             __query_pairs.append_pair("labelSelector", value);
         }
-        if let Some(value) = &self.resource_version {
+        if let Some(value) = self.resource_version {
             __query_pairs.append_pair("resourceVersion", value);
         }
-        if let Some(value) = &self.timeout_seconds {
+        if let Some(value) = self.timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &value.to_string());
         }
         __query_pairs.append_pair("watch", "true");

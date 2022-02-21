@@ -27,17 +27,17 @@ impl<'a> PatchOptional<'a> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(value) = &self.dry_run {
+        if let Some(value) = self.dry_run {
             __query_pairs.append_pair("dryRun", value);
         }
-        if let Some(value) = &self.field_manager {
+        if let Some(value) = self.field_manager {
             __query_pairs.append_pair("fieldManager", value);
         }
-        if let Some(value) = &self.field_validation {
+        if let Some(value) = self.field_validation {
             __query_pairs.append_pair("fieldValidation", value);
         }
-        if let Some(value) = &self.force {
-            __query_pairs.append_pair("force", if *value { "true" } else { "false" });
+        if let Some(value) = self.force {
+            __query_pairs.append_pair("force", if value { "true" } else { "false" });
         }
     }
 }

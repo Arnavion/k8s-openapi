@@ -22,10 +22,10 @@ pub(crate) fn generate(
 	for super::Property { name, field_name, field_type_name, .. } in fields {
 		use std::fmt::Write;
 
-		writeln!(fields_append_pair, "        if let Some(value) = &self.{} {{", field_name)?;
+		writeln!(fields_append_pair, "        if let Some(value) = self.{} {{", field_name)?;
 		match &**field_type_name {
 			"Option<&'a str>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, value);"#, name)?,
-			"Option<bool>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, if *value {{ "true" }} else {{ "false" }});"#, name)?,
+			"Option<bool>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, if value {{ "true" }} else {{ "false" }});"#, name)?,
 			_ => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, &value.to_string());"#, name)?,
 		}
 		writeln!(fields_append_pair, "        }}")?;

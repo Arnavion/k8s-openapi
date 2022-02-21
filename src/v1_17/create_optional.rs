@@ -21,10 +21,10 @@ impl<'a> CreateOptional<'a> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(value) = &self.dry_run {
+        if let Some(value) = self.dry_run {
             __query_pairs.append_pair("dryRun", value);
         }
-        if let Some(value) = &self.field_manager {
+        if let Some(value) = self.field_manager {
             __query_pairs.append_pair("fieldManager", value);
         }
     }

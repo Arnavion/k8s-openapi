@@ -44,25 +44,25 @@ impl<'a> ListOptional<'a> {
         self,
         __query_pairs: &mut crate::url::form_urlencoded::Serializer<'_, T>,
     ) where T: crate::url::form_urlencoded::Target {
-        if let Some(value) = &self.continue_ {
+        if let Some(value) = self.continue_ {
             __query_pairs.append_pair("continue", value);
         }
-        if let Some(value) = &self.field_selector {
+        if let Some(value) = self.field_selector {
             __query_pairs.append_pair("fieldSelector", value);
         }
-        if let Some(value) = &self.label_selector {
+        if let Some(value) = self.label_selector {
             __query_pairs.append_pair("labelSelector", value);
         }
-        if let Some(value) = &self.limit {
+        if let Some(value) = self.limit {
             __query_pairs.append_pair("limit", &value.to_string());
         }
-        if let Some(value) = &self.resource_version {
+        if let Some(value) = self.resource_version {
             __query_pairs.append_pair("resourceVersion", value);
         }
-        if let Some(value) = &self.resource_version_match {
+        if let Some(value) = self.resource_version_match {
             __query_pairs.append_pair("resourceVersionMatch", value);
         }
-        if let Some(value) = &self.timeout_seconds {
+        if let Some(value) = self.timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &value.to_string());
         }
     }
