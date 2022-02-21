@@ -37,4 +37,3 @@ jobs:
       run: ./ci/per_version.sh
       env:
         VERSION: "${{ matrix.version }}"
-        OP: "${{ matrix.op }}"
