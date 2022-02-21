@@ -20,9 +20,6 @@ pub struct ListOptional<'a> {
     /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
     pub limit: Option<i64>,
 
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-
     /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
     pub resource_version: Option<&'a str>,
 
@@ -51,9 +48,6 @@ impl<'a> ListOptional<'a> {
         }
         if let Some(value) = &self.limit {
             __query_pairs.append_pair("limit", &value.to_string());
-        }
-        if let Some(value) = &self.pretty {
-            __query_pairs.append_pair("pretty", value);
         }
         if let Some(value) = &self.resource_version {
             __query_pairs.append_pair("resourceVersion", value);

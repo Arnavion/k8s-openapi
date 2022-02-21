@@ -12,9 +12,6 @@ pub struct ReplaceOptional<'a> {
 
     /// fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the `ServerSideFieldValidation` feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields.
     pub field_validation: Option<&'a str>,
-
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 #[cfg(feature = "api")]
@@ -35,9 +32,6 @@ impl<'a> ReplaceOptional<'a> {
         }
         if let Some(value) = &self.field_validation {
             __query_pairs.append_pair("fieldValidation", value);
-        }
-        if let Some(value) = &self.pretty {
-            __query_pairs.append_pair("pretty", value);
         }
     }
 }

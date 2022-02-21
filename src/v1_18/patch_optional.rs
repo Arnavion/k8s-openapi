@@ -12,9 +12,6 @@ pub struct PatchOptional<'a> {
 
     /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
     pub force: Option<bool>,
-
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 #[cfg(feature = "api")]
@@ -35,9 +32,6 @@ impl<'a> PatchOptional<'a> {
         }
         if let Some(value) = &self.force {
             __query_pairs.append_pair("force", &value.to_string());
-        }
-        if let Some(value) = &self.pretty {
-            __query_pairs.append_pair("pretty", value);
         }
     }
 }

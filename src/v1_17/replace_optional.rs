@@ -9,9 +9,6 @@ pub struct ReplaceOptional<'a> {
 
     /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
     pub field_manager: Option<&'a str>,
-
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
 }
 
 #[cfg(feature = "api")]
@@ -29,9 +26,6 @@ impl<'a> ReplaceOptional<'a> {
         }
         if let Some(value) = &self.field_manager {
             __query_pairs.append_pair("fieldManager", value);
-        }
-        if let Some(value) = &self.pretty {
-            __query_pairs.append_pair("pretty", value);
         }
     }
 }

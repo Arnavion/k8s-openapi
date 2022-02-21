@@ -184,6 +184,9 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 			return Err(format!("never found any {} operations", description).into());
 		}
 
+		// Not useful for programmatic clients.
+		let _ = optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
+
 		spec.definitions.insert(crate::swagger20::DefinitionPath(type_name.to_string()), crate::swagger20::Schema {
 			description: Some(format!("Common parameters for all {} operations.", description)),
 			kind: crate::swagger20::SchemaKind::Ty(ty(optional_definition)),
@@ -399,6 +402,10 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	if list_operations.is_empty() {
 		return Err("never found any list-watch operations".into());
 	}
+
+	// Not useful for programmatic clients.
+	let _ = list_optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
+	let _ = watch_optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
 
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.ListOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all list operations.".to_string()),

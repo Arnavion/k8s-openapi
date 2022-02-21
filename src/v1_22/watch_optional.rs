@@ -13,9 +13,6 @@ pub struct WatchOptional<'a> {
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
     pub label_selector: Option<&'a str>,
 
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-
     /// resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.
     ///
     /// Defaults to unset
@@ -43,9 +40,6 @@ impl<'a> WatchOptional<'a> {
         }
         if let Some(value) = &self.label_selector {
             __query_pairs.append_pair("labelSelector", value);
-        }
-        if let Some(value) = &self.pretty {
-            __query_pairs.append_pair("pretty", value);
         }
         if let Some(value) = &self.resource_version {
             __query_pairs.append_pair("resourceVersion", value);
