@@ -84,7 +84,7 @@ async fn create() {
 			break;
 		}
 
-		client.sleep(std::time::Duration::from_secs(1)).await;
+		tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 	}
 
 	// Find a pod of the failed job using owner reference
@@ -110,7 +110,7 @@ async fn create() {
 			}
 		}
 
-		client.sleep(std::time::Duration::from_secs(1)).await;
+		tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 	};
 
 	let job_pod_container_state_terminated =

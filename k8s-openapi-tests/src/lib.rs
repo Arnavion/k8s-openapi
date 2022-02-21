@@ -159,6 +159,9 @@ impl Client {
 			let replay_file = std::io::BufReader::new(replay_file);
 			let replays: Vec<_> = serde_json::from_reader(replay_file).expect("couldn't parse replay file");
 
+			// Make all `tokio::time::sleep` calls not actually sleep.
+			tokio::time::pause();
+
 			Client::Replaying(replays.into_iter().enumerate())
 		}
 	}
@@ -253,13 +256,6 @@ impl Client {
 					body: ClientResponseBody::Replaying(std::io::Cursor::new(replay.response_body)),
 				}
 			},
-		}
-	}
-
-	async fn sleep(&self, duration: std::time::Duration) {
-		match self {
-			Client::Recording { .. } => tokio::time::sleep(duration).await,
-			Client::Replaying(_) => (),
 		}
 	}
 }

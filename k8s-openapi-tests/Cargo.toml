@@ -37,6 +37,7 @@ serde = { version = "1", default-features = false, features = [
 serde_yaml = { version = "0.8", default-features = false }
 tokio = { version = "1", default-features = false, features = [
 	"macros", # for #[tokio::test]
+	"test-util", # for tokio::time::pause
 	"time", # for tokio::time::sleep
 ] }
 
