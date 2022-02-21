@@ -51,7 +51,7 @@ This crate moves all optional parameters to separate structs, one for each API. 
 list_namespaced_pod("kube-system", Default::default());
 
 // List all pods in the kube-system namespace with label foo=bar
-list_namespaced_pod("kube-system", ListOptional { label_selector: Some("foo=bar"), ..Default::default());
+list_namespaced_pod("kube-system", ListOptional { label_selector: Some("foo=bar"), ..Default::default() });
 ```
 
 The second example uses struct update syntax to explicitly set one field of the struct and `Default` the rest.
@@ -63,7 +63,7 @@ Auto-generated clients have to choose between providing a synchronous or asynchr
 
 This crate is instead based on the [sans-io approach](https://sans-io.readthedocs.io/) popularized by Python for network protocols and applications.
 
-For example, the `Pod::list_namespaced_pod` does not return `Result<ListResponse<Pod>>` or `impl Future<Output = ListResponse<Pod>>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string, request headers and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
+For example, the `Pod::list_namespaced_pod` function does not return `Result<ListResponse<Pod>>` or `impl Future<Output = ListResponse<Pod>>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string, request headers and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
 
 After you've executed the request, your HTTP client will give you the response's `http::StatusCode` and some `[u8]` bytes of the response body. To parse these into a `ListResponse<Pod>`, you use that type's `fn try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function. The result is either a successful `ListResponse<Pod>` value, or an error that the response is incomplete and you need to get more bytes of the response body and try again, or a fatal error because the response is invalid JSON.
 
