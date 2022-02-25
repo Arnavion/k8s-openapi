@@ -108,7 +108,7 @@ impl crate::schemars::JsonSchema for IDRange {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "max".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -133,11 +133,11 @@ impl crate::schemars::JsonSchema for IDRange {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "max",
-                    "min",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "max".to_owned(),
+                    "min".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -108,7 +108,7 @@ impl crate::schemars::JsonSchema for DaemonSetUpdateStrategy {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "rollingUpdate".to_owned(),
                         {
@@ -131,7 +131,7 @@ impl crate::schemars::JsonSchema for DaemonSetUpdateStrategy {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

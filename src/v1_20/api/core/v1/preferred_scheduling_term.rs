@@ -108,7 +108,7 @@ impl crate::schemars::JsonSchema for PreferredSchedulingTerm {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "preference".to_owned(),
                         {
@@ -132,11 +132,11 @@ impl crate::schemars::JsonSchema for PreferredSchedulingTerm {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "preference",
-                    "weight",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "preference".to_owned(),
+                    "weight".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -152,7 +152,7 @@ impl crate::schemars::JsonSchema for FlowSchemaCondition {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "lastTransitionTime".to_owned(),
                         {
@@ -208,7 +208,7 @@ impl crate::schemars::JsonSchema for FlowSchemaCondition {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -124,7 +124,7 @@ impl crate::schemars::JsonSchema for PodAffinityTerm {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "labelSelector".to_owned(),
                         {
@@ -167,10 +167,10 @@ impl crate::schemars::JsonSchema for PodAffinityTerm {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "topologyKey",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "topologyKey".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -125,7 +125,7 @@ impl crate::schemars::JsonSchema for CustomResourceConversion {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "conversionReviewVersions".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -168,10 +168,10 @@ impl crate::schemars::JsonSchema for CustomResourceConversion {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "strategy",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "strategy".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

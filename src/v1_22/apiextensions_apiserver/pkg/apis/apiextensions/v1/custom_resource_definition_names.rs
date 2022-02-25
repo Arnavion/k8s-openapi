@@ -160,7 +160,7 @@ impl crate::schemars::JsonSchema for CustomResourceDefinitionNames {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "categories".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -245,11 +245,11 @@ impl crate::schemars::JsonSchema for CustomResourceDefinitionNames {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "kind",
-                    "plural",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "kind".to_owned(),
+                    "plural".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

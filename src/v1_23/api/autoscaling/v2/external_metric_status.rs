@@ -108,7 +108,7 @@ impl crate::schemars::JsonSchema for ExternalMetricStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "current".to_owned(),
                         {
@@ -131,11 +131,11 @@ impl crate::schemars::JsonSchema for ExternalMetricStatus {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "current",
-                    "metric",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "current".to_owned(),
+                    "metric".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

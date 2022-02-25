@@ -559,7 +559,7 @@ impl crate::schemars::JsonSchema for StorageClass {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "allowVolumeExpansion".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -692,11 +692,11 @@ impl crate::schemars::JsonSchema for StorageClass {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "metadata",
-                    "provisioner",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "metadata".to_owned(),
+                    "provisioner".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

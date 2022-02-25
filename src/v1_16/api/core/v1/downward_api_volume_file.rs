@@ -137,7 +137,7 @@ impl crate::schemars::JsonSchema for DownwardAPIVolumeFile {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "fieldRef".to_owned(),
                         {
@@ -183,10 +183,10 @@ impl crate::schemars::JsonSchema for DownwardAPIVolumeFile {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "path",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "path".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -134,7 +134,7 @@ impl crate::schemars::JsonSchema for CSINodeDriver {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "allocatable".to_owned(),
                         {
@@ -188,11 +188,11 @@ impl crate::schemars::JsonSchema for CSINodeDriver {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "name",
-                    "nodeID",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "name".to_owned(),
+                    "nodeID".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

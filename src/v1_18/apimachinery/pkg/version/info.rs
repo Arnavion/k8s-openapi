@@ -169,7 +169,7 @@ impl crate::schemars::JsonSchema for Info {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "buildDate".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -233,18 +233,18 @@ impl crate::schemars::JsonSchema for Info {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "buildDate",
-                    "compiler",
-                    "gitCommit",
-                    "gitTreeState",
-                    "gitVersion",
-                    "goVersion",
-                    "major",
-                    "minor",
-                    "platform",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "buildDate".to_owned(),
+                    "compiler".to_owned(),
+                    "gitCommit".to_owned(),
+                    "gitTreeState".to_owned(),
+                    "gitVersion".to_owned(),
+                    "goVersion".to_owned(),
+                    "major".to_owned(),
+                    "minor".to_owned(),
+                    "platform".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

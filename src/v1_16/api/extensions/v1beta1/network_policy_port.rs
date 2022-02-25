@@ -113,7 +113,7 @@ impl crate::schemars::JsonSchema for NetworkPolicyPort {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "port".to_owned(),
                         {
@@ -136,7 +136,7 @@ impl crate::schemars::JsonSchema for NetworkPolicyPort {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

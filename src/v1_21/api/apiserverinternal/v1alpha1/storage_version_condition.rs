@@ -157,7 +157,7 @@ impl crate::schemars::JsonSchema for StorageVersionCondition {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "lastTransitionTime".to_owned(),
                         {
@@ -225,12 +225,12 @@ impl crate::schemars::JsonSchema for StorageVersionCondition {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "reason",
-                    "status",
-                    "type",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "reason".to_owned(),
+                    "status".to_owned(),
+                    "type".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

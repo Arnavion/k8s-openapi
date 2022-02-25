@@ -260,7 +260,7 @@ impl crate::schemars::JsonSchema for PodStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "conditions".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -424,7 +424,7 @@ impl crate::schemars::JsonSchema for PodStatus {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

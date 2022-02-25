@@ -108,7 +108,7 @@ impl crate::schemars::JsonSchema for ServerAddressByClientCIDR {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "clientCIDR".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -131,11 +131,11 @@ impl crate::schemars::JsonSchema for ServerAddressByClientCIDR {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "clientCIDR",
-                    "serverAddress",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "clientCIDR".to_owned(),
+                    "serverAddress".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

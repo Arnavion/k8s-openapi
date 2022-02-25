@@ -134,7 +134,7 @@ impl crate::schemars::JsonSchema for Taint {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "effect".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -179,11 +179,11 @@ impl crate::schemars::JsonSchema for Taint {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "effect",
-                    "key",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "effect".to_owned(),
+                    "key".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

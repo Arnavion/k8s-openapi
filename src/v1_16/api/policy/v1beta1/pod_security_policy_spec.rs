@@ -392,7 +392,7 @@ impl crate::schemars::JsonSchema for PodSecurityPolicySpec {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "allowPrivilegeEscalation".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -736,13 +736,13 @@ impl crate::schemars::JsonSchema for PodSecurityPolicySpec {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "fsGroup",
-                    "runAsUser",
-                    "seLinux",
-                    "supplementalGroups",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "fsGroup".to_owned(),
+                    "runAsUser".to_owned(),
+                    "seLinux".to_owned(),
+                    "supplementalGroups".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

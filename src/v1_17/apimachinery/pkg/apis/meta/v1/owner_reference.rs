@@ -154,7 +154,7 @@ impl crate::schemars::JsonSchema for OwnerReference {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "apiVersion".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -221,13 +221,13 @@ impl crate::schemars::JsonSchema for OwnerReference {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "apiVersion",
-                    "kind",
-                    "name",
-                    "uid",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "apiVersion".to_owned(),
+                    "kind".to_owned(),
+                    "name".to_owned(),
+                    "uid".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -139,7 +139,7 @@ impl crate::schemars::JsonSchema for EnvVarSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "configMapKeyRef".to_owned(),
                         {
@@ -184,7 +184,7 @@ impl crate::schemars::JsonSchema for EnvVarSource {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

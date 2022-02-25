@@ -154,7 +154,7 @@ impl crate::schemars::JsonSchema for CustomResourceDefinitionSpec {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "conversion".to_owned(),
                         {
@@ -225,13 +225,13 @@ impl crate::schemars::JsonSchema for CustomResourceDefinitionSpec {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "group",
-                    "names",
-                    "scope",
-                    "versions",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "group".to_owned(),
+                    "names".to_owned(),
+                    "scope".to_owned(),
+                    "versions".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -134,7 +134,7 @@ impl crate::schemars::JsonSchema for TopologySpreadConstraint {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "labelSelector".to_owned(),
                         {
@@ -180,12 +180,12 @@ impl crate::schemars::JsonSchema for TopologySpreadConstraint {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "maxSkew",
-                    "topologyKey",
-                    "whenUnsatisfiable",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "maxSkew".to_owned(),
+                    "topologyKey".to_owned(),
+                    "whenUnsatisfiable".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

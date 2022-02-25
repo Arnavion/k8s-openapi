@@ -151,7 +151,7 @@ impl crate::schemars::JsonSchema for Condition {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "lastTransitionTime".to_owned(),
                         {
@@ -219,14 +219,14 @@ impl crate::schemars::JsonSchema for Condition {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "lastTransitionTime",
-                    "message",
-                    "reason",
-                    "status",
-                    "type",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "lastTransitionTime".to_owned(),
+                    "message".to_owned(),
+                    "reason".to_owned(),
+                    "status".to_owned(),
+                    "type".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

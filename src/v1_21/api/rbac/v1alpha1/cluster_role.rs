@@ -495,7 +495,7 @@ impl crate::schemars::JsonSchema for ClusterRole {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "aggregationRule".to_owned(),
                         {
@@ -555,10 +555,10 @@ impl crate::schemars::JsonSchema for ClusterRole {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "metadata",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "metadata".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

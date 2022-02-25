@@ -100,7 +100,7 @@ impl crate::schemars::JsonSchema for CustomResourceValidation {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "openAPIV3Schema".to_owned(),
                         {
@@ -112,7 +112,7 @@ impl crate::schemars::JsonSchema for CustomResourceValidation {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

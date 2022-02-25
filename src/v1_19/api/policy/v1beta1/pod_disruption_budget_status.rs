@@ -154,7 +154,7 @@ impl crate::schemars::JsonSchema for PodDisruptionBudgetStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "currentHealthy".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -230,13 +230,13 @@ impl crate::schemars::JsonSchema for PodDisruptionBudgetStatus {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "currentHealthy",
-                    "desiredHealthy",
-                    "disruptionsAllowed",
-                    "expectedPods",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "currentHealthy".to_owned(),
+                    "desiredHealthy".to_owned(),
+                    "disruptionsAllowed".to_owned(),
+                    "expectedPods".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

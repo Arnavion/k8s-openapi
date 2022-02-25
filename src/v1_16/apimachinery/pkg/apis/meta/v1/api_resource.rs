@@ -203,7 +203,7 @@ impl crate::schemars::JsonSchema for APIResource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "categories".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -341,14 +341,14 @@ impl crate::schemars::JsonSchema for APIResource {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "kind",
-                    "name",
-                    "namespaced",
-                    "singularName",
-                    "verbs",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "kind".to_owned(),
+                    "name".to_owned(),
+                    "namespaced".to_owned(),
+                    "singularName".to_owned(),
+                    "verbs".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

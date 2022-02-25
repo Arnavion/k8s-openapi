@@ -113,7 +113,7 @@ impl crate::schemars::JsonSchema for ServiceBackendPort {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "name".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -137,7 +137,7 @@ impl crate::schemars::JsonSchema for ServiceBackendPort {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

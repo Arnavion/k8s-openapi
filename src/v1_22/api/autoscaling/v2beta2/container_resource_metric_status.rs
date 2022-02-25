@@ -118,7 +118,7 @@ impl crate::schemars::JsonSchema for ContainerResourceMetricStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "container".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -152,12 +152,12 @@ impl crate::schemars::JsonSchema for ContainerResourceMetricStatus {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "container",
-                    "current",
-                    "name",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "container".to_owned(),
+                    "current".to_owned(),
+                    "name".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

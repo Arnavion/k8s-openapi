@@ -323,7 +323,7 @@ impl crate::schemars::JsonSchema for EphemeralContainers {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "apiVersion".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -365,11 +365,11 @@ impl crate::schemars::JsonSchema for EphemeralContainers {
                         "metadata".to_owned(),
                         __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>(),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "ephemeralContainers",
-                    "metadata",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "ephemeralContainers".to_owned(),
+                    "metadata".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

@@ -165,7 +165,7 @@ impl crate::schemars::JsonSchema for JobCondition {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "lastProbeTime".to_owned(),
                         {
@@ -232,11 +232,11 @@ impl crate::schemars::JsonSchema for JobCondition {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "status",
-                    "type",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "status".to_owned(),
+                    "type".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

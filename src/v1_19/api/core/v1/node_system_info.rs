@@ -188,7 +188,7 @@ impl crate::schemars::JsonSchema for NodeSystemInfo {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "architecture".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -299,19 +299,19 @@ impl crate::schemars::JsonSchema for NodeSystemInfo {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "architecture",
-                    "bootID",
-                    "containerRuntimeVersion",
-                    "kernelVersion",
-                    "kubeProxyVersion",
-                    "kubeletVersion",
-                    "machineID",
-                    "operatingSystem",
-                    "osImage",
-                    "systemUUID",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "architecture".to_owned(),
+                    "bootID".to_owned(),
+                    "containerRuntimeVersion".to_owned(),
+                    "kernelVersion".to_owned(),
+                    "kubeProxyVersion".to_owned(),
+                    "kubeletVersion".to_owned(),
+                    "machineID".to_owned(),
+                    "operatingSystem".to_owned(),
+                    "osImage".to_owned(),
+                    "systemUUID".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

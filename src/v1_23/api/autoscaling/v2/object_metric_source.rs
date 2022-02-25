@@ -118,7 +118,7 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "describedObject".to_owned(),
                         {
@@ -152,12 +152,12 @@ impl crate::schemars::JsonSchema for ObjectMetricSource {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "describedObject",
-                    "metric",
-                    "target",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "describedObject".to_owned(),
+                    "metric".to_owned(),
+                    "target".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

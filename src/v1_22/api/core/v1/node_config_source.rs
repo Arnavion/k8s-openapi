@@ -100,7 +100,7 @@ impl crate::schemars::JsonSchema for NodeConfigSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "configMap".to_owned(),
                         {
@@ -112,7 +112,7 @@ impl crate::schemars::JsonSchema for NodeConfigSource {
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
-                ]).collect(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

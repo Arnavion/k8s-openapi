@@ -98,7 +98,7 @@ impl crate::schemars::JsonSchema for HTTPIngressRuleValue {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "paths".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -114,10 +114,10 @@ impl crate::schemars::JsonSchema for HTTPIngressRuleValue {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "paths",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "paths".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

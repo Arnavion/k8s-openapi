@@ -131,7 +131,7 @@ impl crate::schemars::JsonSchema for SubjectRulesReviewStatus {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "evaluationError".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -184,12 +184,12 @@ impl crate::schemars::JsonSchema for SubjectRulesReviewStatus {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "incomplete",
-                    "nonResourceRules",
-                    "resourceRules",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "incomplete".to_owned(),
+                    "nonResourceRules".to_owned(),
+                    "resourceRules".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

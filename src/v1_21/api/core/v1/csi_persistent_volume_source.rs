@@ -199,7 +199,7 @@ impl crate::schemars::JsonSchema for CSIPersistentVolumeSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "controllerExpandSecretRef".to_owned(),
                         {
@@ -308,11 +308,11 @@ impl crate::schemars::JsonSchema for CSIPersistentVolumeSource {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "driver",
-                    "volumeHandle",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "driver".to_owned(),
+                    "volumeHandle".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

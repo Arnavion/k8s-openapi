@@ -160,7 +160,7 @@ impl crate::schemars::JsonSchema for AzureDiskVolumeSource {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "cachingMode".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -227,11 +227,11 @@ impl crate::schemars::JsonSchema for AzureDiskVolumeSource {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "diskName",
-                    "diskURI",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "diskName".to_owned(),
+                    "diskURI".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

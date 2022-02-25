@@ -147,7 +147,7 @@ impl crate::schemars::JsonSchema for IngressClassParametersReference {
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
             object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                properties: IntoIterator::into_iter([
+                properties: [
                     (
                         "apiGroup".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
@@ -203,11 +203,11 @@ impl crate::schemars::JsonSchema for IngressClassParametersReference {
                             ..Default::default()
                         }),
                     ),
-                ]).collect(),
-                required: IntoIterator::into_iter([
-                    "kind",
-                    "name",
-                ]).map(std::borrow::ToOwned::to_owned).collect(),
+                ].into(),
+                required: [
+                    "kind".to_owned(),
+                    "name".to_owned(),
+                ].into(),
                 ..Default::default()
             })),
             ..Default::default()

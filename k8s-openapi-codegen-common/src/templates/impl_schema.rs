@@ -68,7 +68,7 @@ fn gen_schema(
 			let mut props = String::new();
 			for (name, (schema, required)) in properties {
 				if *required {
-					writeln!(required_props, "{indent}            {:?},", &**name, indent = indent)?;
+					writeln!(required_props, "{indent}            {:?}.to_owned(),", &**name, indent = indent)?;
 				}
 
 				match &schema.kind {
@@ -107,15 +107,15 @@ fn gen_schema(
 			}
 
 			if !props.is_empty() {
-				writeln!(out, "{indent}        properties: IntoIterator::into_iter([", indent = indent)?;
+				writeln!(out, "{indent}        properties: [", indent = indent)?;
 				write!(out, "{}", props)?;
-				writeln!(out, "{indent}        ]).collect(),", indent = indent)?;
+				writeln!(out, "{indent}        ].into(),", indent = indent)?;
 			}
 
 			if !required_props.is_empty() {
-				writeln!(out, "{indent}        required: IntoIterator::into_iter([", indent = indent)?;
+				writeln!(out, "{indent}        required: [", indent = indent)?;
 				write!(out, "{}", required_props)?;
-				writeln!(out, "{indent}        ]).map(std::borrow::ToOwned::to_owned).collect(),", indent = indent)?;
+				writeln!(out, "{indent}        ].into(),", indent = indent)?;
 			}
 
 			writeln!(out, "{indent}        ..Default::default()", indent = indent)?;
@@ -380,7 +380,7 @@ fn gen_type(
 				"{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),",
 				indent = indent, local = local)?;
 			writeln!(out, "{indent}object: Some(Box::new({local}schemars::schema::ObjectValidation {{", indent = indent, local = local)?;
-			writeln!(out, "{indent}    properties: IntoIterator::into_iter([", indent = indent)?;
+			writeln!(out, "{indent}    properties: [", indent = indent)?;
 			writeln!(out, "{indent}        (", indent = indent)?;
 			writeln!(out, r#"{indent}            "object".to_owned(),"#, indent = indent)?;
 			writeln!(out,  "{indent}            __gen.subschema_for::<{}>(),", crate::get_fully_qualified_type_name(ref_path, map_namespace), indent = indent)?;
@@ -395,12 +395,12 @@ fn gen_type(
 			writeln!(out, "{indent}                ..Default::default()", indent = indent)?;
 			writeln!(out, "{indent}            }}),", indent = indent)?;
 			writeln!(out, "{indent}        ),", indent = indent)?;
-			writeln!(out, "{indent}    ]).collect(),", indent = indent)?;
+			writeln!(out, "{indent}    ].into(),", indent = indent)?;
 
-			writeln!(out, "{indent}    required: IntoIterator::into_iter([", indent = indent)?;
-			writeln!(out, r#"{indent}        "object","#, indent = indent)?;
-			writeln!(out, r#"{indent}        "type","#, indent = indent)?;
-			writeln!(out, "{indent}    ]).map(std::borrow::ToOwned::to_owned).collect(),", indent = indent)?;
+			writeln!(out, "{indent}    required: [", indent = indent)?;
+			writeln!(out, r#"{indent}        "object".to_owned(),"#, indent = indent)?;
+			writeln!(out, r#"{indent}        "type".to_owned(),"#, indent = indent)?;
+			writeln!(out, "{indent}    ].into(),", indent = indent)?;
 
 			writeln!(out, "{indent}    ..Default::default()", indent = indent)?;
 			writeln!(out, "{indent}}})),", indent = indent)?;
