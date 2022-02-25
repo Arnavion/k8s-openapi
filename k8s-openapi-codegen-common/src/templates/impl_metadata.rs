@@ -8,9 +8,9 @@ pub(crate) fn generate(
 	if let Some(metadata_ty) = &resource_metadata.metadata_ty {
 		let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-		let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-		let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-		let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
+		let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+		let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+		let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
 		writeln!(
 			writer,

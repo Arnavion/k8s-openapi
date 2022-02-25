@@ -7,10 +7,10 @@ fn main() {
 	const MAX: usize = 23;
 
 	let enabled_version = {
-		let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_TEST_V1_{}", v)).is_ok());
+		let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_TEST_V1_{v}")).is_ok());
 		let v1 = enabled_versions.next().expect("None of the test_v1_* features are enabled on the k8s-openapi-tests crate.");
 		if let Some(v2) = enabled_versions.next() {
-			panic!("Both test_v1_{} and test_v1_{} features are enabled on the k8s-openapi-tests crate.", v1, v2);
+			panic!("Both test_v1_{v1} and test_v1_{v2} features are enabled on the k8s-openapi-tests crate.");
 		}
 		v1
 	};

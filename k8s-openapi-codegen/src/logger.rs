@@ -2,7 +2,7 @@ pub(crate) fn make_local_logger(version_name: &'static str) -> env_logger::Logge
 	let mut builder = env_logger::Builder::new();
 	builder.format(move |buf, record| {
 		use std::io::Write;
-		writeln!(buf, "[{}] {} {}:{} {}", version_name, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
+		writeln!(buf, "[{version_name}] {} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
 	});
 	let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
 	builder.parse_filters(&rust_log).build()

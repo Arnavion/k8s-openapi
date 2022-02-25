@@ -18,7 +18,7 @@ async fn watch_pods() {
 			let pod = match pod_watch_event {
 				(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Added(pod)), _) => pod,
 				(k8s_openapi::WatchResponse::Ok(_), _) => return std::future::ready(None),
-				(other, status_code) => panic!("{:?} {}", other, status_code),
+				(other, status_code) => panic!("{other:?} {status_code}"),
 			};
 
 			let name = pod.metadata.name.as_deref();
@@ -104,7 +104,7 @@ fn bookmark_events() {
 			.expect("expected hard-coded test case to be deserialized successfully but it failed to deserialize");
 		let watch_event = match watch_response {
 			(k8s_openapi::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == test_case.len() => watch_event,
-			watch_response => panic!("hard-coded test case did not deserialize as expected: {:?}", watch_response),
+			watch_response => panic!("hard-coded test case did not deserialize as expected: {watch_response:?}"),
 		};
 		assert_eq!(watch_event, meta::WatchEvent::Bookmark {
 			resource_version: "123".to_owned(),
@@ -120,7 +120,7 @@ fn bookmark_events() {
 			.expect_err("expected hard-coded failure test case to fail to deserialize but it deserialized successfully");
 		match err {
 			k8s_openapi::ResponseError::Json(_) => (),
-			err => panic!("hard-coded test case did not fail to deserialize as expected: {:?}", err),
+			err => panic!("hard-coded test case did not fail to deserialize as expected: {err:?}"),
 		}
 	}
 }

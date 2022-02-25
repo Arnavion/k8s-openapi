@@ -190,7 +190,7 @@ pub fn run(
 ) -> Result<RunResult, Error> {
 	use std::io::Write;
 
-	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {} does not exist in spec", definition_path))?;
+	let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {definition_path} does not exist in spec"))?;
 
 	let local = map_namespace_local_to_string(map_namespace)?;
 
@@ -202,7 +202,7 @@ pub fn run(
 
 	let path_parts: Vec<_> = definition_path.split('.').collect();
 	let namespace_parts: Vec<_> =
-		map_namespace.map_namespace(&path_parts).ok_or_else(|| format!("unexpected path {:?}", definition_path))?
+		map_namespace.map_namespace(&path_parts).ok_or_else(|| format!("unexpected path {definition_path:?}"))?
 		.into_iter()
 		.collect();
 
@@ -229,7 +229,7 @@ pub fn run(
 
 	let mut out = state.make_writer(&namespace_parts, type_feature)?;
 
-	let type_name = path_parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?;
+	let type_name = path_parts.last().ok_or_else(|| format!("path for {definition_path} has no parts"))?;
 
 	let derives = get_derives(&definition.kind, definitions, map_namespace)?;
 
@@ -339,7 +339,7 @@ pub fn run(
 								format!("{:?}", ""),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
-								definition.list_kind.as_ref().map(|kind| format!("{:?}", kind)),
+								definition.list_kind.as_ref().map(|kind| format!("{kind:?}")),
 							)
 						}
 						else {
@@ -348,11 +348,11 @@ pub fn run(
 								format!("{:?}", single_group_version_kind.group),
 								format!("{:?}", single_group_version_kind.kind),
 								format!("{:?}", single_group_version_kind.version),
-								definition.list_kind.as_ref().map(|kind| format!("{:?}", kind)),
+								definition.list_kind.as_ref().map(|kind| format!("{kind:?}")),
 							)
 						}),
-					Some((_, true, false)) => return Err(format!("{} has an apiVersion property but not a kind property", definition_path).into()),
-					Some((_, false, true)) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
+					Some((_, true, false)) => return Err(format!("{definition_path} has an apiVersion property but not a kind property").into()),
+					Some((_, false, true)) => return Err(format!("{definition_path} has a kind property but not an apiVersion property").into()),
 					Some((_, false, false)) | None => None,
 				};
 
@@ -426,19 +426,39 @@ pub fn run(
 							#[allow(clippy::match_same_arms)]
 							let (url_path_segment_, scope_, url_path_segment_and_scope) = match components {
 								("{name}", Some(url_path_segment), Some("{namespace}"), Some("namespaces")) =>
-									(format!("{:?}", url_path_segment), format!("{}NamespaceResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+									(
+										format!("{url_path_segment:?}"),
+										format!("{local}NamespaceResourceScope"),
+										&mut namespace_or_cluster_scoped_url_path_segment_and_scope,
+									),
 
 								("{name}", Some(url_path_segment), _, _) =>
-									(format!("{:?}", url_path_segment), format!("{}ClusterResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+									(
+										format!("{url_path_segment:?}"),
+										format!("{local}ClusterResourceScope"),
+										&mut namespace_or_cluster_scoped_url_path_segment_and_scope,
+									),
 
 								(url_path_segment, Some("{name}"), _, _) =>
-									(format!("{:?}", url_path_segment), format!("{}SubResourceScope", local), &mut subresource_url_path_segment_and_scope),
+									(
+										format!("{url_path_segment:?}"),
+										format!("{local}SubResourceScope"),
+										&mut subresource_url_path_segment_and_scope,
+									),
 
 								(url_path_segment, Some("{namespace}"), Some("namespaces"), _) =>
-									(format!("{:?}", url_path_segment), format!("{}NamespaceResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+									(
+										format!("{url_path_segment:?}"),
+										format!("{local}NamespaceResourceScope"),
+										&mut namespace_or_cluster_scoped_url_path_segment_and_scope,
+									),
 
 								(url_path_segment, _, _, _) =>
-									(format!("{:?}", url_path_segment), format!("{}ClusterResourceScope", local), &mut namespace_or_cluster_scoped_url_path_segment_and_scope),
+									(
+										format!("{url_path_segment:?}"),
+										format!("{local}ClusterResourceScope"),
+										&mut namespace_or_cluster_scoped_url_path_segment_and_scope,
+									),
 							};
 
 							url_path_segment_and_scope.push((url_path_segment_, scope_));
@@ -458,9 +478,9 @@ pub fn run(
 				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroupList" |
 				"io.k8s.apimachinery.pkg.apis.meta.v1.APIResourceList" |
 				"io.k8s.apimachinery.pkg.apis.meta.v1.APIVersions" =>
-					namespace_or_cluster_scoped_url_path_segment_and_scope.push((r#""""#.to_owned(), format!("{}ClusterResourceScope", local))),
+					namespace_or_cluster_scoped_url_path_segment_and_scope.push((r#""""#.to_owned(), format!("{local}ClusterResourceScope"))),
 				"io.k8s.apimachinery.pkg.apis.meta.v1.Status" =>
-					subresource_url_path_segment_and_scope.push((r#""status""#.to_owned(), format!("{}SubResourceScope", local))),
+					subresource_url_path_segment_and_scope.push((r#""status""#.to_owned(), format!("{local}SubResourceScope"))),
 				_ => (),
 			}
 
@@ -483,19 +503,16 @@ pub fn run(
 						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
 
 						([], []) => return Err(format!(
-							"definition {} is a Resource but its URL path segment and scope could not be inferred",
-							definition_path).into()),
+							"definition {definition_path} is a Resource but its URL path segment and scope could not be inferred").into()),
 						([_, ..], _) => return Err(format!(
-							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
-							definition_path, namespace_or_cluster_scoped_url_path_segment_and_scope).into()),
+							"definition {definition_path} is a Resource but was inferred to have multiple scopes {namespace_or_cluster_scoped_url_path_segment_and_scope:?}").into()),
 						([], [_, ..]) => return Err(format!(
-							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
-							definition_path, subresource_url_path_segment_and_scope).into()),
+							"definition {definition_path} is a Resource but was inferred to have multiple scopes {subresource_url_path_segment_and_scope:?}").into()),
 					},
 				}),
 
 				(Some(_), Some((_, templates::PropertyRequired::Optional | templates::PropertyRequired::OptionalDefault))) =>
-					return Err(format!("definition {} has optional metadata", definition_path).into()),
+					return Err(format!("definition {definition_path} has optional metadata").into()),
 
 				(
 					Some((api_version, group, kind, version, list_kind)),
@@ -512,14 +529,11 @@ pub fn run(
 						([], [(url_path_segment, scope)]) => (&**url_path_segment, &**scope),
 
 						([], []) => return Err(format!(
-							"definition {} is a Resource but its URL path segment and scope could not be inferred",
-							definition_path).into()),
+							"definition {definition_path} is a Resource but its URL path segment and scope could not be inferred").into()),
 						([_, _, ..], _) => return Err(format!(
-							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
-							definition_path, namespace_or_cluster_scoped_url_path_segment_and_scope).into()),
+							"definition {definition_path} is a Resource but was inferred to have multiple scopes {namespace_or_cluster_scoped_url_path_segment_and_scope:?}").into()),
 						([], [_, _, ..]) => return Err(format!(
-							"definition {} is a Resource but was inferred to have multiple scopes {:?}",
-							definition_path, subresource_url_path_segment_and_scope).into()),
+							"definition {definition_path} is a Resource but was inferred to have multiple scopes {subresource_url_path_segment_and_scope:?}").into()),
 					},
 				}),
 
@@ -573,7 +587,7 @@ pub fn run(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ref(_) => return Err(format!("{} is a Ref", definition_path).into()),
+		swagger20::SchemaKind::Ref(_) => return Err(format!("{definition_path} is a Ref").into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => {
 			templates::int_or_string::generate(
@@ -600,7 +614,7 @@ pub fn run(
 			let json_schema_props_type_name =
 				get_fully_qualified_type_name(
 					&swagger20::RefPath {
-						path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
+						path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaProps"),
 						can_be_default: None,
 					},
 					map_namespace);
@@ -654,7 +668,7 @@ pub fn run(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { metadata }) => {
 			let metadata_rust_type = get_rust_type(metadata, map_namespace)?;
 
-			let template_generics_where_part = format!("T: {}ListableResource", local);
+			let template_generics_where_part = format!("T: {local}ListableResource");
 			let template_generics = templates::Generics {
 				type_part: Some("T"),
 				where_part: Some(&template_generics_where_part),
@@ -723,7 +737,7 @@ pub fn run(
 			)?;
 
 			{
-				let template_generics_where_part = format!("T: {local}serde::Deserialize<'de> + {local}ListableResource", local = local);
+				let template_generics_where_part = format!("T: {local}serde::Deserialize<'de> + {local}ListableResource");
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -740,7 +754,7 @@ pub fn run(
 			}
 
 			{
-				let template_generics_where_part = format!("T: {local}serde::Serialize + {local}ListableResource", local = local);
+				let template_generics_where_part = format!("T: {local}serde::Serialize + {local}ListableResource");
 				let template_generics = templates::Generics {
 					where_part: Some(&template_generics_where_part),
 					..template_generics
@@ -761,7 +775,7 @@ pub fn run(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
 			let item_type_name = get_rust_type(items, map_namespace)?;
-			let alias_type_name = format!("{}List<{}>", local, item_type_name);
+			let alias_type_name = format!("{local}List<{item_type_name}>");
 
 			templates::type_alias::generate(
 				&mut out,
@@ -800,10 +814,10 @@ pub fn run(
 
 					let field_type_name =
 						if let Some(borrowed_type_name) = type_name.strip_prefix('&') {
-							format!("Option<&'a {}>", borrowed_type_name)
+							format!("Option<&'a {borrowed_type_name}>")
 						}
 						else {
-							format!("Option<{}>", type_name)
+							format!("Option<{type_name}>")
 						};
 
 					result.push(templates::Property {
@@ -1304,7 +1318,7 @@ fn evaluate_trait_bound(
 				swagger20::Type::JsonSchemaPropsOrStringArray(namespace)
 			) => {
 				let json_schema_props_ref_path = swagger20::RefPath {
-					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaProps", namespace),
+					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaProps"),
 					can_be_default: None,
 				};
 				let json_schema_props_bound =
@@ -1385,7 +1399,7 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 
 			*previous_line_was_empty = false;
 
-			Some(format!("{} {}", indent, line).into())
+			Some(format!("{indent} {line}").into())
 		})
 }
 
@@ -1477,27 +1491,27 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.CreateOptional" =>
-			Ok(format!("{}CreateOptional<'_>", local).into()),
+			Ok(format!("{local}CreateOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.DeleteOptional" =>
-			Ok(format!("{}DeleteOptional<'_>", local).into()),
+			Ok(format!("{local}DeleteOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ListOptional" =>
-			Ok(format!("{}ListOptional<'_>", local).into()),
+			Ok(format!("{local}ListOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.PatchOptional" =>
-			Ok(format!("{}PatchOptional<'_>", local).into()),
+			Ok(format!("{local}PatchOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.ReplaceOptional" =>
-			Ok(format!("{}ReplaceOptional<'_>", local).into()),
+			Ok(format!("{local}ReplaceOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(swagger20::RefPath { path, .. }) if path == "io.k8s.WatchOptional" =>
-			Ok(format!("{}WatchOptional<'_>", local).into()),
+			Ok(format!("{local}WatchOptional<'_>").into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
 			Ok(format!("&{}", get_fully_qualified_type_name(ref_path, map_namespace)).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("&{}serde_json::Value", local).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("&{local}serde_json::Value").into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
 			Ok(format!("&[{}]", get_rust_type(&items.kind, map_namespace)?).into()),
@@ -1562,7 +1576,7 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ref(ref_path) =>
 			Ok(get_fully_qualified_type_name(ref_path, map_namespace).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("{}serde_json::Value", local).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("{local}serde_json::Value").into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
 			Ok(format!("Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
@@ -1578,9 +1592,9 @@ fn get_rust_type(
 			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
-			Ok(format!("{}ByteString", local).into()),
+			Ok(format!("{local}ByteString").into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
-			Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>", local = local).into()),
+			Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>").into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {
@@ -1611,7 +1625,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("{}List<{}>", local, get_rust_type(items, map_namespace)?).into()),
+			Ok(format!("{local}List<{}>", get_rust_type(items, map_namespace)?).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1673,7 +1687,7 @@ pub fn write_operation(
 	writeln!(out)?;
 
 	if let Some(type_name) = type_name {
-		writeln!(out, "impl {} {{", type_name)?;
+		writeln!(out, "impl {type_name} {{")?;
 	}
 
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
@@ -1739,127 +1753,122 @@ pub fn write_operation(
 
 	if let Some(description) = operation.description.as_ref() {
 		for line in get_comment_text(description, "") {
-			writeln!(out, "{}///{}", indent, line)?;
+			writeln!(out, "{indent}///{line}")?;
 			need_empty_line = true;
 		}
 	}
 	if let Some(operation_result_name) = &operation_result_name {
 		if need_empty_line {
-			writeln!(out, "{}///", indent)?;
+			writeln!(out, "{indent}///")?;
 		}
 
 		writeln!(out,
-			"{}/// Use the returned [`{}ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
-			indent, local, operation_result_name, operation_result_name)?;
+			"{indent}/// Use the returned [`{local}ResponseBody`]`<`[`{operation_result_name}`]`>` constructor, or [`{operation_result_name}`] directly, to parse the HTTP response.")?;
 		need_empty_line = true;
 	}
 	else {
 		let common_response_type_link = match operation.responses {
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) =>
-				Some(format!("[`{}CreateResponse`]`<Self>", local)),
+				Some(format!("[`{local}CreateResponse`]`<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
 				Some(swagger20::KubernetesAction::Delete) =>
-					Some(format!("[`{}DeleteResponse`]`<Self>", local)),
+					Some(format!("[`{local}DeleteResponse`]`<Self>")),
 
 				Some(swagger20::KubernetesAction::DeleteCollection) =>
-					Some(format!("[`{local}DeleteResponse`]`<`[`{local}List`]`<Self>>", local = local)),
+					Some(format!("[`{local}DeleteResponse`]`<`[`{local}List`]`<Self>>")),
 
 				kubernetes_action => return Err(format!(
-					"operation {} has a DeleteResponse response but its action {:?} is neither a Delete nor DeleteCollection action",
-					operation.id, kubernetes_action).into()),
+					"operation {} has a DeleteResponse response but its action {kubernetes_action:?} is neither a Delete nor DeleteCollection action",
+					operation.id).into()),
 			},
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
-				Some(format!("[`{}ListResponse`]`<Self>", local)),
+				Some(format!("[`{local}ListResponse`]`<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) =>
-				Some(format!("[`{}PatchResponse`]`<Self>", local)),
+				Some(format!("[`{local}PatchResponse`]`<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) =>
-				Some(format!("[`{}ReplaceResponse`]`<Self>", local)),
+				Some(format!("[`{local}ReplaceResponse`]`<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) =>
-				Some(format!("[`{}WatchResponse`]`<Self>", local)),
+				Some(format!("[`{local}WatchResponse`]`<Self>")),
 
 			_ => None,
 		};
 
 		if let Some(common_response_type_link) = common_response_type_link {
 			if need_empty_line {
-				writeln!(out, "{}///", indent)?;
+				writeln!(out, "{indent}///")?;
 			}
 
 			writeln!(out,
-				"{}/// Use the returned [`{}ResponseBody`]`<`{}>` constructor, or {}` directly, to parse the HTTP response.",
-				indent,
-				local,
-				common_response_type_link,
-				common_response_type_link)?;
+				"{indent}/// Use the returned [`{local}ResponseBody`]`<`{common_response_type_link}>` constructor, or {common_response_type_link}` directly, to parse the HTTP response.")?;
 			need_empty_line = true;
 		}
 	}
 
 	if !parameters.is_empty() || delete_optional_parameter.is_some() || query_string_optional_parameter.is_some() {
 		if need_empty_line {
-			writeln!(out, "{}///", indent)?;
+			writeln!(out, "{indent}///")?;
 		}
 
-		writeln!(out, "{}/// # Arguments", indent)?;
+		writeln!(out, "{indent}/// # Arguments")?;
 		for (parameter_name, _, parameter) in &required_parameters {
-			writeln!(out, "{}///", indent)?;
-			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
+			writeln!(out, "{indent}///")?;
+			writeln!(out, "{indent}/// * `{parameter_name}`")?;
 			if let Some(description) = parameter.schema.description.as_ref() {
-				writeln!(out, "{}///", indent)?;
+				writeln!(out, "{indent}///")?;
 				for line in get_comment_text(description, "    ") {
-					writeln!(out, "{}///{}", indent, line)?;
+					writeln!(out, "{indent}///{line}")?;
 				}
 			}
 		}
 		if let Some((parameter_name, _, parameter)) = &delete_optional_parameter {
-			writeln!(out, "{}///", indent)?;
-			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
+			writeln!(out, "{indent}///")?;
+			writeln!(out, "{indent}/// * `{parameter_name}`")?;
 			if let Some(description) = parameter.schema.description.as_ref() {
-				writeln!(out, "{}///", indent)?;
+				writeln!(out, "{indent}///")?;
 				for line in get_comment_text(description, "    ") {
-					writeln!(out, "{}///{}", indent, line)?;
+					writeln!(out, "{indent}///{line}")?;
 				}
 			}
 		}
 		if let Some((parameter_name, _, parameter)) = &query_string_optional_parameter {
-			writeln!(out, "{}///", indent)?;
-			writeln!(out, "{}/// * `{}`", indent, parameter_name)?;
+			writeln!(out, "{indent}///")?;
+			writeln!(out, "{indent}/// * `{parameter_name}`")?;
 			if let Some(description) = parameter.schema.description.as_ref() {
-				writeln!(out, "{}///", indent)?;
+				writeln!(out, "{indent}///")?;
 				for line in get_comment_text(description, "    ") {
-					writeln!(out, "{}///{}", indent, line)?;
+					writeln!(out, "{indent}///{line}")?;
 				}
 			}
 		}
 		if !optional_parameters.is_empty() {
-			writeln!(out, "{}///", indent)?;
-			writeln!(out, "{}/// * `optional`", indent)?;
-			writeln!(out, "{}///", indent)?;
-			writeln!(out, "{}///     Optional parameters. Use `Default::default()` to not pass any.", indent)?;
+			writeln!(out, "{indent}///")?;
+			writeln!(out, "{indent}/// * `optional`")?;
+			writeln!(out, "{indent}///")?;
+			writeln!(out, "{indent}///     Optional parameters. Use `Default::default()` to not pass any.")?;
 		}
 	}
 
 	if let Some(operation_feature) = operation_feature {
-		writeln!(out, r#"{}#[cfg(feature = {:?})]"#, indent, operation_feature)?;
+		writeln!(out, r#"{indent}#[cfg(feature = {operation_feature:?})]"#)?;
 	}
 
-	writeln!(out, "{}{}fn {}(", indent, vis, operation_fn_name)?;
+	writeln!(out, "{indent}{vis}fn {operation_fn_name}(")?;
 	for (parameter_name, parameter_type, _) in &required_parameters {
-		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+		writeln!(out, "{indent}    {parameter_name}: {parameter_type},")?;
 	}
 	if let Some((parameter_name, parameter_type, _)) = &delete_optional_parameter {
-		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+		writeln!(out, "{indent}    {parameter_name}: {parameter_type},")?;
 	}
 	if let Some((parameter_name, parameter_type, _)) = &query_string_optional_parameter {
-		writeln!(out, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+		writeln!(out, "{indent}    {parameter_name}: {parameter_type},")?;
 	}
 	if !optional_parameters.is_empty() {
-		write!(out, "{}    optional: {}", indent, operation_optional_parameters_name)?;
+		write!(out, "{indent}    optional: {operation_optional_parameters_name}")?;
 		if any_optional_fields_have_lifetimes {
 			write!(out, "<'_>")?;
 		}
@@ -1867,48 +1876,46 @@ pub fn write_operation(
 	}
 	if let Some(operation_result_name) = &operation_result_name {
 		writeln!(out,
-			"{}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
-			indent, operation_result_name, local = local)?;
+			"{indent}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{operation_result_name}>), {local}RequestError> {{")?;
 	}
 	else {
 		let common_response_type = match operation.responses {
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::CreateResponse) =>
-				Some(format!("{}CreateResponse<Self>", local)),
+				Some(format!("{local}CreateResponse<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::DeleteResponse) => match operation.kubernetes_action {
 				Some(swagger20::KubernetesAction::Delete) =>
-					Some(format!("{}DeleteResponse<Self>", local)),
+					Some(format!("{local}DeleteResponse<Self>")),
 
 				Some(swagger20::KubernetesAction::DeleteCollection) =>
-					Some(format!("{local}DeleteResponse<{local}List<Self>>", local = local)),
+					Some(format!("{local}DeleteResponse<{local}List<Self>>")),
 
 				kubernetes_action => return Err(format!(
-					"operation {} has a DeleteResponse response but its action {:?} is neither a Delete nor DeleteCollection action",
-					operation.id, kubernetes_action).into()),
+					"operation {} has a DeleteResponse response but its action {kubernetes_action:?} is neither a Delete nor DeleteCollection action",
+					operation.id).into()),
 			},
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ListResponse) =>
-				Some(format!("{}ListResponse<Self>", local)),
+				Some(format!("{local}ListResponse<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::PatchResponse) =>
-				Some(format!("{}PatchResponse<Self>", local)),
+				Some(format!("{local}PatchResponse<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::ReplaceResponse) =>
-				Some(format!("{}ReplaceResponse<Self>", local)),
+				Some(format!("{local}ReplaceResponse<Self>")),
 
 			crate::swagger20::OperationResponses::Common(crate::swagger20::Type::WatchResponse) =>
-				Some(format!("{}WatchResponse<Self>", local)),
+				Some(format!("{local}WatchResponse<Self>")),
 
 			_ => None,
 		};
 
 		if let Some(common_response_type) = common_response_type {
 			writeln!(out,
-				"{}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{}>), {local}RequestError> {{",
-				indent, common_response_type, local = local)?;
+				"{indent}) -> Result<({local}http::Request<Vec<u8>>, fn({local}http::StatusCode) -> {local}ResponseBody<{common_response_type}>), {local}RequestError> {{")?;
 		}
 		else {
-			writeln!(out, "{}) -> Result<{local}http::Request<Vec<u8>>, {local}RequestError> {{", indent, local = local)?;
+			writeln!(out, "{indent}) -> Result<{local}http::Request<Vec<u8>>, {local}RequestError> {{")?;
 		}
 	}
 
@@ -1918,16 +1925,16 @@ pub fn write_operation(
 		query_string_optional_parameter.is_some();
 
 	if !optional_parameters.is_empty() {
-		writeln!(out, "{}    let {} {{", indent, operation_optional_parameters_name)?;
+		writeln!(out, "{indent}    let {operation_optional_parameters_name} {{")?;
 		for (parameter_name, _, _) in &optional_parameters {
-			writeln!(out, "{}        {},", indent, parameter_name)?;
+			writeln!(out, "{indent}        {parameter_name},")?;
 		}
 
-		writeln!(out, "{}    }} = optional;", indent)?;
+		writeln!(out, "{indent}    }} = optional;")?;
 	}
 
 	if have_path_parameters {
-		write!(out, r#"{}    let __url = format!("{}"#, indent, operation.path)?;
+		write!(out, r#"{indent}    let __url = format!("{}"#, operation.path)?;
 		if have_query_parameters {
 			write!(out, "?")?;
 		}
@@ -1938,21 +1945,20 @@ pub fn write_operation(
 				if parameter.location == swagger20::ParameterLocation::Path {
 					match parameter.schema.kind {
 						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => (),
-						_ => return Err(format!("parameter {} is in the path but is a {:?}", parameter_name, parameter_type).into()),
+						_ => return Err(format!("parameter {parameter_name} is in the path but is a {parameter_type:?}").into()),
 					}
 
 					writeln!(
 						out,
-						"{}        {} = {local}percent_encoding::percent_encode({}.as_bytes(), {local}percent_encoding2::PATH_SEGMENT_ENCODE_SET),",
-						indent, parameter_name, parameter_name, local = local)?;
+						"{indent}        {parameter_name} = {local}percent_encoding::percent_encode({parameter_name}.as_bytes(), {local}percent_encoding2::PATH_SEGMENT_ENCODE_SET),")?;
 				}
 			}
-			write!(out, "{}    ", indent)?;
+			write!(out, "{indent}    ")?;
 		}
 		writeln!(out, ");")?;
 	}
 	else {
-		write!(out, r#"{}    let __url = "{}"#, indent, operation.path)?;
+		write!(out, r#"{indent}    let __url = "{}"#, operation.path)?;
 		if have_query_parameters {
 			write!(out, "?")?;
 		}
@@ -1960,9 +1966,9 @@ pub fn write_operation(
 	}
 
 	if have_query_parameters {
-		writeln!(out, "{}    let mut __query_pairs = {}url::form_urlencoded::Serializer::new(__url);", indent, local)?;
+		writeln!(out, "{indent}    let mut __query_pairs = {local}url::form_urlencoded::Serializer::new(__url);")?;
 		if let Some((parameter_name, _, _)) = &query_string_optional_parameter {
-			writeln!(out, "{}    {}.__serialize(&mut __query_pairs);", indent, parameter_name)?;
+			writeln!(out, "{indent}    {parameter_name}.__serialize(&mut __query_pairs);")?;
 		}
 		else {
 			for (parameter_name, parameter_type, parameter) in &parameters {
@@ -1971,56 +1977,56 @@ pub fn write_operation(
 						match &parameter.schema.kind {
 							swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) => match &items.kind {
 								swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-									writeln!(out, "{}    for {} in {} {{", indent, parameter_name, parameter_name)?;
-									writeln!(out, r#"{}        __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?;
-									writeln!(out, "{}    }}", indent)?;
+									writeln!(out, "{indent}    for {parameter_name} in {parameter_name} {{")?;
+									writeln!(out, r#"{indent}        __query_pairs.append_pair({:?}, {parameter_name});"#, parameter.name)?;
+									writeln!(out, "{indent}    }}")?;
 								},
 
-								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+								_ => return Err(format!("parameter {} is in the query string but is a {parameter_type:?}", parameter.name).into()),
 							},
 
 							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) =>
-								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, if {} {{ "true" }} else {{ "false" }});"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}    __query_pairs.append_pair({:?}, if {parameter_name} {{ "true" }} else {{ "false" }});"#, parameter.name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. } | swagger20::Type::Number { .. }) =>
-								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}    __query_pairs.append_pair({:?}, &{parameter_name}.to_string());"#, parameter.name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
-								writeln!(out, r#"{}    __query_pairs.append_pair({:?}, &{});"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}    __query_pairs.append_pair({:?}, &{parameter_name});"#, parameter.name)?,
 
-							_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+							_ => return Err(format!("parameter {} is in the query string but is a {parameter_type:?}", parameter.name).into()),
 						}
 					}
 					else {
-						writeln!(out, "{}    if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
+						writeln!(out, "{indent}    if let Some({parameter_name}) = {parameter_name} {{")?;
 						match &parameter.schema.kind {
 							swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) => match &items.kind {
 								swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-									writeln!(out, "{}        for {} in {} {{", indent, parameter_name, parameter_name)?;
-									writeln!(out, r#"{}            __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?;
-									writeln!(out, "{}        }}", indent)?;
+									writeln!(out, "{indent}        for {parameter_name} in {parameter_name} {{")?;
+									writeln!(out, r#"{indent}            __query_pairs.append_pair({:?}, {parameter_name});"#, parameter.name)?;
+									writeln!(out, "{indent}        }}")?;
 								},
 
-								_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+								_ => return Err(format!("parameter {} is in the query string but is a {parameter_type:?}", parameter.name).into()),
 							},
 
 							swagger20::SchemaKind::Ty(swagger20::Type::Boolean) =>
-								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, if {} {{ "true" }} else {{ "false" }});"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}        __query_pairs.append_pair({:?}, if {parameter_name} {{ "true" }} else {{ "false" }});"#, parameter.name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. } | swagger20::Type::Number { .. }) =>
-								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}        __query_pairs.append_pair({:?}, &{parameter_name}.to_string());"#, parameter.name)?,
 
 							swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
-								writeln!(out, r#"{}        __query_pairs.append_pair({:?}, {});"#, indent, parameter.name, parameter_name)?,
+								writeln!(out, r#"{indent}        __query_pairs.append_pair({:?}, {parameter_name});"#, parameter.name)?,
 
-							_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter.name, parameter_type).into()),
+							_ => return Err(format!("parameter {} is in the query string but is a {parameter_type:?}", parameter.name).into()),
 						}
-						writeln!(out, "{}    }}", indent)?;
+						writeln!(out, "{indent}    }}")?;
 					}
 				}
 			}
 		}
-		writeln!(out, "{}    let __url = __query_pairs.finish();", indent)?;
+		writeln!(out, "{indent}    let __url = __query_pairs.finish();")?;
 	}
 	writeln!(out)?;
 
@@ -2032,25 +2038,25 @@ pub fn write_operation(
 		swagger20::Method::Put => "put",
 	};
 
-	writeln!(out, "{}    let __request = {}http::Request::{}(__url);", indent, local, method)?;
+	writeln!(out, "{indent}    let __request = {local}http::Request::{method}(__url);")?;
 
 	let body_parameter =
 		delete_optional_parameter.as_ref()
 		.or_else(|| parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body));
 
-	write!(out, "{}    let __body = ", indent)?;
+	write!(out, "{indent}    let __body = ")?;
 	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
 		if parameter.required {
 			if parameter_type.starts_with('&') {
-				writeln!(out, "{local}serde_json::to_vec({}).map_err({local}RequestError::Json)?;", parameter_name, local = local)?;
+				writeln!(out, "{local}serde_json::to_vec({parameter_name}).map_err({local}RequestError::Json)?;")?;
 			}
 			else {
-				writeln!(out, "{local}serde_json::to_vec(&{}).map_err({local}RequestError::Json)?;", parameter_name, local = local)?;
+				writeln!(out, "{local}serde_json::to_vec(&{parameter_name}).map_err({local}RequestError::Json)?;")?;
 			}
 		}
 		else {
 			writeln!(out)?;
-			writeln!(out, "{}.unwrap_or(Ok(vec![]), |value| {local}serde_json::to_vec(value).map_err({local}RequestError::Json))?;", parameter_name, local = local)?;
+			writeln!(out, "{parameter_name}.unwrap_or(Ok(vec![]), |value| {local}serde_json::to_vec(value).map_err({local}RequestError::Json))?;")?;
 		}
 
 		let is_patch =
@@ -2063,17 +2069,15 @@ pub fn write_operation(
 		if is_patch {
 			let patch_type = get_rust_type(&parameter.schema.kind, map_namespace)?;
 			writeln!(out,
-				"{}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static(match {} {{",
-				indent, parameter_name, local = local)?;
-			writeln!(out, r#"{}        {}::Json(_) => "application/json-patch+json","#, indent, patch_type)?;
-			writeln!(out, r#"{}        {}::Merge(_) => "application/merge-patch+json","#, indent, patch_type)?;
-			writeln!(out, r#"{}        {}::StrategicMerge(_) => "application/strategic-merge-patch+json","#, indent, patch_type)?;
-			writeln!(out, "{}    }}));", indent)?;
+				"{indent}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static(match {parameter_name} {{")?;
+			writeln!(out, r#"{indent}        {patch_type}::Json(_) => "application/json-patch+json","#)?;
+			writeln!(out, r#"{indent}        {patch_type}::Merge(_) => "application/merge-patch+json","#)?;
+			writeln!(out, r#"{indent}        {patch_type}::StrategicMerge(_) => "application/strategic-merge-patch+json","#)?;
+			writeln!(out, "{indent}    }}));")?;
 		}
 		else {
 			writeln!(out,
-				r#"{}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static("application/json"));"#,
-				indent, local = local)?;
+				r#"{indent}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static("application/json"));"#)?;
 		}
 	}
 	else {
@@ -2081,10 +2085,10 @@ pub fn write_operation(
 	}
 
 	if operation_result_name.is_some() {
-		writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-		writeln!(out, "{}        Ok(request) => Ok((request, {}ResponseBody::new)),", indent, local)?;
-		writeln!(out, "{}        Err(err) => Err({}RequestError::Http(err)),", indent, local)?;
-		writeln!(out, "{}    }}", indent)?;
+		writeln!(out, "{indent}    match __request.body(__body) {{")?;
+		writeln!(out, "{indent}        Ok(request) => Ok((request, {local}ResponseBody::new)),")?;
+		writeln!(out, "{indent}        Err(err) => Err({local}RequestError::Http(err)),")?;
+		writeln!(out, "{indent}    }}")?;
 	}
 	else {
 		let is_common_response_type = match operation.responses {
@@ -2093,16 +2097,16 @@ pub fn write_operation(
 		};
 
 		if is_common_response_type {
-			writeln!(out, "{}    match __request.body(__body) {{", indent)?;
-			writeln!(out, "{}        Ok(request) => Ok((request, {}ResponseBody::new)),", indent, local)?;
-			writeln!(out, "{}        Err(err) => Err({}RequestError::Http(err)),", indent, local)?;
-			writeln!(out, "{}    }}", indent)?;
+			writeln!(out, "{indent}    match __request.body(__body) {{")?;
+			writeln!(out, "{indent}        Ok(request) => Ok((request, {local}ResponseBody::new)),")?;
+			writeln!(out, "{indent}        Err(err) => Err({local}RequestError::Http(err)),")?;
+			writeln!(out, "{indent}    }}")?;
 		}
 		else {
-			writeln!(out, "{}    __request.body(__body).map_err({}RequestError::Http)", indent, local)?;
+			writeln!(out, "{indent}    __request.body(__body).map_err({local}RequestError::Http)")?;
 		}
 	}
-	writeln!(out, "{}}}", indent)?;
+	writeln!(out, "{indent}}}")?;
 
 	if type_name.is_some() {
 		writeln!(out, "}}")?;
@@ -2112,17 +2116,17 @@ pub fn write_operation(
 		writeln!(out)?;
 
 		if let Some(type_name) = type_name {
-			writeln!(out, "/// Optional parameters of [`{}::{}`]", type_name, operation_fn_name)?;
+			writeln!(out, "/// Optional parameters of [`{type_name}::{operation_fn_name}`]")?;
 		}
 		else {
-			writeln!(out, "/// Optional parameters of [`{}`]", operation_fn_name)?;
+			writeln!(out, "/// Optional parameters of [`{operation_fn_name}`]")?;
 		}
 
 		if let Some(operation_feature) = operation_feature {
-			writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
+			writeln!(out, r#"#[cfg(feature = {operation_feature:?})]"#)?;
 		}
 		writeln!(out, "#[derive(Clone, Copy, Debug, Default)]")?;
-		write!(out, "{}struct {}", vis, operation_optional_parameters_name)?;
+		write!(out, "{vis}struct {operation_optional_parameters_name}")?;
 		if any_optional_fields_have_lifetimes {
 			write!(out, "<'a>")?;
 		}
@@ -2131,14 +2135,14 @@ pub fn write_operation(
 		for (parameter_name, parameter_type, parameter) in &optional_parameters {
 			if let Some(description) = parameter.schema.description.as_ref() {
 				for line in get_comment_text(description, "") {
-					writeln!(out, "    ///{}", line)?;
+					writeln!(out, "    ///{line}")?;
 				}
 			}
 			if let Some(borrowed_parameter_type) = parameter_type.strip_prefix('&') {
-				writeln!(out, "    {}{}: Option<&'a {}>,", vis, parameter_name, borrowed_parameter_type)?;
+				writeln!(out, "    {vis}{parameter_name}: Option<&'a {borrowed_parameter_type}>,")?;
 			}
 			else {
-				writeln!(out, "    {}{}: Option<{}>,", vis, parameter_name, parameter_type)?;
+				writeln!(out, "    {vis}{parameter_name}: Option<{parameter_type}>,")?;
 			}
 		}
 
@@ -2151,20 +2155,18 @@ pub fn write_operation(
 
 			if let Some(type_name) = type_name {
 				writeln!(out,
-					"/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]",
-					operation_result_name, type_name, operation_fn_name)?;
+					"/// Use `<{operation_result_name} as Response>::try_from_parts` to parse the HTTP response body of [`{type_name}::{operation_fn_name}`]")?;
 			}
 			else {
 				writeln!(out,
-					"/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}`]",
-					operation_result_name, operation_fn_name)?;
+					"/// Use `<{operation_result_name} as Response>::try_from_parts` to parse the HTTP response body of [`{operation_fn_name}`]")?;
 			}
 
 			if let Some(operation_feature) = operation_feature {
-				writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
+				writeln!(out, r#"#[cfg(feature = {operation_feature:?})]"#)?;
 			}
 			writeln!(out, "#[derive(Debug)]")?;
-			writeln!(out, "{}enum {} {{", vis, operation_result_name)?;
+			writeln!(out, "{vis}enum {operation_result_name} {{")?;
 
 			let operation_responses: Result<Vec<_>, _> =
 				responses.iter()
@@ -2175,7 +2177,7 @@ pub fn write_operation(
 						http::StatusCode::OK => "OK",
 						http::StatusCode::UNAUTHORIZED => "UNAUTHORIZED",
 						http::StatusCode::UNPROCESSABLE_ENTITY => "UNPROCESSABLE_ENTITY",
-						_ => return Err(format!("unrecognized status code {}", status_code)),
+						_ => return Err(format!("unrecognized status code {status_code}")),
 					};
 
 					let variant_name = match status_code {
@@ -2184,7 +2186,7 @@ pub fn write_operation(
 						http::StatusCode::OK => "Ok",
 						http::StatusCode::UNAUTHORIZED => "Unauthorized",
 						http::StatusCode::UNPROCESSABLE_ENTITY => "UnprocessableEntity",
-						_ => return Err(format!("unrecognized status code {}", status_code)),
+						_ => return Err(format!("unrecognized status code {status_code}")),
 					};
 
 					Ok((http_status_code, variant_name, schema))
@@ -2193,53 +2195,53 @@ pub fn write_operation(
 			let operation_responses = operation_responses?;
 
 			for &(_, variant_name, schema) in &operation_responses {
-				writeln!(out, "    {}({}),", variant_name, get_rust_type(&schema.kind, map_namespace)?)?;
+				writeln!(out, "    {variant_name}({}),", get_rust_type(&schema.kind, map_namespace)?)?;
 			}
 
-			writeln!(out, "    Other(Result<Option<{local}serde_json::Value>, {local}serde_json::Error>),", local = local)?;
+			writeln!(out, "    Other(Result<Option<{local}serde_json::Value>, {local}serde_json::Error>),")?;
 			writeln!(out, "}}")?;
 			writeln!(out)?;
 
 			if let Some(operation_feature) = operation_feature {
-				writeln!(out, r#"#[cfg(feature = {:?})]"#, operation_feature)?;
+				writeln!(out, r#"#[cfg(feature = {operation_feature:?})]"#)?;
 			}
-			writeln!(out, "impl {}Response for {} {{", local, operation_result_name)?;
-			writeln!(out, "    fn try_from_parts(status_code: {local}http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{", local = local)?;
+			writeln!(out, "impl {local}Response for {operation_result_name} {{")?;
+			writeln!(out, "    fn try_from_parts(status_code: {local}http::StatusCode, buf: &[u8]) -> Result<(Self, usize), {local}ResponseError> {{")?;
 
 			writeln!(out, "        match status_code {{")?;
 			for &(http_status_code, variant_name, schema) in &operation_responses {
-				writeln!(out, "            {}http::StatusCode::{} => {{", local, http_status_code)?;
+				writeln!(out, "            {local}http::StatusCode::{http_status_code} => {{")?;
 
 				match &schema.kind {
 					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
 						writeln!(out, "                if buf.is_empty() {{")?;
-						writeln!(out, "                    return Err({}ResponseError::NeedMoreData);", local)?;
+						writeln!(out, "                    return Err({local}ResponseError::NeedMoreData);")?;
 						writeln!(out, "                }}")?;
 						writeln!(out)?;
 						writeln!(out, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
 						writeln!(out, "                    Ok(s) => (s, buf.len()),")?;
 						writeln!(out, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
-						writeln!(out, "                        (0, Some(_)) => return Err({}ResponseError::Utf8(err)),", local)?;
-						writeln!(out, "                        (0, None) => return Err({}ResponseError::NeedMoreData),", local)?;
+						writeln!(out, "                        (0, Some(_)) => return Err({local}ResponseError::Utf8(err)),")?;
+						writeln!(out, "                        (0, None) => return Err({local}ResponseError::NeedMoreData),")?;
 						writeln!(out, "                        (valid_up_to, _) => (")?;
 						writeln!(out, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
 						writeln!(out, "                            valid_up_to,")?;
 						writeln!(out, "                        ),")?;
 						writeln!(out, "                    }},")?;
 						writeln!(out, "                }};")?;
-						writeln!(out, "                Ok(({}::{}(result.to_owned()), len))", operation_result_name, variant_name)?;
+						writeln!(out, "                Ok(({operation_result_name}::{variant_name}(result.to_owned()), len))")?;
 					},
 
 					swagger20::SchemaKind::Ref(_) => {
-						writeln!(out, "                let result = match {}serde_json::from_slice(buf) {{", local)?;
+						writeln!(out, "                let result = match {local}serde_json::from_slice(buf) {{")?;
 						writeln!(out, "                    Ok(value) => value,")?;
-						writeln!(out, "                    Err(err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
-						writeln!(out, "                    Err(err) => return Err({}ResponseError::Json(err)),", local)?;
+						writeln!(out, "                    Err(err) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),")?;
+						writeln!(out, "                    Err(err) => return Err({local}ResponseError::Json(err)),")?;
 						writeln!(out, "                }};")?;
-						writeln!(out, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
+						writeln!(out, "                Ok(({operation_result_name}::{variant_name}(result), buf.len()))")?;
 					},
 
-					other => return Err(format!("operation {} has unrecognized type for response of variant {}: {:?}", operation.id, variant_name, other).into()),
+					other => return Err(format!("operation {} has unrecognized type for response of variant {variant_name}: {other:?}", operation.id).into()),
 				}
 
 				writeln!(out, "            }},")?;
@@ -2250,13 +2252,13 @@ pub fn write_operation(
 			writeln!(out, "                        (Ok(None), 0)")?;
 			writeln!(out, "                    }}")?;
 			writeln!(out, "                    else {{")?;
-			writeln!(out, "                        match {}serde_json::from_slice(buf) {{", local)?;
+			writeln!(out, "                        match {local}serde_json::from_slice(buf) {{")?;
 			writeln!(out, "                            Ok(value) => (Ok(Some(value)), buf.len()),")?;
-			writeln!(out, "                            Err(err) if err.is_eof() => return Err({}ResponseError::NeedMoreData),", local)?;
+			writeln!(out, "                            Err(err) if err.is_eof() => return Err({local}ResponseError::NeedMoreData),")?;
 			writeln!(out, "                            Err(err) => (Err(err), 0),")?;
 			writeln!(out, "                        }}")?;
 			writeln!(out, "                    }};")?;
-			writeln!(out, "                Ok(({}::Other(result), read))", operation_result_name)?;
+			writeln!(out, "                Ok(({operation_result_name}::Other(result), read))")?;
 			writeln!(out, "            }},")?;
 			writeln!(out, "        }}")?;
 			writeln!(out, "    }}")?;
@@ -2287,7 +2289,7 @@ fn get_operation_names(
 						let mut chars = part.chars();
 						if let Some(first_char) = chars.next() {
 							let rest_chars = chars.as_str();
-							std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
+							std::borrow::Cow::Owned(format!("{}{rest_chars}", first_char.to_uppercase()))
 						}
 						else {
 							std::borrow::Cow::Borrowed("")
@@ -2307,14 +2309,14 @@ fn get_operation_names(
 	let operation_fn_name = get_rust_ident(&operation_id);
 
 	let mut chars = operation_id.chars();
-	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
+	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {operation:?}"))?.to_uppercase();
 	let rest_chars = chars.as_str();
 	let operation_result_name = match (&operation.responses, operation.kubernetes_action) {
 		(swagger20::OperationResponses::Common(_), _) |
 		(_, Some(swagger20::KubernetesAction::Connect)) => None,
-		_ => Some(format!("{}{}Response", first_char, rest_chars)),
+		_ => Some(format!("{first_char}{rest_chars}Response")),
 	};
-	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
+	let operation_optional_parameters_name = format!("{first_char}{rest_chars}Optional");
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }

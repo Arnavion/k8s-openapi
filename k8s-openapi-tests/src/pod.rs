@@ -7,7 +7,7 @@ async fn list() {
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 	let pod_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 	assert_eq!(k8s_openapi::kind(&pod_list), "PodList");

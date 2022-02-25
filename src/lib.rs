@@ -47,7 +47,7 @@
 //!
 //! fn main() {
 //!     let pod_spec: api::PodSpec = Default::default();
-//!     println!("{:#?}", pod_spec);
+//!     println!("{pod_spec:#?}");
 //! }
 //! ```
 //!
@@ -193,8 +193,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Some unexpected response
             // (not HTTP 200, but still parsed successfully)
             Ok(other) => return Err(format!(
-                "expected Ok but got {} {:?}",
-                status_code, other).into()),
+                "expected Ok but got {status_code} {other:?}").into()),
 
             // Need more response data.
             // Read more bytes from the response into the `ResponseBody`
@@ -203,13 +202,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Some other error, like the response body being
             // malformed JSON or invalid UTF-8.
             Err(err) => return Err(format!(
-                "error: {} {:?}",
-                status_code, err).into()),
+                "error: {status_code} {err:?}").into()),
         }
     };
 
     for pod in pod_list.items {
-        println!("{:#?}", pod);
+        println!("{pod:#?}",);
     }
 
     Ok(())
@@ -547,8 +545,8 @@ pub enum RequestError {
 impl std::fmt::Display for RequestError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            RequestError::Http(err) => write!(f, "{}", err),
-            RequestError::Json(err) => write!(f, "{}", err),
+            RequestError::Http(err) => write!(f, "{err}"),
+            RequestError::Json(err) => write!(f, "{err}"),
         }
     }
 }
@@ -669,9 +667,9 @@ pub enum ResponseError {
 impl std::fmt::Display for ResponseError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ResponseError::NeedMoreData => write!(f, "need more response data"),
-            ResponseError::Json(err) => write!(f, "{}", err),
-            ResponseError::Utf8(err) => write!(f, "{}", err),
+            ResponseError::NeedMoreData => f.write_str("need more response data"),
+            ResponseError::Json(err) => write!(f, "{err}"),
+            ResponseError::Utf8(err) => write!(f, "{err}"),
         }
     }
 }

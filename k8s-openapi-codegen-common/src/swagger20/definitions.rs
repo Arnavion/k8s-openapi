@@ -144,7 +144,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			}
 			else if let Some(properties) = value.properties.take() {
 				if value.ty.as_deref() != Some("object") {
-					return Err(serde::de::Error::custom(format!("schema has properties but not type=object {:?}", value)));
+					return Err(serde::de::Error::custom(format!("schema has properties but not type=object {value:?}")));
 				}
 
 				let required: std::collections::BTreeSet<_> = value.required.into_iter().collect();

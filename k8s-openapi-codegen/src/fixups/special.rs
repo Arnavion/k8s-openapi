@@ -7,8 +7,8 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &namespace in &["v1beta1", "v1"] {
-			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrArray", namespace));
+		for namespace in ["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrArray"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(_))) {
@@ -29,8 +29,8 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &namespace in &["v1beta1", "v1"] {
-			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrBool", namespace));
+		for namespace in ["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrBool"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(_))) {
@@ -51,8 +51,8 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		let mut found = false;
 
-		for &namespace in &["v1beta1", "v1"] {
-			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{}.JSONSchemaPropsOrStringArray", namespace));
+		for namespace in ["v1beta1", "v1"] {
+			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrStringArray"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(_))) {
@@ -138,8 +138,8 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 
 			if !operation.id.starts_with(description) {
 				return Err(format!(
-					"operation {} has action {:?} but isn't a {} operation",
-					operation.id, operation.kubernetes_action, description).into());
+					"operation {} has action {:?} but isn't a {description} operation",
+					operation.id, operation.kubernetes_action).into());
 			}
 
 			{
@@ -157,8 +157,8 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 						}
 						else {
 							return Err(format!(
-								"operation {} is a {} operation but doesn't have a {} parameter",
-								operation.id, description, expected_parameter_name).into());
+								"operation {} is a {description} operation but doesn't have a {expected_parameter_name} parameter",
+								operation.id).into());
 						};
 
 					optional_definition
@@ -181,14 +181,14 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 		}
 
 		if optional_definition.is_empty() {
-			return Err(format!("never found any {} operations", description).into());
+			return Err(format!("never found any {description} operations").into());
 		}
 
 		// Not useful for programmatic clients.
 		let _ = optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
 
 		spec.definitions.insert(crate::swagger20::DefinitionPath(type_name.to_string()), crate::swagger20::Schema {
-			description: Some(format!("Common parameters for all {} operations.", description)),
+			description: Some(format!("Common parameters for all {description} operations.")),
 			kind: crate::swagger20::SchemaKind::Ty(ty(optional_definition)),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
@@ -369,7 +369,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 					&**expected_parameter
 				}
 				else {
-					return Err(format!("operation {} is a list operation but doesn't have a {} parameter", operation.id, expected_parameter_name).into());
+					return Err(format!("operation {} is a list operation but doesn't have a {expected_parameter_name} parameter", operation.id).into());
 				};
 
 			if expected_parameter_name != "allowWatchBookmarks" && expected_parameter_name != "watch" {
@@ -530,7 +530,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	for operation in &spec.operations {
 		if let Some(crate::swagger20::KubernetesAction::Watch | crate::swagger20::KubernetesAction::WatchList) = operation.kubernetes_action {
 			if !converted_watch_operations.contains(&operation.id) {
-				return Err(format!("found a watch operation that wasn't synthesized from a list operation: {:?}", operation).into());
+				return Err(format!("found a watch operation that wasn't synthesized from a list operation: {operation:?}").into());
 			}
 		}
 	}
@@ -553,7 +553,7 @@ pub(crate) fn watch_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate
 						if let Some(property_description) = &object_property.description {
 							writeln!(type_description)?;
 							writeln!(type_description)?;
-							writeln!(type_description, "{}", property_description)?;
+							writeln!(type_description, "{property_description}")?;
 						}
 					}
 					spec.definitions.insert(definition_path, definition);
@@ -623,27 +623,25 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 				item_schema
 			}
 			else {
-				return Err(format!("definition {} looks like a list but doesn't have an items property", definition_path).into());
+				return Err(format!("definition {definition_path} looks like a list but doesn't have an items property").into());
 			};
 
 		let (item_ref_path, list_kind) =
 			if let crate::swagger20::SchemaKind::Ref(item_ref_path) = &item_schema.kind {
 				let item_schema =
 					spec.definitions.get(&crate::swagger20::DefinitionPath(item_ref_path.path.clone()))
-					.ok_or_else(|| format!("definition {} looks like a list but its item's definition does not exist in the spec", definition_path))?;
+					.ok_or_else(|| format!("definition {definition_path} looks like a list but its item's definition does not exist in the spec"))?;
 
 				let item_kubernetes_group_kind_version = match &item_schema.kubernetes_group_kind_versions[..] {
 					[group_kind_version] => group_kind_version,
 					_ => return Err(format!(
-						"definition {} looks like a list but its item's definition does not have a single group-version-kind",
-						definition_path).into()),
+						"definition {definition_path} looks like a list but its item's definition does not have a single group-version-kind").into()),
 				};
 
 				let list_kubernetes_group_kind_version = match &definition.kubernetes_group_kind_versions[..] {
 					[group_kind_version] => group_kind_version,
 					_ => return Err(format!(
-						"definition {} looks like a list but it does not have a single group-version-kind",
-						definition_path).into()),
+						"definition {definition_path} looks like a list but it does not have a single group-version-kind").into()),
 				};
 
 				let item_gkv_corresponds_to_list_gkv =
@@ -652,13 +650,13 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 					list_kubernetes_group_kind_version.kind == format!("{}List", item_kubernetes_group_kind_version.kind);
 				if !item_gkv_corresponds_to_list_gkv {
 					return Err(format!(
-						"defintion {} looks like a list but its group-version-kind does not correspond to its item's group-version-kind", definition_path).into());
+						"defintion {definition_path} looks like a list but its group-version-kind does not correspond to its item's group-version-kind").into());
 				}
 
 				(item_ref_path.clone(), list_kubernetes_group_kind_version.kind.clone())
 			}
 			else {
-				return Err(format!("definition {} looks like a list but its items property is not a ref", definition_path).into());
+				return Err(format!("definition {definition_path} looks like a list but its items property is not a ref").into());
 			};
 
 		list_definition_paths.push((definition_path.clone(), item_ref_path, list_kind));
@@ -666,7 +664,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 		if let Some((_, list_property_names)) = &list_properties {
 			let property_names: std::collections::BTreeSet<_> = properties.keys().cloned().collect();
 			if &property_names != list_property_names {
-				return Err(format!("Definition {} looks like a list but doesn't have the expected properties: {:?}", definition_path, properties).into());
+				return Err(format!("Definition {definition_path} looks like a list but doesn't have the expected properties: {properties:?}").into());
 			}
 		}
 		else {
@@ -783,8 +781,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
 					if response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED, http::StatusCode::ACCEPTED] {
-						return Err(format!("operation {} does not have the expected response status codes of a create operation: {:?}",
-							operation.id, response_status_codes).into());
+						return Err(format!("operation {} does not have the expected response status codes of a create operation: {response_status_codes:?}",
+							operation.id).into());
 					}
 
 					let group_version_kind =
@@ -836,8 +834,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 						let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 						response_status_codes.sort();
 						if response_status_codes != [http::StatusCode::OK, http::StatusCode::ACCEPTED] {
-							return Err(format!("operation {} does not have the expected response status codes of a delete operation: {:?}",
-								operation.id, response_status_codes).into());
+							return Err(format!("operation {} does not have the expected response status codes of a delete operation: {response_status_codes:?}",
+								operation.id).into());
 						}
 
 						// Prevent the Iterator::all closure below capturing all of `self` and complain about conflicting borrows
@@ -861,7 +859,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 								if let Some(kubernetes_group_kind_version) = &operation.kubernetes_group_kind_version {
 									let response_schema =
 										definitions.get(&crate::swagger20::DefinitionPath(ref_path.path.clone()))
-										.unwrap_or_else(|| panic!("operation {} returns undefined type {:?}", operation.id, kubernetes_group_kind_version));
+										.unwrap_or_else(|| panic!("operation {} returns undefined type {kubernetes_group_kind_version:?}", operation.id));
 									if response_schema.kubernetes_group_kind_versions.contains(kubernetes_group_kind_version) {
 										return true;
 									}
@@ -888,8 +886,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 						response_status_codes.sort();
 						if response_status_codes != [http::StatusCode::OK] // delete-collection does not have 202, but we'll synthesize it anyway
 						{
-							return Err(format!("operation {} does not have the expected response status codes of a delete-collection operation: {:?}",
-								operation.id, response_status_codes).into());
+							return Err(format!("operation {} does not have the expected response status codes of a delete-collection operation: {response_status_codes:?}",
+								operation.id).into());
 						}
 
 						let should_use_common_response_type =
@@ -941,8 +939,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
 					if response_status_codes != [http::StatusCode::OK] {
-						return Err(format!("operation {} does not have the expected response status codes of a list operation: {:?}",
-							operation.id, response_status_codes).into());
+						return Err(format!("operation {} does not have the expected response status codes of a list operation: {response_status_codes:?}",
+							operation.id).into());
 					}
 
 					let group_version_kind =
@@ -1000,8 +998,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 						response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] &&
 						response_status_codes != [http::StatusCode::OK] // 1.21 and earlier did not have 201
 					{
-						return Err(format!("operation {} does not have the expected response status codes of a patch operation: {:?}",
-							operation.id, response_status_codes).into());
+						return Err(format!("operation {} does not have the expected response status codes of a patch operation: {response_status_codes:?}",
+							operation.id).into());
 					}
 
 					let group_version_kind =
@@ -1051,8 +1049,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
 					if response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] {
-						return Err(format!("operation {} does not have the expected response status codes of a replace operation: {:?}",
-							operation.id, response_status_codes).into());
+						return Err(format!("operation {} does not have the expected response status codes of a replace operation: {response_status_codes:?}",
+							operation.id).into());
 					}
 
 					let group_version_kind =
@@ -1102,8 +1100,8 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 					let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
 					response_status_codes.sort();
 					if response_status_codes != [http::StatusCode::OK] {
-						return Err(format!("operation {} does not have the expected response status codes of a watch operation: {:?}",
-							operation.id, response_status_codes).into());
+						return Err(format!("operation {} does not have the expected response status codes of a watch operation: {response_status_codes:?}",
+							operation.id).into());
 					}
 
 					let should_use_common_response_type =

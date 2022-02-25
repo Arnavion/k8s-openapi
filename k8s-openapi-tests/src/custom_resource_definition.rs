@@ -121,7 +121,7 @@ async fn test() {
 
 	let custom_resource_definition = apiextensions::CustomResourceDefinition {
 		metadata: meta::ObjectMeta {
-			name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
+			name: Some(format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP)),
 			..Default::default()
 		},
 		spec: apiextensions::CustomResourceDefinitionSpec {
@@ -160,7 +160,7 @@ async fn test() {
 			(k8s_openapi::CreateResponse::Created(_), _) |
 			(_, http::StatusCode::CONFLICT) => break,
 			(_, http::StatusCode::INTERNAL_SERVER_ERROR) => (),
-			(other, status_code) => panic!("{:?} {}", other, status_code),
+			(other, status_code) => panic!("{other:?} {status_code}"),
 		}
 	}
 
@@ -168,11 +168,11 @@ async fn test() {
 	loop {
 		let (request, response_body) =
 			apiextensions::CustomResourceDefinition::read_custom_resource_definition(
-				&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP.to_owned()))
+				&format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP.to_owned()))
 			.expect("couldn't get custom resource definition");
 		let custom_resource_definition = match client.get_single_value(request, response_body).await {
 			(apiextensions::ReadCustomResourceDefinitionResponse::Ok(custom_resource_definition), _) => custom_resource_definition,
-			(other, status_code) => panic!("{:?} {}", other, status_code),
+			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 
 		let accepted_names_kind = {
@@ -211,7 +211,7 @@ async fn test() {
 		.expect("couldn't create FooBar");
 	let fb1 = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Ok(fb) | k8s_openapi::CreateResponse::Created(fb), _) => fb,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 
@@ -219,7 +219,7 @@ async fn test() {
 	let (request, response_body) = FooBar::list_namespaced_foo_bar("default", Default::default()).expect("couldn't list FooBars");
 	let foo_bar_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(foo_bar_list), _) => foo_bar_list,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 	assert_eq!(k8s_openapi::kind(&foo_bar_list), "FooBarList");
 	let _ =
@@ -233,7 +233,7 @@ async fn test() {
 	let (request, response_body) = FooBar::read_namespaced_foo_bar("fb1", "default").expect("couldn't read FooBar");
 	let fb1_2 = match client.get_single_value(request, response_body).await {
 		(ReadNamespacedFooBarResponse::Ok(fb), _) => fb,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 	assert_eq!(fb1_2.metadata.name.as_ref().unwrap(), "fb1");
 
@@ -249,7 +249,7 @@ async fn test() {
 				let fb = match foo_bar_watch_event {
 					(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Added(fb)), _) => fb,
 					(k8s_openapi::WatchResponse::Ok(_), _) => return std::future::ready(None),
-					(other, status_code) => panic!("{:?} {}", other, status_code),
+					(other, status_code) => panic!("{other:?} {status_code}"),
 				};
 
 				let name = fb.metadata.name.as_deref();
@@ -274,7 +274,7 @@ async fn test() {
 	};
 	let () = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 
@@ -290,14 +290,14 @@ async fn test() {
 		].into_iter().collect())),
 	].into_iter().collect());
 	let request =
-		http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
-			<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION, plural))
+		http::Request::post(format!("/apis/{}/{}/namespaces/default/{plural}",
+			<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION))
 		.header(http::header::CONTENT_TYPE, "application/json")
 		.body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
 		.expect("couldn't create custom resource");
 	match client.get_single_value(request, k8s_openapi::ResponseBody::<k8s_openapi::CreateResponse<FooBar>>::new).await {
 		(_, http::StatusCode::UNPROCESSABLE_ENTITY) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
 	let fb3 = serde_json::Value::Object(vec![
@@ -312,25 +312,25 @@ async fn test() {
 		].into_iter().collect())),
 	].into_iter().collect());
 	let request =
-		http::Request::post(format!("/apis/{}/{}/namespaces/default/{}",
-			<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION, plural))
+		http::Request::post(format!("/apis/{}/{}/namespaces/default/{plural}",
+			<FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION))
 		.header(http::header::CONTENT_TYPE, "application/json")
 		.body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
 		.expect("couldn't create custom resource");
 	match client.get_single_value(request, k8s_openapi::ResponseBody::<k8s_openapi::CreateResponse<FooBar>>::new).await {
 		(_, http::StatusCode::UNPROCESSABLE_ENTITY) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
 
 	// Delete CRD
 	let (request, response_body) =
 		apiextensions::CustomResourceDefinition::delete_custom_resource_definition(
-			&format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP),
+			&format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP),
 			Default::default())
 		.expect("couldn't delete custom resource definition");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 }

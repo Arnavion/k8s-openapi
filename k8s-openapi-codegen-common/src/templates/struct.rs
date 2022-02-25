@@ -5,8 +5,8 @@ pub(crate) fn generate(
 	generics: super::Generics<'_>,
 	fields: &[super::Property<'_>],
 ) -> Result<(), crate::Error> {
-	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
+	let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+	let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
 	let fields: String = {
 		fields.iter()
@@ -19,7 +19,7 @@ pub(crate) fn generate(
 
 			if let Some(comment) = comment {
 				for line in crate::get_comment_text(comment, "") {
-					writeln!(fields, "    ///{}", line)?;
+					writeln!(fields, "    ///{line}")?;
 				}
 			}
 

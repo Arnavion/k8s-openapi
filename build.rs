@@ -5,7 +5,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
 
     let enabled_version = {
-        let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{}", v)).is_ok());
+        let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok());
         let v1 = enabled_versions.next().expect("\n\
             None of the v1_* features are enabled on the k8s-openapi crate.\n\
             \n\
@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if let Some(v2) = enabled_versions.next() {
             panic!(
                 "\n\
-                    Both v1_{} and v1_{} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.\n\
+                    Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.\n\
                     \n\
                     The feature indicates which version of Kubernetes the k8s-openapi crate should support.\n\
                     \n\
@@ -40,10 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     If you have not enabled one or both of these features yourself, then one of the library crates in your dependency graph *has*. \
                     Locate which library crates in your dependency graph depend on k8s-openapi and enable one of its features, and file a bug against them. \
                     You can search your Cargo.lock for \"k8s-openapi\" to discover these crates.\
-                ",
-                v1,
-                v2,
-            );
+                ");
         }
         v1
     };
@@ -57,39 +54,39 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     for v in MIN..=MAX {
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` feature is enabled, otherwise it evaluates to nothing.", v)?;
+        writeln!(f, "/// This macro evaluates to its contents if the `v1_{v}` feature is enabled, otherwise it evaluates to nothing.")?;
         writeln!(f, "///")?;
         writeln!(f, "/// # Examples")?;
         writeln!(f, "///")?;
         writeln!(f, "/// ```rust")?;
         writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
-        writeln!(f, "/// k8s_if_1_{}! {{", v)?;
+        writeln!(f, "/// k8s_if_1_{v}! {{")?;
         writeln!(f, "///     use k8s_openapi::api::core::v1 as api;")?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
         if enabled_version == v {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{v} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}")?;
         }
         else {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{v} {{ ($($tt:tt)*) => {{ }}; }}")?;
         }
         writeln!(f)?;
 
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or higher feature is enabled, otherwise it evaluates to nothing.", v)?;
+        writeln!(f, "/// This macro evaluates to its contents if the `v1_{v}` or higher feature is enabled, otherwise it evaluates to nothing.")?;
         if enabled_version >= v {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{v} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}")?;
         }
         else {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{v} {{ ($($tt:tt)*) => {{ }}; }}")?;
         }
         writeln!(f)?;
 
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or lower feature is enabled, otherwise it evaluates to nothing.", v)?;
+        writeln!(f, "/// This macro evaluates to its contents if the `v1_{v}` or lower feature is enabled, otherwise it evaluates to nothing.")?;
         if enabled_version <= v {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{v} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}")?;
         }
         else {
-            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{v} {{ ($($tt:tt)*) => {{ }}; }}")?;
         }
         writeln!(f)?;
     }
@@ -105,9 +102,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for v in MIN..=MAX {
         writeln!(f)?;
 
-        for (name_suffix, enabled) in &[("", enabled_version == v), ("_ge", enabled_version >= v), ("_le", enabled_version <= v)] {
-            writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if{}_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", name_suffix, v)?;
-            if *enabled {
+        for (name_suffix, enabled) in [("", enabled_version == v), ("_ge", enabled_version >= v), ("_le", enabled_version <= v)] {
+            writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if{name_suffix}_1_{v}!($($arm:tt)*), $($rest:tt)* }}) => {{")?;
+            if enabled {
                 writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
             }
             else {

@@ -50,7 +50,7 @@ async fn deployment() {
 		.expect("couldn't create deployment");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
 
@@ -124,7 +124,7 @@ async fn deployment() {
 		.expect("couldn't delete deployment");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
 	// Delete all pods of the deployment using label selector
@@ -140,7 +140,7 @@ async fn deployment() {
 		.expect("couldn't delete pods collection");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 }
 
@@ -149,11 +149,10 @@ async fn patch_and_assert_container_has_image(client: &mut crate::Client, patch:
 	let (request, response_body) =
 		apps::Deployment::patch_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
 		.expect("couldn't create patch");
-	println!("{:?}", request);
 
 	let deployment = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::PatchResponse::Ok(deployment), _) => deployment,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 	let image =

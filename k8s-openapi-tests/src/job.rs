@@ -51,7 +51,7 @@ async fn create() {
 		.expect("couldn't create job");
 	let job: batch::Job = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(job), _) => job,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 	let job_image =
@@ -73,7 +73,7 @@ async fn create() {
 		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default").expect("couldn't get job");
 		let job: batch::Job = match client.get_single_value(request, response_body).await {
 			(batch::ReadNamespacedJobResponse::Ok(job), _) => job,
-			(other, status_code) => panic!("{:?} {}", other, status_code),
+			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 
 		let job_status =
@@ -92,7 +92,7 @@ async fn create() {
 		let (request, response_body) = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
 		let pod_list = match client.get_single_value(request, response_body).await {
 			(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
-			(other, status_code) => panic!("{:?} {}", other, status_code),
+			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 
 		let job_pod_status =
@@ -124,7 +124,7 @@ async fn create() {
 	let (request, response_body) = batch::Job::delete_namespaced_job(&job_name, "default", Default::default()).expect("couldn't delete job");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
 	// Delete all pods of the job using label selector
@@ -140,6 +140,6 @@ async fn create() {
 		.expect("couldn't delete pods collection");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 }

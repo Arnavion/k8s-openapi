@@ -10,7 +10,7 @@ async fn list() {
 		.expect("couldn't list deployments");
 	let deployment_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(deployment_list), _) => deployment_list,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 	assert_eq!(k8s_openapi::kind(&deployment_list), "DeploymentList");

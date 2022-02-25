@@ -14,7 +14,7 @@ pub(crate) fn generate(
 	};
 
 	let or_variant_type: std::borrow::Cow<'_, str> = match or {
-		Or::Array => format!("Vec<{}>", json_schema_props_type_name).into(),
+		Or::Array => format!("Vec<{json_schema_props_type_name}>").into(),
 		Or::Bool => "bool".into(),
 		Or::StringArray => "Vec<String>".into(),
 	};
@@ -24,28 +24,26 @@ pub(crate) fn generate(
 		Or::Array => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {}serde::de::SeqAccess<'de> {{", local)?;
+			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {local}serde::de::SeqAccess<'de> {{")?;
 			writeln!(or_visit,
-				"                Ok({}::Schemas({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))",
-				type_name, local = local)?;
+				"                Ok({type_name}::Schemas({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))")?;
 			writeln!(or_visit, "            }}")?;
 		},
 
 		Or::Bool => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: {}serde::de::Error {{", local)?;
-			writeln!(or_visit, "                Ok({}::Bool(v))", type_name)?;
+			writeln!(or_visit, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: {local}serde::de::Error {{")?;
+			writeln!(or_visit, "                Ok({type_name}::Bool(v))")?;
 			writeln!(or_visit, "            }}")?;
 		},
 
 		Or::StringArray => {
 			use std::fmt::Write;
 
-			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {}serde::de::SeqAccess<'de> {{", local)?;
+			writeln!(or_visit, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: {local}serde::de::SeqAccess<'de> {{")?;
 			writeln!(or_visit,
-				"                Ok({}::Strings({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))",
-				type_name, local = local)?;
+				"                Ok({type_name}::Strings({local}serde::de::Deserialize::deserialize({local}serde::de::value::SeqAccessDeserializer::new(seq))?))")?;
 			writeln!(or_visit, "            }}")?;
 		},
 	}

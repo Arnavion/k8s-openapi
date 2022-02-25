@@ -62,10 +62,10 @@ impl Client {
 			.join(replays_directory);
 		let () =
 			std::fs::create_dir_all(&replays_directory)
-			.map_err(|err| format!("couldn't create test-replays directory {}: {}", replays_directory.display(), err))
+			.map_err(|err| format!("couldn't create test-replays directory {}: {err}", replays_directory.display()))
 			.unwrap();
 
-		let replay_filename = replays_directory.join(format!("{}.json", test_name));
+		let replay_filename = replays_directory.join(format!("{test_name}.json"));
 
 		if std::env::var("K8S_RECORD").is_ok() {
 			let kubeconfig: KubeConfig = {
@@ -80,12 +80,12 @@ impl Client {
 
 			let KubeConfigContext { cluster, user } =
 				kubeconfig.contexts.into_iter()
-				.find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {}", context))
+				.find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {context}"))
 				.context;
 
 			let KubeConfigCluster { certificate_authority, server } =
 				kubeconfig.clusters.into_iter()
-				.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {}", cluster))
+				.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {cluster}"))
 				.cluster;
 
 			let ca_certificate = {
@@ -99,12 +99,12 @@ impl Client {
 
 			let server: http::Uri = server.parse().expect("couldn't parse server URL");
 			if let Some(path_and_query) = server.path_and_query() {
-				assert_eq!(path_and_query, "/", "server URL {} has path and query {}", server, path_and_query);
+				assert_eq!(path_and_query, "/", "server URL {server} has path and query {path_and_query}");
 			}
 
 			let KubeConfigUser { client_certificate, client_key } =
 				kubeconfig.users.into_iter()
-				.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {}", user))
+				.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {user}"))
 				.user;
 
 			let client_tls_identity = {
@@ -362,7 +362,7 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
 					{
 						let read = match response.as_mut().poll_read(cx, &mut buf[..]) {
 							Poll::Ready(Ok(read)) => read,
-							Poll::Ready(Err(err)) => panic!("{}", err),
+							Poll::Ready(Err(err)) => panic!("{err}"),
 							Poll::Pending => return Poll::Pending,
 						};
 						response_body.append_slice(&buf[..read]);
@@ -372,14 +372,14 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
 						match response_body.parse() {
 							Ok(value) => return Poll::Ready(Some((value, response_body.status_code))),
 							Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-							Err(err) => panic!("{}", err),
+							Err(err) => panic!("{err}"),
 						}
 
 						match response.as_mut().poll_read(cx, &mut buf[..]) {
 							Poll::Ready(Ok(0)) if response_body.is_empty() => return Poll::Ready(None),
 							Poll::Ready(Ok(0)) => panic!("unexpected EOF"),
 							Poll::Ready(Ok(read)) => response_body.append_slice(&buf[..read]),
-							Poll::Ready(Err(err)) => panic!("{}", err),
+							Poll::Ready(Err(err)) => panic!("{err}"),
 							Poll::Pending => return Poll::Pending,
 						}
 					}

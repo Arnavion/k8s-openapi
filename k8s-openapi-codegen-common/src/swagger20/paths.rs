@@ -24,7 +24,7 @@ impl<'de> serde::Deserialize<'de> for KubernetesAction {
 			type Value = KubernetesAction;
 
 			fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-				write!(f, "x-kubernetes-action")
+				f.write_str("x-kubernetes-action")
 			}
 
 			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {

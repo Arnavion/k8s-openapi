@@ -10,23 +10,23 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
 	let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
+	let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+	let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+	let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
 	let operation_feature_attribute: std::borrow::Cow<'static, str> =
-		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = {:?})]\n", operation_feature).into());
+		operation_feature.map_or("".into(), |operation_feature| format!("#[cfg(feature = {operation_feature:?})]\n").into());
 
 	let mut fields_append_pair = String::new();
 
 	for super::Property { name, field_name, field_type_name, .. } in fields {
 		use std::fmt::Write;
 
-		writeln!(fields_append_pair, "        if let Some(value) = self.{} {{", field_name)?;
+		writeln!(fields_append_pair, "        if let Some(value) = self.{field_name} {{")?;
 		match &**field_type_name {
-			"Option<&'a str>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, value);"#, name)?,
-			"Option<bool>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, if value {{ "true" }} else {{ "false" }});"#, name)?,
-			_ => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({:?}, &value.to_string());"#, name)?,
+			"Option<&'a str>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({name:?}, value);"#)?,
+			"Option<bool>" => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({name:?}, if value {{ "true" }} else {{ "false" }});"#)?,
+			_ => writeln!(fields_append_pair, r#"            __query_pairs.append_pair({name:?}, &value.to_string());"#)?,
 		}
 		writeln!(fields_append_pair, "        }}")?;
 	}

@@ -137,7 +137,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///
 /// let custom_resource_definition = apiextensions::CustomResourceDefinition {
 ///     metadata: meta::ObjectMeta {
-///         name: Some(format!("{}.{}", plural, <FooBar as k8s_openapi::Resource>::GROUP)),
+///         name: Some(format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP)),
 ///         ..Default::default()
 ///     },
 ///     spec: custom_resource_definition_spec.into(),

@@ -153,7 +153,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			let cr_name_string = cr_spec_name_string[..(cr_spec_name_string.len() - 4)].to_owned();
 			(cr_spec_name_string, cr_name_string)
 		};
-		let cr_list_name = format!("{}List", cr_name);
+		let cr_list_name = format!("{cr_name}List");
 
 		let body_parameter =
 			std::sync::Arc::new(swagger20::Parameter {
@@ -177,7 +177,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				name: "name".to_owned(),
 				required: true,
 				schema: swagger20::Schema {
-					description: Some(format!("name of the `{}`", cr_name)),
+					description: Some(format!("name of the `{cr_name}`")),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
@@ -209,7 +209,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 			},
 			definitions: vec![
 				(swagger20::DefinitionPath(cr_name.clone()), swagger20::Schema {
-					description: Some(format!("Custom resource for `{}`", cr_spec_name)),
+					description: Some(format!("Custom resource for `{cr_spec_name}`")),
 					kind: swagger20::SchemaKind::Properties(vec![
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
 							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources>".to_owned()),
@@ -233,7 +233,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							list_kind: None,
 						}, true)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
-							description: Some(format!("Specification of the `{}` custom resource", cr_name)),
+							description: Some(format!("Specification of the `{cr_name}` custom resource")),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
 								path: cr_spec_name,
 								can_be_default: None,
@@ -244,7 +244,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					].into_iter().chain(
 						has_subresources.map(|has_subresources|
 							(swagger20::PropertyName("subresources".to_owned()), (swagger20::Schema {
-								description: Some(format!("Subresources of the `{}` custom resource", cr_name)),
+								description: Some(format!("Subresources of the `{cr_name}` custom resource")),
 								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
@@ -261,7 +261,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				}),
 
 				(swagger20::DefinitionPath(cr_list_name.clone()), swagger20::Schema {
-					description: Some(format!("`{}` is a list of `{}`", cr_list_name, cr_name)),
+					description: Some(format!("`{cr_list_name}` is a list of `{cr_name}`")),
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::ListRef {
 						items: Box::new(swagger20::SchemaKind::Ref(swagger20::RefPath {
 							path: cr_name.clone(),
@@ -280,8 +280,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 			].into_iter().collect(),
 			operations: vec![
 				swagger20::Operation {
-					description: Some(format!("Create a `{}`", cr_name)),
-					id: format!("create{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Create a `{cr_name}`")),
+					id: format!("create{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Post,
 					kubernetes_action: Some(swagger20::KubernetesAction::Post),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -293,14 +293,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 						Some(body_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::CreateResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Delete a `{}`", cr_name)),
-					id: format!("delete{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Delete a `{cr_name}`")),
+					id: format!("delete{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Delete,
 					kubernetes_action: Some(swagger20::KubernetesAction::Delete),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -326,14 +326,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Delete a collection of objects of kind `{}`", cr_name)),
-					id: format!("deleteCollection{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Delete a collection of objects of kind `{cr_name}`")),
+					id: format!("deleteCollection{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Delete,
 					kubernetes_action: Some(swagger20::KubernetesAction::DeleteCollection),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -372,14 +372,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::DeleteResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("List objects of kind `{}`", cr_name)),
-					id: format!("list{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("List objects of kind `{cr_name}`")),
+					id: format!("list{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::List),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -404,14 +404,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ListResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Partially update the specified `{}`", cr_name)),
-					id: format!("patch{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Partially update the specified `{cr_name}`")),
+					id: format!("patch{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Patch,
 					kubernetes_action: Some(swagger20::KubernetesAction::Patch),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -451,14 +451,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Partially update the state of the specified `{}`", cr_name)),
-					id: format!("patch{}{}Status", namespace_operation_id_component, cr_name),
+					description: Some(format!("Partially update the state of the specified `{cr_name}`")),
+					id: format!("patch{namespace_operation_id_component}{cr_name}Status"),
 					method: swagger20::Method::Patch,
 					kubernetes_action: Some(swagger20::KubernetesAction::Patch),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -498,14 +498,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}/status")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::PatchResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Read the specified `{}`", cr_name)),
-					id: format!("read{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Read the specified `{cr_name}`")),
+					id: format!("read{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Get),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -517,7 +517,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}")),
 					responses: swagger20::OperationResponses::Map(vec![
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
@@ -533,8 +533,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Read status of the specified `{}`", cr_name)),
-					id: format!("read{}{}Status", namespace_operation_id_component, cr_name),
+					description: Some(format!("Read status of the specified `{cr_name}`")),
+					id: format!("read{namespace_operation_id_component}{cr_name}Status"),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Get),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -546,7 +546,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}/status")),
 					responses: swagger20::OperationResponses::Map(vec![
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
@@ -562,8 +562,8 @@ impl super::CustomDerive for CustomResourceDefinition {
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Replace the specified `{}`", cr_name)),
-					id: format!("replace{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Replace the specified `{cr_name}`")),
+					id: format!("replace{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Put,
 					kubernetes_action: Some(swagger20::KubernetesAction::Put),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -590,14 +590,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Replace status of the specified `{}`", cr_name)),
-					id: format!("replace{}{}Status", namespace_operation_id_component, cr_name),
+					description: Some(format!("Replace status of the specified `{cr_name}`")),
+					id: format!("replace{namespace_operation_id_component}{cr_name}Status"),
 					method: swagger20::Method::Put,
 					kubernetes_action: Some(swagger20::KubernetesAction::Put),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -624,14 +624,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}/{{name}}/status", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}/status")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::ReplaceResponse),
 					tag: None,
 				},
 
 				swagger20::Operation {
-					description: Some(format!("Watch objects of kind `{}`", cr_name)),
-					id: format!("watch{}{}", namespace_operation_id_component, cr_name),
+					description: Some(format!("Watch objects of kind `{cr_name}`")),
+					id: format!("watch{namespace_operation_id_component}{cr_name}"),
 					method: swagger20::Method::Get,
 					kubernetes_action: Some(swagger20::KubernetesAction::Watch),
 					kubernetes_group_kind_version: Some(swagger20::KubernetesGroupKindVersion {
@@ -656,7 +656,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							},
 						})),
 					].into_iter().flatten().collect(),
-					path: swagger20::Path(format!("/apis/{}/{}{}/{}", group, version, namespace_path_component, plural)),
+					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}")),
 					responses: swagger20::OperationResponses::Common(swagger20::Type::WatchResponse),
 					tag: None,
 				},
@@ -678,7 +678,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 				None,
 				&mut run_state,
 			)
-			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
+			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err}"))
 			.spanning(&tokens)?;
 
 		let _ =
@@ -692,13 +692,13 @@ impl super::CustomDerive for CustomResourceDefinition {
 				None,
 				&mut run_state,
 			)
-			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err))
+			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err}"))
 			.spanning(&tokens)?;
 
 		assert!(spec.operations.is_empty());
 
-		let out = String::from_utf8(run_state.writer).map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {}", err)).spanning(&tokens)?;
-		let result = out.parse().map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {:?}", err)).spanning(&tokens)?;
+		let out = String::from_utf8(run_state.writer).map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err}")).spanning(&tokens)?;
+		let result = out.parse().map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err:?}")).spanning(&tokens)?;
 		Ok(result)
 	}
 }

@@ -29,7 +29,7 @@ impl std::fmt::Debug for Error {
 
 		let mut source = self.0.source();
 		while let Some(err) = source {
-			writeln!(f, "caused by: {}", err)?;
+			writeln!(f, "caused by: {err}")?;
 			source = err.source();
 		}
 
@@ -162,7 +162,7 @@ impl std::str::FromStr for RequestedVersion {
 			supported_version::ALL.iter()
 			.find(|v| v.name() == version)
 			.ok_or_else(|| {
-				let mut err = format!("unknown version {:?} requested, supported versions are ", version);
+				let mut err = format!("unknown version {version:?} requested, supported versions are ");
 				for (i, &version) in supported_version::ALL.iter().enumerate() {
 					if i > 0 {
 						err.push_str(", ");
@@ -197,7 +197,7 @@ async fn run(
 	let mut num_generated_apis = 0_usize;
 
 	let mut spec: swagger20::Spec = {
-		log::info!("Parsing spec file at {} ...", spec_url);
+		log::info!("Parsing spec file at {spec_url} ...");
 		let spec_url: url::Url = spec_url.parse()?;
 		if spec_url.scheme() == "file" {
 			let spec_path = spec_url.to_file_path().map_err(|()| "not a file path")?;
@@ -227,7 +227,7 @@ async fn run(
 		let expected_num_generated_types: usize = spec.definitions.len();
 		let expected_num_generated_apis: usize = spec.operations.len();
 
-		log::info!("OK. Spec has {} definitions and {} operations", expected_num_generated_types, expected_num_generated_apis);
+		log::info!("OK. Spec has {expected_num_generated_types} definitions and {expected_num_generated_apis} operations");
 
 		loop {
 			log::info!("Removing output directory {} ...", out_dir.display());
@@ -242,17 +242,17 @@ async fn run(
 							log::trace!("OK");
 							break;
 						},
-						Err(err) => log::warn!("Error: {}", err),
+						Err(err) => log::warn!("Error: {err}"),
 					}
 				},
-				Err(err) => log::warn!("Error: {}", err),
+				Err(err) => log::warn!("Error: {err}"),
 			}
 		}
 
 		log::info!("Generating types...");
 
 		for definition_path in spec.definitions.keys() {
-			log::trace!("Working on {} ...", definition_path);
+			log::trace!("Working on {definition_path} ...");
 
 			let run_state = RunState {
 				out_dir: &out_dir,
@@ -283,8 +283,8 @@ async fn run(
 			for operation in spec.operations {
 				if let Some(swagger20::KubernetesGroupKindVersion { group, kind, version }) = operation.kubernetes_group_kind_version {
 					return Err(format!(
-						"Operation {} is associated with {}/{}/{} but did not get emitted with that definition",
-						operation.id, group, version, kind).into());
+						"Operation {} is associated with {group}/{version}/{kind} but did not get emitted with that definition",
+						operation.id).into());
 				}
 
 				k8s_openapi_codegen_common::write_operation(
@@ -301,9 +301,9 @@ async fn run(
 		}
 
 		log::info!("OK");
-		log::info!("Generated {} structs", num_generated_structs);
-		log::info!("Generated {} type aliases", num_generated_type_aliases);
-		log::info!("Generated {} API functions", num_generated_apis);
+		log::info!("Generated {num_generated_structs} structs");
+		log::info!("Generated {num_generated_type_aliases} type aliases");
+		log::info!("Generated {num_generated_apis} API functions");
 
 		if num_generated_structs + num_generated_type_aliases != expected_num_generated_types {
 			return Err("Did not generate or skip expected number of types".into());
@@ -367,7 +367,7 @@ impl k8s_openapi_codegen_common::RunState for RunState<'_> {
 				if append_newline {
 					writeln!(parent_mod_rs)?;
 				}
-				writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
+				writeln!(parent_mod_rs, "pub mod {mod_name};")?;
 
 				log::trace!("    OK");
 				log::trace!("    Creating subdirectory...");
@@ -386,13 +386,13 @@ impl k8s_openapi_codegen_common::RunState for RunState<'_> {
 		let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 		writeln!(parent_mod_rs)?;
 		if let Some(type_feature) = type_feature {
-			writeln!(parent_mod_rs, r#"#[cfg(feature = {:?})]"#, type_feature)?;
+			writeln!(parent_mod_rs, r#"#[cfg(feature = {type_feature:?})]"#)?;
 		}
-		writeln!(parent_mod_rs, "mod {};", mod_name)?;
+		writeln!(parent_mod_rs, "mod {mod_name};")?;
 		if let Some(type_feature) = type_feature {
-			writeln!(parent_mod_rs, r#"#[cfg(feature = {:?})]"#, type_feature)?;
+			writeln!(parent_mod_rs, r#"#[cfg(feature = {type_feature:?})]"#)?;
 		}
-		writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
+		writeln!(parent_mod_rs, "pub use self::{mod_name}::{type_name};")?;
 
 		let file_name = current.join(&*mod_name).with_extension("rs");
 		let file = std::io::BufWriter::new(std::fs::File::create(file_name)?);
@@ -414,18 +414,15 @@ impl k8s_openapi_codegen_common::RunState for RunState<'_> {
 			(Some(operation_optional_parameters_name), Some(operation_result_name)) =>
 				writeln!(
 					parent_mod_rs,
-					r#"#[cfg(feature = "api")] pub use self::{}::{{{}, {}}};"#,
-					mod_name, operation_optional_parameters_name, operation_result_name)?,
+					r#"#[cfg(feature = "api")] pub use self::{mod_name}::{{{operation_optional_parameters_name}, {operation_result_name}}};"#)?,
 			(Some(operation_optional_parameters_name), None) =>
 				writeln!(
 					parent_mod_rs,
-					r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
-					mod_name, operation_optional_parameters_name)?,
+					r#"#[cfg(feature = "api")] pub use self::{mod_name}::{operation_optional_parameters_name};"#)?,
 			(None, Some(operation_result_name)) =>
 				writeln!(
 					parent_mod_rs,
-					r#"#[cfg(feature = "api")] pub use self::{}::{};"#,
-					mod_name, operation_result_name)?,
+					r#"#[cfg(feature = "api")] pub use self::{mod_name}::{operation_result_name};"#)?,
 			(None, None) =>
 				(),
 		}

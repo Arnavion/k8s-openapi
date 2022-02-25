@@ -9,7 +9,7 @@ async fn get() {
 	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 	let pod_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
-		(other, status_code) => panic!("{:?} {}", other, status_code),
+		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 
 	let apiserver_pod =
@@ -44,7 +44,7 @@ async fn get() {
 	while let Some(chunk) = chunks.next().await {
 		let s = match chunk {
 			(api::ReadNamespacedPodLogResponse::Ok(s), _) => s,
-			(other, status_code) => panic!("{:?} {}", other, status_code),
+			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 		apiserver_logs.push_str(&s);
 
@@ -57,7 +57,7 @@ async fn get() {
 			break;
 		}
 	}
-	assert!(found_line, "did not find expected text in apiserver pod logs: {}", apiserver_logs);
+	assert!(found_line, "did not find expected text in apiserver pod logs: {apiserver_logs}");
 }
 
 #[test]
@@ -70,7 +70,7 @@ fn partial_and_invalid_utf8_sequences() {
 	// Empty buffer
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {result:?}"),
 	}
 
 	response_body.append_slice(b"a");
@@ -78,7 +78,7 @@ fn partial_and_invalid_utf8_sequences() {
 	// Entire buffer is valid
 	match response_body.parse() {
 		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "a" => (),
-		result => panic!(r#"expected empty buffer to return Ok("a"), but it returned {:?}"#, result),
+		result => panic!(r#"expected empty buffer to return Ok("a"), but it returned {result:?}"#),
 	}
 
 	// Entire buffer must have been consumed, and it should now be empty
@@ -89,13 +89,13 @@ fn partial_and_invalid_utf8_sequences() {
 
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
-		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {result:?}"),
 	}
 
 	// First byte of buffer must not have been consumed, so it's still invalid
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
-		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {result:?}"),
 	}
 
 	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
@@ -106,7 +106,7 @@ fn partial_and_invalid_utf8_sequences() {
 	// First byte of buffer is partial
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {result:?}"),
 	}
 
 	response_body.append_slice(b"\xb8");
@@ -114,7 +114,7 @@ fn partial_and_invalid_utf8_sequences() {
 	// First two bytes of buffer are partial
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {result:?}"),
 	}
 
 	// Entire buffer is valid
@@ -122,7 +122,7 @@ fn partial_and_invalid_utf8_sequences() {
 
 	match response_body.parse() {
 		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
-		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 
 	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
@@ -133,14 +133,14 @@ fn partial_and_invalid_utf8_sequences() {
 	// First three bytes are valid. Fourth byte is partial.
 	match response_body.parse() {
 		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
-		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 
 	// First three bytes must have been consumed. Remaining byte is partial.
 	assert_eq!(&*response_body, b"\xe7");
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
-		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {result:?}"),
 	}
 
 	response_body.append_slice(b"\x95\x8c");
@@ -148,7 +148,7 @@ fn partial_and_invalid_utf8_sequences() {
 	// Entire buffer is valid
 	match response_body.parse() {
 		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{754c}" => (),
-		result => panic!(r#"expected empty buffer to return Ok("\u{{754c}}"), but it returned {:?}"#, result),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{754c}}"), but it returned {result:?}"#),
 	}
 
 	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
@@ -159,13 +159,13 @@ fn partial_and_invalid_utf8_sequences() {
 	// First three bytes are valid. Fourth byte is invalid.
 	match response_body.parse() {
 		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
-		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 
 	// First three bytes must have been consumed. Remaining byte is invalid.
 	assert_eq!(&*response_body, b"\xff");
 	match response_body.parse() {
 		Err(k8s_openapi::ResponseError::Utf8(err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
-		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
+		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {result:?}"),
 	}
 }

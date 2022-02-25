@@ -8,12 +8,12 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
 	let type_comment: String =
 		type_comment
-		.map(|type_comment| crate::get_comment_text(type_comment, "").map(|line| format!("///{}\n", line)).collect())
+		.map(|type_comment| crate::get_comment_text(type_comment, "").map(|line| format!("///{line}\n")).collect())
 		.unwrap_or_default();
 
 	let type_feature_attribute =
 		type_feature
-		.map(|type_feature| format!("#[cfg(feature = {:?})]\n", type_feature))
+		.map(|type_feature| format!("#[cfg(feature = {type_feature:?})]\n"))
 		.unwrap_or_default();
 
 	let derives =

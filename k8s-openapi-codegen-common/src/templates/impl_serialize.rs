@@ -10,9 +10,9 @@ pub(crate) fn generate(
 
 	let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-	let type_generics_impl = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-	let type_generics_type = generics.type_part.map(|part| format!("<{}>", part)).unwrap_or_default();
-	let type_generics_where = generics.where_part.map(|part| format!(" where {}", part)).unwrap_or_default();
+	let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+	let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+	let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
 	let mut fields_string = String::new();
 	let mut required_fields_num = 0_usize;
@@ -21,43 +21,41 @@ pub(crate) fn generate(
 
 	if resource_metadata.is_some() {
 		writeln!(fields_string,
-			r#"        {local}serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {local}Resource>::API_VERSION)?;"#,
-			local = local)?;
+			r#"        {local}serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as {local}Resource>::API_VERSION)?;"#)?;
 		writeln!(fields_string,
-			r#"        {local}serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {local}Resource>::KIND)?;"#,
-			local = local)?;
+			r#"        {local}serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as {local}Resource>::KIND)?;"#)?;
 
 		required_fields_num += 2;
 	}
 
 	for super::Property { name, field_name, required, is_flattened, .. } in fields {
 		if *is_flattened {
-			writeln!(fields_string, "        {}serde::Serialize::serialize(&self.{}, SerializerWrapper(&mut state))?;", local, field_name)?;
+			writeln!(fields_string, "        {local}serde::Serialize::serialize(&self.{field_name}, SerializerWrapper(&mut state))?;")?;
 
 			has_flattened_field = true;
 		}
 		else {
 			match required {
 				super::PropertyRequired::Required { is_default: _ } => {
-					writeln!(fields_string, "        {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
+					writeln!(fields_string, "        {local}serde::ser::SerializeStruct::serialize_field(&mut state, {name:?}, &self.{field_name})?;")?;
 
 					required_fields_num += 1;
 				},
 
 				super::PropertyRequired::Optional => {
-					writeln!(fields_string, "        if let Some(value) = &self.{} {{", field_name)?;
-					writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, value)?;", local, name)?;
+					writeln!(fields_string, "        if let Some(value) = &self.{field_name} {{")?;
+					writeln!(fields_string, "            {local}serde::ser::SerializeStruct::serialize_field(&mut state, {name:?}, value)?;")?;
 					writeln!(fields_string, "        }}")?;
 
-					fields_num.push(format!("self.{}.as_ref().map_or(0, |_| 1)", field_name));
+					fields_num.push(format!("self.{field_name}.as_ref().map_or(0, |_| 1)"));
 				},
 
 				super::PropertyRequired::OptionalDefault => {
-					writeln!(fields_string, "        if !self.{}.is_empty() {{", field_name)?;
-					writeln!(fields_string, "            {}serde::ser::SerializeStruct::serialize_field(&mut state, {:?}, &self.{})?;", local, name, field_name)?;
+					writeln!(fields_string, "        if !self.{field_name}.is_empty() {{")?;
+					writeln!(fields_string, "            {local}serde::ser::SerializeStruct::serialize_field(&mut state, {name:?}, &self.{field_name})?;")?;
 					writeln!(fields_string, "        }}")?;
 
-					fields_num.push(format!("usize::from(!self.{}.is_empty())", field_name));
+					fields_num.push(format!("usize::from(!self.{field_name}.is_empty())"));
 				},
 			}
 		}
@@ -77,19 +75,19 @@ pub(crate) fn generate(
 					writeln!(fields_num_str, " +")?;
 				}
 
-				write!(fields_num_str, "            {}", field_num)?;
+				write!(fields_num_str, "            {field_num}")?;
 			}
 
 			fields_num_str.into()
 		},
 
-		(required_fields_num, true) => format!("            {}", required_fields_num).into(),
+		(required_fields_num, true) => format!("            {required_fields_num}").into(),
 
 		(required_fields_num, false) => {
-			let mut fields_num_str = format!("            {}", required_fields_num);
+			let mut fields_num_str = format!("            {required_fields_num}");
 			for field_num in fields_num {
 				writeln!(fields_num_str, " +")?;
-				write!(fields_num_str, "            {}", field_num)?;
+				write!(fields_num_str, "            {field_num}")?;
 			}
 
 			fields_num_str.into()
@@ -98,10 +96,10 @@ pub(crate) fn generate(
 
 	let serialize_type_name =
 		if resource_metadata.is_some() {
-			format!("<Self as {}Resource>::KIND", local)
+			format!("<Self as {local}Resource>::KIND")
 		}
 		else {
-			format!("{:?}", type_name)
+			format!("{type_name:?}")
 		};
 
 	let struct_serializer: std::borrow::Cow<'_, str> =
@@ -110,100 +108,100 @@ pub(crate) fn generate(
 
 			writeln!(out, "        struct SerializerWrapper<'a, S>(&'a mut S);")?;
 			writeln!(out)?;
-			writeln!(out, "        impl<'a, S> {local}serde::Serializer for SerializerWrapper<'a, S> where S: {local}serde::ser::SerializeStruct {{", local = local)?;
+			writeln!(out, "        impl<'a, S> {local}serde::Serializer for SerializerWrapper<'a, S> where S: {local}serde::ser::SerializeStruct {{")?;
 			writeln!(out, "            type Ok = ();")?;
-			writeln!(out, "            type Error = <S as {}serde::ser::SerializeStruct>::Error;", local)?;
+			writeln!(out, "            type Error = <S as {local}serde::ser::SerializeStruct>::Error;")?;
 			writeln!(out)?;
-			writeln!(out, "            type SerializeSeq = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
-			writeln!(out, "            type SerializeTuple = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
-			writeln!(out, "            type SerializeTupleStruct = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
-			writeln!(out, "            type SerializeTupleVariant = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
-			writeln!(out, "            type SerializeMap = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
+			writeln!(out, "            type SerializeSeq = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
+			writeln!(out, "            type SerializeTuple = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
+			writeln!(out, "            type SerializeTupleStruct = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
+			writeln!(out, "            type SerializeTupleVariant = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
+			writeln!(out, "            type SerializeMap = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
 			writeln!(out, "            type SerializeStruct = SerializerStructWrapper<'a, S>;")?;
-			writeln!(out, "            type SerializeStructVariant = {}serde::ser::Impossible<Self::Ok, Self::Error>;", local)?;
+			writeln!(out, "            type SerializeStructVariant = {local}serde::ser::Impossible<Self::Ok, Self::Error>;")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_bool(self, _: bool) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("bool is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("bool is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_i8(self, _: i8) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("i8 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("i8 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_i16(self, _: i16) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom(" is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom(" is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_i32(self, _: i32) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("i32 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("i32 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_i64(self, _: i64) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("i64 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("i64 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_u8(self, _: u8) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("u8 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("u8 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_u16(self, _: u16) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("u16 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("u16 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_u32(self, _: u32) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("u32 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("u32 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_u64(self, _: u64) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("u64 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("u64 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_f32(self, _: f32) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("f32 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("f32 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_f64(self, _: f64) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("f64 is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("f64 is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_char(self, _: char) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("char is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("char is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_str(self, _: &str) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("str is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("str is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_bytes(self, _: &[u8]) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("bytes is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("bytes is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_none(self) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("none is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("none is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
-			writeln!(out, "            fn serialize_some<T>(self, _: &T) -> Result<Self::Ok, Self::Error> where T: {}serde::Serialize + ?Sized {{", local)?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("some is not supported"))"#, local)?;
+			writeln!(out, "            fn serialize_some<T>(self, _: &T) -> Result<Self::Ok, Self::Error> where T: {local}serde::Serialize + ?Sized {{")?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("some is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_unit(self) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("unit is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("unit is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_unit_struct(self, _: &'static str) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("unit struct is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("unit struct is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_unit_variant(self, _: &'static str, _: u32, _: &'static str) -> Result<Self::Ok, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("unit variant is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("unit variant is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_newtype_struct<T>(")?;
 			writeln!(out, "                self,")?;
 			writeln!(out, "                _: &'static str,")?;
 			writeln!(out, "                _: &T,")?;
-			writeln!(out, "            ) -> Result<Self::Ok, Self::Error> where T: {}serde::Serialize + ?Sized {{", local)?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("newtype struct is not supported"))"#, local)?;
+			writeln!(out, "            ) -> Result<Self::Ok, Self::Error> where T: {local}serde::Serialize + ?Sized {{")?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("newtype struct is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_newtype_variant<T>(")?;
@@ -212,20 +210,20 @@ pub(crate) fn generate(
 			writeln!(out, "                _: u32,")?;
 			writeln!(out, "                _: &'static str,")?;
 			writeln!(out, "                _: &T,")?;
-			writeln!(out, "            ) -> Result<Self::Ok, Self::Error> where T: {}serde::Serialize + ?Sized {{", local)?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("newtype variant is not supported"))"#, local)?;
+			writeln!(out, "            ) -> Result<Self::Ok, Self::Error> where T: {local}serde::Serialize + ?Sized {{")?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("newtype variant is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_seq(self, _: Option<usize>) -> Result<Self::SerializeSeq, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("seq is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("seq is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_tuple(self, _: usize) -> Result<Self::SerializeTuple, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("tuple is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("tuple is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_tuple_struct(self, _: &'static str, _: usize) -> Result<Self::SerializeTupleStruct, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("tuple struct is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("tuple struct is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_tuple_variant(")?;
@@ -235,11 +233,11 @@ pub(crate) fn generate(
 			writeln!(out, "                _: &'static str,")?;
 			writeln!(out, "                _: usize,")?;
 			writeln!(out, "            ) -> Result<Self::SerializeTupleVariant, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("tuple variant is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("tuple variant is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_map(self, _: Option<usize>) -> Result<Self::SerializeMap, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("map is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("map is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
 			writeln!(out, "            fn serialize_struct(self, _: &'static str, _: usize) -> Result<Self::SerializeStruct, Self::Error> {{")?;
@@ -253,17 +251,17 @@ pub(crate) fn generate(
 			writeln!(out, "                _: &'static str,")?;
 			writeln!(out, "                _: usize,")?;
 			writeln!(out, "            ) -> Result<Self::SerializeStructVariant, Self::Error> {{")?;
-			writeln!(out, r#"                Err({}serde::ser::Error::custom("struct variant is not supported"))"#, local)?;
+			writeln!(out, r#"                Err({local}serde::ser::Error::custom("struct variant is not supported"))"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out, "        }}")?;
 			writeln!(out)?;
 			writeln!(out, "        struct SerializerStructWrapper<'a, S>(&'a mut S);")?;
 			writeln!(out)?;
-			writeln!(out, "        impl<'a, S> {local}serde::ser::SerializeStruct for SerializerStructWrapper<'a, S> where S: {local}serde::ser::SerializeStruct {{", local = local)?;
+			writeln!(out, "        impl<'a, S> {local}serde::ser::SerializeStruct for SerializerStructWrapper<'a, S> where S: {local}serde::ser::SerializeStruct {{")?;
 			writeln!(out, "            type Ok = ();")?;
-			writeln!(out, "            type Error = <S as {}serde::ser::SerializeStruct>::Error;", local)?;
+			writeln!(out, "            type Error = <S as {local}serde::ser::SerializeStruct>::Error;")?;
 			writeln!(out)?;
-			writeln!(out, "            fn serialize_field<T>(&mut self, key: &'static str, value: &T) -> Result<(), Self::Error> where T: {}serde::Serialize + ?Sized {{", local)?;
+			writeln!(out, "            fn serialize_field<T>(&mut self, key: &'static str, value: &T) -> Result<(), Self::Error> where T: {local}serde::Serialize + ?Sized {{")?;
 			writeln!(out, r#"                self.0.serialize_field(key, value)"#)?;
 			writeln!(out, "            }}")?;
 			writeln!(out)?;
