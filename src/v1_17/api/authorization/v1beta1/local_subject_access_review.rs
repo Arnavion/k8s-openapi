@@ -33,7 +33,7 @@ impl LocalSubjectAccessReview {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_local_subject_access_review(
+    pub fn create(
         namespace: &str,
         body: &crate::api::authorization::v1beta1::LocalSubjectAccessReview,
         optional: crate::CreateOptional<'_>,

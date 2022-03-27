@@ -154,7 +154,7 @@ async fn test() {
 
 	loop {
 		let (request, response_body) =
-			apiextensions::CustomResourceDefinition::create_custom_resource_definition(&custom_resource_definition, Default::default())
+			apiextensions::CustomResourceDefinition::create(&custom_resource_definition, Default::default())
 			.expect("couldn't create custom resource definition");
 		match client.get_single_value(request, response_body).await {
 			(k8s_openapi::CreateResponse::Created(_), _) |
@@ -167,7 +167,7 @@ async fn test() {
 	// Wait for CRD to be registered
 	loop {
 		let (request, response_body) =
-			apiextensions::CustomResourceDefinition::read_custom_resource_definition(
+			apiextensions::CustomResourceDefinition::read(
 				&format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP.to_owned()))
 			.expect("couldn't get custom resource definition");
 		let custom_resource_definition = match client.get_single_value(request, response_body).await {
@@ -207,7 +207,7 @@ async fn test() {
 		subresources: Default::default(),
 	};
 	let (request, response_body) =
-		FooBar::create_namespaced_foo_bar("default", &fb1)
+		FooBar::create("default", &fb1)
 		.expect("couldn't create FooBar");
 	let fb1 = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Ok(fb) | k8s_openapi::CreateResponse::Created(fb), _) => fb,
@@ -216,7 +216,7 @@ async fn test() {
 
 
 	// List CR
-	let (request, response_body) = FooBar::list_namespaced_foo_bar("default", Default::default()).expect("couldn't list FooBars");
+	let (request, response_body) = FooBar::list("default", Default::default()).expect("couldn't list FooBars");
 	let foo_bar_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(foo_bar_list), _) => foo_bar_list,
 		(other, status_code) => panic!("{other:?} {status_code}"),
@@ -230,9 +230,9 @@ async fn test() {
 
 
 	// Read CR
-	let (request, response_body) = FooBar::read_namespaced_foo_bar("fb1", "default").expect("couldn't read FooBar");
+	let (request, response_body) = FooBar::read("fb1", "default").expect("couldn't read FooBar");
 	let fb1_2 = match client.get_single_value(request, response_body).await {
-		(ReadNamespacedFooBarResponse::Ok(fb), _) => fb,
+		(ReadFooBarResponse::Ok(fb), _) => fb,
 		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
 	assert_eq!(fb1_2.metadata.name.as_ref().unwrap(), "fb1");
@@ -240,7 +240,7 @@ async fn test() {
 
 	// Watch CR
 	{
-		let (request, response_body) = FooBar::watch_namespaced_foo_bar("default", Default::default()).expect("couldn't watch FooBars");
+		let (request, response_body) = FooBar::watch("default", Default::default()).expect("couldn't watch FooBars");
 		let foo_bar_watch_events = client.get_multiple_values(request, response_body);
 		futures_util::pin_mut!(foo_bar_watch_events);
 		let _ =
@@ -270,7 +270,7 @@ async fn test() {
 		let metadata = &fb1.metadata;
 		let name = metadata.name.as_ref().expect("create FooBar response did not set metadata.name");
 		let namespace = metadata.namespace.as_ref().expect("create FooBar response did not set metadata.namespace");
-		FooBar::delete_namespaced_foo_bar(name, namespace, Default::default()).expect("couldn't delete FooBar")
+		FooBar::delete(name, namespace, Default::default()).expect("couldn't delete FooBar")
 	};
 	let () = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
@@ -325,7 +325,7 @@ async fn test() {
 
 	// Delete CRD
 	let (request, response_body) =
-		apiextensions::CustomResourceDefinition::delete_custom_resource_definition(
+		apiextensions::CustomResourceDefinition::delete(
 			&format!("{plural}.{}", <FooBar as k8s_openapi::Resource>::GROUP),
 			Default::default())
 		.expect("couldn't delete custom resource definition");

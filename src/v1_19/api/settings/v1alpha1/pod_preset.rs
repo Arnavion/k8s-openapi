@@ -29,7 +29,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_pod_preset(
+    pub fn create(
         namespace: &str,
         body: &crate::api::settings::v1alpha1::PodPreset,
         optional: crate::CreateOptional<'_>,
@@ -72,7 +72,7 @@ impl PodPreset {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_pod_preset(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -115,7 +115,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_pod_preset(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -154,7 +154,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_pod_preset(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -189,7 +189,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_pod_preset_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/settings.k8s.io/v1alpha1/podpresets?".to_owned();
@@ -229,7 +229,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod_preset(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -262,7 +262,7 @@ impl PodPreset {
 impl PodPreset {
     /// read the specified PodPreset
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodPresetResponse`]`>` constructor, or [`ReadNamespacedPodPresetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodPresetResponse`]`>` constructor, or [`ReadPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -274,10 +274,10 @@ impl PodPreset {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_preset(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodPresetResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodPresetResponse>), crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -292,16 +292,16 @@ impl PodPreset {
     }
 }
 
-/// Use `<ReadNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::read_namespaced_pod_preset`]
+/// Use `<ReadPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodPresetResponse {
+pub enum ReadPodPresetResponse {
     Ok(crate::api::settings::v1alpha1::PodPreset),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodPresetResponse {
+impl crate::Response for ReadPodPresetResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -310,7 +310,7 @@ impl crate::Response for ReadNamespacedPodPresetResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((ReadPodPresetResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -324,7 +324,7 @@ impl crate::Response for ReadNamespacedPodPresetResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodPresetResponse::Other(result), read))
+                Ok((ReadPodPresetResponse::Other(result), read))
             },
         }
     }
@@ -353,7 +353,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod_preset(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::settings::v1alpha1::PodPreset,
@@ -396,7 +396,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_pod_preset(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -431,7 +431,7 @@ impl PodPreset {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_pod_preset_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/settings.k8s.io/v1alpha1/podpresets?".to_owned();

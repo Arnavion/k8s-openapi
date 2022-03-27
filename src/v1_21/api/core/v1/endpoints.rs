@@ -42,7 +42,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_endpoints(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::Endpoints,
         optional: crate::CreateOptional<'_>,
@@ -85,7 +85,7 @@ impl Endpoints {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_endpoints(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -128,7 +128,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_endpoints(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -163,7 +163,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_endpoints_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
@@ -199,7 +199,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_endpoints(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -242,7 +242,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_endpoints(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -275,7 +275,7 @@ impl Endpoints {
 impl Endpoints {
     /// read the specified Endpoints
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedEndpointsResponse`]`>` constructor, or [`ReadNamespacedEndpointsResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadEndpointsResponse`]`>` constructor, or [`ReadEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -287,10 +287,10 @@ impl Endpoints {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_endpoints(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedEndpointsResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadEndpointsResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/endpoints/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -305,16 +305,16 @@ impl Endpoints {
     }
 }
 
-/// Use `<ReadNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::read_namespaced_endpoints`]
+/// Use `<ReadEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedEndpointsResponse {
+pub enum ReadEndpointsResponse {
     Ok(crate::api::core::v1::Endpoints),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedEndpointsResponse {
+impl crate::Response for ReadEndpointsResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -323,7 +323,7 @@ impl crate::Response for ReadNamespacedEndpointsResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedEndpointsResponse::Ok(result), buf.len()))
+                Ok((ReadEndpointsResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -337,7 +337,7 @@ impl crate::Response for ReadNamespacedEndpointsResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedEndpointsResponse::Other(result), read))
+                Ok((ReadEndpointsResponse::Other(result), read))
             },
         }
     }
@@ -366,7 +366,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_endpoints(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Endpoints,
@@ -405,7 +405,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_endpoints_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/endpoints?".to_owned();
@@ -441,7 +441,7 @@ impl Endpoints {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_endpoints(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

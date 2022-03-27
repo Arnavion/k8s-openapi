@@ -27,7 +27,7 @@ impl ComponentStatus {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_component_status(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();
@@ -57,7 +57,7 @@ impl ComponentStatus {
     ///
     ///     name of the ComponentStatus
     #[cfg(feature = "api")]
-    pub fn read_component_status(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadComponentStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/componentstatuses/{name}",
@@ -73,7 +73,7 @@ impl ComponentStatus {
     }
 }
 
-/// Use `<ReadComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::read_component_status`]
+/// Use `<ReadComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadComponentStatusResponse {
@@ -126,7 +126,7 @@ impl ComponentStatus {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_component_status(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/componentstatuses?".to_owned();

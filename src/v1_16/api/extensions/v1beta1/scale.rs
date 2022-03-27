@@ -38,7 +38,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_deployment_scale(
+    pub fn patch_deployment(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -89,7 +89,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_replica_set_scale(
+    pub fn patch_replica_set(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -140,7 +140,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_replication_controller_dummy_scale(
+    pub fn patch_replication_controller_dummy(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -173,7 +173,7 @@ impl Scale {
 impl Scale {
     /// read scale of the specified Deployment
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDeploymentScaleResponse`]`>` constructor, or [`ReadNamespacedDeploymentScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadDeploymentScaleResponse`]`>` constructor, or [`ReadDeploymentScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -185,10 +185,10 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_deployment_scale(
+    pub fn read_deployment(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedDeploymentScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadDeploymentScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -203,16 +203,16 @@ impl Scale {
     }
 }
 
-/// Use `<ReadNamespacedDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_deployment_scale`]
+/// Use `<ReadDeploymentScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_deployment`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedDeploymentScaleResponse {
+pub enum ReadDeploymentScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedDeploymentScaleResponse {
+impl crate::Response for ReadDeploymentScaleResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -221,7 +221,7 @@ impl crate::Response for ReadNamespacedDeploymentScaleResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedDeploymentScaleResponse::Ok(result), buf.len()))
+                Ok((ReadDeploymentScaleResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -235,7 +235,7 @@ impl crate::Response for ReadNamespacedDeploymentScaleResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedDeploymentScaleResponse::Other(result), read))
+                Ok((ReadDeploymentScaleResponse::Other(result), read))
             },
         }
     }
@@ -246,7 +246,7 @@ impl crate::Response for ReadNamespacedDeploymentScaleResponse {
 impl Scale {
     /// read scale of the specified ReplicaSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetScaleResponse`]`>` constructor, or [`ReadNamespacedReplicaSetScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadReplicaSetScaleResponse`]`>` constructor, or [`ReadReplicaSetScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -258,10 +258,10 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_replica_set_scale(
+    pub fn read_replica_set(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadReplicaSetScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -276,16 +276,16 @@ impl Scale {
     }
 }
 
-/// Use `<ReadNamespacedReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_replica_set_scale`]
+/// Use `<ReadReplicaSetScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_replica_set`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedReplicaSetScaleResponse {
+pub enum ReadReplicaSetScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
+impl crate::Response for ReadReplicaSetScaleResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -294,7 +294,7 @@ impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedReplicaSetScaleResponse::Ok(result), buf.len()))
+                Ok((ReadReplicaSetScaleResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -308,7 +308,7 @@ impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedReplicaSetScaleResponse::Other(result), read))
+                Ok((ReadReplicaSetScaleResponse::Other(result), read))
             },
         }
     }
@@ -319,7 +319,7 @@ impl crate::Response for ReadNamespacedReplicaSetScaleResponse {
 impl Scale {
     /// read scale of the specified ReplicationControllerDummy
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicationControllerDummyScaleResponse`]`>` constructor, or [`ReadNamespacedReplicationControllerDummyScaleResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadReplicationControllerDummyScaleResponse`]`>` constructor, or [`ReadReplicationControllerDummyScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -331,10 +331,10 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_replication_controller_dummy_scale(
+    pub fn read_replication_controller_dummy(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerDummyScaleResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadReplicationControllerDummyScaleResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -349,16 +349,16 @@ impl Scale {
     }
 }
 
-/// Use `<ReadNamespacedReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_replication_controller_dummy_scale`]
+/// Use `<ReadReplicationControllerDummyScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_replication_controller_dummy`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedReplicationControllerDummyScaleResponse {
+pub enum ReadReplicationControllerDummyScaleResponse {
     Ok(crate::api::extensions::v1beta1::Scale),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
+impl crate::Response for ReadReplicationControllerDummyScaleResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -367,7 +367,7 @@ impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
+                Ok((ReadReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -381,7 +381,7 @@ impl crate::Response for ReadNamespacedReplicationControllerDummyScaleResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedReplicationControllerDummyScaleResponse::Other(result), read))
+                Ok((ReadReplicationControllerDummyScaleResponse::Other(result), read))
             },
         }
     }
@@ -410,7 +410,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_deployment_scale(
+    pub fn replace_deployment(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
@@ -457,7 +457,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_replica_set_scale(
+    pub fn replace_replica_set(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,
@@ -504,7 +504,7 @@ impl Scale {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_replication_controller_dummy_scale(
+    pub fn replace_replication_controller_dummy(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::Scale,

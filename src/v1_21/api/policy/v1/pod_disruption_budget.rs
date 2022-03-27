@@ -34,7 +34,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_pod_disruption_budget(
+    pub fn create(
         namespace: &str,
         body: &crate::api::policy::v1::PodDisruptionBudget,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl PodDisruptionBudget {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_pod_disruption_budget(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_pod_disruption_budget(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -159,7 +159,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_pod_disruption_budget(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -194,7 +194,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_pod_disruption_budget_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/policy/v1/poddisruptionbudgets?".to_owned();
@@ -234,7 +234,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod_disruption_budget(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -285,7 +285,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod_disruption_budget_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -318,7 +318,7 @@ impl PodDisruptionBudget {
 impl PodDisruptionBudget {
     /// read the specified PodDisruptionBudget
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`ReadNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodDisruptionBudgetResponse`]`>` constructor, or [`ReadPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,10 +330,10 @@ impl PodDisruptionBudget {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_disruption_budget(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodDisruptionBudgetResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -348,16 +348,16 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Use `<ReadNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`]
+/// Use `<ReadPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodDisruptionBudgetResponse {
+pub enum ReadPodDisruptionBudgetResponse {
     Ok(crate::api::policy::v1::PodDisruptionBudget),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
+impl crate::Response for ReadPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -366,7 +366,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((ReadPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -380,7 +380,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodDisruptionBudgetResponse::Other(result), read))
+                Ok((ReadPodDisruptionBudgetResponse::Other(result), read))
             },
         }
     }
@@ -391,7 +391,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// read status of the specified PodDisruptionBudget
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodDisruptionBudgetStatusResponse`]`>` constructor, or [`ReadNamespacedPodDisruptionBudgetStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodDisruptionBudgetStatusResponse`]`>` constructor, or [`ReadPodDisruptionBudgetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -403,10 +403,10 @@ impl PodDisruptionBudget {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_disruption_budget_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -421,16 +421,16 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Use `<ReadNamespacedPodDisruptionBudgetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`]
+/// Use `<ReadPodDisruptionBudgetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodDisruptionBudgetStatusResponse {
+pub enum ReadPodDisruptionBudgetStatusResponse {
     Ok(crate::api::policy::v1::PodDisruptionBudget),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
+impl crate::Response for ReadPodDisruptionBudgetStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -439,7 +439,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -453,7 +453,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Other(result), read))
+                Ok((ReadPodDisruptionBudgetStatusResponse::Other(result), read))
             },
         }
     }
@@ -482,7 +482,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod_disruption_budget(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::policy::v1::PodDisruptionBudget,
@@ -529,7 +529,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod_disruption_budget_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::policy::v1::PodDisruptionBudget,
@@ -572,7 +572,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_pod_disruption_budget(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -607,7 +607,7 @@ impl PodDisruptionBudget {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_pod_disruption_budget_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/policy/v1/poddisruptionbudgets?".to_owned();

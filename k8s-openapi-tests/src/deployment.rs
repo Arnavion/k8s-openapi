@@ -6,7 +6,7 @@ async fn list() {
 	let mut client = crate::Client::new("deployment-list");
 
 	let (request, response_body) =
-		apps::Deployment::list_namespaced_deployment("kube-system", Default::default())
+		apps::Deployment::list("kube-system", Default::default())
 		.expect("couldn't list deployments");
 	let deployment_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(deployment_list), _) => deployment_list,

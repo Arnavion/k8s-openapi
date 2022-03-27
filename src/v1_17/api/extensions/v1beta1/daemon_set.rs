@@ -34,7 +34,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_daemon_set(
+    pub fn create(
         namespace: &str,
         body: &crate::api::extensions::v1beta1::DaemonSet,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl DaemonSet {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_daemon_set(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_daemon_set(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -155,7 +155,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_daemon_set_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/daemonsets?".to_owned();
@@ -191,7 +191,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_daemon_set(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -234,7 +234,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_daemon_set(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -285,7 +285,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_daemon_set_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -318,7 +318,7 @@ impl DaemonSet {
 impl DaemonSet {
     /// read the specified DaemonSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDaemonSetResponse`]`>` constructor, or [`ReadNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadDaemonSetResponse`]`>` constructor, or [`ReadDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,10 +330,10 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_daemon_set(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedDaemonSetResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadDaemonSetResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -348,16 +348,16 @@ impl DaemonSet {
     }
 }
 
-/// Use `<ReadNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read_namespaced_daemon_set`]
+/// Use `<ReadDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedDaemonSetResponse {
+pub enum ReadDaemonSetResponse {
     Ok(crate::api::extensions::v1beta1::DaemonSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedDaemonSetResponse {
+impl crate::Response for ReadDaemonSetResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -366,7 +366,7 @@ impl crate::Response for ReadNamespacedDaemonSetResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((ReadDaemonSetResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -380,7 +380,7 @@ impl crate::Response for ReadNamespacedDaemonSetResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedDaemonSetResponse::Other(result), read))
+                Ok((ReadDaemonSetResponse::Other(result), read))
             },
         }
     }
@@ -391,7 +391,7 @@ impl crate::Response for ReadNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// read status of the specified DaemonSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDaemonSetStatusResponse`]`>` constructor, or [`ReadNamespacedDaemonSetStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadDaemonSetStatusResponse`]`>` constructor, or [`ReadDaemonSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -403,10 +403,10 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_daemon_set_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedDaemonSetStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadDaemonSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -421,16 +421,16 @@ impl DaemonSet {
     }
 }
 
-/// Use `<ReadNamespacedDaemonSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read_namespaced_daemon_set_status`]
+/// Use `<ReadDaemonSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedDaemonSetStatusResponse {
+pub enum ReadDaemonSetStatusResponse {
     Ok(crate::api::extensions::v1beta1::DaemonSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedDaemonSetStatusResponse {
+impl crate::Response for ReadDaemonSetStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -439,7 +439,7 @@ impl crate::Response for ReadNamespacedDaemonSetStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadDaemonSetStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -453,7 +453,7 @@ impl crate::Response for ReadNamespacedDaemonSetStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedDaemonSetStatusResponse::Other(result), read))
+                Ok((ReadDaemonSetStatusResponse::Other(result), read))
             },
         }
     }
@@ -482,7 +482,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_daemon_set(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::DaemonSet,
@@ -529,7 +529,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_daemon_set_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::DaemonSet,
@@ -568,7 +568,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_daemon_set_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/daemonsets?".to_owned();
@@ -604,7 +604,7 @@ impl DaemonSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_daemon_set(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

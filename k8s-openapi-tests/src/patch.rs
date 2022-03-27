@@ -46,7 +46,7 @@ async fn deployment() {
 		..Default::default()
 	};
 	let (request, response_body) =
-		apps::Deployment::create_namespaced_deployment("default", &deployment, Default::default())
+		apps::Deployment::create("default", &deployment, Default::default())
 		.expect("couldn't create deployment");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(_), _) => (),
@@ -120,7 +120,7 @@ async fn deployment() {
 
 	// Delete deployment
 	let (request, response_body) =
-		apps::Deployment::delete_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", Default::default())
+		apps::Deployment::delete("k8s-openapi-tests-patch-deployment", "default", Default::default())
 		.expect("couldn't delete deployment");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
@@ -129,7 +129,7 @@ async fn deployment() {
 
 	// Delete all pods of the deployment using label selector
 	let (request, response_body) =
-		api::Pod::delete_collection_namespaced_pod(
+		api::Pod::delete_collection(
 			"default",
 			Default::default(),
 			k8s_openapi::ListOptional {
@@ -147,7 +147,7 @@ async fn deployment() {
 /// Patch the deployment with the given path, and assert that the patched deployment has a container with the expected image
 async fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta::Patch, expected_image: &str) {
 	let (request, response_body) =
-		apps::Deployment::patch_namespaced_deployment("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
+		apps::Deployment::patch("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
 		.expect("couldn't create patch");
 
 	let deployment = match client.get_single_value(request, response_body).await {

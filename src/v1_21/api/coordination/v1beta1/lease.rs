@@ -31,7 +31,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_lease(
+    pub fn create(
         namespace: &str,
         body: &crate::api::coordination::v1beta1::Lease,
         optional: crate::CreateOptional<'_>,
@@ -74,7 +74,7 @@ impl Lease {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_lease(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -117,7 +117,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_lease(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -152,7 +152,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_lease_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
@@ -188,7 +188,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_lease(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -231,7 +231,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_lease(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -264,7 +264,7 @@ impl Lease {
 impl Lease {
     /// read the specified Lease
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedLeaseResponse`]`>` constructor, or [`ReadNamespacedLeaseResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadLeaseResponse`]`>` constructor, or [`ReadLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -276,10 +276,10 @@ impl Lease {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_lease(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedLeaseResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadLeaseResponse>), crate::RequestError> {
         let __url = format!("/apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -294,16 +294,16 @@ impl Lease {
     }
 }
 
-/// Use `<ReadNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::read_namespaced_lease`]
+/// Use `<ReadLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedLeaseResponse {
+pub enum ReadLeaseResponse {
     Ok(crate::api::coordination::v1beta1::Lease),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedLeaseResponse {
+impl crate::Response for ReadLeaseResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -312,7 +312,7 @@ impl crate::Response for ReadNamespacedLeaseResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((ReadLeaseResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -326,7 +326,7 @@ impl crate::Response for ReadNamespacedLeaseResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedLeaseResponse::Other(result), read))
+                Ok((ReadLeaseResponse::Other(result), read))
             },
         }
     }
@@ -355,7 +355,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_lease(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::coordination::v1beta1::Lease,
@@ -394,7 +394,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_lease_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/coordination.k8s.io/v1beta1/leases?".to_owned();
@@ -430,7 +430,7 @@ impl Lease {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_lease(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

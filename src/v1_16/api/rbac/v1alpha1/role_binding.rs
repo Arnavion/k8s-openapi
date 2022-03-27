@@ -34,7 +34,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_role_binding(
+    pub fn create(
         namespace: &str,
         body: &crate::api::rbac::v1alpha1::RoleBinding,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl RoleBinding {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_role_binding(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_role_binding(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -159,7 +159,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_role_binding(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -194,7 +194,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_role_binding_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_owned();
@@ -234,7 +234,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_role_binding(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -267,7 +267,7 @@ impl RoleBinding {
 impl RoleBinding {
     /// read the specified RoleBinding
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedRoleBindingResponse`]`>` constructor, or [`ReadNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadRoleBindingResponse`]`>` constructor, or [`ReadRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -279,10 +279,10 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_role_binding(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedRoleBindingResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadRoleBindingResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -297,16 +297,16 @@ impl RoleBinding {
     }
 }
 
-/// Use `<ReadNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::read_namespaced_role_binding`]
+/// Use `<ReadRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedRoleBindingResponse {
+pub enum ReadRoleBindingResponse {
     Ok(crate::api::rbac::v1alpha1::RoleBinding),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedRoleBindingResponse {
+impl crate::Response for ReadRoleBindingResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -315,7 +315,7 @@ impl crate::Response for ReadNamespacedRoleBindingResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ReadRoleBindingResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -329,7 +329,7 @@ impl crate::Response for ReadNamespacedRoleBindingResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedRoleBindingResponse::Other(result), read))
+                Ok((ReadRoleBindingResponse::Other(result), read))
             },
         }
     }
@@ -358,7 +358,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_role_binding(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::rbac::v1alpha1::RoleBinding,
@@ -401,7 +401,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_role_binding(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -436,7 +436,7 @@ impl RoleBinding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_role_binding_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_owned();

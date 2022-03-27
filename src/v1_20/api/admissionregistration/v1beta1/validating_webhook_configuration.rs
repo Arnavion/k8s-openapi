@@ -27,7 +27,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_validating_webhook_configuration(
+    pub fn create(
         body: &crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -63,7 +63,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_validating_webhook_configuration(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -99,7 +99,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_validating_webhook_configuration(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -132,7 +132,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_validating_webhook_configuration(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations?".to_owned();
@@ -168,7 +168,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_validating_webhook_configuration(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -207,7 +207,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     name of the ValidatingWebhookConfiguration
     #[cfg(feature = "api")]
-    pub fn read_validating_webhook_configuration(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name}",
@@ -223,7 +223,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
-/// Use `<ReadValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
+/// Use `<ReadValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadValidatingWebhookConfigurationResponse {
@@ -280,7 +280,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_validating_webhook_configuration(
+    pub fn replace(
         name: &str,
         body: &crate::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         optional: crate::ReplaceOptional<'_>,
@@ -317,7 +317,7 @@ impl ValidatingWebhookConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_validating_webhook_configuration(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations?".to_owned();

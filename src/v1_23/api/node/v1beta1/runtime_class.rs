@@ -33,7 +33,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_runtime_class(
+    pub fn create(
         body: &crate::api::node::v1beta1::RuntimeClass,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -69,7 +69,7 @@ impl RuntimeClass {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_runtime_class(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -105,7 +105,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_runtime_class(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -138,7 +138,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_runtime_class(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1beta1/runtimeclasses?".to_owned();
@@ -174,7 +174,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_runtime_class(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -213,7 +213,7 @@ impl RuntimeClass {
     ///
     ///     name of the RuntimeClass
     #[cfg(feature = "api")]
-    pub fn read_runtime_class(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadRuntimeClassResponse>), crate::RequestError> {
         let __url = format!("/apis/node.k8s.io/v1beta1/runtimeclasses/{name}",
@@ -229,7 +229,7 @@ impl RuntimeClass {
     }
 }
 
-/// Use `<ReadRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::read_runtime_class`]
+/// Use `<ReadRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadRuntimeClassResponse {
@@ -286,7 +286,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_runtime_class(
+    pub fn replace(
         name: &str,
         body: &crate::api::node::v1beta1::RuntimeClass,
         optional: crate::ReplaceOptional<'_>,
@@ -323,7 +323,7 @@ impl RuntimeClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_runtime_class(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/node.k8s.io/v1beta1/runtimeclasses?".to_owned();

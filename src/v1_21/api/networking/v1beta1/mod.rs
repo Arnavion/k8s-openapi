@@ -7,8 +7,8 @@ pub use self::http_ingress_rule_value::HTTPIngressRuleValue;
 
 mod ingress;
 pub use self::ingress::Ingress;
-#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressResponse;
-#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressStatusResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadIngressResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadIngressStatusResponse;
 
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;

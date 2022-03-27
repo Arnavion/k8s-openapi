@@ -35,7 +35,7 @@ impl Eviction {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_pod_eviction(
+    pub fn create_pod(
         name: &str,
         namespace: &str,
         body: &crate::api::policy::v1::Eviction,

@@ -34,12 +34,12 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_namespaced_service_proxy(
+    pub fn connect_delete_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectDeleteNamespacedServiceProxyOptional<'_>,
+        optional: ConnectDeleteServiceProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectDeleteNamespacedServiceProxyOptional {
+        let ConnectDeleteServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
@@ -58,10 +58,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`]
+/// Optional parameters of [`Service::connect_delete_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
+pub struct ConnectDeleteServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
@@ -89,13 +89,13 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_namespaced_service_proxy_with_path(
+    pub fn connect_delete_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectDeleteNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectDeleteServiceProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectDeleteNamespacedServiceProxyWithPathOptional {
+        let ConnectDeleteServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
@@ -115,10 +115,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`]
+/// Optional parameters of [`Service::connect_delete_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectDeleteServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
@@ -142,12 +142,12 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_service_proxy(
+    pub fn connect_get_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectGetNamespacedServiceProxyOptional<'_>,
+        optional: ConnectGetServiceProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedServiceProxyOptional {
+        let ConnectGetServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
@@ -166,10 +166,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_get_namespaced_service_proxy`]
+/// Optional parameters of [`Service::connect_get_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
+pub struct ConnectGetServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
@@ -197,13 +197,13 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_service_proxy_with_path(
+    pub fn connect_get_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectGetNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectGetServiceProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedServiceProxyWithPathOptional {
+        let ConnectGetServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
@@ -223,10 +223,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`]
+/// Optional parameters of [`Service::connect_get_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectGetServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
@@ -250,12 +250,12 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_namespaced_service_proxy(
+    pub fn connect_patch_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPatchNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPatchServiceProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPatchNamespacedServiceProxyOptional {
+        let ConnectPatchServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
@@ -274,10 +274,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`]
+/// Optional parameters of [`Service::connect_patch_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPatchServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
@@ -305,13 +305,13 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_namespaced_service_proxy_with_path(
+    pub fn connect_patch_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPatchNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPatchServiceProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPatchNamespacedServiceProxyWithPathOptional {
+        let ConnectPatchServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
@@ -331,10 +331,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`]
+/// Optional parameters of [`Service::connect_patch_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPatchServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
@@ -358,12 +358,12 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_service_proxy(
+    pub fn connect_post_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPostNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPostServiceProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedServiceProxyOptional {
+        let ConnectPostServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
@@ -382,10 +382,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_post_namespaced_service_proxy`]
+/// Optional parameters of [`Service::connect_post_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPostServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
@@ -413,13 +413,13 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_service_proxy_with_path(
+    pub fn connect_post_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPostNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPostServiceProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedServiceProxyWithPathOptional {
+        let ConnectPostServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
@@ -439,10 +439,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`]
+/// Optional parameters of [`Service::connect_post_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPostServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
@@ -466,12 +466,12 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_namespaced_service_proxy(
+    pub fn connect_put_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPutNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPutServiceProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPutNamespacedServiceProxyOptional {
+        let ConnectPutServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?",
@@ -490,10 +490,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_put_namespaced_service_proxy`]
+/// Optional parameters of [`Service::connect_put_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPutServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
@@ -521,13 +521,13 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_namespaced_service_proxy_with_path(
+    pub fn connect_put_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPutNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPutServiceProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPutNamespacedServiceProxyWithPathOptional {
+        let ConnectPutServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?",
@@ -547,10 +547,10 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`]
+/// Optional parameters of [`Service::connect_put_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPutServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
@@ -574,7 +574,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_service(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::Service,
         optional: crate::CreateOptional<'_>,
@@ -617,7 +617,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_service(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -656,7 +656,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_service(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -691,7 +691,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_service_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/services?".to_owned();
@@ -731,7 +731,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_service(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -782,7 +782,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_service_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -815,7 +815,7 @@ impl Service {
 impl Service {
     /// read the specified Service
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceResponse`]`>` constructor, or [`ReadNamespacedServiceResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadServiceResponse`]`>` constructor, or [`ReadServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -827,10 +827,10 @@ impl Service {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_service(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadServiceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -845,16 +845,16 @@ impl Service {
     }
 }
 
-/// Use `<ReadNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service`]
+/// Use `<ReadServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedServiceResponse {
+pub enum ReadServiceResponse {
     Ok(crate::api::core::v1::Service),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedServiceResponse {
+impl crate::Response for ReadServiceResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -863,7 +863,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((ReadServiceResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -877,7 +877,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedServiceResponse::Other(result), read))
+                Ok((ReadServiceResponse::Other(result), read))
             },
         }
     }
@@ -888,7 +888,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
 impl Service {
     /// read status of the specified Service
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceStatusResponse`]`>` constructor, or [`ReadNamespacedServiceStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadServiceStatusResponse`]`>` constructor, or [`ReadServiceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -900,10 +900,10 @@ impl Service {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_service_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadServiceStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -918,16 +918,16 @@ impl Service {
     }
 }
 
-/// Use `<ReadNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service_status`]
+/// Use `<ReadServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedServiceStatusResponse {
+pub enum ReadServiceStatusResponse {
     Ok(crate::api::core::v1::Service),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedServiceStatusResponse {
+impl crate::Response for ReadServiceStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -936,7 +936,7 @@ impl crate::Response for ReadNamespacedServiceStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedServiceStatusResponse::Ok(result), buf.len()))
+                Ok((ReadServiceStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -950,7 +950,7 @@ impl crate::Response for ReadNamespacedServiceStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedServiceStatusResponse::Other(result), read))
+                Ok((ReadServiceStatusResponse::Other(result), read))
             },
         }
     }
@@ -979,7 +979,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_service(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Service,
@@ -1026,7 +1026,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_service_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Service,
@@ -1069,7 +1069,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_service(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -1104,7 +1104,7 @@ impl Service {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_service_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/services?".to_owned();

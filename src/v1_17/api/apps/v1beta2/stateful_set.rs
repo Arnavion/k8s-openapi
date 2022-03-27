@@ -36,7 +36,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_stateful_set(
+    pub fn create(
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
         optional: crate::CreateOptional<'_>,
@@ -79,7 +79,7 @@ impl StatefulSet {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_stateful_set(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -122,7 +122,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_stateful_set(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -161,7 +161,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_stateful_set(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -196,7 +196,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_stateful_set_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/statefulsets?".to_owned();
@@ -236,7 +236,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_stateful_set(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -287,7 +287,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_stateful_set_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -320,7 +320,7 @@ impl StatefulSet {
 impl StatefulSet {
     /// read the specified StatefulSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedStatefulSetResponse`]`>` constructor, or [`ReadNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadStatefulSetResponse`]`>` constructor, or [`ReadStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -332,10 +332,10 @@ impl StatefulSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_stateful_set(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedStatefulSetResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStatefulSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -350,16 +350,16 @@ impl StatefulSet {
     }
 }
 
-/// Use `<ReadNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read_namespaced_stateful_set`]
+/// Use `<ReadStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedStatefulSetResponse {
+pub enum ReadStatefulSetResponse {
     Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedStatefulSetResponse {
+impl crate::Response for ReadStatefulSetResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -368,7 +368,7 @@ impl crate::Response for ReadNamespacedStatefulSetResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((ReadStatefulSetResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -382,7 +382,7 @@ impl crate::Response for ReadNamespacedStatefulSetResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedStatefulSetResponse::Other(result), read))
+                Ok((ReadStatefulSetResponse::Other(result), read))
             },
         }
     }
@@ -393,7 +393,7 @@ impl crate::Response for ReadNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// read status of the specified StatefulSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedStatefulSetStatusResponse`]`>` constructor, or [`ReadNamespacedStatefulSetStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadStatefulSetStatusResponse`]`>` constructor, or [`ReadStatefulSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -405,10 +405,10 @@ impl StatefulSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_stateful_set_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedStatefulSetStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStatefulSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -423,16 +423,16 @@ impl StatefulSet {
     }
 }
 
-/// Use `<ReadNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read_namespaced_stateful_set_status`]
+/// Use `<ReadStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedStatefulSetStatusResponse {
+pub enum ReadStatefulSetStatusResponse {
     Ok(crate::api::apps::v1beta2::StatefulSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
+impl crate::Response for ReadStatefulSetStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -441,7 +441,7 @@ impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadStatefulSetStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -455,7 +455,7 @@ impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedStatefulSetStatusResponse::Other(result), read))
+                Ok((ReadStatefulSetStatusResponse::Other(result), read))
             },
         }
     }
@@ -484,7 +484,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_stateful_set(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
@@ -531,7 +531,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_stateful_set_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1beta2::StatefulSet,
@@ -574,7 +574,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_stateful_set(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -609,7 +609,7 @@ impl StatefulSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_stateful_set_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1beta2/statefulsets?".to_owned();

@@ -31,7 +31,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_network_policy(
+    pub fn create(
         namespace: &str,
         body: &crate::api::extensions::v1beta1::NetworkPolicy,
         optional: crate::CreateOptional<'_>,
@@ -74,7 +74,7 @@ impl NetworkPolicy {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_network_policy(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -117,7 +117,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_network_policy(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -156,7 +156,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_network_policy(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -191,7 +191,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_network_policy_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/networkpolicies?".to_owned();
@@ -231,7 +231,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_network_policy(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -264,7 +264,7 @@ impl NetworkPolicy {
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedNetworkPolicyResponse`]`>` constructor, or [`ReadNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNetworkPolicyResponse`]`>` constructor, or [`ReadNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -276,10 +276,10 @@ impl NetworkPolicy {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_network_policy(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedNetworkPolicyResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNetworkPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -294,16 +294,16 @@ impl NetworkPolicy {
     }
 }
 
-/// Use `<ReadNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::read_namespaced_network_policy`]
+/// Use `<ReadNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedNetworkPolicyResponse {
+pub enum ReadNetworkPolicyResponse {
     Ok(crate::api::extensions::v1beta1::NetworkPolicy),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedNetworkPolicyResponse {
+impl crate::Response for ReadNetworkPolicyResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -312,7 +312,7 @@ impl crate::Response for ReadNamespacedNetworkPolicyResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((ReadNetworkPolicyResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -326,7 +326,7 @@ impl crate::Response for ReadNamespacedNetworkPolicyResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedNetworkPolicyResponse::Other(result), read))
+                Ok((ReadNetworkPolicyResponse::Other(result), read))
             },
         }
     }
@@ -355,7 +355,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_network_policy(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::NetworkPolicy,
@@ -398,7 +398,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_network_policy(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -433,7 +433,7 @@ impl NetworkPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_network_policy_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/networkpolicies?".to_owned();

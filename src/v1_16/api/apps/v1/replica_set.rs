@@ -34,7 +34,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_replica_set(
+    pub fn create(
         namespace: &str,
         body: &crate::api::apps::v1::ReplicaSet,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl ReplicaSet {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_replica_set(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_replica_set(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -159,7 +159,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_replica_set(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -194,7 +194,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_replica_set_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1/replicasets?".to_owned();
@@ -234,7 +234,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_replica_set(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -285,7 +285,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_replica_set_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -318,7 +318,7 @@ impl ReplicaSet {
 impl ReplicaSet {
     /// read the specified ReplicaSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetResponse`]`>` constructor, or [`ReadNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadReplicaSetResponse`]`>` constructor, or [`ReadReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,10 +330,10 @@ impl ReplicaSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_replica_set(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadReplicaSetResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -348,16 +348,16 @@ impl ReplicaSet {
     }
 }
 
-/// Use `<ReadNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set`]
+/// Use `<ReadReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedReplicaSetResponse {
+pub enum ReadReplicaSetResponse {
     Ok(crate::api::apps::v1::ReplicaSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedReplicaSetResponse {
+impl crate::Response for ReadReplicaSetResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -366,7 +366,7 @@ impl crate::Response for ReadNamespacedReplicaSetResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((ReadReplicaSetResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -380,7 +380,7 @@ impl crate::Response for ReadNamespacedReplicaSetResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedReplicaSetResponse::Other(result), read))
+                Ok((ReadReplicaSetResponse::Other(result), read))
             },
         }
     }
@@ -391,7 +391,7 @@ impl crate::Response for ReadNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// read status of the specified ReplicaSet
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetStatusResponse`]`>` constructor, or [`ReadNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadReplicaSetStatusResponse`]`>` constructor, or [`ReadReplicaSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -403,10 +403,10 @@ impl ReplicaSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_replica_set_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadReplicaSetStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -421,16 +421,16 @@ impl ReplicaSet {
     }
 }
 
-/// Use `<ReadNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set_status`]
+/// Use `<ReadReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedReplicaSetStatusResponse {
+pub enum ReadReplicaSetStatusResponse {
     Ok(crate::api::apps::v1::ReplicaSet),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
+impl crate::Response for ReadReplicaSetStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -439,7 +439,7 @@ impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadReplicaSetStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -453,7 +453,7 @@ impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedReplicaSetStatusResponse::Other(result), read))
+                Ok((ReadReplicaSetStatusResponse::Other(result), read))
             },
         }
     }
@@ -482,7 +482,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_replica_set(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1::ReplicaSet,
@@ -529,7 +529,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_replica_set_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::apps::v1::ReplicaSet,
@@ -572,7 +572,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_replica_set(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -607,7 +607,7 @@ impl ReplicaSet {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_replica_set_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apps/v1/replicasets?".to_owned();

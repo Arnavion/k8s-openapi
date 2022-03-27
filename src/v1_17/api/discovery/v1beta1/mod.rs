@@ -10,4 +10,4 @@ pub use self::endpoint_port::EndpointPort;
 
 mod endpoint_slice;
 pub use self::endpoint_slice::EndpointSlice;
-#[cfg(feature = "api")] pub use self::endpoint_slice::ReadNamespacedEndpointSliceResponse;
+#[cfg(feature = "api")] pub use self::endpoint_slice::ReadEndpointSliceResponse;

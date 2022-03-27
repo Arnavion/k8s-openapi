@@ -27,7 +27,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_csi_node(
+    pub fn create(
         body: &crate::api::storage::v1::CSINode,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -63,7 +63,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_csi_node(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -98,7 +98,7 @@ impl CSINode {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_csi_node(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -132,7 +132,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_csi_node(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1/csinodes?".to_owned();
@@ -168,7 +168,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_csi_node(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -207,7 +207,7 @@ impl CSINode {
     ///
     ///     name of the CSINode
     #[cfg(feature = "api")]
-    pub fn read_csi_node(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCSINodeResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/csinodes/{name}",
@@ -223,7 +223,7 @@ impl CSINode {
     }
 }
 
-/// Use `<ReadCSINodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSINode::read_csi_node`]
+/// Use `<ReadCSINodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSINode::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCSINodeResponse {
@@ -280,7 +280,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_csi_node(
+    pub fn replace(
         name: &str,
         body: &crate::api::storage::v1::CSINode,
         optional: crate::ReplaceOptional<'_>,
@@ -317,7 +317,7 @@ impl CSINode {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_csi_node(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1/csinodes?".to_owned();

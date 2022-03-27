@@ -47,7 +47,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_storage_class(
+    pub fn create(
         body: &crate::api::storage::v1beta1::StorageClass,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -83,7 +83,7 @@ impl StorageClass {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_storage_class(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -119,7 +119,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_storage_class(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -152,7 +152,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_storage_class(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/storageclasses?".to_owned();
@@ -188,7 +188,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_storage_class(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -227,7 +227,7 @@ impl StorageClass {
     ///
     ///     name of the StorageClass
     #[cfg(feature = "api")]
-    pub fn read_storage_class(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageClassResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}",
@@ -243,7 +243,7 @@ impl StorageClass {
     }
 }
 
-/// Use `<ReadStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::read_storage_class`]
+/// Use `<ReadStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadStorageClassResponse {
@@ -300,7 +300,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_storage_class(
+    pub fn replace(
         name: &str,
         body: &crate::api::storage::v1beta1::StorageClass,
         optional: crate::ReplaceOptional<'_>,
@@ -337,7 +337,7 @@ impl StorageClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_storage_class(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1beta1/storageclasses?".to_owned();

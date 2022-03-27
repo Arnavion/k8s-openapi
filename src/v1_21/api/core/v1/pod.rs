@@ -34,12 +34,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_namespaced_pod_proxy(
+    pub fn connect_delete_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectDeleteNamespacedPodProxyOptional<'_>,
+        optional: ConnectDeletePodProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectDeleteNamespacedPodProxyOptional {
+        let ConnectDeletePodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
@@ -58,10 +58,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy`]
+/// Optional parameters of [`Pod::connect_delete_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectDeleteNamespacedPodProxyOptional<'a> {
+pub struct ConnectDeletePodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
@@ -89,13 +89,13 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_namespaced_pod_proxy_with_path(
+    pub fn connect_delete_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectDeleteNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectDeletePodProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectDeleteNamespacedPodProxyWithPathOptional {
+        let ConnectDeletePodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
@@ -115,10 +115,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy_with_path`]
+/// Optional parameters of [`Pod::connect_delete_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectDeleteNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectDeletePodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
@@ -142,12 +142,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_pod_attach(
+    pub fn connect_get_attach(
         name: &str,
         namespace: &str,
-        optional: ConnectGetNamespacedPodAttachOptional<'_>,
+        optional: ConnectGetPodAttachOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedPodAttachOptional {
+        let ConnectGetPodAttachOptional {
             container,
             stderr,
             stdin,
@@ -182,10 +182,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_get_namespaced_pod_attach`]
+/// Optional parameters of [`Pod::connect_get_attach`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedPodAttachOptional<'a> {
+pub struct ConnectGetPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
     /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
@@ -217,12 +217,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_pod_exec(
+    pub fn connect_get_exec(
         name: &str,
         namespace: &str,
-        optional: ConnectGetNamespacedPodExecOptional<'_>,
+        optional: ConnectGetPodExecOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedPodExecOptional {
+        let ConnectGetPodExecOptional {
             command,
             container,
             stderr,
@@ -263,10 +263,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_get_namespaced_pod_exec`]
+/// Optional parameters of [`Pod::connect_get_exec`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedPodExecOptional<'a> {
+pub struct ConnectGetPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a [String]>,
     /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
@@ -300,12 +300,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_pod_portforward(
+    pub fn connect_get_portforward(
         name: &str,
         namespace: &str,
-        optional: ConnectGetNamespacedPodPortforwardOptional,
+        optional: ConnectGetPodPortforwardOptional,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedPodPortforwardOptional {
+        let ConnectGetPodPortforwardOptional {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
@@ -324,10 +324,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_get_namespaced_pod_portforward`]
+/// Optional parameters of [`Pod::connect_get_portforward`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedPodPortforwardOptional {
+pub struct ConnectGetPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
 }
@@ -351,12 +351,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_pod_proxy(
+    pub fn connect_get_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectGetNamespacedPodProxyOptional<'_>,
+        optional: ConnectGetPodProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedPodProxyOptional {
+        let ConnectGetPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
@@ -375,10 +375,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy`]
+/// Optional parameters of [`Pod::connect_get_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedPodProxyOptional<'a> {
+pub struct ConnectGetPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
@@ -406,13 +406,13 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_namespaced_pod_proxy_with_path(
+    pub fn connect_get_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectGetNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectGetPodProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectGetNamespacedPodProxyWithPathOptional {
+        let ConnectGetPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
@@ -432,10 +432,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy_with_path`]
+/// Optional parameters of [`Pod::connect_get_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectGetNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectGetPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
@@ -459,12 +459,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_namespaced_pod_proxy(
+    pub fn connect_patch_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPatchNamespacedPodProxyOptional<'_>,
+        optional: ConnectPatchPodProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPatchNamespacedPodProxyOptional {
+        let ConnectPatchPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
@@ -483,10 +483,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy`]
+/// Optional parameters of [`Pod::connect_patch_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPatchNamespacedPodProxyOptional<'a> {
+pub struct ConnectPatchPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
@@ -514,13 +514,13 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_namespaced_pod_proxy_with_path(
+    pub fn connect_patch_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPatchNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPatchPodProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPatchNamespacedPodProxyWithPathOptional {
+        let ConnectPatchPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
@@ -540,10 +540,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy_with_path`]
+/// Optional parameters of [`Pod::connect_patch_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPatchNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPatchPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
@@ -567,12 +567,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_pod_attach(
+    pub fn connect_post_attach(
         name: &str,
         namespace: &str,
-        optional: ConnectPostNamespacedPodAttachOptional<'_>,
+        optional: ConnectPostPodAttachOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedPodAttachOptional {
+        let ConnectPostPodAttachOptional {
             container,
             stderr,
             stdin,
@@ -607,10 +607,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_post_namespaced_pod_attach`]
+/// Optional parameters of [`Pod::connect_post_attach`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedPodAttachOptional<'a> {
+pub struct ConnectPostPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
     /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
@@ -642,12 +642,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_pod_exec(
+    pub fn connect_post_exec(
         name: &str,
         namespace: &str,
-        optional: ConnectPostNamespacedPodExecOptional<'_>,
+        optional: ConnectPostPodExecOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedPodExecOptional {
+        let ConnectPostPodExecOptional {
             command,
             container,
             stderr,
@@ -686,10 +686,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_post_namespaced_pod_exec`]
+/// Optional parameters of [`Pod::connect_post_exec`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedPodExecOptional<'a> {
+pub struct ConnectPostPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a str>,
     /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
@@ -723,12 +723,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_pod_portforward(
+    pub fn connect_post_portforward(
         name: &str,
         namespace: &str,
-        optional: ConnectPostNamespacedPodPortforwardOptional,
+        optional: ConnectPostPodPortforwardOptional,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedPodPortforwardOptional {
+        let ConnectPostPodPortforwardOptional {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?",
@@ -747,10 +747,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_post_namespaced_pod_portforward`]
+/// Optional parameters of [`Pod::connect_post_portforward`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedPodPortforwardOptional {
+pub struct ConnectPostPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
 }
@@ -774,12 +774,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_pod_proxy(
+    pub fn connect_post_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPostNamespacedPodProxyOptional<'_>,
+        optional: ConnectPostPodProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedPodProxyOptional {
+        let ConnectPostPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
@@ -798,10 +798,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy`]
+/// Optional parameters of [`Pod::connect_post_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedPodProxyOptional<'a> {
+pub struct ConnectPostPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
@@ -829,13 +829,13 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_namespaced_pod_proxy_with_path(
+    pub fn connect_post_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPostNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPostPodProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPostNamespacedPodProxyWithPathOptional {
+        let ConnectPostPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
@@ -855,10 +855,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy_with_path`]
+/// Optional parameters of [`Pod::connect_post_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPostNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPostPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
@@ -882,12 +882,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_namespaced_pod_proxy(
+    pub fn connect_put_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectPutNamespacedPodProxyOptional<'_>,
+        optional: ConnectPutPodProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPutNamespacedPodProxyOptional {
+        let ConnectPutPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?",
@@ -906,10 +906,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy`]
+/// Optional parameters of [`Pod::connect_put_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPutNamespacedPodProxyOptional<'a> {
+pub struct ConnectPutPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
@@ -937,13 +937,13 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_namespaced_pod_proxy_with_path(
+    pub fn connect_put_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectPutNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPutPodProxyWithPathOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectPutNamespacedPodProxyWithPathOptional {
+        let ConnectPutPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?",
@@ -963,10 +963,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy_with_path`]
+/// Optional parameters of [`Pod::connect_put_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ConnectPutNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPutPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
@@ -990,7 +990,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_pod(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::Pod,
         optional: crate::CreateOptional<'_>,
@@ -1033,7 +1033,7 @@ impl Pod {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_pod(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -1076,7 +1076,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_pod(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -1115,7 +1115,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_pod(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -1150,7 +1150,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_pod_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/pods?".to_owned();
@@ -1190,7 +1190,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -1241,7 +1241,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -1274,7 +1274,7 @@ impl Pod {
 impl Pod {
     /// read the specified Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodResponse`]`>` constructor, or [`ReadNamespacedPodResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodResponse`]`>` constructor, or [`ReadPodResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1286,10 +1286,10 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1304,16 +1304,16 @@ impl Pod {
     }
 }
 
-/// Use `<ReadNamespacedPodResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod`]
+/// Use `<ReadPodResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodResponse {
+pub enum ReadPodResponse {
     Ok(crate::api::core::v1::Pod),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodResponse {
+impl crate::Response for ReadPodResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -1322,7 +1322,7 @@ impl crate::Response for ReadNamespacedPodResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodResponse::Ok(result), buf.len()))
+                Ok((ReadPodResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -1336,7 +1336,7 @@ impl crate::Response for ReadNamespacedPodResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodResponse::Other(result), read))
+                Ok((ReadPodResponse::Other(result), read))
             },
         }
     }
@@ -1347,7 +1347,7 @@ impl crate::Response for ReadNamespacedPodResponse {
 impl Pod {
     /// read log of the specified Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodLogResponse`]`>` constructor, or [`ReadNamespacedPodLogResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodLogResponse`]`>` constructor, or [`ReadPodLogResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1363,12 +1363,12 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_log(
+    pub fn read_log(
         name: &str,
         namespace: &str,
-        optional: ReadNamespacedPodLogOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodLogResponse>), crate::RequestError> {
-        let ReadNamespacedPodLogOptional {
+        optional: ReadPodLogOptional<'_>,
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodLogResponse>), crate::RequestError> {
+        let ReadPodLogOptional {
             container,
             follow,
             insecure_skip_tls_verify_backend,
@@ -1418,10 +1418,10 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::read_namespaced_pod_log`]
+/// Optional parameters of [`Pod::read_log`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
-pub struct ReadNamespacedPodLogOptional<'a> {
+pub struct ReadPodLogOptional<'a> {
     /// The container for which to stream logs. Defaults to only container if there is one container in the pod.
     pub container: Option<&'a str>,
     /// Follow the log stream of the pod. Defaults to false.
@@ -1440,16 +1440,16 @@ pub struct ReadNamespacedPodLogOptional<'a> {
     pub timestamps: Option<bool>,
 }
 
-/// Use `<ReadNamespacedPodLogResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod_log`]
+/// Use `<ReadPodLogResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_log`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodLogResponse {
+pub enum ReadPodLogResponse {
     Ok(String),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodLogResponse {
+impl crate::Response for ReadPodLogResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -1468,7 +1468,7 @@ impl crate::Response for ReadNamespacedPodLogResponse {
                         ),
                     },
                 };
-                Ok((ReadNamespacedPodLogResponse::Ok(result.to_owned()), len))
+                Ok((ReadPodLogResponse::Ok(result.to_owned()), len))
             },
             _ => {
                 let (result, read) =
@@ -1482,7 +1482,7 @@ impl crate::Response for ReadNamespacedPodLogResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodLogResponse::Other(result), read))
+                Ok((ReadPodLogResponse::Other(result), read))
             },
         }
     }
@@ -1493,7 +1493,7 @@ impl crate::Response for ReadNamespacedPodLogResponse {
 impl Pod {
     /// read status of the specified Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodStatusResponse`]`>` constructor, or [`ReadNamespacedPodStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodStatusResponse`]`>` constructor, or [`ReadPodStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1505,10 +1505,10 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -1523,16 +1523,16 @@ impl Pod {
     }
 }
 
-/// Use `<ReadNamespacedPodStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_namespaced_pod_status`]
+/// Use `<ReadPodStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodStatusResponse {
+pub enum ReadPodStatusResponse {
     Ok(crate::api::core::v1::Pod),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodStatusResponse {
+impl crate::Response for ReadPodStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -1541,7 +1541,7 @@ impl crate::Response for ReadNamespacedPodStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodStatusResponse::Ok(result), buf.len()))
+                Ok((ReadPodStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -1555,7 +1555,7 @@ impl crate::Response for ReadNamespacedPodStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodStatusResponse::Other(result), read))
+                Ok((ReadPodStatusResponse::Other(result), read))
             },
         }
     }
@@ -1584,7 +1584,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Pod,
@@ -1631,7 +1631,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Pod,
@@ -1674,7 +1674,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_pod(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -1709,7 +1709,7 @@ impl Pod {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_pod_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/pods?".to_owned();

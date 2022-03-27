@@ -56,14 +56,14 @@
 #![cfg_attr(feature = "api", doc = r#"
 (This requires the `api` feature to be enabled. The feature is enabled by default. See ["Crate features"](#crate-features) below for more details.)
 
-This example executes the [`api::core::v1::Pod::list_namespaced_pod`] API operation to list all pods inside a namespace.
+This example executes the [`api::core::v1::Pod::list`] API operation to list all pods inside a namespace.
 It demonstrates the common patterns implemented by all API operation functions in this crate:
 
 1. The API function has required parameters and optional parameters. All optional parameters are taken as a single struct with optional fields.
 
-   Specifically for the [`api::core::v1::Pod::list_namespaced_pod`] operation, the `namespace` parameter is required and taken by the function itself,
+   Specifically for the [`api::core::v1::Pod::list`] operation, the `namespace` parameter is required and taken by the function itself,
    while other optional parameters like `field_selector` are fields of the [`ListOptional`] struct. An instance of
-   this struct is taken as the last parameter of `Pod::list_namespaced_pod`. This struct impls [`Default`] so that you can just pass in `Default::default()`
+   this struct is taken as the last parameter of `Pod::list`. This struct impls [`Default`] so that you can just pass in `Default::default()`
    if you don't want to specify values for any of the optional parameters.
 
    Some API operations have a single common type for optional parameters:
@@ -77,14 +77,14 @@ It demonstrates the common patterns implemented by all API operation functions i
    - All delete-collection API take optional parameters using the [`DeleteOptional`] struct for delete options and the [`ListOptional`] struct for list options.
 
    Other API functions have their own `Optional` structs with fields corresponding to the specific parameters for those functions,
-   such as [`api::core::v1::ReadNamespacedPodLogOptional`] for [`api::core::v1::Pod::read_namespaced_pod_log`]
+   such as [`api::core::v1::ReadPodLogOptional`] for [`api::core::v1::Pod::read_log`]
 
 1. The function returns an [`http::Request`] value with the URL path, query string, and request body filled out according to the parameters
    given to the function. The function does *not* execute this request. You can execute this `http::Request` using any HTTP client library you want to use.
    It does not matter whether you use a synchronous client like `reqwest`, or an asynchronous client like `hyper`, or a mock client that returns bytes
    read from a test file.
 
-1. For each API operation function, there is a corresponding response type. For `Pod::list_namespaced_pod` this is [`ListResponse`]`<`[`api::core::v1::Pod`]`>`.
+1. For each API operation function, there is a corresponding response type. For `Pod::list` this is [`ListResponse`]`<`[`api::core::v1::Pod`]`>`.
    This is an enum with variants for each of the possible HTTP status codes that the operation can return, and contains the data that the API server would
    return corresponding to that status code. For example, the list-namespaced-pod operation returns a pod list with HTTP 200 OK, so one of the variants of
    that type is `Ok(`[`List`]`<`[`api::core::v1::Pod`]`>)`
@@ -157,7 +157,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a `http::Request` to list all the pods in the
     // "kube-system" namespace.
     let (request, response_body) =
-        api::Pod::list_namespaced_pod("kube-system", Default::default())?;
+        api::Pod::list("kube-system", Default::default())?;
 
     // Execute the request and get a response.
     // If this is an asynchronous operation, you would await
@@ -227,8 +227,8 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!
 //! - The crate also contains a feature named `api`. If this feature is disabled, the library will only contain the resource types like [`api::core::v1::Pod`],
 //!   and not the associated operation functions like
-#![cfg_attr(feature = "api", doc = "[`api::core::v1::Pod::read_namespaced_pod`]")]
-#![cfg_attr(not(feature = "api"), doc = "`api::core::v1::Pod::read_namespaced_pod`")]
+#![cfg_attr(feature = "api", doc = "[`api::core::v1::Pod::read`]")]
+#![cfg_attr(not(feature = "api"), doc = "`api::core::v1::Pod::read`")]
 //! . The `Response` and `Optional` types for the operation functions
 //!   will also not be accessible.
 //!
@@ -630,7 +630,7 @@ impl<T> ResponseBody<T> where T: Response {
     /// Drop the first `cnt` bytes of this buffer.
     ///
     /// This is useful for skipping over malformed bytes, such as invalid utf-8 sequences when parsing streaming `String` responses
-    /// like from [`api::core::v1::Pod::read_namespaced_pod_log`].
+    /// like from [`api::core::v1::Pod::read_log`].
     ///
     /// # Panics
     ///

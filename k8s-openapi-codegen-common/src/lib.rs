@@ -1680,7 +1680,7 @@ pub fn write_operation(
 	writeln!(out, "// Generated from operation {}", operation.id)?;
 
 	let (operation_fn_name, operation_result_name, operation_optional_parameters_name) =
-		get_operation_names(operation, type_name.is_some())?;
+		get_operation_names(operation, type_name)?;
 
 	let indent = if type_name.is_some() { "    " } else { "" };
 
@@ -2275,16 +2275,25 @@ pub fn write_operation(
 
 fn get_operation_names(
 	operation: &swagger20::Operation,
-	strip_tag: bool,
+	type_name: Option<&str>,
 ) -> Result<(std::borrow::Cow<'static, str>, Option<String>, String), Error> {
-	let operation_id =
-		if strip_tag {
-			operation.tag.as_ref()
-			.map_or(std::borrow::Cow::Borrowed(&*operation.id), |tag| {
-				// For functions associated with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
-				// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
-				let tag: String =
-					tag.split('_')
+	let (operation_id, operation_id_with_type_name) =
+		if let Some(type_name) = type_name {
+			// For operations associated with types, like `listCoreV1NamespacedPod`,
+			// the best function name is `Pod::list`, because:
+			//
+			// 1. The type name can be stripped, leading to `listCoreV1Namespaced`
+			// 2. The `Namespaced` part can be stripped, leading to `listCoreV1`
+			// 3. The API version contained in the operation name can be stripped, leading to `list`.
+			//    The operation tag is this value.
+			//
+			// However the type name is retained for computing the result type name and optional parameters type name,
+			// since otherwise any mod with multiple types will end up having types of the same name, eg multiple `ReadResponse`s.
+
+			let tag: String = {
+				// `operation.tag` is empty for `#[derive(k8s_openapi_derive::CustomResourceDefinition)]`
+				let tag = operation.tag.as_deref().unwrap_or("");
+				tag.split('_')
 					.map(|part| {
 						let mut chars = part.chars();
 						if let Some(first_char) = chars.next() {
@@ -2295,20 +2304,35 @@ fn get_operation_names(
 							std::borrow::Cow::Borrowed("")
 						}
 					})
-					.collect();
+					.collect()
+			};
 
-				std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
-			})
+			if let Some(operation_id) = operation.id.strip_suffix(type_name) {
+				let operation_id = operation_id.replacen("Namespaced", "", 1);
+				let operation_id = operation_id.replacen(&tag, "", 1);
+				let operation_id_with_type_name = format!("{operation_id}{type_name}");
+				(std::borrow::Cow::Owned(operation_id), std::borrow::Cow::Owned(operation_id_with_type_name))
+			}
+			else {
+				// Type name is in the middle of the operation ID, eg `patchCoreV1NamespacedPodStatus`
+				// In this case, `replacen(1)` the type name instead of `strip_suffix()`ing it, and retain the original string
+				// as the `operation_id_with_type_name`.
+
+				let operation_id_with_type_name = operation.id.replacen("Namespaced", "", 1);
+				let operation_id_with_type_name = operation_id_with_type_name.replacen(&tag, "", 1);
+				let operation_id = operation_id_with_type_name.replacen(type_name, "", 1);
+				(std::borrow::Cow::Owned(operation_id), std::borrow::Cow::Owned(operation_id_with_type_name))
+			}
 		}
 		else {
 			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,
 			// so their ID should be used as-is.
-			std::borrow::Cow::Borrowed(&*operation.id)
+			(std::borrow::Cow::Borrowed(&*operation.id), std::borrow::Cow::Borrowed(&*operation.id))
 		};
 
 	let operation_fn_name = get_rust_ident(&operation_id);
 
-	let mut chars = operation_id.chars();
+	let mut chars = operation_id_with_type_name.chars();
 	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {operation:?}"))?.to_uppercase();
 	let rest_chars = chars.as_str();
 	let operation_result_name = match (&operation.responses, operation.kubernetes_action) {

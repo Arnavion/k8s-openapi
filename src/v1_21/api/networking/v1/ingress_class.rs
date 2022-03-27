@@ -27,7 +27,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_ingress_class(
+    pub fn create(
         body: &crate::api::networking::v1::IngressClass,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -63,7 +63,7 @@ impl IngressClass {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_ingress_class(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -99,7 +99,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_ingress_class(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -132,7 +132,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_ingress_class(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/networking.k8s.io/v1/ingressclasses?".to_owned();
@@ -168,7 +168,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_ingress_class(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -207,7 +207,7 @@ impl IngressClass {
     ///
     ///     name of the IngressClass
     #[cfg(feature = "api")]
-    pub fn read_ingress_class(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadIngressClassResponse>), crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/ingressclasses/{name}",
@@ -223,7 +223,7 @@ impl IngressClass {
     }
 }
 
-/// Use `<ReadIngressClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`IngressClass::read_ingress_class`]
+/// Use `<ReadIngressClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`IngressClass::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadIngressClassResponse {
@@ -280,7 +280,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_ingress_class(
+    pub fn replace(
         name: &str,
         body: &crate::api::networking::v1::IngressClass,
         optional: crate::ReplaceOptional<'_>,
@@ -317,7 +317,7 @@ impl IngressClass {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_ingress_class(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/networking.k8s.io/v1/ingressclasses?".to_owned();

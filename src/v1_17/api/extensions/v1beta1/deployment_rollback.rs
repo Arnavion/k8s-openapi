@@ -20,7 +20,7 @@ pub struct DeploymentRollback {
 impl DeploymentRollback {
     /// create rollback of a Deployment
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedDeploymentRollbackResponse`]`>` constructor, or [`CreateNamespacedDeploymentRollbackResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateDeploymentRollbackResponse`]`>` constructor, or [`CreateDeploymentRollbackResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -38,12 +38,12 @@ impl DeploymentRollback {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_deployment_rollback(
+    pub fn create(
         name: &str,
         namespace: &str,
         body: &crate::api::extensions::v1beta1::DeploymentRollback,
         optional: crate::CreateOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<CreateNamespacedDeploymentRollbackResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<CreateDeploymentRollbackResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback?",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -62,10 +62,10 @@ impl DeploymentRollback {
     }
 }
 
-/// Use `<CreateNamespacedDeploymentRollbackResponse as Response>::try_from_parts` to parse the HTTP response body of [`DeploymentRollback::create_namespaced_deployment_rollback`]
+/// Use `<CreateDeploymentRollbackResponse as Response>::try_from_parts` to parse the HTTP response body of [`DeploymentRollback::create`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum CreateNamespacedDeploymentRollbackResponse {
+pub enum CreateDeploymentRollbackResponse {
     Ok(crate::apimachinery::pkg::apis::meta::v1::Status),
     Created(crate::apimachinery::pkg::apis::meta::v1::Status),
     Accepted(crate::apimachinery::pkg::apis::meta::v1::Status),
@@ -73,7 +73,7 @@ pub enum CreateNamespacedDeploymentRollbackResponse {
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
+impl crate::Response for CreateDeploymentRollbackResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -82,7 +82,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateNamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
+                Ok((CreateDeploymentRollbackResponse::Ok(result), buf.len()))
             },
             crate::http::StatusCode::CREATED => {
                 let result = match crate::serde_json::from_slice(buf) {
@@ -90,7 +90,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateNamespacedDeploymentRollbackResponse::Created(result), buf.len()))
+                Ok((CreateDeploymentRollbackResponse::Created(result), buf.len()))
             },
             crate::http::StatusCode::ACCEPTED => {
                 let result = match crate::serde_json::from_slice(buf) {
@@ -98,7 +98,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateNamespacedDeploymentRollbackResponse::Accepted(result), buf.len()))
+                Ok((CreateDeploymentRollbackResponse::Accepted(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -112,7 +112,7 @@ impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((CreateNamespacedDeploymentRollbackResponse::Other(result), read))
+                Ok((CreateDeploymentRollbackResponse::Other(result), read))
             },
         }
     }

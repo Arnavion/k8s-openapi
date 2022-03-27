@@ -29,7 +29,7 @@ impl SelfSubjectRulesReview {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_self_subject_rules_review(
+    pub fn create(
         body: &crate::api::authorization::v1beta1::SelfSubjectRulesReview,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {

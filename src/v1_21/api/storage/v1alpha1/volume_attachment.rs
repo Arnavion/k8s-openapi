@@ -32,7 +32,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_volume_attachment(
+    pub fn create(
         body: &crate::api::storage::v1alpha1::VolumeAttachment,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -68,7 +68,7 @@ impl VolumeAttachment {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_volume_attachment(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -104,7 +104,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_volume_attachment(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -137,7 +137,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_volume_attachment(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1alpha1/volumeattachments?".to_owned();
@@ -173,7 +173,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_volume_attachment(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -212,7 +212,7 @@ impl VolumeAttachment {
     ///
     ///     name of the VolumeAttachment
     #[cfg(feature = "api")]
-    pub fn read_volume_attachment(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadVolumeAttachmentResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments/{name}",
@@ -228,7 +228,7 @@ impl VolumeAttachment {
     }
 }
 
-/// Use `<ReadVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::read_volume_attachment`]
+/// Use `<ReadVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentResponse {
@@ -285,7 +285,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_volume_attachment(
+    pub fn replace(
         name: &str,
         body: &crate::api::storage::v1alpha1::VolumeAttachment,
         optional: crate::ReplaceOptional<'_>,
@@ -322,7 +322,7 @@ impl VolumeAttachment {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_volume_attachment(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1alpha1/volumeattachments?".to_owned();

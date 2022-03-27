@@ -34,7 +34,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_cron_job(
+    pub fn create(
         namespace: &str,
         body: &crate::api::batch::v2alpha1::CronJob,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl CronJob {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_cron_job(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_cron_job(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -155,7 +155,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_cron_job_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/batch/v2alpha1/cronjobs?".to_owned();
@@ -191,7 +191,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_cron_job(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -234,7 +234,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_cron_job(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -285,7 +285,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_cron_job_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -318,7 +318,7 @@ impl CronJob {
 impl CronJob {
     /// read the specified CronJob
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedCronJobResponse`]`>` constructor, or [`ReadNamespacedCronJobResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadCronJobResponse`]`>` constructor, or [`ReadCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,10 +330,10 @@ impl CronJob {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_cron_job(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedCronJobResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCronJobResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -348,16 +348,16 @@ impl CronJob {
     }
 }
 
-/// Use `<ReadNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read_namespaced_cron_job`]
+/// Use `<ReadCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedCronJobResponse {
+pub enum ReadCronJobResponse {
     Ok(crate::api::batch::v2alpha1::CronJob),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedCronJobResponse {
+impl crate::Response for ReadCronJobResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -366,7 +366,7 @@ impl crate::Response for ReadNamespacedCronJobResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedCronJobResponse::Ok(result), buf.len()))
+                Ok((ReadCronJobResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -380,7 +380,7 @@ impl crate::Response for ReadNamespacedCronJobResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedCronJobResponse::Other(result), read))
+                Ok((ReadCronJobResponse::Other(result), read))
             },
         }
     }
@@ -391,7 +391,7 @@ impl crate::Response for ReadNamespacedCronJobResponse {
 impl CronJob {
     /// read status of the specified CronJob
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedCronJobStatusResponse`]`>` constructor, or [`ReadNamespacedCronJobStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadCronJobStatusResponse`]`>` constructor, or [`ReadCronJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -403,10 +403,10 @@ impl CronJob {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_cron_job_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedCronJobStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCronJobStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -421,16 +421,16 @@ impl CronJob {
     }
 }
 
-/// Use `<ReadNamespacedCronJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read_namespaced_cron_job_status`]
+/// Use `<ReadCronJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedCronJobStatusResponse {
+pub enum ReadCronJobStatusResponse {
     Ok(crate::api::batch::v2alpha1::CronJob),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedCronJobStatusResponse {
+impl crate::Response for ReadCronJobStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -439,7 +439,7 @@ impl crate::Response for ReadNamespacedCronJobStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedCronJobStatusResponse::Ok(result), buf.len()))
+                Ok((ReadCronJobStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -453,7 +453,7 @@ impl crate::Response for ReadNamespacedCronJobStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedCronJobStatusResponse::Other(result), read))
+                Ok((ReadCronJobStatusResponse::Other(result), read))
             },
         }
     }
@@ -482,7 +482,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_cron_job(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::batch::v2alpha1::CronJob,
@@ -529,7 +529,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_cron_job_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::batch::v2alpha1::CronJob,
@@ -568,7 +568,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_cron_job_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/batch/v2alpha1/cronjobs?".to_owned();
@@ -604,7 +604,7 @@ impl CronJob {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_cron_job(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

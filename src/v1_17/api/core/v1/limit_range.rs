@@ -31,7 +31,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_limit_range(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::LimitRange,
         optional: crate::CreateOptional<'_>,
@@ -74,7 +74,7 @@ impl LimitRange {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_limit_range(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -117,7 +117,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_limit_range(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -152,7 +152,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_limit_range_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/limitranges?".to_owned();
@@ -188,7 +188,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_limit_range(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -231,7 +231,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_limit_range(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -264,7 +264,7 @@ impl LimitRange {
 impl LimitRange {
     /// read the specified LimitRange
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedLimitRangeResponse`]`>` constructor, or [`ReadNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadLimitRangeResponse`]`>` constructor, or [`ReadLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -276,10 +276,10 @@ impl LimitRange {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_limit_range(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedLimitRangeResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadLimitRangeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -294,16 +294,16 @@ impl LimitRange {
     }
 }
 
-/// Use `<ReadNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::read_namespaced_limit_range`]
+/// Use `<ReadLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedLimitRangeResponse {
+pub enum ReadLimitRangeResponse {
     Ok(crate::api::core::v1::LimitRange),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedLimitRangeResponse {
+impl crate::Response for ReadLimitRangeResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -312,7 +312,7 @@ impl crate::Response for ReadNamespacedLimitRangeResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((ReadLimitRangeResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -326,7 +326,7 @@ impl crate::Response for ReadNamespacedLimitRangeResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedLimitRangeResponse::Other(result), read))
+                Ok((ReadLimitRangeResponse::Other(result), read))
             },
         }
     }
@@ -355,7 +355,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_limit_range(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::LimitRange,
@@ -394,7 +394,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_limit_range_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/limitranges?".to_owned();
@@ -430,7 +430,7 @@ impl LimitRange {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_limit_range(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

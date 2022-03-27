@@ -47,7 +47,7 @@ async fn create() {
 	};
 
 	let (request, response_body) =
-		batch::Job::create_namespaced_job("default", &job, Default::default())
+		batch::Job::create("default", &job, Default::default())
 		.expect("couldn't create job");
 	let job: batch::Job = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::CreateResponse::Created(job), _) => job,
@@ -70,9 +70,9 @@ async fn create() {
 
 	// Wait for job to fail
 	loop {
-		let (request, response_body) = batch::Job::read_namespaced_job(&job_name, "default").expect("couldn't get job");
+		let (request, response_body) = batch::Job::read(&job_name, "default").expect("couldn't get job");
 		let job: batch::Job = match client.get_single_value(request, response_body).await {
-			(batch::ReadNamespacedJobResponse::Ok(job), _) => job,
+			(batch::ReadJobResponse::Ok(job), _) => job,
 			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 
@@ -89,7 +89,7 @@ async fn create() {
 
 	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
-		let (request, response_body) = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
+		let (request, response_body) = api::Pod::list("default", Default::default()).expect("couldn't list pods");
 		let pod_list = match client.get_single_value(request, response_body).await {
 			(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
 			(other, status_code) => panic!("{other:?} {status_code}"),
@@ -121,7 +121,7 @@ async fn create() {
 		.terminated.expect("couldn't get job pod container termination info");
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
-	let (request, response_body) = batch::Job::delete_namespaced_job(&job_name, "default", Default::default()).expect("couldn't delete job");
+	let (request, response_body) = batch::Job::delete(&job_name, "default", Default::default()).expect("couldn't delete job");
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{other:?} {status_code}"),
@@ -129,7 +129,7 @@ async fn create() {
 
 	// Delete all pods of the job using label selector
 	let (request, response_body) =
-		api::Pod::delete_collection_namespaced_pod(
+		api::Pod::delete_collection(
 			"default",
 			Default::default(),
 			k8s_openapi::ListOptional {

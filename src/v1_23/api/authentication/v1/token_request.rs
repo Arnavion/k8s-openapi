@@ -38,7 +38,7 @@ impl TokenRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_service_account_token(
+    pub fn create_service_account_token(
         name: &str,
         namespace: &str,
         body: &crate::api::authentication::v1::TokenRequest,

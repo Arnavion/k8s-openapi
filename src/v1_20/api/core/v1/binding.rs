@@ -31,7 +31,7 @@ impl Binding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_binding(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::Binding,
         optional: crate::CreateOptional<'_>,
@@ -76,7 +76,7 @@ impl Binding {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_pod_binding(
+    pub fn create_pod(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::Binding,

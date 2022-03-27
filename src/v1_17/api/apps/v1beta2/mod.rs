@@ -1,12 +1,12 @@
 
 mod controller_revision;
 pub use self::controller_revision::ControllerRevision;
-#[cfg(feature = "api")] pub use self::controller_revision::ReadNamespacedControllerRevisionResponse;
+#[cfg(feature = "api")] pub use self::controller_revision::ReadControllerRevisionResponse;
 
 mod daemon_set;
 pub use self::daemon_set::DaemonSet;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetResponse;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetStatusResponse;
+#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetResponse;
+#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetStatusResponse;
 
 mod daemon_set_condition;
 pub use self::daemon_set_condition::DaemonSetCondition;
@@ -22,8 +22,8 @@ pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
 
 mod deployment;
 pub use self::deployment::Deployment;
-#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentResponse;
-#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentStatusResponse;
+#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentResponse;
+#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentStatusResponse;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
@@ -39,8 +39,8 @@ pub use self::deployment_strategy::DeploymentStrategy;
 
 mod replica_set;
 pub use self::replica_set::ReplicaSet;
-#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetResponse;
-#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetStatusResponse;
+#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetResponse;
+#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetStatusResponse;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
@@ -62,9 +62,9 @@ pub use self::rolling_update_stateful_set_strategy::RollingUpdateStatefulSetStra
 
 mod scale;
 pub use self::scale::Scale;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedDeploymentScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedReplicaSetScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedStatefulSetScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadDeploymentScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadReplicaSetScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadStatefulSetScaleResponse;
 
 mod scale_spec;
 pub use self::scale_spec::ScaleSpec;
@@ -74,8 +74,8 @@ pub use self::scale_status::ScaleStatus;
 
 mod stateful_set;
 pub use self::stateful_set::StatefulSet;
-#[cfg(feature = "api")] pub use self::stateful_set::ReadNamespacedStatefulSetResponse;
-#[cfg(feature = "api")] pub use self::stateful_set::ReadNamespacedStatefulSetStatusResponse;
+#[cfg(feature = "api")] pub use self::stateful_set::ReadStatefulSetResponse;
+#[cfg(feature = "api")] pub use self::stateful_set::ReadStatefulSetStatusResponse;
 
 mod stateful_set_condition;
 pub use self::stateful_set_condition::StatefulSetCondition;

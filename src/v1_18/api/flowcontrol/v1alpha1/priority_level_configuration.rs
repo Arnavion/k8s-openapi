@@ -30,7 +30,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_priority_level_configuration(
+    pub fn create(
         body: &crate::api::flowcontrol::v1alpha1::PriorityLevelConfiguration,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -66,7 +66,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_priority_level_configuration(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -102,7 +102,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_priority_level_configuration(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -135,7 +135,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_priority_level_configuration(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations?".to_owned();
@@ -171,7 +171,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_priority_level_configuration(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -216,7 +216,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_priority_level_configuration_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -255,7 +255,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     name of the PriorityLevelConfiguration
     #[cfg(feature = "api")]
-    pub fn read_priority_level_configuration(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPriorityLevelConfigurationResponse>), crate::RequestError> {
         let __url = format!("/apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name}",
@@ -271,7 +271,7 @@ impl PriorityLevelConfiguration {
     }
 }
 
-/// Use `<ReadPriorityLevelConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityLevelConfiguration::read_priority_level_configuration`]
+/// Use `<ReadPriorityLevelConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityLevelConfiguration::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPriorityLevelConfigurationResponse {
@@ -322,7 +322,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     name of the PriorityLevelConfiguration
     #[cfg(feature = "api")]
-    pub fn read_priority_level_configuration_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPriorityLevelConfigurationStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name}/status",
@@ -338,7 +338,7 @@ impl PriorityLevelConfiguration {
     }
 }
 
-/// Use `<ReadPriorityLevelConfigurationStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityLevelConfiguration::read_priority_level_configuration_status`]
+/// Use `<ReadPriorityLevelConfigurationStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityLevelConfiguration::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPriorityLevelConfigurationStatusResponse {
@@ -395,7 +395,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_priority_level_configuration(
+    pub fn replace(
         name: &str,
         body: &crate::api::flowcontrol::v1alpha1::PriorityLevelConfiguration,
         optional: crate::ReplaceOptional<'_>,
@@ -436,7 +436,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_priority_level_configuration_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::flowcontrol::v1alpha1::PriorityLevelConfiguration,
         optional: crate::ReplaceOptional<'_>,
@@ -473,7 +473,7 @@ impl PriorityLevelConfiguration {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_priority_level_configuration(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations?".to_owned();

@@ -30,7 +30,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_persistent_volume(
+    pub fn create(
         body: &crate::api::core::v1::PersistentVolume,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -66,7 +66,7 @@ impl PersistentVolume {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_persistent_volume(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -102,7 +102,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_persistent_volume(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -135,7 +135,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_persistent_volume(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumes?".to_owned();
@@ -171,7 +171,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_persistent_volume(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -216,7 +216,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_persistent_volume_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -255,7 +255,7 @@ impl PersistentVolume {
     ///
     ///     name of the PersistentVolume
     #[cfg(feature = "api")]
-    pub fn read_persistent_volume(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumes/{name}",
@@ -271,7 +271,7 @@ impl PersistentVolume {
     }
 }
 
-/// Use `<ReadPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read_persistent_volume`]
+/// Use `<ReadPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeResponse {
@@ -322,7 +322,7 @@ impl PersistentVolume {
     ///
     ///     name of the PersistentVolume
     #[cfg(feature = "api")]
-    pub fn read_persistent_volume_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumes/{name}/status",
@@ -338,7 +338,7 @@ impl PersistentVolume {
     }
 }
 
-/// Use `<ReadPersistentVolumeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read_persistent_volume_status`]
+/// Use `<ReadPersistentVolumeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeStatusResponse {
@@ -395,7 +395,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_persistent_volume(
+    pub fn replace(
         name: &str,
         body: &crate::api::core::v1::PersistentVolume,
         optional: crate::ReplaceOptional<'_>,
@@ -436,7 +436,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_persistent_volume_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::core::v1::PersistentVolume,
         optional: crate::ReplaceOptional<'_>,
@@ -473,7 +473,7 @@ impl PersistentVolume {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_persistent_volume(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumes?".to_owned();

@@ -30,7 +30,7 @@ impl SubjectAccessReview {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_subject_access_review(
+    pub fn create(
         body: &crate::api::authorization::v1::SubjectAccessReview,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {

@@ -29,7 +29,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_custom_resource_definition(
+    pub fn create(
         body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -65,7 +65,7 @@ impl CustomResourceDefinition {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_custom_resource_definition(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -101,7 +101,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_custom_resource_definition(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -134,7 +134,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_custom_resource_definition(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_owned();
@@ -170,7 +170,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_custom_resource_definition(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -215,7 +215,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_custom_resource_definition_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -254,7 +254,7 @@ impl CustomResourceDefinition {
     ///
     ///     name of the CustomResourceDefinition
     #[cfg(feature = "api")]
-    pub fn read_custom_resource_definition(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCustomResourceDefinitionResponse>), crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}",
@@ -270,7 +270,7 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Use `<ReadCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition`]
+/// Use `<ReadCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionResponse {
@@ -321,7 +321,7 @@ impl CustomResourceDefinition {
     ///
     ///     name of the CustomResourceDefinition
     #[cfg(feature = "api")]
-    pub fn read_custom_resource_definition_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCustomResourceDefinitionStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status",
@@ -337,7 +337,7 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Use `<ReadCustomResourceDefinitionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition_status`]
+/// Use `<ReadCustomResourceDefinitionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionStatusResponse {
@@ -394,7 +394,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_custom_resource_definition(
+    pub fn replace(
         name: &str,
         body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: crate::ReplaceOptional<'_>,
@@ -435,7 +435,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_custom_resource_definition_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: crate::ReplaceOptional<'_>,
@@ -472,7 +472,7 @@ impl CustomResourceDefinition {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_custom_resource_definition(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_owned();

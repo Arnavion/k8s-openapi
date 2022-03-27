@@ -6,7 +6,7 @@ async fn get() {
 
 	let mut client = crate::Client::new("logs-get");
 
-	let (request, response_body) = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
+	let (request, response_body) = api::Pod::list("kube-system", Default::default()).expect("couldn't list pods");
 	let pod_list = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
 		(other, status_code) => panic!("{other:?} {status_code}"),
@@ -32,7 +32,7 @@ async fn get() {
 		.name.as_ref().expect("couldn't get apiserver pod name");
 
 	let (request, response_body) =
-		api::Pod::read_namespaced_pod_log(apiserver_pod_name, "kube-system", api::ReadNamespacedPodLogOptional {
+		api::Pod::read_log(apiserver_pod_name, "kube-system", api::ReadPodLogOptional {
 			container: Some("kube-apiserver"),
 			..Default::default()
 		})
@@ -43,7 +43,7 @@ async fn get() {
 	let mut found_line = false;
 	while let Some(chunk) = chunks.next().await {
 		let s = match chunk {
-			(api::ReadNamespacedPodLogResponse::Ok(s), _) => s,
+			(api::ReadPodLogResponse::Ok(s), _) => s,
 			(other, status_code) => panic!("{other:?} {status_code}"),
 		};
 		apiserver_logs.push_str(&s);
@@ -64,7 +64,7 @@ async fn get() {
 fn partial_and_invalid_utf8_sequences() {
 	use k8s_openapi::api::core::v1 as api;
 
-	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadPodLogResponse> =
 		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
 
 	// Empty buffer
@@ -77,7 +77,7 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// Entire buffer is valid
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "a" => (),
+		Ok(api::ReadPodLogResponse::Ok(s)) if s == "a" => (),
 		result => panic!(r#"expected empty buffer to return Ok("a"), but it returned {result:?}"#),
 	}
 
@@ -98,7 +98,7 @@ fn partial_and_invalid_utf8_sequences() {
 		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {result:?}"),
 	}
 
-	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadPodLogResponse> =
 		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
 
 	response_body.append_slice(b"\xe4");
@@ -121,18 +121,18 @@ fn partial_and_invalid_utf8_sequences() {
 	response_body.append_slice(b"\x96");
 
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 
-	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadPodLogResponse> =
 		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
 
 	response_body.append_slice(b"\xe4\xb8\x96\xe7");
 
 	// First three bytes are valid. Fourth byte is partial.
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 
@@ -147,18 +147,18 @@ fn partial_and_invalid_utf8_sequences() {
 
 	// Entire buffer is valid
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{754c}" => (),
+		Ok(api::ReadPodLogResponse::Ok(s)) if s == "\u{754c}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{754c}}"), but it returned {result:?}"#),
 	}
 
-	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadPodLogResponse> =
 		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
 
 	response_body.append_slice(b"\xe4\xb8\x96\xff");
 
 	// First three bytes are valid. Fourth byte is invalid.
 	match response_body.parse() {
-		Ok(api::ReadNamespacedPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
+		Ok(api::ReadPodLogResponse::Ok(s)) if s == "\u{4e16}" => (),
 		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {result:?}"#),
 	}
 

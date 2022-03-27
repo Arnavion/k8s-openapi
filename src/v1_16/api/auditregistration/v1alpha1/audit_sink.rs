@@ -26,7 +26,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_audit_sink(
+    pub fn create(
         body: &crate::api::auditregistration::v1alpha1::AuditSink,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -62,7 +62,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_audit_sink(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -97,7 +97,7 @@ impl AuditSink {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_audit_sink(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -131,7 +131,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_audit_sink(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_owned();
@@ -167,7 +167,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_audit_sink(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -206,7 +206,7 @@ impl AuditSink {
     ///
     ///     name of the AuditSink
     #[cfg(feature = "api")]
-    pub fn read_audit_sink(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadAuditSinkResponse>), crate::RequestError> {
         let __url = format!("/apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name}",
@@ -222,7 +222,7 @@ impl AuditSink {
     }
 }
 
-/// Use `<ReadAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::read_audit_sink`]
+/// Use `<ReadAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAuditSinkResponse {
@@ -279,7 +279,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_audit_sink(
+    pub fn replace(
         name: &str,
         body: &crate::api::auditregistration::v1alpha1::AuditSink,
         optional: crate::ReplaceOptional<'_>,
@@ -316,7 +316,7 @@ impl AuditSink {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_audit_sink(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_owned();

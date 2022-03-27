@@ -30,7 +30,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespace(
+    pub fn create(
         body: &crate::api::core::v1::Namespace,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -66,7 +66,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespace(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -99,7 +99,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespace(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/namespaces?".to_owned();
@@ -135,7 +135,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespace(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -180,7 +180,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespace_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -219,7 +219,7 @@ impl Namespace {
     ///
     ///     name of the Namespace
     #[cfg(feature = "api")]
-    pub fn read_namespace(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespaceResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{name}",
@@ -235,7 +235,7 @@ impl Namespace {
     }
 }
 
-/// Use `<ReadNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace`]
+/// Use `<ReadNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespaceResponse {
@@ -286,7 +286,7 @@ impl Namespace {
     ///
     ///     name of the Namespace
     #[cfg(feature = "api")]
-    pub fn read_namespace_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespaceStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{name}/status",
@@ -302,7 +302,7 @@ impl Namespace {
     }
 }
 
-/// Use `<ReadNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace_status`]
+/// Use `<ReadNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNamespaceStatusResponse {
@@ -359,7 +359,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespace(
+    pub fn replace(
         name: &str,
         body: &crate::api::core::v1::Namespace,
         optional: crate::ReplaceOptional<'_>,
@@ -400,7 +400,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespace_finalize(
+    pub fn replace_finalize(
         name: &str,
         body: &crate::api::core::v1::Namespace,
         optional: crate::ReplaceOptional<'_>,
@@ -441,7 +441,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespace_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::core::v1::Namespace,
         optional: crate::ReplaceOptional<'_>,
@@ -478,7 +478,7 @@ impl Namespace {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespace(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/namespaces?".to_owned();

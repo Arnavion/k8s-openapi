@@ -56,7 +56,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_csi_storage_capacity(
+    pub fn create(
         namespace: &str,
         body: &crate::api::storage::v1alpha1::CSIStorageCapacity,
         optional: crate::CreateOptional<'_>,
@@ -99,7 +99,7 @@ impl CSIStorageCapacity {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_csi_storage_capacity(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -142,7 +142,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_csi_storage_capacity(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -177,7 +177,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_csi_storage_capacity_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1alpha1/csistoragecapacities?".to_owned();
@@ -213,7 +213,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_csi_storage_capacity(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -256,7 +256,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_csi_storage_capacity(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -289,7 +289,7 @@ impl CSIStorageCapacity {
 impl CSIStorageCapacity {
     /// read the specified CSIStorageCapacity
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedCSIStorageCapacityResponse`]`>` constructor, or [`ReadNamespacedCSIStorageCapacityResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadCSIStorageCapacityResponse`]`>` constructor, or [`ReadCSIStorageCapacityResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -301,10 +301,10 @@ impl CSIStorageCapacity {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_csi_storage_capacity(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedCSIStorageCapacityResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCSIStorageCapacityResponse>), crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/namespaces/{namespace}/csistoragecapacities/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -319,16 +319,16 @@ impl CSIStorageCapacity {
     }
 }
 
-/// Use `<ReadNamespacedCSIStorageCapacityResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSIStorageCapacity::read_namespaced_csi_storage_capacity`]
+/// Use `<ReadCSIStorageCapacityResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSIStorageCapacity::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedCSIStorageCapacityResponse {
+pub enum ReadCSIStorageCapacityResponse {
     Ok(crate::api::storage::v1alpha1::CSIStorageCapacity),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedCSIStorageCapacityResponse {
+impl crate::Response for ReadCSIStorageCapacityResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -337,7 +337,7 @@ impl crate::Response for ReadNamespacedCSIStorageCapacityResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedCSIStorageCapacityResponse::Ok(result), buf.len()))
+                Ok((ReadCSIStorageCapacityResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -351,7 +351,7 @@ impl crate::Response for ReadNamespacedCSIStorageCapacityResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedCSIStorageCapacityResponse::Other(result), read))
+                Ok((ReadCSIStorageCapacityResponse::Other(result), read))
             },
         }
     }
@@ -380,7 +380,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_csi_storage_capacity(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::storage::v1alpha1::CSIStorageCapacity,
@@ -419,7 +419,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_csi_storage_capacity_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/storage.k8s.io/v1alpha1/csistoragecapacities?".to_owned();
@@ -455,7 +455,7 @@ impl CSIStorageCapacity {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_csi_storage_capacity(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

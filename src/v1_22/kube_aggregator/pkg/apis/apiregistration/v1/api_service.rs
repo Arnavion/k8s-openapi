@@ -30,7 +30,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_api_service(
+    pub fn create(
         body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -66,7 +66,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_api_service(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -101,7 +101,7 @@ impl APIService {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_api_service(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -135,7 +135,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_api_service(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apiregistration.k8s.io/v1/apiservices?".to_owned();
@@ -171,7 +171,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_api_service(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -216,7 +216,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_api_service_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -255,7 +255,7 @@ impl APIService {
     ///
     ///     name of the APIService
     #[cfg(feature = "api")]
-    pub fn read_api_service(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadAPIServiceResponse>), crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}",
@@ -271,7 +271,7 @@ impl APIService {
     }
 }
 
-/// Use `<ReadAPIServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::read_api_service`]
+/// Use `<ReadAPIServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAPIServiceResponse {
@@ -322,7 +322,7 @@ impl APIService {
     ///
     ///     name of the APIService
     #[cfg(feature = "api")]
-    pub fn read_api_service_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadAPIServiceStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status",
@@ -338,7 +338,7 @@ impl APIService {
     }
 }
 
-/// Use `<ReadAPIServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::read_api_service_status`]
+/// Use `<ReadAPIServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadAPIServiceStatusResponse {
@@ -395,7 +395,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_api_service(
+    pub fn replace(
         name: &str,
         body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: crate::ReplaceOptional<'_>,
@@ -436,7 +436,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_api_service_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         optional: crate::ReplaceOptional<'_>,
@@ -473,7 +473,7 @@ impl APIService {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_api_service(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/apiregistration.k8s.io/v1/apiservices?".to_owned();

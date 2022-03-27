@@ -15,11 +15,11 @@ pub use self::policy_rule::PolicyRule;
 
 mod role;
 pub use self::role::Role;
-#[cfg(feature = "api")] pub use self::role::ReadNamespacedRoleResponse;
+#[cfg(feature = "api")] pub use self::role::ReadRoleResponse;
 
 mod role_binding;
 pub use self::role_binding::RoleBinding;
-#[cfg(feature = "api")] pub use self::role_binding::ReadNamespacedRoleBindingResponse;
+#[cfg(feature = "api")] pub use self::role_binding::ReadRoleBindingResponse;
 
 mod role_ref;
 pub use self::role_ref::RoleRef;

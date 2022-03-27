@@ -34,7 +34,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_persistent_volume_claim(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::PersistentVolumeClaim,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl PersistentVolumeClaim {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_persistent_volume_claim(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_persistent_volume_claim(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -159,7 +159,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_persistent_volume_claim(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -194,7 +194,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_persistent_volume_claim_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumeclaims?".to_owned();
@@ -234,7 +234,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_persistent_volume_claim(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -285,7 +285,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_persistent_volume_claim_status(
+    pub fn patch_status(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -318,7 +318,7 @@ impl PersistentVolumeClaim {
 impl PersistentVolumeClaim {
     /// read the specified PersistentVolumeClaim
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPersistentVolumeClaimResponse`]`>` constructor, or [`ReadNamespacedPersistentVolumeClaimResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPersistentVolumeClaimResponse`]`>` constructor, or [`ReadPersistentVolumeClaimResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,10 +330,10 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_persistent_volume_claim(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPersistentVolumeClaimResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeClaimResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -348,16 +348,16 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Use `<ReadNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim`]
+/// Use `<ReadPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPersistentVolumeClaimResponse {
+pub enum ReadPersistentVolumeClaimResponse {
     Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
+impl crate::Response for ReadPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -366,7 +366,7 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((ReadPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -380,7 +380,7 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPersistentVolumeClaimResponse::Other(result), read))
+                Ok((ReadPersistentVolumeClaimResponse::Other(result), read))
             },
         }
     }
@@ -391,7 +391,7 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// read status of the specified PersistentVolumeClaim
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPersistentVolumeClaimStatusResponse`]`>` constructor, or [`ReadNamespacedPersistentVolumeClaimStatusResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPersistentVolumeClaimStatusResponse`]`>` constructor, or [`ReadPersistentVolumeClaimStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -403,10 +403,10 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_persistent_volume_claim_status(
+    pub fn read_status(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPersistentVolumeClaimStatusResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeClaimStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -421,16 +421,16 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Use `<ReadNamespacedPersistentVolumeClaimStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim_status`]
+/// Use `<ReadPersistentVolumeClaimStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPersistentVolumeClaimStatusResponse {
+pub enum ReadPersistentVolumeClaimStatusResponse {
     Ok(crate::api::core::v1::PersistentVolumeClaim),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
+impl crate::Response for ReadPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -439,7 +439,7 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
+                Ok((ReadPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -453,7 +453,7 @@ impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Other(result), read))
+                Ok((ReadPersistentVolumeClaimStatusResponse::Other(result), read))
             },
         }
     }
@@ -482,7 +482,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_persistent_volume_claim(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::PersistentVolumeClaim,
@@ -529,7 +529,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_persistent_volume_claim_status(
+    pub fn replace_status(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::PersistentVolumeClaim,
@@ -572,7 +572,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_persistent_volume_claim(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -607,7 +607,7 @@ impl PersistentVolumeClaim {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_persistent_volume_claim_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/persistentvolumeclaims?".to_owned();

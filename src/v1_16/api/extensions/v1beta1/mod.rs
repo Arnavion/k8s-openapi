@@ -10,8 +10,8 @@ pub use self::allowed_host_path::AllowedHostPath;
 
 mod daemon_set;
 pub use self::daemon_set::DaemonSet;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetResponse;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadNamespacedDaemonSetStatusResponse;
+#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetResponse;
+#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetStatusResponse;
 
 mod daemon_set_condition;
 pub use self::daemon_set_condition::DaemonSetCondition;
@@ -27,15 +27,15 @@ pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
 
 mod deployment;
 pub use self::deployment::Deployment;
-#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentResponse;
-#[cfg(feature = "api")] pub use self::deployment::ReadNamespacedDeploymentStatusResponse;
+#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentResponse;
+#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentStatusResponse;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
 
 mod deployment_rollback;
 pub use self::deployment_rollback::DeploymentRollback;
-#[cfg(feature = "api")] pub use self::deployment_rollback::CreateNamespacedDeploymentRollbackResponse;
+#[cfg(feature = "api")] pub use self::deployment_rollback::CreateDeploymentRollbackResponse;
 
 mod deployment_spec;
 pub use self::deployment_spec::DeploymentSpec;
@@ -66,8 +66,8 @@ pub use self::ip_block::IPBlock;
 
 mod ingress;
 pub use self::ingress::Ingress;
-#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressResponse;
-#[cfg(feature = "api")] pub use self::ingress::ReadNamespacedIngressStatusResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadIngressResponse;
+#[cfg(feature = "api")] pub use self::ingress::ReadIngressStatusResponse;
 
 mod ingress_backend;
 pub use self::ingress_backend::IngressBackend;
@@ -86,7 +86,7 @@ pub use self::ingress_tls::IngressTLS;
 
 mod network_policy;
 pub use self::network_policy::NetworkPolicy;
-#[cfg(feature = "api")] pub use self::network_policy::ReadNamespacedNetworkPolicyResponse;
+#[cfg(feature = "api")] pub use self::network_policy::ReadNetworkPolicyResponse;
 
 mod network_policy_egress_rule;
 pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;
@@ -112,8 +112,8 @@ pub use self::pod_security_policy_spec::PodSecurityPolicySpec;
 
 mod replica_set;
 pub use self::replica_set::ReplicaSet;
-#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetResponse;
-#[cfg(feature = "api")] pub use self::replica_set::ReadNamespacedReplicaSetStatusResponse;
+#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetResponse;
+#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetStatusResponse;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
@@ -147,9 +147,9 @@ pub use self::se_linux_strategy_options::SELinuxStrategyOptions;
 
 mod scale;
 pub use self::scale::Scale;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedDeploymentScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedReplicaSetScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadNamespacedReplicationControllerDummyScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadDeploymentScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadReplicaSetScaleResponse;
+#[cfg(feature = "api")] pub use self::scale::ReadReplicationControllerDummyScaleResponse;
 
 mod scale_spec;
 pub use self::scale_spec::ScaleSpec;

@@ -37,7 +37,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_service_account(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::ServiceAccount,
         optional: crate::CreateOptional<'_>,
@@ -80,7 +80,7 @@ impl ServiceAccount {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_service_account(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -123,7 +123,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_service_account(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -162,7 +162,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_service_account(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -197,7 +197,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_service_account_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/serviceaccounts?".to_owned();
@@ -237,7 +237,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_service_account(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -270,7 +270,7 @@ impl ServiceAccount {
 impl ServiceAccount {
     /// read the specified ServiceAccount
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceAccountResponse`]`>` constructor, or [`ReadNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadServiceAccountResponse`]`>` constructor, or [`ReadServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -282,10 +282,10 @@ impl ServiceAccount {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_service_account(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceAccountResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadServiceAccountResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -300,16 +300,16 @@ impl ServiceAccount {
     }
 }
 
-/// Use `<ReadNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::read_namespaced_service_account`]
+/// Use `<ReadServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedServiceAccountResponse {
+pub enum ReadServiceAccountResponse {
     Ok(crate::api::core::v1::ServiceAccount),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedServiceAccountResponse {
+impl crate::Response for ReadServiceAccountResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -318,7 +318,7 @@ impl crate::Response for ReadNamespacedServiceAccountResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((ReadServiceAccountResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -332,7 +332,7 @@ impl crate::Response for ReadNamespacedServiceAccountResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedServiceAccountResponse::Other(result), read))
+                Ok((ReadServiceAccountResponse::Other(result), read))
             },
         }
     }
@@ -361,7 +361,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_service_account(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::ServiceAccount,
@@ -404,7 +404,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_service_account(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
@@ -439,7 +439,7 @@ impl ServiceAccount {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_service_account_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/serviceaccounts?".to_owned();

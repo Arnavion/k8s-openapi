@@ -30,7 +30,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_cluster_role(
+    pub fn create(
         body: &crate::api::rbac::v1alpha1::ClusterRole,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -66,7 +66,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_cluster_role(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -101,7 +101,7 @@ impl ClusterRole {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_cluster_role(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -135,7 +135,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_cluster_role(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_owned();
@@ -171,7 +171,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_cluster_role(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -210,7 +210,7 @@ impl ClusterRole {
     ///
     ///     name of the ClusterRole
     #[cfg(feature = "api")]
-    pub fn read_cluster_role(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadClusterRoleResponse>), crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}",
@@ -226,7 +226,7 @@ impl ClusterRole {
     }
 }
 
-/// Use `<ReadClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::read_cluster_role`]
+/// Use `<ReadClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadClusterRoleResponse {
@@ -283,7 +283,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_cluster_role(
+    pub fn replace(
         name: &str,
         body: &crate::api::rbac::v1alpha1::ClusterRole,
         optional: crate::ReplaceOptional<'_>,
@@ -320,7 +320,7 @@ impl ClusterRole {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_cluster_role(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_owned();

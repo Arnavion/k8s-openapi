@@ -27,7 +27,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_pod_security_policy(
+    pub fn create(
         body: &crate::api::extensions::v1beta1::PodSecurityPolicy,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -63,7 +63,7 @@ impl PodSecurityPolicy {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_pod_security_policy(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -99,7 +99,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_pod_security_policy(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -132,7 +132,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_pod_security_policy(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_owned();
@@ -168,7 +168,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_pod_security_policy(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -207,7 +207,7 @@ impl PodSecurityPolicy {
     ///
     ///     name of the PodSecurityPolicy
     #[cfg(feature = "api")]
-    pub fn read_pod_security_policy(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodSecurityPolicyResponse>), crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies/{name}",
@@ -223,7 +223,7 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Use `<ReadPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::read_pod_security_policy`]
+/// Use `<ReadPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadPodSecurityPolicyResponse {
@@ -280,7 +280,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_pod_security_policy(
+    pub fn replace(
         name: &str,
         body: &crate::api::extensions::v1beta1::PodSecurityPolicy,
         optional: crate::ReplaceOptional<'_>,
@@ -317,7 +317,7 @@ impl PodSecurityPolicy {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_pod_security_policy(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_owned();

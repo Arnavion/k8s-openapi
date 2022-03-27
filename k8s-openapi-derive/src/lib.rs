@@ -145,7 +145,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// };
 ///
 /// let (request, response_body) =
-///     apiextensions::CustomResourceDefinition::create_custom_resource_definition(&custom_resource_definition, Default::default())
+///     apiextensions::CustomResourceDefinition::create(&custom_resource_definition, Default::default())
 ///     .expect("couldn't create custom resource definition");
 /// let response = client.execute(request).expect("couldn't create custom resource definition");
 /// ```
@@ -156,7 +156,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// ```rust,ignore
 /// impl FooBar {
 ///     /// Create a FooBar
-///     fn create_namespaced_foo_bar(
+///     fn create(
 ///         namespace: &str,
 ///         body: &FooBar,
 ///         optional: k8s_openapi::DeleteOptional<'_>,
@@ -171,7 +171,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Delete a FooBar
-///     fn delete_namespaced_foo_bar(
+///     fn delete(
 ///         name: &str,
 ///         namespace: &str,
 ///         optional: k8s_openapi::DeleteOptional<'_>,
@@ -186,7 +186,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Delete a collection of objects of kind FooBar
-///     fn delete_collection_namespaced_foo_bar(
+///     fn delete_collection(
 ///         namespace: &str,
 ///         delete_optional: k8s_openapi::DeleteOptional<'_>,
 ///         list_optional: k8s_openapi::ListOptional<'_>,
@@ -201,7 +201,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// List objects of kind FooBar
-///     fn list_namespaced_foo_bar(
+///     fn list(
 ///         namespace: &str,
 ///         optional: k8s_openapi::ListOptional<'_>,
 ///     ) ->
@@ -215,7 +215,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Partially update the specified FooBar
-///     fn patch_namespaced_foo_bar(
+///     fn patch(
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
@@ -231,7 +231,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Partially update the state of the specified FooBar
-///     fn patch_namespaced_foo_bar_status(
+///     fn patch_status(
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &k8s_openapi::apimachinery::pkg::apis::meta::v1::Patch,
@@ -247,31 +247,31 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Read the specified FooBar
-///     fn read_namespaced_foo_bar(
+///     fn read(
 ///         name: &str,
 ///         namespace: &str,
 ///     ) -> Result<
 ///         (
 ///             k8s_openapi::http::Request<Vec<u8>>,
-///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarResponse>
+///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadFooBarResponse>
 ///         ),
 ///         k8s_openapi::RequestError,
 ///     > { ... }
 ///
 ///     /// Read status of the specified FooBar
-///     fn read_namespaced_foo_bar_status(
+///     fn read_status(
 ///         name: &str,
 ///         namespace: &str,
 ///     ) -> Result<
 ///         (
 ///             k8s_openapi::http::Request<Vec<u8>>,
-///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadNamespacedFooBarStatusResponse>
+///             fn(k8s_openapi::http::StatusCode) -> k8s_openapi::ResponseBody<ReadFooBarStatusResponse>
 ///         ),
 ///         k8s_openapi::RequestError,
 ///     > { ... }
 ///
 ///     /// Replace the specified FooBar
-///     fn replace_namespaced_foo_bar(
+///     fn replace(
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &FooBar,
@@ -287,7 +287,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Replace status of the specified FooBar
-///     fn replace_namespaced_foo_bar_status(
+///     fn replace_status(
 ///         name: &str,
 ///         namespace: &str,
 ///         body: &FooBar,
@@ -303,7 +303,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     { ... }
 ///
 ///     /// Watch objects of kind FooBar
-///     fn watch_namespaced_foo_bar(
+///     fn watch(
 ///         namespace: &str,
 ///         optional: k8s_openapi::WatchOptional<'_>,
 ///     ) ->

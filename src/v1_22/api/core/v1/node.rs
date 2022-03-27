@@ -30,7 +30,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_node_proxy(
+    pub fn connect_delete_proxy(
         name: &str,
         optional: ConnectDeleteNodeProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
@@ -52,7 +52,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_delete_node_proxy`]
+/// Optional parameters of [`Node::connect_delete_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyOptional<'a> {
@@ -79,7 +79,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_delete_node_proxy_with_path(
+    pub fn connect_delete_proxy_with_path(
         name: &str,
         path: &str,
         optional: ConnectDeleteNodeProxyWithPathOptional<'_>,
@@ -103,7 +103,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_delete_node_proxy_with_path`]
+/// Optional parameters of [`Node::connect_delete_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
@@ -126,7 +126,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_node_proxy(
+    pub fn connect_get_proxy(
         name: &str,
         optional: ConnectGetNodeProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
@@ -148,7 +148,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_get_node_proxy`]
+/// Optional parameters of [`Node::connect_get_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyOptional<'a> {
@@ -175,7 +175,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_get_node_proxy_with_path(
+    pub fn connect_get_proxy_with_path(
         name: &str,
         path: &str,
         optional: ConnectGetNodeProxyWithPathOptional<'_>,
@@ -199,7 +199,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_get_node_proxy_with_path`]
+/// Optional parameters of [`Node::connect_get_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyWithPathOptional<'a> {
@@ -222,7 +222,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_node_proxy(
+    pub fn connect_patch_proxy(
         name: &str,
         optional: ConnectPatchNodeProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
@@ -244,7 +244,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_patch_node_proxy`]
+/// Optional parameters of [`Node::connect_patch_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyOptional<'a> {
@@ -271,7 +271,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_patch_node_proxy_with_path(
+    pub fn connect_patch_proxy_with_path(
         name: &str,
         path: &str,
         optional: ConnectPatchNodeProxyWithPathOptional<'_>,
@@ -295,7 +295,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_patch_node_proxy_with_path`]
+/// Optional parameters of [`Node::connect_patch_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
@@ -318,7 +318,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_node_proxy(
+    pub fn connect_post_proxy(
         name: &str,
         optional: ConnectPostNodeProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
@@ -340,7 +340,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_post_node_proxy`]
+/// Optional parameters of [`Node::connect_post_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyOptional<'a> {
@@ -367,7 +367,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_post_node_proxy_with_path(
+    pub fn connect_post_proxy_with_path(
         name: &str,
         path: &str,
         optional: ConnectPostNodeProxyWithPathOptional<'_>,
@@ -391,7 +391,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_post_node_proxy_with_path`]
+/// Optional parameters of [`Node::connect_post_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyWithPathOptional<'a> {
@@ -414,7 +414,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_node_proxy(
+    pub fn connect_put_proxy(
         name: &str,
         optional: ConnectPutNodeProxyOptional<'_>,
     ) -> Result<crate::http::Request<Vec<u8>>, crate::RequestError> {
@@ -436,7 +436,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_put_node_proxy`]
+/// Optional parameters of [`Node::connect_put_proxy`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyOptional<'a> {
@@ -463,7 +463,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn connect_put_node_proxy_with_path(
+    pub fn connect_put_proxy_with_path(
         name: &str,
         path: &str,
         optional: ConnectPutNodeProxyWithPathOptional<'_>,
@@ -487,7 +487,7 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_put_node_proxy_with_path`]
+/// Optional parameters of [`Node::connect_put_proxy_with_path`]
 #[cfg(feature = "api")]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyWithPathOptional<'a> {
@@ -510,7 +510,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_node(
+    pub fn create(
         body: &crate::api::core::v1::Node,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -546,7 +546,7 @@ impl Node {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_node(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -582,7 +582,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_node(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -615,7 +615,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_node(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/nodes?".to_owned();
@@ -651,7 +651,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_node(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -696,7 +696,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_node_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -735,7 +735,7 @@ impl Node {
     ///
     ///     name of the Node
     #[cfg(feature = "api")]
-    pub fn read_node(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNodeResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}",
@@ -751,7 +751,7 @@ impl Node {
     }
 }
 
-/// Use `<ReadNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read_node`]
+/// Use `<ReadNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNodeResponse {
@@ -802,7 +802,7 @@ impl Node {
     ///
     ///     name of the Node
     #[cfg(feature = "api")]
-    pub fn read_node_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNodeStatusResponse>), crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status",
@@ -818,7 +818,7 @@ impl Node {
     }
 }
 
-/// Use `<ReadNodeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read_node_status`]
+/// Use `<ReadNodeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadNodeStatusResponse {
@@ -875,7 +875,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_node(
+    pub fn replace(
         name: &str,
         body: &crate::api::core::v1::Node,
         optional: crate::ReplaceOptional<'_>,
@@ -916,7 +916,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_node_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::core::v1::Node,
         optional: crate::ReplaceOptional<'_>,
@@ -953,7 +953,7 @@ impl Node {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_node(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/nodes?".to_owned();

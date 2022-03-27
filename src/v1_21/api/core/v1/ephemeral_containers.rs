@@ -34,7 +34,7 @@ impl EphemeralContainers {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_pod_ephemeralcontainers(
+    pub fn patch_pod_ephemeralcontainers(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -67,7 +67,7 @@ impl EphemeralContainers {
 impl EphemeralContainers {
     /// read ephemeralcontainers of the specified Pod
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodEphemeralcontainersResponse`]`>` constructor, or [`ReadNamespacedPodEphemeralcontainersResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodEphemeralcontainersResponse`]`>` constructor, or [`ReadPodEphemeralcontainersResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -79,10 +79,10 @@ impl EphemeralContainers {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_pod_ephemeralcontainers(
+    pub fn read_pod_ephemeralcontainers(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodEphemeralcontainersResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadPodEphemeralcontainersResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -97,16 +97,16 @@ impl EphemeralContainers {
     }
 }
 
-/// Use `<ReadNamespacedPodEphemeralcontainersResponse as Response>::try_from_parts` to parse the HTTP response body of [`EphemeralContainers::read_namespaced_pod_ephemeralcontainers`]
+/// Use `<ReadPodEphemeralcontainersResponse as Response>::try_from_parts` to parse the HTTP response body of [`EphemeralContainers::read_pod_ephemeralcontainers`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedPodEphemeralcontainersResponse {
+pub enum ReadPodEphemeralcontainersResponse {
     Ok(crate::api::core::v1::EphemeralContainers),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedPodEphemeralcontainersResponse {
+impl crate::Response for ReadPodEphemeralcontainersResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -115,7 +115,7 @@ impl crate::Response for ReadNamespacedPodEphemeralcontainersResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedPodEphemeralcontainersResponse::Ok(result), buf.len()))
+                Ok((ReadPodEphemeralcontainersResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -129,7 +129,7 @@ impl crate::Response for ReadNamespacedPodEphemeralcontainersResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedPodEphemeralcontainersResponse::Other(result), read))
+                Ok((ReadPodEphemeralcontainersResponse::Other(result), read))
             },
         }
     }
@@ -158,7 +158,7 @@ impl EphemeralContainers {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_pod_ephemeralcontainers(
+    pub fn replace_pod_ephemeralcontainers(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::EphemeralContainers,

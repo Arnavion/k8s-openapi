@@ -16,8 +16,8 @@ pub use self::hpa_scaling_rules::HPAScalingRules;
 
 mod horizontal_pod_autoscaler;
 pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadNamespacedHorizontalPodAutoscalerResponse;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadNamespacedHorizontalPodAutoscalerStatusResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerResponse;
+#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerStatusResponse;
 
 mod horizontal_pod_autoscaler_behavior;
 pub use self::horizontal_pod_autoscaler_behavior::HorizontalPodAutoscalerBehavior;

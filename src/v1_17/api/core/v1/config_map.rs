@@ -34,7 +34,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_namespaced_config_map(
+    pub fn create(
         namespace: &str,
         body: &crate::api::core::v1::ConfigMap,
         optional: crate::CreateOptional<'_>,
@@ -77,7 +77,7 @@ impl ConfigMap {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_namespaced_config_map(
+    pub fn delete_collection(
         namespace: &str,
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
@@ -120,7 +120,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_namespaced_config_map(
+    pub fn delete(
         name: &str,
         namespace: &str,
         optional: crate::DeleteOptional<'_>,
@@ -155,7 +155,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_config_map_for_all_namespaces(
+    pub fn list_for_all_namespaces(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/configmaps?".to_owned();
@@ -191,7 +191,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_namespaced_config_map(
+    pub fn list(
         namespace: &str,
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
@@ -234,7 +234,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_namespaced_config_map(
+    pub fn patch(
         name: &str,
         namespace: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
@@ -267,7 +267,7 @@ impl ConfigMap {
 impl ConfigMap {
     /// read the specified ConfigMap
     ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedConfigMapResponse`]`>` constructor, or [`ReadNamespacedConfigMapResponse`] directly, to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadConfigMapResponse`]`>` constructor, or [`ReadConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -279,10 +279,10 @@ impl ConfigMap {
     ///
     ///     object name and auth scope, such as for teams and projects
     #[cfg(feature = "api")]
-    pub fn read_namespaced_config_map(
+    pub fn read(
         name: &str,
         namespace: &str,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadNamespacedConfigMapResponse>), crate::RequestError> {
+    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadConfigMapResponse>), crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}",
             name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
             namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
@@ -297,16 +297,16 @@ impl ConfigMap {
     }
 }
 
-/// Use `<ReadNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::read_namespaced_config_map`]
+/// Use `<ReadConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
-pub enum ReadNamespacedConfigMapResponse {
+pub enum ReadConfigMapResponse {
     Ok(crate::api::core::v1::ConfigMap),
     Other(Result<Option<crate::serde_json::Value>, crate::serde_json::Error>),
 }
 
 #[cfg(feature = "api")]
-impl crate::Response for ReadNamespacedConfigMapResponse {
+impl crate::Response for ReadConfigMapResponse {
     fn try_from_parts(status_code: crate::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             crate::http::StatusCode::OK => {
@@ -315,7 +315,7 @@ impl crate::Response for ReadNamespacedConfigMapResponse {
                     Err(err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadNamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((ReadConfigMapResponse::Ok(result), buf.len()))
             },
             _ => {
                 let (result, read) =
@@ -329,7 +329,7 @@ impl crate::Response for ReadNamespacedConfigMapResponse {
                             Err(err) => (Err(err), 0),
                         }
                     };
-                Ok((ReadNamespacedConfigMapResponse::Other(result), read))
+                Ok((ReadConfigMapResponse::Other(result), read))
             },
         }
     }
@@ -358,7 +358,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_namespaced_config_map(
+    pub fn replace(
         name: &str,
         namespace: &str,
         body: &crate::api::core::v1::ConfigMap,
@@ -397,7 +397,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_config_map_for_all_namespaces(
+    pub fn watch_for_all_namespaces(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/api/v1/configmaps?".to_owned();
@@ -433,7 +433,7 @@ impl ConfigMap {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_namespaced_config_map(
+    pub fn watch(
         namespace: &str,
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {

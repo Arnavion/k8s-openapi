@@ -8,7 +8,7 @@ async fn watch_pods() {
 	let mut client = crate::Client::new("watch_event-watch_pods");
 
 	let (request, response_body) =
-		api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
+		api::Pod::watch("kube-system", Default::default()).expect("couldn't watch pods");
 	let pod_watch_events = client.get_multiple_values(request, response_body);
 	futures_util::pin_mut!(pod_watch_events);
 

@@ -35,7 +35,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_certificate_signing_request(
+    pub fn create(
         body: &crate::api::certificates::v1::CertificateSigningRequest,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -71,7 +71,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_certificate_signing_request(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -106,7 +106,7 @@ impl CertificateSigningRequest {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_certificate_signing_request(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -140,7 +140,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_certificate_signing_request(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1/certificatesigningrequests?".to_owned();
@@ -176,7 +176,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_certificate_signing_request(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -221,7 +221,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_certificate_signing_request_approval(
+    pub fn patch_approval(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -266,7 +266,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_certificate_signing_request_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -305,7 +305,7 @@ impl CertificateSigningRequest {
     ///
     ///     name of the CertificateSigningRequest
     #[cfg(feature = "api")]
-    pub fn read_certificate_signing_request(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCertificateSigningRequestResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1/certificatesigningrequests/{name}",
@@ -321,7 +321,7 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Use `<ReadCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_certificate_signing_request`]
+/// Use `<ReadCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestResponse {
@@ -372,7 +372,7 @@ impl CertificateSigningRequest {
     ///
     ///     name of the CertificateSigningRequest
     #[cfg(feature = "api")]
-    pub fn read_certificate_signing_request_approval(
+    pub fn read_approval(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCertificateSigningRequestApprovalResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1/certificatesigningrequests/{name}/approval",
@@ -388,7 +388,7 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Use `<ReadCertificateSigningRequestApprovalResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_certificate_signing_request_approval`]
+/// Use `<ReadCertificateSigningRequestApprovalResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_approval`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestApprovalResponse {
@@ -439,7 +439,7 @@ impl CertificateSigningRequest {
     ///
     ///     name of the CertificateSigningRequest
     #[cfg(feature = "api")]
-    pub fn read_certificate_signing_request_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadCertificateSigningRequestStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/certificates.k8s.io/v1/certificatesigningrequests/{name}/status",
@@ -455,7 +455,7 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Use `<ReadCertificateSigningRequestStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_certificate_signing_request_status`]
+/// Use `<ReadCertificateSigningRequestStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestStatusResponse {
@@ -512,7 +512,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_certificate_signing_request(
+    pub fn replace(
         name: &str,
         body: &crate::api::certificates::v1::CertificateSigningRequest,
         optional: crate::ReplaceOptional<'_>,
@@ -553,7 +553,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_certificate_signing_request_approval(
+    pub fn replace_approval(
         name: &str,
         body: &crate::api::certificates::v1::CertificateSigningRequest,
         optional: crate::ReplaceOptional<'_>,
@@ -594,7 +594,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_certificate_signing_request_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::certificates::v1::CertificateSigningRequest,
         optional: crate::ReplaceOptional<'_>,
@@ -631,7 +631,7 @@ impl CertificateSigningRequest {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_certificate_signing_request(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/certificates.k8s.io/v1/certificatesigningrequests?".to_owned();

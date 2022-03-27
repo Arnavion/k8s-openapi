@@ -31,7 +31,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn create_storage_version(
+    pub fn create(
         body: &crate::api::apiserverinternal::v1alpha1::StorageVersion,
         optional: crate::CreateOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
@@ -67,7 +67,7 @@ impl StorageVersion {
     ///
     ///     List options. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_collection_storage_version(
+    pub fn delete_collection(
         delete_optional: crate::DeleteOptional<'_>,
         list_optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<crate::List<Self>>>), crate::RequestError> {
@@ -103,7 +103,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn delete_storage_version(
+    pub fn delete(
         name: &str,
         optional: crate::DeleteOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::DeleteResponse<Self>>), crate::RequestError> {
@@ -136,7 +136,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn list_storage_version(
+    pub fn list(
         optional: crate::ListOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::ListResponse<Self>>), crate::RequestError> {
         let __url = "/apis/internal.apiserver.k8s.io/v1alpha1/storageversions?".to_owned();
@@ -172,7 +172,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_storage_version(
+    pub fn patch(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -217,7 +217,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn patch_storage_version_status(
+    pub fn patch_status(
         name: &str,
         body: &crate::apimachinery::pkg::apis::meta::v1::Patch,
         optional: crate::PatchOptional<'_>,
@@ -256,7 +256,7 @@ impl StorageVersion {
     ///
     ///     name of the StorageVersion
     #[cfg(feature = "api")]
-    pub fn read_storage_version(
+    pub fn read(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageVersionResponse>), crate::RequestError> {
         let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}",
@@ -272,7 +272,7 @@ impl StorageVersion {
     }
 }
 
-/// Use `<ReadStorageVersionResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read_storage_version`]
+/// Use `<ReadStorageVersionResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadStorageVersionResponse {
@@ -323,7 +323,7 @@ impl StorageVersion {
     ///
     ///     name of the StorageVersion
     #[cfg(feature = "api")]
-    pub fn read_storage_version_status(
+    pub fn read_status(
         name: &str,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<ReadStorageVersionStatusResponse>), crate::RequestError> {
         let __url = format!("/apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}/status",
@@ -339,7 +339,7 @@ impl StorageVersion {
     }
 }
 
-/// Use `<ReadStorageVersionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read_storage_version_status`]
+/// Use `<ReadStorageVersionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageVersion::read_status`]
 #[cfg(feature = "api")]
 #[derive(Debug)]
 pub enum ReadStorageVersionStatusResponse {
@@ -396,7 +396,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_storage_version(
+    pub fn replace(
         name: &str,
         body: &crate::api::apiserverinternal::v1alpha1::StorageVersion,
         optional: crate::ReplaceOptional<'_>,
@@ -437,7 +437,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn replace_storage_version_status(
+    pub fn replace_status(
         name: &str,
         body: &crate::api::apiserverinternal::v1alpha1::StorageVersion,
         optional: crate::ReplaceOptional<'_>,
@@ -474,7 +474,7 @@ impl StorageVersion {
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     #[cfg(feature = "api")]
-    pub fn watch_storage_version(
+    pub fn watch(
         optional: crate::WatchOptional<'_>,
     ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::WatchResponse<Self>>), crate::RequestError> {
         let __url = "/apis/internal.apiserver.k8s.io/v1alpha1/storageversions?".to_owned();
