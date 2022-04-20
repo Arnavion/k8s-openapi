@@ -63,6 +63,9 @@ declare -A KIND_VERSIONS=(
 	['1.23']='0.12.0'
 )
 
+# https://github.com/docker/buildx/releases
+DOCKER_BUILDX_VERSION='0.8.2'
+
 case "$1" in
 	'all')
 		for v in "${!K8S_VERSIONS[@]}"; do
@@ -121,8 +124,20 @@ case "$2" in
 			(
 				trap "rm -rf '/tmp/kubernetes-v$K8S_VERSION'" EXIT
 
-				rm -rf "/tmp/kubernetes-v$K8S_VERSION" &&
-				git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 https://github.com/kubernetes/kubernetes "/tmp/kubernetes-v$K8S_VERSION" &&
+				rm -rf "/tmp/kubernetes-v$K8S_VERSION"
+				git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 'https://github.com/kubernetes/kubernetes' "/tmp/kubernetes-v$K8S_VERSION"
+
+				if ! (docker --help | grep buildx) >/dev/null; then
+					mkdir -p ~/.docker/cli-plugins
+					flock -x ~/.docker/cli-plugins -c "
+					if ! (docker --help | grep buildx) >/dev/null; then
+						curl -Lo ~/.docker/cli-plugins/docker-buildx \
+							'https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-amd64'
+						chmod +x ~/.docker/cli-plugins/docker-buildx
+					fi
+					"
+				fi
+
 				"kind-$KIND_VERSION" build node-image --image "kindest/node:v$K8S_VERSION" --kube-root "/tmp/kubernetes-v$K8S_VERSION"
 			)
 		fi
