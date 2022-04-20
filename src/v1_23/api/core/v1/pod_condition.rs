@@ -19,12 +19,6 @@ pub struct PodCondition {
     pub status: String,
 
     /// Type is the type of the condition. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
-    ///
-    /// Possible enum values:
-    ///  - `"ContainersReady"` indicates whether all containers in the pod are ready.
-    ///  - `"Initialized"` means that all init containers in the pod have started successfully.
-    ///  - `"PodScheduled"` represents status of the scheduling process for this pod.
-    ///  - `"Ready"` means the pod is able to service requests and should be added to the load balancing pools of all matching services.
     pub type_: String,
 }
 
@@ -226,7 +220,7 @@ impl crate::schemars::JsonSchema for PodCondition {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type is the type of the condition. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions\n\nPossible enum values:\n - `\"ContainersReady\"` indicates whether all containers in the pod are ready.\n - `\"Initialized\"` means that all init containers in the pod have started successfully.\n - `\"PodScheduled\"` represents status of the scheduling process for this pod.\n - `\"Ready\"` means the pod is able to service requests and should be added to the load balancing pools of all matching services.".to_owned()),
+                                description: Some("Type is the type of the condition. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

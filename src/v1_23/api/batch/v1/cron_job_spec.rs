@@ -5,10 +5,6 @@
 pub struct CronJobSpec {
     /// Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow" (default): allows CronJobs to run concurrently; - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running job and replaces it with a new one
     ///
-    /// Possible enum values:
-    ///  - `"Allow"` allows CronJobs to run concurrently.
-    ///  - `"Forbid"` forbids concurrent runs, skipping next run if previous hasn't finished yet.
-    ///  - `"Replace"` cancels currently running job and replaces it with a new one.
     pub concurrency_policy: Option<String>,
 
     /// The number of failed finished jobs to retain. Value must be non-negative integer. Defaults to 1.
@@ -183,7 +179,7 @@ impl crate::schemars::JsonSchema for CronJobSpec {
                         "concurrencyPolicy".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Specifies how to treat concurrent executions of a Job. Valid values are: - \"Allow\" (default): allows CronJobs to run concurrently; - \"Forbid\": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - \"Replace\": cancels currently running job and replaces it with a new one\n\nPossible enum values:\n - `\"Allow\"` allows CronJobs to run concurrently.\n - `\"Forbid\"` forbids concurrent runs, skipping next run if previous hasn't finished yet.\n - `\"Replace\"` cancels currently running job and replaces it with a new one.".to_owned()),
+                                description: Some("Specifies how to treat concurrent executions of a Job. Valid values are: - \"Allow\" (default): allows CronJobs to run concurrently; - \"Forbid\": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - \"Replace\": cancels currently running job and replaces it with a new one\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

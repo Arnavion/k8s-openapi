@@ -20,10 +20,6 @@ pub struct Container {
 
     /// Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
     ///
-    /// Possible enum values:
-    ///  - `"Always"` means that kubelet always attempts to pull the latest image. Container will fail If the pull fails.
-    ///  - `"IfNotPresent"` means that kubelet pulls if the image isn't present on disk. Container will fail if the image isn't present and the pull fails.
-    ///  - `"Never"` means that kubelet never pulls an image, but only uses a local image. Container will fail if the image isn't present
     pub image_pull_policy: Option<String>,
 
     /// Actions that the management system should take in response to container lifecycle events. Cannot be updated.
@@ -61,9 +57,6 @@ pub struct Container {
 
     /// Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
     ///
-    /// Possible enum values:
-    ///  - `"FallbackToLogsOnError"` will read the most recent contents of the container logs for the container status message when the container exits with an error and the terminationMessagePath has no contents.
-    ///  - `"File"` is the default behavior and will set the container status message to the contents of the container's terminationMessagePath when the container exits.
     pub termination_message_policy: Option<String>,
 
     /// Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
@@ -466,7 +459,7 @@ impl crate::schemars::JsonSchema for Container {
                         "imagePullPolicy".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images\n\nPossible enum values:\n - `\"Always\"` means that kubelet always attempts to pull the latest image. Container will fail If the pull fails.\n - `\"IfNotPresent\"` means that kubelet pulls if the image isn't present on disk. Container will fail if the image isn't present and the pull fails.\n - `\"Never\"` means that kubelet never pulls an image, but only uses a local image. Container will fail if the image isn't present".to_owned()),
+                                description: Some("Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
@@ -602,7 +595,7 @@ impl crate::schemars::JsonSchema for Container {
                         "terminationMessagePolicy".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.\n\nPossible enum values:\n - `\"FallbackToLogsOnError\"` will read the most recent contents of the container logs for the container status message when the container exits with an error and the terminationMessagePath has no contents.\n - `\"File\"` is the default behavior and will set the container status message to the contents of the container's terminationMessagePath when the container exits.".to_owned()),
+                                description: Some("Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

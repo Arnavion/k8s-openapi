@@ -19,11 +19,6 @@ pub struct LimitRangeItem {
     pub min: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Type of resource that this limit applies to.
-    ///
-    /// Possible enum values:
-    ///  - `"Container"` Limit that applies to all containers in a namespace
-    ///  - `"PersistentVolumeClaim"` Limit that applies to all persistent volume claims in a namespace
-    ///  - `"Pod"` Limit that applies to all pods in a namespace
     pub type_: String,
 }
 
@@ -248,7 +243,7 @@ impl crate::schemars::JsonSchema for LimitRangeItem {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of resource that this limit applies to.\n\nPossible enum values:\n - `\"Container\"` Limit that applies to all containers in a namespace\n - `\"PersistentVolumeClaim\"` Limit that applies to all persistent volume claims in a namespace\n - `\"Pod\"` Limit that applies to all pods in a namespace".to_owned()),
+                                description: Some("Type of resource that this limit applies to.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

@@ -17,9 +17,6 @@ pub struct HTTPGetAction {
 
     /// Scheme to use for connecting to the host. Defaults to HTTP.
     ///
-    /// Possible enum values:
-    ///  - `"HTTP"` means that the scheme used will be http://
-    ///  - `"HTTPS"` means that the scheme used will be https://
     pub scheme: Option<String>,
 }
 
@@ -207,7 +204,7 @@ impl crate::schemars::JsonSchema for HTTPGetAction {
                         "scheme".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Scheme to use for connecting to the host. Defaults to HTTP.\n\nPossible enum values:\n - `\"HTTP\"` means that the scheme used will be http://\n - `\"HTTPS\"` means that the scheme used will be https://".to_owned()),
+                                description: Some("Scheme to use for connecting to the host. Defaults to HTTP.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

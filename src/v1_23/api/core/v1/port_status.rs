@@ -13,10 +13,6 @@ pub struct PortStatus {
 
     /// Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
     ///
-    /// Possible enum values:
-    ///  - `"SCTP"` is the SCTP protocol.
-    ///  - `"TCP"` is the TCP protocol.
-    ///  - `"UDP"` is the UDP protocol.
     pub protocol: String,
 }
 
@@ -152,7 +148,7 @@ impl crate::schemars::JsonSchema for PortStatus {
                         "protocol".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"\n\nPossible enum values:\n - `\"SCTP\"` is the SCTP protocol.\n - `\"TCP\"` is the TCP protocol.\n - `\"UDP\"` is the UDP protocol.".to_owned()),
+                                description: Some("Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

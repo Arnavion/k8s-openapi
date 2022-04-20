@@ -17,10 +17,6 @@ pub struct ContainerPort {
 
     /// Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
     ///
-    /// Possible enum values:
-    ///  - `"SCTP"` is the SCTP protocol.
-    ///  - `"TCP"` is the TCP protocol.
-    ///  - `"UDP"` is the UDP protocol.
     pub protocol: Option<String>,
 }
 
@@ -206,7 +202,7 @@ impl crate::schemars::JsonSchema for ContainerPort {
                         "protocol".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Protocol for port. Must be UDP, TCP, or SCTP. Defaults to \"TCP\".\n\nPossible enum values:\n - `\"SCTP\"` is the SCTP protocol.\n - `\"TCP\"` is the TCP protocol.\n - `\"UDP\"` is the UDP protocol.".to_owned()),
+                                description: Some("Protocol for port. Must be UDP, TCP, or SCTP. Defaults to \"TCP\".\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

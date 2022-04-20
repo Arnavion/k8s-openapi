@@ -5,10 +5,6 @@
 pub struct EndpointSlice {
     /// addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.
     ///
-    /// Possible enum values:
-    ///  - `"FQDN"` represents a FQDN.
-    ///  - `"IPv4"` represents an IPv4 Address.
-    ///  - `"IPv6"` represents an IPv6 Address.
     pub address_type: String,
 
     /// endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.
@@ -628,7 +624,7 @@ impl crate::schemars::JsonSchema for EndpointSlice {
                         "addressType".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.\n\nPossible enum values:\n - `\"FQDN\"` represents a FQDN.\n - `\"IPv4\"` represents an IPv4 Address.\n - `\"IPv6\"` represents an IPv6 Address.".to_owned()),
+                                description: Some("addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

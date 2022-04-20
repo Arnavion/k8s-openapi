@@ -17,12 +17,6 @@ pub struct PersistentVolumeClaimCondition {
 
     pub status: String,
 
-    ///
-    ///
-    ///
-    /// Possible enum values:
-    ///  - `"FileSystemResizePending"` - controller resize is finished and a file system resize is pending on node
-    ///  - `"Resizing"` - a user trigger resize of pvc has been started
     pub type_: String,
 }
 
@@ -219,10 +213,6 @@ impl crate::schemars::JsonSchema for PersistentVolumeClaimCondition {
                     (
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("\n\n\nPossible enum values:\n - `\"FileSystemResizePending\"` - controller resize is finished and a file system resize is pending on node\n - `\"Resizing\"` - a user trigger resize of pvc has been started".to_owned()),
-                                ..Default::default()
-                            })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),

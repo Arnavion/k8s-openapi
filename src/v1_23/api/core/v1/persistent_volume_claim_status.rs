@@ -17,10 +17,6 @@ pub struct PersistentVolumeClaimStatus {
 
     /// Phase represents the current phase of PersistentVolumeClaim.
     ///
-    /// Possible enum values:
-    ///  - `"Bound"` used for PersistentVolumeClaims that are bound
-    ///  - `"Lost"` used for PersistentVolumeClaims that lost their underlying PersistentVolume. The claim was bound to a PersistentVolume and this volume does not exist any longer and all data on it was lost.
-    ///  - `"Pending"` used for PersistentVolumeClaims that are not yet bound
     pub phase: Option<String>,
 
     /// ResizeStatus stores status of resize operation. ResizeStatus is not set by default but when expansion is complete resizeStatus is set to empty string by resize controller or kubelet. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.
@@ -240,7 +236,7 @@ impl crate::schemars::JsonSchema for PersistentVolumeClaimStatus {
                         "phase".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Phase represents the current phase of PersistentVolumeClaim.\n\nPossible enum values:\n - `\"Bound\"` used for PersistentVolumeClaims that are bound\n - `\"Lost\"` used for PersistentVolumeClaims that lost their underlying PersistentVolume. The claim was bound to a PersistentVolume and this volume does not exist any longer and all data on it was lost.\n - `\"Pending\"` used for PersistentVolumeClaims that are not yet bound".to_owned()),
+                                description: Some("Phase represents the current phase of PersistentVolumeClaim.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

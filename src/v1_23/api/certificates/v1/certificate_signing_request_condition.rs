@@ -29,11 +29,6 @@ pub struct CertificateSigningRequestCondition {
     /// Approved and Denied conditions are mutually exclusive. Approved, Denied, and Failed conditions cannot be removed once added.
     ///
     /// Only one condition of a given type is allowed.
-    ///
-    /// Possible enum values:
-    ///  - `"Approved"` Approved indicates the request was approved and should be issued by the signer.
-    ///  - `"Denied"` Denied indicates the request was denied and should not be issued by the signer.
-    ///  - `"Failed"` Failed indicates the signer failed to issue the certificate.
     pub type_: String,
 }
 
@@ -235,7 +230,7 @@ impl crate::schemars::JsonSchema for CertificateSigningRequestCondition {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("type of the condition. Known conditions are \"Approved\", \"Denied\", and \"Failed\".\n\nAn \"Approved\" condition is added via the /approval subresource, indicating the request was approved and should be issued by the signer.\n\nA \"Denied\" condition is added via the /approval subresource, indicating the request was denied and should not be issued by the signer.\n\nA \"Failed\" condition is added via the /status subresource, indicating the signer failed to issue the certificate.\n\nApproved and Denied conditions are mutually exclusive. Approved, Denied, and Failed conditions cannot be removed once added.\n\nOnly one condition of a given type is allowed.\n\nPossible enum values:\n - `\"Approved\"` Approved indicates the request was approved and should be issued by the signer.\n - `\"Denied\"` Denied indicates the request was denied and should not be issued by the signer.\n - `\"Failed\"` Failed indicates the signer failed to issue the certificate.".to_owned()),
+                                description: Some("type of the condition. Known conditions are \"Approved\", \"Denied\", and \"Failed\".\n\nAn \"Approved\" condition is added via the /approval subresource, indicating the request was approved and should be issued by the signer.\n\nA \"Denied\" condition is added via the /approval subresource, indicating the request was denied and should not be issued by the signer.\n\nA \"Failed\" condition is added via the /status subresource, indicating the signer failed to issue the certificate.\n\nApproved and Denied conditions are mutually exclusive. Approved, Denied, and Failed conditions cannot be removed once added.\n\nOnly one condition of a given type is allowed.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

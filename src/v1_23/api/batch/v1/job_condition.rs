@@ -19,11 +19,6 @@ pub struct JobCondition {
     pub status: String,
 
     /// Type of job condition, Complete or Failed.
-    ///
-    /// Possible enum values:
-    ///  - `"Complete"` means the job has completed its execution.
-    ///  - `"Failed"` means the job has failed its execution.
-    ///  - `"Suspended"` means the job has been suspended.
     pub type_: String,
 }
 
@@ -225,7 +220,7 @@ impl crate::schemars::JsonSchema for JobCondition {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of job condition, Complete or Failed.\n\nPossible enum values:\n - `\"Complete\"` means the job has completed its execution.\n - `\"Failed\"` means the job has failed its execution.\n - `\"Suspended\"` means the job has been suspended.".to_owned()),
+                                description: Some("Type of job condition, Complete or Failed.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

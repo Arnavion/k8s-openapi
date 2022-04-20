@@ -19,13 +19,6 @@ pub struct NodeCondition {
     pub status: String,
 
     /// Type of node condition.
-    ///
-    /// Possible enum values:
-    ///  - `"DiskPressure"` means the kubelet is under pressure due to insufficient available disk.
-    ///  - `"MemoryPressure"` means the kubelet is under pressure due to insufficient available memory.
-    ///  - `"NetworkUnavailable"` means that network for the node is not correctly configured.
-    ///  - `"PIDPressure"` means the kubelet is under pressure due to insufficient available PID.
-    ///  - `"Ready"` means kubelet is healthy and ready to accept pods.
     pub type_: String,
 }
 
@@ -227,7 +220,7 @@ impl crate::schemars::JsonSchema for NodeCondition {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of node condition.\n\nPossible enum values:\n - `\"DiskPressure\"` means the kubelet is under pressure due to insufficient available disk.\n - `\"MemoryPressure\"` means the kubelet is under pressure due to insufficient available memory.\n - `\"NetworkUnavailable\"` means that network for the node is not correctly configured.\n - `\"PIDPressure\"` means the kubelet is under pressure due to insufficient available PID.\n - `\"Ready\"` means kubelet is healthy and ready to accept pods.".to_owned()),
+                                description: Some("Type of node condition.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

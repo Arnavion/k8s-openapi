@@ -5,22 +5,10 @@
 pub struct ScopedResourceSelectorRequirement {
     /// Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     ///
-    /// Possible enum values:
-    ///  - `"DoesNotExist"`
-    ///  - `"Exists"`
-    ///  - `"In"`
-    ///  - `"NotIn"`
     pub operator: String,
 
     /// The name of the scope that the selector applies to.
     ///
-    /// Possible enum values:
-    ///  - `"BestEffort"` Match all pod objects that have best effort quality of service
-    ///  - `"CrossNamespacePodAffinity"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.
-    ///  - `"NotBestEffort"` Match all pod objects that do not have best effort quality of service
-    ///  - `"NotTerminating"` Match all pod objects where spec.activeDeadlineSeconds is nil
-    ///  - `"PriorityClass"` Match all pod objects that have priority class mentioned
-    ///  - `"Terminating"` Match all pod objects where spec.activeDeadlineSeconds \>=0
     pub scope_name: String,
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
@@ -140,7 +128,7 @@ impl crate::schemars::JsonSchema for ScopedResourceSelectorRequirement {
                         "operator".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.\n\nPossible enum values:\n - `\"DoesNotExist\"`\n - `\"Exists\"`\n - `\"In\"`\n - `\"NotIn\"`".to_owned()),
+                                description: Some("Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
@@ -151,7 +139,7 @@ impl crate::schemars::JsonSchema for ScopedResourceSelectorRequirement {
                         "scopeName".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The name of the scope that the selector applies to.\n\nPossible enum values:\n - `\"BestEffort\"` Match all pod objects that have best effort quality of service\n - `\"CrossNamespacePodAffinity\"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.\n - `\"NotBestEffort\"` Match all pod objects that do not have best effort quality of service\n - `\"NotTerminating\"` Match all pod objects where spec.activeDeadlineSeconds is nil\n - `\"PriorityClass\"` Match all pod objects that have priority class mentioned\n - `\"Terminating\"` Match all pod objects where spec.activeDeadlineSeconds >=0".to_owned()),
+                                description: Some("The name of the scope that the selector applies to.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

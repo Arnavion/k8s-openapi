@@ -29,10 +29,6 @@ pub struct NodeStatus {
 
     /// NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.
     ///
-    /// Possible enum values:
-    ///  - `"Pending"` means the node has been created/added by the system, but not configured.
-    ///  - `"Running"` means the node has been configured and has Kubernetes components running.
-    ///  - `"Terminated"` means the node has been removed from the cluster.
     pub phase: Option<String>,
 
     /// List of volumes that are attached to the node.
@@ -348,7 +344,7 @@ impl crate::schemars::JsonSchema for NodeStatus {
                         "phase".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.\n\nPossible enum values:\n - `\"Pending\"` means the node has been created/added by the system, but not configured.\n - `\"Running\"` means the node has been configured and has Kubernetes components running.\n - `\"Terminated\"` means the node has been removed from the cluster.".to_owned()),
+                                description: Some("NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

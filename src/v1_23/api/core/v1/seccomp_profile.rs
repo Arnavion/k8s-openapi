@@ -10,10 +10,6 @@ pub struct SeccompProfile {
     ///
     /// Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
     ///
-    /// Possible enum values:
-    ///  - `"Localhost"` indicates a profile defined in a file on the node should be used. The file's location relative to \<kubelet-root-dir\>/seccomp.
-    ///  - `"RuntimeDefault"` represents the default container runtime seccomp profile.
-    ///  - `"Unconfined"` indicates no seccomp profile is applied (A.K.A. unconfined).
     pub type_: String,
 }
 
@@ -134,7 +130,7 @@ impl crate::schemars::JsonSchema for SeccompProfile {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("type indicates which kind of seccomp profile will be applied. Valid options are:\n\nLocalhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.\n\nPossible enum values:\n - `\"Localhost\"` indicates a profile defined in a file on the node should be used. The file's location relative to <kubelet-root-dir>/seccomp.\n - `\"RuntimeDefault\"` represents the default container runtime seccomp profile.\n - `\"Unconfined\"` indicates no seccomp profile is applied (A.K.A. unconfined).".to_owned()),
+                                description: Some("type indicates which kind of seccomp profile will be applied. Valid options are:\n\nLocalhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

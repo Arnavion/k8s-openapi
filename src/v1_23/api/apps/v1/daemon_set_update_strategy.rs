@@ -8,9 +8,6 @@ pub struct DaemonSetUpdateStrategy {
 
     /// Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
     ///
-    /// Possible enum values:
-    ///  - `"OnDelete"` Replace the old daemons only when it's killed
-    ///  - `"RollingUpdate"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.
     pub type_: Option<String>,
 }
 
@@ -133,7 +130,7 @@ impl crate::schemars::JsonSchema for DaemonSetUpdateStrategy {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is RollingUpdate.\n\nPossible enum values:\n - `\"OnDelete\"` Replace the old daemons only when it's killed\n - `\"RollingUpdate\"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.".to_owned()),
+                                description: Some("Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is RollingUpdate.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

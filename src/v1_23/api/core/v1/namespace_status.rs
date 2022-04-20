@@ -8,9 +8,6 @@ pub struct NamespaceStatus {
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     ///
-    /// Possible enum values:
-    ///  - `"Active"` means the namespace is available for use in the system
-    ///  - `"Terminating"` means the namespace is undergoing graceful termination
     pub phase: Option<String>,
 }
 
@@ -137,7 +134,7 @@ impl crate::schemars::JsonSchema for NamespaceStatus {
                         "phase".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/\n\nPossible enum values:\n - `\"Active\"` means the namespace is available for use in the system\n - `\"Terminating\"` means the namespace is undergoing graceful termination".to_owned()),
+                                description: Some("Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

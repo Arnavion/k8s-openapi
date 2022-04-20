@@ -8,9 +8,6 @@ pub struct DeploymentStrategy {
 
     /// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
     ///
-    /// Possible enum values:
-    ///  - `"Recreate"` Kill all existing pods before creating new ones.
-    ///  - `"RollingUpdate"` Replace the old ReplicaSets by new one using rolling update i.e gradually scale down the old ReplicaSets and scale up the new one.
     pub type_: Option<String>,
 }
 
@@ -133,7 +130,7 @@ impl crate::schemars::JsonSchema for DeploymentStrategy {
                         "type".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.\n\nPossible enum values:\n - `\"Recreate\"` Kill all existing pods before creating new ones.\n - `\"RollingUpdate\"` Replace the old ReplicaSets by new one using rolling update i.e gradually scale down the old ReplicaSets and scale up the new one.".to_owned()),
+                                description: Some("Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.\n\n".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),

@@ -4,12 +4,6 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodReadinessGate {
     /// ConditionType refers to a condition in the pod's condition list with matching type.
-    ///
-    /// Possible enum values:
-    ///  - `"ContainersReady"` indicates whether all containers in the pod are ready.
-    ///  - `"Initialized"` means that all init containers in the pod have started successfully.
-    ///  - `"PodScheduled"` represents status of the scheduling process for this pod.
-    ///  - `"Ready"` means the pod is able to service requests and should be added to the load balancing pools of all matching services.
     pub condition_type: String,
 }
 
@@ -109,7 +103,7 @@ impl crate::schemars::JsonSchema for PodReadinessGate {
                         "conditionType".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ConditionType refers to a condition in the pod's condition list with matching type.\n\nPossible enum values:\n - `\"ContainersReady\"` indicates whether all containers in the pod are ready.\n - `\"Initialized\"` means that all init containers in the pod have started successfully.\n - `\"PodScheduled\"` represents status of the scheduling process for this pod.\n - `\"Ready\"` means the pod is able to service requests and should be added to the load balancing pools of all matching services.".to_owned()),
+                                description: Some("ConditionType refers to a condition in the pod's condition list with matching type.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
