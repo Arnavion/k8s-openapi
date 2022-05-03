@@ -32,6 +32,7 @@
 #![cfg_attr(feature = "v1_21", doc = "v1_21")]
 #![cfg_attr(feature = "v1_22", doc = "v1_22")]
 #![cfg_attr(feature = "v1_23", doc = "v1_23")]
+#![cfg_attr(feature = "v1_24", doc = "v1_24")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -718,5 +719,8 @@ pub mod percent_encoding2 {
 
 #[cfg(feature = "v1_23")] mod v1_23;
 #[cfg(feature = "v1_23")] pub use self::v1_23::*;
+
+#[cfg(feature = "v1_24")] mod v1_24;
+#[cfg(feature = "v1_24")] pub use self::v1_24::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

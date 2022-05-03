@@ -7,6 +7,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_21,
 	SupportedVersion::V1_22,
 	SupportedVersion::V1_23,
+	SupportedVersion::V1_24,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -19,6 +20,7 @@ pub(crate) enum SupportedVersion {
 	V1_21,
 	V1_22,
 	V1_23,
+	V1_24,
 }
 
 impl SupportedVersion {
@@ -32,6 +34,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_21 => "1.21",
 			SupportedVersion::V1_22 => "1.22",
 			SupportedVersion::V1_23 => "1.23",
+			SupportedVersion::V1_24 => "1.24",
 		}
 	}
 
@@ -45,6 +48,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_21 => "v1_21",
 			SupportedVersion::V1_22 => "v1_22",
 			SupportedVersion::V1_23 => "v1_23",
+			SupportedVersion::V1_24 => "v1_24",
 		}
 	}
 
@@ -58,6 +62,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_21 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.21.12/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_22 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.22.9/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_23 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.23.6/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_24 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.24.0/api/openapi-spec/swagger.json",
 		}
 	}
 
@@ -106,6 +111,11 @@ impl SupportedVersion {
 			],
 
 			SupportedVersion::V1_23 => &[
+				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
+			],
+
+			SupportedVersion::V1_24 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],

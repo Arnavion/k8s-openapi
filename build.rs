@@ -1,8 +1,8 @@
-const MIN: usize = 16;
-const MAX: usize = 23;
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
+
+    const MIN: usize = 16;
+    const MAX: usize = 24;
 
     let enabled_version = {
         let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok());

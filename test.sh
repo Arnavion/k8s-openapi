@@ -49,6 +49,7 @@ declare -A K8S_VERSIONS=(
 	['1.21']='1.21.12'
 	['1.22']='1.22.9'
 	['1.23']='1.23.6'
+	['1.24']='1.24.0'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
@@ -61,6 +62,7 @@ declare -A KIND_VERSIONS=(
 	['1.21']='0.12.0'
 	['1.22']='0.12.0'
 	['1.23']='0.12.0'
+	['1.24']='0.12.0'
 )
 
 # https://github.com/docker/buildx/releases
