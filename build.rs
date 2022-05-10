@@ -1,7 +1,7 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
 
-    const MIN: usize = 16;
+    const MIN: usize = 18;
     const MAX: usize = 24;
 
     let enabled_version = {

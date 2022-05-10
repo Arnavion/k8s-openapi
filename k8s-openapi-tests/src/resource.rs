@@ -1,17 +1,5 @@
 #[test]
 fn impl_resource() {
-	k8s_openapi::k8s_if_le_1_17! {
-		assert_is_subresource::<k8s_openapi::api::apps::v1beta1::DeploymentRollback>("rollback");
-	}
-
-	k8s_openapi::k8s_if_le_1_17! {
-		assert_is_subresource::<k8s_openapi::api::apps::v1beta1::Scale>("scale");
-	}
-
-	k8s_openapi::k8s_if_le_1_17! {
-		assert_is_subresource::<k8s_openapi::api::apps::v1beta2::Scale>("scale");
-	}
-
 	assert_is_subresource::<k8s_openapi::api::authentication::v1::TokenRequest>("token");
 
 	k8s_openapi::k8s_if_le_1_21! {
@@ -60,14 +48,6 @@ fn impl_resource() {
 	assert_is_cluster_scoped::<k8s_openapi::api::core::v1::Namespace>("namespaces");
 
 	assert_is_namespace_scoped::<k8s_openapi::api::core::v1::Pod>("pods");
-
-	k8s_openapi::k8s_if_le_1_17! {
-		assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::DeploymentRollback>("rollback");
-	}
-
-	k8s_openapi::k8s_if_le_1_17! {
-		assert_is_subresource::<k8s_openapi::api::extensions::v1beta1::Scale>("scale");
-	}
 
 	assert_is_cluster_scoped::<k8s_openapi::apimachinery::pkg::apis::meta::v1::APIGroupList>("");
 

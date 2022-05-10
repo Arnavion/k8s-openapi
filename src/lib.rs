@@ -23,9 +23,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(feature = "v1_15", doc = "v1_15")]
-#![cfg_attr(feature = "v1_16", doc = "v1_16")]
-#![cfg_attr(feature = "v1_17", doc = "v1_17")]
 #![cfg_attr(feature = "v1_18", doc = "v1_18")]
 #![cfg_attr(feature = "v1_19", doc = "v1_19")]
 #![cfg_attr(feature = "v1_20", doc = "v1_20")]
@@ -695,12 +692,6 @@ pub mod percent_encoding2 {
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
-
-#[cfg(feature = "v1_16")] mod v1_16;
-#[cfg(feature = "v1_16")] pub use self::v1_16::*;
-
-#[cfg(feature = "v1_17")] mod v1_17;
-#[cfg(feature = "v1_17")] pub use self::v1_17::*;
 
 #[cfg(feature = "v1_18")] mod v1_18;
 #[cfg(feature = "v1_18")] pub use self::v1_18::*;

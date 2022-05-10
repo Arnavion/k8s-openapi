@@ -177,12 +177,8 @@ async fn test() {
 
 		let accepted_names_kind = {
 			let status = custom_resource_definition.status.as_ref();
-			k8s_openapi::k8s_if_le_1_17! {
-				let accepted_names = status.map(|status| &status.accepted_names);
-			}
-			k8s_openapi::k8s_if_ge_1_18! {
-				let accepted_names = status.and_then(|status| status.accepted_names.as_ref());
-			}
+			let accepted_names = status.and_then(|status| status.accepted_names.as_ref());
+
 			accepted_names.map(|accepted_names| &accepted_names.kind)
 		};
 		if accepted_names_kind.map_or(false, |accepted_names_kind| accepted_names_kind == "FooBar") {
