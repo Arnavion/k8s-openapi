@@ -23,9 +23,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(feature = "v1_15", doc = "v1_15")]
-#![cfg_attr(feature = "v1_16", doc = "v1_16")]
-#![cfg_attr(feature = "v1_17", doc = "v1_17")]
 #![cfg_attr(feature = "v1_18", doc = "v1_18")]
 #![cfg_attr(feature = "v1_19", doc = "v1_19")]
 #![cfg_attr(feature = "v1_20", doc = "v1_20")]
@@ -223,8 +220,8 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! # Crate features
 //!
 //! - This crate contains several `v1_*` features. Enabling one of the `v1_*` features selects which version of the Kubernetes API server this crate should target.
-//!   For example, enabling the `v1_16` feature means the crate will only contain the API exposed by Kubernetes 1.16. It will not expose API
-//!   that were removed in 1.16 or earlier, nor any API added in 1.17 or later.
+//!   For example, enabling the `v1_23` feature means the crate will only contain the API exposed by Kubernetes 1.23. It will not expose API
+//!   that were removed in 1.23 or earlier, nor any API added in 1.24 or later.
 //!
 //! - The crate also contains a feature named `api`. If this feature is disabled, the library will only contain the resource types like [`api::core::v1::Pod`],
 //!   and not the associated operation functions like
@@ -695,12 +692,6 @@ pub mod percent_encoding2 {
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
-
-#[cfg(feature = "v1_16")] mod v1_16;
-#[cfg(feature = "v1_16")] pub use self::v1_16::*;
-
-#[cfg(feature = "v1_17")] mod v1_17;
-#[cfg(feature = "v1_17")] pub use self::v1_17::*;
 
 #[cfg(feature = "v1_18")] mod v1_18;
 #[cfg(feature = "v1_18")] pub use self::v1_18::*;
