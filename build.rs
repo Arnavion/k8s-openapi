@@ -4,41 +4,52 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     const MIN: usize = 18;
     const MAX: usize = 24;
 
+    println!("cargo:rerun-if-env-changed=K8S_OPENAPI_ENABLED_VERSION");
+
     let enabled_version = {
-        let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok());
+        let mut enabled_versions =
+            (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok())
+            .chain(
+                std::env::var("K8S_OPENAPI_ENABLED_VERSION").ok()
+                .and_then(|value| value.strip_prefix("1.").and_then(|value| value.parse::<usize>().ok())))
+            .collect::<std::collections::BTreeSet<_>>()
+            .into_iter();
         let v1 = enabled_versions.next().expect("\n\
             None of the v1_* features are enabled on the k8s-openapi crate.\n\
             \n\
             The k8s-openapi crate requires a feature to be enabled to indicate which version of Kubernetes it should support.\n\
             \n\
             If you're using k8s-openapi in a binary crate, enable the feature corresponding to the minimum version of API server that you want to support. \
-            It may be possible that your binary crate does not directly depend on k8s-openapi. In this case, add a dependency on k8s-openapi, then enable \
-            the corresponding feature.\n\
+            In case your binary crate does not directly depend on k8s-openapi, add a dependency on k8s-openapi and enable the corresponding feature in it.\n\
             \n\
             If you're using k8s-openapi in a library crate, add a dev-dependency on k8s-openapi and enable one of the features there. This way \
             the feature will be enabled when buildings tests and examples of your library, but not when building the library itself. \
-            It may be possible that your library crate does not directly depend on k8s-openapi. In this case, add a dev-dependency on k8s-openapi, \
-            then enable the corresponding feature.\n\
+            In case your library crate does not directly depend on k8s-openapi, add a dev-dependency on k8s-openapi and enable the corresponding feature in it.\n\
+            \n\
+            Alternatively, when running commands that do not build dev dependencies such as `cargo check` and `cargo doc`, you can set the `K8S_OPENAPI_ENABLED_VERSION` \
+            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`.\
             \n\
             Library crates *must not* enable any features in their direct dependency on k8s-openapi, only in their dev-dependency. \
-            The choice of Kubernetes version to support should be left to the final binary crate, so only the binary crate should enable a specific feature. \
-            If library crates also enable features, it can cause multiple features to be enabled simultaneously, which k8s-openapi does not support.\n\
+            The choice of which Kubernetes version to support should be left to the final binary crate, so only binary crates should enable a specific feature. \
+            If library crates also enabled features, it could cause multiple features to be enabled simultaneously, which k8s-openapi does not support.\n\
             \n\
-            If you want to restrict your library crate to support only a single specific version or range of versions of Kubernetes, \
+            If your library crate only supports a single specific version or a specific range of versions of Kubernetes, \
             please use the k8s_* version-specific macros to emit different code based on which feature gets enabled in the end.\
+            \n\
+            See the library docs for more details.
         ");
         if let Some(v2) = enabled_versions.next() {
             panic!(
                 "\n\
-                    Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.\n\
+                    Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. These feature indicates which version of Kubernetes the k8s-openapi crate should support. \
+                    Only one feature can be enabled at the same time.\n\
                     \n\
-                    The feature indicates which version of Kubernetes the k8s-openapi crate should support.\n\
-                    \n\
-                    If you have enabled both of these features yourself, please remove one of them. If you are writing a library crate, \
-                    do not enable any features at all. Library crates *must not* enable any features on the k8s-openapi crate.\n\
+                    If you have enabled both of these features yourself, either via the k8s-openapi dependency in your Cargo.toml or via setting \
+                    the `K8S_OPENAPI_ENABLED_VERSION` env var, please remove one of them. If you are writing a library crate, do not enable any features at all. \
+                    Library crates *must not* enable any features on the k8s-openapi crate.\n\
                     \n\
                     If you have not enabled one or both of these features yourself, then one of the library crates in your dependency graph *has*. \
-                    Locate which library crates in your dependency graph depend on k8s-openapi and enable one of its features, and file a bug against them. \
+                    Locate which library crates in your dependency graph depend on k8s-openapi and enable one or more of its features, and file a bug against them, citing this text. \
                     You can search your Cargo.lock for \"k8s-openapi\" to discover these crates.\
                 ");
         }
@@ -46,6 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     println!("cargo:version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
+    println!(r#"cargo:rustc-cfg=k8s_openapi_enabled_version="1.{enabled_version}""#);
 
     let mut f = {
         let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or("OUT_DIR not set")?.into();

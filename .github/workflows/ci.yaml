@@ -35,4 +35,4 @@ jobs:
     - name: 'Run'
       run: ./ci/per_version.sh
       env:
-        VERSION: "${{ matrix.version }}"
+        K8S_OPENAPI_ENABLED_VERSION: "${{ matrix.version }}"

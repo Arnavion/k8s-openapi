@@ -23,13 +23,13 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(feature = "v1_18", doc = "v1_18")]
-#![cfg_attr(feature = "v1_19", doc = "v1_19")]
-#![cfg_attr(feature = "v1_20", doc = "v1_20")]
-#![cfg_attr(feature = "v1_21", doc = "v1_21")]
-#![cfg_attr(feature = "v1_22", doc = "v1_22")]
-#![cfg_attr(feature = "v1_23", doc = "v1_23")]
-#![cfg_attr(feature = "v1_24", doc = "v1_24")]
+#![cfg_attr(k8s_openapi_enabled_version="1.18", doc = "v1_18")]
+#![cfg_attr(k8s_openapi_enabled_version="1.19", doc = "v1_19")]
+#![cfg_attr(k8s_openapi_enabled_version="1.20", doc = "v1_20")]
+#![cfg_attr(k8s_openapi_enabled_version="1.21", doc = "v1_21")]
+#![cfg_attr(k8s_openapi_enabled_version="1.22", doc = "v1_22")]
+#![cfg_attr(k8s_openapi_enabled_version="1.23", doc = "v1_23")]
+#![cfg_attr(k8s_openapi_enabled_version="1.24", doc = "v1_24")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -262,6 +262,16 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! [dev-dependencies]
 //! k8s-openapi = { version = "...", features = ["v1_50"] }
 //! ```
+//!
+//! However, commands like `cargo check` and `cargo doc` do not build dev dependencies, so they would not enable the feature and would fail to build.
+//! One way to resolve this is to add a feature to your library that enables one of the k8s-openapi `v1_*` features and is used only when running such commands.
+//!
+//! ```toml
+//! [features]
+//! __check = ["k8s-openapi/v1_50"]   # This feature is used internally for `cargo check` and `cargo doc`
+//! ```
+//!
+//! Another way is to define the `K8S_OPENAPI_ENABLED_VERSION` env var on the command, such as `K8S_OPENAPI_ENABLED_VERSION=1.50 cargo check`.
 //!
 //!
 //! # Conditional compilation
@@ -693,25 +703,25 @@ pub mod percent_encoding2 {
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
 
-#[cfg(feature = "v1_18")] mod v1_18;
-#[cfg(feature = "v1_18")] pub use self::v1_18::*;
+#[cfg(k8s_openapi_enabled_version="1.18")] mod v1_18;
+#[cfg(k8s_openapi_enabled_version="1.18")] pub use self::v1_18::*;
 
-#[cfg(feature = "v1_19")] mod v1_19;
-#[cfg(feature = "v1_19")] pub use self::v1_19::*;
+#[cfg(k8s_openapi_enabled_version="1.19")] mod v1_19;
+#[cfg(k8s_openapi_enabled_version="1.19")] pub use self::v1_19::*;
 
-#[cfg(feature = "v1_20")] mod v1_20;
-#[cfg(feature = "v1_20")] pub use self::v1_20::*;
+#[cfg(k8s_openapi_enabled_version="1.20")] mod v1_20;
+#[cfg(k8s_openapi_enabled_version="1.20")] pub use self::v1_20::*;
 
-#[cfg(feature = "v1_21")] mod v1_21;
-#[cfg(feature = "v1_21")] pub use self::v1_21::*;
+#[cfg(k8s_openapi_enabled_version="1.21")] mod v1_21;
+#[cfg(k8s_openapi_enabled_version="1.21")] pub use self::v1_21::*;
 
-#[cfg(feature = "v1_22")] mod v1_22;
-#[cfg(feature = "v1_22")] pub use self::v1_22::*;
+#[cfg(k8s_openapi_enabled_version="1.22")] mod v1_22;
+#[cfg(k8s_openapi_enabled_version="1.22")] pub use self::v1_22::*;
 
-#[cfg(feature = "v1_23")] mod v1_23;
-#[cfg(feature = "v1_23")] pub use self::v1_23::*;
+#[cfg(k8s_openapi_enabled_version="1.23")] mod v1_23;
+#[cfg(k8s_openapi_enabled_version="1.23")] pub use self::v1_23::*;
 
-#[cfg(feature = "v1_24")] mod v1_24;
-#[cfg(feature = "v1_24")] pub use self::v1_24::*;
+#[cfg(k8s_openapi_enabled_version="1.24")] mod v1_24;
+#[cfg(k8s_openapi_enabled_version="1.24")] pub use self::v1_24::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
