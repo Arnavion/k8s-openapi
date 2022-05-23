@@ -1,3 +1,33 @@
+# v0.15.0 (2022-05-22)
+
+## k8s-openapi
+
+- BREAKING CHANGE: The `pretty` optional parameter has been removed from all operations. Setting this parameter to `true` would've made the API server pretty-print the JSON response, which is meaningless for a programmatic client.
+
+- BREAKING CHANGE: In addition to the previous change, the `exact` and `export` parameters have been removed from all read operations (eg `Pod::read_namespaced_pod`). These parameters were removed in Kubernetes v1.21 and were known to be broken before that, and would've caused the server response to not be able to be parsed correctly via the operation's response type anyway.
+
+  All read operations with the exception of `Pod::read_namespaced_pod_log` had only these three optional parameters, so now that they've been removed such read operations don't have an `optional: ReadFooOptional<'_>` parameter at all.
+
+- BREAKING CHANGE: Operation names no longer include the `_namespaced` part and the resource type name. For example, `Pod::read_namespaced_pod` is now just `Pod::read`. The corresponding optional parameters type and response type no longer include the `Namespaced` part, eg `ReadNamespacedPodResponse` is now just `ReadPodResponse`.
+
+- BREAKING CHANGE: Added support for Kubernetes 1.24 under the `v1_24` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.16 and 1.17.
+
+- FEATURE: The `K8S_OPENAPI_ENABLED_VERSION` env var can now be set at build time to enable a specific API version, just like enabling a specific version feature would've done. This is only meant to be used by library developers who want to run `cargo check`, `cargo doc`, etc commands, for which the previous advice of enabling a version feature via a dev dependency would not work.
+
+Corresponding Kubernetes API server versions:
+
+- v1.18.20
+- v1.19.16
+- v1.20.15
+- v1.21.12
+- v1.22.9
+- v1.23.6
+- v1.24.0
+
+---
+
 # v0.14.0 (2022-01-23)
 
 ## k8s-openapi
