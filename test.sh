@@ -44,7 +44,7 @@ declare -A K8S_VERSIONS=(
 
 	['1.19']='1.19.16'
 	['1.20']='1.20.15'
-	['1.21']='1.21.12'
+	['1.21']='1.21.13'
 	['1.22']='1.22.9'
 	['1.23']='1.23.6'
 	['1.24']='1.24.0'
@@ -125,7 +125,7 @@ case "$2" in
 				rm -rf "/tmp/kubernetes-v$K8S_VERSION"
 				git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 'https://github.com/kubernetes/kubernetes' "/tmp/kubernetes-v$K8S_VERSION"
 
-				if ! (docker --help | grep buildx) >/dev/null; then
+				if ! (docker --help | grep -q buildx); then
 					mkdir -p ~/.docker/cli-plugins
 					flock -x ~/.docker/cli-plugins -c "
 					if ! (docker --help | grep buildx) >/dev/null; then
