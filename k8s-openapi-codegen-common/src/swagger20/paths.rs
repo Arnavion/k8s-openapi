@@ -1,5 +1,5 @@
 /// The value of an `"x-kubernetes-action"` annotation on an operation.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum KubernetesAction {
 	Connect,
 	Delete,
