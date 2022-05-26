@@ -47,7 +47,7 @@ declare -A K8S_VERSIONS=(
 	['1.21']='1.21.13'
 	['1.22']='1.22.10'
 	['1.23']='1.23.7'
-	['1.24']='1.24.0'
+	['1.24']='1.24.1'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
