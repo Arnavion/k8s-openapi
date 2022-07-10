@@ -404,6 +404,9 @@ pub use serde_value;
 #[cfg(feature = "api")]
 pub use url;
 
+
+mod deep_merge;
+pub use self::deep_merge::DeepMerge;
 /// A wrapper around a list of bytes.
 ///
 /// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.

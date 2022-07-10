@@ -9,6 +9,8 @@ impl Default for {type_name} {{
     }}
 }}
 
+impl crate::DeepMerge for {type_name} {{}}
+
 impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
         struct Visitor;

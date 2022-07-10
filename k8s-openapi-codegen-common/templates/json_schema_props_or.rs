@@ -3,6 +3,8 @@ enum {type_name} {{
     {or_variant_name}({or_variant_type}),
 }}
 
+impl crate::DeepMerge for {type_name} {{}}
+
 impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
         struct Visitor;
