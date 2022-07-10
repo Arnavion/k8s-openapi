@@ -27,6 +27,8 @@
 //! 1. Invoke the [`run`] function for each definition in the spec.
 //! 1. For each left-over API operations, ie those operations that weren't associated with any definition, invoke the [`write_operation`] function.
 
+use templates::{CollectionInfo, CollectionType};
+
 pub mod swagger20;
 
 mod templates;
@@ -273,9 +275,11 @@ pub fn run(
 
 					let mut field_type_name = String::new();
 
+					let field_type_impl_default = does_kind_impl_default(&schema.kind, definitions, map_namespace)?;
+
 					let required = match required {
 						true => templates::PropertyRequired::Required {
-							is_default: is_default(&schema.kind, definitions, map_namespace)?,
+							is_default: does_kind_impl_default(&schema.kind, definitions, map_namespace)?,
 						},
 						false => templates::PropertyRequired::Optional,
 					};
@@ -284,7 +288,13 @@ pub fn run(
 						field_type_name.push_str("Option<");
 					}
 
-					let type_name = get_rust_type(&schema.kind, map_namespace)?;
+					let (type_name, collection_item_type) = get_rust_type(&schema.kind, map_namespace)?;
+					let field_inner_type_name = type_name.to_string();
+
+
+					let collection_item_impls_default = collection_item_type.as_ref().map(|col_item| {
+						does_kind_impl_default(&col_item.items_kind, definitions, map_namespace)
+					}).transpose()?;
 
 					if name.0 == "metadata" {
 						metadata_ty = Some((type_name.clone(), required));
@@ -326,6 +336,10 @@ pub fn run(
 						comment: schema.description.as_deref(),
 						field_name,
 						field_type_name,
+						field_inner_type_name,
+						field_type_impl_default,
+						collection_item_type,
+						collection_item_impls_default,
 						required,
 						is_flattened,
 					});
@@ -647,12 +661,12 @@ pub fn run(
 					can_be_default: None,
 				}),
 				map_namespace,
-			)?;
+			)?.0;
 
 			let error_other_rust_type = get_rust_type(
 				&swagger20::SchemaKind::Ref(raw_extension_ref_path.clone()),
 				map_namespace,
-			)?;
+			)?.0;
 
 			templates::watch_event::generate(
 				&mut out,
@@ -666,7 +680,7 @@ pub fn run(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { metadata }) => {
-			let metadata_rust_type = get_rust_type(metadata, map_namespace)?;
+			let metadata_rust_type = get_rust_type(metadata, map_namespace)?.0;
 
 			let template_generics_where_part = format!("T: {local}ListableResource");
 			let template_generics = templates::Generics {
@@ -680,6 +694,11 @@ pub fn run(
 					comment: Some("List of objects."),
 					field_name: "items".into(),
 					field_type_name: "Vec<T>".to_owned(),
+					field_inner_type_name: "Vec<T>".to_owned(),
+					// no support for DSL-like methods for this one
+					field_type_impl_default: false,
+					collection_item_type: None,
+					collection_item_impls_default: None,
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
 				},
@@ -689,6 +708,11 @@ pub fn run(
 					comment: Some("Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"),
 					field_name: "metadata".into(),
 					field_type_name: (*metadata_rust_type).to_owned(),
+					field_inner_type_name: (*metadata_rust_type).to_owned(),
+					// no support for DSL-like methods for this one
+					field_type_impl_default: false,
+					collection_item_type: None,
+					collection_item_impls_default: None,
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
 				},
@@ -774,7 +798,7 @@ pub fn run(
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
-			let item_type_name = get_rust_type(items, map_namespace)?;
+			let item_type_name = get_rust_type(items, map_namespace)?.0;
 			let alias_type_name = format!("{local}List<{item_type_name}>");
 
 			templates::type_alias::generate(
@@ -824,7 +848,11 @@ pub fn run(
 						name,
 						comment: schema.description.as_deref(),
 						field_name,
+						field_inner_type_name: type_name.to_string(),
+						field_type_impl_default: false,
 						field_type_name,
+						collection_item_type: None,
+						collection_item_impls_default: None,
 						required: templates::PropertyRequired::Optional,
 						is_flattened: false,
 					});
@@ -963,7 +991,7 @@ pub fn run(
 		},
 
 		swagger20::SchemaKind::Ty(_) => {
-			let inner_type_name = get_rust_type(&definition.kind, map_namespace)?;
+			let inner_type_name = get_rust_type(&definition.kind, map_namespace)?.0;
 
 			// Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `chrono::DateTime`
 			// that uses a variable number up to nine.
@@ -1066,6 +1094,7 @@ fn map_namespace_local_to_string(map_namespace: &impl MapNamespace) -> Result<St
 	Ok(result)
 }
 
+
 fn get_derives(
 	kind: &swagger20::SchemaKind,
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
@@ -1107,42 +1136,7 @@ fn get_derives(
 				swagger20::Type::WatchOptional(_)
 			))))?;
 
-	#[allow(clippy::match_same_arms)]
-	let is_default = evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, required| match kind {
-		// Option<T>::default is None regardless of T
-		_ if !required => Ok(true),
-
-		swagger20::SchemaKind::Ref(swagger20::RefPath { can_be_default: Some(can_be_default), .. }) => Ok(*can_be_default),
-
-		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if ref_path.references_scope(map_namespace) => Ok(false),
-
-		// metadata field in resource type created by #[derive(CustomResourceDefinition)]
-		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. })
-			if !ref_path.references_scope(map_namespace) && ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" => Ok(true),
-
-		// Handled by evaluate_trait_bound
-		swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
-
-		// chrono::DateTime<chrono::Utc> is not Default
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
-
-		// Enums without a default value
-		swagger20::SchemaKind::Ty(
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_) |
-			swagger20::Type::Patch |
-			swagger20::Type::WatchEvent(_) |
-			swagger20::Type::CreateResponse |
-			swagger20::Type::DeleteResponse |
-			swagger20::Type::ListResponse |
-			swagger20::Type::PatchResponse |
-			swagger20::Type::ReplaceResponse |
-			swagger20::Type::WatchResponse
-		) => Ok(false),
-
-		_ => Ok(true),
-	})?;
+	let is_default = does_kind_impl_default(kind, definitions, map_namespace)?;
 	let derive_default =
 		is_default &&
 		// IntOrString has a manual Default impl, so don't #[derive] it.
@@ -1193,12 +1187,11 @@ fn get_derives(
 	}))
 }
 
-fn is_default(
+fn does_kind_impl_default(
 	kind: &swagger20::SchemaKind,
 	definitions: &std::collections::BTreeMap<swagger20::DefinitionPath, swagger20::Schema>,
 	map_namespace: &impl MapNamespace,
 ) -> Result<bool, Error> {
-	#[allow(clippy::match_same_arms)]
 	evaluate_trait_bound(kind, false, definitions, map_namespace, |kind, required| match kind {
 		// Option<T>::default is None regardless of T
 		_ if !required => Ok(true),
@@ -1514,7 +1507,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("&{local}serde_json::Value").into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("&[{}]", get_rust_type(&items.kind, map_namespace)?).into()),
+			Ok(format!("&[{}]", get_rust_type(&items.kind, map_namespace)?.0).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1524,16 +1517,16 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
+			Ok(format!("&std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?.0).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
-			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?.0).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
-			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?.0).into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)) =>
-			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
+			Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?.0).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
@@ -1546,7 +1539,7 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => Ok(format!("&{}", get_rust_type(schema_kind, map_namespace)?.0).into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -1567,35 +1560,39 @@ fn get_rust_borrow_type(
 fn get_rust_type(
 	schema_kind: &swagger20::SchemaKind,
 	map_namespace: &impl MapNamespace,
-) -> Result<std::borrow::Cow<'static, str>, Error> {
+) -> Result<(std::borrow::Cow<'static, str>, Option<CollectionInfo<'static>>), Error> {
 	let local = map_namespace_local_to_string(map_namespace)?;
 
 	match schema_kind {
 		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
 		swagger20::SchemaKind::Ref(ref_path) =>
-			Ok(get_fully_qualified_type_name(ref_path, map_namespace).into()),
+			Ok((get_fully_qualified_type_name(ref_path, map_namespace).into(), None)),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("{local}serde_json::Value").into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok((format!("{local}serde_json::Value").into(), None)),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-			Ok(format!("Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) => {
+			let items_type = get_rust_type(&items.kind, map_namespace)?.0;
+			Ok((format!("Vec<{}>", items_type).into(), Some(CollectionInfo { items_type, items_kind: items.kind.clone(), type_: CollectionType::Vec })))
+		},
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok(("bool".into(), None)),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => Ok("i32".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => Ok("i64".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => Ok(("i32".into(), None)),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => Ok(("i64".into(), None)),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok(("f64".into(), None)),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) => {
+			let items_type = get_rust_type(&additional_properties.kind, map_namespace)?.0;
+			Ok((format!("std::collections::BTreeMap<String, {}>", items_type).into(), Some(CollectionInfo{ items_type, items_kind: additional_properties.kind.clone(), type_: CollectionType::Map  })))
+		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
-			Ok(format!("{local}ByteString").into()),
+			Ok((format!("{local}ByteString").into(), None)),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
-			Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>").into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
+			Ok((format!("{local}chrono::DateTime<{local}chrono::Utc>").into(), None)),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok(("String".into(), None)),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {
 			let namespace_parts =
@@ -1610,7 +1607,7 @@ fn get_rust_type(
 				result.push_str("::");
 			}
 			result.push_str("CustomResourceSubresources");
-			Ok(result.into())
+			Ok((result.into(), None))
 		},
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
@@ -1625,7 +1622,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::ListDef { .. }) => Err("ListDef type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) =>
-			Ok(format!("{local}List<{}>", get_rust_type(items, map_namespace)?).into()),
+			Ok((format!("{local}List<{}>", get_rust_type(items, map_namespace)?.0).into(), None)),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::CreateOptional(_)) => Err("CreateOptional type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::DeleteOptional(_)) => Err("DeleteOptional type not supported".into()),
@@ -2067,7 +2064,7 @@ pub fn write_operation(
 				false
 			};
 		if is_patch {
-			let patch_type = get_rust_type(&parameter.schema.kind, map_namespace)?;
+			let patch_type = get_rust_type(&parameter.schema.kind, map_namespace)?.0;
 			writeln!(out,
 				"{indent}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static(match {parameter_name} {{")?;
 			writeln!(out, r#"{indent}        {patch_type}::Json(_) => "application/json-patch+json","#)?;
@@ -2195,7 +2192,7 @@ pub fn write_operation(
 			let operation_responses = operation_responses?;
 
 			for &(_, variant_name, schema) in &operation_responses {
-				writeln!(out, "    {variant_name}({}),", get_rust_type(&schema.kind, map_namespace)?)?;
+				writeln!(out, "    {variant_name}({}),", get_rust_type(&schema.kind, map_namespace)?.0)?;
 			}
 
 			writeln!(out, "    Other(Result<Option<{local}serde_json::Value>, {local}serde_json::Error>),")?;

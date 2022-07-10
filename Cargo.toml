@@ -51,6 +51,8 @@ default = ["api"]
 
 api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
 
+dsl = [] # Enables extra build-pattern DSL-like methods to make customizing resources in Rust code more convenient. Adds extra build time.
+
 # Each feature corresponds to a supported version of Kubernetes
 v1_18 = []
 v1_19 = []

@@ -1,3 +1,5 @@
+use crate::swagger20::SchemaKind;
+
 pub(crate) mod impl_deserialize;
 
 pub(crate) mod impl_listable_resource;
@@ -41,8 +43,29 @@ pub(crate) struct Property<'a> {
 	pub(crate) comment: Option<&'a str>,
 	pub(crate) field_name: std::borrow::Cow<'static, str>,
 	pub(crate) field_type_name: String,
+	pub(crate) field_inner_type_name: String,
+	/// Irrespective of this field being required or not (ignore the wrapping `Optional` if present), does it have a `Default` implemented?
+	pub(crate) field_type_impl_default: bool,
+	pub(crate) collection_item_type: Option<CollectionInfo<'a>>,
+	/// If `collection_item_type` is true, it must contain `Some` with `Default` for the time element
+	// Kept separately to avoid having to refactor the code too much, since it's calculate from `collection_item_type`
+	// somewhat later.
+	pub(crate) collection_item_impls_default: Option<bool>,
 	pub(crate) required: PropertyRequired,
 	pub(crate) is_flattened: bool,
+}
+
+#[derive(Clone)]
+pub(crate) struct CollectionInfo<'a> {
+	pub(crate) items_type: std::borrow::Cow<'a, str>,
+	pub(crate) items_kind: SchemaKind,
+	pub(crate) type_: CollectionType,
+}
+
+#[derive(Clone)]
+pub(crate) enum CollectionType {
+	Vec,
+	Map,
 }
 
 #[derive(Clone, Copy)]

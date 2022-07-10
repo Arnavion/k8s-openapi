@@ -43,7 +43,7 @@ pub(crate) fn generate(
 	Ok(())
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub(crate) struct Derives {
 	pub(crate) clone: bool,
 	pub(crate) copy: bool,
