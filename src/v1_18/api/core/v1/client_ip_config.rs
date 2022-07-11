@@ -5,7 +5,32 @@
 pub struct ClientIPConfig {
     /// timeoutSeconds specifies the seconds of ClientIP type session sticky time. The value must be \>0 && \<=86400(for 1 day) if ServiceAffinity == "ClientIP". Default value is 10800(for 3 hours).
     pub timeout_seconds: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ClientIPConfig  {
+    /// Set [`Self::timeout_seconds`]
+    pub  fn timeout_seconds_set(&mut self, timeout_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.timeout_seconds = timeout_seconds.into(); self
+    }
+
+    pub  fn timeout_seconds(&mut self) -> &mut i32 {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) }
+        self.timeout_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::timeout_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn timeout_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) };
+        func(self.timeout_seconds.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ClientIPConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

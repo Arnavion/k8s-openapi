@@ -15,7 +15,85 @@ pub struct EndpointPort {
     /// The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
     ///
     pub protocol: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointPort  {
+    /// Set [`Self::app_protocol`]
+    pub  fn app_protocol_set(&mut self, app_protocol: impl Into<Option<String>>) -> &mut Self {
+        self.app_protocol = app_protocol.into(); self
+    }
+
+    pub  fn app_protocol(&mut self) -> &mut String {
+        if self.app_protocol.is_none() { self.app_protocol = Some(Default::default()) }
+        self.app_protocol.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::app_protocol`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn app_protocol_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.app_protocol.is_none() { self.app_protocol = Some(Default::default()) };
+        func(self.app_protocol.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<i32>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+    /// Set [`Self::protocol`]
+    pub  fn protocol_set(&mut self, protocol: impl Into<Option<String>>) -> &mut Self {
+        self.protocol = protocol.into(); self
+    }
+
+    pub  fn protocol(&mut self) -> &mut String {
+        if self.protocol.is_none() { self.protocol = Some(Default::default()) }
+        self.protocol.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::protocol`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn protocol_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.protocol.is_none() { self.protocol = Some(Default::default()) };
+        func(self.protocol.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

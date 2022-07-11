@@ -20,7 +20,119 @@ pub struct VolumeMount {
 
     /// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
     pub sub_path_expr: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeMount  {
+    /// Set [`Self::mount_path`]
+    pub  fn mount_path_set(&mut self, mount_path: impl Into<String>) -> &mut Self {
+        self.mount_path = mount_path.into(); self
+    }
+
+    pub  fn mount_path(&mut self) -> &mut String {
+        &mut self.mount_path
+    }
+
+    /// Modify [`Self::mount_path`] with a `func`
+    pub  fn mount_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.mount_path); self
+    }
+
+
+    /// Set [`Self::mount_propagation`]
+    pub  fn mount_propagation_set(&mut self, mount_propagation: impl Into<Option<String>>) -> &mut Self {
+        self.mount_propagation = mount_propagation.into(); self
+    }
+
+    pub  fn mount_propagation(&mut self) -> &mut String {
+        if self.mount_propagation.is_none() { self.mount_propagation = Some(Default::default()) }
+        self.mount_propagation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::mount_propagation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn mount_propagation_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.mount_propagation.is_none() { self.mount_propagation = Some(Default::default()) };
+        func(self.mount_propagation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::sub_path`]
+    pub  fn sub_path_set(&mut self, sub_path: impl Into<Option<String>>) -> &mut Self {
+        self.sub_path = sub_path.into(); self
+    }
+
+    pub  fn sub_path(&mut self) -> &mut String {
+        if self.sub_path.is_none() { self.sub_path = Some(Default::default()) }
+        self.sub_path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::sub_path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn sub_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.sub_path.is_none() { self.sub_path = Some(Default::default()) };
+        func(self.sub_path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::sub_path_expr`]
+    pub  fn sub_path_expr_set(&mut self, sub_path_expr: impl Into<Option<String>>) -> &mut Self {
+        self.sub_path_expr = sub_path_expr.into(); self
+    }
+
+    pub  fn sub_path_expr(&mut self) -> &mut String {
+        if self.sub_path_expr.is_none() { self.sub_path_expr = Some(Default::default()) }
+        self.sub_path_expr.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::sub_path_expr`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn sub_path_expr_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.sub_path_expr.is_none() { self.sub_path_expr = Some(Default::default()) };
+        func(self.sub_path_expr.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,46 @@
 pub struct HTTPIngressRuleValue {
     /// A collection of paths that map requests to backends.
     pub paths: Vec<crate::api::networking::v1::HTTPIngressPath>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HTTPIngressRuleValue  {
+    /// Set [`Self::paths`]
+    pub  fn paths_set(&mut self, paths: impl Into<Vec<crate::api::networking::v1::HTTPIngressPath>>) -> &mut Self {
+        self.paths = paths.into(); self
+    }
+
+    pub  fn paths(&mut self) -> &mut Vec<crate::api::networking::v1::HTTPIngressPath> {
+        &mut self.paths
+    }
+
+    /// Modify [`Self::paths`] with a `func`
+    pub  fn paths_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1::HTTPIngressPath>)) -> &mut Self {
+        func(&mut self.paths); self
+    }
+
+    /// Push new element to [`Self::paths`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn paths_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::HTTPIngressPath)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.paths.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::paths`]
+    pub  fn paths_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1::HTTPIngressPath]>) -> &mut Self {
+         for item in other.borrow() {
+             self.paths.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HTTPIngressRuleValue {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

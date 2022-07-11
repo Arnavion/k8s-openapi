@@ -33,7 +33,230 @@ pub struct PodSecurityContext {
 
     /// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodSecurityContext  {
+    /// Set [`Self::fs_group`]
+    pub  fn fs_group_set(&mut self, fs_group: impl Into<Option<i64>>) -> &mut Self {
+        self.fs_group = fs_group.into(); self
+    }
+
+    pub  fn fs_group(&mut self) -> &mut i64 {
+        if self.fs_group.is_none() { self.fs_group = Some(Default::default()) }
+        self.fs_group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_group_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.fs_group.is_none() { self.fs_group = Some(Default::default()) };
+        func(self.fs_group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::fs_group_change_policy`]
+    pub  fn fs_group_change_policy_set(&mut self, fs_group_change_policy: impl Into<Option<String>>) -> &mut Self {
+        self.fs_group_change_policy = fs_group_change_policy.into(); self
+    }
+
+    pub  fn fs_group_change_policy(&mut self) -> &mut String {
+        if self.fs_group_change_policy.is_none() { self.fs_group_change_policy = Some(Default::default()) }
+        self.fs_group_change_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_group_change_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_group_change_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_group_change_policy.is_none() { self.fs_group_change_policy = Some(Default::default()) };
+        func(self.fs_group_change_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::run_as_group`]
+    pub  fn run_as_group_set(&mut self, run_as_group: impl Into<Option<i64>>) -> &mut Self {
+        self.run_as_group = run_as_group.into(); self
+    }
+
+    pub  fn run_as_group(&mut self) -> &mut i64 {
+        if self.run_as_group.is_none() { self.run_as_group = Some(Default::default()) }
+        self.run_as_group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::run_as_group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn run_as_group_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.run_as_group.is_none() { self.run_as_group = Some(Default::default()) };
+        func(self.run_as_group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::run_as_non_root`]
+    pub  fn run_as_non_root_set(&mut self, run_as_non_root: impl Into<Option<bool>>) -> &mut Self {
+        self.run_as_non_root = run_as_non_root.into(); self
+    }
+
+    pub  fn run_as_non_root(&mut self) -> &mut bool {
+        if self.run_as_non_root.is_none() { self.run_as_non_root = Some(Default::default()) }
+        self.run_as_non_root.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::run_as_non_root`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn run_as_non_root_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.run_as_non_root.is_none() { self.run_as_non_root = Some(Default::default()) };
+        func(self.run_as_non_root.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::run_as_user`]
+    pub  fn run_as_user_set(&mut self, run_as_user: impl Into<Option<i64>>) -> &mut Self {
+        self.run_as_user = run_as_user.into(); self
+    }
+
+    pub  fn run_as_user(&mut self) -> &mut i64 {
+        if self.run_as_user.is_none() { self.run_as_user = Some(Default::default()) }
+        self.run_as_user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::run_as_user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn run_as_user_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.run_as_user.is_none() { self.run_as_user = Some(Default::default()) };
+        func(self.run_as_user.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::se_linux_options`]
+    pub  fn se_linux_options_set(&mut self, se_linux_options: impl Into<Option<crate::api::core::v1::SELinuxOptions>>) -> &mut Self {
+        self.se_linux_options = se_linux_options.into(); self
+    }
+
+    pub  fn se_linux_options(&mut self) -> &mut crate::api::core::v1::SELinuxOptions {
+        if self.se_linux_options.is_none() { self.se_linux_options = Some(Default::default()) }
+        self.se_linux_options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::se_linux_options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn se_linux_options_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SELinuxOptions)) -> &mut Self {
+        if self.se_linux_options.is_none() { self.se_linux_options = Some(Default::default()) };
+        func(self.se_linux_options.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::supplemental_groups`]
+    pub  fn supplemental_groups_set(&mut self, supplemental_groups: impl Into<Option<Vec<i64>>>) -> &mut Self {
+        self.supplemental_groups = supplemental_groups.into(); self
+    }
+
+    pub  fn supplemental_groups(&mut self) -> &mut Vec<i64> {
+        if self.supplemental_groups.is_none() { self.supplemental_groups = Some(Default::default()) }
+        self.supplemental_groups.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::supplemental_groups`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn supplemental_groups_with(&mut self, func: impl FnOnce(&mut Vec<i64>)) -> &mut Self {
+        if self.supplemental_groups.is_none() { self.supplemental_groups = Some(Default::default()) };
+        func(self.supplemental_groups.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::supplemental_groups`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn supplemental_groups_push_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.supplemental_groups.is_none() {
+            self.supplemental_groups = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.supplemental_groups.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::supplemental_groups`]
+    pub  fn supplemental_groups_append_from(&mut self, other: impl std::borrow::Borrow<[i64]>) -> &mut Self {
+         if self.supplemental_groups.is_none() { self.supplemental_groups = Some(Vec::new()); }
+         let supplemental_groups = &mut self.supplemental_groups.as_mut().unwrap();
+         for item in other.borrow() {
+             supplemental_groups.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::sysctls`]
+    pub  fn sysctls_set(&mut self, sysctls: impl Into<Option<Vec<crate::api::core::v1::Sysctl>>>) -> &mut Self {
+        self.sysctls = sysctls.into(); self
+    }
+
+    pub  fn sysctls(&mut self) -> &mut Vec<crate::api::core::v1::Sysctl> {
+        if self.sysctls.is_none() { self.sysctls = Some(Default::default()) }
+        self.sysctls.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::sysctls`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn sysctls_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::Sysctl>)) -> &mut Self {
+        if self.sysctls.is_none() { self.sysctls = Some(Default::default()) };
+        func(self.sysctls.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::sysctls`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn sysctls_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Sysctl)) -> &mut Self {
+        if self.sysctls.is_none() {
+            self.sysctls = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.sysctls.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::sysctls`]
+    pub  fn sysctls_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::Sysctl]>) -> &mut Self {
+         if self.sysctls.is_none() { self.sysctls = Some(Vec::new()); }
+         let sysctls = &mut self.sysctls.as_mut().unwrap();
+         for item in other.borrow() {
+             sysctls.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::windows_options`]
+    pub  fn windows_options_set(&mut self, windows_options: impl Into<Option<crate::api::core::v1::WindowsSecurityContextOptions>>) -> &mut Self {
+        self.windows_options = windows_options.into(); self
+    }
+
+    pub  fn windows_options(&mut self) -> &mut crate::api::core::v1::WindowsSecurityContextOptions {
+        if self.windows_options.is_none() { self.windows_options = Some(Default::default()) }
+        self.windows_options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::windows_options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn windows_options_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::WindowsSecurityContextOptions)) -> &mut Self {
+        if self.windows_options.is_none() { self.windows_options = Some(Default::default()) };
+        func(self.windows_options.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

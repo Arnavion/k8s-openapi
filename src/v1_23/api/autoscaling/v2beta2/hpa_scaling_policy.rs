@@ -11,7 +11,58 @@ pub struct HPAScalingPolicy {
 
     /// Value contains the amount of change which is permitted by the policy. It must be greater than zero
     pub value: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HPAScalingPolicy  {
+    /// Set [`Self::period_seconds`]
+    pub  fn period_seconds_set(&mut self, period_seconds: impl Into<i32>) -> &mut Self {
+        self.period_seconds = period_seconds.into(); self
+    }
+
+    pub  fn period_seconds(&mut self) -> &mut i32 {
+        &mut self.period_seconds
+    }
+
+    /// Modify [`Self::period_seconds`] with a `func`
+    pub  fn period_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.period_seconds); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<i32>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut i32 {
+        &mut self.value
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.value); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HPAScalingPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

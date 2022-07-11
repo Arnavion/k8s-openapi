@@ -9,7 +9,25 @@ pub struct ReplaceOptional<'a> {
 
     /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
     pub field_manager: Option<&'a str>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<'a> ReplaceOptional<'a>  {
+    /// Set [`Self::dry_run`]
+    pub  fn dry_run_set(&mut self, dry_run: impl Into<Option<&'a str>>) -> &mut Self {
+        self.dry_run = dry_run.into(); self
+    }
+
+
+    /// Set [`Self::field_manager`]
+    pub  fn field_manager_set(&mut self, field_manager: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_manager = field_manager.into(); self
+    }
+
+
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> ReplaceOptional<'a> {

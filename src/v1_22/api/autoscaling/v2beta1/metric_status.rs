@@ -20,7 +20,123 @@ pub struct MetricStatus {
 
     /// type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl MetricStatus  {
+    /// Set [`Self::container_resource`]
+    pub  fn container_resource_set(&mut self, container_resource: impl Into<Option<crate::api::autoscaling::v2beta1::ContainerResourceMetricStatus>>) -> &mut Self {
+        self.container_resource = container_resource.into(); self
+    }
+
+    pub  fn container_resource(&mut self) -> &mut crate::api::autoscaling::v2beta1::ContainerResourceMetricStatus {
+        if self.container_resource.is_none() { self.container_resource = Some(Default::default()) }
+        self.container_resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::container_resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn container_resource_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::ContainerResourceMetricStatus)) -> &mut Self {
+        if self.container_resource.is_none() { self.container_resource = Some(Default::default()) };
+        func(self.container_resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::external`]
+    pub  fn external_set(&mut self, external: impl Into<Option<crate::api::autoscaling::v2beta1::ExternalMetricStatus>>) -> &mut Self {
+        self.external = external.into(); self
+    }
+
+    pub  fn external(&mut self) -> &mut crate::api::autoscaling::v2beta1::ExternalMetricStatus {
+        if self.external.is_none() { self.external = Some(Default::default()) }
+        self.external.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::ExternalMetricStatus)) -> &mut Self {
+        if self.external.is_none() { self.external = Some(Default::default()) };
+        func(self.external.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::object`]
+    pub  fn object_set(&mut self, object: impl Into<Option<crate::api::autoscaling::v2beta1::ObjectMetricStatus>>) -> &mut Self {
+        self.object = object.into(); self
+    }
+
+    pub  fn object(&mut self) -> &mut crate::api::autoscaling::v2beta1::ObjectMetricStatus {
+        if self.object.is_none() { self.object = Some(Default::default()) }
+        self.object.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::object`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn object_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::ObjectMetricStatus)) -> &mut Self {
+        if self.object.is_none() { self.object = Some(Default::default()) };
+        func(self.object.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pods`]
+    pub  fn pods_set(&mut self, pods: impl Into<Option<crate::api::autoscaling::v2beta1::PodsMetricStatus>>) -> &mut Self {
+        self.pods = pods.into(); self
+    }
+
+    pub  fn pods(&mut self) -> &mut crate::api::autoscaling::v2beta1::PodsMetricStatus {
+        if self.pods.is_none() { self.pods = Some(Default::default()) }
+        self.pods.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pods`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pods_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::PodsMetricStatus)) -> &mut Self {
+        if self.pods.is_none() { self.pods = Some(Default::default()) };
+        func(self.pods.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resource`]
+    pub  fn resource_set(&mut self, resource: impl Into<Option<crate::api::autoscaling::v2beta1::ResourceMetricStatus>>) -> &mut Self {
+        self.resource = resource.into(); self
+    }
+
+    pub  fn resource(&mut self) -> &mut crate::api::autoscaling::v2beta1::ResourceMetricStatus {
+        if self.resource.is_none() { self.resource = Some(Default::default()) }
+        self.resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::ResourceMetricStatus)) -> &mut Self {
+        if self.resource.is_none() { self.resource = Some(Default::default()) };
+        func(self.resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

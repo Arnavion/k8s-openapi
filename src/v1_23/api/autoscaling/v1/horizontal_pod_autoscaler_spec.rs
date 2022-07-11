@@ -14,7 +14,81 @@ pub struct HorizontalPodAutoscalerSpec {
 
     /// target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.
     pub target_cpu_utilization_percentage: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HorizontalPodAutoscalerSpec  {
+    /// Set [`Self::max_replicas`]
+    pub  fn max_replicas_set(&mut self, max_replicas: impl Into<i32>) -> &mut Self {
+        self.max_replicas = max_replicas.into(); self
+    }
+
+    pub  fn max_replicas(&mut self) -> &mut i32 {
+        &mut self.max_replicas
+    }
+
+    /// Modify [`Self::max_replicas`] with a `func`
+    pub  fn max_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.max_replicas); self
+    }
+
+
+    /// Set [`Self::min_replicas`]
+    pub  fn min_replicas_set(&mut self, min_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.min_replicas = min_replicas.into(); self
+    }
+
+    pub  fn min_replicas(&mut self) -> &mut i32 {
+        if self.min_replicas.is_none() { self.min_replicas = Some(Default::default()) }
+        self.min_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_replicas.is_none() { self.min_replicas = Some(Default::default()) };
+        func(self.min_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scale_target_ref`]
+    pub  fn scale_target_ref_set(&mut self, scale_target_ref: impl Into<crate::api::autoscaling::v1::CrossVersionObjectReference>) -> &mut Self {
+        self.scale_target_ref = scale_target_ref.into(); self
+    }
+
+    pub  fn scale_target_ref(&mut self) -> &mut crate::api::autoscaling::v1::CrossVersionObjectReference {
+        &mut self.scale_target_ref
+    }
+
+    /// Modify [`Self::scale_target_ref`] with a `func`
+    pub  fn scale_target_ref_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v1::CrossVersionObjectReference)) -> &mut Self {
+        func(&mut self.scale_target_ref); self
+    }
+
+
+    /// Set [`Self::target_cpu_utilization_percentage`]
+    pub  fn target_cpu_utilization_percentage_set(&mut self, target_cpu_utilization_percentage: impl Into<Option<i32>>) -> &mut Self {
+        self.target_cpu_utilization_percentage = target_cpu_utilization_percentage.into(); self
+    }
+
+    pub  fn target_cpu_utilization_percentage(&mut self) -> &mut i32 {
+        if self.target_cpu_utilization_percentage.is_none() { self.target_cpu_utilization_percentage = Some(Default::default()) }
+        self.target_cpu_utilization_percentage.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_cpu_utilization_percentage`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_cpu_utilization_percentage_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.target_cpu_utilization_percentage.is_none() { self.target_cpu_utilization_percentage = Some(Default::default()) };
+        func(self.target_cpu_utilization_percentage.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

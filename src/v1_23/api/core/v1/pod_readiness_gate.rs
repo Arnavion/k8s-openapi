@@ -5,7 +5,28 @@
 pub struct PodReadinessGate {
     /// ConditionType refers to a condition in the pod's condition list with matching type.
     pub condition_type: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodReadinessGate  {
+    /// Set [`Self::condition_type`]
+    pub  fn condition_type_set(&mut self, condition_type: impl Into<String>) -> &mut Self {
+        self.condition_type = condition_type.into(); self
+    }
+
+    pub  fn condition_type(&mut self) -> &mut String {
+        &mut self.condition_type
+    }
+
+    /// Modify [`Self::condition_type`] with a `func`
+    pub  fn condition_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.condition_type); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodReadinessGate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

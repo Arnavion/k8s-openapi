@@ -19,7 +19,70 @@ pub struct Endpoints {
 
     /// The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
     pub subsets: Option<Vec<crate::api::core::v1::EndpointSubset>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Endpoints  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::subsets`]
+    pub  fn subsets_set(&mut self, subsets: impl Into<Option<Vec<crate::api::core::v1::EndpointSubset>>>) -> &mut Self {
+        self.subsets = subsets.into(); self
+    }
+
+    pub  fn subsets(&mut self) -> &mut Vec<crate::api::core::v1::EndpointSubset> {
+        if self.subsets.is_none() { self.subsets = Some(Default::default()) }
+        self.subsets.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::subsets`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn subsets_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EndpointSubset>)) -> &mut Self {
+        if self.subsets.is_none() { self.subsets = Some(Default::default()) };
+        func(self.subsets.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::subsets`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn subsets_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EndpointSubset)) -> &mut Self {
+        if self.subsets.is_none() {
+            self.subsets = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.subsets.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::subsets`]
+    pub  fn subsets_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EndpointSubset]>) -> &mut Self {
+         if self.subsets.is_none() { self.subsets = Some(Vec::new()); }
+         let subsets = &mut self.subsets.as_mut().unwrap();
+         for item in other.borrow() {
+             subsets.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin /v1/Endpoints
 

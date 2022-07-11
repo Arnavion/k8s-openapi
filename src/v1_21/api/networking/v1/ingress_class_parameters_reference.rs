@@ -17,7 +17,100 @@ pub struct IngressClassParametersReference {
 
     /// Scope represents if this refers to a cluster or namespace scoped resource. This may be set to "Cluster" (default) or "Namespace". Field can be enabled with IngressClassNamespacedParams feature gate.
     pub scope: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressClassParametersReference  {
+    /// Set [`Self::api_group`]
+    pub  fn api_group_set(&mut self, api_group: impl Into<Option<String>>) -> &mut Self {
+        self.api_group = api_group.into(); self
+    }
+
+    pub  fn api_group(&mut self) -> &mut String {
+        if self.api_group.is_none() { self.api_group = Some(Default::default()) }
+        self.api_group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_group.is_none() { self.api_group = Some(Default::default()) };
+        func(self.api_group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<Option<String>>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) }
+        self.namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) };
+        func(self.namespace.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scope`]
+    pub  fn scope_set(&mut self, scope: impl Into<Option<String>>) -> &mut Self {
+        self.scope = scope.into(); self
+    }
+
+    pub  fn scope(&mut self) -> &mut String {
+        if self.scope.is_none() { self.scope = Some(Default::default()) }
+        self.scope.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scope`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scope_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.scope.is_none() { self.scope = Some(Default::default()) };
+        func(self.scope.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressClassParametersReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

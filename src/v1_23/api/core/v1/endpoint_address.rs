@@ -14,7 +14,85 @@ pub struct EndpointAddress {
 
     /// Reference to object providing the endpoint.
     pub target_ref: Option<crate::api::core::v1::ObjectReference>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointAddress  {
+    /// Set [`Self::hostname`]
+    pub  fn hostname_set(&mut self, hostname: impl Into<Option<String>>) -> &mut Self {
+        self.hostname = hostname.into(); self
+    }
+
+    pub  fn hostname(&mut self) -> &mut String {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) }
+        self.hostname.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostname`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostname_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) };
+        func(self.hostname.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ip`]
+    pub  fn ip_set(&mut self, ip: impl Into<String>) -> &mut Self {
+        self.ip = ip.into(); self
+    }
+
+    pub  fn ip(&mut self) -> &mut String {
+        &mut self.ip
+    }
+
+    /// Modify [`Self::ip`] with a `func`
+    pub  fn ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.ip); self
+    }
+
+
+    /// Set [`Self::node_name`]
+    pub  fn node_name_set(&mut self, node_name: impl Into<Option<String>>) -> &mut Self {
+        self.node_name = node_name.into(); self
+    }
+
+    pub  fn node_name(&mut self) -> &mut String {
+        if self.node_name.is_none() { self.node_name = Some(Default::default()) }
+        self.node_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.node_name.is_none() { self.node_name = Some(Default::default()) };
+        func(self.node_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_ref`]
+    pub  fn target_ref_set(&mut self, target_ref: impl Into<Option<crate::api::core::v1::ObjectReference>>) -> &mut Self {
+        self.target_ref = target_ref.into(); self
+    }
+
+    pub  fn target_ref(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) }
+        self.target_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) };
+        func(self.target_ref.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

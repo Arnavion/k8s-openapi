@@ -13,7 +13,62 @@ pub struct VolumeAttachment {
 
     /// Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.
     pub status: Option<crate::api::storage::v1beta1::VolumeAttachmentStatus>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeAttachment  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::storage::v1beta1::VolumeAttachmentSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::storage::v1beta1::VolumeAttachmentSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1beta1::VolumeAttachmentSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<Option<crate::api::storage::v1beta1::VolumeAttachmentStatus>>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut crate::api::storage::v1beta1::VolumeAttachmentStatus {
+        if self.status.is_none() { self.status = Some(Default::default()) }
+        self.status.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1beta1::VolumeAttachmentStatus)) -> &mut Self {
+        if self.status.is_none() { self.status = Some(Default::default()) };
+        func(self.status.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin storage.k8s.io/v1beta1/VolumeAttachment
 

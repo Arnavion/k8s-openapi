@@ -8,7 +8,74 @@ pub struct TokenReviewSpec {
 
     /// Token is the opaque bearer token.
     pub token: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenReviewSpec  {
+    /// Set [`Self::audiences`]
+    pub  fn audiences_set(&mut self, audiences: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.audiences = audiences.into(); self
+    }
+
+    pub  fn audiences(&mut self) -> &mut Vec<String> {
+        if self.audiences.is_none() { self.audiences = Some(Default::default()) }
+        self.audiences.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::audiences`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn audiences_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.audiences.is_none() { self.audiences = Some(Default::default()) };
+        func(self.audiences.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::audiences`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn audiences_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.audiences.is_none() {
+            self.audiences = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.audiences.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::audiences`]
+    pub  fn audiences_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.audiences.is_none() { self.audiences = Some(Vec::new()); }
+         let audiences = &mut self.audiences.as_mut().unwrap();
+         for item in other.borrow() {
+             audiences.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::token`]
+    pub  fn token_set(&mut self, token: impl Into<Option<String>>) -> &mut Self {
+        self.token = token.into(); self
+    }
+
+    pub  fn token(&mut self) -> &mut String {
+        if self.token.is_none() { self.token = Some(Default::default()) }
+        self.token.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::token`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn token_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.token.is_none() { self.token = Some(Default::default()) };
+        func(self.token.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenReviewSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

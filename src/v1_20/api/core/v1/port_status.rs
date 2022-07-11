@@ -13,7 +13,62 @@ pub struct PortStatus {
 
     /// Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
     pub protocol: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PortStatus  {
+    /// Set [`Self::error`]
+    pub  fn error_set(&mut self, error: impl Into<Option<String>>) -> &mut Self {
+        self.error = error.into(); self
+    }
+
+    pub  fn error(&mut self) -> &mut String {
+        if self.error.is_none() { self.error = Some(Default::default()) }
+        self.error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn error_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.error.is_none() { self.error = Some(Default::default()) };
+        func(self.error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<i32>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+    /// Set [`Self::protocol`]
+    pub  fn protocol_set(&mut self, protocol: impl Into<String>) -> &mut Self {
+        self.protocol = protocol.into(); self
+    }
+
+    pub  fn protocol(&mut self) -> &mut String {
+        &mut self.protocol
+    }
+
+    /// Modify [`Self::protocol`] with a `func`
+    pub  fn protocol_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.protocol); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PortStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

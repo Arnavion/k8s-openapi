@@ -8,7 +8,43 @@ pub struct List<T> where T: crate::ListableResource {
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ListMeta,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<T> List<T>  where T: crate::ListableResource {
+    /// Set [`Self::items`]
+    pub  fn items_set(&mut self, items: impl Into<Vec<T>>) -> &mut Self {
+        self.items = items.into(); self
+    }
+
+    pub  fn items(&mut self) -> &mut Vec<T> {
+        &mut self.items
+    }
+
+    /// Modify [`Self::items`] with a `func`
+    pub  fn items_with(&mut self, func: impl FnOnce(&mut Vec<T>)) -> &mut Self {
+        func(&mut self.items); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ListMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ListMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ListMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+}
+
 
 impl<T> crate::Resource for List<T> where T: crate::ListableResource {
     const API_VERSION: &'static str = <T as crate::Resource>::API_VERSION;

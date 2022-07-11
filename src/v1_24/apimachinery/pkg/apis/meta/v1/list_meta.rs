@@ -14,7 +14,89 @@ pub struct ListMeta {
 
     /// Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
     pub self_link: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ListMeta  {
+    /// Set [`Self::continue_`]
+    pub  fn continue_set(&mut self, continue_: impl Into<Option<String>>) -> &mut Self {
+        self.continue_ = continue_.into(); self
+    }
+
+    pub  fn continue_(&mut self) -> &mut String {
+        if self.continue_.is_none() { self.continue_ = Some(Default::default()) }
+        self.continue_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::continue_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn continue_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.continue_.is_none() { self.continue_ = Some(Default::default()) };
+        func(self.continue_.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::remaining_item_count`]
+    pub  fn remaining_item_count_set(&mut self, remaining_item_count: impl Into<Option<i64>>) -> &mut Self {
+        self.remaining_item_count = remaining_item_count.into(); self
+    }
+
+    pub  fn remaining_item_count(&mut self) -> &mut i64 {
+        if self.remaining_item_count.is_none() { self.remaining_item_count = Some(Default::default()) }
+        self.remaining_item_count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::remaining_item_count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn remaining_item_count_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.remaining_item_count.is_none() { self.remaining_item_count = Some(Default::default()) };
+        func(self.remaining_item_count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resource_version`]
+    pub  fn resource_version_set(&mut self, resource_version: impl Into<Option<String>>) -> &mut Self {
+        self.resource_version = resource_version.into(); self
+    }
+
+    pub  fn resource_version(&mut self) -> &mut String {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) }
+        self.resource_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) };
+        func(self.resource_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::self_link`]
+    pub  fn self_link_set(&mut self, self_link: impl Into<Option<String>>) -> &mut Self {
+        self.self_link = self_link.into(); self
+    }
+
+    pub  fn self_link(&mut self) -> &mut String {
+        if self.self_link.is_none() { self.self_link = Some(Default::default()) }
+        self.self_link.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::self_link`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn self_link_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.self_link.is_none() { self.self_link = Some(Default::default()) };
+        func(self.self_link.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ListMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

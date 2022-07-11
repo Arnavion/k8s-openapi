@@ -17,7 +17,200 @@ pub struct PodPresetSpec {
 
     /// Volumes defines the collection of Volume to inject into the pod.
     pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodPresetSpec  {
+    /// Set [`Self::env`]
+    pub  fn env_set(&mut self, env: impl Into<Option<Vec<crate::api::core::v1::EnvVar>>>) -> &mut Self {
+        self.env = env.into(); self
+    }
+
+    pub  fn env(&mut self) -> &mut Vec<crate::api::core::v1::EnvVar> {
+        if self.env.is_none() { self.env = Some(Default::default()) }
+        self.env.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::env`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn env_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EnvVar>)) -> &mut Self {
+        if self.env.is_none() { self.env = Some(Default::default()) };
+        func(self.env.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::env`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn env_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EnvVar)) -> &mut Self {
+        if self.env.is_none() {
+            self.env = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.env.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::env`]
+    pub  fn env_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EnvVar]>) -> &mut Self {
+         if self.env.is_none() { self.env = Some(Vec::new()); }
+         let env = &mut self.env.as_mut().unwrap();
+         for item in other.borrow() {
+             env.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::env_from`]
+    pub  fn env_from_set(&mut self, env_from: impl Into<Option<Vec<crate::api::core::v1::EnvFromSource>>>) -> &mut Self {
+        self.env_from = env_from.into(); self
+    }
+
+    pub  fn env_from(&mut self) -> &mut Vec<crate::api::core::v1::EnvFromSource> {
+        if self.env_from.is_none() { self.env_from = Some(Default::default()) }
+        self.env_from.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::env_from`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn env_from_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EnvFromSource>)) -> &mut Self {
+        if self.env_from.is_none() { self.env_from = Some(Default::default()) };
+        func(self.env_from.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::env_from`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn env_from_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EnvFromSource)) -> &mut Self {
+        if self.env_from.is_none() {
+            self.env_from = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.env_from.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::env_from`]
+    pub  fn env_from_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EnvFromSource]>) -> &mut Self {
+         if self.env_from.is_none() { self.env_from = Some(Vec::new()); }
+         let env_from = &mut self.env_from.as_mut().unwrap();
+         for item in other.borrow() {
+             env_from.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_mounts`]
+    pub  fn volume_mounts_set(&mut self, volume_mounts: impl Into<Option<Vec<crate::api::core::v1::VolumeMount>>>) -> &mut Self {
+        self.volume_mounts = volume_mounts.into(); self
+    }
+
+    pub  fn volume_mounts(&mut self) -> &mut Vec<crate::api::core::v1::VolumeMount> {
+        if self.volume_mounts.is_none() { self.volume_mounts = Some(Default::default()) }
+        self.volume_mounts.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_mounts`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_mounts_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::VolumeMount>)) -> &mut Self {
+        if self.volume_mounts.is_none() { self.volume_mounts = Some(Default::default()) };
+        func(self.volume_mounts.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_mounts`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_mounts_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VolumeMount)) -> &mut Self {
+        if self.volume_mounts.is_none() {
+            self.volume_mounts = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_mounts.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_mounts`]
+    pub  fn volume_mounts_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::VolumeMount]>) -> &mut Self {
+         if self.volume_mounts.is_none() { self.volume_mounts = Some(Vec::new()); }
+         let volume_mounts = &mut self.volume_mounts.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_mounts.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::volumes`]
+    pub  fn volumes_set(&mut self, volumes: impl Into<Option<Vec<crate::api::core::v1::Volume>>>) -> &mut Self {
+        self.volumes = volumes.into(); self
+    }
+
+    pub  fn volumes(&mut self) -> &mut Vec<crate::api::core::v1::Volume> {
+        if self.volumes.is_none() { self.volumes = Some(Default::default()) }
+        self.volumes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volumes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volumes_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::Volume>)) -> &mut Self {
+        if self.volumes.is_none() { self.volumes = Some(Default::default()) };
+        func(self.volumes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volumes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volumes_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Volume)) -> &mut Self {
+        if self.volumes.is_none() {
+            self.volumes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volumes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volumes`]
+    pub  fn volumes_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::Volume]>) -> &mut Self {
+         if self.volumes.is_none() { self.volumes = Some(Vec::new()); }
+         let volumes = &mut self.volumes.as_mut().unwrap();
+         for item in other.borrow() {
+             volumes.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodPresetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

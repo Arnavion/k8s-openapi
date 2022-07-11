@@ -8,7 +8,79 @@ pub struct APIVersions {
 
     /// versions are the api versions that are available.
     pub versions: Vec<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIVersions  {
+    /// Set [`Self::server_address_by_client_cidrs`]
+    pub  fn server_address_by_client_cidrs_set(&mut self, server_address_by_client_cidrs: impl Into<Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>>) -> &mut Self {
+        self.server_address_by_client_cidrs = server_address_by_client_cidrs.into(); self
+    }
+
+    pub  fn server_address_by_client_cidrs(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR> {
+        &mut self.server_address_by_client_cidrs
+    }
+
+    /// Modify [`Self::server_address_by_client_cidrs`] with a `func`
+    pub  fn server_address_by_client_cidrs_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>)) -> &mut Self {
+        func(&mut self.server_address_by_client_cidrs); self
+    }
+
+    /// Push new element to [`Self::server_address_by_client_cidrs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn server_address_by_client_cidrs_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.server_address_by_client_cidrs.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::server_address_by_client_cidrs`]
+    pub  fn server_address_by_client_cidrs_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR]>) -> &mut Self {
+         for item in other.borrow() {
+             self.server_address_by_client_cidrs.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::versions`]
+    pub  fn versions_set(&mut self, versions: impl Into<Vec<String>>) -> &mut Self {
+        self.versions = versions.into(); self
+    }
+
+    pub  fn versions(&mut self) -> &mut Vec<String> {
+        &mut self.versions
+    }
+
+    /// Modify [`Self::versions`] with a `func`
+    pub  fn versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.versions); self
+    }
+
+    /// Push new element to [`Self::versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.versions.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::versions`]
+    pub  fn versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl crate::Resource for APIVersions {
     const API_VERSION: &'static str = "v1";

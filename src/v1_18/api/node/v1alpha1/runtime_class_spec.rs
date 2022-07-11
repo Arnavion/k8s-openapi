@@ -11,7 +11,66 @@ pub struct RuntimeClassSpec {
 
     /// Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.
     pub scheduling: Option<crate::api::node::v1alpha1::Scheduling>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RuntimeClassSpec  {
+    /// Set [`Self::overhead`]
+    pub  fn overhead_set(&mut self, overhead: impl Into<Option<crate::api::node::v1alpha1::Overhead>>) -> &mut Self {
+        self.overhead = overhead.into(); self
+    }
+
+    pub  fn overhead(&mut self) -> &mut crate::api::node::v1alpha1::Overhead {
+        if self.overhead.is_none() { self.overhead = Some(Default::default()) }
+        self.overhead.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::overhead`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn overhead_with(&mut self, func: impl FnOnce(&mut crate::api::node::v1alpha1::Overhead)) -> &mut Self {
+        if self.overhead.is_none() { self.overhead = Some(Default::default()) };
+        func(self.overhead.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::runtime_handler`]
+    pub  fn runtime_handler_set(&mut self, runtime_handler: impl Into<String>) -> &mut Self {
+        self.runtime_handler = runtime_handler.into(); self
+    }
+
+    pub  fn runtime_handler(&mut self) -> &mut String {
+        &mut self.runtime_handler
+    }
+
+    /// Modify [`Self::runtime_handler`] with a `func`
+    pub  fn runtime_handler_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.runtime_handler); self
+    }
+
+
+    /// Set [`Self::scheduling`]
+    pub  fn scheduling_set(&mut self, scheduling: impl Into<Option<crate::api::node::v1alpha1::Scheduling>>) -> &mut Self {
+        self.scheduling = scheduling.into(); self
+    }
+
+    pub  fn scheduling(&mut self) -> &mut crate::api::node::v1alpha1::Scheduling {
+        if self.scheduling.is_none() { self.scheduling = Some(Default::default()) }
+        self.scheduling.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scheduling`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scheduling_with(&mut self, func: impl FnOnce(&mut crate::api::node::v1alpha1::Scheduling)) -> &mut Self {
+        if self.scheduling.is_none() { self.scheduling = Some(Default::default()) };
+        func(self.scheduling.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClassSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

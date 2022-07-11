@@ -8,7 +8,74 @@ pub struct HostAlias {
 
     /// IP address of the host file entry.
     pub ip: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HostAlias  {
+    /// Set [`Self::hostnames`]
+    pub  fn hostnames_set(&mut self, hostnames: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.hostnames = hostnames.into(); self
+    }
+
+    pub  fn hostnames(&mut self) -> &mut Vec<String> {
+        if self.hostnames.is_none() { self.hostnames = Some(Default::default()) }
+        self.hostnames.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostnames`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostnames_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.hostnames.is_none() { self.hostnames = Some(Default::default()) };
+        func(self.hostnames.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::hostnames`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn hostnames_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostnames.is_none() {
+            self.hostnames = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.hostnames.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::hostnames`]
+    pub  fn hostnames_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.hostnames.is_none() { self.hostnames = Some(Vec::new()); }
+         let hostnames = &mut self.hostnames.as_mut().unwrap();
+         for item in other.borrow() {
+             hostnames.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ip`]
+    pub  fn ip_set(&mut self, ip: impl Into<Option<String>>) -> &mut Self {
+        self.ip = ip.into(); self
+    }
+
+    pub  fn ip(&mut self) -> &mut String {
+        if self.ip.is_none() { self.ip = Some(Default::default()) }
+        self.ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip.is_none() { self.ip = Some(Default::default()) };
+        func(self.ip.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HostAlias {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

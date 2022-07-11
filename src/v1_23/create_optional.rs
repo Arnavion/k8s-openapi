@@ -12,7 +12,31 @@ pub struct CreateOptional<'a> {
 
     /// fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the `ServerSideFieldValidation` feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields.
     pub field_validation: Option<&'a str>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<'a> CreateOptional<'a>  {
+    /// Set [`Self::dry_run`]
+    pub  fn dry_run_set(&mut self, dry_run: impl Into<Option<&'a str>>) -> &mut Self {
+        self.dry_run = dry_run.into(); self
+    }
+
+
+    /// Set [`Self::field_manager`]
+    pub  fn field_manager_set(&mut self, field_manager: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_manager = field_manager.into(); self
+    }
+
+
+    /// Set [`Self::field_validation`]
+    pub  fn field_validation_set(&mut self, field_validation: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_validation = field_validation.into(); self
+    }
+
+
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> CreateOptional<'a> {

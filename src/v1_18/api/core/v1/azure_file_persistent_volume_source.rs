@@ -14,7 +14,81 @@ pub struct AzureFilePersistentVolumeSource {
 
     /// Share Name
     pub share_name: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AzureFilePersistentVolumeSource  {
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_name`]
+    pub  fn secret_name_set(&mut self, secret_name: impl Into<String>) -> &mut Self {
+        self.secret_name = secret_name.into(); self
+    }
+
+    pub  fn secret_name(&mut self) -> &mut String {
+        &mut self.secret_name
+    }
+
+    /// Modify [`Self::secret_name`] with a `func`
+    pub  fn secret_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.secret_name); self
+    }
+
+
+    /// Set [`Self::secret_namespace`]
+    pub  fn secret_namespace_set(&mut self, secret_namespace: impl Into<Option<String>>) -> &mut Self {
+        self.secret_namespace = secret_namespace.into(); self
+    }
+
+    pub  fn secret_namespace(&mut self) -> &mut String {
+        if self.secret_namespace.is_none() { self.secret_namespace = Some(Default::default()) }
+        self.secret_namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.secret_namespace.is_none() { self.secret_namespace = Some(Default::default()) };
+        func(self.secret_namespace.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::share_name`]
+    pub  fn share_name_set(&mut self, share_name: impl Into<String>) -> &mut Self {
+        self.share_name = share_name.into(); self
+    }
+
+    pub  fn share_name(&mut self) -> &mut String {
+        &mut self.share_name
+    }
+
+    /// Modify [`Self::share_name`] with a `func`
+    pub  fn share_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.share_name); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AzureFilePersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

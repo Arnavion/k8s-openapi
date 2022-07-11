@@ -10,7 +10,58 @@ pub struct ObjectMetricStatus {
 
     /// metric identifies the target metric by name and selector
     pub metric: crate::api::autoscaling::v2beta2::MetricIdentifier,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ObjectMetricStatus  {
+    /// Set [`Self::current`]
+    pub  fn current_set(&mut self, current: impl Into<crate::api::autoscaling::v2beta2::MetricValueStatus>) -> &mut Self {
+        self.current = current.into(); self
+    }
+
+    pub  fn current(&mut self) -> &mut crate::api::autoscaling::v2beta2::MetricValueStatus {
+        &mut self.current
+    }
+
+    /// Modify [`Self::current`] with a `func`
+    pub  fn current_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::MetricValueStatus)) -> &mut Self {
+        func(&mut self.current); self
+    }
+
+
+    /// Set [`Self::described_object`]
+    pub  fn described_object_set(&mut self, described_object: impl Into<crate::api::autoscaling::v2beta2::CrossVersionObjectReference>) -> &mut Self {
+        self.described_object = described_object.into(); self
+    }
+
+    pub  fn described_object(&mut self) -> &mut crate::api::autoscaling::v2beta2::CrossVersionObjectReference {
+        &mut self.described_object
+    }
+
+    /// Modify [`Self::described_object`] with a `func`
+    pub  fn described_object_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::CrossVersionObjectReference)) -> &mut Self {
+        func(&mut self.described_object); self
+    }
+
+
+    /// Set [`Self::metric`]
+    pub  fn metric_set(&mut self, metric: impl Into<crate::api::autoscaling::v2beta2::MetricIdentifier>) -> &mut Self {
+        self.metric = metric.into(); self
+    }
+
+    pub  fn metric(&mut self) -> &mut crate::api::autoscaling::v2beta2::MetricIdentifier {
+        &mut self.metric
+    }
+
+    /// Modify [`Self::metric`] with a `func`
+    pub  fn metric_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::MetricIdentifier)) -> &mut Self {
+        func(&mut self.metric); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

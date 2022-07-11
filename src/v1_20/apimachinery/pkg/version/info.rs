@@ -20,7 +20,148 @@ pub struct Info {
     pub minor: String,
 
     pub platform: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Info  {
+    /// Set [`Self::build_date`]
+    pub  fn build_date_set(&mut self, build_date: impl Into<String>) -> &mut Self {
+        self.build_date = build_date.into(); self
+    }
+
+    pub  fn build_date(&mut self) -> &mut String {
+        &mut self.build_date
+    }
+
+    /// Modify [`Self::build_date`] with a `func`
+    pub  fn build_date_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.build_date); self
+    }
+
+
+    /// Set [`Self::compiler`]
+    pub  fn compiler_set(&mut self, compiler: impl Into<String>) -> &mut Self {
+        self.compiler = compiler.into(); self
+    }
+
+    pub  fn compiler(&mut self) -> &mut String {
+        &mut self.compiler
+    }
+
+    /// Modify [`Self::compiler`] with a `func`
+    pub  fn compiler_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.compiler); self
+    }
+
+
+    /// Set [`Self::git_commit`]
+    pub  fn git_commit_set(&mut self, git_commit: impl Into<String>) -> &mut Self {
+        self.git_commit = git_commit.into(); self
+    }
+
+    pub  fn git_commit(&mut self) -> &mut String {
+        &mut self.git_commit
+    }
+
+    /// Modify [`Self::git_commit`] with a `func`
+    pub  fn git_commit_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.git_commit); self
+    }
+
+
+    /// Set [`Self::git_tree_state`]
+    pub  fn git_tree_state_set(&mut self, git_tree_state: impl Into<String>) -> &mut Self {
+        self.git_tree_state = git_tree_state.into(); self
+    }
+
+    pub  fn git_tree_state(&mut self) -> &mut String {
+        &mut self.git_tree_state
+    }
+
+    /// Modify [`Self::git_tree_state`] with a `func`
+    pub  fn git_tree_state_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.git_tree_state); self
+    }
+
+
+    /// Set [`Self::git_version`]
+    pub  fn git_version_set(&mut self, git_version: impl Into<String>) -> &mut Self {
+        self.git_version = git_version.into(); self
+    }
+
+    pub  fn git_version(&mut self) -> &mut String {
+        &mut self.git_version
+    }
+
+    /// Modify [`Self::git_version`] with a `func`
+    pub  fn git_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.git_version); self
+    }
+
+
+    /// Set [`Self::go_version`]
+    pub  fn go_version_set(&mut self, go_version: impl Into<String>) -> &mut Self {
+        self.go_version = go_version.into(); self
+    }
+
+    pub  fn go_version(&mut self) -> &mut String {
+        &mut self.go_version
+    }
+
+    /// Modify [`Self::go_version`] with a `func`
+    pub  fn go_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.go_version); self
+    }
+
+
+    /// Set [`Self::major`]
+    pub  fn major_set(&mut self, major: impl Into<String>) -> &mut Self {
+        self.major = major.into(); self
+    }
+
+    pub  fn major(&mut self) -> &mut String {
+        &mut self.major
+    }
+
+    /// Modify [`Self::major`] with a `func`
+    pub  fn major_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.major); self
+    }
+
+
+    /// Set [`Self::minor`]
+    pub  fn minor_set(&mut self, minor: impl Into<String>) -> &mut Self {
+        self.minor = minor.into(); self
+    }
+
+    pub  fn minor(&mut self) -> &mut String {
+        &mut self.minor
+    }
+
+    /// Modify [`Self::minor`] with a `func`
+    pub  fn minor_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.minor); self
+    }
+
+
+    /// Set [`Self::platform`]
+    pub  fn platform_set(&mut self, platform: impl Into<String>) -> &mut Self {
+        self.platform = platform.into(); self
+    }
+
+    pub  fn platform(&mut self) -> &mut String {
+        &mut self.platform
+    }
+
+    /// Modify [`Self::platform`] with a `func`
+    pub  fn platform_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.platform); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Info {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

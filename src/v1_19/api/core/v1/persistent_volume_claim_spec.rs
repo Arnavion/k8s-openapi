@@ -23,7 +23,169 @@ pub struct PersistentVolumeClaimSpec {
 
     /// VolumeName is the binding reference to the PersistentVolume backing this claim.
     pub volume_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PersistentVolumeClaimSpec  {
+    /// Set [`Self::access_modes`]
+    pub  fn access_modes_set(&mut self, access_modes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.access_modes = access_modes.into(); self
+    }
+
+    pub  fn access_modes(&mut self) -> &mut Vec<String> {
+        if self.access_modes.is_none() { self.access_modes = Some(Default::default()) }
+        self.access_modes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::access_modes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn access_modes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.access_modes.is_none() { self.access_modes = Some(Default::default()) };
+        func(self.access_modes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::access_modes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn access_modes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.access_modes.is_none() {
+            self.access_modes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.access_modes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::access_modes`]
+    pub  fn access_modes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.access_modes.is_none() { self.access_modes = Some(Vec::new()); }
+         let access_modes = &mut self.access_modes.as_mut().unwrap();
+         for item in other.borrow() {
+             access_modes.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::data_source`]
+    pub  fn data_source_set(&mut self, data_source: impl Into<Option<crate::api::core::v1::TypedLocalObjectReference>>) -> &mut Self {
+        self.data_source = data_source.into(); self
+    }
+
+    pub  fn data_source(&mut self) -> &mut crate::api::core::v1::TypedLocalObjectReference {
+        if self.data_source.is_none() { self.data_source = Some(Default::default()) }
+        self.data_source.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::data_source`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn data_source_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TypedLocalObjectReference)) -> &mut Self {
+        if self.data_source.is_none() { self.data_source = Some(Default::default()) };
+        func(self.data_source.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resources`]
+    pub  fn resources_set(&mut self, resources: impl Into<Option<crate::api::core::v1::ResourceRequirements>>) -> &mut Self {
+        self.resources = resources.into(); self
+    }
+
+    pub  fn resources(&mut self) -> &mut crate::api::core::v1::ResourceRequirements {
+        if self.resources.is_none() { self.resources = Some(Default::default()) }
+        self.resources.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resources`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resources_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ResourceRequirements)) -> &mut Self {
+        if self.resources.is_none() { self.resources = Some(Default::default()) };
+        func(self.resources.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_class_name`]
+    pub  fn storage_class_name_set(&mut self, storage_class_name: impl Into<Option<String>>) -> &mut Self {
+        self.storage_class_name = storage_class_name.into(); self
+    }
+
+    pub  fn storage_class_name(&mut self) -> &mut String {
+        if self.storage_class_name.is_none() { self.storage_class_name = Some(Default::default()) }
+        self.storage_class_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_class_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_class_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_class_name.is_none() { self.storage_class_name = Some(Default::default()) };
+        func(self.storage_class_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_mode`]
+    pub  fn volume_mode_set(&mut self, volume_mode: impl Into<Option<String>>) -> &mut Self {
+        self.volume_mode = volume_mode.into(); self
+    }
+
+    pub  fn volume_mode(&mut self) -> &mut String {
+        if self.volume_mode.is_none() { self.volume_mode = Some(Default::default()) }
+        self.volume_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_mode_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_mode.is_none() { self.volume_mode = Some(Default::default()) };
+        func(self.volume_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_name`]
+    pub  fn volume_name_set(&mut self, volume_name: impl Into<Option<String>>) -> &mut Self {
+        self.volume_name = volume_name.into(); self
+    }
+
+    pub  fn volume_name(&mut self) -> &mut String {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) }
+        self.volume_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) };
+        func(self.volume_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

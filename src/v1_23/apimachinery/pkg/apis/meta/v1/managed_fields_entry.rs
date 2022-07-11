@@ -23,7 +23,133 @@ pub struct ManagedFieldsEntry {
 
     /// Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
     pub time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ManagedFieldsEntry  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<Option<String>>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+    pub  fn api_version(&mut self) -> &mut String {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) }
+        self.api_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) };
+        func(self.api_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::fields_type`]
+    pub  fn fields_type_set(&mut self, fields_type: impl Into<Option<String>>) -> &mut Self {
+        self.fields_type = fields_type.into(); self
+    }
+
+    pub  fn fields_type(&mut self) -> &mut String {
+        if self.fields_type.is_none() { self.fields_type = Some(Default::default()) }
+        self.fields_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fields_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fields_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fields_type.is_none() { self.fields_type = Some(Default::default()) };
+        func(self.fields_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::fields_v1`]
+    pub  fn fields_v1_set(&mut self, fields_v1: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::FieldsV1>>) -> &mut Self {
+        self.fields_v1 = fields_v1.into(); self
+    }
+
+    pub  fn fields_v1(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::FieldsV1 {
+        if self.fields_v1.is_none() { self.fields_v1 = Some(Default::default()) }
+        self.fields_v1.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fields_v1`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fields_v1_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::FieldsV1)) -> &mut Self {
+        if self.fields_v1.is_none() { self.fields_v1 = Some(Default::default()) };
+        func(self.fields_v1.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::manager`]
+    pub  fn manager_set(&mut self, manager: impl Into<Option<String>>) -> &mut Self {
+        self.manager = manager.into(); self
+    }
+
+    pub  fn manager(&mut self) -> &mut String {
+        if self.manager.is_none() { self.manager = Some(Default::default()) }
+        self.manager.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::manager`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn manager_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.manager.is_none() { self.manager = Some(Default::default()) };
+        func(self.manager.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::operation`]
+    pub  fn operation_set(&mut self, operation: impl Into<Option<String>>) -> &mut Self {
+        self.operation = operation.into(); self
+    }
+
+    pub  fn operation(&mut self) -> &mut String {
+        if self.operation.is_none() { self.operation = Some(Default::default()) }
+        self.operation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::operation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn operation_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.operation.is_none() { self.operation = Some(Default::default()) };
+        func(self.operation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::subresource`]
+    pub  fn subresource_set(&mut self, subresource: impl Into<Option<String>>) -> &mut Self {
+        self.subresource = subresource.into(); self
+    }
+
+    pub  fn subresource(&mut self) -> &mut String {
+        if self.subresource.is_none() { self.subresource = Some(Default::default()) }
+        self.subresource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::subresource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn subresource_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.subresource.is_none() { self.subresource = Some(Default::default()) };
+        func(self.subresource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::time`]
+    pub  fn time_set(&mut self, time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.time = time.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ManagedFieldsEntry {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

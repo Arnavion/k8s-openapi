@@ -8,7 +8,51 @@ pub struct Lifecycle {
 
     /// PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
     pub pre_stop: Option<crate::api::core::v1::Handler>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Lifecycle  {
+    /// Set [`Self::post_start`]
+    pub  fn post_start_set(&mut self, post_start: impl Into<Option<crate::api::core::v1::Handler>>) -> &mut Self {
+        self.post_start = post_start.into(); self
+    }
+
+    pub  fn post_start(&mut self) -> &mut crate::api::core::v1::Handler {
+        if self.post_start.is_none() { self.post_start = Some(Default::default()) }
+        self.post_start.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::post_start`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn post_start_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Handler)) -> &mut Self {
+        if self.post_start.is_none() { self.post_start = Some(Default::default()) };
+        func(self.post_start.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pre_stop`]
+    pub  fn pre_stop_set(&mut self, pre_stop: impl Into<Option<crate::api::core::v1::Handler>>) -> &mut Self {
+        self.pre_stop = pre_stop.into(); self
+    }
+
+    pub  fn pre_stop(&mut self) -> &mut crate::api::core::v1::Handler {
+        if self.pre_stop.is_none() { self.pre_stop = Some(Default::default()) }
+        self.pre_stop.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pre_stop`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pre_stop_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Handler)) -> &mut Self {
+        if self.pre_stop.is_none() { self.pre_stop = Some(Default::default()) };
+        func(self.pre_stop.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Lifecycle {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

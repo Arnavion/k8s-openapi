@@ -14,7 +14,108 @@ pub struct FlowSchemaSpec {
 
     /// `rules` describes which requests will match this flow schema. This FlowSchema matches a request if and only if at least one member of rules matches the request. if it is an empty slice, there will be no requests matching the FlowSchema.
     pub rules: Option<Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl FlowSchemaSpec  {
+    /// Set [`Self::distinguisher_method`]
+    pub  fn distinguisher_method_set(&mut self, distinguisher_method: impl Into<Option<crate::api::flowcontrol::v1beta1::FlowDistinguisherMethod>>) -> &mut Self {
+        self.distinguisher_method = distinguisher_method.into(); self
+    }
+
+    pub  fn distinguisher_method(&mut self) -> &mut crate::api::flowcontrol::v1beta1::FlowDistinguisherMethod {
+        if self.distinguisher_method.is_none() { self.distinguisher_method = Some(Default::default()) }
+        self.distinguisher_method.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::distinguisher_method`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn distinguisher_method_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::FlowDistinguisherMethod)) -> &mut Self {
+        if self.distinguisher_method.is_none() { self.distinguisher_method = Some(Default::default()) };
+        func(self.distinguisher_method.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::matching_precedence`]
+    pub  fn matching_precedence_set(&mut self, matching_precedence: impl Into<Option<i32>>) -> &mut Self {
+        self.matching_precedence = matching_precedence.into(); self
+    }
+
+    pub  fn matching_precedence(&mut self) -> &mut i32 {
+        if self.matching_precedence.is_none() { self.matching_precedence = Some(Default::default()) }
+        self.matching_precedence.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::matching_precedence`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn matching_precedence_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.matching_precedence.is_none() { self.matching_precedence = Some(Default::default()) };
+        func(self.matching_precedence.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::priority_level_configuration`]
+    pub  fn priority_level_configuration_set(&mut self, priority_level_configuration: impl Into<crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationReference>) -> &mut Self {
+        self.priority_level_configuration = priority_level_configuration.into(); self
+    }
+
+    pub  fn priority_level_configuration(&mut self) -> &mut crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationReference {
+        &mut self.priority_level_configuration
+    }
+
+    /// Modify [`Self::priority_level_configuration`] with a `func`
+    pub  fn priority_level_configuration_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationReference)) -> &mut Self {
+        func(&mut self.priority_level_configuration); self
+    }
+
+
+    /// Set [`Self::rules`]
+    pub  fn rules_set(&mut self, rules: impl Into<Option<Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>>>) -> &mut Self {
+        self.rules = rules.into(); self
+    }
+
+    pub  fn rules(&mut self) -> &mut Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects> {
+        if self.rules.is_none() { self.rules = Some(Default::default()) }
+        self.rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>)) -> &mut Self {
+        if self.rules.is_none() { self.rules = Some(Default::default()) };
+        func(self.rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects)) -> &mut Self {
+        if self.rules.is_none() {
+            self.rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::rules`]
+    pub  fn rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects]>) -> &mut Self {
+         if self.rules.is_none() { self.rules = Some(Vec::new()); }
+         let rules = &mut self.rules.as_mut().unwrap();
+         for item in other.borrow() {
+             rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

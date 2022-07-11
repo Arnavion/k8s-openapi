@@ -8,7 +8,47 @@ pub struct Eviction {
 
     /// ObjectMeta describes the pod that is being evicted.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Eviction  {
+    /// Set [`Self::delete_options`]
+    pub  fn delete_options_set(&mut self, delete_options: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::DeleteOptions>>) -> &mut Self {
+        self.delete_options = delete_options.into(); self
+    }
+
+    pub  fn delete_options(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::DeleteOptions {
+        if self.delete_options.is_none() { self.delete_options = Some(Default::default()) }
+        self.delete_options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::delete_options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn delete_options_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::DeleteOptions)) -> &mut Self {
+        if self.delete_options.is_none() { self.delete_options = Some(Default::default()) };
+        func(self.delete_options.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+}
+
 
 // Begin policy/v1/Eviction
 

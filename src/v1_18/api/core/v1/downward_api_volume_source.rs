@@ -8,7 +8,74 @@ pub struct DownwardAPIVolumeSource {
 
     /// Items is a list of downward API volume file
     pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DownwardAPIVolumeSource  {
+    /// Set [`Self::default_mode`]
+    pub  fn default_mode_set(&mut self, default_mode: impl Into<Option<i32>>) -> &mut Self {
+        self.default_mode = default_mode.into(); self
+    }
+
+    pub  fn default_mode(&mut self) -> &mut i32 {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) }
+        self.default_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_mode_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) };
+        func(self.default_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::items`]
+    pub  fn items_set(&mut self, items: impl Into<Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>>) -> &mut Self {
+        self.items = items.into(); self
+    }
+
+    pub  fn items(&mut self) -> &mut Vec<crate::api::core::v1::DownwardAPIVolumeFile> {
+        if self.items.is_none() { self.items = Some(Default::default()) }
+        self.items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn items_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::DownwardAPIVolumeFile>)) -> &mut Self {
+        if self.items.is_none() { self.items = Some(Default::default()) };
+        func(self.items.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::items`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn items_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::DownwardAPIVolumeFile)) -> &mut Self {
+        if self.items.is_none() {
+            self.items = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.items.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::items`]
+    pub  fn items_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::DownwardAPIVolumeFile]>) -> &mut Self {
+         if self.items.is_none() { self.items = Some(Vec::new()); }
+         let items = &mut self.items.as_mut().unwrap();
+         for item in other.borrow() {
+             items.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

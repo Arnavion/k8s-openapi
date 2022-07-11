@@ -20,7 +20,141 @@ pub struct CephFSVolumeSource {
 
     /// user is optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
     pub user: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CephFSVolumeSource  {
+    /// Set [`Self::monitors`]
+    pub  fn monitors_set(&mut self, monitors: impl Into<Vec<String>>) -> &mut Self {
+        self.monitors = monitors.into(); self
+    }
+
+    pub  fn monitors(&mut self) -> &mut Vec<String> {
+        &mut self.monitors
+    }
+
+    /// Modify [`Self::monitors`] with a `func`
+    pub  fn monitors_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.monitors); self
+    }
+
+    /// Push new element to [`Self::monitors`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn monitors_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.monitors.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::monitors`]
+    pub  fn monitors_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.monitors.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<Option<String>>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        if self.path.is_none() { self.path = Some(Default::default()) }
+        self.path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.path.is_none() { self.path = Some(Default::default()) };
+        func(self.path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_file`]
+    pub  fn secret_file_set(&mut self, secret_file: impl Into<Option<String>>) -> &mut Self {
+        self.secret_file = secret_file.into(); self
+    }
+
+    pub  fn secret_file(&mut self) -> &mut String {
+        if self.secret_file.is_none() { self.secret_file = Some(Default::default()) }
+        self.secret_file.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_file`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_file_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.secret_file.is_none() { self.secret_file = Some(Default::default()) };
+        func(self.secret_file.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<Option<crate::api::core::v1::LocalObjectReference>>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::LocalObjectReference {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) }
+        self.secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LocalObjectReference)) -> &mut Self {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) };
+        func(self.secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::user`]
+    pub  fn user_set(&mut self, user: impl Into<Option<String>>) -> &mut Self {
+        self.user = user.into(); self
+    }
+
+    pub  fn user(&mut self) -> &mut String {
+        if self.user.is_none() { self.user = Some(Default::default()) }
+        self.user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn user_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.user.is_none() { self.user = Some(Default::default()) };
+        func(self.user.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CephFSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

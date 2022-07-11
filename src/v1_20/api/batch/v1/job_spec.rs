@@ -26,7 +26,161 @@ pub struct JobSpec {
 
     /// ttlSecondsAfterFinished limits the lifetime of a Job that has finished execution (either Complete or Failed). If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. When the Job is being deleted, its lifecycle guarantees (e.g. finalizers) will be honored. If this field is unset, the Job won't be automatically deleted. If this field is set to zero, the Job becomes eligible to be deleted immediately after it finishes. This field is alpha-level and is only honored by servers that enable the TTLAfterFinished feature.
     pub ttl_seconds_after_finished: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl JobSpec  {
+    /// Set [`Self::active_deadline_seconds`]
+    pub  fn active_deadline_seconds_set(&mut self, active_deadline_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.active_deadline_seconds = active_deadline_seconds.into(); self
+    }
+
+    pub  fn active_deadline_seconds(&mut self) -> &mut i64 {
+        if self.active_deadline_seconds.is_none() { self.active_deadline_seconds = Some(Default::default()) }
+        self.active_deadline_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::active_deadline_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn active_deadline_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.active_deadline_seconds.is_none() { self.active_deadline_seconds = Some(Default::default()) };
+        func(self.active_deadline_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::backoff_limit`]
+    pub  fn backoff_limit_set(&mut self, backoff_limit: impl Into<Option<i32>>) -> &mut Self {
+        self.backoff_limit = backoff_limit.into(); self
+    }
+
+    pub  fn backoff_limit(&mut self) -> &mut i32 {
+        if self.backoff_limit.is_none() { self.backoff_limit = Some(Default::default()) }
+        self.backoff_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::backoff_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn backoff_limit_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.backoff_limit.is_none() { self.backoff_limit = Some(Default::default()) };
+        func(self.backoff_limit.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::completions`]
+    pub  fn completions_set(&mut self, completions: impl Into<Option<i32>>) -> &mut Self {
+        self.completions = completions.into(); self
+    }
+
+    pub  fn completions(&mut self) -> &mut i32 {
+        if self.completions.is_none() { self.completions = Some(Default::default()) }
+        self.completions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::completions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn completions_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.completions.is_none() { self.completions = Some(Default::default()) };
+        func(self.completions.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::manual_selector`]
+    pub  fn manual_selector_set(&mut self, manual_selector: impl Into<Option<bool>>) -> &mut Self {
+        self.manual_selector = manual_selector.into(); self
+    }
+
+    pub  fn manual_selector(&mut self) -> &mut bool {
+        if self.manual_selector.is_none() { self.manual_selector = Some(Default::default()) }
+        self.manual_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::manual_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn manual_selector_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.manual_selector.is_none() { self.manual_selector = Some(Default::default()) };
+        func(self.manual_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::parallelism`]
+    pub  fn parallelism_set(&mut self, parallelism: impl Into<Option<i32>>) -> &mut Self {
+        self.parallelism = parallelism.into(); self
+    }
+
+    pub  fn parallelism(&mut self) -> &mut i32 {
+        if self.parallelism.is_none() { self.parallelism = Some(Default::default()) }
+        self.parallelism.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::parallelism`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn parallelism_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.parallelism.is_none() { self.parallelism = Some(Default::default()) };
+        func(self.parallelism.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<crate::api::core::v1::PodTemplateSpec>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        &mut self.template
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        func(&mut self.template); self
+    }
+
+
+    /// Set [`Self::ttl_seconds_after_finished`]
+    pub  fn ttl_seconds_after_finished_set(&mut self, ttl_seconds_after_finished: impl Into<Option<i32>>) -> &mut Self {
+        self.ttl_seconds_after_finished = ttl_seconds_after_finished.into(); self
+    }
+
+    pub  fn ttl_seconds_after_finished(&mut self) -> &mut i32 {
+        if self.ttl_seconds_after_finished.is_none() { self.ttl_seconds_after_finished = Some(Default::default()) }
+        self.ttl_seconds_after_finished.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ttl_seconds_after_finished`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ttl_seconds_after_finished_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.ttl_seconds_after_finished.is_none() { self.ttl_seconds_after_finished = Some(Default::default()) };
+        func(self.ttl_seconds_after_finished.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JobSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

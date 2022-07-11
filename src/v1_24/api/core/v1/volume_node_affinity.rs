@@ -5,7 +5,32 @@
 pub struct VolumeNodeAffinity {
     /// required specifies hard node constraints that must be met.
     pub required: Option<crate::api::core::v1::NodeSelector>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeNodeAffinity  {
+    /// Set [`Self::required`]
+    pub  fn required_set(&mut self, required: impl Into<Option<crate::api::core::v1::NodeSelector>>) -> &mut Self {
+        self.required = required.into(); self
+    }
+
+    pub  fn required(&mut self) -> &mut crate::api::core::v1::NodeSelector {
+        if self.required.is_none() { self.required = Some(Default::default()) }
+        self.required.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::required`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn required_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeSelector)) -> &mut Self {
+        if self.required.is_none() { self.required = Some(Default::default()) };
+        func(self.required.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeNodeAffinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

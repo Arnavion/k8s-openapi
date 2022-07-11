@@ -8,7 +8,51 @@ pub struct CustomResourceSubresources {
 
     /// status indicates the custom resource should serve a `/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.
     pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceStatus>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceSubresources  {
+    /// Set [`Self::scale`]
+    pub  fn scale_set(&mut self, scale: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceScale>>) -> &mut Self {
+        self.scale = scale.into(); self
+    }
+
+    pub  fn scale(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceScale {
+        if self.scale.is_none() { self.scale = Some(Default::default()) }
+        self.scale.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scale`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scale_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceScale)) -> &mut Self {
+        if self.scale.is_none() { self.scale = Some(Default::default()) };
+        func(self.scale.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceStatus>>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceStatus {
+        if self.status.is_none() { self.status = Some(Default::default()) }
+        self.status.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceStatus)) -> &mut Self {
+        if self.status.is_none() { self.status = Some(Default::default()) };
+        func(self.status.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresources {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

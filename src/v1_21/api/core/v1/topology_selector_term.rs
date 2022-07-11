@@ -5,7 +5,55 @@
 pub struct TopologySelectorTerm {
     /// A list of topology selector requirements by labels.
     pub match_label_expressions: Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TopologySelectorTerm  {
+    /// Set [`Self::match_label_expressions`]
+    pub  fn match_label_expressions_set(&mut self, match_label_expressions: impl Into<Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>>>) -> &mut Self {
+        self.match_label_expressions = match_label_expressions.into(); self
+    }
+
+    pub  fn match_label_expressions(&mut self) -> &mut Vec<crate::api::core::v1::TopologySelectorLabelRequirement> {
+        if self.match_label_expressions.is_none() { self.match_label_expressions = Some(Default::default()) }
+        self.match_label_expressions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_label_expressions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_label_expressions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::TopologySelectorLabelRequirement>)) -> &mut Self {
+        if self.match_label_expressions.is_none() { self.match_label_expressions = Some(Default::default()) };
+        func(self.match_label_expressions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::match_label_expressions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn match_label_expressions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TopologySelectorLabelRequirement)) -> &mut Self {
+        if self.match_label_expressions.is_none() {
+            self.match_label_expressions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.match_label_expressions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::match_label_expressions`]
+    pub  fn match_label_expressions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::TopologySelectorLabelRequirement]>) -> &mut Self {
+         if self.match_label_expressions.is_none() { self.match_label_expressions = Some(Vec::new()); }
+         let match_label_expressions = &mut self.match_label_expressions.as_mut().unwrap();
+         for item in other.borrow() {
+             match_label_expressions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TopologySelectorTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

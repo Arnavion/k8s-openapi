@@ -14,7 +14,104 @@ pub struct HorizontalPodAutoscalerSpec {
 
     /// scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.
     pub scale_target_ref: crate::api::autoscaling::v2beta1::CrossVersionObjectReference,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HorizontalPodAutoscalerSpec  {
+    /// Set [`Self::max_replicas`]
+    pub  fn max_replicas_set(&mut self, max_replicas: impl Into<i32>) -> &mut Self {
+        self.max_replicas = max_replicas.into(); self
+    }
+
+    pub  fn max_replicas(&mut self) -> &mut i32 {
+        &mut self.max_replicas
+    }
+
+    /// Modify [`Self::max_replicas`] with a `func`
+    pub  fn max_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.max_replicas); self
+    }
+
+
+    /// Set [`Self::metrics`]
+    pub  fn metrics_set(&mut self, metrics: impl Into<Option<Vec<crate::api::autoscaling::v2beta1::MetricSpec>>>) -> &mut Self {
+        self.metrics = metrics.into(); self
+    }
+
+    pub  fn metrics(&mut self) -> &mut Vec<crate::api::autoscaling::v2beta1::MetricSpec> {
+        if self.metrics.is_none() { self.metrics = Some(Default::default()) }
+        self.metrics.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::metrics`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn metrics_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::autoscaling::v2beta1::MetricSpec>)) -> &mut Self {
+        if self.metrics.is_none() { self.metrics = Some(Default::default()) };
+        func(self.metrics.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::metrics`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn metrics_push_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::MetricSpec)) -> &mut Self {
+        if self.metrics.is_none() {
+            self.metrics = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.metrics.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::metrics`]
+    pub  fn metrics_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::autoscaling::v2beta1::MetricSpec]>) -> &mut Self {
+         if self.metrics.is_none() { self.metrics = Some(Vec::new()); }
+         let metrics = &mut self.metrics.as_mut().unwrap();
+         for item in other.borrow() {
+             metrics.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::min_replicas`]
+    pub  fn min_replicas_set(&mut self, min_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.min_replicas = min_replicas.into(); self
+    }
+
+    pub  fn min_replicas(&mut self) -> &mut i32 {
+        if self.min_replicas.is_none() { self.min_replicas = Some(Default::default()) }
+        self.min_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_replicas.is_none() { self.min_replicas = Some(Default::default()) };
+        func(self.min_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scale_target_ref`]
+    pub  fn scale_target_ref_set(&mut self, scale_target_ref: impl Into<crate::api::autoscaling::v2beta1::CrossVersionObjectReference>) -> &mut Self {
+        self.scale_target_ref = scale_target_ref.into(); self
+    }
+
+    pub  fn scale_target_ref(&mut self) -> &mut crate::api::autoscaling::v2beta1::CrossVersionObjectReference {
+        &mut self.scale_target_ref
+    }
+
+    /// Modify [`Self::scale_target_ref`] with a `func`
+    pub  fn scale_target_ref_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::CrossVersionObjectReference)) -> &mut Self {
+        func(&mut self.scale_target_ref); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

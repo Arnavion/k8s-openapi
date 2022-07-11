@@ -23,7 +23,138 @@ pub struct APIServiceSpec {
 
     /// VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
     pub version_priority: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIServiceSpec  {
+    /// Set [`Self::ca_bundle`]
+    pub  fn ca_bundle_set(&mut self, ca_bundle: impl Into<Option<crate::ByteString>>) -> &mut Self {
+        self.ca_bundle = ca_bundle.into(); self
+    }
+
+    pub  fn ca_bundle(&mut self) -> &mut crate::ByteString {
+        if self.ca_bundle.is_none() { self.ca_bundle = Some(Default::default()) }
+        self.ca_bundle.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ca_bundle`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ca_bundle_with(&mut self, func: impl FnOnce(&mut crate::ByteString)) -> &mut Self {
+        if self.ca_bundle.is_none() { self.ca_bundle = Some(Default::default()) };
+        func(self.ca_bundle.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<String>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::group_priority_minimum`]
+    pub  fn group_priority_minimum_set(&mut self, group_priority_minimum: impl Into<i32>) -> &mut Self {
+        self.group_priority_minimum = group_priority_minimum.into(); self
+    }
+
+    pub  fn group_priority_minimum(&mut self) -> &mut i32 {
+        &mut self.group_priority_minimum
+    }
+
+    /// Modify [`Self::group_priority_minimum`] with a `func`
+    pub  fn group_priority_minimum_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.group_priority_minimum); self
+    }
+
+
+    /// Set [`Self::insecure_skip_tls_verify`]
+    pub  fn insecure_skip_tls_verify_set(&mut self, insecure_skip_tls_verify: impl Into<Option<bool>>) -> &mut Self {
+        self.insecure_skip_tls_verify = insecure_skip_tls_verify.into(); self
+    }
+
+    pub  fn insecure_skip_tls_verify(&mut self) -> &mut bool {
+        if self.insecure_skip_tls_verify.is_none() { self.insecure_skip_tls_verify = Some(Default::default()) }
+        self.insecure_skip_tls_verify.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::insecure_skip_tls_verify`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn insecure_skip_tls_verify_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.insecure_skip_tls_verify.is_none() { self.insecure_skip_tls_verify = Some(Default::default()) };
+        func(self.insecure_skip_tls_verify.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service`]
+    pub  fn service_set(&mut self, service: impl Into<Option<crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::ServiceReference>>) -> &mut Self {
+        self.service = service.into(); self
+    }
+
+    pub  fn service(&mut self) -> &mut crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::ServiceReference {
+        if self.service.is_none() { self.service = Some(Default::default()) }
+        self.service.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_with(&mut self, func: impl FnOnce(&mut crate::kube_aggregator::pkg::apis::apiregistration::v1beta1::ServiceReference)) -> &mut Self {
+        if self.service.is_none() { self.service = Some(Default::default()) };
+        func(self.service.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::version`]
+    pub  fn version_set(&mut self, version: impl Into<Option<String>>) -> &mut Self {
+        self.version = version.into(); self
+    }
+
+    pub  fn version(&mut self) -> &mut String {
+        if self.version.is_none() { self.version = Some(Default::default()) }
+        self.version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.version.is_none() { self.version = Some(Default::default()) };
+        func(self.version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::version_priority`]
+    pub  fn version_priority_set(&mut self, version_priority: impl Into<i32>) -> &mut Self {
+        self.version_priority = version_priority.into(); self
+    }
+
+    pub  fn version_priority(&mut self) -> &mut i32 {
+        &mut self.version_priority
+    }
+
+    /// Modify [`Self::version_priority`] with a `func`
+    pub  fn version_priority_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.version_priority); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

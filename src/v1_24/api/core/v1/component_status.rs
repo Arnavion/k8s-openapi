@@ -8,7 +8,70 @@ pub struct ComponentStatus {
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ComponentStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::core::v1::ComponentCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::core::v1::ComponentCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ComponentCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ComponentCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ComponentCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+}
+
 
 // Begin /v1/ComponentStatus
 

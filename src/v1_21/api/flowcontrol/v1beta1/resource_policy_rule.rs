@@ -17,7 +17,173 @@ pub struct ResourcePolicyRule {
 
     /// `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs and, if present, must be the only entry. Required.
     pub verbs: Vec<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourcePolicyRule  {
+    /// Set [`Self::api_groups`]
+    pub  fn api_groups_set(&mut self, api_groups: impl Into<Vec<String>>) -> &mut Self {
+        self.api_groups = api_groups.into(); self
+    }
+
+    pub  fn api_groups(&mut self) -> &mut Vec<String> {
+        &mut self.api_groups
+    }
+
+    /// Modify [`Self::api_groups`] with a `func`
+    pub  fn api_groups_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.api_groups); self
+    }
+
+    /// Push new element to [`Self::api_groups`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn api_groups_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.api_groups.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::api_groups`]
+    pub  fn api_groups_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.api_groups.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::cluster_scope`]
+    pub  fn cluster_scope_set(&mut self, cluster_scope: impl Into<Option<bool>>) -> &mut Self {
+        self.cluster_scope = cluster_scope.into(); self
+    }
+
+    pub  fn cluster_scope(&mut self) -> &mut bool {
+        if self.cluster_scope.is_none() { self.cluster_scope = Some(Default::default()) }
+        self.cluster_scope.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cluster_scope`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cluster_scope_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.cluster_scope.is_none() { self.cluster_scope = Some(Default::default()) };
+        func(self.cluster_scope.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespaces`]
+    pub  fn namespaces_set(&mut self, namespaces: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.namespaces = namespaces.into(); self
+    }
+
+    pub  fn namespaces(&mut self) -> &mut Vec<String> {
+        if self.namespaces.is_none() { self.namespaces = Some(Default::default()) }
+        self.namespaces.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespaces`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespaces_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.namespaces.is_none() { self.namespaces = Some(Default::default()) };
+        func(self.namespaces.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::namespaces`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn namespaces_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespaces.is_none() {
+            self.namespaces = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.namespaces.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::namespaces`]
+    pub  fn namespaces_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.namespaces.is_none() { self.namespaces = Some(Vec::new()); }
+         let namespaces = &mut self.namespaces.as_mut().unwrap();
+         for item in other.borrow() {
+             namespaces.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::resources`]
+    pub  fn resources_set(&mut self, resources: impl Into<Vec<String>>) -> &mut Self {
+        self.resources = resources.into(); self
+    }
+
+    pub  fn resources(&mut self) -> &mut Vec<String> {
+        &mut self.resources
+    }
+
+    /// Modify [`Self::resources`] with a `func`
+    pub  fn resources_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.resources); self
+    }
+
+    /// Push new element to [`Self::resources`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn resources_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.resources.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::resources`]
+    pub  fn resources_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.resources.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::verbs`]
+    pub  fn verbs_set(&mut self, verbs: impl Into<Vec<String>>) -> &mut Self {
+        self.verbs = verbs.into(); self
+    }
+
+    pub  fn verbs(&mut self) -> &mut Vec<String> {
+        &mut self.verbs
+    }
+
+    /// Modify [`Self::verbs`] with a `func`
+    pub  fn verbs_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.verbs); self
+    }
+
+    /// Push new element to [`Self::verbs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn verbs_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.verbs.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::verbs`]
+    pub  fn verbs_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.verbs.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourcePolicyRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

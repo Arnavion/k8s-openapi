@@ -8,7 +8,70 @@ pub struct RunAsUserStrategyOptions {
 
     /// rule is the strategy that will dictate the allowable RunAsUser values that may be set.
     pub rule: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RunAsUserStrategyOptions  {
+    /// Set [`Self::ranges`]
+    pub  fn ranges_set(&mut self, ranges: impl Into<Option<Vec<crate::api::policy::v1beta1::IDRange>>>) -> &mut Self {
+        self.ranges = ranges.into(); self
+    }
+
+    pub  fn ranges(&mut self) -> &mut Vec<crate::api::policy::v1beta1::IDRange> {
+        if self.ranges.is_none() { self.ranges = Some(Default::default()) }
+        self.ranges.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ranges`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ranges_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::IDRange>)) -> &mut Self {
+        if self.ranges.is_none() { self.ranges = Some(Default::default()) };
+        func(self.ranges.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ranges`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ranges_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::IDRange)) -> &mut Self {
+        if self.ranges.is_none() {
+            self.ranges = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ranges.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ranges`]
+    pub  fn ranges_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::IDRange]>) -> &mut Self {
+         if self.ranges.is_none() { self.ranges = Some(Vec::new()); }
+         let ranges = &mut self.ranges.as_mut().unwrap();
+         for item in other.borrow() {
+             ranges.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::rule`]
+    pub  fn rule_set(&mut self, rule: impl Into<String>) -> &mut Self {
+        self.rule = rule.into(); self
+    }
+
+    pub  fn rule(&mut self) -> &mut String {
+        &mut self.rule
+    }
+
+    /// Modify [`Self::rule`] with a `func`
+    pub  fn rule_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.rule); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RunAsUserStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,28 @@
 pub struct UserSubject {
     /// `name` is the username that matches, or "*" to match all usernames. Required.
     pub name: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl UserSubject  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for UserSubject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

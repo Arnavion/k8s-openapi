@@ -8,7 +8,88 @@ pub struct NonResourceRule {
 
     /// Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
     pub verbs: Vec<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NonResourceRule  {
+    /// Set [`Self::non_resource_urls`]
+    pub  fn non_resource_urls_set(&mut self, non_resource_urls: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.non_resource_urls = non_resource_urls.into(); self
+    }
+
+    pub  fn non_resource_urls(&mut self) -> &mut Vec<String> {
+        if self.non_resource_urls.is_none() { self.non_resource_urls = Some(Default::default()) }
+        self.non_resource_urls.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::non_resource_urls`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn non_resource_urls_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.non_resource_urls.is_none() { self.non_resource_urls = Some(Default::default()) };
+        func(self.non_resource_urls.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::non_resource_urls`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn non_resource_urls_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.non_resource_urls.is_none() {
+            self.non_resource_urls = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.non_resource_urls.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::non_resource_urls`]
+    pub  fn non_resource_urls_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.non_resource_urls.is_none() { self.non_resource_urls = Some(Vec::new()); }
+         let non_resource_urls = &mut self.non_resource_urls.as_mut().unwrap();
+         for item in other.borrow() {
+             non_resource_urls.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::verbs`]
+    pub  fn verbs_set(&mut self, verbs: impl Into<Vec<String>>) -> &mut Self {
+        self.verbs = verbs.into(); self
+    }
+
+    pub  fn verbs(&mut self) -> &mut Vec<String> {
+        &mut self.verbs
+    }
+
+    /// Modify [`Self::verbs`] with a `func`
+    pub  fn verbs_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.verbs); self
+    }
+
+    /// Push new element to [`Self::verbs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn verbs_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.verbs.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::verbs`]
+    pub  fn verbs_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.verbs.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NonResourceRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

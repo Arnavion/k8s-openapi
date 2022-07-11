@@ -10,7 +10,51 @@ pub struct AllowedHostPath {
 
     /// when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.
     pub read_only: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AllowedHostPath  {
+    /// Set [`Self::path_prefix`]
+    pub  fn path_prefix_set(&mut self, path_prefix: impl Into<Option<String>>) -> &mut Self {
+        self.path_prefix = path_prefix.into(); self
+    }
+
+    pub  fn path_prefix(&mut self) -> &mut String {
+        if self.path_prefix.is_none() { self.path_prefix = Some(Default::default()) }
+        self.path_prefix.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::path_prefix`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn path_prefix_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.path_prefix.is_none() { self.path_prefix = Some(Default::default()) };
+        func(self.path_prefix.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AllowedHostPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

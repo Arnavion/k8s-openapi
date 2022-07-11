@@ -134,7 +134,1050 @@ pub struct JSONSchemaProps {
 
     /// x-kubernetes-validations describes a list of validation rules written in the CEL expression language. This field is an alpha-level. Using this field requires the feature gate `CustomResourceValidationExpressions` to be enabled.
     pub x_kubernetes_validations: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl JSONSchemaProps  {
+    /// Set [`Self::ref_path`]
+    pub  fn ref_path_set(&mut self, ref_path: impl Into<Option<String>>) -> &mut Self {
+        self.ref_path = ref_path.into(); self
+    }
+
+    pub  fn ref_path(&mut self) -> &mut String {
+        if self.ref_path.is_none() { self.ref_path = Some(Default::default()) }
+        self.ref_path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ref_path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ref_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ref_path.is_none() { self.ref_path = Some(Default::default()) };
+        func(self.ref_path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::schema`]
+    pub  fn schema_set(&mut self, schema: impl Into<Option<String>>) -> &mut Self {
+        self.schema = schema.into(); self
+    }
+
+    pub  fn schema(&mut self) -> &mut String {
+        if self.schema.is_none() { self.schema = Some(Default::default()) }
+        self.schema.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::schema`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn schema_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.schema.is_none() { self.schema = Some(Default::default()) };
+        func(self.schema.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::additional_items`]
+    pub  fn additional_items_set(&mut self, additional_items: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrBool>>) -> &mut Self {
+        self.additional_items = additional_items.into(); self
+    }
+
+
+    /// Set [`Self::additional_properties`]
+    pub  fn additional_properties_set(&mut self, additional_properties: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrBool>>) -> &mut Self {
+        self.additional_properties = additional_properties.into(); self
+    }
+
+
+    /// Set [`Self::all_of`]
+    pub  fn all_of_set(&mut self, all_of: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.all_of = all_of.into(); self
+    }
+
+    pub  fn all_of(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.all_of.is_none() { self.all_of = Some(Default::default()) }
+        self.all_of.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::all_of`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn all_of_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.all_of.is_none() { self.all_of = Some(Default::default()) };
+        func(self.all_of.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::all_of`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn all_of_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.all_of.is_none() {
+            self.all_of = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.all_of.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::all_of`]
+    pub  fn all_of_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps]>) -> &mut Self {
+         if self.all_of.is_none() { self.all_of = Some(Vec::new()); }
+         let all_of = &mut self.all_of.as_mut().unwrap();
+         for item in other.borrow() {
+             all_of.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::any_of`]
+    pub  fn any_of_set(&mut self, any_of: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.any_of = any_of.into(); self
+    }
+
+    pub  fn any_of(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.any_of.is_none() { self.any_of = Some(Default::default()) }
+        self.any_of.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::any_of`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn any_of_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.any_of.is_none() { self.any_of = Some(Default::default()) };
+        func(self.any_of.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::any_of`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn any_of_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.any_of.is_none() {
+            self.any_of = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.any_of.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::any_of`]
+    pub  fn any_of_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps]>) -> &mut Self {
+         if self.any_of.is_none() { self.any_of = Some(Vec::new()); }
+         let any_of = &mut self.any_of.as_mut().unwrap();
+         for item in other.borrow() {
+             any_of.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::default`]
+    pub  fn default_set(&mut self, default: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON>>) -> &mut Self {
+        self.default = default.into(); self
+    }
+
+    pub  fn default(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON {
+        if self.default.is_none() { self.default = Some(Default::default()) }
+        self.default.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON)) -> &mut Self {
+        if self.default.is_none() { self.default = Some(Default::default()) };
+        func(self.default.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::definitions`]
+    pub  fn definitions_set(&mut self, definitions: impl Into<Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.definitions = definitions.into(); self
+    }
+
+    pub  fn definitions(&mut self) -> &mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.definitions.is_none() { self.definitions = Some(Default::default()) }
+        self.definitions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::definitions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn definitions_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.definitions.is_none() { self.definitions = Some(Default::default()) };
+        func(self.definitions.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::definitions`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn definitions_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.definitions.is_none() {
+            self.definitions = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.definitions.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::definitions`]
+    pub  fn definitions_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>) -> &mut Self {
+         if self.definitions.is_none() { self.definitions = Some(std::collections::BTreeMap::new()); }
+         let definitions = &mut self.definitions.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             definitions.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::dependencies`]
+    pub  fn dependencies_set(&mut self, dependencies: impl Into<Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrStringArray>>>) -> &mut Self {
+        self.dependencies = dependencies.into(); self
+    }
+
+    pub  fn dependencies(&mut self) -> &mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrStringArray> {
+        if self.dependencies.is_none() { self.dependencies = Some(Default::default()) }
+        self.dependencies.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::dependencies`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn dependencies_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrStringArray>)) -> &mut Self {
+        if self.dependencies.is_none() { self.dependencies = Some(Default::default()) };
+        func(self.dependencies.as_mut().unwrap()); self
+    }
+
+    /// Insert all elements from `other` into [`Self::dependencies`]
+    pub  fn dependencies_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrStringArray>>) -> &mut Self {
+         if self.dependencies.is_none() { self.dependencies = Some(std::collections::BTreeMap::new()); }
+         let dependencies = &mut self.dependencies.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             dependencies.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::description`]
+    pub  fn description_set(&mut self, description: impl Into<Option<String>>) -> &mut Self {
+        self.description = description.into(); self
+    }
+
+    pub  fn description(&mut self) -> &mut String {
+        if self.description.is_none() { self.description = Some(Default::default()) }
+        self.description.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::description`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn description_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.description.is_none() { self.description = Some(Default::default()) };
+        func(self.description.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::enum_`]
+    pub  fn enum_set(&mut self, enum_: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON>>>) -> &mut Self {
+        self.enum_ = enum_.into(); self
+    }
+
+    pub  fn enum_(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON> {
+        if self.enum_.is_none() { self.enum_ = Some(Default::default()) }
+        self.enum_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::enum_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn enum_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON>)) -> &mut Self {
+        if self.enum_.is_none() { self.enum_ = Some(Default::default()) };
+        func(self.enum_.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::enum_`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn enum_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON)) -> &mut Self {
+        if self.enum_.is_none() {
+            self.enum_ = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.enum_.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::enum_`]
+    pub  fn enum_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON]>) -> &mut Self {
+         if self.enum_.is_none() { self.enum_ = Some(Vec::new()); }
+         let enum_ = &mut self.enum_.as_mut().unwrap();
+         for item in other.borrow() {
+             enum_.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::example`]
+    pub  fn example_set(&mut self, example: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON>>) -> &mut Self {
+        self.example = example.into(); self
+    }
+
+    pub  fn example(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON {
+        if self.example.is_none() { self.example = Some(Default::default()) }
+        self.example.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::example`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn example_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSON)) -> &mut Self {
+        if self.example.is_none() { self.example = Some(Default::default()) };
+        func(self.example.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::exclusive_maximum`]
+    pub  fn exclusive_maximum_set(&mut self, exclusive_maximum: impl Into<Option<bool>>) -> &mut Self {
+        self.exclusive_maximum = exclusive_maximum.into(); self
+    }
+
+    pub  fn exclusive_maximum(&mut self) -> &mut bool {
+        if self.exclusive_maximum.is_none() { self.exclusive_maximum = Some(Default::default()) }
+        self.exclusive_maximum.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::exclusive_maximum`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn exclusive_maximum_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.exclusive_maximum.is_none() { self.exclusive_maximum = Some(Default::default()) };
+        func(self.exclusive_maximum.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::exclusive_minimum`]
+    pub  fn exclusive_minimum_set(&mut self, exclusive_minimum: impl Into<Option<bool>>) -> &mut Self {
+        self.exclusive_minimum = exclusive_minimum.into(); self
+    }
+
+    pub  fn exclusive_minimum(&mut self) -> &mut bool {
+        if self.exclusive_minimum.is_none() { self.exclusive_minimum = Some(Default::default()) }
+        self.exclusive_minimum.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::exclusive_minimum`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn exclusive_minimum_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.exclusive_minimum.is_none() { self.exclusive_minimum = Some(Default::default()) };
+        func(self.exclusive_minimum.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::external_docs`]
+    pub  fn external_docs_set(&mut self, external_docs: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ExternalDocumentation>>) -> &mut Self {
+        self.external_docs = external_docs.into(); self
+    }
+
+    pub  fn external_docs(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ExternalDocumentation {
+        if self.external_docs.is_none() { self.external_docs = Some(Default::default()) }
+        self.external_docs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external_docs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_docs_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ExternalDocumentation)) -> &mut Self {
+        if self.external_docs.is_none() { self.external_docs = Some(Default::default()) };
+        func(self.external_docs.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::format`]
+    pub  fn format_set(&mut self, format: impl Into<Option<String>>) -> &mut Self {
+        self.format = format.into(); self
+    }
+
+    pub  fn format(&mut self) -> &mut String {
+        if self.format.is_none() { self.format = Some(Default::default()) }
+        self.format.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::format`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn format_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.format.is_none() { self.format = Some(Default::default()) };
+        func(self.format.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::id`]
+    pub  fn id_set(&mut self, id: impl Into<Option<String>>) -> &mut Self {
+        self.id = id.into(); self
+    }
+
+    pub  fn id(&mut self) -> &mut String {
+        if self.id.is_none() { self.id = Some(Default::default()) }
+        self.id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.id.is_none() { self.id = Some(Default::default()) };
+        func(self.id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::items`]
+    pub  fn items_set(&mut self, items: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaPropsOrArray>>) -> &mut Self {
+        self.items = items.into(); self
+    }
+
+
+    /// Set [`Self::max_items`]
+    pub  fn max_items_set(&mut self, max_items: impl Into<Option<i64>>) -> &mut Self {
+        self.max_items = max_items.into(); self
+    }
+
+    pub  fn max_items(&mut self) -> &mut i64 {
+        if self.max_items.is_none() { self.max_items = Some(Default::default()) }
+        self.max_items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_items_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.max_items.is_none() { self.max_items = Some(Default::default()) };
+        func(self.max_items.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::max_length`]
+    pub  fn max_length_set(&mut self, max_length: impl Into<Option<i64>>) -> &mut Self {
+        self.max_length = max_length.into(); self
+    }
+
+    pub  fn max_length(&mut self) -> &mut i64 {
+        if self.max_length.is_none() { self.max_length = Some(Default::default()) }
+        self.max_length.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_length`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_length_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.max_length.is_none() { self.max_length = Some(Default::default()) };
+        func(self.max_length.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::max_properties`]
+    pub  fn max_properties_set(&mut self, max_properties: impl Into<Option<i64>>) -> &mut Self {
+        self.max_properties = max_properties.into(); self
+    }
+
+    pub  fn max_properties(&mut self) -> &mut i64 {
+        if self.max_properties.is_none() { self.max_properties = Some(Default::default()) }
+        self.max_properties.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_properties`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_properties_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.max_properties.is_none() { self.max_properties = Some(Default::default()) };
+        func(self.max_properties.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::maximum`]
+    pub  fn maximum_set(&mut self, maximum: impl Into<Option<f64>>) -> &mut Self {
+        self.maximum = maximum.into(); self
+    }
+
+    pub  fn maximum(&mut self) -> &mut f64 {
+        if self.maximum.is_none() { self.maximum = Some(Default::default()) }
+        self.maximum.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::maximum`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn maximum_with(&mut self, func: impl FnOnce(&mut f64)) -> &mut Self {
+        if self.maximum.is_none() { self.maximum = Some(Default::default()) };
+        func(self.maximum.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::min_items`]
+    pub  fn min_items_set(&mut self, min_items: impl Into<Option<i64>>) -> &mut Self {
+        self.min_items = min_items.into(); self
+    }
+
+    pub  fn min_items(&mut self) -> &mut i64 {
+        if self.min_items.is_none() { self.min_items = Some(Default::default()) }
+        self.min_items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_items_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.min_items.is_none() { self.min_items = Some(Default::default()) };
+        func(self.min_items.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::min_length`]
+    pub  fn min_length_set(&mut self, min_length: impl Into<Option<i64>>) -> &mut Self {
+        self.min_length = min_length.into(); self
+    }
+
+    pub  fn min_length(&mut self) -> &mut i64 {
+        if self.min_length.is_none() { self.min_length = Some(Default::default()) }
+        self.min_length.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_length`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_length_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.min_length.is_none() { self.min_length = Some(Default::default()) };
+        func(self.min_length.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::min_properties`]
+    pub  fn min_properties_set(&mut self, min_properties: impl Into<Option<i64>>) -> &mut Self {
+        self.min_properties = min_properties.into(); self
+    }
+
+    pub  fn min_properties(&mut self) -> &mut i64 {
+        if self.min_properties.is_none() { self.min_properties = Some(Default::default()) }
+        self.min_properties.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_properties`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_properties_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.min_properties.is_none() { self.min_properties = Some(Default::default()) };
+        func(self.min_properties.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::minimum`]
+    pub  fn minimum_set(&mut self, minimum: impl Into<Option<f64>>) -> &mut Self {
+        self.minimum = minimum.into(); self
+    }
+
+    pub  fn minimum(&mut self) -> &mut f64 {
+        if self.minimum.is_none() { self.minimum = Some(Default::default()) }
+        self.minimum.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::minimum`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn minimum_with(&mut self, func: impl FnOnce(&mut f64)) -> &mut Self {
+        if self.minimum.is_none() { self.minimum = Some(Default::default()) };
+        func(self.minimum.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::multiple_of`]
+    pub  fn multiple_of_set(&mut self, multiple_of: impl Into<Option<f64>>) -> &mut Self {
+        self.multiple_of = multiple_of.into(); self
+    }
+
+    pub  fn multiple_of(&mut self) -> &mut f64 {
+        if self.multiple_of.is_none() { self.multiple_of = Some(Default::default()) }
+        self.multiple_of.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::multiple_of`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn multiple_of_with(&mut self, func: impl FnOnce(&mut f64)) -> &mut Self {
+        if self.multiple_of.is_none() { self.multiple_of = Some(Default::default()) };
+        func(self.multiple_of.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::not`]
+    pub  fn not_set(&mut self, not: impl Into<Option<Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.not = not.into(); self
+    }
+
+    pub  fn not(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps {
+        if self.not.is_none() { self.not = Some(Default::default()) }
+        self.not.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::not`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn not_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.not.is_none() { self.not = Some(Default::default()) };
+        func(self.not.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::nullable`]
+    pub  fn nullable_set(&mut self, nullable: impl Into<Option<bool>>) -> &mut Self {
+        self.nullable = nullable.into(); self
+    }
+
+    pub  fn nullable(&mut self) -> &mut bool {
+        if self.nullable.is_none() { self.nullable = Some(Default::default()) }
+        self.nullable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::nullable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn nullable_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.nullable.is_none() { self.nullable = Some(Default::default()) };
+        func(self.nullable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::one_of`]
+    pub  fn one_of_set(&mut self, one_of: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.one_of = one_of.into(); self
+    }
+
+    pub  fn one_of(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.one_of.is_none() { self.one_of = Some(Default::default()) }
+        self.one_of.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::one_of`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn one_of_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.one_of.is_none() { self.one_of = Some(Default::default()) };
+        func(self.one_of.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::one_of`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn one_of_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.one_of.is_none() {
+            self.one_of = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.one_of.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::one_of`]
+    pub  fn one_of_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps]>) -> &mut Self {
+         if self.one_of.is_none() { self.one_of = Some(Vec::new()); }
+         let one_of = &mut self.one_of.as_mut().unwrap();
+         for item in other.borrow() {
+             one_of.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::pattern`]
+    pub  fn pattern_set(&mut self, pattern: impl Into<Option<String>>) -> &mut Self {
+        self.pattern = pattern.into(); self
+    }
+
+    pub  fn pattern(&mut self) -> &mut String {
+        if self.pattern.is_none() { self.pattern = Some(Default::default()) }
+        self.pattern.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pattern`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pattern_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.pattern.is_none() { self.pattern = Some(Default::default()) };
+        func(self.pattern.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pattern_properties`]
+    pub  fn pattern_properties_set(&mut self, pattern_properties: impl Into<Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.pattern_properties = pattern_properties.into(); self
+    }
+
+    pub  fn pattern_properties(&mut self) -> &mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.pattern_properties.is_none() { self.pattern_properties = Some(Default::default()) }
+        self.pattern_properties.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pattern_properties`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pattern_properties_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.pattern_properties.is_none() { self.pattern_properties = Some(Default::default()) };
+        func(self.pattern_properties.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::pattern_properties`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn pattern_properties_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.pattern_properties.is_none() {
+            self.pattern_properties = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.pattern_properties.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::pattern_properties`]
+    pub  fn pattern_properties_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>) -> &mut Self {
+         if self.pattern_properties.is_none() { self.pattern_properties = Some(std::collections::BTreeMap::new()); }
+         let pattern_properties = &mut self.pattern_properties.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             pattern_properties.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::properties`]
+    pub  fn properties_set(&mut self, properties: impl Into<Option<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>>) -> &mut Self {
+        self.properties = properties.into(); self
+    }
+
+    pub  fn properties(&mut self) -> &mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps> {
+        if self.properties.is_none() { self.properties = Some(Default::default()) }
+        self.properties.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::properties`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn properties_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>)) -> &mut Self {
+        if self.properties.is_none() { self.properties = Some(Default::default()) };
+        func(self.properties.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::properties`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn properties_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.properties.is_none() {
+            self.properties = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.properties.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::properties`]
+    pub  fn properties_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>) -> &mut Self {
+         if self.properties.is_none() { self.properties = Some(std::collections::BTreeMap::new()); }
+         let properties = &mut self.properties.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             properties.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::required`]
+    pub  fn required_set(&mut self, required: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.required = required.into(); self
+    }
+
+    pub  fn required(&mut self) -> &mut Vec<String> {
+        if self.required.is_none() { self.required = Some(Default::default()) }
+        self.required.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::required`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn required_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.required.is_none() { self.required = Some(Default::default()) };
+        func(self.required.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::required`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn required_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.required.is_none() {
+            self.required = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.required.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::required`]
+    pub  fn required_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.required.is_none() { self.required = Some(Vec::new()); }
+         let required = &mut self.required.as_mut().unwrap();
+         for item in other.borrow() {
+             required.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::title`]
+    pub  fn title_set(&mut self, title: impl Into<Option<String>>) -> &mut Self {
+        self.title = title.into(); self
+    }
+
+    pub  fn title(&mut self) -> &mut String {
+        if self.title.is_none() { self.title = Some(Default::default()) }
+        self.title.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::title`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn title_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.title.is_none() { self.title = Some(Default::default()) };
+        func(self.title.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::unique_items`]
+    pub  fn unique_items_set(&mut self, unique_items: impl Into<Option<bool>>) -> &mut Self {
+        self.unique_items = unique_items.into(); self
+    }
+
+    pub  fn unique_items(&mut self) -> &mut bool {
+        if self.unique_items.is_none() { self.unique_items = Some(Default::default()) }
+        self.unique_items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::unique_items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn unique_items_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.unique_items.is_none() { self.unique_items = Some(Default::default()) };
+        func(self.unique_items.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_embedded_resource`]
+    pub  fn x_kubernetes_embedded_resource_set(&mut self, x_kubernetes_embedded_resource: impl Into<Option<bool>>) -> &mut Self {
+        self.x_kubernetes_embedded_resource = x_kubernetes_embedded_resource.into(); self
+    }
+
+    pub  fn x_kubernetes_embedded_resource(&mut self) -> &mut bool {
+        if self.x_kubernetes_embedded_resource.is_none() { self.x_kubernetes_embedded_resource = Some(Default::default()) }
+        self.x_kubernetes_embedded_resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_embedded_resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_embedded_resource_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.x_kubernetes_embedded_resource.is_none() { self.x_kubernetes_embedded_resource = Some(Default::default()) };
+        func(self.x_kubernetes_embedded_resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_int_or_string`]
+    pub  fn x_kubernetes_int_or_string_set(&mut self, x_kubernetes_int_or_string: impl Into<Option<bool>>) -> &mut Self {
+        self.x_kubernetes_int_or_string = x_kubernetes_int_or_string.into(); self
+    }
+
+    pub  fn x_kubernetes_int_or_string(&mut self) -> &mut bool {
+        if self.x_kubernetes_int_or_string.is_none() { self.x_kubernetes_int_or_string = Some(Default::default()) }
+        self.x_kubernetes_int_or_string.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_int_or_string`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_int_or_string_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.x_kubernetes_int_or_string.is_none() { self.x_kubernetes_int_or_string = Some(Default::default()) };
+        func(self.x_kubernetes_int_or_string.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_list_map_keys`]
+    pub  fn x_kubernetes_list_map_keys_set(&mut self, x_kubernetes_list_map_keys: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.x_kubernetes_list_map_keys = x_kubernetes_list_map_keys.into(); self
+    }
+
+    pub  fn x_kubernetes_list_map_keys(&mut self) -> &mut Vec<String> {
+        if self.x_kubernetes_list_map_keys.is_none() { self.x_kubernetes_list_map_keys = Some(Default::default()) }
+        self.x_kubernetes_list_map_keys.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_list_map_keys`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_list_map_keys_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.x_kubernetes_list_map_keys.is_none() { self.x_kubernetes_list_map_keys = Some(Default::default()) };
+        func(self.x_kubernetes_list_map_keys.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::x_kubernetes_list_map_keys`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn x_kubernetes_list_map_keys_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.x_kubernetes_list_map_keys.is_none() {
+            self.x_kubernetes_list_map_keys = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.x_kubernetes_list_map_keys.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::x_kubernetes_list_map_keys`]
+    pub  fn x_kubernetes_list_map_keys_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.x_kubernetes_list_map_keys.is_none() { self.x_kubernetes_list_map_keys = Some(Vec::new()); }
+         let x_kubernetes_list_map_keys = &mut self.x_kubernetes_list_map_keys.as_mut().unwrap();
+         for item in other.borrow() {
+             x_kubernetes_list_map_keys.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::x_kubernetes_list_type`]
+    pub  fn x_kubernetes_list_type_set(&mut self, x_kubernetes_list_type: impl Into<Option<String>>) -> &mut Self {
+        self.x_kubernetes_list_type = x_kubernetes_list_type.into(); self
+    }
+
+    pub  fn x_kubernetes_list_type(&mut self) -> &mut String {
+        if self.x_kubernetes_list_type.is_none() { self.x_kubernetes_list_type = Some(Default::default()) }
+        self.x_kubernetes_list_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_list_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_list_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.x_kubernetes_list_type.is_none() { self.x_kubernetes_list_type = Some(Default::default()) };
+        func(self.x_kubernetes_list_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_map_type`]
+    pub  fn x_kubernetes_map_type_set(&mut self, x_kubernetes_map_type: impl Into<Option<String>>) -> &mut Self {
+        self.x_kubernetes_map_type = x_kubernetes_map_type.into(); self
+    }
+
+    pub  fn x_kubernetes_map_type(&mut self) -> &mut String {
+        if self.x_kubernetes_map_type.is_none() { self.x_kubernetes_map_type = Some(Default::default()) }
+        self.x_kubernetes_map_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_map_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_map_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.x_kubernetes_map_type.is_none() { self.x_kubernetes_map_type = Some(Default::default()) };
+        func(self.x_kubernetes_map_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_preserve_unknown_fields`]
+    pub  fn x_kubernetes_preserve_unknown_fields_set(&mut self, x_kubernetes_preserve_unknown_fields: impl Into<Option<bool>>) -> &mut Self {
+        self.x_kubernetes_preserve_unknown_fields = x_kubernetes_preserve_unknown_fields.into(); self
+    }
+
+    pub  fn x_kubernetes_preserve_unknown_fields(&mut self) -> &mut bool {
+        if self.x_kubernetes_preserve_unknown_fields.is_none() { self.x_kubernetes_preserve_unknown_fields = Some(Default::default()) }
+        self.x_kubernetes_preserve_unknown_fields.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_preserve_unknown_fields`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_preserve_unknown_fields_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.x_kubernetes_preserve_unknown_fields.is_none() { self.x_kubernetes_preserve_unknown_fields = Some(Default::default()) };
+        func(self.x_kubernetes_preserve_unknown_fields.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::x_kubernetes_validations`]
+    pub  fn x_kubernetes_validations_set(&mut self, x_kubernetes_validations: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule>>>) -> &mut Self {
+        self.x_kubernetes_validations = x_kubernetes_validations.into(); self
+    }
+
+    pub  fn x_kubernetes_validations(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule> {
+        if self.x_kubernetes_validations.is_none() { self.x_kubernetes_validations = Some(Default::default()) }
+        self.x_kubernetes_validations.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::x_kubernetes_validations`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn x_kubernetes_validations_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule>)) -> &mut Self {
+        if self.x_kubernetes_validations.is_none() { self.x_kubernetes_validations = Some(Default::default()) };
+        func(self.x_kubernetes_validations.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::x_kubernetes_validations`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn x_kubernetes_validations_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule)) -> &mut Self {
+        if self.x_kubernetes_validations.is_none() {
+            self.x_kubernetes_validations = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.x_kubernetes_validations.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::x_kubernetes_validations`]
+    pub  fn x_kubernetes_validations_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule]>) -> &mut Self {
+         if self.x_kubernetes_validations.is_none() { self.x_kubernetes_validations = Some(Vec::new()); }
+         let x_kubernetes_validations = &mut self.x_kubernetes_validations.as_mut().unwrap();
+         for item in other.borrow() {
+             x_kubernetes_validations.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

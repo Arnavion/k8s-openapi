@@ -20,7 +20,165 @@ pub struct CustomResourceDefinitionNames {
 
     /// singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.
     pub singular: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceDefinitionNames  {
+    /// Set [`Self::categories`]
+    pub  fn categories_set(&mut self, categories: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.categories = categories.into(); self
+    }
+
+    pub  fn categories(&mut self) -> &mut Vec<String> {
+        if self.categories.is_none() { self.categories = Some(Default::default()) }
+        self.categories.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::categories`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn categories_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.categories.is_none() { self.categories = Some(Default::default()) };
+        func(self.categories.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::categories`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn categories_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.categories.is_none() {
+            self.categories = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.categories.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::categories`]
+    pub  fn categories_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.categories.is_none() { self.categories = Some(Vec::new()); }
+         let categories = &mut self.categories.as_mut().unwrap();
+         for item in other.borrow() {
+             categories.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::list_kind`]
+    pub  fn list_kind_set(&mut self, list_kind: impl Into<Option<String>>) -> &mut Self {
+        self.list_kind = list_kind.into(); self
+    }
+
+    pub  fn list_kind(&mut self) -> &mut String {
+        if self.list_kind.is_none() { self.list_kind = Some(Default::default()) }
+        self.list_kind.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::list_kind`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn list_kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.list_kind.is_none() { self.list_kind = Some(Default::default()) };
+        func(self.list_kind.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::plural`]
+    pub  fn plural_set(&mut self, plural: impl Into<String>) -> &mut Self {
+        self.plural = plural.into(); self
+    }
+
+    pub  fn plural(&mut self) -> &mut String {
+        &mut self.plural
+    }
+
+    /// Modify [`Self::plural`] with a `func`
+    pub  fn plural_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.plural); self
+    }
+
+
+    /// Set [`Self::short_names`]
+    pub  fn short_names_set(&mut self, short_names: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.short_names = short_names.into(); self
+    }
+
+    pub  fn short_names(&mut self) -> &mut Vec<String> {
+        if self.short_names.is_none() { self.short_names = Some(Default::default()) }
+        self.short_names.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::short_names`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn short_names_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.short_names.is_none() { self.short_names = Some(Default::default()) };
+        func(self.short_names.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::short_names`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn short_names_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.short_names.is_none() {
+            self.short_names = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.short_names.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::short_names`]
+    pub  fn short_names_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.short_names.is_none() { self.short_names = Some(Vec::new()); }
+         let short_names = &mut self.short_names.as_mut().unwrap();
+         for item in other.borrow() {
+             short_names.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::singular`]
+    pub  fn singular_set(&mut self, singular: impl Into<Option<String>>) -> &mut Self {
+        self.singular = singular.into(); self
+    }
+
+    pub  fn singular(&mut self) -> &mut String {
+        if self.singular.is_none() { self.singular = Some(Default::default()) }
+        self.singular.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::singular`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn singular_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.singular.is_none() { self.singular = Some(Default::default()) };
+        func(self.singular.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

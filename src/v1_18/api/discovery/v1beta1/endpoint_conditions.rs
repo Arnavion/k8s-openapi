@@ -5,7 +5,32 @@
 pub struct EndpointConditions {
     /// ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.
     pub ready: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointConditions  {
+    /// Set [`Self::ready`]
+    pub  fn ready_set(&mut self, ready: impl Into<Option<bool>>) -> &mut Self {
+        self.ready = ready.into(); self
+    }
+
+    pub  fn ready(&mut self) -> &mut bool {
+        if self.ready.is_none() { self.ready = Some(Default::default()) }
+        self.ready.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ready`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ready_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.ready.is_none() { self.ready = Some(Default::default()) };
+        func(self.ready.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointConditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

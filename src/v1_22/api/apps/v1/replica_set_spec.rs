@@ -14,7 +14,85 @@ pub struct ReplicaSetSpec {
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ReplicaSetSpec  {
+    /// Set [`Self::min_ready_seconds`]
+    pub  fn min_ready_seconds_set(&mut self, min_ready_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.min_ready_seconds = min_ready_seconds.into(); self
+    }
+
+    pub  fn min_ready_seconds(&mut self) -> &mut i32 {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) }
+        self.min_ready_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_ready_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_ready_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) };
+        func(self.min_ready_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) }
+        self.replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) };
+        func(self.replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        &mut self.selector
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        func(&mut self.selector); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<Option<crate::api::core::v1::PodTemplateSpec>>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        if self.template.is_none() { self.template = Some(Default::default()) }
+        self.template.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        if self.template.is_none() { self.template = Some(Default::default()) };
+        func(self.template.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ReplicaSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

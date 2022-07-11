@@ -5,7 +5,32 @@
 pub struct NodeDaemonEndpoints {
     /// Endpoint on which Kubelet is listening.
     pub kubelet_endpoint: Option<crate::api::core::v1::DaemonEndpoint>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeDaemonEndpoints  {
+    /// Set [`Self::kubelet_endpoint`]
+    pub  fn kubelet_endpoint_set(&mut self, kubelet_endpoint: impl Into<Option<crate::api::core::v1::DaemonEndpoint>>) -> &mut Self {
+        self.kubelet_endpoint = kubelet_endpoint.into(); self
+    }
+
+    pub  fn kubelet_endpoint(&mut self) -> &mut crate::api::core::v1::DaemonEndpoint {
+        if self.kubelet_endpoint.is_none() { self.kubelet_endpoint = Some(Default::default()) }
+        self.kubelet_endpoint.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::kubelet_endpoint`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn kubelet_endpoint_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::DaemonEndpoint)) -> &mut Self {
+        if self.kubelet_endpoint.is_none() { self.kubelet_endpoint = Some(Default::default()) };
+        func(self.kubelet_endpoint.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeDaemonEndpoints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -21,7 +21,62 @@ pub struct HTTPIngressPath {
     ///   or treat it identically to Prefix or Exact path types.
     /// Implementations are required to support all path types.
     pub path_type: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HTTPIngressPath  {
+    /// Set [`Self::backend`]
+    pub  fn backend_set(&mut self, backend: impl Into<crate::api::networking::v1::IngressBackend>) -> &mut Self {
+        self.backend = backend.into(); self
+    }
+
+    pub  fn backend(&mut self) -> &mut crate::api::networking::v1::IngressBackend {
+        &mut self.backend
+    }
+
+    /// Modify [`Self::backend`] with a `func`
+    pub  fn backend_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::IngressBackend)) -> &mut Self {
+        func(&mut self.backend); self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<Option<String>>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        if self.path.is_none() { self.path = Some(Default::default()) }
+        self.path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.path.is_none() { self.path = Some(Default::default()) };
+        func(self.path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::path_type`]
+    pub  fn path_type_set(&mut self, path_type: impl Into<String>) -> &mut Self {
+        self.path_type = path_type.into(); self
+    }
+
+    pub  fn path_type(&mut self) -> &mut String {
+        &mut self.path_type
+    }
+
+    /// Modify [`Self::path_type`] with a `func`
+    pub  fn path_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.path_type); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HTTPIngressPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

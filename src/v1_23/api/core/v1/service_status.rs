@@ -8,7 +8,61 @@ pub struct ServiceStatus {
 
     /// LoadBalancer contains the current status of the load-balancer, if one is present.
     pub load_balancer: Option<crate::api::core::v1::LoadBalancerStatus>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::Condition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::Condition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::load_balancer`]
+    pub  fn load_balancer_set(&mut self, load_balancer: impl Into<Option<crate::api::core::v1::LoadBalancerStatus>>) -> &mut Self {
+        self.load_balancer = load_balancer.into(); self
+    }
+
+    pub  fn load_balancer(&mut self) -> &mut crate::api::core::v1::LoadBalancerStatus {
+        if self.load_balancer.is_none() { self.load_balancer = Some(Default::default()) }
+        self.load_balancer.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::load_balancer`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn load_balancer_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LoadBalancerStatus)) -> &mut Self {
+        if self.load_balancer.is_none() { self.load_balancer = Some(Default::default()) };
+        func(self.load_balancer.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

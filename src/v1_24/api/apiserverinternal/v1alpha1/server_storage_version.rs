@@ -11,7 +11,93 @@ pub struct ServerStorageVersion {
 
     /// The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
     pub encoding_version: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServerStorageVersion  {
+    /// Set [`Self::api_server_id`]
+    pub  fn api_server_id_set(&mut self, api_server_id: impl Into<Option<String>>) -> &mut Self {
+        self.api_server_id = api_server_id.into(); self
+    }
+
+    pub  fn api_server_id(&mut self) -> &mut String {
+        if self.api_server_id.is_none() { self.api_server_id = Some(Default::default()) }
+        self.api_server_id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_server_id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_server_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_server_id.is_none() { self.api_server_id = Some(Default::default()) };
+        func(self.api_server_id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::decodable_versions`]
+    pub  fn decodable_versions_set(&mut self, decodable_versions: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.decodable_versions = decodable_versions.into(); self
+    }
+
+    pub  fn decodable_versions(&mut self) -> &mut Vec<String> {
+        if self.decodable_versions.is_none() { self.decodable_versions = Some(Default::default()) }
+        self.decodable_versions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::decodable_versions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn decodable_versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.decodable_versions.is_none() { self.decodable_versions = Some(Default::default()) };
+        func(self.decodable_versions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::decodable_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn decodable_versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.decodable_versions.is_none() {
+            self.decodable_versions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.decodable_versions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::decodable_versions`]
+    pub  fn decodable_versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.decodable_versions.is_none() { self.decodable_versions = Some(Vec::new()); }
+         let decodable_versions = &mut self.decodable_versions.as_mut().unwrap();
+         for item in other.borrow() {
+             decodable_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::encoding_version`]
+    pub  fn encoding_version_set(&mut self, encoding_version: impl Into<Option<String>>) -> &mut Self {
+        self.encoding_version = encoding_version.into(); self
+    }
+
+    pub  fn encoding_version(&mut self) -> &mut String {
+        if self.encoding_version.is_none() { self.encoding_version = Some(Default::default()) }
+        self.encoding_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::encoding_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn encoding_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.encoding_version.is_none() { self.encoding_version = Some(Default::default()) };
+        func(self.encoding_version.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

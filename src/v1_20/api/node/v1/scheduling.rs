@@ -8,7 +8,97 @@ pub struct Scheduling {
 
     /// tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
     pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Scheduling  {
+    /// Set [`Self::node_selector`]
+    pub  fn node_selector_set(&mut self, node_selector: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.node_selector = node_selector.into(); self
+    }
+
+    pub  fn node_selector(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.node_selector.is_none() { self.node_selector = Some(Default::default()) }
+        self.node_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_selector_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.node_selector.is_none() { self.node_selector = Some(Default::default()) };
+        func(self.node_selector.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::node_selector`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn node_selector_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.node_selector.is_none() {
+            self.node_selector = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.node_selector.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::node_selector`]
+    pub  fn node_selector_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.node_selector.is_none() { self.node_selector = Some(std::collections::BTreeMap::new()); }
+         let node_selector = &mut self.node_selector.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             node_selector.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::tolerations`]
+    pub  fn tolerations_set(&mut self, tolerations: impl Into<Option<Vec<crate::api::core::v1::Toleration>>>) -> &mut Self {
+        self.tolerations = tolerations.into(); self
+    }
+
+    pub  fn tolerations(&mut self) -> &mut Vec<crate::api::core::v1::Toleration> {
+        if self.tolerations.is_none() { self.tolerations = Some(Default::default()) }
+        self.tolerations.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tolerations`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tolerations_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::Toleration>)) -> &mut Self {
+        if self.tolerations.is_none() { self.tolerations = Some(Default::default()) };
+        func(self.tolerations.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::tolerations`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn tolerations_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Toleration)) -> &mut Self {
+        if self.tolerations.is_none() {
+            self.tolerations = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.tolerations.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::tolerations`]
+    pub  fn tolerations_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::Toleration]>) -> &mut Self {
+         if self.tolerations.is_none() { self.tolerations = Some(Vec::new()); }
+         let tolerations = &mut self.tolerations.as_mut().unwrap();
+         for item in other.borrow() {
+             tolerations.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Scheduling {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

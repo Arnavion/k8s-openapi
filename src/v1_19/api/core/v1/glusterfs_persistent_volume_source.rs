@@ -14,7 +14,81 @@ pub struct GlusterfsPersistentVolumeSource {
 
     /// ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
     pub read_only: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl GlusterfsPersistentVolumeSource  {
+    /// Set [`Self::endpoints`]
+    pub  fn endpoints_set(&mut self, endpoints: impl Into<String>) -> &mut Self {
+        self.endpoints = endpoints.into(); self
+    }
+
+    pub  fn endpoints(&mut self) -> &mut String {
+        &mut self.endpoints
+    }
+
+    /// Modify [`Self::endpoints`] with a `func`
+    pub  fn endpoints_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.endpoints); self
+    }
+
+
+    /// Set [`Self::endpoints_namespace`]
+    pub  fn endpoints_namespace_set(&mut self, endpoints_namespace: impl Into<Option<String>>) -> &mut Self {
+        self.endpoints_namespace = endpoints_namespace.into(); self
+    }
+
+    pub  fn endpoints_namespace(&mut self) -> &mut String {
+        if self.endpoints_namespace.is_none() { self.endpoints_namespace = Some(Default::default()) }
+        self.endpoints_namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::endpoints_namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn endpoints_namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.endpoints_namespace.is_none() { self.endpoints_namespace = Some(Default::default()) };
+        func(self.endpoints_namespace.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<String>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        &mut self.path
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.path); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,112 @@ pub struct TokenReviewStatus {
 
     /// User is the UserInfo associated with the provided token.
     pub user: Option<crate::api::authentication::v1::UserInfo>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenReviewStatus  {
+    /// Set [`Self::audiences`]
+    pub  fn audiences_set(&mut self, audiences: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.audiences = audiences.into(); self
+    }
+
+    pub  fn audiences(&mut self) -> &mut Vec<String> {
+        if self.audiences.is_none() { self.audiences = Some(Default::default()) }
+        self.audiences.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::audiences`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn audiences_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.audiences.is_none() { self.audiences = Some(Default::default()) };
+        func(self.audiences.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::audiences`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn audiences_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.audiences.is_none() {
+            self.audiences = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.audiences.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::audiences`]
+    pub  fn audiences_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.audiences.is_none() { self.audiences = Some(Vec::new()); }
+         let audiences = &mut self.audiences.as_mut().unwrap();
+         for item in other.borrow() {
+             audiences.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::authenticated`]
+    pub  fn authenticated_set(&mut self, authenticated: impl Into<Option<bool>>) -> &mut Self {
+        self.authenticated = authenticated.into(); self
+    }
+
+    pub  fn authenticated(&mut self) -> &mut bool {
+        if self.authenticated.is_none() { self.authenticated = Some(Default::default()) }
+        self.authenticated.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::authenticated`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn authenticated_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.authenticated.is_none() { self.authenticated = Some(Default::default()) };
+        func(self.authenticated.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::error`]
+    pub  fn error_set(&mut self, error: impl Into<Option<String>>) -> &mut Self {
+        self.error = error.into(); self
+    }
+
+    pub  fn error(&mut self) -> &mut String {
+        if self.error.is_none() { self.error = Some(Default::default()) }
+        self.error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn error_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.error.is_none() { self.error = Some(Default::default()) };
+        func(self.error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::user`]
+    pub  fn user_set(&mut self, user: impl Into<Option<crate::api::authentication::v1::UserInfo>>) -> &mut Self {
+        self.user = user.into(); self
+    }
+
+    pub  fn user(&mut self) -> &mut crate::api::authentication::v1::UserInfo {
+        if self.user.is_none() { self.user = Some(Default::default()) }
+        self.user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn user_with(&mut self, func: impl FnOnce(&mut crate::api::authentication::v1::UserInfo)) -> &mut Self {
+        if self.user.is_none() { self.user = Some(Default::default()) };
+        func(self.user.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

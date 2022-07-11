@@ -11,7 +11,85 @@ pub struct LabelSelectorRequirement {
 
     /// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
     pub values: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LabelSelectorRequirement  {
+    /// Set [`Self::key`]
+    pub  fn key_set(&mut self, key: impl Into<String>) -> &mut Self {
+        self.key = key.into(); self
+    }
+
+    pub  fn key(&mut self) -> &mut String {
+        &mut self.key
+    }
+
+    /// Modify [`Self::key`] with a `func`
+    pub  fn key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.key); self
+    }
+
+
+    /// Set [`Self::operator`]
+    pub  fn operator_set(&mut self, operator: impl Into<String>) -> &mut Self {
+        self.operator = operator.into(); self
+    }
+
+    pub  fn operator(&mut self) -> &mut String {
+        &mut self.operator
+    }
+
+    /// Modify [`Self::operator`] with a `func`
+    pub  fn operator_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.operator); self
+    }
+
+
+    /// Set [`Self::values`]
+    pub  fn values_set(&mut self, values: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.values = values.into(); self
+    }
+
+    pub  fn values(&mut self) -> &mut Vec<String> {
+        if self.values.is_none() { self.values = Some(Default::default()) }
+        self.values.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::values`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn values_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.values.is_none() { self.values = Some(Default::default()) };
+        func(self.values.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::values`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn values_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.values.is_none() {
+            self.values = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.values.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::values`]
+    pub  fn values_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.values.is_none() { self.values = Some(Vec::new()); }
+         let values = &mut self.values.as_mut().unwrap();
+         for item in other.borrow() {
+             values.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LabelSelectorRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,65 @@ pub struct RuntimeClassStrategyOptions {
 
     /// defaultRuntimeClassName is the default RuntimeClassName to set on the pod. The default MUST be allowed by the allowedRuntimeClassNames list. A value of nil does not mutate the Pod.
     pub default_runtime_class_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RuntimeClassStrategyOptions  {
+    /// Set [`Self::allowed_runtime_class_names`]
+    pub  fn allowed_runtime_class_names_set(&mut self, allowed_runtime_class_names: impl Into<Vec<String>>) -> &mut Self {
+        self.allowed_runtime_class_names = allowed_runtime_class_names.into(); self
+    }
+
+    pub  fn allowed_runtime_class_names(&mut self) -> &mut Vec<String> {
+        &mut self.allowed_runtime_class_names
+    }
+
+    /// Modify [`Self::allowed_runtime_class_names`] with a `func`
+    pub  fn allowed_runtime_class_names_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.allowed_runtime_class_names); self
+    }
+
+    /// Push new element to [`Self::allowed_runtime_class_names`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_runtime_class_names_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.allowed_runtime_class_names.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_runtime_class_names`]
+    pub  fn allowed_runtime_class_names_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.allowed_runtime_class_names.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::default_runtime_class_name`]
+    pub  fn default_runtime_class_name_set(&mut self, default_runtime_class_name: impl Into<Option<String>>) -> &mut Self {
+        self.default_runtime_class_name = default_runtime_class_name.into(); self
+    }
+
+    pub  fn default_runtime_class_name(&mut self) -> &mut String {
+        if self.default_runtime_class_name.is_none() { self.default_runtime_class_name = Some(Default::default()) }
+        self.default_runtime_class_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_runtime_class_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_runtime_class_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.default_runtime_class_name.is_none() { self.default_runtime_class_name = Some(Default::default()) };
+        func(self.default_runtime_class_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClassStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

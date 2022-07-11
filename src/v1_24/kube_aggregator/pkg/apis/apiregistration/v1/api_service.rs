@@ -11,7 +11,66 @@ pub struct APIService {
 
     /// Status contains derived information about an API server
     pub status: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIService  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec>>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec {
+        if self.spec.is_none() { self.spec = Some(Default::default()) }
+        self.spec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec)) -> &mut Self {
+        if self.spec.is_none() { self.spec = Some(Default::default()) };
+        func(self.spec.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus {
+        if self.status.is_none() { self.status = Some(Default::default()) }
+        self.status.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus)) -> &mut Self {
+        if self.status.is_none() { self.status = Some(Default::default()) };
+        func(self.status.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin apiregistration.k8s.io/v1/APIService
 

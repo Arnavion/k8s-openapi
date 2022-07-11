@@ -8,7 +8,97 @@ pub struct NetworkPolicyEgressRule {
 
     /// List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
     pub to: Option<Vec<crate::api::networking::v1::NetworkPolicyPeer>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NetworkPolicyEgressRule  {
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::networking::v1::NetworkPolicyPort>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::networking::v1::NetworkPolicyPort> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1::NetworkPolicyPort>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::NetworkPolicyPort)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1::NetworkPolicyPort]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::to`]
+    pub  fn to_set(&mut self, to: impl Into<Option<Vec<crate::api::networking::v1::NetworkPolicyPeer>>>) -> &mut Self {
+        self.to = to.into(); self
+    }
+
+    pub  fn to(&mut self) -> &mut Vec<crate::api::networking::v1::NetworkPolicyPeer> {
+        if self.to.is_none() { self.to = Some(Default::default()) }
+        self.to.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::to`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn to_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1::NetworkPolicyPeer>)) -> &mut Self {
+        if self.to.is_none() { self.to = Some(Default::default()) };
+        func(self.to.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::to`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn to_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::NetworkPolicyPeer)) -> &mut Self {
+        if self.to.is_none() {
+            self.to = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.to.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::to`]
+    pub  fn to_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1::NetworkPolicyPeer]>) -> &mut Self {
+         if self.to.is_none() { self.to = Some(Vec::new()); }
+         let to = &mut self.to.as_mut().unwrap();
+         for item in other.borrow() {
+             to.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyEgressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

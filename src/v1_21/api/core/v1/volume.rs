@@ -107,7 +107,579 @@ pub struct Volume {
 
     /// VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
     pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Volume  {
+    /// Set [`Self::aws_elastic_block_store`]
+    pub  fn aws_elastic_block_store_set(&mut self, aws_elastic_block_store: impl Into<Option<crate::api::core::v1::AWSElasticBlockStoreVolumeSource>>) -> &mut Self {
+        self.aws_elastic_block_store = aws_elastic_block_store.into(); self
+    }
+
+    pub  fn aws_elastic_block_store(&mut self) -> &mut crate::api::core::v1::AWSElasticBlockStoreVolumeSource {
+        if self.aws_elastic_block_store.is_none() { self.aws_elastic_block_store = Some(Default::default()) }
+        self.aws_elastic_block_store.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::aws_elastic_block_store`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn aws_elastic_block_store_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::AWSElasticBlockStoreVolumeSource)) -> &mut Self {
+        if self.aws_elastic_block_store.is_none() { self.aws_elastic_block_store = Some(Default::default()) };
+        func(self.aws_elastic_block_store.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::azure_disk`]
+    pub  fn azure_disk_set(&mut self, azure_disk: impl Into<Option<crate::api::core::v1::AzureDiskVolumeSource>>) -> &mut Self {
+        self.azure_disk = azure_disk.into(); self
+    }
+
+    pub  fn azure_disk(&mut self) -> &mut crate::api::core::v1::AzureDiskVolumeSource {
+        if self.azure_disk.is_none() { self.azure_disk = Some(Default::default()) }
+        self.azure_disk.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::azure_disk`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn azure_disk_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::AzureDiskVolumeSource)) -> &mut Self {
+        if self.azure_disk.is_none() { self.azure_disk = Some(Default::default()) };
+        func(self.azure_disk.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::azure_file`]
+    pub  fn azure_file_set(&mut self, azure_file: impl Into<Option<crate::api::core::v1::AzureFileVolumeSource>>) -> &mut Self {
+        self.azure_file = azure_file.into(); self
+    }
+
+    pub  fn azure_file(&mut self) -> &mut crate::api::core::v1::AzureFileVolumeSource {
+        if self.azure_file.is_none() { self.azure_file = Some(Default::default()) }
+        self.azure_file.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::azure_file`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn azure_file_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::AzureFileVolumeSource)) -> &mut Self {
+        if self.azure_file.is_none() { self.azure_file = Some(Default::default()) };
+        func(self.azure_file.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::cephfs`]
+    pub  fn cephfs_set(&mut self, cephfs: impl Into<Option<crate::api::core::v1::CephFSVolumeSource>>) -> &mut Self {
+        self.cephfs = cephfs.into(); self
+    }
+
+    pub  fn cephfs(&mut self) -> &mut crate::api::core::v1::CephFSVolumeSource {
+        if self.cephfs.is_none() { self.cephfs = Some(Default::default()) }
+        self.cephfs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cephfs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cephfs_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::CephFSVolumeSource)) -> &mut Self {
+        if self.cephfs.is_none() { self.cephfs = Some(Default::default()) };
+        func(self.cephfs.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::cinder`]
+    pub  fn cinder_set(&mut self, cinder: impl Into<Option<crate::api::core::v1::CinderVolumeSource>>) -> &mut Self {
+        self.cinder = cinder.into(); self
+    }
+
+    pub  fn cinder(&mut self) -> &mut crate::api::core::v1::CinderVolumeSource {
+        if self.cinder.is_none() { self.cinder = Some(Default::default()) }
+        self.cinder.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cinder`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cinder_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::CinderVolumeSource)) -> &mut Self {
+        if self.cinder.is_none() { self.cinder = Some(Default::default()) };
+        func(self.cinder.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::config_map`]
+    pub  fn config_map_set(&mut self, config_map: impl Into<Option<crate::api::core::v1::ConfigMapVolumeSource>>) -> &mut Self {
+        self.config_map = config_map.into(); self
+    }
+
+    pub  fn config_map(&mut self) -> &mut crate::api::core::v1::ConfigMapVolumeSource {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) }
+        self.config_map.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::config_map`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn config_map_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ConfigMapVolumeSource)) -> &mut Self {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) };
+        func(self.config_map.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::csi`]
+    pub  fn csi_set(&mut self, csi: impl Into<Option<crate::api::core::v1::CSIVolumeSource>>) -> &mut Self {
+        self.csi = csi.into(); self
+    }
+
+    pub  fn csi(&mut self) -> &mut crate::api::core::v1::CSIVolumeSource {
+        if self.csi.is_none() { self.csi = Some(Default::default()) }
+        self.csi.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::csi`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn csi_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::CSIVolumeSource)) -> &mut Self {
+        if self.csi.is_none() { self.csi = Some(Default::default()) };
+        func(self.csi.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::downward_api`]
+    pub  fn downward_api_set(&mut self, downward_api: impl Into<Option<crate::api::core::v1::DownwardAPIVolumeSource>>) -> &mut Self {
+        self.downward_api = downward_api.into(); self
+    }
+
+    pub  fn downward_api(&mut self) -> &mut crate::api::core::v1::DownwardAPIVolumeSource {
+        if self.downward_api.is_none() { self.downward_api = Some(Default::default()) }
+        self.downward_api.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::downward_api`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn downward_api_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::DownwardAPIVolumeSource)) -> &mut Self {
+        if self.downward_api.is_none() { self.downward_api = Some(Default::default()) };
+        func(self.downward_api.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::empty_dir`]
+    pub  fn empty_dir_set(&mut self, empty_dir: impl Into<Option<crate::api::core::v1::EmptyDirVolumeSource>>) -> &mut Self {
+        self.empty_dir = empty_dir.into(); self
+    }
+
+    pub  fn empty_dir(&mut self) -> &mut crate::api::core::v1::EmptyDirVolumeSource {
+        if self.empty_dir.is_none() { self.empty_dir = Some(Default::default()) }
+        self.empty_dir.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::empty_dir`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn empty_dir_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EmptyDirVolumeSource)) -> &mut Self {
+        if self.empty_dir.is_none() { self.empty_dir = Some(Default::default()) };
+        func(self.empty_dir.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ephemeral`]
+    pub  fn ephemeral_set(&mut self, ephemeral: impl Into<Option<crate::api::core::v1::EphemeralVolumeSource>>) -> &mut Self {
+        self.ephemeral = ephemeral.into(); self
+    }
+
+    pub  fn ephemeral(&mut self) -> &mut crate::api::core::v1::EphemeralVolumeSource {
+        if self.ephemeral.is_none() { self.ephemeral = Some(Default::default()) }
+        self.ephemeral.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ephemeral`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ephemeral_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EphemeralVolumeSource)) -> &mut Self {
+        if self.ephemeral.is_none() { self.ephemeral = Some(Default::default()) };
+        func(self.ephemeral.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::fc`]
+    pub  fn fc_set(&mut self, fc: impl Into<Option<crate::api::core::v1::FCVolumeSource>>) -> &mut Self {
+        self.fc = fc.into(); self
+    }
+
+    pub  fn fc(&mut self) -> &mut crate::api::core::v1::FCVolumeSource {
+        if self.fc.is_none() { self.fc = Some(Default::default()) }
+        self.fc.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fc`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fc_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::FCVolumeSource)) -> &mut Self {
+        if self.fc.is_none() { self.fc = Some(Default::default()) };
+        func(self.fc.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::flex_volume`]
+    pub  fn flex_volume_set(&mut self, flex_volume: impl Into<Option<crate::api::core::v1::FlexVolumeSource>>) -> &mut Self {
+        self.flex_volume = flex_volume.into(); self
+    }
+
+    pub  fn flex_volume(&mut self) -> &mut crate::api::core::v1::FlexVolumeSource {
+        if self.flex_volume.is_none() { self.flex_volume = Some(Default::default()) }
+        self.flex_volume.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::flex_volume`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn flex_volume_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::FlexVolumeSource)) -> &mut Self {
+        if self.flex_volume.is_none() { self.flex_volume = Some(Default::default()) };
+        func(self.flex_volume.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::flocker`]
+    pub  fn flocker_set(&mut self, flocker: impl Into<Option<crate::api::core::v1::FlockerVolumeSource>>) -> &mut Self {
+        self.flocker = flocker.into(); self
+    }
+
+    pub  fn flocker(&mut self) -> &mut crate::api::core::v1::FlockerVolumeSource {
+        if self.flocker.is_none() { self.flocker = Some(Default::default()) }
+        self.flocker.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::flocker`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn flocker_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::FlockerVolumeSource)) -> &mut Self {
+        if self.flocker.is_none() { self.flocker = Some(Default::default()) };
+        func(self.flocker.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::gce_persistent_disk`]
+    pub  fn gce_persistent_disk_set(&mut self, gce_persistent_disk: impl Into<Option<crate::api::core::v1::GCEPersistentDiskVolumeSource>>) -> &mut Self {
+        self.gce_persistent_disk = gce_persistent_disk.into(); self
+    }
+
+    pub  fn gce_persistent_disk(&mut self) -> &mut crate::api::core::v1::GCEPersistentDiskVolumeSource {
+        if self.gce_persistent_disk.is_none() { self.gce_persistent_disk = Some(Default::default()) }
+        self.gce_persistent_disk.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::gce_persistent_disk`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn gce_persistent_disk_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::GCEPersistentDiskVolumeSource)) -> &mut Self {
+        if self.gce_persistent_disk.is_none() { self.gce_persistent_disk = Some(Default::default()) };
+        func(self.gce_persistent_disk.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::git_repo`]
+    pub  fn git_repo_set(&mut self, git_repo: impl Into<Option<crate::api::core::v1::GitRepoVolumeSource>>) -> &mut Self {
+        self.git_repo = git_repo.into(); self
+    }
+
+    pub  fn git_repo(&mut self) -> &mut crate::api::core::v1::GitRepoVolumeSource {
+        if self.git_repo.is_none() { self.git_repo = Some(Default::default()) }
+        self.git_repo.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::git_repo`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn git_repo_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::GitRepoVolumeSource)) -> &mut Self {
+        if self.git_repo.is_none() { self.git_repo = Some(Default::default()) };
+        func(self.git_repo.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::glusterfs`]
+    pub  fn glusterfs_set(&mut self, glusterfs: impl Into<Option<crate::api::core::v1::GlusterfsVolumeSource>>) -> &mut Self {
+        self.glusterfs = glusterfs.into(); self
+    }
+
+    pub  fn glusterfs(&mut self) -> &mut crate::api::core::v1::GlusterfsVolumeSource {
+        if self.glusterfs.is_none() { self.glusterfs = Some(Default::default()) }
+        self.glusterfs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::glusterfs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn glusterfs_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::GlusterfsVolumeSource)) -> &mut Self {
+        if self.glusterfs.is_none() { self.glusterfs = Some(Default::default()) };
+        func(self.glusterfs.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::host_path`]
+    pub  fn host_path_set(&mut self, host_path: impl Into<Option<crate::api::core::v1::HostPathVolumeSource>>) -> &mut Self {
+        self.host_path = host_path.into(); self
+    }
+
+    pub  fn host_path(&mut self) -> &mut crate::api::core::v1::HostPathVolumeSource {
+        if self.host_path.is_none() { self.host_path = Some(Default::default()) }
+        self.host_path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_path_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::HostPathVolumeSource)) -> &mut Self {
+        if self.host_path.is_none() { self.host_path = Some(Default::default()) };
+        func(self.host_path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::iscsi`]
+    pub  fn iscsi_set(&mut self, iscsi: impl Into<Option<crate::api::core::v1::ISCSIVolumeSource>>) -> &mut Self {
+        self.iscsi = iscsi.into(); self
+    }
+
+    pub  fn iscsi(&mut self) -> &mut crate::api::core::v1::ISCSIVolumeSource {
+        if self.iscsi.is_none() { self.iscsi = Some(Default::default()) }
+        self.iscsi.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::iscsi`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn iscsi_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ISCSIVolumeSource)) -> &mut Self {
+        if self.iscsi.is_none() { self.iscsi = Some(Default::default()) };
+        func(self.iscsi.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::nfs`]
+    pub  fn nfs_set(&mut self, nfs: impl Into<Option<crate::api::core::v1::NFSVolumeSource>>) -> &mut Self {
+        self.nfs = nfs.into(); self
+    }
+
+    pub  fn nfs(&mut self) -> &mut crate::api::core::v1::NFSVolumeSource {
+        if self.nfs.is_none() { self.nfs = Some(Default::default()) }
+        self.nfs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::nfs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn nfs_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NFSVolumeSource)) -> &mut Self {
+        if self.nfs.is_none() { self.nfs = Some(Default::default()) };
+        func(self.nfs.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::persistent_volume_claim`]
+    pub  fn persistent_volume_claim_set(&mut self, persistent_volume_claim: impl Into<Option<crate::api::core::v1::PersistentVolumeClaimVolumeSource>>) -> &mut Self {
+        self.persistent_volume_claim = persistent_volume_claim.into(); self
+    }
+
+    pub  fn persistent_volume_claim(&mut self) -> &mut crate::api::core::v1::PersistentVolumeClaimVolumeSource {
+        if self.persistent_volume_claim.is_none() { self.persistent_volume_claim = Some(Default::default()) }
+        self.persistent_volume_claim.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::persistent_volume_claim`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn persistent_volume_claim_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeClaimVolumeSource)) -> &mut Self {
+        if self.persistent_volume_claim.is_none() { self.persistent_volume_claim = Some(Default::default()) };
+        func(self.persistent_volume_claim.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::photon_persistent_disk`]
+    pub  fn photon_persistent_disk_set(&mut self, photon_persistent_disk: impl Into<Option<crate::api::core::v1::PhotonPersistentDiskVolumeSource>>) -> &mut Self {
+        self.photon_persistent_disk = photon_persistent_disk.into(); self
+    }
+
+    pub  fn photon_persistent_disk(&mut self) -> &mut crate::api::core::v1::PhotonPersistentDiskVolumeSource {
+        if self.photon_persistent_disk.is_none() { self.photon_persistent_disk = Some(Default::default()) }
+        self.photon_persistent_disk.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::photon_persistent_disk`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn photon_persistent_disk_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PhotonPersistentDiskVolumeSource)) -> &mut Self {
+        if self.photon_persistent_disk.is_none() { self.photon_persistent_disk = Some(Default::default()) };
+        func(self.photon_persistent_disk.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::portworx_volume`]
+    pub  fn portworx_volume_set(&mut self, portworx_volume: impl Into<Option<crate::api::core::v1::PortworxVolumeSource>>) -> &mut Self {
+        self.portworx_volume = portworx_volume.into(); self
+    }
+
+    pub  fn portworx_volume(&mut self) -> &mut crate::api::core::v1::PortworxVolumeSource {
+        if self.portworx_volume.is_none() { self.portworx_volume = Some(Default::default()) }
+        self.portworx_volume.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::portworx_volume`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn portworx_volume_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PortworxVolumeSource)) -> &mut Self {
+        if self.portworx_volume.is_none() { self.portworx_volume = Some(Default::default()) };
+        func(self.portworx_volume.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::projected`]
+    pub  fn projected_set(&mut self, projected: impl Into<Option<crate::api::core::v1::ProjectedVolumeSource>>) -> &mut Self {
+        self.projected = projected.into(); self
+    }
+
+    pub  fn projected(&mut self) -> &mut crate::api::core::v1::ProjectedVolumeSource {
+        if self.projected.is_none() { self.projected = Some(Default::default()) }
+        self.projected.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::projected`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn projected_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ProjectedVolumeSource)) -> &mut Self {
+        if self.projected.is_none() { self.projected = Some(Default::default()) };
+        func(self.projected.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::quobyte`]
+    pub  fn quobyte_set(&mut self, quobyte: impl Into<Option<crate::api::core::v1::QuobyteVolumeSource>>) -> &mut Self {
+        self.quobyte = quobyte.into(); self
+    }
+
+    pub  fn quobyte(&mut self) -> &mut crate::api::core::v1::QuobyteVolumeSource {
+        if self.quobyte.is_none() { self.quobyte = Some(Default::default()) }
+        self.quobyte.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::quobyte`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn quobyte_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::QuobyteVolumeSource)) -> &mut Self {
+        if self.quobyte.is_none() { self.quobyte = Some(Default::default()) };
+        func(self.quobyte.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::rbd`]
+    pub  fn rbd_set(&mut self, rbd: impl Into<Option<crate::api::core::v1::RBDVolumeSource>>) -> &mut Self {
+        self.rbd = rbd.into(); self
+    }
+
+    pub  fn rbd(&mut self) -> &mut crate::api::core::v1::RBDVolumeSource {
+        if self.rbd.is_none() { self.rbd = Some(Default::default()) }
+        self.rbd.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rbd`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rbd_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::RBDVolumeSource)) -> &mut Self {
+        if self.rbd.is_none() { self.rbd = Some(Default::default()) };
+        func(self.rbd.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scale_io`]
+    pub  fn scale_io_set(&mut self, scale_io: impl Into<Option<crate::api::core::v1::ScaleIOVolumeSource>>) -> &mut Self {
+        self.scale_io = scale_io.into(); self
+    }
+
+    pub  fn scale_io(&mut self) -> &mut crate::api::core::v1::ScaleIOVolumeSource {
+        if self.scale_io.is_none() { self.scale_io = Some(Default::default()) }
+        self.scale_io.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scale_io`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scale_io_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ScaleIOVolumeSource)) -> &mut Self {
+        if self.scale_io.is_none() { self.scale_io = Some(Default::default()) };
+        func(self.scale_io.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret`]
+    pub  fn secret_set(&mut self, secret: impl Into<Option<crate::api::core::v1::SecretVolumeSource>>) -> &mut Self {
+        self.secret = secret.into(); self
+    }
+
+    pub  fn secret(&mut self) -> &mut crate::api::core::v1::SecretVolumeSource {
+        if self.secret.is_none() { self.secret = Some(Default::default()) }
+        self.secret.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretVolumeSource)) -> &mut Self {
+        if self.secret.is_none() { self.secret = Some(Default::default()) };
+        func(self.secret.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storageos`]
+    pub  fn storageos_set(&mut self, storageos: impl Into<Option<crate::api::core::v1::StorageOSVolumeSource>>) -> &mut Self {
+        self.storageos = storageos.into(); self
+    }
+
+    pub  fn storageos(&mut self) -> &mut crate::api::core::v1::StorageOSVolumeSource {
+        if self.storageos.is_none() { self.storageos = Some(Default::default()) }
+        self.storageos.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storageos`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storageos_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::StorageOSVolumeSource)) -> &mut Self {
+        if self.storageos.is_none() { self.storageos = Some(Default::default()) };
+        func(self.storageos.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::vsphere_volume`]
+    pub  fn vsphere_volume_set(&mut self, vsphere_volume: impl Into<Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>>) -> &mut Self {
+        self.vsphere_volume = vsphere_volume.into(); self
+    }
+
+    pub  fn vsphere_volume(&mut self) -> &mut crate::api::core::v1::VsphereVirtualDiskVolumeSource {
+        if self.vsphere_volume.is_none() { self.vsphere_volume = Some(Default::default()) }
+        self.vsphere_volume.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::vsphere_volume`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn vsphere_volume_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VsphereVirtualDiskVolumeSource)) -> &mut Self {
+        if self.vsphere_volume.is_none() { self.vsphere_volume = Some(Default::default()) };
+        func(self.vsphere_volume.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Volume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,139 @@ pub struct PodDNSConfig {
 
     /// A list of DNS search domains for host-name lookup. This will be appended to the base search paths generated from DNSPolicy. Duplicated search paths will be removed.
     pub searches: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodDNSConfig  {
+    /// Set [`Self::nameservers`]
+    pub  fn nameservers_set(&mut self, nameservers: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.nameservers = nameservers.into(); self
+    }
+
+    pub  fn nameservers(&mut self) -> &mut Vec<String> {
+        if self.nameservers.is_none() { self.nameservers = Some(Default::default()) }
+        self.nameservers.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::nameservers`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn nameservers_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.nameservers.is_none() { self.nameservers = Some(Default::default()) };
+        func(self.nameservers.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::nameservers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn nameservers_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.nameservers.is_none() {
+            self.nameservers = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.nameservers.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::nameservers`]
+    pub  fn nameservers_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.nameservers.is_none() { self.nameservers = Some(Vec::new()); }
+         let nameservers = &mut self.nameservers.as_mut().unwrap();
+         for item in other.borrow() {
+             nameservers.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::options`]
+    pub  fn options_set(&mut self, options: impl Into<Option<Vec<crate::api::core::v1::PodDNSConfigOption>>>) -> &mut Self {
+        self.options = options.into(); self
+    }
+
+    pub  fn options(&mut self) -> &mut Vec<crate::api::core::v1::PodDNSConfigOption> {
+        if self.options.is_none() { self.options = Some(Default::default()) }
+        self.options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn options_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PodDNSConfigOption>)) -> &mut Self {
+        if self.options.is_none() { self.options = Some(Default::default()) };
+        func(self.options.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::options`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn options_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodDNSConfigOption)) -> &mut Self {
+        if self.options.is_none() {
+            self.options = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.options.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::options`]
+    pub  fn options_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PodDNSConfigOption]>) -> &mut Self {
+         if self.options.is_none() { self.options = Some(Vec::new()); }
+         let options = &mut self.options.as_mut().unwrap();
+         for item in other.borrow() {
+             options.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::searches`]
+    pub  fn searches_set(&mut self, searches: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.searches = searches.into(); self
+    }
+
+    pub  fn searches(&mut self) -> &mut Vec<String> {
+        if self.searches.is_none() { self.searches = Some(Default::default()) }
+        self.searches.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::searches`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn searches_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.searches.is_none() { self.searches = Some(Default::default()) };
+        func(self.searches.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::searches`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn searches_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.searches.is_none() {
+            self.searches = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.searches.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::searches`]
+    pub  fn searches_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.searches.is_none() { self.searches = Some(Vec::new()); }
+         let searches = &mut self.searches.as_mut().unwrap();
+         for item in other.borrow() {
+             searches.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDNSConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

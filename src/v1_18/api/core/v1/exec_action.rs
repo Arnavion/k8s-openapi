@@ -5,7 +5,55 @@
 pub struct ExecAction {
     /// Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
     pub command: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ExecAction  {
+    /// Set [`Self::command`]
+    pub  fn command_set(&mut self, command: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.command = command.into(); self
+    }
+
+    pub  fn command(&mut self) -> &mut Vec<String> {
+        if self.command.is_none() { self.command = Some(Default::default()) }
+        self.command.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::command`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn command_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.command.is_none() { self.command = Some(Default::default()) };
+        func(self.command.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::command`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn command_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.command.is_none() {
+            self.command = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.command.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::command`]
+    pub  fn command_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.command.is_none() { self.command = Some(Vec::new()); }
+         let command = &mut self.command.as_mut().unwrap();
+         for item in other.borrow() {
+             command.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExecAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

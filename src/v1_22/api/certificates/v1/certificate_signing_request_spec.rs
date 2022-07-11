@@ -72,7 +72,226 @@ pub struct CertificateSigningRequestSpec {
 
     /// username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     pub username: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CertificateSigningRequestSpec  {
+    /// Set [`Self::expiration_seconds`]
+    pub  fn expiration_seconds_set(&mut self, expiration_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.expiration_seconds = expiration_seconds.into(); self
+    }
+
+    pub  fn expiration_seconds(&mut self) -> &mut i32 {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) }
+        self.expiration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::expiration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn expiration_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) };
+        func(self.expiration_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::extra`]
+    pub  fn extra_set(&mut self, extra: impl Into<Option<std::collections::BTreeMap<String, Vec<String>>>>) -> &mut Self {
+        self.extra = extra.into(); self
+    }
+
+    pub  fn extra(&mut self) -> &mut std::collections::BTreeMap<String, Vec<String>> {
+        if self.extra.is_none() { self.extra = Some(Default::default()) }
+        self.extra.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::extra`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn extra_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, Vec<String>>)) -> &mut Self {
+        if self.extra.is_none() { self.extra = Some(Default::default()) };
+        func(self.extra.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::extra`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn extra_insert_with(&mut self, name: &str, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.extra.is_none() {
+            self.extra = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.extra.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::extra`]
+    pub  fn extra_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, Vec<String>>>) -> &mut Self {
+         if self.extra.is_none() { self.extra = Some(std::collections::BTreeMap::new()); }
+         let extra = &mut self.extra.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             extra.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::groups`]
+    pub  fn groups_set(&mut self, groups: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.groups = groups.into(); self
+    }
+
+    pub  fn groups(&mut self) -> &mut Vec<String> {
+        if self.groups.is_none() { self.groups = Some(Default::default()) }
+        self.groups.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::groups`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn groups_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.groups.is_none() { self.groups = Some(Default::default()) };
+        func(self.groups.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::groups`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn groups_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.groups.is_none() {
+            self.groups = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.groups.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::groups`]
+    pub  fn groups_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.groups.is_none() { self.groups = Some(Vec::new()); }
+         let groups = &mut self.groups.as_mut().unwrap();
+         for item in other.borrow() {
+             groups.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::request`]
+    pub  fn request_set(&mut self, request: impl Into<crate::ByteString>) -> &mut Self {
+        self.request = request.into(); self
+    }
+
+    pub  fn request(&mut self) -> &mut crate::ByteString {
+        &mut self.request
+    }
+
+    /// Modify [`Self::request`] with a `func`
+    pub  fn request_with(&mut self, func: impl FnOnce(&mut crate::ByteString)) -> &mut Self {
+        func(&mut self.request); self
+    }
+
+
+    /// Set [`Self::signer_name`]
+    pub  fn signer_name_set(&mut self, signer_name: impl Into<String>) -> &mut Self {
+        self.signer_name = signer_name.into(); self
+    }
+
+    pub  fn signer_name(&mut self) -> &mut String {
+        &mut self.signer_name
+    }
+
+    /// Modify [`Self::signer_name`] with a `func`
+    pub  fn signer_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.signer_name); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::usages`]
+    pub  fn usages_set(&mut self, usages: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.usages = usages.into(); self
+    }
+
+    pub  fn usages(&mut self) -> &mut Vec<String> {
+        if self.usages.is_none() { self.usages = Some(Default::default()) }
+        self.usages.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::usages`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn usages_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.usages.is_none() { self.usages = Some(Default::default()) };
+        func(self.usages.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::usages`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn usages_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.usages.is_none() {
+            self.usages = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.usages.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::usages`]
+    pub  fn usages_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.usages.is_none() { self.usages = Some(Vec::new()); }
+         let usages = &mut self.usages.as_mut().unwrap();
+         for item in other.borrow() {
+             usages.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::username`]
+    pub  fn username_set(&mut self, username: impl Into<Option<String>>) -> &mut Self {
+        self.username = username.into(); self
+    }
+
+    pub  fn username(&mut self) -> &mut String {
+        if self.username.is_none() { self.username = Some(Default::default()) }
+        self.username.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::username`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn username_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.username.is_none() { self.username = Some(Default::default()) };
+        func(self.username.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,62 @@ pub struct ControllerRevision {
 
     /// Revision indicates the revision of the state represented by Data.
     pub revision: i64,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ControllerRevision  {
+    /// Set [`Self::data`]
+    pub  fn data_set(&mut self, data: impl Into<Option<crate::apimachinery::pkg::runtime::RawExtension>>) -> &mut Self {
+        self.data = data.into(); self
+    }
+
+    pub  fn data(&mut self) -> &mut crate::apimachinery::pkg::runtime::RawExtension {
+        if self.data.is_none() { self.data = Some(Default::default()) }
+        self.data.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::data`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn data_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::runtime::RawExtension)) -> &mut Self {
+        if self.data.is_none() { self.data = Some(Default::default()) };
+        func(self.data.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::revision`]
+    pub  fn revision_set(&mut self, revision: impl Into<i64>) -> &mut Self {
+        self.revision = revision.into(); self
+    }
+
+    pub  fn revision(&mut self) -> &mut i64 {
+        &mut self.revision
+    }
+
+    /// Modify [`Self::revision`] with a `func`
+    pub  fn revision_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        func(&mut self.revision); self
+    }
+
+
+}
+
 
 // Begin apps/v1/ControllerRevision
 

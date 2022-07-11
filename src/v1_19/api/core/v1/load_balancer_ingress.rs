@@ -8,7 +8,51 @@ pub struct LoadBalancerIngress {
 
     /// IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
     pub ip: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LoadBalancerIngress  {
+    /// Set [`Self::hostname`]
+    pub  fn hostname_set(&mut self, hostname: impl Into<Option<String>>) -> &mut Self {
+        self.hostname = hostname.into(); self
+    }
+
+    pub  fn hostname(&mut self) -> &mut String {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) }
+        self.hostname.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostname`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostname_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) };
+        func(self.hostname.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ip`]
+    pub  fn ip_set(&mut self, ip: impl Into<Option<String>>) -> &mut Self {
+        self.ip = ip.into(); self
+    }
+
+    pub  fn ip(&mut self) -> &mut String {
+        if self.ip.is_none() { self.ip = Some(Default::default()) }
+        self.ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip.is_none() { self.ip = Some(Default::default()) };
+        func(self.ip.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

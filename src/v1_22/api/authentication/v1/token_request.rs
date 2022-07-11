@@ -11,7 +11,49 @@ pub struct TokenRequest {
 
     /// Status is filled in by the server and indicates whether the token can be authenticated.
     pub status: Option<crate::api::authentication::v1::TokenRequestStatus>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenRequest  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::authentication::v1::TokenRequestSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::authentication::v1::TokenRequestSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::authentication::v1::TokenRequestSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<Option<crate::api::authentication::v1::TokenRequestStatus>>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+
+}
+
 
 // Begin authentication.k8s.io/v1/TokenRequest
 

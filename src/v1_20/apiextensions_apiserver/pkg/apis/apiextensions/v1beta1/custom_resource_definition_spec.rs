@@ -32,7 +32,237 @@ pub struct CustomResourceDefinitionSpec {
 
     /// versions is the list of all API versions of the defined custom resource. Optional if `version` is specified. The name of the first item in the `versions` list must match the `version` field if `version` and `versions` are both specified. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
     pub versions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceDefinitionSpec  {
+    /// Set [`Self::additional_printer_columns`]
+    pub  fn additional_printer_columns_set(&mut self, additional_printer_columns: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>>>) -> &mut Self {
+        self.additional_printer_columns = additional_printer_columns.into(); self
+    }
+
+    pub  fn additional_printer_columns(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition> {
+        if self.additional_printer_columns.is_none() { self.additional_printer_columns = Some(Default::default()) }
+        self.additional_printer_columns.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::additional_printer_columns`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn additional_printer_columns_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition>)) -> &mut Self {
+        if self.additional_printer_columns.is_none() { self.additional_printer_columns = Some(Default::default()) };
+        func(self.additional_printer_columns.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::additional_printer_columns`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn additional_printer_columns_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition)) -> &mut Self {
+        if self.additional_printer_columns.is_none() {
+            self.additional_printer_columns = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.additional_printer_columns.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::additional_printer_columns`]
+    pub  fn additional_printer_columns_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceColumnDefinition]>) -> &mut Self {
+         if self.additional_printer_columns.is_none() { self.additional_printer_columns = Some(Vec::new()); }
+         let additional_printer_columns = &mut self.additional_printer_columns.as_mut().unwrap();
+         for item in other.borrow() {
+             additional_printer_columns.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::conversion`]
+    pub  fn conversion_set(&mut self, conversion: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceConversion>>) -> &mut Self {
+        self.conversion = conversion.into(); self
+    }
+
+    pub  fn conversion(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceConversion {
+        if self.conversion.is_none() { self.conversion = Some(Default::default()) }
+        self.conversion.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conversion`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conversion_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceConversion)) -> &mut Self {
+        if self.conversion.is_none() { self.conversion = Some(Default::default()) };
+        func(self.conversion.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<String>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        &mut self.group
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.group); self
+    }
+
+
+    /// Set [`Self::names`]
+    pub  fn names_set(&mut self, names: impl Into<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames>) -> &mut Self {
+        self.names = names.into(); self
+    }
+
+    pub  fn names(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames {
+        &mut self.names
+    }
+
+    /// Modify [`Self::names`] with a `func`
+    pub  fn names_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames)) -> &mut Self {
+        func(&mut self.names); self
+    }
+
+
+    /// Set [`Self::preserve_unknown_fields`]
+    pub  fn preserve_unknown_fields_set(&mut self, preserve_unknown_fields: impl Into<Option<bool>>) -> &mut Self {
+        self.preserve_unknown_fields = preserve_unknown_fields.into(); self
+    }
+
+    pub  fn preserve_unknown_fields(&mut self) -> &mut bool {
+        if self.preserve_unknown_fields.is_none() { self.preserve_unknown_fields = Some(Default::default()) }
+        self.preserve_unknown_fields.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preserve_unknown_fields`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preserve_unknown_fields_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.preserve_unknown_fields.is_none() { self.preserve_unknown_fields = Some(Default::default()) };
+        func(self.preserve_unknown_fields.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scope`]
+    pub  fn scope_set(&mut self, scope: impl Into<String>) -> &mut Self {
+        self.scope = scope.into(); self
+    }
+
+    pub  fn scope(&mut self) -> &mut String {
+        &mut self.scope
+    }
+
+    /// Modify [`Self::scope`] with a `func`
+    pub  fn scope_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.scope); self
+    }
+
+
+    /// Set [`Self::subresources`]
+    pub  fn subresources_set(&mut self, subresources: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources>>) -> &mut Self {
+        self.subresources = subresources.into(); self
+    }
+
+    pub  fn subresources(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources {
+        if self.subresources.is_none() { self.subresources = Some(Default::default()) }
+        self.subresources.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::subresources`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn subresources_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources)) -> &mut Self {
+        if self.subresources.is_none() { self.subresources = Some(Default::default()) };
+        func(self.subresources.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::validation`]
+    pub  fn validation_set(&mut self, validation: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation>>) -> &mut Self {
+        self.validation = validation.into(); self
+    }
+
+    pub  fn validation(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation {
+        if self.validation.is_none() { self.validation = Some(Default::default()) }
+        self.validation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::validation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn validation_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceValidation)) -> &mut Self {
+        if self.validation.is_none() { self.validation = Some(Default::default()) };
+        func(self.validation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::version`]
+    pub  fn version_set(&mut self, version: impl Into<Option<String>>) -> &mut Self {
+        self.version = version.into(); self
+    }
+
+    pub  fn version(&mut self) -> &mut String {
+        if self.version.is_none() { self.version = Some(Default::default()) }
+        self.version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.version.is_none() { self.version = Some(Default::default()) };
+        func(self.version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::versions`]
+    pub  fn versions_set(&mut self, versions: impl Into<Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>>>) -> &mut Self {
+        self.versions = versions.into(); self
+    }
+
+    pub  fn versions(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion> {
+        if self.versions.is_none() { self.versions = Some(Default::default()) }
+        self.versions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::versions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn versions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>)) -> &mut Self {
+        if self.versions.is_none() { self.versions = Some(Default::default()) };
+        func(self.versions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn versions_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion)) -> &mut Self {
+        if self.versions.is_none() {
+            self.versions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.versions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::versions`]
+    pub  fn versions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion]>) -> &mut Self {
+         if self.versions.is_none() { self.versions = Some(Vec::new()); }
+         let versions = &mut self.versions.as_mut().unwrap();
+         for item in other.borrow() {
+             versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

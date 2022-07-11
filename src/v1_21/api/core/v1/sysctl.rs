@@ -8,7 +8,43 @@ pub struct Sysctl {
 
     /// Value of a property to set
     pub value: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Sysctl  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<String>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut String {
+        &mut self.value
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.value); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Sysctl {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

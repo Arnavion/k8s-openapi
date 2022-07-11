@@ -8,7 +8,47 @@ pub struct PriorityLevelConfigurationSpec {
 
     /// `type` indicates whether this priority level is subject to limitation on request execution.  A value of `"Exempt"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `"Limited"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PriorityLevelConfigurationSpec  {
+    /// Set [`Self::limited`]
+    pub  fn limited_set(&mut self, limited: impl Into<Option<crate::api::flowcontrol::v1alpha1::LimitedPriorityLevelConfiguration>>) -> &mut Self {
+        self.limited = limited.into(); self
+    }
+
+    pub  fn limited(&mut self) -> &mut crate::api::flowcontrol::v1alpha1::LimitedPriorityLevelConfiguration {
+        if self.limited.is_none() { self.limited = Some(Default::default()) }
+        self.limited.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::limited`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn limited_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1alpha1::LimitedPriorityLevelConfiguration)) -> &mut Self {
+        if self.limited.is_none() { self.limited = Some(Default::default()) };
+        func(self.limited.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PriorityLevelConfigurationSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

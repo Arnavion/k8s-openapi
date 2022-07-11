@@ -8,7 +8,43 @@ pub struct HostPortRange {
 
     /// min is the start of the range, inclusive.
     pub min: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HostPortRange  {
+    /// Set [`Self::max`]
+    pub  fn max_set(&mut self, max: impl Into<i32>) -> &mut Self {
+        self.max = max.into(); self
+    }
+
+    pub  fn max(&mut self) -> &mut i32 {
+        &mut self.max
+    }
+
+    /// Modify [`Self::max`] with a `func`
+    pub  fn max_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.max); self
+    }
+
+
+    /// Set [`Self::min`]
+    pub  fn min_set(&mut self, min: impl Into<i32>) -> &mut Self {
+        self.min = min.into(); self
+    }
+
+    pub  fn min(&mut self) -> &mut i32 {
+        &mut self.min
+    }
+
+    /// Modify [`Self::min`] with a `func`
+    pub  fn min_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.min); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HostPortRange {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

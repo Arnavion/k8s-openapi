@@ -47,7 +47,251 @@ pub struct Event {
 
     /// Type of this event (Normal, Warning), new types could be added in the future
     pub type_: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Event  {
+    /// Set [`Self::action`]
+    pub  fn action_set(&mut self, action: impl Into<Option<String>>) -> &mut Self {
+        self.action = action.into(); self
+    }
+
+    pub  fn action(&mut self) -> &mut String {
+        if self.action.is_none() { self.action = Some(Default::default()) }
+        self.action.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::action`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn action_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.action.is_none() { self.action = Some(Default::default()) };
+        func(self.action.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::count`]
+    pub  fn count_set(&mut self, count: impl Into<Option<i32>>) -> &mut Self {
+        self.count = count.into(); self
+    }
+
+    pub  fn count(&mut self) -> &mut i32 {
+        if self.count.is_none() { self.count = Some(Default::default()) }
+        self.count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.count.is_none() { self.count = Some(Default::default()) };
+        func(self.count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::event_time`]
+    pub  fn event_time_set(&mut self, event_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>>) -> &mut Self {
+        self.event_time = event_time.into(); self
+    }
+
+
+    /// Set [`Self::first_timestamp`]
+    pub  fn first_timestamp_set(&mut self, first_timestamp: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.first_timestamp = first_timestamp.into(); self
+    }
+
+
+    /// Set [`Self::involved_object`]
+    pub  fn involved_object_set(&mut self, involved_object: impl Into<crate::api::core::v1::ObjectReference>) -> &mut Self {
+        self.involved_object = involved_object.into(); self
+    }
+
+    pub  fn involved_object(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        &mut self.involved_object
+    }
+
+    /// Modify [`Self::involved_object`] with a `func`
+    pub  fn involved_object_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        func(&mut self.involved_object); self
+    }
+
+
+    /// Set [`Self::last_timestamp`]
+    pub  fn last_timestamp_set(&mut self, last_timestamp: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.last_timestamp = last_timestamp.into(); self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::related`]
+    pub  fn related_set(&mut self, related: impl Into<Option<crate::api::core::v1::ObjectReference>>) -> &mut Self {
+        self.related = related.into(); self
+    }
+
+    pub  fn related(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        if self.related.is_none() { self.related = Some(Default::default()) }
+        self.related.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::related`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn related_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.related.is_none() { self.related = Some(Default::default()) };
+        func(self.related.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reporting_component`]
+    pub  fn reporting_component_set(&mut self, reporting_component: impl Into<Option<String>>) -> &mut Self {
+        self.reporting_component = reporting_component.into(); self
+    }
+
+    pub  fn reporting_component(&mut self) -> &mut String {
+        if self.reporting_component.is_none() { self.reporting_component = Some(Default::default()) }
+        self.reporting_component.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reporting_component`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reporting_component_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reporting_component.is_none() { self.reporting_component = Some(Default::default()) };
+        func(self.reporting_component.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reporting_instance`]
+    pub  fn reporting_instance_set(&mut self, reporting_instance: impl Into<Option<String>>) -> &mut Self {
+        self.reporting_instance = reporting_instance.into(); self
+    }
+
+    pub  fn reporting_instance(&mut self) -> &mut String {
+        if self.reporting_instance.is_none() { self.reporting_instance = Some(Default::default()) }
+        self.reporting_instance.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reporting_instance`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reporting_instance_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reporting_instance.is_none() { self.reporting_instance = Some(Default::default()) };
+        func(self.reporting_instance.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::series`]
+    pub  fn series_set(&mut self, series: impl Into<Option<crate::api::core::v1::EventSeries>>) -> &mut Self {
+        self.series = series.into(); self
+    }
+
+    pub  fn series(&mut self) -> &mut crate::api::core::v1::EventSeries {
+        if self.series.is_none() { self.series = Some(Default::default()) }
+        self.series.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::series`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn series_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EventSeries)) -> &mut Self {
+        if self.series.is_none() { self.series = Some(Default::default()) };
+        func(self.series.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::source`]
+    pub  fn source_set(&mut self, source: impl Into<Option<crate::api::core::v1::EventSource>>) -> &mut Self {
+        self.source = source.into(); self
+    }
+
+    pub  fn source(&mut self) -> &mut crate::api::core::v1::EventSource {
+        if self.source.is_none() { self.source = Some(Default::default()) }
+        self.source.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::source`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn source_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EventSource)) -> &mut Self {
+        if self.source.is_none() { self.source = Some(Default::default()) };
+        func(self.source.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin /v1/Event
 

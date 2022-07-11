@@ -14,7 +14,104 @@ pub struct CSINodeDriver {
 
     /// topologyKeys is the list of keys supported by the driver. When a driver is initialized on a cluster, it provides a set of topology keys that it understands (e.g. "company.com/zone", "company.com/region"). When a driver is initialized on a node, it provides the same topology keys along with values. Kubelet will expose these topology keys as labels on its own node object. When Kubernetes does topology aware provisioning, it can use this list to determine which labels it should retrieve from the node object and pass back to the driver. It is possible for different nodes to use different topology keys. This can be empty if driver does not support topology.
     pub topology_keys: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSINodeDriver  {
+    /// Set [`Self::allocatable`]
+    pub  fn allocatable_set(&mut self, allocatable: impl Into<Option<crate::api::storage::v1beta1::VolumeNodeResources>>) -> &mut Self {
+        self.allocatable = allocatable.into(); self
+    }
+
+    pub  fn allocatable(&mut self) -> &mut crate::api::storage::v1beta1::VolumeNodeResources {
+        if self.allocatable.is_none() { self.allocatable = Some(Default::default()) }
+        self.allocatable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allocatable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allocatable_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1beta1::VolumeNodeResources)) -> &mut Self {
+        if self.allocatable.is_none() { self.allocatable = Some(Default::default()) };
+        func(self.allocatable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::node_id`]
+    pub  fn node_id_set(&mut self, node_id: impl Into<String>) -> &mut Self {
+        self.node_id = node_id.into(); self
+    }
+
+    pub  fn node_id(&mut self) -> &mut String {
+        &mut self.node_id
+    }
+
+    /// Modify [`Self::node_id`] with a `func`
+    pub  fn node_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.node_id); self
+    }
+
+
+    /// Set [`Self::topology_keys`]
+    pub  fn topology_keys_set(&mut self, topology_keys: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.topology_keys = topology_keys.into(); self
+    }
+
+    pub  fn topology_keys(&mut self) -> &mut Vec<String> {
+        if self.topology_keys.is_none() { self.topology_keys = Some(Default::default()) }
+        self.topology_keys.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::topology_keys`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn topology_keys_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.topology_keys.is_none() { self.topology_keys = Some(Default::default()) };
+        func(self.topology_keys.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::topology_keys`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn topology_keys_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.topology_keys.is_none() {
+            self.topology_keys = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.topology_keys.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::topology_keys`]
+    pub  fn topology_keys_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.topology_keys.is_none() { self.topology_keys = Some(Vec::new()); }
+         let topology_keys = &mut self.topology_keys.as_mut().unwrap();
+         for item in other.borrow() {
+             topology_keys.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

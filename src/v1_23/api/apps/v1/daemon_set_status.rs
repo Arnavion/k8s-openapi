@@ -32,7 +32,210 @@ pub struct DaemonSetStatus {
 
     /// The total number of nodes that are running updated daemon pod
     pub updated_number_scheduled: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DaemonSetStatus  {
+    /// Set [`Self::collision_count`]
+    pub  fn collision_count_set(&mut self, collision_count: impl Into<Option<i32>>) -> &mut Self {
+        self.collision_count = collision_count.into(); self
+    }
+
+    pub  fn collision_count(&mut self) -> &mut i32 {
+        if self.collision_count.is_none() { self.collision_count = Some(Default::default()) }
+        self.collision_count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::collision_count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn collision_count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.collision_count.is_none() { self.collision_count = Some(Default::default()) };
+        func(self.collision_count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::apps::v1::DaemonSetCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::apps::v1::DaemonSetCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::apps::v1::DaemonSetCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::DaemonSetCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::apps::v1::DaemonSetCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::current_number_scheduled`]
+    pub  fn current_number_scheduled_set(&mut self, current_number_scheduled: impl Into<i32>) -> &mut Self {
+        self.current_number_scheduled = current_number_scheduled.into(); self
+    }
+
+    pub  fn current_number_scheduled(&mut self) -> &mut i32 {
+        &mut self.current_number_scheduled
+    }
+
+    /// Modify [`Self::current_number_scheduled`] with a `func`
+    pub  fn current_number_scheduled_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.current_number_scheduled); self
+    }
+
+
+    /// Set [`Self::desired_number_scheduled`]
+    pub  fn desired_number_scheduled_set(&mut self, desired_number_scheduled: impl Into<i32>) -> &mut Self {
+        self.desired_number_scheduled = desired_number_scheduled.into(); self
+    }
+
+    pub  fn desired_number_scheduled(&mut self) -> &mut i32 {
+        &mut self.desired_number_scheduled
+    }
+
+    /// Modify [`Self::desired_number_scheduled`] with a `func`
+    pub  fn desired_number_scheduled_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.desired_number_scheduled); self
+    }
+
+
+    /// Set [`Self::number_available`]
+    pub  fn number_available_set(&mut self, number_available: impl Into<Option<i32>>) -> &mut Self {
+        self.number_available = number_available.into(); self
+    }
+
+    pub  fn number_available(&mut self) -> &mut i32 {
+        if self.number_available.is_none() { self.number_available = Some(Default::default()) }
+        self.number_available.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::number_available`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn number_available_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.number_available.is_none() { self.number_available = Some(Default::default()) };
+        func(self.number_available.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::number_misscheduled`]
+    pub  fn number_misscheduled_set(&mut self, number_misscheduled: impl Into<i32>) -> &mut Self {
+        self.number_misscheduled = number_misscheduled.into(); self
+    }
+
+    pub  fn number_misscheduled(&mut self) -> &mut i32 {
+        &mut self.number_misscheduled
+    }
+
+    /// Modify [`Self::number_misscheduled`] with a `func`
+    pub  fn number_misscheduled_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.number_misscheduled); self
+    }
+
+
+    /// Set [`Self::number_ready`]
+    pub  fn number_ready_set(&mut self, number_ready: impl Into<i32>) -> &mut Self {
+        self.number_ready = number_ready.into(); self
+    }
+
+    pub  fn number_ready(&mut self) -> &mut i32 {
+        &mut self.number_ready
+    }
+
+    /// Modify [`Self::number_ready`] with a `func`
+    pub  fn number_ready_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.number_ready); self
+    }
+
+
+    /// Set [`Self::number_unavailable`]
+    pub  fn number_unavailable_set(&mut self, number_unavailable: impl Into<Option<i32>>) -> &mut Self {
+        self.number_unavailable = number_unavailable.into(); self
+    }
+
+    pub  fn number_unavailable(&mut self) -> &mut i32 {
+        if self.number_unavailable.is_none() { self.number_unavailable = Some(Default::default()) }
+        self.number_unavailable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::number_unavailable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn number_unavailable_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.number_unavailable.is_none() { self.number_unavailable = Some(Default::default()) };
+        func(self.number_unavailable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::updated_number_scheduled`]
+    pub  fn updated_number_scheduled_set(&mut self, updated_number_scheduled: impl Into<Option<i32>>) -> &mut Self {
+        self.updated_number_scheduled = updated_number_scheduled.into(); self
+    }
+
+    pub  fn updated_number_scheduled(&mut self) -> &mut i32 {
+        if self.updated_number_scheduled.is_none() { self.updated_number_scheduled = Some(Default::default()) }
+        self.updated_number_scheduled.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::updated_number_scheduled`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn updated_number_scheduled_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.updated_number_scheduled.is_none() { self.updated_number_scheduled = Some(Default::default()) };
+        func(self.updated_number_scheduled.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

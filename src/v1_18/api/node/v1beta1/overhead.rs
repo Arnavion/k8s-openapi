@@ -5,7 +5,55 @@
 pub struct Overhead {
     /// PodFixed represents the fixed resource overhead associated with running a pod.
     pub pod_fixed: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Overhead  {
+    /// Set [`Self::pod_fixed`]
+    pub  fn pod_fixed_set(&mut self, pod_fixed: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.pod_fixed = pod_fixed.into(); self
+    }
+
+    pub  fn pod_fixed(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.pod_fixed.is_none() { self.pod_fixed = Some(Default::default()) }
+        self.pod_fixed.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_fixed`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_fixed_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.pod_fixed.is_none() { self.pod_fixed = Some(Default::default()) };
+        func(self.pod_fixed.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::pod_fixed`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn pod_fixed_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.pod_fixed.is_none() {
+            self.pod_fixed = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.pod_fixed.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::pod_fixed`]
+    pub  fn pod_fixed_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.pod_fixed.is_none() { self.pod_fixed = Some(std::collections::BTreeMap::new()); }
+         let pod_fixed = &mut self.pod_fixed.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             pod_fixed.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Overhead {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

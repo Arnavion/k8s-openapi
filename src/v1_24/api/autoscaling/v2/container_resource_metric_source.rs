@@ -11,7 +11,58 @@ pub struct ContainerResourceMetricSource {
 
     /// target specifies the target value for the given metric
     pub target: crate::api::autoscaling::v2::MetricTarget,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerResourceMetricSource  {
+    /// Set [`Self::container`]
+    pub  fn container_set(&mut self, container: impl Into<String>) -> &mut Self {
+        self.container = container.into(); self
+    }
+
+    pub  fn container(&mut self) -> &mut String {
+        &mut self.container
+    }
+
+    /// Modify [`Self::container`] with a `func`
+    pub  fn container_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.container); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::target`]
+    pub  fn target_set(&mut self, target: impl Into<crate::api::autoscaling::v2::MetricTarget>) -> &mut Self {
+        self.target = target.into(); self
+    }
+
+    pub  fn target(&mut self) -> &mut crate::api::autoscaling::v2::MetricTarget {
+        &mut self.target
+    }
+
+    /// Modify [`Self::target`] with a `func`
+    pub  fn target_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2::MetricTarget)) -> &mut Self {
+        func(&mut self.target); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

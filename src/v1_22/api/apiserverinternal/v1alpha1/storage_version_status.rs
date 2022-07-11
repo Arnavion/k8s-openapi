@@ -11,7 +11,116 @@ pub struct StorageVersionStatus {
 
     /// The reported versions per API server instance.
     pub storage_versions: Option<Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StorageVersionStatus  {
+    /// Set [`Self::common_encoding_version`]
+    pub  fn common_encoding_version_set(&mut self, common_encoding_version: impl Into<Option<String>>) -> &mut Self {
+        self.common_encoding_version = common_encoding_version.into(); self
+    }
+
+    pub  fn common_encoding_version(&mut self) -> &mut String {
+        if self.common_encoding_version.is_none() { self.common_encoding_version = Some(Default::default()) }
+        self.common_encoding_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::common_encoding_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn common_encoding_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.common_encoding_version.is_none() { self.common_encoding_version = Some(Default::default()) };
+        func(self.common_encoding_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::apiserverinternal::v1alpha1::StorageVersionCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::apiserverinternal::v1alpha1::StorageVersionCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::apiserverinternal::v1alpha1::StorageVersionCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::storage_versions`]
+    pub  fn storage_versions_set(&mut self, storage_versions: impl Into<Option<Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>>>) -> &mut Self {
+        self.storage_versions = storage_versions.into(); self
+    }
+
+    pub  fn storage_versions(&mut self) -> &mut Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion> {
+        if self.storage_versions.is_none() { self.storage_versions = Some(Default::default()) }
+        self.storage_versions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_versions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_versions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>)) -> &mut Self {
+        if self.storage_versions.is_none() { self.storage_versions = Some(Default::default()) };
+        func(self.storage_versions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::storage_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn storage_versions_push_with(&mut self, func: impl FnOnce(&mut crate::api::apiserverinternal::v1alpha1::ServerStorageVersion)) -> &mut Self {
+        if self.storage_versions.is_none() {
+            self.storage_versions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.storage_versions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::storage_versions`]
+    pub  fn storage_versions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::apiserverinternal::v1alpha1::ServerStorageVersion]>) -> &mut Self {
+         if self.storage_versions.is_none() { self.storage_versions = Some(Vec::new()); }
+         let storage_versions = &mut self.storage_versions.as_mut().unwrap();
+         for item in other.borrow() {
+             storage_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StorageVersionStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

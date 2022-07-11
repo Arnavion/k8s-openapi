@@ -8,7 +8,51 @@ pub struct RollingUpdateStatefulSetStrategy {
 
     /// Partition indicates the ordinal at which the StatefulSet should be partitioned for updates. During a rolling update, all pods from ordinal Replicas-1 to Partition are updated. All pods from ordinal Partition-1 to 0 remain untouched. This is helpful in being able to do a canary based deployment. The default value is 0.
     pub partition: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RollingUpdateStatefulSetStrategy  {
+    /// Set [`Self::max_unavailable`]
+    pub  fn max_unavailable_set(&mut self, max_unavailable: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.max_unavailable = max_unavailable.into(); self
+    }
+
+    pub  fn max_unavailable(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) }
+        self.max_unavailable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_unavailable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_unavailable_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) };
+        func(self.max_unavailable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::partition`]
+    pub  fn partition_set(&mut self, partition: impl Into<Option<i32>>) -> &mut Self {
+        self.partition = partition.into(); self
+    }
+
+    pub  fn partition(&mut self) -> &mut i32 {
+        if self.partition.is_none() { self.partition = Some(Default::default()) }
+        self.partition.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::partition`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn partition_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.partition.is_none() { self.partition = Some(Default::default()) };
+        func(self.partition.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateStatefulSetStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

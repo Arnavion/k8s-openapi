@@ -8,7 +8,74 @@ pub struct ProjectedVolumeSource {
 
     /// sources is the list of volume projections
     pub sources: Option<Vec<crate::api::core::v1::VolumeProjection>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ProjectedVolumeSource  {
+    /// Set [`Self::default_mode`]
+    pub  fn default_mode_set(&mut self, default_mode: impl Into<Option<i32>>) -> &mut Self {
+        self.default_mode = default_mode.into(); self
+    }
+
+    pub  fn default_mode(&mut self) -> &mut i32 {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) }
+        self.default_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_mode_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) };
+        func(self.default_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::sources`]
+    pub  fn sources_set(&mut self, sources: impl Into<Option<Vec<crate::api::core::v1::VolumeProjection>>>) -> &mut Self {
+        self.sources = sources.into(); self
+    }
+
+    pub  fn sources(&mut self) -> &mut Vec<crate::api::core::v1::VolumeProjection> {
+        if self.sources.is_none() { self.sources = Some(Default::default()) }
+        self.sources.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::sources`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn sources_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::VolumeProjection>)) -> &mut Self {
+        if self.sources.is_none() { self.sources = Some(Default::default()) };
+        func(self.sources.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::sources`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn sources_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VolumeProjection)) -> &mut Self {
+        if self.sources.is_none() {
+            self.sources = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.sources.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::sources`]
+    pub  fn sources_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::VolumeProjection]>) -> &mut Self {
+         if self.sources.is_none() { self.sources = Some(Vec::new()); }
+         let sources = &mut self.sources.as_mut().unwrap();
+         for item in other.borrow() {
+             sources.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

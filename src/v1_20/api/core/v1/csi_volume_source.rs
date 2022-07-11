@@ -17,7 +17,127 @@ pub struct CSIVolumeSource {
 
     /// VolumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
     pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSIVolumeSource  {
+    /// Set [`Self::driver`]
+    pub  fn driver_set(&mut self, driver: impl Into<String>) -> &mut Self {
+        self.driver = driver.into(); self
+    }
+
+    pub  fn driver(&mut self) -> &mut String {
+        &mut self.driver
+    }
+
+    /// Modify [`Self::driver`] with a `func`
+    pub  fn driver_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.driver); self
+    }
+
+
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::node_publish_secret_ref`]
+    pub  fn node_publish_secret_ref_set(&mut self, node_publish_secret_ref: impl Into<Option<crate::api::core::v1::LocalObjectReference>>) -> &mut Self {
+        self.node_publish_secret_ref = node_publish_secret_ref.into(); self
+    }
+
+    pub  fn node_publish_secret_ref(&mut self) -> &mut crate::api::core::v1::LocalObjectReference {
+        if self.node_publish_secret_ref.is_none() { self.node_publish_secret_ref = Some(Default::default()) }
+        self.node_publish_secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_publish_secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_publish_secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LocalObjectReference)) -> &mut Self {
+        if self.node_publish_secret_ref.is_none() { self.node_publish_secret_ref = Some(Default::default()) };
+        func(self.node_publish_secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_attributes`]
+    pub  fn volume_attributes_set(&mut self, volume_attributes: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.volume_attributes = volume_attributes.into(); self
+    }
+
+    pub  fn volume_attributes(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.volume_attributes.is_none() { self.volume_attributes = Some(Default::default()) }
+        self.volume_attributes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_attributes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_attributes_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.volume_attributes.is_none() { self.volume_attributes = Some(Default::default()) };
+        func(self.volume_attributes.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::volume_attributes`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn volume_attributes_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_attributes.is_none() {
+            self.volume_attributes = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_attributes.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::volume_attributes`]
+    pub  fn volume_attributes_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.volume_attributes.is_none() { self.volume_attributes = Some(std::collections::BTreeMap::new()); }
+         let volume_attributes = &mut self.volume_attributes.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             volume_attributes.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

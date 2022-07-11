@@ -8,7 +8,51 @@ pub struct StatefulSetPersistentVolumeClaimRetentionPolicy {
 
     /// WhenScaled specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is scaled down. The default policy of `Retain` causes PVCs to not be affected by a scaledown. The `Delete` policy causes the associated PVCs for any excess pods above the replica count to be deleted.
     pub when_scaled: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatefulSetPersistentVolumeClaimRetentionPolicy  {
+    /// Set [`Self::when_deleted`]
+    pub  fn when_deleted_set(&mut self, when_deleted: impl Into<Option<String>>) -> &mut Self {
+        self.when_deleted = when_deleted.into(); self
+    }
+
+    pub  fn when_deleted(&mut self) -> &mut String {
+        if self.when_deleted.is_none() { self.when_deleted = Some(Default::default()) }
+        self.when_deleted.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::when_deleted`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn when_deleted_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.when_deleted.is_none() { self.when_deleted = Some(Default::default()) };
+        func(self.when_deleted.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::when_scaled`]
+    pub  fn when_scaled_set(&mut self, when_scaled: impl Into<Option<String>>) -> &mut Self {
+        self.when_scaled = when_scaled.into(); self
+    }
+
+    pub  fn when_scaled(&mut self) -> &mut String {
+        if self.when_scaled.is_none() { self.when_scaled = Some(Default::default()) }
+        self.when_scaled.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::when_scaled`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn when_scaled_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.when_scaled.is_none() { self.when_scaled = Some(Default::default()) };
+        func(self.when_scaled.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetPersistentVolumeClaimRetentionPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,47 @@ pub struct IngressServiceBackend {
 
     /// Port of the referenced service. A port name or port number is required for a IngressServiceBackend.
     pub port: Option<crate::api::networking::v1::ServiceBackendPort>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressServiceBackend  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<Option<crate::api::networking::v1::ServiceBackendPort>>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut crate::api::networking::v1::ServiceBackendPort {
+        if self.port.is_none() { self.port = Some(Default::default()) }
+        self.port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::ServiceBackendPort)) -> &mut Self {
+        if self.port.is_none() { self.port = Some(Default::default()) };
+        func(self.port.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressServiceBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

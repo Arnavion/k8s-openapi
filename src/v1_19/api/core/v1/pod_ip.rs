@@ -6,7 +6,32 @@
 pub struct PodIP {
     /// ip is an IP address (IPv4 or IPv6) assigned to the pod
     pub ip: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodIP  {
+    /// Set [`Self::ip`]
+    pub  fn ip_set(&mut self, ip: impl Into<Option<String>>) -> &mut Self {
+        self.ip = ip.into(); self
+    }
+
+    pub  fn ip(&mut self) -> &mut String {
+        if self.ip.is_none() { self.ip = Some(Default::default()) }
+        self.ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip.is_none() { self.ip = Some(Default::default()) };
+        func(self.ip.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodIP {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,113 @@ pub struct SubjectRulesReviewStatus {
 
     /// ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.
     pub resource_rules: Vec<crate::api::authorization::v1beta1::ResourceRule>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SubjectRulesReviewStatus  {
+    /// Set [`Self::evaluation_error`]
+    pub  fn evaluation_error_set(&mut self, evaluation_error: impl Into<Option<String>>) -> &mut Self {
+        self.evaluation_error = evaluation_error.into(); self
+    }
+
+    pub  fn evaluation_error(&mut self) -> &mut String {
+        if self.evaluation_error.is_none() { self.evaluation_error = Some(Default::default()) }
+        self.evaluation_error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::evaluation_error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn evaluation_error_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.evaluation_error.is_none() { self.evaluation_error = Some(Default::default()) };
+        func(self.evaluation_error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::incomplete`]
+    pub  fn incomplete_set(&mut self, incomplete: impl Into<bool>) -> &mut Self {
+        self.incomplete = incomplete.into(); self
+    }
+
+    pub  fn incomplete(&mut self) -> &mut bool {
+        &mut self.incomplete
+    }
+
+    /// Modify [`Self::incomplete`] with a `func`
+    pub  fn incomplete_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        func(&mut self.incomplete); self
+    }
+
+
+    /// Set [`Self::non_resource_rules`]
+    pub  fn non_resource_rules_set(&mut self, non_resource_rules: impl Into<Vec<crate::api::authorization::v1beta1::NonResourceRule>>) -> &mut Self {
+        self.non_resource_rules = non_resource_rules.into(); self
+    }
+
+    pub  fn non_resource_rules(&mut self) -> &mut Vec<crate::api::authorization::v1beta1::NonResourceRule> {
+        &mut self.non_resource_rules
+    }
+
+    /// Modify [`Self::non_resource_rules`] with a `func`
+    pub  fn non_resource_rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::authorization::v1beta1::NonResourceRule>)) -> &mut Self {
+        func(&mut self.non_resource_rules); self
+    }
+
+    /// Push new element to [`Self::non_resource_rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn non_resource_rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::authorization::v1beta1::NonResourceRule)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.non_resource_rules.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::non_resource_rules`]
+    pub  fn non_resource_rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::authorization::v1beta1::NonResourceRule]>) -> &mut Self {
+         for item in other.borrow() {
+             self.non_resource_rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::resource_rules`]
+    pub  fn resource_rules_set(&mut self, resource_rules: impl Into<Vec<crate::api::authorization::v1beta1::ResourceRule>>) -> &mut Self {
+        self.resource_rules = resource_rules.into(); self
+    }
+
+    pub  fn resource_rules(&mut self) -> &mut Vec<crate::api::authorization::v1beta1::ResourceRule> {
+        &mut self.resource_rules
+    }
+
+    /// Modify [`Self::resource_rules`] with a `func`
+    pub  fn resource_rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::authorization::v1beta1::ResourceRule>)) -> &mut Self {
+        func(&mut self.resource_rules); self
+    }
+
+    /// Push new element to [`Self::resource_rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn resource_rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::authorization::v1beta1::ResourceRule)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.resource_rules.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::resource_rules`]
+    pub  fn resource_rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::authorization::v1beta1::ResourceRule]>) -> &mut Self {
+         for item in other.borrow() {
+             self.resource_rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SubjectRulesReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,85 @@ pub struct SubjectAccessReviewStatus {
 
     /// Reason is optional.  It indicates why a request was allowed or denied.
     pub reason: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SubjectAccessReviewStatus  {
+    /// Set [`Self::allowed`]
+    pub  fn allowed_set(&mut self, allowed: impl Into<bool>) -> &mut Self {
+        self.allowed = allowed.into(); self
+    }
+
+    pub  fn allowed(&mut self) -> &mut bool {
+        &mut self.allowed
+    }
+
+    /// Modify [`Self::allowed`] with a `func`
+    pub  fn allowed_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        func(&mut self.allowed); self
+    }
+
+
+    /// Set [`Self::denied`]
+    pub  fn denied_set(&mut self, denied: impl Into<Option<bool>>) -> &mut Self {
+        self.denied = denied.into(); self
+    }
+
+    pub  fn denied(&mut self) -> &mut bool {
+        if self.denied.is_none() { self.denied = Some(Default::default()) }
+        self.denied.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::denied`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn denied_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.denied.is_none() { self.denied = Some(Default::default()) };
+        func(self.denied.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::evaluation_error`]
+    pub  fn evaluation_error_set(&mut self, evaluation_error: impl Into<Option<String>>) -> &mut Self {
+        self.evaluation_error = evaluation_error.into(); self
+    }
+
+    pub  fn evaluation_error(&mut self) -> &mut String {
+        if self.evaluation_error.is_none() { self.evaluation_error = Some(Default::default()) }
+        self.evaluation_error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::evaluation_error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn evaluation_error_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.evaluation_error.is_none() { self.evaluation_error = Some(Default::default()) };
+        func(self.evaluation_error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

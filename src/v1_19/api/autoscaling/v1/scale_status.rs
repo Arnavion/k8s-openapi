@@ -8,7 +8,47 @@ pub struct ScaleStatus {
 
     /// label query over pods that should match the replicas count. This is same as the label selector but in the string format to avoid introspection by clients. The string will be in the same format as the query-param syntax. More info about label selectors: http://kubernetes.io/docs/user-guide/labels#label-selectors
     pub selector: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ScaleStatus  {
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<i32>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        &mut self.replicas
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.replicas); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<String>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut String {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

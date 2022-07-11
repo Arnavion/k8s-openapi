@@ -77,7 +77,247 @@ pub struct MutatingWebhook {
 
     /// TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds.
     pub timeout_seconds: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl MutatingWebhook  {
+    /// Set [`Self::admission_review_versions`]
+    pub  fn admission_review_versions_set(&mut self, admission_review_versions: impl Into<Vec<String>>) -> &mut Self {
+        self.admission_review_versions = admission_review_versions.into(); self
+    }
+
+    pub  fn admission_review_versions(&mut self) -> &mut Vec<String> {
+        &mut self.admission_review_versions
+    }
+
+    /// Modify [`Self::admission_review_versions`] with a `func`
+    pub  fn admission_review_versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.admission_review_versions); self
+    }
+
+    /// Push new element to [`Self::admission_review_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn admission_review_versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.admission_review_versions.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::admission_review_versions`]
+    pub  fn admission_review_versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.admission_review_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::client_config`]
+    pub  fn client_config_set(&mut self, client_config: impl Into<crate::api::admissionregistration::v1::WebhookClientConfig>) -> &mut Self {
+        self.client_config = client_config.into(); self
+    }
+
+    pub  fn client_config(&mut self) -> &mut crate::api::admissionregistration::v1::WebhookClientConfig {
+        &mut self.client_config
+    }
+
+    /// Modify [`Self::client_config`] with a `func`
+    pub  fn client_config_with(&mut self, func: impl FnOnce(&mut crate::api::admissionregistration::v1::WebhookClientConfig)) -> &mut Self {
+        func(&mut self.client_config); self
+    }
+
+
+    /// Set [`Self::failure_policy`]
+    pub  fn failure_policy_set(&mut self, failure_policy: impl Into<Option<String>>) -> &mut Self {
+        self.failure_policy = failure_policy.into(); self
+    }
+
+    pub  fn failure_policy(&mut self) -> &mut String {
+        if self.failure_policy.is_none() { self.failure_policy = Some(Default::default()) }
+        self.failure_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::failure_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn failure_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.failure_policy.is_none() { self.failure_policy = Some(Default::default()) };
+        func(self.failure_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::match_policy`]
+    pub  fn match_policy_set(&mut self, match_policy: impl Into<Option<String>>) -> &mut Self {
+        self.match_policy = match_policy.into(); self
+    }
+
+    pub  fn match_policy(&mut self) -> &mut String {
+        if self.match_policy.is_none() { self.match_policy = Some(Default::default()) }
+        self.match_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.match_policy.is_none() { self.match_policy = Some(Default::default()) };
+        func(self.match_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::namespace_selector`]
+    pub  fn namespace_selector_set(&mut self, namespace_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.namespace_selector = namespace_selector.into(); self
+    }
+
+    pub  fn namespace_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.namespace_selector.is_none() { self.namespace_selector = Some(Default::default()) }
+        self.namespace_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.namespace_selector.is_none() { self.namespace_selector = Some(Default::default()) };
+        func(self.namespace_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::object_selector`]
+    pub  fn object_selector_set(&mut self, object_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.object_selector = object_selector.into(); self
+    }
+
+    pub  fn object_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.object_selector.is_none() { self.object_selector = Some(Default::default()) }
+        self.object_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::object_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn object_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.object_selector.is_none() { self.object_selector = Some(Default::default()) };
+        func(self.object_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reinvocation_policy`]
+    pub  fn reinvocation_policy_set(&mut self, reinvocation_policy: impl Into<Option<String>>) -> &mut Self {
+        self.reinvocation_policy = reinvocation_policy.into(); self
+    }
+
+    pub  fn reinvocation_policy(&mut self) -> &mut String {
+        if self.reinvocation_policy.is_none() { self.reinvocation_policy = Some(Default::default()) }
+        self.reinvocation_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reinvocation_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reinvocation_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reinvocation_policy.is_none() { self.reinvocation_policy = Some(Default::default()) };
+        func(self.reinvocation_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::rules`]
+    pub  fn rules_set(&mut self, rules: impl Into<Option<Vec<crate::api::admissionregistration::v1::RuleWithOperations>>>) -> &mut Self {
+        self.rules = rules.into(); self
+    }
+
+    pub  fn rules(&mut self) -> &mut Vec<crate::api::admissionregistration::v1::RuleWithOperations> {
+        if self.rules.is_none() { self.rules = Some(Default::default()) }
+        self.rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::admissionregistration::v1::RuleWithOperations>)) -> &mut Self {
+        if self.rules.is_none() { self.rules = Some(Default::default()) };
+        func(self.rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::admissionregistration::v1::RuleWithOperations)) -> &mut Self {
+        if self.rules.is_none() {
+            self.rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::rules`]
+    pub  fn rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::admissionregistration::v1::RuleWithOperations]>) -> &mut Self {
+         if self.rules.is_none() { self.rules = Some(Vec::new()); }
+         let rules = &mut self.rules.as_mut().unwrap();
+         for item in other.borrow() {
+             rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::side_effects`]
+    pub  fn side_effects_set(&mut self, side_effects: impl Into<String>) -> &mut Self {
+        self.side_effects = side_effects.into(); self
+    }
+
+    pub  fn side_effects(&mut self) -> &mut String {
+        &mut self.side_effects
+    }
+
+    /// Modify [`Self::side_effects`] with a `func`
+    pub  fn side_effects_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.side_effects); self
+    }
+
+
+    /// Set [`Self::timeout_seconds`]
+    pub  fn timeout_seconds_set(&mut self, timeout_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.timeout_seconds = timeout_seconds.into(); self
+    }
+
+    pub  fn timeout_seconds(&mut self) -> &mut i32 {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) }
+        self.timeout_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::timeout_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn timeout_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) };
+        func(self.timeout_seconds.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

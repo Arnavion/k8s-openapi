@@ -14,7 +14,89 @@ pub struct BoundObjectReference {
 
     /// UID of the referent.
     pub uid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl BoundObjectReference  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<Option<String>>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+    pub  fn api_version(&mut self) -> &mut String {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) }
+        self.api_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) };
+        func(self.api_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<Option<String>>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        if self.kind.is_none() { self.kind = Some(Default::default()) }
+        self.kind.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.kind.is_none() { self.kind = Some(Default::default()) };
+        func(self.kind.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for BoundObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

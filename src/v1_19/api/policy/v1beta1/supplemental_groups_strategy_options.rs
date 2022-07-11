@@ -8,7 +8,74 @@ pub struct SupplementalGroupsStrategyOptions {
 
     /// rule is the strategy that will dictate what supplemental groups is used in the SecurityContext.
     pub rule: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SupplementalGroupsStrategyOptions  {
+    /// Set [`Self::ranges`]
+    pub  fn ranges_set(&mut self, ranges: impl Into<Option<Vec<crate::api::policy::v1beta1::IDRange>>>) -> &mut Self {
+        self.ranges = ranges.into(); self
+    }
+
+    pub  fn ranges(&mut self) -> &mut Vec<crate::api::policy::v1beta1::IDRange> {
+        if self.ranges.is_none() { self.ranges = Some(Default::default()) }
+        self.ranges.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ranges`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ranges_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::IDRange>)) -> &mut Self {
+        if self.ranges.is_none() { self.ranges = Some(Default::default()) };
+        func(self.ranges.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ranges`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ranges_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::IDRange)) -> &mut Self {
+        if self.ranges.is_none() {
+            self.ranges = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ranges.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ranges`]
+    pub  fn ranges_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::IDRange]>) -> &mut Self {
+         if self.ranges.is_none() { self.ranges = Some(Vec::new()); }
+         let ranges = &mut self.ranges.as_mut().unwrap();
+         for item in other.borrow() {
+             ranges.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::rule`]
+    pub  fn rule_set(&mut self, rule: impl Into<Option<String>>) -> &mut Self {
+        self.rule = rule.into(); self
+    }
+
+    pub  fn rule(&mut self) -> &mut String {
+        if self.rule.is_none() { self.rule = Some(Default::default()) }
+        self.rule.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rule`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rule_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.rule.is_none() { self.rule = Some(Default::default()) };
+        func(self.rule.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SupplementalGroupsStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

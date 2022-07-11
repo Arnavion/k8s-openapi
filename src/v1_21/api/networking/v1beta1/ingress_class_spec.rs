@@ -8,7 +8,51 @@ pub struct IngressClassSpec {
 
     /// Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
     pub parameters: Option<crate::api::networking::v1beta1::IngressClassParametersReference>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressClassSpec  {
+    /// Set [`Self::controller`]
+    pub  fn controller_set(&mut self, controller: impl Into<Option<String>>) -> &mut Self {
+        self.controller = controller.into(); self
+    }
+
+    pub  fn controller(&mut self) -> &mut String {
+        if self.controller.is_none() { self.controller = Some(Default::default()) }
+        self.controller.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::controller`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn controller_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.controller.is_none() { self.controller = Some(Default::default()) };
+        func(self.controller.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::parameters`]
+    pub  fn parameters_set(&mut self, parameters: impl Into<Option<crate::api::networking::v1beta1::IngressClassParametersReference>>) -> &mut Self {
+        self.parameters = parameters.into(); self
+    }
+
+    pub  fn parameters(&mut self) -> &mut crate::api::networking::v1beta1::IngressClassParametersReference {
+        if self.parameters.is_none() { self.parameters = Some(Default::default()) }
+        self.parameters.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::parameters`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn parameters_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1beta1::IngressClassParametersReference)) -> &mut Self {
+        if self.parameters.is_none() { self.parameters = Some(Default::default()) };
+        func(self.parameters.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressClassSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

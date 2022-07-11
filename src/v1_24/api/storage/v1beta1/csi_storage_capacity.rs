@@ -33,7 +33,100 @@ pub struct CSIStorageCapacity {
 
     /// The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
     pub storage_class_name: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSIStorageCapacity  {
+    /// Set [`Self::capacity`]
+    pub  fn capacity_set(&mut self, capacity: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.capacity = capacity.into(); self
+    }
+
+    pub  fn capacity(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.capacity.is_none() { self.capacity = Some(Default::default()) }
+        self.capacity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::capacity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn capacity_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.capacity.is_none() { self.capacity = Some(Default::default()) };
+        func(self.capacity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::maximum_volume_size`]
+    pub  fn maximum_volume_size_set(&mut self, maximum_volume_size: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.maximum_volume_size = maximum_volume_size.into(); self
+    }
+
+    pub  fn maximum_volume_size(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.maximum_volume_size.is_none() { self.maximum_volume_size = Some(Default::default()) }
+        self.maximum_volume_size.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::maximum_volume_size`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn maximum_volume_size_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.maximum_volume_size.is_none() { self.maximum_volume_size = Some(Default::default()) };
+        func(self.maximum_volume_size.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::node_topology`]
+    pub  fn node_topology_set(&mut self, node_topology: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.node_topology = node_topology.into(); self
+    }
+
+    pub  fn node_topology(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.node_topology.is_none() { self.node_topology = Some(Default::default()) }
+        self.node_topology.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_topology`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_topology_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.node_topology.is_none() { self.node_topology = Some(Default::default()) };
+        func(self.node_topology.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_class_name`]
+    pub  fn storage_class_name_set(&mut self, storage_class_name: impl Into<String>) -> &mut Self {
+        self.storage_class_name = storage_class_name.into(); self
+    }
+
+    pub  fn storage_class_name(&mut self) -> &mut String {
+        &mut self.storage_class_name
+    }
+
+    /// Modify [`Self::storage_class_name`] with a `func`
+    pub  fn storage_class_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.storage_class_name); self
+    }
+
+
+}
+
 
 // Begin storage.k8s.io/v1beta1/CSIStorageCapacity
 

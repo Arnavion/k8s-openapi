@@ -8,7 +8,43 @@ pub struct RuntimeClass {
 
     /// Specification of the RuntimeClass More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: crate::api::node::v1alpha1::RuntimeClassSpec,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RuntimeClass  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::node::v1alpha1::RuntimeClassSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::node::v1alpha1::RuntimeClassSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::node::v1alpha1::RuntimeClassSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+}
+
 
 // Begin node.k8s.io/v1alpha1/RuntimeClass
 

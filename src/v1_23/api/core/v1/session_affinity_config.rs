@@ -5,7 +5,32 @@
 pub struct SessionAffinityConfig {
     /// clientIP contains the configurations of Client IP based session affinity.
     pub client_ip: Option<crate::api::core::v1::ClientIPConfig>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SessionAffinityConfig  {
+    /// Set [`Self::client_ip`]
+    pub  fn client_ip_set(&mut self, client_ip: impl Into<Option<crate::api::core::v1::ClientIPConfig>>) -> &mut Self {
+        self.client_ip = client_ip.into(); self
+    }
+
+    pub  fn client_ip(&mut self) -> &mut crate::api::core::v1::ClientIPConfig {
+        if self.client_ip.is_none() { self.client_ip = Some(Default::default()) }
+        self.client_ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::client_ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn client_ip_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ClientIPConfig)) -> &mut Self {
+        if self.client_ip.is_none() { self.client_ip = Some(Default::default()) };
+        func(self.client_ip.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SessionAffinityConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

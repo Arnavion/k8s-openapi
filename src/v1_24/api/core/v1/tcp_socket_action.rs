@@ -8,7 +8,47 @@ pub struct TCPSocketAction {
 
     /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
     pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TCPSocketAction  {
+    /// Set [`Self::host`]
+    pub  fn host_set(&mut self, host: impl Into<Option<String>>) -> &mut Self {
+        self.host = host.into(); self
+    }
+
+    pub  fn host(&mut self) -> &mut String {
+        if self.host.is_none() { self.host = Some(Default::default()) }
+        self.host.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.host.is_none() { self.host = Some(Default::default()) };
+        func(self.host.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<crate::apimachinery::pkg::util::intstr::IntOrString>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TCPSocketAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

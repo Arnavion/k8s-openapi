@@ -5,7 +5,55 @@
 pub struct NamespaceSpec {
     /// Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub finalizers: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NamespaceSpec  {
+    /// Set [`Self::finalizers`]
+    pub  fn finalizers_set(&mut self, finalizers: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.finalizers = finalizers.into(); self
+    }
+
+    pub  fn finalizers(&mut self) -> &mut Vec<String> {
+        if self.finalizers.is_none() { self.finalizers = Some(Default::default()) }
+        self.finalizers.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::finalizers`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn finalizers_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.finalizers.is_none() { self.finalizers = Some(Default::default()) };
+        func(self.finalizers.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::finalizers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn finalizers_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.finalizers.is_none() {
+            self.finalizers = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.finalizers.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::finalizers`]
+    pub  fn finalizers_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.finalizers.is_none() { self.finalizers = Some(Vec::new()); }
+         let finalizers = &mut self.finalizers.as_mut().unwrap();
+         for item in other.borrow() {
+             finalizers.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NamespaceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

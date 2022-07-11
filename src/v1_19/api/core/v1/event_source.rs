@@ -8,7 +8,51 @@ pub struct EventSource {
 
     /// Node name on which the event is generated.
     pub host: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EventSource  {
+    /// Set [`Self::component`]
+    pub  fn component_set(&mut self, component: impl Into<Option<String>>) -> &mut Self {
+        self.component = component.into(); self
+    }
+
+    pub  fn component(&mut self) -> &mut String {
+        if self.component.is_none() { self.component = Some(Default::default()) }
+        self.component.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::component`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn component_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.component.is_none() { self.component = Some(Default::default()) };
+        func(self.component.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::host`]
+    pub  fn host_set(&mut self, host: impl Into<Option<String>>) -> &mut Self {
+        self.host = host.into(); self
+    }
+
+    pub  fn host(&mut self) -> &mut String {
+        if self.host.is_none() { self.host = Some(Default::default()) }
+        self.host.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.host.is_none() { self.host = Some(Default::default()) };
+        func(self.host.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EventSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

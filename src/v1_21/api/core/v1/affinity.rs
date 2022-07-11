@@ -11,7 +11,70 @@ pub struct Affinity {
 
     /// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
     pub pod_anti_affinity: Option<crate::api::core::v1::PodAntiAffinity>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Affinity  {
+    /// Set [`Self::node_affinity`]
+    pub  fn node_affinity_set(&mut self, node_affinity: impl Into<Option<crate::api::core::v1::NodeAffinity>>) -> &mut Self {
+        self.node_affinity = node_affinity.into(); self
+    }
+
+    pub  fn node_affinity(&mut self) -> &mut crate::api::core::v1::NodeAffinity {
+        if self.node_affinity.is_none() { self.node_affinity = Some(Default::default()) }
+        self.node_affinity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_affinity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_affinity_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeAffinity)) -> &mut Self {
+        if self.node_affinity.is_none() { self.node_affinity = Some(Default::default()) };
+        func(self.node_affinity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_affinity`]
+    pub  fn pod_affinity_set(&mut self, pod_affinity: impl Into<Option<crate::api::core::v1::PodAffinity>>) -> &mut Self {
+        self.pod_affinity = pod_affinity.into(); self
+    }
+
+    pub  fn pod_affinity(&mut self) -> &mut crate::api::core::v1::PodAffinity {
+        if self.pod_affinity.is_none() { self.pod_affinity = Some(Default::default()) }
+        self.pod_affinity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_affinity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_affinity_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodAffinity)) -> &mut Self {
+        if self.pod_affinity.is_none() { self.pod_affinity = Some(Default::default()) };
+        func(self.pod_affinity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_anti_affinity`]
+    pub  fn pod_anti_affinity_set(&mut self, pod_anti_affinity: impl Into<Option<crate::api::core::v1::PodAntiAffinity>>) -> &mut Self {
+        self.pod_anti_affinity = pod_anti_affinity.into(); self
+    }
+
+    pub  fn pod_anti_affinity(&mut self) -> &mut crate::api::core::v1::PodAntiAffinity {
+        if self.pod_anti_affinity.is_none() { self.pod_anti_affinity = Some(Default::default()) }
+        self.pod_anti_affinity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_anti_affinity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_anti_affinity_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodAntiAffinity)) -> &mut Self {
+        if self.pod_anti_affinity.is_none() { self.pod_anti_affinity = Some(Default::default()) };
+        func(self.pod_anti_affinity.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Affinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,70 @@ pub struct ValidatingWebhookConfiguration {
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
     pub webhooks: Option<Vec<crate::api::admissionregistration::v1::ValidatingWebhook>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ValidatingWebhookConfiguration  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::webhooks`]
+    pub  fn webhooks_set(&mut self, webhooks: impl Into<Option<Vec<crate::api::admissionregistration::v1::ValidatingWebhook>>>) -> &mut Self {
+        self.webhooks = webhooks.into(); self
+    }
+
+    pub  fn webhooks(&mut self) -> &mut Vec<crate::api::admissionregistration::v1::ValidatingWebhook> {
+        if self.webhooks.is_none() { self.webhooks = Some(Default::default()) }
+        self.webhooks.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::webhooks`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn webhooks_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::admissionregistration::v1::ValidatingWebhook>)) -> &mut Self {
+        if self.webhooks.is_none() { self.webhooks = Some(Default::default()) };
+        func(self.webhooks.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::webhooks`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn webhooks_push_with(&mut self, func: impl FnOnce(&mut crate::api::admissionregistration::v1::ValidatingWebhook)) -> &mut Self {
+        if self.webhooks.is_none() {
+            self.webhooks = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.webhooks.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::webhooks`]
+    pub  fn webhooks_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::admissionregistration::v1::ValidatingWebhook]>) -> &mut Self {
+         if self.webhooks.is_none() { self.webhooks = Some(Vec::new()); }
+         let webhooks = &mut self.webhooks.as_mut().unwrap();
+         for item in other.borrow() {
+             webhooks.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin admissionregistration.k8s.io/v1/ValidatingWebhookConfiguration
 

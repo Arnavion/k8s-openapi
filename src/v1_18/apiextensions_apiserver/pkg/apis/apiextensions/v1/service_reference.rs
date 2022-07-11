@@ -14,7 +14,81 @@ pub struct ServiceReference {
 
     /// port is an optional service port at which the webhook will be contacted. `port` should be a valid port number (1-65535, inclusive). Defaults to 443 for backward compatibility.
     pub port: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceReference  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<String>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        &mut self.namespace
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.namespace); self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<Option<String>>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        if self.path.is_none() { self.path = Some(Default::default()) }
+        self.path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.path.is_none() { self.path = Some(Default::default()) };
+        func(self.path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<Option<i32>>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        if self.port.is_none() { self.port = Some(Default::default()) }
+        self.port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.port.is_none() { self.port = Some(Default::default()) };
+        func(self.port.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

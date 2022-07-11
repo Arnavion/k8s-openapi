@@ -8,7 +8,51 @@ pub struct VolumeAttachmentSource {
 
     /// Name of the persistent volume to attach.
     pub persistent_volume_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeAttachmentSource  {
+    /// Set [`Self::inline_volume_spec`]
+    pub  fn inline_volume_spec_set(&mut self, inline_volume_spec: impl Into<Option<crate::api::core::v1::PersistentVolumeSpec>>) -> &mut Self {
+        self.inline_volume_spec = inline_volume_spec.into(); self
+    }
+
+    pub  fn inline_volume_spec(&mut self) -> &mut crate::api::core::v1::PersistentVolumeSpec {
+        if self.inline_volume_spec.is_none() { self.inline_volume_spec = Some(Default::default()) }
+        self.inline_volume_spec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::inline_volume_spec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn inline_volume_spec_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeSpec)) -> &mut Self {
+        if self.inline_volume_spec.is_none() { self.inline_volume_spec = Some(Default::default()) };
+        func(self.inline_volume_spec.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::persistent_volume_name`]
+    pub  fn persistent_volume_name_set(&mut self, persistent_volume_name: impl Into<Option<String>>) -> &mut Self {
+        self.persistent_volume_name = persistent_volume_name.into(); self
+    }
+
+    pub  fn persistent_volume_name(&mut self) -> &mut String {
+        if self.persistent_volume_name.is_none() { self.persistent_volume_name = Some(Default::default()) }
+        self.persistent_volume_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::persistent_volume_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn persistent_volume_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.persistent_volume_name.is_none() { self.persistent_volume_name = Some(Default::default()) };
+        func(self.persistent_volume_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

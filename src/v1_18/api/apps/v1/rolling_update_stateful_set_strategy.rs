@@ -5,7 +5,32 @@
 pub struct RollingUpdateStatefulSetStrategy {
     /// Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
     pub partition: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RollingUpdateStatefulSetStrategy  {
+    /// Set [`Self::partition`]
+    pub  fn partition_set(&mut self, partition: impl Into<Option<i32>>) -> &mut Self {
+        self.partition = partition.into(); self
+    }
+
+    pub  fn partition(&mut self) -> &mut i32 {
+        if self.partition.is_none() { self.partition = Some(Default::default()) }
+        self.partition.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::partition`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn partition_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.partition.is_none() { self.partition = Some(Default::default()) };
+        func(self.partition.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateStatefulSetStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

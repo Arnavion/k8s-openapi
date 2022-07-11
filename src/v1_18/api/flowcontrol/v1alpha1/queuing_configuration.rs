@@ -11,7 +11,70 @@ pub struct QueuingConfiguration {
 
     /// `queues` is the number of queues for this priority level. The queues exist independently at each apiserver. The value must be positive.  Setting it to 1 effectively precludes shufflesharding and thus makes the distinguisher method of associated flow schemas irrelevant.  This field has a default value of 64.
     pub queues: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl QueuingConfiguration  {
+    /// Set [`Self::hand_size`]
+    pub  fn hand_size_set(&mut self, hand_size: impl Into<Option<i32>>) -> &mut Self {
+        self.hand_size = hand_size.into(); self
+    }
+
+    pub  fn hand_size(&mut self) -> &mut i32 {
+        if self.hand_size.is_none() { self.hand_size = Some(Default::default()) }
+        self.hand_size.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hand_size`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hand_size_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.hand_size.is_none() { self.hand_size = Some(Default::default()) };
+        func(self.hand_size.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::queue_length_limit`]
+    pub  fn queue_length_limit_set(&mut self, queue_length_limit: impl Into<Option<i32>>) -> &mut Self {
+        self.queue_length_limit = queue_length_limit.into(); self
+    }
+
+    pub  fn queue_length_limit(&mut self) -> &mut i32 {
+        if self.queue_length_limit.is_none() { self.queue_length_limit = Some(Default::default()) }
+        self.queue_length_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::queue_length_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn queue_length_limit_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.queue_length_limit.is_none() { self.queue_length_limit = Some(Default::default()) };
+        func(self.queue_length_limit.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::queues`]
+    pub  fn queues_set(&mut self, queues: impl Into<Option<i32>>) -> &mut Self {
+        self.queues = queues.into(); self
+    }
+
+    pub  fn queues(&mut self) -> &mut i32 {
+        if self.queues.is_none() { self.queues = Some(Default::default()) }
+        self.queues.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::queues`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn queues_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.queues.is_none() { self.queues = Some(Default::default()) };
+        func(self.queues.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for QueuingConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

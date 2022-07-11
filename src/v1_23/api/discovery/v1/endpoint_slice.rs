@@ -15,7 +15,118 @@ pub struct EndpointSlice {
 
     /// ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
     pub ports: Option<Vec<crate::api::discovery::v1::EndpointPort>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointSlice  {
+    /// Set [`Self::address_type`]
+    pub  fn address_type_set(&mut self, address_type: impl Into<String>) -> &mut Self {
+        self.address_type = address_type.into(); self
+    }
+
+    pub  fn address_type(&mut self) -> &mut String {
+        &mut self.address_type
+    }
+
+    /// Modify [`Self::address_type`] with a `func`
+    pub  fn address_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.address_type); self
+    }
+
+
+    /// Set [`Self::endpoints`]
+    pub  fn endpoints_set(&mut self, endpoints: impl Into<Vec<crate::api::discovery::v1::Endpoint>>) -> &mut Self {
+        self.endpoints = endpoints.into(); self
+    }
+
+    pub  fn endpoints(&mut self) -> &mut Vec<crate::api::discovery::v1::Endpoint> {
+        &mut self.endpoints
+    }
+
+    /// Modify [`Self::endpoints`] with a `func`
+    pub  fn endpoints_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::discovery::v1::Endpoint>)) -> &mut Self {
+        func(&mut self.endpoints); self
+    }
+
+    /// Push new element to [`Self::endpoints`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn endpoints_push_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1::Endpoint)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.endpoints.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::endpoints`]
+    pub  fn endpoints_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::discovery::v1::Endpoint]>) -> &mut Self {
+         for item in other.borrow() {
+             self.endpoints.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::discovery::v1::EndpointPort>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::discovery::v1::EndpointPort> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::discovery::v1::EndpointPort>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1::EndpointPort)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::discovery::v1::EndpointPort]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin discovery.k8s.io/v1/EndpointSlice
 

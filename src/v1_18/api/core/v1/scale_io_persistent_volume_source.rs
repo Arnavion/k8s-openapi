@@ -32,7 +32,191 @@ pub struct ScaleIOPersistentVolumeSource {
 
     /// The name of a volume already created in the ScaleIO system that is associated with this volume source.
     pub volume_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ScaleIOPersistentVolumeSource  {
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::gateway`]
+    pub  fn gateway_set(&mut self, gateway: impl Into<String>) -> &mut Self {
+        self.gateway = gateway.into(); self
+    }
+
+    pub  fn gateway(&mut self) -> &mut String {
+        &mut self.gateway
+    }
+
+    /// Modify [`Self::gateway`] with a `func`
+    pub  fn gateway_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.gateway); self
+    }
+
+
+    /// Set [`Self::protection_domain`]
+    pub  fn protection_domain_set(&mut self, protection_domain: impl Into<Option<String>>) -> &mut Self {
+        self.protection_domain = protection_domain.into(); self
+    }
+
+    pub  fn protection_domain(&mut self) -> &mut String {
+        if self.protection_domain.is_none() { self.protection_domain = Some(Default::default()) }
+        self.protection_domain.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::protection_domain`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn protection_domain_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.protection_domain.is_none() { self.protection_domain = Some(Default::default()) };
+        func(self.protection_domain.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<crate::api::core::v1::SecretReference>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        &mut self.secret_ref
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        func(&mut self.secret_ref); self
+    }
+
+
+    /// Set [`Self::ssl_enabled`]
+    pub  fn ssl_enabled_set(&mut self, ssl_enabled: impl Into<Option<bool>>) -> &mut Self {
+        self.ssl_enabled = ssl_enabled.into(); self
+    }
+
+    pub  fn ssl_enabled(&mut self) -> &mut bool {
+        if self.ssl_enabled.is_none() { self.ssl_enabled = Some(Default::default()) }
+        self.ssl_enabled.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ssl_enabled`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ssl_enabled_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.ssl_enabled.is_none() { self.ssl_enabled = Some(Default::default()) };
+        func(self.ssl_enabled.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_mode`]
+    pub  fn storage_mode_set(&mut self, storage_mode: impl Into<Option<String>>) -> &mut Self {
+        self.storage_mode = storage_mode.into(); self
+    }
+
+    pub  fn storage_mode(&mut self) -> &mut String {
+        if self.storage_mode.is_none() { self.storage_mode = Some(Default::default()) }
+        self.storage_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_mode_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_mode.is_none() { self.storage_mode = Some(Default::default()) };
+        func(self.storage_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_pool`]
+    pub  fn storage_pool_set(&mut self, storage_pool: impl Into<Option<String>>) -> &mut Self {
+        self.storage_pool = storage_pool.into(); self
+    }
+
+    pub  fn storage_pool(&mut self) -> &mut String {
+        if self.storage_pool.is_none() { self.storage_pool = Some(Default::default()) }
+        self.storage_pool.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_pool`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_pool_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_pool.is_none() { self.storage_pool = Some(Default::default()) };
+        func(self.storage_pool.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::system`]
+    pub  fn system_set(&mut self, system: impl Into<String>) -> &mut Self {
+        self.system = system.into(); self
+    }
+
+    pub  fn system(&mut self) -> &mut String {
+        &mut self.system
+    }
+
+    /// Modify [`Self::system`] with a `func`
+    pub  fn system_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.system); self
+    }
+
+
+    /// Set [`Self::volume_name`]
+    pub  fn volume_name_set(&mut self, volume_name: impl Into<Option<String>>) -> &mut Self {
+        self.volume_name = volume_name.into(); self
+    }
+
+    pub  fn volume_name(&mut self) -> &mut String {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) }
+        self.volume_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) };
+        func(self.volume_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleIOPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -17,7 +17,96 @@ pub struct ConfigMapNodeConfigSource {
 
     /// UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.
     pub uid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ConfigMapNodeConfigSource  {
+    /// Set [`Self::kubelet_config_key`]
+    pub  fn kubelet_config_key_set(&mut self, kubelet_config_key: impl Into<String>) -> &mut Self {
+        self.kubelet_config_key = kubelet_config_key.into(); self
+    }
+
+    pub  fn kubelet_config_key(&mut self) -> &mut String {
+        &mut self.kubelet_config_key
+    }
+
+    /// Modify [`Self::kubelet_config_key`] with a `func`
+    pub  fn kubelet_config_key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kubelet_config_key); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<String>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        &mut self.namespace
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.namespace); self
+    }
+
+
+    /// Set [`Self::resource_version`]
+    pub  fn resource_version_set(&mut self, resource_version: impl Into<Option<String>>) -> &mut Self {
+        self.resource_version = resource_version.into(); self
+    }
+
+    pub  fn resource_version(&mut self) -> &mut String {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) }
+        self.resource_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) };
+        func(self.resource_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ConfigMapNodeConfigSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

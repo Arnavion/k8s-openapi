@@ -8,7 +8,74 @@ pub struct NamespaceStatus {
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub phase: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NamespaceStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::core::v1::NamespaceCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::core::v1::NamespaceCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::NamespaceCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NamespaceCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::NamespaceCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::phase`]
+    pub  fn phase_set(&mut self, phase: impl Into<Option<String>>) -> &mut Self {
+        self.phase = phase.into(); self
+    }
+
+    pub  fn phase(&mut self) -> &mut String {
+        if self.phase.is_none() { self.phase = Some(Default::default()) }
+        self.phase.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::phase`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn phase_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.phase.is_none() { self.phase = Some(Default::default()) };
+        func(self.phase.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NamespaceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

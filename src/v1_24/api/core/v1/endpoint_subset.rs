@@ -18,7 +18,139 @@ pub struct EndpointSubset {
 
     /// Port numbers available on the related IP addresses.
     pub ports: Option<Vec<crate::api::core::v1::EndpointPort>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointSubset  {
+    /// Set [`Self::addresses`]
+    pub  fn addresses_set(&mut self, addresses: impl Into<Option<Vec<crate::api::core::v1::EndpointAddress>>>) -> &mut Self {
+        self.addresses = addresses.into(); self
+    }
+
+    pub  fn addresses(&mut self) -> &mut Vec<crate::api::core::v1::EndpointAddress> {
+        if self.addresses.is_none() { self.addresses = Some(Default::default()) }
+        self.addresses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::addresses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn addresses_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EndpointAddress>)) -> &mut Self {
+        if self.addresses.is_none() { self.addresses = Some(Default::default()) };
+        func(self.addresses.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::addresses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn addresses_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EndpointAddress)) -> &mut Self {
+        if self.addresses.is_none() {
+            self.addresses = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.addresses.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::addresses`]
+    pub  fn addresses_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EndpointAddress]>) -> &mut Self {
+         if self.addresses.is_none() { self.addresses = Some(Vec::new()); }
+         let addresses = &mut self.addresses.as_mut().unwrap();
+         for item in other.borrow() {
+             addresses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::not_ready_addresses`]
+    pub  fn not_ready_addresses_set(&mut self, not_ready_addresses: impl Into<Option<Vec<crate::api::core::v1::EndpointAddress>>>) -> &mut Self {
+        self.not_ready_addresses = not_ready_addresses.into(); self
+    }
+
+    pub  fn not_ready_addresses(&mut self) -> &mut Vec<crate::api::core::v1::EndpointAddress> {
+        if self.not_ready_addresses.is_none() { self.not_ready_addresses = Some(Default::default()) }
+        self.not_ready_addresses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::not_ready_addresses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn not_ready_addresses_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EndpointAddress>)) -> &mut Self {
+        if self.not_ready_addresses.is_none() { self.not_ready_addresses = Some(Default::default()) };
+        func(self.not_ready_addresses.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::not_ready_addresses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn not_ready_addresses_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EndpointAddress)) -> &mut Self {
+        if self.not_ready_addresses.is_none() {
+            self.not_ready_addresses = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.not_ready_addresses.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::not_ready_addresses`]
+    pub  fn not_ready_addresses_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EndpointAddress]>) -> &mut Self {
+         if self.not_ready_addresses.is_none() { self.not_ready_addresses = Some(Vec::new()); }
+         let not_ready_addresses = &mut self.not_ready_addresses.as_mut().unwrap();
+         for item in other.borrow() {
+             not_ready_addresses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::core::v1::EndpointPort>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::core::v1::EndpointPort> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EndpointPort>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EndpointPort)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EndpointPort]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointSubset {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,70 @@ pub struct IngressBackend {
 
     /// Specifies the port of the referenced service.
     pub service_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressBackend  {
+    /// Set [`Self::resource`]
+    pub  fn resource_set(&mut self, resource: impl Into<Option<crate::api::core::v1::TypedLocalObjectReference>>) -> &mut Self {
+        self.resource = resource.into(); self
+    }
+
+    pub  fn resource(&mut self) -> &mut crate::api::core::v1::TypedLocalObjectReference {
+        if self.resource.is_none() { self.resource = Some(Default::default()) }
+        self.resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TypedLocalObjectReference)) -> &mut Self {
+        if self.resource.is_none() { self.resource = Some(Default::default()) };
+        func(self.resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service_name`]
+    pub  fn service_name_set(&mut self, service_name: impl Into<Option<String>>) -> &mut Self {
+        self.service_name = service_name.into(); self
+    }
+
+    pub  fn service_name(&mut self) -> &mut String {
+        if self.service_name.is_none() { self.service_name = Some(Default::default()) }
+        self.service_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.service_name.is_none() { self.service_name = Some(Default::default()) };
+        func(self.service_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service_port`]
+    pub  fn service_port_set(&mut self, service_port: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.service_port = service_port.into(); self
+    }
+
+    pub  fn service_port(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.service_port.is_none() { self.service_port = Some(Default::default()) }
+        self.service_port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service_port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_port_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.service_port.is_none() { self.service_port = Some(Default::default()) };
+        func(self.service_port.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

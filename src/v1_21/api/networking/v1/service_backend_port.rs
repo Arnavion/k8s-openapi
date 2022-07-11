@@ -8,7 +8,51 @@ pub struct ServiceBackendPort {
 
     /// Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with "Name".
     pub number: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceBackendPort  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::number`]
+    pub  fn number_set(&mut self, number: impl Into<Option<i32>>) -> &mut Self {
+        self.number = number.into(); self
+    }
+
+    pub  fn number(&mut self) -> &mut i32 {
+        if self.number.is_none() { self.number = Some(Default::default()) }
+        self.number.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::number`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn number_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.number.is_none() { self.number = Some(Default::default()) };
+        func(self.number.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceBackendPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

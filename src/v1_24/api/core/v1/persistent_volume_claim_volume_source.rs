@@ -8,7 +8,47 @@ pub struct PersistentVolumeClaimVolumeSource {
 
     /// readOnly Will force the ReadOnly setting in VolumeMounts. Default false.
     pub read_only: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PersistentVolumeClaimVolumeSource  {
+    /// Set [`Self::claim_name`]
+    pub  fn claim_name_set(&mut self, claim_name: impl Into<String>) -> &mut Self {
+        self.claim_name = claim_name.into(); self
+    }
+
+    pub  fn claim_name(&mut self) -> &mut String {
+        &mut self.claim_name
+    }
+
+    /// Modify [`Self::claim_name`] with a `func`
+    pub  fn claim_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.claim_name); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

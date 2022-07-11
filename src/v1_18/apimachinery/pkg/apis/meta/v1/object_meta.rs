@@ -66,7 +66,406 @@ pub struct ObjectMeta {
     ///
     /// Populated by the system. Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ObjectMeta  {
+    /// Set [`Self::annotations`]
+    pub  fn annotations_set(&mut self, annotations: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.annotations = annotations.into(); self
+    }
+
+    pub  fn annotations(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.annotations.is_none() { self.annotations = Some(Default::default()) }
+        self.annotations.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::annotations`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn annotations_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.annotations.is_none() { self.annotations = Some(Default::default()) };
+        func(self.annotations.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::annotations`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn annotations_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.annotations.is_none() {
+            self.annotations = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.annotations.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::annotations`]
+    pub  fn annotations_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.annotations.is_none() { self.annotations = Some(std::collections::BTreeMap::new()); }
+         let annotations = &mut self.annotations.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             annotations.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::cluster_name`]
+    pub  fn cluster_name_set(&mut self, cluster_name: impl Into<Option<String>>) -> &mut Self {
+        self.cluster_name = cluster_name.into(); self
+    }
+
+    pub  fn cluster_name(&mut self) -> &mut String {
+        if self.cluster_name.is_none() { self.cluster_name = Some(Default::default()) }
+        self.cluster_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cluster_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cluster_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.cluster_name.is_none() { self.cluster_name = Some(Default::default()) };
+        func(self.cluster_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::creation_timestamp`]
+    pub  fn creation_timestamp_set(&mut self, creation_timestamp: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.creation_timestamp = creation_timestamp.into(); self
+    }
+
+
+    /// Set [`Self::deletion_grace_period_seconds`]
+    pub  fn deletion_grace_period_seconds_set(&mut self, deletion_grace_period_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.deletion_grace_period_seconds = deletion_grace_period_seconds.into(); self
+    }
+
+    pub  fn deletion_grace_period_seconds(&mut self) -> &mut i64 {
+        if self.deletion_grace_period_seconds.is_none() { self.deletion_grace_period_seconds = Some(Default::default()) }
+        self.deletion_grace_period_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::deletion_grace_period_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn deletion_grace_period_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.deletion_grace_period_seconds.is_none() { self.deletion_grace_period_seconds = Some(Default::default()) };
+        func(self.deletion_grace_period_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::deletion_timestamp`]
+    pub  fn deletion_timestamp_set(&mut self, deletion_timestamp: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.deletion_timestamp = deletion_timestamp.into(); self
+    }
+
+
+    /// Set [`Self::finalizers`]
+    pub  fn finalizers_set(&mut self, finalizers: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.finalizers = finalizers.into(); self
+    }
+
+    pub  fn finalizers(&mut self) -> &mut Vec<String> {
+        if self.finalizers.is_none() { self.finalizers = Some(Default::default()) }
+        self.finalizers.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::finalizers`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn finalizers_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.finalizers.is_none() { self.finalizers = Some(Default::default()) };
+        func(self.finalizers.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::finalizers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn finalizers_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.finalizers.is_none() {
+            self.finalizers = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.finalizers.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::finalizers`]
+    pub  fn finalizers_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.finalizers.is_none() { self.finalizers = Some(Vec::new()); }
+         let finalizers = &mut self.finalizers.as_mut().unwrap();
+         for item in other.borrow() {
+             finalizers.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::generate_name`]
+    pub  fn generate_name_set(&mut self, generate_name: impl Into<Option<String>>) -> &mut Self {
+        self.generate_name = generate_name.into(); self
+    }
+
+    pub  fn generate_name(&mut self) -> &mut String {
+        if self.generate_name.is_none() { self.generate_name = Some(Default::default()) }
+        self.generate_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::generate_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn generate_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.generate_name.is_none() { self.generate_name = Some(Default::default()) };
+        func(self.generate_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::generation`]
+    pub  fn generation_set(&mut self, generation: impl Into<Option<i64>>) -> &mut Self {
+        self.generation = generation.into(); self
+    }
+
+    pub  fn generation(&mut self) -> &mut i64 {
+        if self.generation.is_none() { self.generation = Some(Default::default()) }
+        self.generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.generation.is_none() { self.generation = Some(Default::default()) };
+        func(self.generation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::labels`]
+    pub  fn labels_set(&mut self, labels: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.labels = labels.into(); self
+    }
+
+    pub  fn labels(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.labels.is_none() { self.labels = Some(Default::default()) }
+        self.labels.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::labels`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn labels_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.labels.is_none() { self.labels = Some(Default::default()) };
+        func(self.labels.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::labels`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn labels_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.labels.is_none() {
+            self.labels = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.labels.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::labels`]
+    pub  fn labels_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.labels.is_none() { self.labels = Some(std::collections::BTreeMap::new()); }
+         let labels = &mut self.labels.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             labels.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::managed_fields`]
+    pub  fn managed_fields_set(&mut self, managed_fields: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>>>) -> &mut Self {
+        self.managed_fields = managed_fields.into(); self
+    }
+
+    pub  fn managed_fields(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry> {
+        if self.managed_fields.is_none() { self.managed_fields = Some(Default::default()) }
+        self.managed_fields.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::managed_fields`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn managed_fields_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry>)) -> &mut Self {
+        if self.managed_fields.is_none() { self.managed_fields = Some(Default::default()) };
+        func(self.managed_fields.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::managed_fields`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn managed_fields_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry)) -> &mut Self {
+        if self.managed_fields.is_none() {
+            self.managed_fields = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.managed_fields.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::managed_fields`]
+    pub  fn managed_fields_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::ManagedFieldsEntry]>) -> &mut Self {
+         if self.managed_fields.is_none() { self.managed_fields = Some(Vec::new()); }
+         let managed_fields = &mut self.managed_fields.as_mut().unwrap();
+         for item in other.borrow() {
+             managed_fields.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<Option<String>>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) }
+        self.namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) };
+        func(self.namespace.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::owner_references`]
+    pub  fn owner_references_set(&mut self, owner_references: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>>>) -> &mut Self {
+        self.owner_references = owner_references.into(); self
+    }
+
+    pub  fn owner_references(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference> {
+        if self.owner_references.is_none() { self.owner_references = Some(Default::default()) }
+        self.owner_references.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::owner_references`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn owner_references_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>)) -> &mut Self {
+        if self.owner_references.is_none() { self.owner_references = Some(Default::default()) };
+        func(self.owner_references.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::owner_references`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn owner_references_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::OwnerReference)) -> &mut Self {
+        if self.owner_references.is_none() {
+            self.owner_references = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.owner_references.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::owner_references`]
+    pub  fn owner_references_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::OwnerReference]>) -> &mut Self {
+         if self.owner_references.is_none() { self.owner_references = Some(Vec::new()); }
+         let owner_references = &mut self.owner_references.as_mut().unwrap();
+         for item in other.borrow() {
+             owner_references.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::resource_version`]
+    pub  fn resource_version_set(&mut self, resource_version: impl Into<Option<String>>) -> &mut Self {
+        self.resource_version = resource_version.into(); self
+    }
+
+    pub  fn resource_version(&mut self) -> &mut String {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) }
+        self.resource_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) };
+        func(self.resource_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::self_link`]
+    pub  fn self_link_set(&mut self, self_link: impl Into<Option<String>>) -> &mut Self {
+        self.self_link = self_link.into(); self
+    }
+
+    pub  fn self_link(&mut self) -> &mut String {
+        if self.self_link.is_none() { self.self_link = Some(Default::default()) }
+        self.self_link.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::self_link`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn self_link_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.self_link.is_none() { self.self_link = Some(Default::default()) };
+        func(self.self_link.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

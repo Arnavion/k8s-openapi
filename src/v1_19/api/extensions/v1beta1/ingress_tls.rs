@@ -8,7 +8,74 @@ pub struct IngressTLS {
 
     /// SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
     pub secret_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressTLS  {
+    /// Set [`Self::hosts`]
+    pub  fn hosts_set(&mut self, hosts: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.hosts = hosts.into(); self
+    }
+
+    pub  fn hosts(&mut self) -> &mut Vec<String> {
+        if self.hosts.is_none() { self.hosts = Some(Default::default()) }
+        self.hosts.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hosts`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hosts_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.hosts.is_none() { self.hosts = Some(Default::default()) };
+        func(self.hosts.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::hosts`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn hosts_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hosts.is_none() {
+            self.hosts = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.hosts.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::hosts`]
+    pub  fn hosts_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.hosts.is_none() { self.hosts = Some(Vec::new()); }
+         let hosts = &mut self.hosts.as_mut().unwrap();
+         for item in other.borrow() {
+             hosts.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::secret_name`]
+    pub  fn secret_name_set(&mut self, secret_name: impl Into<Option<String>>) -> &mut Self {
+        self.secret_name = secret_name.into(); self
+    }
+
+    pub  fn secret_name(&mut self) -> &mut String {
+        if self.secret_name.is_none() { self.secret_name = Some(Default::default()) }
+        self.secret_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.secret_name.is_none() { self.secret_name = Some(Default::default()) };
+        func(self.secret_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressTLS {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

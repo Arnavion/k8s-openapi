@@ -71,6 +71,7 @@ impl crate::serde::Serialize for IntOrString {
     }
 }
 
+
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for IntOrString {
     fn schema_name() -> String {

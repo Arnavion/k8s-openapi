@@ -8,7 +8,47 @@ pub struct PhotonPersistentDiskVolumeSource {
 
     /// pdID is the ID that identifies Photon Controller persistent disk
     pub pd_id: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PhotonPersistentDiskVolumeSource  {
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pd_id`]
+    pub  fn pd_id_set(&mut self, pd_id: impl Into<String>) -> &mut Self {
+        self.pd_id = pd_id.into(); self
+    }
+
+    pub  fn pd_id(&mut self) -> &mut String {
+        &mut self.pd_id
+    }
+
+    /// Modify [`Self::pd_id`] with a `func`
+    pub  fn pd_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.pd_id); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PhotonPersistentDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

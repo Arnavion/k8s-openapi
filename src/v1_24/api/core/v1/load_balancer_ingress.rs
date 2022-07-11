@@ -11,7 +11,93 @@ pub struct LoadBalancerIngress {
 
     /// Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
     pub ports: Option<Vec<crate::api::core::v1::PortStatus>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LoadBalancerIngress  {
+    /// Set [`Self::hostname`]
+    pub  fn hostname_set(&mut self, hostname: impl Into<Option<String>>) -> &mut Self {
+        self.hostname = hostname.into(); self
+    }
+
+    pub  fn hostname(&mut self) -> &mut String {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) }
+        self.hostname.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostname`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostname_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) };
+        func(self.hostname.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ip`]
+    pub  fn ip_set(&mut self, ip: impl Into<Option<String>>) -> &mut Self {
+        self.ip = ip.into(); self
+    }
+
+    pub  fn ip(&mut self) -> &mut String {
+        if self.ip.is_none() { self.ip = Some(Default::default()) }
+        self.ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip.is_none() { self.ip = Some(Default::default()) };
+        func(self.ip.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::core::v1::PortStatus>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::core::v1::PortStatus> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PortStatus>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PortStatus)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PortStatus]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

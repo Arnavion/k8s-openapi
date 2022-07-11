@@ -8,7 +8,43 @@ pub struct PreferredSchedulingTerm {
 
     /// Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
     pub weight: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PreferredSchedulingTerm  {
+    /// Set [`Self::preference`]
+    pub  fn preference_set(&mut self, preference: impl Into<crate::api::core::v1::NodeSelectorTerm>) -> &mut Self {
+        self.preference = preference.into(); self
+    }
+
+    pub  fn preference(&mut self) -> &mut crate::api::core::v1::NodeSelectorTerm {
+        &mut self.preference
+    }
+
+    /// Modify [`Self::preference`] with a `func`
+    pub  fn preference_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeSelectorTerm)) -> &mut Self {
+        func(&mut self.preference); self
+    }
+
+
+    /// Set [`Self::weight`]
+    pub  fn weight_set(&mut self, weight: impl Into<i32>) -> &mut Self {
+        self.weight = weight.into(); self
+    }
+
+    pub  fn weight(&mut self) -> &mut i32 {
+        &mut self.weight
+    }
+
+    /// Modify [`Self::weight`] with a `func`
+    pub  fn weight_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.weight); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PreferredSchedulingTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

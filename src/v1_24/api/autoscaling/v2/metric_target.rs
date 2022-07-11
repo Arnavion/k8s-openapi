@@ -14,7 +14,85 @@ pub struct MetricTarget {
 
     /// value is the target value of the metric (as a quantity).
     pub value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl MetricTarget  {
+    /// Set [`Self::average_utilization`]
+    pub  fn average_utilization_set(&mut self, average_utilization: impl Into<Option<i32>>) -> &mut Self {
+        self.average_utilization = average_utilization.into(); self
+    }
+
+    pub  fn average_utilization(&mut self) -> &mut i32 {
+        if self.average_utilization.is_none() { self.average_utilization = Some(Default::default()) }
+        self.average_utilization.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::average_utilization`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn average_utilization_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.average_utilization.is_none() { self.average_utilization = Some(Default::default()) };
+        func(self.average_utilization.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::average_value`]
+    pub  fn average_value_set(&mut self, average_value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.average_value = average_value.into(); self
+    }
+
+    pub  fn average_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.average_value.is_none() { self.average_value = Some(Default::default()) }
+        self.average_value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::average_value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn average_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.average_value.is_none() { self.average_value = Some(Default::default()) };
+        func(self.average_value.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.value.is_none() { self.value = Some(Default::default()) }
+        self.value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.value.is_none() { self.value = Some(Default::default()) };
+        func(self.value.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MetricTarget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

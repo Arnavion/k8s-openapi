@@ -11,7 +11,84 @@ pub struct TokenRequestSpec {
 
     /// ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.
     pub expiration_seconds: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenRequestSpec  {
+    /// Set [`Self::audiences`]
+    pub  fn audiences_set(&mut self, audiences: impl Into<Vec<String>>) -> &mut Self {
+        self.audiences = audiences.into(); self
+    }
+
+    pub  fn audiences(&mut self) -> &mut Vec<String> {
+        &mut self.audiences
+    }
+
+    /// Modify [`Self::audiences`] with a `func`
+    pub  fn audiences_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.audiences); self
+    }
+
+    /// Push new element to [`Self::audiences`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn audiences_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.audiences.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::audiences`]
+    pub  fn audiences_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.audiences.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::bound_object_ref`]
+    pub  fn bound_object_ref_set(&mut self, bound_object_ref: impl Into<Option<crate::api::authentication::v1::BoundObjectReference>>) -> &mut Self {
+        self.bound_object_ref = bound_object_ref.into(); self
+    }
+
+    pub  fn bound_object_ref(&mut self) -> &mut crate::api::authentication::v1::BoundObjectReference {
+        if self.bound_object_ref.is_none() { self.bound_object_ref = Some(Default::default()) }
+        self.bound_object_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::bound_object_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn bound_object_ref_with(&mut self, func: impl FnOnce(&mut crate::api::authentication::v1::BoundObjectReference)) -> &mut Self {
+        if self.bound_object_ref.is_none() { self.bound_object_ref = Some(Default::default()) };
+        func(self.bound_object_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::expiration_seconds`]
+    pub  fn expiration_seconds_set(&mut self, expiration_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.expiration_seconds = expiration_seconds.into(); self
+    }
+
+    pub  fn expiration_seconds(&mut self) -> &mut i64 {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) }
+        self.expiration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::expiration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn expiration_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) };
+        func(self.expiration_seconds.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

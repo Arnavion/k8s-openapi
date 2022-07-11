@@ -8,7 +8,70 @@ pub struct Role {
 
     /// Rules holds all the PolicyRules for this Role
     pub rules: Option<Vec<crate::api::rbac::v1beta1::PolicyRule>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Role  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::rules`]
+    pub  fn rules_set(&mut self, rules: impl Into<Option<Vec<crate::api::rbac::v1beta1::PolicyRule>>>) -> &mut Self {
+        self.rules = rules.into(); self
+    }
+
+    pub  fn rules(&mut self) -> &mut Vec<crate::api::rbac::v1beta1::PolicyRule> {
+        if self.rules.is_none() { self.rules = Some(Default::default()) }
+        self.rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::rbac::v1beta1::PolicyRule>)) -> &mut Self {
+        if self.rules.is_none() { self.rules = Some(Default::default()) };
+        func(self.rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::rbac::v1beta1::PolicyRule)) -> &mut Self {
+        if self.rules.is_none() {
+            self.rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::rules`]
+    pub  fn rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::rbac::v1beta1::PolicyRule]>) -> &mut Self {
+         if self.rules.is_none() { self.rules = Some(Vec::new()); }
+         let rules = &mut self.rules.as_mut().unwrap();
+         for item in other.borrow() {
+             rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin rbac.authorization.k8s.io/v1beta1/Role
 

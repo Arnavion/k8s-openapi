@@ -12,7 +12,89 @@ pub struct CustomResourceConversion {
 
     /// webhookClientConfig is the instructions for how to call the webhook if strategy is `Webhook`. Required when `strategy` is set to `Webhook`.
     pub webhook_client_config: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceConversion  {
+    /// Set [`Self::conversion_review_versions`]
+    pub  fn conversion_review_versions_set(&mut self, conversion_review_versions: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.conversion_review_versions = conversion_review_versions.into(); self
+    }
+
+    pub  fn conversion_review_versions(&mut self) -> &mut Vec<String> {
+        if self.conversion_review_versions.is_none() { self.conversion_review_versions = Some(Default::default()) }
+        self.conversion_review_versions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conversion_review_versions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conversion_review_versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.conversion_review_versions.is_none() { self.conversion_review_versions = Some(Default::default()) };
+        func(self.conversion_review_versions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conversion_review_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conversion_review_versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.conversion_review_versions.is_none() {
+            self.conversion_review_versions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conversion_review_versions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conversion_review_versions`]
+    pub  fn conversion_review_versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.conversion_review_versions.is_none() { self.conversion_review_versions = Some(Vec::new()); }
+         let conversion_review_versions = &mut self.conversion_review_versions.as_mut().unwrap();
+         for item in other.borrow() {
+             conversion_review_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::strategy`]
+    pub  fn strategy_set(&mut self, strategy: impl Into<String>) -> &mut Self {
+        self.strategy = strategy.into(); self
+    }
+
+    pub  fn strategy(&mut self) -> &mut String {
+        &mut self.strategy
+    }
+
+    /// Modify [`Self::strategy`] with a `func`
+    pub  fn strategy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.strategy); self
+    }
+
+
+    /// Set [`Self::webhook_client_config`]
+    pub  fn webhook_client_config_set(&mut self, webhook_client_config: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig>>) -> &mut Self {
+        self.webhook_client_config = webhook_client_config.into(); self
+    }
+
+    pub  fn webhook_client_config(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig {
+        if self.webhook_client_config.is_none() { self.webhook_client_config = Some(Default::default()) }
+        self.webhook_client_config.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::webhook_client_config`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn webhook_client_config_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::WebhookClientConfig)) -> &mut Self {
+        if self.webhook_client_config.is_none() { self.webhook_client_config = Some(Default::default()) };
+        func(self.webhook_client_config.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

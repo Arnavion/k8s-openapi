@@ -8,7 +8,51 @@ pub struct SecretReference {
 
     /// namespace defines the space within which the secret name must be unique.
     pub namespace: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SecretReference  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<Option<String>>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) }
+        self.namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) };
+        func(self.namespace.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SecretReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

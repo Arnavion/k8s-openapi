@@ -45,7 +45,362 @@ pub struct PodStatus {
 
     /// RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
     pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::core::v1::PodCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::core::v1::PodCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PodCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PodCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::container_statuses`]
+    pub  fn container_statuses_set(&mut self, container_statuses: impl Into<Option<Vec<crate::api::core::v1::ContainerStatus>>>) -> &mut Self {
+        self.container_statuses = container_statuses.into(); self
+    }
+
+    pub  fn container_statuses(&mut self) -> &mut Vec<crate::api::core::v1::ContainerStatus> {
+        if self.container_statuses.is_none() { self.container_statuses = Some(Default::default()) }
+        self.container_statuses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::container_statuses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn container_statuses_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ContainerStatus>)) -> &mut Self {
+        if self.container_statuses.is_none() { self.container_statuses = Some(Default::default()) };
+        func(self.container_statuses.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::container_statuses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn container_statuses_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStatus)) -> &mut Self {
+        if self.container_statuses.is_none() {
+            self.container_statuses = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.container_statuses.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::container_statuses`]
+    pub  fn container_statuses_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ContainerStatus]>) -> &mut Self {
+         if self.container_statuses.is_none() { self.container_statuses = Some(Vec::new()); }
+         let container_statuses = &mut self.container_statuses.as_mut().unwrap();
+         for item in other.borrow() {
+             container_statuses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ephemeral_container_statuses`]
+    pub  fn ephemeral_container_statuses_set(&mut self, ephemeral_container_statuses: impl Into<Option<Vec<crate::api::core::v1::ContainerStatus>>>) -> &mut Self {
+        self.ephemeral_container_statuses = ephemeral_container_statuses.into(); self
+    }
+
+    pub  fn ephemeral_container_statuses(&mut self) -> &mut Vec<crate::api::core::v1::ContainerStatus> {
+        if self.ephemeral_container_statuses.is_none() { self.ephemeral_container_statuses = Some(Default::default()) }
+        self.ephemeral_container_statuses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ephemeral_container_statuses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ephemeral_container_statuses_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ContainerStatus>)) -> &mut Self {
+        if self.ephemeral_container_statuses.is_none() { self.ephemeral_container_statuses = Some(Default::default()) };
+        func(self.ephemeral_container_statuses.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ephemeral_container_statuses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ephemeral_container_statuses_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStatus)) -> &mut Self {
+        if self.ephemeral_container_statuses.is_none() {
+            self.ephemeral_container_statuses = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ephemeral_container_statuses.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ephemeral_container_statuses`]
+    pub  fn ephemeral_container_statuses_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ContainerStatus]>) -> &mut Self {
+         if self.ephemeral_container_statuses.is_none() { self.ephemeral_container_statuses = Some(Vec::new()); }
+         let ephemeral_container_statuses = &mut self.ephemeral_container_statuses.as_mut().unwrap();
+         for item in other.borrow() {
+             ephemeral_container_statuses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::host_ip`]
+    pub  fn host_ip_set(&mut self, host_ip: impl Into<Option<String>>) -> &mut Self {
+        self.host_ip = host_ip.into(); self
+    }
+
+    pub  fn host_ip(&mut self) -> &mut String {
+        if self.host_ip.is_none() { self.host_ip = Some(Default::default()) }
+        self.host_ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.host_ip.is_none() { self.host_ip = Some(Default::default()) };
+        func(self.host_ip.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::init_container_statuses`]
+    pub  fn init_container_statuses_set(&mut self, init_container_statuses: impl Into<Option<Vec<crate::api::core::v1::ContainerStatus>>>) -> &mut Self {
+        self.init_container_statuses = init_container_statuses.into(); self
+    }
+
+    pub  fn init_container_statuses(&mut self) -> &mut Vec<crate::api::core::v1::ContainerStatus> {
+        if self.init_container_statuses.is_none() { self.init_container_statuses = Some(Default::default()) }
+        self.init_container_statuses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::init_container_statuses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn init_container_statuses_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ContainerStatus>)) -> &mut Self {
+        if self.init_container_statuses.is_none() { self.init_container_statuses = Some(Default::default()) };
+        func(self.init_container_statuses.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::init_container_statuses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn init_container_statuses_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStatus)) -> &mut Self {
+        if self.init_container_statuses.is_none() {
+            self.init_container_statuses = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.init_container_statuses.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::init_container_statuses`]
+    pub  fn init_container_statuses_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ContainerStatus]>) -> &mut Self {
+         if self.init_container_statuses.is_none() { self.init_container_statuses = Some(Vec::new()); }
+         let init_container_statuses = &mut self.init_container_statuses.as_mut().unwrap();
+         for item in other.borrow() {
+             init_container_statuses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::nominated_node_name`]
+    pub  fn nominated_node_name_set(&mut self, nominated_node_name: impl Into<Option<String>>) -> &mut Self {
+        self.nominated_node_name = nominated_node_name.into(); self
+    }
+
+    pub  fn nominated_node_name(&mut self) -> &mut String {
+        if self.nominated_node_name.is_none() { self.nominated_node_name = Some(Default::default()) }
+        self.nominated_node_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::nominated_node_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn nominated_node_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.nominated_node_name.is_none() { self.nominated_node_name = Some(Default::default()) };
+        func(self.nominated_node_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::phase`]
+    pub  fn phase_set(&mut self, phase: impl Into<Option<String>>) -> &mut Self {
+        self.phase = phase.into(); self
+    }
+
+    pub  fn phase(&mut self) -> &mut String {
+        if self.phase.is_none() { self.phase = Some(Default::default()) }
+        self.phase.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::phase`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn phase_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.phase.is_none() { self.phase = Some(Default::default()) };
+        func(self.phase.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_ip`]
+    pub  fn pod_ip_set(&mut self, pod_ip: impl Into<Option<String>>) -> &mut Self {
+        self.pod_ip = pod_ip.into(); self
+    }
+
+    pub  fn pod_ip(&mut self) -> &mut String {
+        if self.pod_ip.is_none() { self.pod_ip = Some(Default::default()) }
+        self.pod_ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.pod_ip.is_none() { self.pod_ip = Some(Default::default()) };
+        func(self.pod_ip.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_ips`]
+    pub  fn pod_ips_set(&mut self, pod_ips: impl Into<Option<Vec<crate::api::core::v1::PodIP>>>) -> &mut Self {
+        self.pod_ips = pod_ips.into(); self
+    }
+
+    pub  fn pod_ips(&mut self) -> &mut Vec<crate::api::core::v1::PodIP> {
+        if self.pod_ips.is_none() { self.pod_ips = Some(Default::default()) }
+        self.pod_ips.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_ips`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_ips_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PodIP>)) -> &mut Self {
+        if self.pod_ips.is_none() { self.pod_ips = Some(Default::default()) };
+        func(self.pod_ips.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::pod_ips`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn pod_ips_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodIP)) -> &mut Self {
+        if self.pod_ips.is_none() {
+            self.pod_ips = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.pod_ips.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::pod_ips`]
+    pub  fn pod_ips_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PodIP]>) -> &mut Self {
+         if self.pod_ips.is_none() { self.pod_ips = Some(Vec::new()); }
+         let pod_ips = &mut self.pod_ips.as_mut().unwrap();
+         for item in other.borrow() {
+             pod_ips.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::qos_class`]
+    pub  fn qos_class_set(&mut self, qos_class: impl Into<Option<String>>) -> &mut Self {
+        self.qos_class = qos_class.into(); self
+    }
+
+    pub  fn qos_class(&mut self) -> &mut String {
+        if self.qos_class.is_none() { self.qos_class = Some(Default::default()) }
+        self.qos_class.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::qos_class`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn qos_class_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.qos_class.is_none() { self.qos_class = Some(Default::default()) };
+        func(self.qos_class.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::start_time`]
+    pub  fn start_time_set(&mut self, start_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.start_time = start_time.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

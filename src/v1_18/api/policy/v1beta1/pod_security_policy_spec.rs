@@ -78,7 +78,706 @@ pub struct PodSecurityPolicySpec {
 
     /// volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
     pub volumes: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodSecurityPolicySpec  {
+    /// Set [`Self::allow_privilege_escalation`]
+    pub  fn allow_privilege_escalation_set(&mut self, allow_privilege_escalation: impl Into<Option<bool>>) -> &mut Self {
+        self.allow_privilege_escalation = allow_privilege_escalation.into(); self
+    }
+
+    pub  fn allow_privilege_escalation(&mut self) -> &mut bool {
+        if self.allow_privilege_escalation.is_none() { self.allow_privilege_escalation = Some(Default::default()) }
+        self.allow_privilege_escalation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allow_privilege_escalation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allow_privilege_escalation_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.allow_privilege_escalation.is_none() { self.allow_privilege_escalation = Some(Default::default()) };
+        func(self.allow_privilege_escalation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::allowed_csi_drivers`]
+    pub  fn allowed_csi_drivers_set(&mut self, allowed_csi_drivers: impl Into<Option<Vec<crate::api::policy::v1beta1::AllowedCSIDriver>>>) -> &mut Self {
+        self.allowed_csi_drivers = allowed_csi_drivers.into(); self
+    }
+
+    pub  fn allowed_csi_drivers(&mut self) -> &mut Vec<crate::api::policy::v1beta1::AllowedCSIDriver> {
+        if self.allowed_csi_drivers.is_none() { self.allowed_csi_drivers = Some(Default::default()) }
+        self.allowed_csi_drivers.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_csi_drivers`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_csi_drivers_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::AllowedCSIDriver>)) -> &mut Self {
+        if self.allowed_csi_drivers.is_none() { self.allowed_csi_drivers = Some(Default::default()) };
+        func(self.allowed_csi_drivers.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_csi_drivers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_csi_drivers_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::AllowedCSIDriver)) -> &mut Self {
+        if self.allowed_csi_drivers.is_none() {
+            self.allowed_csi_drivers = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_csi_drivers.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_csi_drivers`]
+    pub  fn allowed_csi_drivers_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::AllowedCSIDriver]>) -> &mut Self {
+         if self.allowed_csi_drivers.is_none() { self.allowed_csi_drivers = Some(Vec::new()); }
+         let allowed_csi_drivers = &mut self.allowed_csi_drivers.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_csi_drivers.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::allowed_capabilities`]
+    pub  fn allowed_capabilities_set(&mut self, allowed_capabilities: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.allowed_capabilities = allowed_capabilities.into(); self
+    }
+
+    pub  fn allowed_capabilities(&mut self) -> &mut Vec<String> {
+        if self.allowed_capabilities.is_none() { self.allowed_capabilities = Some(Default::default()) }
+        self.allowed_capabilities.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_capabilities`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_capabilities_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.allowed_capabilities.is_none() { self.allowed_capabilities = Some(Default::default()) };
+        func(self.allowed_capabilities.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_capabilities`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_capabilities_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.allowed_capabilities.is_none() {
+            self.allowed_capabilities = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_capabilities.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_capabilities`]
+    pub  fn allowed_capabilities_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.allowed_capabilities.is_none() { self.allowed_capabilities = Some(Vec::new()); }
+         let allowed_capabilities = &mut self.allowed_capabilities.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_capabilities.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::allowed_flex_volumes`]
+    pub  fn allowed_flex_volumes_set(&mut self, allowed_flex_volumes: impl Into<Option<Vec<crate::api::policy::v1beta1::AllowedFlexVolume>>>) -> &mut Self {
+        self.allowed_flex_volumes = allowed_flex_volumes.into(); self
+    }
+
+    pub  fn allowed_flex_volumes(&mut self) -> &mut Vec<crate::api::policy::v1beta1::AllowedFlexVolume> {
+        if self.allowed_flex_volumes.is_none() { self.allowed_flex_volumes = Some(Default::default()) }
+        self.allowed_flex_volumes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_flex_volumes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_flex_volumes_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::AllowedFlexVolume>)) -> &mut Self {
+        if self.allowed_flex_volumes.is_none() { self.allowed_flex_volumes = Some(Default::default()) };
+        func(self.allowed_flex_volumes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_flex_volumes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_flex_volumes_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::AllowedFlexVolume)) -> &mut Self {
+        if self.allowed_flex_volumes.is_none() {
+            self.allowed_flex_volumes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_flex_volumes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_flex_volumes`]
+    pub  fn allowed_flex_volumes_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::AllowedFlexVolume]>) -> &mut Self {
+         if self.allowed_flex_volumes.is_none() { self.allowed_flex_volumes = Some(Vec::new()); }
+         let allowed_flex_volumes = &mut self.allowed_flex_volumes.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_flex_volumes.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::allowed_host_paths`]
+    pub  fn allowed_host_paths_set(&mut self, allowed_host_paths: impl Into<Option<Vec<crate::api::policy::v1beta1::AllowedHostPath>>>) -> &mut Self {
+        self.allowed_host_paths = allowed_host_paths.into(); self
+    }
+
+    pub  fn allowed_host_paths(&mut self) -> &mut Vec<crate::api::policy::v1beta1::AllowedHostPath> {
+        if self.allowed_host_paths.is_none() { self.allowed_host_paths = Some(Default::default()) }
+        self.allowed_host_paths.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_host_paths`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_host_paths_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::AllowedHostPath>)) -> &mut Self {
+        if self.allowed_host_paths.is_none() { self.allowed_host_paths = Some(Default::default()) };
+        func(self.allowed_host_paths.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_host_paths`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_host_paths_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::AllowedHostPath)) -> &mut Self {
+        if self.allowed_host_paths.is_none() {
+            self.allowed_host_paths = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_host_paths.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_host_paths`]
+    pub  fn allowed_host_paths_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::AllowedHostPath]>) -> &mut Self {
+         if self.allowed_host_paths.is_none() { self.allowed_host_paths = Some(Vec::new()); }
+         let allowed_host_paths = &mut self.allowed_host_paths.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_host_paths.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::allowed_proc_mount_types`]
+    pub  fn allowed_proc_mount_types_set(&mut self, allowed_proc_mount_types: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.allowed_proc_mount_types = allowed_proc_mount_types.into(); self
+    }
+
+    pub  fn allowed_proc_mount_types(&mut self) -> &mut Vec<String> {
+        if self.allowed_proc_mount_types.is_none() { self.allowed_proc_mount_types = Some(Default::default()) }
+        self.allowed_proc_mount_types.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_proc_mount_types`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_proc_mount_types_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.allowed_proc_mount_types.is_none() { self.allowed_proc_mount_types = Some(Default::default()) };
+        func(self.allowed_proc_mount_types.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_proc_mount_types`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_proc_mount_types_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.allowed_proc_mount_types.is_none() {
+            self.allowed_proc_mount_types = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_proc_mount_types.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_proc_mount_types`]
+    pub  fn allowed_proc_mount_types_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.allowed_proc_mount_types.is_none() { self.allowed_proc_mount_types = Some(Vec::new()); }
+         let allowed_proc_mount_types = &mut self.allowed_proc_mount_types.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_proc_mount_types.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::allowed_unsafe_sysctls`]
+    pub  fn allowed_unsafe_sysctls_set(&mut self, allowed_unsafe_sysctls: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.allowed_unsafe_sysctls = allowed_unsafe_sysctls.into(); self
+    }
+
+    pub  fn allowed_unsafe_sysctls(&mut self) -> &mut Vec<String> {
+        if self.allowed_unsafe_sysctls.is_none() { self.allowed_unsafe_sysctls = Some(Default::default()) }
+        self.allowed_unsafe_sysctls.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_unsafe_sysctls`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_unsafe_sysctls_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.allowed_unsafe_sysctls.is_none() { self.allowed_unsafe_sysctls = Some(Default::default()) };
+        func(self.allowed_unsafe_sysctls.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_unsafe_sysctls`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_unsafe_sysctls_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.allowed_unsafe_sysctls.is_none() {
+            self.allowed_unsafe_sysctls = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_unsafe_sysctls.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_unsafe_sysctls`]
+    pub  fn allowed_unsafe_sysctls_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.allowed_unsafe_sysctls.is_none() { self.allowed_unsafe_sysctls = Some(Vec::new()); }
+         let allowed_unsafe_sysctls = &mut self.allowed_unsafe_sysctls.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_unsafe_sysctls.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::default_add_capabilities`]
+    pub  fn default_add_capabilities_set(&mut self, default_add_capabilities: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.default_add_capabilities = default_add_capabilities.into(); self
+    }
+
+    pub  fn default_add_capabilities(&mut self) -> &mut Vec<String> {
+        if self.default_add_capabilities.is_none() { self.default_add_capabilities = Some(Default::default()) }
+        self.default_add_capabilities.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_add_capabilities`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_add_capabilities_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.default_add_capabilities.is_none() { self.default_add_capabilities = Some(Default::default()) };
+        func(self.default_add_capabilities.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::default_add_capabilities`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn default_add_capabilities_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.default_add_capabilities.is_none() {
+            self.default_add_capabilities = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.default_add_capabilities.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::default_add_capabilities`]
+    pub  fn default_add_capabilities_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.default_add_capabilities.is_none() { self.default_add_capabilities = Some(Vec::new()); }
+         let default_add_capabilities = &mut self.default_add_capabilities.as_mut().unwrap();
+         for item in other.borrow() {
+             default_add_capabilities.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::default_allow_privilege_escalation`]
+    pub  fn default_allow_privilege_escalation_set(&mut self, default_allow_privilege_escalation: impl Into<Option<bool>>) -> &mut Self {
+        self.default_allow_privilege_escalation = default_allow_privilege_escalation.into(); self
+    }
+
+    pub  fn default_allow_privilege_escalation(&mut self) -> &mut bool {
+        if self.default_allow_privilege_escalation.is_none() { self.default_allow_privilege_escalation = Some(Default::default()) }
+        self.default_allow_privilege_escalation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_allow_privilege_escalation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_allow_privilege_escalation_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.default_allow_privilege_escalation.is_none() { self.default_allow_privilege_escalation = Some(Default::default()) };
+        func(self.default_allow_privilege_escalation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::forbidden_sysctls`]
+    pub  fn forbidden_sysctls_set(&mut self, forbidden_sysctls: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.forbidden_sysctls = forbidden_sysctls.into(); self
+    }
+
+    pub  fn forbidden_sysctls(&mut self) -> &mut Vec<String> {
+        if self.forbidden_sysctls.is_none() { self.forbidden_sysctls = Some(Default::default()) }
+        self.forbidden_sysctls.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::forbidden_sysctls`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn forbidden_sysctls_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.forbidden_sysctls.is_none() { self.forbidden_sysctls = Some(Default::default()) };
+        func(self.forbidden_sysctls.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::forbidden_sysctls`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn forbidden_sysctls_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.forbidden_sysctls.is_none() {
+            self.forbidden_sysctls = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.forbidden_sysctls.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::forbidden_sysctls`]
+    pub  fn forbidden_sysctls_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.forbidden_sysctls.is_none() { self.forbidden_sysctls = Some(Vec::new()); }
+         let forbidden_sysctls = &mut self.forbidden_sysctls.as_mut().unwrap();
+         for item in other.borrow() {
+             forbidden_sysctls.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::fs_group`]
+    pub  fn fs_group_set(&mut self, fs_group: impl Into<crate::api::policy::v1beta1::FSGroupStrategyOptions>) -> &mut Self {
+        self.fs_group = fs_group.into(); self
+    }
+
+    pub  fn fs_group(&mut self) -> &mut crate::api::policy::v1beta1::FSGroupStrategyOptions {
+        &mut self.fs_group
+    }
+
+    /// Modify [`Self::fs_group`] with a `func`
+    pub  fn fs_group_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::FSGroupStrategyOptions)) -> &mut Self {
+        func(&mut self.fs_group); self
+    }
+
+
+    /// Set [`Self::host_ipc`]
+    pub  fn host_ipc_set(&mut self, host_ipc: impl Into<Option<bool>>) -> &mut Self {
+        self.host_ipc = host_ipc.into(); self
+    }
+
+    pub  fn host_ipc(&mut self) -> &mut bool {
+        if self.host_ipc.is_none() { self.host_ipc = Some(Default::default()) }
+        self.host_ipc.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_ipc`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_ipc_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.host_ipc.is_none() { self.host_ipc = Some(Default::default()) };
+        func(self.host_ipc.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::host_network`]
+    pub  fn host_network_set(&mut self, host_network: impl Into<Option<bool>>) -> &mut Self {
+        self.host_network = host_network.into(); self
+    }
+
+    pub  fn host_network(&mut self) -> &mut bool {
+        if self.host_network.is_none() { self.host_network = Some(Default::default()) }
+        self.host_network.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_network`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_network_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.host_network.is_none() { self.host_network = Some(Default::default()) };
+        func(self.host_network.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::host_pid`]
+    pub  fn host_pid_set(&mut self, host_pid: impl Into<Option<bool>>) -> &mut Self {
+        self.host_pid = host_pid.into(); self
+    }
+
+    pub  fn host_pid(&mut self) -> &mut bool {
+        if self.host_pid.is_none() { self.host_pid = Some(Default::default()) }
+        self.host_pid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_pid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_pid_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.host_pid.is_none() { self.host_pid = Some(Default::default()) };
+        func(self.host_pid.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::host_ports`]
+    pub  fn host_ports_set(&mut self, host_ports: impl Into<Option<Vec<crate::api::policy::v1beta1::HostPortRange>>>) -> &mut Self {
+        self.host_ports = host_ports.into(); self
+    }
+
+    pub  fn host_ports(&mut self) -> &mut Vec<crate::api::policy::v1beta1::HostPortRange> {
+        if self.host_ports.is_none() { self.host_ports = Some(Default::default()) }
+        self.host_ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host_ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::policy::v1beta1::HostPortRange>)) -> &mut Self {
+        if self.host_ports.is_none() { self.host_ports = Some(Default::default()) };
+        func(self.host_ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::host_ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn host_ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::HostPortRange)) -> &mut Self {
+        if self.host_ports.is_none() {
+            self.host_ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.host_ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::host_ports`]
+    pub  fn host_ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::policy::v1beta1::HostPortRange]>) -> &mut Self {
+         if self.host_ports.is_none() { self.host_ports = Some(Vec::new()); }
+         let host_ports = &mut self.host_ports.as_mut().unwrap();
+         for item in other.borrow() {
+             host_ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::privileged`]
+    pub  fn privileged_set(&mut self, privileged: impl Into<Option<bool>>) -> &mut Self {
+        self.privileged = privileged.into(); self
+    }
+
+    pub  fn privileged(&mut self) -> &mut bool {
+        if self.privileged.is_none() { self.privileged = Some(Default::default()) }
+        self.privileged.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::privileged`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn privileged_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.privileged.is_none() { self.privileged = Some(Default::default()) };
+        func(self.privileged.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only_root_filesystem`]
+    pub  fn read_only_root_filesystem_set(&mut self, read_only_root_filesystem: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only_root_filesystem = read_only_root_filesystem.into(); self
+    }
+
+    pub  fn read_only_root_filesystem(&mut self) -> &mut bool {
+        if self.read_only_root_filesystem.is_none() { self.read_only_root_filesystem = Some(Default::default()) }
+        self.read_only_root_filesystem.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only_root_filesystem`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_root_filesystem_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only_root_filesystem.is_none() { self.read_only_root_filesystem = Some(Default::default()) };
+        func(self.read_only_root_filesystem.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::required_drop_capabilities`]
+    pub  fn required_drop_capabilities_set(&mut self, required_drop_capabilities: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.required_drop_capabilities = required_drop_capabilities.into(); self
+    }
+
+    pub  fn required_drop_capabilities(&mut self) -> &mut Vec<String> {
+        if self.required_drop_capabilities.is_none() { self.required_drop_capabilities = Some(Default::default()) }
+        self.required_drop_capabilities.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::required_drop_capabilities`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn required_drop_capabilities_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.required_drop_capabilities.is_none() { self.required_drop_capabilities = Some(Default::default()) };
+        func(self.required_drop_capabilities.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::required_drop_capabilities`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn required_drop_capabilities_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.required_drop_capabilities.is_none() {
+            self.required_drop_capabilities = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.required_drop_capabilities.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::required_drop_capabilities`]
+    pub  fn required_drop_capabilities_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.required_drop_capabilities.is_none() { self.required_drop_capabilities = Some(Vec::new()); }
+         let required_drop_capabilities = &mut self.required_drop_capabilities.as_mut().unwrap();
+         for item in other.borrow() {
+             required_drop_capabilities.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::run_as_group`]
+    pub  fn run_as_group_set(&mut self, run_as_group: impl Into<Option<crate::api::policy::v1beta1::RunAsGroupStrategyOptions>>) -> &mut Self {
+        self.run_as_group = run_as_group.into(); self
+    }
+
+    pub  fn run_as_group(&mut self) -> &mut crate::api::policy::v1beta1::RunAsGroupStrategyOptions {
+        if self.run_as_group.is_none() { self.run_as_group = Some(Default::default()) }
+        self.run_as_group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::run_as_group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn run_as_group_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::RunAsGroupStrategyOptions)) -> &mut Self {
+        if self.run_as_group.is_none() { self.run_as_group = Some(Default::default()) };
+        func(self.run_as_group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::run_as_user`]
+    pub  fn run_as_user_set(&mut self, run_as_user: impl Into<crate::api::policy::v1beta1::RunAsUserStrategyOptions>) -> &mut Self {
+        self.run_as_user = run_as_user.into(); self
+    }
+
+    pub  fn run_as_user(&mut self) -> &mut crate::api::policy::v1beta1::RunAsUserStrategyOptions {
+        &mut self.run_as_user
+    }
+
+    /// Modify [`Self::run_as_user`] with a `func`
+    pub  fn run_as_user_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::RunAsUserStrategyOptions)) -> &mut Self {
+        func(&mut self.run_as_user); self
+    }
+
+
+    /// Set [`Self::runtime_class`]
+    pub  fn runtime_class_set(&mut self, runtime_class: impl Into<Option<crate::api::policy::v1beta1::RuntimeClassStrategyOptions>>) -> &mut Self {
+        self.runtime_class = runtime_class.into(); self
+    }
+
+    pub  fn runtime_class(&mut self) -> &mut crate::api::policy::v1beta1::RuntimeClassStrategyOptions {
+        if self.runtime_class.is_none() { self.runtime_class = Some(Default::default()) }
+        self.runtime_class.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::runtime_class`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn runtime_class_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::RuntimeClassStrategyOptions)) -> &mut Self {
+        if self.runtime_class.is_none() { self.runtime_class = Some(Default::default()) };
+        func(self.runtime_class.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::se_linux`]
+    pub  fn se_linux_set(&mut self, se_linux: impl Into<crate::api::policy::v1beta1::SELinuxStrategyOptions>) -> &mut Self {
+        self.se_linux = se_linux.into(); self
+    }
+
+    pub  fn se_linux(&mut self) -> &mut crate::api::policy::v1beta1::SELinuxStrategyOptions {
+        &mut self.se_linux
+    }
+
+    /// Modify [`Self::se_linux`] with a `func`
+    pub  fn se_linux_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::SELinuxStrategyOptions)) -> &mut Self {
+        func(&mut self.se_linux); self
+    }
+
+
+    /// Set [`Self::supplemental_groups`]
+    pub  fn supplemental_groups_set(&mut self, supplemental_groups: impl Into<crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions>) -> &mut Self {
+        self.supplemental_groups = supplemental_groups.into(); self
+    }
+
+    pub  fn supplemental_groups(&mut self) -> &mut crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions {
+        &mut self.supplemental_groups
+    }
+
+    /// Modify [`Self::supplemental_groups`] with a `func`
+    pub  fn supplemental_groups_with(&mut self, func: impl FnOnce(&mut crate::api::policy::v1beta1::SupplementalGroupsStrategyOptions)) -> &mut Self {
+        func(&mut self.supplemental_groups); self
+    }
+
+
+    /// Set [`Self::volumes`]
+    pub  fn volumes_set(&mut self, volumes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.volumes = volumes.into(); self
+    }
+
+    pub  fn volumes(&mut self) -> &mut Vec<String> {
+        if self.volumes.is_none() { self.volumes = Some(Default::default()) }
+        self.volumes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volumes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volumes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.volumes.is_none() { self.volumes = Some(Default::default()) };
+        func(self.volumes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volumes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volumes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volumes.is_none() {
+            self.volumes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volumes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volumes`]
+    pub  fn volumes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.volumes.is_none() { self.volumes = Some(Vec::new()); }
+         let volumes = &mut self.volumes.as_mut().unwrap();
+         for item in other.borrow() {
+             volumes.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

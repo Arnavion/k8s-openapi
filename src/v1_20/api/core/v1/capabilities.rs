@@ -8,7 +8,97 @@ pub struct Capabilities {
 
     /// Removed capabilities
     pub drop: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Capabilities  {
+    /// Set [`Self::add`]
+    pub  fn add_set(&mut self, add: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.add = add.into(); self
+    }
+
+    pub  fn add(&mut self) -> &mut Vec<String> {
+        if self.add.is_none() { self.add = Some(Default::default()) }
+        self.add.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::add`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn add_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.add.is_none() { self.add = Some(Default::default()) };
+        func(self.add.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::add`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn add_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.add.is_none() {
+            self.add = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.add.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::add`]
+    pub  fn add_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.add.is_none() { self.add = Some(Vec::new()); }
+         let add = &mut self.add.as_mut().unwrap();
+         for item in other.borrow() {
+             add.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::drop`]
+    pub  fn drop_set(&mut self, drop: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.drop = drop.into(); self
+    }
+
+    pub  fn drop(&mut self) -> &mut Vec<String> {
+        if self.drop.is_none() { self.drop = Some(Default::default()) }
+        self.drop.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::drop`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn drop_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.drop.is_none() { self.drop = Some(Default::default()) };
+        func(self.drop.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::drop`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn drop_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.drop.is_none() {
+            self.drop = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.drop.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::drop`]
+    pub  fn drop_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.drop.is_none() { self.drop = Some(Vec::new()); }
+         let drop = &mut self.drop.as_mut().unwrap();
+         for item in other.borrow() {
+             drop.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Capabilities {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

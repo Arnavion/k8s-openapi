@@ -20,7 +20,152 @@ pub struct HorizontalPodAutoscalerStatus {
 
     /// observedGeneration is the most recent generation observed by this autoscaler.
     pub observed_generation: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HorizontalPodAutoscalerStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::autoscaling::v2beta1::HorizontalPodAutoscalerCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::current_metrics`]
+    pub  fn current_metrics_set(&mut self, current_metrics: impl Into<Option<Vec<crate::api::autoscaling::v2beta1::MetricStatus>>>) -> &mut Self {
+        self.current_metrics = current_metrics.into(); self
+    }
+
+    pub  fn current_metrics(&mut self) -> &mut Vec<crate::api::autoscaling::v2beta1::MetricStatus> {
+        if self.current_metrics.is_none() { self.current_metrics = Some(Default::default()) }
+        self.current_metrics.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::current_metrics`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn current_metrics_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::autoscaling::v2beta1::MetricStatus>)) -> &mut Self {
+        if self.current_metrics.is_none() { self.current_metrics = Some(Default::default()) };
+        func(self.current_metrics.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::current_metrics`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn current_metrics_push_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta1::MetricStatus)) -> &mut Self {
+        if self.current_metrics.is_none() {
+            self.current_metrics = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.current_metrics.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::current_metrics`]
+    pub  fn current_metrics_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::autoscaling::v2beta1::MetricStatus]>) -> &mut Self {
+         if self.current_metrics.is_none() { self.current_metrics = Some(Vec::new()); }
+         let current_metrics = &mut self.current_metrics.as_mut().unwrap();
+         for item in other.borrow() {
+             current_metrics.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::current_replicas`]
+    pub  fn current_replicas_set(&mut self, current_replicas: impl Into<i32>) -> &mut Self {
+        self.current_replicas = current_replicas.into(); self
+    }
+
+    pub  fn current_replicas(&mut self) -> &mut i32 {
+        &mut self.current_replicas
+    }
+
+    /// Modify [`Self::current_replicas`] with a `func`
+    pub  fn current_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.current_replicas); self
+    }
+
+
+    /// Set [`Self::desired_replicas`]
+    pub  fn desired_replicas_set(&mut self, desired_replicas: impl Into<i32>) -> &mut Self {
+        self.desired_replicas = desired_replicas.into(); self
+    }
+
+    pub  fn desired_replicas(&mut self) -> &mut i32 {
+        &mut self.desired_replicas
+    }
+
+    /// Modify [`Self::desired_replicas`] with a `func`
+    pub  fn desired_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.desired_replicas); self
+    }
+
+
+    /// Set [`Self::last_scale_time`]
+    pub  fn last_scale_time_set(&mut self, last_scale_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.last_scale_time = last_scale_time.into(); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

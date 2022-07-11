@@ -9,7 +9,47 @@ pub struct GRPCAction {
     ///
     /// If this is not specified, the default behavior is defined by gRPC.
     pub service: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl GRPCAction  {
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<i32>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+    /// Set [`Self::service`]
+    pub  fn service_set(&mut self, service: impl Into<Option<String>>) -> &mut Self {
+        self.service = service.into(); self
+    }
+
+    pub  fn service(&mut self) -> &mut String {
+        if self.service.is_none() { self.service = Some(Default::default()) }
+        self.service.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.service.is_none() { self.service = Some(Default::default()) };
+        func(self.service.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GRPCAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

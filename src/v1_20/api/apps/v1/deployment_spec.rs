@@ -26,7 +26,157 @@ pub struct DeploymentSpec {
 
     /// Template describes the pods that will be created.
     pub template: crate::api::core::v1::PodTemplateSpec,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DeploymentSpec  {
+    /// Set [`Self::min_ready_seconds`]
+    pub  fn min_ready_seconds_set(&mut self, min_ready_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.min_ready_seconds = min_ready_seconds.into(); self
+    }
+
+    pub  fn min_ready_seconds(&mut self) -> &mut i32 {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) }
+        self.min_ready_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_ready_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_ready_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) };
+        func(self.min_ready_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::paused`]
+    pub  fn paused_set(&mut self, paused: impl Into<Option<bool>>) -> &mut Self {
+        self.paused = paused.into(); self
+    }
+
+    pub  fn paused(&mut self) -> &mut bool {
+        if self.paused.is_none() { self.paused = Some(Default::default()) }
+        self.paused.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::paused`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn paused_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.paused.is_none() { self.paused = Some(Default::default()) };
+        func(self.paused.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::progress_deadline_seconds`]
+    pub  fn progress_deadline_seconds_set(&mut self, progress_deadline_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.progress_deadline_seconds = progress_deadline_seconds.into(); self
+    }
+
+    pub  fn progress_deadline_seconds(&mut self) -> &mut i32 {
+        if self.progress_deadline_seconds.is_none() { self.progress_deadline_seconds = Some(Default::default()) }
+        self.progress_deadline_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::progress_deadline_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn progress_deadline_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.progress_deadline_seconds.is_none() { self.progress_deadline_seconds = Some(Default::default()) };
+        func(self.progress_deadline_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) }
+        self.replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) };
+        func(self.replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::revision_history_limit`]
+    pub  fn revision_history_limit_set(&mut self, revision_history_limit: impl Into<Option<i32>>) -> &mut Self {
+        self.revision_history_limit = revision_history_limit.into(); self
+    }
+
+    pub  fn revision_history_limit(&mut self) -> &mut i32 {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) }
+        self.revision_history_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::revision_history_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn revision_history_limit_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) };
+        func(self.revision_history_limit.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        &mut self.selector
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        func(&mut self.selector); self
+    }
+
+
+    /// Set [`Self::strategy`]
+    pub  fn strategy_set(&mut self, strategy: impl Into<Option<crate::api::apps::v1::DeploymentStrategy>>) -> &mut Self {
+        self.strategy = strategy.into(); self
+    }
+
+    pub  fn strategy(&mut self) -> &mut crate::api::apps::v1::DeploymentStrategy {
+        if self.strategy.is_none() { self.strategy = Some(Default::default()) }
+        self.strategy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::strategy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn strategy_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::DeploymentStrategy)) -> &mut Self {
+        if self.strategy.is_none() { self.strategy = Some(Default::default()) };
+        func(self.strategy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<crate::api::core::v1::PodTemplateSpec>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        &mut self.template
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        func(&mut self.template); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

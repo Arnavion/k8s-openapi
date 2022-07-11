@@ -5,7 +5,32 @@
 pub struct CustomResourceValidation {
     /// openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
     pub open_api_v3_schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceValidation  {
+    /// Set [`Self::open_api_v3_schema`]
+    pub  fn open_api_v3_schema_set(&mut self, open_api_v3_schema: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>>) -> &mut Self {
+        self.open_api_v3_schema = open_api_v3_schema.into(); self
+    }
+
+    pub  fn open_api_v3_schema(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps {
+        if self.open_api_v3_schema.is_none() { self.open_api_v3_schema = Some(Default::default()) }
+        self.open_api_v3_schema.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::open_api_v3_schema`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn open_api_v3_schema_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps)) -> &mut Self {
+        if self.open_api_v3_schema.is_none() { self.open_api_v3_schema = Some(Default::default()) };
+        func(self.open_api_v3_schema.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceValidation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

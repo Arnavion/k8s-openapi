@@ -14,7 +14,85 @@ pub struct ExternalMetricSource {
 
     /// targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
     pub target_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ExternalMetricSource  {
+    /// Set [`Self::metric_name`]
+    pub  fn metric_name_set(&mut self, metric_name: impl Into<String>) -> &mut Self {
+        self.metric_name = metric_name.into(); self
+    }
+
+    pub  fn metric_name(&mut self) -> &mut String {
+        &mut self.metric_name
+    }
+
+    /// Modify [`Self::metric_name`] with a `func`
+    pub  fn metric_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.metric_name); self
+    }
+
+
+    /// Set [`Self::metric_selector`]
+    pub  fn metric_selector_set(&mut self, metric_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.metric_selector = metric_selector.into(); self
+    }
+
+    pub  fn metric_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.metric_selector.is_none() { self.metric_selector = Some(Default::default()) }
+        self.metric_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::metric_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn metric_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.metric_selector.is_none() { self.metric_selector = Some(Default::default()) };
+        func(self.metric_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_average_value`]
+    pub  fn target_average_value_set(&mut self, target_average_value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.target_average_value = target_average_value.into(); self
+    }
+
+    pub  fn target_average_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.target_average_value.is_none() { self.target_average_value = Some(Default::default()) }
+        self.target_average_value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_average_value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_average_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.target_average_value.is_none() { self.target_average_value = Some(Default::default()) };
+        func(self.target_average_value.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_value`]
+    pub  fn target_value_set(&mut self, target_value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.target_value = target_value.into(); self
+    }
+
+    pub  fn target_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.target_value.is_none() { self.target_value = Some(Default::default()) }
+        self.target_value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.target_value.is_none() { self.target_value = Some(Default::default()) };
+        func(self.target_value.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExternalMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

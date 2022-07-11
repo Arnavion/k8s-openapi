@@ -15,7 +15,70 @@ pub struct StatusCause {
 
     /// A machine-readable description of the cause of the error. If this value is empty there is no information available.
     pub reason: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatusCause  {
+    /// Set [`Self::field`]
+    pub  fn field_set(&mut self, field: impl Into<Option<String>>) -> &mut Self {
+        self.field = field.into(); self
+    }
+
+    pub  fn field(&mut self) -> &mut String {
+        if self.field.is_none() { self.field = Some(Default::default()) }
+        self.field.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::field`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn field_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.field.is_none() { self.field = Some(Default::default()) };
+        func(self.field.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatusCause {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

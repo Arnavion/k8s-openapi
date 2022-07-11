@@ -20,7 +20,238 @@ pub struct LimitRangeItem {
 
     /// Type of resource that this limit applies to.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LimitRangeItem  {
+    /// Set [`Self::default`]
+    pub  fn default_set(&mut self, default: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.default = default.into(); self
+    }
+
+    pub  fn default(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.default.is_none() { self.default = Some(Default::default()) }
+        self.default.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.default.is_none() { self.default = Some(Default::default()) };
+        func(self.default.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::default`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn default_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.default.is_none() {
+            self.default = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.default.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::default`]
+    pub  fn default_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.default.is_none() { self.default = Some(std::collections::BTreeMap::new()); }
+         let default = &mut self.default.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             default.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::default_request`]
+    pub  fn default_request_set(&mut self, default_request: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.default_request = default_request.into(); self
+    }
+
+    pub  fn default_request(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.default_request.is_none() { self.default_request = Some(Default::default()) }
+        self.default_request.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_request`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_request_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.default_request.is_none() { self.default_request = Some(Default::default()) };
+        func(self.default_request.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::default_request`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn default_request_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.default_request.is_none() {
+            self.default_request = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.default_request.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::default_request`]
+    pub  fn default_request_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.default_request.is_none() { self.default_request = Some(std::collections::BTreeMap::new()); }
+         let default_request = &mut self.default_request.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             default_request.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::max`]
+    pub  fn max_set(&mut self, max: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.max = max.into(); self
+    }
+
+    pub  fn max(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.max.is_none() { self.max = Some(Default::default()) }
+        self.max.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.max.is_none() { self.max = Some(Default::default()) };
+        func(self.max.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::max`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn max_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.max.is_none() {
+            self.max = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.max.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::max`]
+    pub  fn max_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.max.is_none() { self.max = Some(std::collections::BTreeMap::new()); }
+         let max = &mut self.max.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             max.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::max_limit_request_ratio`]
+    pub  fn max_limit_request_ratio_set(&mut self, max_limit_request_ratio: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.max_limit_request_ratio = max_limit_request_ratio.into(); self
+    }
+
+    pub  fn max_limit_request_ratio(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.max_limit_request_ratio.is_none() { self.max_limit_request_ratio = Some(Default::default()) }
+        self.max_limit_request_ratio.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_limit_request_ratio`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_limit_request_ratio_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.max_limit_request_ratio.is_none() { self.max_limit_request_ratio = Some(Default::default()) };
+        func(self.max_limit_request_ratio.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::max_limit_request_ratio`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn max_limit_request_ratio_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.max_limit_request_ratio.is_none() {
+            self.max_limit_request_ratio = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.max_limit_request_ratio.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::max_limit_request_ratio`]
+    pub  fn max_limit_request_ratio_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.max_limit_request_ratio.is_none() { self.max_limit_request_ratio = Some(std::collections::BTreeMap::new()); }
+         let max_limit_request_ratio = &mut self.max_limit_request_ratio.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             max_limit_request_ratio.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::min`]
+    pub  fn min_set(&mut self, min: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.min = min.into(); self
+    }
+
+    pub  fn min(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.min.is_none() { self.min = Some(Default::default()) }
+        self.min.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.min.is_none() { self.min = Some(Default::default()) };
+        func(self.min.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::min`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn min_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.min.is_none() {
+            self.min = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.min.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::min`]
+    pub  fn min_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.min.is_none() { self.min = Some(std::collections::BTreeMap::new()); }
+         let min = &mut self.min.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             min.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitRangeItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

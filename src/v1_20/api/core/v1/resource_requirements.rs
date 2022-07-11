@@ -8,7 +8,97 @@ pub struct ResourceRequirements {
 
     /// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
     pub requests: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceRequirements  {
+    /// Set [`Self::limits`]
+    pub  fn limits_set(&mut self, limits: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.limits = limits.into(); self
+    }
+
+    pub  fn limits(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.limits.is_none() { self.limits = Some(Default::default()) }
+        self.limits.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::limits`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn limits_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.limits.is_none() { self.limits = Some(Default::default()) };
+        func(self.limits.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::limits`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn limits_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.limits.is_none() {
+            self.limits = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.limits.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::limits`]
+    pub  fn limits_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.limits.is_none() { self.limits = Some(std::collections::BTreeMap::new()); }
+         let limits = &mut self.limits.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             limits.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::requests`]
+    pub  fn requests_set(&mut self, requests: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.requests = requests.into(); self
+    }
+
+    pub  fn requests(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.requests.is_none() { self.requests = Some(Default::default()) }
+        self.requests.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::requests`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn requests_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.requests.is_none() { self.requests = Some(Default::default()) };
+        func(self.requests.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::requests`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn requests_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.requests.is_none() {
+            self.requests = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.requests.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::requests`]
+    pub  fn requests_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.requests.is_none() { self.requests = Some(std::collections::BTreeMap::new()); }
+         let requests = &mut self.requests.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             requests.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceRequirements {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

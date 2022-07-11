@@ -17,7 +17,100 @@ pub struct DaemonSetSpec {
 
     /// An update strategy to replace existing DaemonSet pods with new pods.
     pub update_strategy: Option<crate::api::apps::v1::DaemonSetUpdateStrategy>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DaemonSetSpec  {
+    /// Set [`Self::min_ready_seconds`]
+    pub  fn min_ready_seconds_set(&mut self, min_ready_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.min_ready_seconds = min_ready_seconds.into(); self
+    }
+
+    pub  fn min_ready_seconds(&mut self) -> &mut i32 {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) }
+        self.min_ready_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_ready_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_ready_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) };
+        func(self.min_ready_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::revision_history_limit`]
+    pub  fn revision_history_limit_set(&mut self, revision_history_limit: impl Into<Option<i32>>) -> &mut Self {
+        self.revision_history_limit = revision_history_limit.into(); self
+    }
+
+    pub  fn revision_history_limit(&mut self) -> &mut i32 {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) }
+        self.revision_history_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::revision_history_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn revision_history_limit_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) };
+        func(self.revision_history_limit.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        &mut self.selector
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        func(&mut self.selector); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<crate::api::core::v1::PodTemplateSpec>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        &mut self.template
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        func(&mut self.template); self
+    }
+
+
+    /// Set [`Self::update_strategy`]
+    pub  fn update_strategy_set(&mut self, update_strategy: impl Into<Option<crate::api::apps::v1::DaemonSetUpdateStrategy>>) -> &mut Self {
+        self.update_strategy = update_strategy.into(); self
+    }
+
+    pub  fn update_strategy(&mut self) -> &mut crate::api::apps::v1::DaemonSetUpdateStrategy {
+        if self.update_strategy.is_none() { self.update_strategy = Some(Default::default()) }
+        self.update_strategy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::update_strategy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn update_strategy_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::DaemonSetUpdateStrategy)) -> &mut Self {
+        if self.update_strategy.is_none() { self.update_strategy = Some(Default::default()) };
+        func(self.update_strategy.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

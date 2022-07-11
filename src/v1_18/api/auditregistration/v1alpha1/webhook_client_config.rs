@@ -23,7 +23,70 @@ pub struct WebhookClientConfig {
     ///
     /// Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either.
     pub url: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl WebhookClientConfig  {
+    /// Set [`Self::ca_bundle`]
+    pub  fn ca_bundle_set(&mut self, ca_bundle: impl Into<Option<crate::ByteString>>) -> &mut Self {
+        self.ca_bundle = ca_bundle.into(); self
+    }
+
+    pub  fn ca_bundle(&mut self) -> &mut crate::ByteString {
+        if self.ca_bundle.is_none() { self.ca_bundle = Some(Default::default()) }
+        self.ca_bundle.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ca_bundle`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ca_bundle_with(&mut self, func: impl FnOnce(&mut crate::ByteString)) -> &mut Self {
+        if self.ca_bundle.is_none() { self.ca_bundle = Some(Default::default()) };
+        func(self.ca_bundle.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service`]
+    pub  fn service_set(&mut self, service: impl Into<Option<crate::api::auditregistration::v1alpha1::ServiceReference>>) -> &mut Self {
+        self.service = service.into(); self
+    }
+
+    pub  fn service(&mut self) -> &mut crate::api::auditregistration::v1alpha1::ServiceReference {
+        if self.service.is_none() { self.service = Some(Default::default()) }
+        self.service.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_with(&mut self, func: impl FnOnce(&mut crate::api::auditregistration::v1alpha1::ServiceReference)) -> &mut Self {
+        if self.service.is_none() { self.service = Some(Default::default()) };
+        func(self.service.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::url`]
+    pub  fn url_set(&mut self, url: impl Into<Option<String>>) -> &mut Self {
+        self.url = url.into(); self
+    }
+
+    pub  fn url(&mut self) -> &mut String {
+        if self.url.is_none() { self.url = Some(Default::default()) }
+        self.url.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::url`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn url_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.url.is_none() { self.url = Some(Default::default()) };
+        func(self.url.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WebhookClientConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

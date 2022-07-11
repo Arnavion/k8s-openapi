@@ -5,7 +5,32 @@
 pub struct NodeConfigSource {
     /// ConfigMap is a reference to a Node's ConfigMap
     pub config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeConfigSource  {
+    /// Set [`Self::config_map`]
+    pub  fn config_map_set(&mut self, config_map: impl Into<Option<crate::api::core::v1::ConfigMapNodeConfigSource>>) -> &mut Self {
+        self.config_map = config_map.into(); self
+    }
+
+    pub  fn config_map(&mut self) -> &mut crate::api::core::v1::ConfigMapNodeConfigSource {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) }
+        self.config_map.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::config_map`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn config_map_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ConfigMapNodeConfigSource)) -> &mut Self {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) };
+        func(self.config_map.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -20,7 +20,150 @@ pub struct StatusDetails {
 
     /// UID of the resource. (when there is a single resource which can be described). More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatusDetails  {
+    /// Set [`Self::causes`]
+    pub  fn causes_set(&mut self, causes: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>>>) -> &mut Self {
+        self.causes = causes.into(); self
+    }
+
+    pub  fn causes(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause> {
+        if self.causes.is_none() { self.causes = Some(Default::default()) }
+        self.causes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::causes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn causes_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::StatusCause>)) -> &mut Self {
+        if self.causes.is_none() { self.causes = Some(Default::default()) };
+        func(self.causes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::causes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn causes_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::StatusCause)) -> &mut Self {
+        if self.causes.is_none() {
+            self.causes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.causes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::causes`]
+    pub  fn causes_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::StatusCause]>) -> &mut Self {
+         if self.causes.is_none() { self.causes = Some(Vec::new()); }
+         let causes = &mut self.causes.as_mut().unwrap();
+         for item in other.borrow() {
+             causes.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<String>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<Option<String>>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        if self.kind.is_none() { self.kind = Some(Default::default()) }
+        self.kind.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.kind.is_none() { self.kind = Some(Default::default()) };
+        func(self.kind.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::retry_after_seconds`]
+    pub  fn retry_after_seconds_set(&mut self, retry_after_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.retry_after_seconds = retry_after_seconds.into(); self
+    }
+
+    pub  fn retry_after_seconds(&mut self) -> &mut i32 {
+        if self.retry_after_seconds.is_none() { self.retry_after_seconds = Some(Default::default()) }
+        self.retry_after_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::retry_after_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn retry_after_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.retry_after_seconds.is_none() { self.retry_after_seconds = Some(Default::default()) };
+        func(self.retry_after_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatusDetails {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,32 @@
 pub struct ScaleSpec {
     /// desired number of instances for the scaled object.
     pub replicas: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ScaleSpec  {
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) }
+        self.replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) };
+        func(self.replicas.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

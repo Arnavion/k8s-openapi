@@ -8,7 +8,47 @@ pub struct ObjectFieldSelector {
 
     /// Path of the field to select in the specified API version.
     pub field_path: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ObjectFieldSelector  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<Option<String>>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+    pub  fn api_version(&mut self) -> &mut String {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) }
+        self.api_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) };
+        func(self.api_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::field_path`]
+    pub  fn field_path_set(&mut self, field_path: impl Into<String>) -> &mut Self {
+        self.field_path = field_path.into(); self
+    }
+
+    pub  fn field_path(&mut self) -> &mut String {
+        &mut self.field_path
+    }
+
+    /// Modify [`Self::field_path`] with a `func`
+    pub  fn field_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.field_path); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectFieldSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

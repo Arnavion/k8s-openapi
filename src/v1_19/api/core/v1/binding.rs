@@ -8,7 +8,43 @@ pub struct Binding {
 
     /// The target object that you want to bind to the standard object.
     pub target: crate::api::core::v1::ObjectReference,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Binding  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::target`]
+    pub  fn target_set(&mut self, target: impl Into<crate::api::core::v1::ObjectReference>) -> &mut Self {
+        self.target = target.into(); self
+    }
+
+    pub  fn target(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        &mut self.target
+    }
+
+    /// Modify [`Self::target`] with a `func`
+    pub  fn target_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        func(&mut self.target); self
+    }
+
+
+}
+
 
 // Begin /v1/Binding
 

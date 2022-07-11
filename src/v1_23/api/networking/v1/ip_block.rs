@@ -8,7 +8,70 @@ pub struct IPBlock {
 
     /// Except is a slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range
     pub except: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IPBlock  {
+    /// Set [`Self::cidr`]
+    pub  fn cidr_set(&mut self, cidr: impl Into<String>) -> &mut Self {
+        self.cidr = cidr.into(); self
+    }
+
+    pub  fn cidr(&mut self) -> &mut String {
+        &mut self.cidr
+    }
+
+    /// Modify [`Self::cidr`] with a `func`
+    pub  fn cidr_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.cidr); self
+    }
+
+
+    /// Set [`Self::except`]
+    pub  fn except_set(&mut self, except: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.except = except.into(); self
+    }
+
+    pub  fn except(&mut self) -> &mut Vec<String> {
+        if self.except.is_none() { self.except = Some(Default::default()) }
+        self.except.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::except`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn except_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.except.is_none() { self.except = Some(Default::default()) };
+        func(self.except.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::except`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn except_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.except.is_none() {
+            self.except = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.except.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::except`]
+    pub  fn except_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.except.is_none() { self.except = Some(Vec::new()); }
+         let except = &mut self.except.as_mut().unwrap();
+         for item in other.borrow() {
+             except.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IPBlock {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

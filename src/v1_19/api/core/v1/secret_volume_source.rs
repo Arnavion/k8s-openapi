@@ -16,7 +16,112 @@ pub struct SecretVolumeSource {
 
     /// Name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
     pub secret_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SecretVolumeSource  {
+    /// Set [`Self::default_mode`]
+    pub  fn default_mode_set(&mut self, default_mode: impl Into<Option<i32>>) -> &mut Self {
+        self.default_mode = default_mode.into(); self
+    }
+
+    pub  fn default_mode(&mut self) -> &mut i32 {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) }
+        self.default_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_mode_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) };
+        func(self.default_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::items`]
+    pub  fn items_set(&mut self, items: impl Into<Option<Vec<crate::api::core::v1::KeyToPath>>>) -> &mut Self {
+        self.items = items.into(); self
+    }
+
+    pub  fn items(&mut self) -> &mut Vec<crate::api::core::v1::KeyToPath> {
+        if self.items.is_none() { self.items = Some(Default::default()) }
+        self.items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn items_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::KeyToPath>)) -> &mut Self {
+        if self.items.is_none() { self.items = Some(Default::default()) };
+        func(self.items.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::items`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn items_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::KeyToPath)) -> &mut Self {
+        if self.items.is_none() {
+            self.items = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.items.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::items`]
+    pub  fn items_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::KeyToPath]>) -> &mut Self {
+         if self.items.is_none() { self.items = Some(Vec::new()); }
+         let items = &mut self.items.as_mut().unwrap();
+         for item in other.borrow() {
+             items.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::optional`]
+    pub  fn optional_set(&mut self, optional: impl Into<Option<bool>>) -> &mut Self {
+        self.optional = optional.into(); self
+    }
+
+    pub  fn optional(&mut self) -> &mut bool {
+        if self.optional.is_none() { self.optional = Some(Default::default()) }
+        self.optional.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::optional`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn optional_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.optional.is_none() { self.optional = Some(Default::default()) };
+        func(self.optional.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_name`]
+    pub  fn secret_name_set(&mut self, secret_name: impl Into<Option<String>>) -> &mut Self {
+        self.secret_name = secret_name.into(); self
+    }
+
+    pub  fn secret_name(&mut self) -> &mut String {
+        if self.secret_name.is_none() { self.secret_name = Some(Default::default()) }
+        self.secret_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.secret_name.is_none() { self.secret_name = Some(Default::default()) };
+        func(self.secret_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SecretVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

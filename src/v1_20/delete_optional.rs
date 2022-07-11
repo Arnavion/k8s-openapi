@@ -24,7 +24,55 @@ pub struct DeleteOptional<'a> {
 
     /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub propagation_policy: Option<&'a str>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<'a> DeleteOptional<'a>  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<Option<&'a str>>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+
+    /// Set [`Self::dry_run`]
+    pub  fn dry_run_set(&mut self, dry_run: impl Into<Option<&'a [String]>>) -> &mut Self {
+        self.dry_run = dry_run.into(); self
+    }
+
+
+    /// Set [`Self::grace_period_seconds`]
+    pub  fn grace_period_seconds_set(&mut self, grace_period_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.grace_period_seconds = grace_period_seconds.into(); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<Option<&'a str>>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+
+    /// Set [`Self::orphan_dependents`]
+    pub  fn orphan_dependents_set(&mut self, orphan_dependents: impl Into<Option<bool>>) -> &mut Self {
+        self.orphan_dependents = orphan_dependents.into(); self
+    }
+
+
+    /// Set [`Self::preconditions`]
+    pub  fn preconditions_set(&mut self, preconditions: impl Into<Option<&'a crate::apimachinery::pkg::apis::meta::v1::Preconditions>>) -> &mut Self {
+        self.preconditions = preconditions.into(); self
+    }
+
+
+    /// Set [`Self::propagation_policy`]
+    pub  fn propagation_policy_set(&mut self, propagation_policy: impl Into<Option<&'a str>>) -> &mut Self {
+        self.propagation_policy = propagation_policy.into(); self
+    }
+
+
+}
+
 
 impl<'a> crate::serde::Serialize for DeleteOptional<'a> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {

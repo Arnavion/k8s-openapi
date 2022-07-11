@@ -14,7 +14,81 @@ pub struct ExternalMetricStatus {
 
     /// metricSelector is used to identify a specific time series within a given metric.
     pub metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ExternalMetricStatus  {
+    /// Set [`Self::current_average_value`]
+    pub  fn current_average_value_set(&mut self, current_average_value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.current_average_value = current_average_value.into(); self
+    }
+
+    pub  fn current_average_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.current_average_value.is_none() { self.current_average_value = Some(Default::default()) }
+        self.current_average_value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::current_average_value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn current_average_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.current_average_value.is_none() { self.current_average_value = Some(Default::default()) };
+        func(self.current_average_value.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::current_value`]
+    pub  fn current_value_set(&mut self, current_value: impl Into<crate::apimachinery::pkg::api::resource::Quantity>) -> &mut Self {
+        self.current_value = current_value.into(); self
+    }
+
+    pub  fn current_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        &mut self.current_value
+    }
+
+    /// Modify [`Self::current_value`] with a `func`
+    pub  fn current_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        func(&mut self.current_value); self
+    }
+
+
+    /// Set [`Self::metric_name`]
+    pub  fn metric_name_set(&mut self, metric_name: impl Into<String>) -> &mut Self {
+        self.metric_name = metric_name.into(); self
+    }
+
+    pub  fn metric_name(&mut self) -> &mut String {
+        &mut self.metric_name
+    }
+
+    /// Modify [`Self::metric_name`] with a `func`
+    pub  fn metric_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.metric_name); self
+    }
+
+
+    /// Set [`Self::metric_selector`]
+    pub  fn metric_selector_set(&mut self, metric_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.metric_selector = metric_selector.into(); self
+    }
+
+    pub  fn metric_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.metric_selector.is_none() { self.metric_selector = Some(Default::default()) }
+        self.metric_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::metric_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn metric_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.metric_selector.is_none() { self.metric_selector = Some(Default::default()) };
+        func(self.metric_selector.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

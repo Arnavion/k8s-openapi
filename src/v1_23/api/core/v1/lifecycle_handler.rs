@@ -11,7 +11,70 @@ pub struct LifecycleHandler {
 
     /// Deprecated. TCPSocket is NOT supported as a LifecycleHandler and kept for the backward compatibility. There are no validation of this field and lifecycle hooks will fail in runtime when tcp handler is specified.
     pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LifecycleHandler  {
+    /// Set [`Self::exec`]
+    pub  fn exec_set(&mut self, exec: impl Into<Option<crate::api::core::v1::ExecAction>>) -> &mut Self {
+        self.exec = exec.into(); self
+    }
+
+    pub  fn exec(&mut self) -> &mut crate::api::core::v1::ExecAction {
+        if self.exec.is_none() { self.exec = Some(Default::default()) }
+        self.exec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::exec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn exec_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ExecAction)) -> &mut Self {
+        if self.exec.is_none() { self.exec = Some(Default::default()) };
+        func(self.exec.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::http_get`]
+    pub  fn http_get_set(&mut self, http_get: impl Into<Option<crate::api::core::v1::HTTPGetAction>>) -> &mut Self {
+        self.http_get = http_get.into(); self
+    }
+
+    pub  fn http_get(&mut self) -> &mut crate::api::core::v1::HTTPGetAction {
+        if self.http_get.is_none() { self.http_get = Some(Default::default()) }
+        self.http_get.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::http_get`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn http_get_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::HTTPGetAction)) -> &mut Self {
+        if self.http_get.is_none() { self.http_get = Some(Default::default()) };
+        func(self.http_get.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::tcp_socket`]
+    pub  fn tcp_socket_set(&mut self, tcp_socket: impl Into<Option<crate::api::core::v1::TCPSocketAction>>) -> &mut Self {
+        self.tcp_socket = tcp_socket.into(); self
+    }
+
+    pub  fn tcp_socket(&mut self) -> &mut crate::api::core::v1::TCPSocketAction {
+        if self.tcp_socket.is_none() { self.tcp_socket = Some(Default::default()) }
+        self.tcp_socket.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tcp_socket`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tcp_socket_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TCPSocketAction)) -> &mut Self {
+        if self.tcp_socket.is_none() { self.tcp_socket = Some(Default::default()) };
+        func(self.tcp_socket.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LifecycleHandler {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

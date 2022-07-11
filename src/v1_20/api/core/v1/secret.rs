@@ -17,7 +17,150 @@ pub struct Secret {
 
     /// Used to facilitate programmatic handling of secret data.
     pub type_: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Secret  {
+    /// Set [`Self::data`]
+    pub  fn data_set(&mut self, data: impl Into<Option<std::collections::BTreeMap<String, crate::ByteString>>>) -> &mut Self {
+        self.data = data.into(); self
+    }
+
+    pub  fn data(&mut self) -> &mut std::collections::BTreeMap<String, crate::ByteString> {
+        if self.data.is_none() { self.data = Some(Default::default()) }
+        self.data.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::data`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn data_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::ByteString>)) -> &mut Self {
+        if self.data.is_none() { self.data = Some(Default::default()) };
+        func(self.data.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::data`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn data_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::ByteString)) -> &mut Self {
+        if self.data.is_none() {
+            self.data = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.data.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::data`]
+    pub  fn data_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::ByteString>>) -> &mut Self {
+         if self.data.is_none() { self.data = Some(std::collections::BTreeMap::new()); }
+         let data = &mut self.data.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             data.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::immutable`]
+    pub  fn immutable_set(&mut self, immutable: impl Into<Option<bool>>) -> &mut Self {
+        self.immutable = immutable.into(); self
+    }
+
+    pub  fn immutable(&mut self) -> &mut bool {
+        if self.immutable.is_none() { self.immutable = Some(Default::default()) }
+        self.immutable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::immutable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn immutable_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.immutable.is_none() { self.immutable = Some(Default::default()) };
+        func(self.immutable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::string_data`]
+    pub  fn string_data_set(&mut self, string_data: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.string_data = string_data.into(); self
+    }
+
+    pub  fn string_data(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.string_data.is_none() { self.string_data = Some(Default::default()) }
+        self.string_data.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::string_data`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn string_data_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.string_data.is_none() { self.string_data = Some(Default::default()) };
+        func(self.string_data.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::string_data`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn string_data_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.string_data.is_none() {
+            self.string_data = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.string_data.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::string_data`]
+    pub  fn string_data_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.string_data.is_none() { self.string_data = Some(std::collections::BTreeMap::new()); }
+         let string_data = &mut self.string_data.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             string_data.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin /v1/Secret
 

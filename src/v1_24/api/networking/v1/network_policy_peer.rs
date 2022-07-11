@@ -15,7 +15,70 @@ pub struct NetworkPolicyPeer {
     ///
     /// If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.
     pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NetworkPolicyPeer  {
+    /// Set [`Self::ip_block`]
+    pub  fn ip_block_set(&mut self, ip_block: impl Into<Option<crate::api::networking::v1::IPBlock>>) -> &mut Self {
+        self.ip_block = ip_block.into(); self
+    }
+
+    pub  fn ip_block(&mut self) -> &mut crate::api::networking::v1::IPBlock {
+        if self.ip_block.is_none() { self.ip_block = Some(Default::default()) }
+        self.ip_block.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip_block`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_block_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::IPBlock)) -> &mut Self {
+        if self.ip_block.is_none() { self.ip_block = Some(Default::default()) };
+        func(self.ip_block.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespace_selector`]
+    pub  fn namespace_selector_set(&mut self, namespace_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.namespace_selector = namespace_selector.into(); self
+    }
+
+    pub  fn namespace_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.namespace_selector.is_none() { self.namespace_selector = Some(Default::default()) }
+        self.namespace_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.namespace_selector.is_none() { self.namespace_selector = Some(Default::default()) };
+        func(self.namespace_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_selector`]
+    pub  fn pod_selector_set(&mut self, pod_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.pod_selector = pod_selector.into(); self
+    }
+
+    pub  fn pod_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.pod_selector.is_none() { self.pod_selector = Some(Default::default()) }
+        self.pod_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.pod_selector.is_none() { self.pod_selector = Some(Default::default()) };
+        func(self.pod_selector.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyPeer {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,135 @@ pub struct IngressSpec {
 
     /// TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
     pub tls: Option<Vec<crate::api::networking::v1beta1::IngressTLS>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressSpec  {
+    /// Set [`Self::backend`]
+    pub  fn backend_set(&mut self, backend: impl Into<Option<crate::api::networking::v1beta1::IngressBackend>>) -> &mut Self {
+        self.backend = backend.into(); self
+    }
+
+    pub  fn backend(&mut self) -> &mut crate::api::networking::v1beta1::IngressBackend {
+        if self.backend.is_none() { self.backend = Some(Default::default()) }
+        self.backend.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::backend`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn backend_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1beta1::IngressBackend)) -> &mut Self {
+        if self.backend.is_none() { self.backend = Some(Default::default()) };
+        func(self.backend.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ingress_class_name`]
+    pub  fn ingress_class_name_set(&mut self, ingress_class_name: impl Into<Option<String>>) -> &mut Self {
+        self.ingress_class_name = ingress_class_name.into(); self
+    }
+
+    pub  fn ingress_class_name(&mut self) -> &mut String {
+        if self.ingress_class_name.is_none() { self.ingress_class_name = Some(Default::default()) }
+        self.ingress_class_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ingress_class_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ingress_class_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ingress_class_name.is_none() { self.ingress_class_name = Some(Default::default()) };
+        func(self.ingress_class_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::rules`]
+    pub  fn rules_set(&mut self, rules: impl Into<Option<Vec<crate::api::networking::v1beta1::IngressRule>>>) -> &mut Self {
+        self.rules = rules.into(); self
+    }
+
+    pub  fn rules(&mut self) -> &mut Vec<crate::api::networking::v1beta1::IngressRule> {
+        if self.rules.is_none() { self.rules = Some(Default::default()) }
+        self.rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1beta1::IngressRule>)) -> &mut Self {
+        if self.rules.is_none() { self.rules = Some(Default::default()) };
+        func(self.rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1beta1::IngressRule)) -> &mut Self {
+        if self.rules.is_none() {
+            self.rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::rules`]
+    pub  fn rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1beta1::IngressRule]>) -> &mut Self {
+         if self.rules.is_none() { self.rules = Some(Vec::new()); }
+         let rules = &mut self.rules.as_mut().unwrap();
+         for item in other.borrow() {
+             rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::tls`]
+    pub  fn tls_set(&mut self, tls: impl Into<Option<Vec<crate::api::networking::v1beta1::IngressTLS>>>) -> &mut Self {
+        self.tls = tls.into(); self
+    }
+
+    pub  fn tls(&mut self) -> &mut Vec<crate::api::networking::v1beta1::IngressTLS> {
+        if self.tls.is_none() { self.tls = Some(Default::default()) }
+        self.tls.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tls`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tls_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1beta1::IngressTLS>)) -> &mut Self {
+        if self.tls.is_none() { self.tls = Some(Default::default()) };
+        func(self.tls.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::tls`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn tls_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1beta1::IngressTLS)) -> &mut Self {
+        if self.tls.is_none() {
+            self.tls = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.tls.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::tls`]
+    pub  fn tls_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1beta1::IngressTLS]>) -> &mut Self {
+         if self.tls.is_none() { self.tls = Some(Vec::new()); }
+         let tls = &mut self.tls.as_mut().unwrap();
+         for item in other.borrow() {
+             tls.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

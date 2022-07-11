@@ -8,7 +8,38 @@ pub struct EventSeries {
 
     /// Time of the last occurrence observed
     pub last_observed_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EventSeries  {
+    /// Set [`Self::count`]
+    pub  fn count_set(&mut self, count: impl Into<Option<i32>>) -> &mut Self {
+        self.count = count.into(); self
+    }
+
+    pub  fn count(&mut self) -> &mut i32 {
+        if self.count.is_none() { self.count = Some(Default::default()) }
+        self.count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.count.is_none() { self.count = Some(Default::default()) };
+        func(self.count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::last_observed_time`]
+    pub  fn last_observed_time_set(&mut self, last_observed_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>>) -> &mut Self {
+        self.last_observed_time = last_observed_time.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EventSeries {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

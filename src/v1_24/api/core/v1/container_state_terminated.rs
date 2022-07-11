@@ -23,7 +23,116 @@ pub struct ContainerStateTerminated {
 
     /// Time at which previous execution of the container started
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerStateTerminated  {
+    /// Set [`Self::container_id`]
+    pub  fn container_id_set(&mut self, container_id: impl Into<Option<String>>) -> &mut Self {
+        self.container_id = container_id.into(); self
+    }
+
+    pub  fn container_id(&mut self) -> &mut String {
+        if self.container_id.is_none() { self.container_id = Some(Default::default()) }
+        self.container_id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::container_id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn container_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.container_id.is_none() { self.container_id = Some(Default::default()) };
+        func(self.container_id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::exit_code`]
+    pub  fn exit_code_set(&mut self, exit_code: impl Into<i32>) -> &mut Self {
+        self.exit_code = exit_code.into(); self
+    }
+
+    pub  fn exit_code(&mut self) -> &mut i32 {
+        &mut self.exit_code
+    }
+
+    /// Modify [`Self::exit_code`] with a `func`
+    pub  fn exit_code_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.exit_code); self
+    }
+
+
+    /// Set [`Self::finished_at`]
+    pub  fn finished_at_set(&mut self, finished_at: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.finished_at = finished_at.into(); self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::signal`]
+    pub  fn signal_set(&mut self, signal: impl Into<Option<i32>>) -> &mut Self {
+        self.signal = signal.into(); self
+    }
+
+    pub  fn signal(&mut self) -> &mut i32 {
+        if self.signal.is_none() { self.signal = Some(Default::default()) }
+        self.signal.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::signal`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn signal_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.signal.is_none() { self.signal = Some(Default::default()) };
+        func(self.signal.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::started_at`]
+    pub  fn started_at_set(&mut self, started_at: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.started_at = started_at.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

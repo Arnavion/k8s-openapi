@@ -60,7 +60,516 @@ pub struct ServiceSpec {
 
     /// type determines how the Service is exposed. Defaults to ClusterIP. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. "ClusterIP" allocates a cluster-internal IP address for load-balancing to endpoints. Endpoints are determined by the selector or if that is not specified, by manual construction of an Endpoints object or EndpointSlice objects. If clusterIP is "None", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a virtual IP. "NodePort" builds on ClusterIP and allocates a port on every node which routes to the same endpoints as the clusterIP. "LoadBalancer" builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP. "ExternalName" aliases this service to the specified externalName. Several other fields do not apply to ExternalName services. More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
     pub type_: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceSpec  {
+    /// Set [`Self::allocate_load_balancer_node_ports`]
+    pub  fn allocate_load_balancer_node_ports_set(&mut self, allocate_load_balancer_node_ports: impl Into<Option<bool>>) -> &mut Self {
+        self.allocate_load_balancer_node_ports = allocate_load_balancer_node_ports.into(); self
+    }
+
+    pub  fn allocate_load_balancer_node_ports(&mut self) -> &mut bool {
+        if self.allocate_load_balancer_node_ports.is_none() { self.allocate_load_balancer_node_ports = Some(Default::default()) }
+        self.allocate_load_balancer_node_ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allocate_load_balancer_node_ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allocate_load_balancer_node_ports_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.allocate_load_balancer_node_ports.is_none() { self.allocate_load_balancer_node_ports = Some(Default::default()) };
+        func(self.allocate_load_balancer_node_ports.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::cluster_ip`]
+    pub  fn cluster_ip_set(&mut self, cluster_ip: impl Into<Option<String>>) -> &mut Self {
+        self.cluster_ip = cluster_ip.into(); self
+    }
+
+    pub  fn cluster_ip(&mut self) -> &mut String {
+        if self.cluster_ip.is_none() { self.cluster_ip = Some(Default::default()) }
+        self.cluster_ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cluster_ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cluster_ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.cluster_ip.is_none() { self.cluster_ip = Some(Default::default()) };
+        func(self.cluster_ip.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::cluster_ips`]
+    pub  fn cluster_ips_set(&mut self, cluster_ips: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.cluster_ips = cluster_ips.into(); self
+    }
+
+    pub  fn cluster_ips(&mut self) -> &mut Vec<String> {
+        if self.cluster_ips.is_none() { self.cluster_ips = Some(Default::default()) }
+        self.cluster_ips.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cluster_ips`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cluster_ips_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.cluster_ips.is_none() { self.cluster_ips = Some(Default::default()) };
+        func(self.cluster_ips.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::cluster_ips`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn cluster_ips_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.cluster_ips.is_none() {
+            self.cluster_ips = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.cluster_ips.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::cluster_ips`]
+    pub  fn cluster_ips_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.cluster_ips.is_none() { self.cluster_ips = Some(Vec::new()); }
+         let cluster_ips = &mut self.cluster_ips.as_mut().unwrap();
+         for item in other.borrow() {
+             cluster_ips.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::external_ips`]
+    pub  fn external_ips_set(&mut self, external_ips: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.external_ips = external_ips.into(); self
+    }
+
+    pub  fn external_ips(&mut self) -> &mut Vec<String> {
+        if self.external_ips.is_none() { self.external_ips = Some(Default::default()) }
+        self.external_ips.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external_ips`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_ips_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.external_ips.is_none() { self.external_ips = Some(Default::default()) };
+        func(self.external_ips.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::external_ips`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn external_ips_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.external_ips.is_none() {
+            self.external_ips = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.external_ips.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::external_ips`]
+    pub  fn external_ips_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.external_ips.is_none() { self.external_ips = Some(Vec::new()); }
+         let external_ips = &mut self.external_ips.as_mut().unwrap();
+         for item in other.borrow() {
+             external_ips.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::external_name`]
+    pub  fn external_name_set(&mut self, external_name: impl Into<Option<String>>) -> &mut Self {
+        self.external_name = external_name.into(); self
+    }
+
+    pub  fn external_name(&mut self) -> &mut String {
+        if self.external_name.is_none() { self.external_name = Some(Default::default()) }
+        self.external_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.external_name.is_none() { self.external_name = Some(Default::default()) };
+        func(self.external_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::external_traffic_policy`]
+    pub  fn external_traffic_policy_set(&mut self, external_traffic_policy: impl Into<Option<String>>) -> &mut Self {
+        self.external_traffic_policy = external_traffic_policy.into(); self
+    }
+
+    pub  fn external_traffic_policy(&mut self) -> &mut String {
+        if self.external_traffic_policy.is_none() { self.external_traffic_policy = Some(Default::default()) }
+        self.external_traffic_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external_traffic_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_traffic_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.external_traffic_policy.is_none() { self.external_traffic_policy = Some(Default::default()) };
+        func(self.external_traffic_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::health_check_node_port`]
+    pub  fn health_check_node_port_set(&mut self, health_check_node_port: impl Into<Option<i32>>) -> &mut Self {
+        self.health_check_node_port = health_check_node_port.into(); self
+    }
+
+    pub  fn health_check_node_port(&mut self) -> &mut i32 {
+        if self.health_check_node_port.is_none() { self.health_check_node_port = Some(Default::default()) }
+        self.health_check_node_port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::health_check_node_port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn health_check_node_port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.health_check_node_port.is_none() { self.health_check_node_port = Some(Default::default()) };
+        func(self.health_check_node_port.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ip_families`]
+    pub  fn ip_families_set(&mut self, ip_families: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.ip_families = ip_families.into(); self
+    }
+
+    pub  fn ip_families(&mut self) -> &mut Vec<String> {
+        if self.ip_families.is_none() { self.ip_families = Some(Default::default()) }
+        self.ip_families.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip_families`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_families_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.ip_families.is_none() { self.ip_families = Some(Default::default()) };
+        func(self.ip_families.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ip_families`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ip_families_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip_families.is_none() {
+            self.ip_families = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ip_families.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ip_families`]
+    pub  fn ip_families_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.ip_families.is_none() { self.ip_families = Some(Vec::new()); }
+         let ip_families = &mut self.ip_families.as_mut().unwrap();
+         for item in other.borrow() {
+             ip_families.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ip_family_policy`]
+    pub  fn ip_family_policy_set(&mut self, ip_family_policy: impl Into<Option<String>>) -> &mut Self {
+        self.ip_family_policy = ip_family_policy.into(); self
+    }
+
+    pub  fn ip_family_policy(&mut self) -> &mut String {
+        if self.ip_family_policy.is_none() { self.ip_family_policy = Some(Default::default()) }
+        self.ip_family_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ip_family_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ip_family_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.ip_family_policy.is_none() { self.ip_family_policy = Some(Default::default()) };
+        func(self.ip_family_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::load_balancer_ip`]
+    pub  fn load_balancer_ip_set(&mut self, load_balancer_ip: impl Into<Option<String>>) -> &mut Self {
+        self.load_balancer_ip = load_balancer_ip.into(); self
+    }
+
+    pub  fn load_balancer_ip(&mut self) -> &mut String {
+        if self.load_balancer_ip.is_none() { self.load_balancer_ip = Some(Default::default()) }
+        self.load_balancer_ip.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::load_balancer_ip`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn load_balancer_ip_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.load_balancer_ip.is_none() { self.load_balancer_ip = Some(Default::default()) };
+        func(self.load_balancer_ip.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::load_balancer_source_ranges`]
+    pub  fn load_balancer_source_ranges_set(&mut self, load_balancer_source_ranges: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.load_balancer_source_ranges = load_balancer_source_ranges.into(); self
+    }
+
+    pub  fn load_balancer_source_ranges(&mut self) -> &mut Vec<String> {
+        if self.load_balancer_source_ranges.is_none() { self.load_balancer_source_ranges = Some(Default::default()) }
+        self.load_balancer_source_ranges.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::load_balancer_source_ranges`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn load_balancer_source_ranges_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.load_balancer_source_ranges.is_none() { self.load_balancer_source_ranges = Some(Default::default()) };
+        func(self.load_balancer_source_ranges.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::load_balancer_source_ranges`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn load_balancer_source_ranges_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.load_balancer_source_ranges.is_none() {
+            self.load_balancer_source_ranges = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.load_balancer_source_ranges.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::load_balancer_source_ranges`]
+    pub  fn load_balancer_source_ranges_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.load_balancer_source_ranges.is_none() { self.load_balancer_source_ranges = Some(Vec::new()); }
+         let load_balancer_source_ranges = &mut self.load_balancer_source_ranges.as_mut().unwrap();
+         for item in other.borrow() {
+             load_balancer_source_ranges.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::core::v1::ServicePort>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::core::v1::ServicePort> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ServicePort>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ServicePort)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ServicePort]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::publish_not_ready_addresses`]
+    pub  fn publish_not_ready_addresses_set(&mut self, publish_not_ready_addresses: impl Into<Option<bool>>) -> &mut Self {
+        self.publish_not_ready_addresses = publish_not_ready_addresses.into(); self
+    }
+
+    pub  fn publish_not_ready_addresses(&mut self) -> &mut bool {
+        if self.publish_not_ready_addresses.is_none() { self.publish_not_ready_addresses = Some(Default::default()) }
+        self.publish_not_ready_addresses.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::publish_not_ready_addresses`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn publish_not_ready_addresses_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.publish_not_ready_addresses.is_none() { self.publish_not_ready_addresses = Some(Default::default()) };
+        func(self.publish_not_ready_addresses.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::selector`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn selector_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.selector.is_none() {
+            self.selector = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.selector.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::selector`]
+    pub  fn selector_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.selector.is_none() { self.selector = Some(std::collections::BTreeMap::new()); }
+         let selector = &mut self.selector.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             selector.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::session_affinity`]
+    pub  fn session_affinity_set(&mut self, session_affinity: impl Into<Option<String>>) -> &mut Self {
+        self.session_affinity = session_affinity.into(); self
+    }
+
+    pub  fn session_affinity(&mut self) -> &mut String {
+        if self.session_affinity.is_none() { self.session_affinity = Some(Default::default()) }
+        self.session_affinity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::session_affinity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn session_affinity_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.session_affinity.is_none() { self.session_affinity = Some(Default::default()) };
+        func(self.session_affinity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::session_affinity_config`]
+    pub  fn session_affinity_config_set(&mut self, session_affinity_config: impl Into<Option<crate::api::core::v1::SessionAffinityConfig>>) -> &mut Self {
+        self.session_affinity_config = session_affinity_config.into(); self
+    }
+
+    pub  fn session_affinity_config(&mut self) -> &mut crate::api::core::v1::SessionAffinityConfig {
+        if self.session_affinity_config.is_none() { self.session_affinity_config = Some(Default::default()) }
+        self.session_affinity_config.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::session_affinity_config`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn session_affinity_config_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SessionAffinityConfig)) -> &mut Self {
+        if self.session_affinity_config.is_none() { self.session_affinity_config = Some(Default::default()) };
+        func(self.session_affinity_config.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::topology_keys`]
+    pub  fn topology_keys_set(&mut self, topology_keys: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.topology_keys = topology_keys.into(); self
+    }
+
+    pub  fn topology_keys(&mut self) -> &mut Vec<String> {
+        if self.topology_keys.is_none() { self.topology_keys = Some(Default::default()) }
+        self.topology_keys.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::topology_keys`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn topology_keys_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.topology_keys.is_none() { self.topology_keys = Some(Default::default()) };
+        func(self.topology_keys.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::topology_keys`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn topology_keys_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.topology_keys.is_none() {
+            self.topology_keys = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.topology_keys.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::topology_keys`]
+    pub  fn topology_keys_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.topology_keys.is_none() { self.topology_keys = Some(Vec::new()); }
+         let topology_keys = &mut self.topology_keys.as_mut().unwrap();
+         for item in other.borrow() {
+             topology_keys.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

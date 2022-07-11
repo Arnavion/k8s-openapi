@@ -20,7 +20,129 @@ pub struct CustomResourceDefinitionSpec {
 
     /// versions is the list of all API versions of the defined custom resource. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
     pub versions: Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceDefinitionSpec  {
+    /// Set [`Self::conversion`]
+    pub  fn conversion_set(&mut self, conversion: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion>>) -> &mut Self {
+        self.conversion = conversion.into(); self
+    }
+
+    pub  fn conversion(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion {
+        if self.conversion.is_none() { self.conversion = Some(Default::default()) }
+        self.conversion.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conversion`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conversion_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceConversion)) -> &mut Self {
+        if self.conversion.is_none() { self.conversion = Some(Default::default()) };
+        func(self.conversion.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<String>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        &mut self.group
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.group); self
+    }
+
+
+    /// Set [`Self::names`]
+    pub  fn names_set(&mut self, names: impl Into<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames>) -> &mut Self {
+        self.names = names.into(); self
+    }
+
+    pub  fn names(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames {
+        &mut self.names
+    }
+
+    /// Modify [`Self::names`] with a `func`
+    pub  fn names_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionNames)) -> &mut Self {
+        func(&mut self.names); self
+    }
+
+
+    /// Set [`Self::preserve_unknown_fields`]
+    pub  fn preserve_unknown_fields_set(&mut self, preserve_unknown_fields: impl Into<Option<bool>>) -> &mut Self {
+        self.preserve_unknown_fields = preserve_unknown_fields.into(); self
+    }
+
+    pub  fn preserve_unknown_fields(&mut self) -> &mut bool {
+        if self.preserve_unknown_fields.is_none() { self.preserve_unknown_fields = Some(Default::default()) }
+        self.preserve_unknown_fields.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preserve_unknown_fields`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preserve_unknown_fields_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.preserve_unknown_fields.is_none() { self.preserve_unknown_fields = Some(Default::default()) };
+        func(self.preserve_unknown_fields.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scope`]
+    pub  fn scope_set(&mut self, scope: impl Into<String>) -> &mut Self {
+        self.scope = scope.into(); self
+    }
+
+    pub  fn scope(&mut self) -> &mut String {
+        &mut self.scope
+    }
+
+    /// Modify [`Self::scope`] with a `func`
+    pub  fn scope_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.scope); self
+    }
+
+
+    /// Set [`Self::versions`]
+    pub  fn versions_set(&mut self, versions: impl Into<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>>) -> &mut Self {
+        self.versions = versions.into(); self
+    }
+
+    pub  fn versions(&mut self) -> &mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion> {
+        &mut self.versions
+    }
+
+    /// Modify [`Self::versions`] with a `func`
+    pub  fn versions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion>)) -> &mut Self {
+        func(&mut self.versions); self
+    }
+
+    /// Push new element to [`Self::versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn versions_push_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.versions.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::versions`]
+    pub  fn versions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionVersion]>) -> &mut Self {
+         for item in other.borrow() {
+             self.versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

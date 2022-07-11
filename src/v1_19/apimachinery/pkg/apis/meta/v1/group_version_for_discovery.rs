@@ -8,7 +8,43 @@ pub struct GroupVersionForDiscovery {
 
     /// version specifies the version in the form of "version". This is to save the clients the trouble of splitting the GroupVersion.
     pub version: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl GroupVersionForDiscovery  {
+    /// Set [`Self::group_version`]
+    pub  fn group_version_set(&mut self, group_version: impl Into<String>) -> &mut Self {
+        self.group_version = group_version.into(); self
+    }
+
+    pub  fn group_version(&mut self) -> &mut String {
+        &mut self.group_version
+    }
+
+    /// Modify [`Self::group_version`] with a `func`
+    pub  fn group_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.group_version); self
+    }
+
+
+    /// Set [`Self::version`]
+    pub  fn version_set(&mut self, version: impl Into<String>) -> &mut Self {
+        self.version = version.into(); self
+    }
+
+    pub  fn version(&mut self) -> &mut String {
+        &mut self.version
+    }
+
+    /// Modify [`Self::version`] with a `func`
+    pub  fn version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.version); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GroupVersionForDiscovery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

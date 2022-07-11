@@ -32,7 +32,163 @@ pub struct NodeSystemInfo {
 
     /// SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid
     pub system_uuid: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeSystemInfo  {
+    /// Set [`Self::architecture`]
+    pub  fn architecture_set(&mut self, architecture: impl Into<String>) -> &mut Self {
+        self.architecture = architecture.into(); self
+    }
+
+    pub  fn architecture(&mut self) -> &mut String {
+        &mut self.architecture
+    }
+
+    /// Modify [`Self::architecture`] with a `func`
+    pub  fn architecture_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.architecture); self
+    }
+
+
+    /// Set [`Self::boot_id`]
+    pub  fn boot_id_set(&mut self, boot_id: impl Into<String>) -> &mut Self {
+        self.boot_id = boot_id.into(); self
+    }
+
+    pub  fn boot_id(&mut self) -> &mut String {
+        &mut self.boot_id
+    }
+
+    /// Modify [`Self::boot_id`] with a `func`
+    pub  fn boot_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.boot_id); self
+    }
+
+
+    /// Set [`Self::container_runtime_version`]
+    pub  fn container_runtime_version_set(&mut self, container_runtime_version: impl Into<String>) -> &mut Self {
+        self.container_runtime_version = container_runtime_version.into(); self
+    }
+
+    pub  fn container_runtime_version(&mut self) -> &mut String {
+        &mut self.container_runtime_version
+    }
+
+    /// Modify [`Self::container_runtime_version`] with a `func`
+    pub  fn container_runtime_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.container_runtime_version); self
+    }
+
+
+    /// Set [`Self::kernel_version`]
+    pub  fn kernel_version_set(&mut self, kernel_version: impl Into<String>) -> &mut Self {
+        self.kernel_version = kernel_version.into(); self
+    }
+
+    pub  fn kernel_version(&mut self) -> &mut String {
+        &mut self.kernel_version
+    }
+
+    /// Modify [`Self::kernel_version`] with a `func`
+    pub  fn kernel_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kernel_version); self
+    }
+
+
+    /// Set [`Self::kube_proxy_version`]
+    pub  fn kube_proxy_version_set(&mut self, kube_proxy_version: impl Into<String>) -> &mut Self {
+        self.kube_proxy_version = kube_proxy_version.into(); self
+    }
+
+    pub  fn kube_proxy_version(&mut self) -> &mut String {
+        &mut self.kube_proxy_version
+    }
+
+    /// Modify [`Self::kube_proxy_version`] with a `func`
+    pub  fn kube_proxy_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kube_proxy_version); self
+    }
+
+
+    /// Set [`Self::kubelet_version`]
+    pub  fn kubelet_version_set(&mut self, kubelet_version: impl Into<String>) -> &mut Self {
+        self.kubelet_version = kubelet_version.into(); self
+    }
+
+    pub  fn kubelet_version(&mut self) -> &mut String {
+        &mut self.kubelet_version
+    }
+
+    /// Modify [`Self::kubelet_version`] with a `func`
+    pub  fn kubelet_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kubelet_version); self
+    }
+
+
+    /// Set [`Self::machine_id`]
+    pub  fn machine_id_set(&mut self, machine_id: impl Into<String>) -> &mut Self {
+        self.machine_id = machine_id.into(); self
+    }
+
+    pub  fn machine_id(&mut self) -> &mut String {
+        &mut self.machine_id
+    }
+
+    /// Modify [`Self::machine_id`] with a `func`
+    pub  fn machine_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.machine_id); self
+    }
+
+
+    /// Set [`Self::operating_system`]
+    pub  fn operating_system_set(&mut self, operating_system: impl Into<String>) -> &mut Self {
+        self.operating_system = operating_system.into(); self
+    }
+
+    pub  fn operating_system(&mut self) -> &mut String {
+        &mut self.operating_system
+    }
+
+    /// Modify [`Self::operating_system`] with a `func`
+    pub  fn operating_system_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.operating_system); self
+    }
+
+
+    /// Set [`Self::os_image`]
+    pub  fn os_image_set(&mut self, os_image: impl Into<String>) -> &mut Self {
+        self.os_image = os_image.into(); self
+    }
+
+    pub  fn os_image(&mut self) -> &mut String {
+        &mut self.os_image
+    }
+
+    /// Modify [`Self::os_image`] with a `func`
+    pub  fn os_image_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.os_image); self
+    }
+
+
+    /// Set [`Self::system_uuid`]
+    pub  fn system_uuid_set(&mut self, system_uuid: impl Into<String>) -> &mut Self {
+        self.system_uuid = system_uuid.into(); self
+    }
+
+    pub  fn system_uuid(&mut self) -> &mut String {
+        &mut self.system_uuid
+    }
+
+    /// Modify [`Self::system_uuid`] with a `func`
+    pub  fn system_uuid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.system_uuid); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

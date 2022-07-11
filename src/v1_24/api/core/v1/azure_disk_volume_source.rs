@@ -20,7 +20,119 @@ pub struct AzureDiskVolumeSource {
 
     /// readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AzureDiskVolumeSource  {
+    /// Set [`Self::caching_mode`]
+    pub  fn caching_mode_set(&mut self, caching_mode: impl Into<Option<String>>) -> &mut Self {
+        self.caching_mode = caching_mode.into(); self
+    }
+
+    pub  fn caching_mode(&mut self) -> &mut String {
+        if self.caching_mode.is_none() { self.caching_mode = Some(Default::default()) }
+        self.caching_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::caching_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn caching_mode_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.caching_mode.is_none() { self.caching_mode = Some(Default::default()) };
+        func(self.caching_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::disk_name`]
+    pub  fn disk_name_set(&mut self, disk_name: impl Into<String>) -> &mut Self {
+        self.disk_name = disk_name.into(); self
+    }
+
+    pub  fn disk_name(&mut self) -> &mut String {
+        &mut self.disk_name
+    }
+
+    /// Modify [`Self::disk_name`] with a `func`
+    pub  fn disk_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.disk_name); self
+    }
+
+
+    /// Set [`Self::disk_uri`]
+    pub  fn disk_uri_set(&mut self, disk_uri: impl Into<String>) -> &mut Self {
+        self.disk_uri = disk_uri.into(); self
+    }
+
+    pub  fn disk_uri(&mut self) -> &mut String {
+        &mut self.disk_uri
+    }
+
+    /// Modify [`Self::disk_uri`] with a `func`
+    pub  fn disk_uri_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.disk_uri); self
+    }
+
+
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<Option<String>>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        if self.kind.is_none() { self.kind = Some(Default::default()) }
+        self.kind.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.kind.is_none() { self.kind = Some(Default::default()) };
+        func(self.kind.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AzureDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

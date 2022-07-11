@@ -8,7 +8,61 @@ pub struct APIResourceList {
 
     /// resources contains the name of the resources and if they are namespaced.
     pub resources: Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIResourceList  {
+    /// Set [`Self::group_version`]
+    pub  fn group_version_set(&mut self, group_version: impl Into<String>) -> &mut Self {
+        self.group_version = group_version.into(); self
+    }
+
+    pub  fn group_version(&mut self) -> &mut String {
+        &mut self.group_version
+    }
+
+    /// Modify [`Self::group_version`] with a `func`
+    pub  fn group_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.group_version); self
+    }
+
+
+    /// Set [`Self::resources`]
+    pub  fn resources_set(&mut self, resources: impl Into<Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>>) -> &mut Self {
+        self.resources = resources.into(); self
+    }
+
+    pub  fn resources(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource> {
+        &mut self.resources
+    }
+
+    /// Modify [`Self::resources`] with a `func`
+    pub  fn resources_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>)) -> &mut Self {
+        func(&mut self.resources); self
+    }
+
+    /// Push new element to [`Self::resources`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn resources_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::APIResource)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.resources.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::resources`]
+    pub  fn resources_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::APIResource]>) -> &mut Self {
+         for item in other.borrow() {
+             self.resources.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl crate::Resource for APIResourceList {
     const API_VERSION: &'static str = "v1";

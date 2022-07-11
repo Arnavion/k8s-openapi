@@ -14,7 +14,85 @@ pub struct VsphereVirtualDiskVolumeSource {
 
     /// Path that identifies vSphere volume vmdk
     pub volume_path: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VsphereVirtualDiskVolumeSource  {
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_policy_id`]
+    pub  fn storage_policy_id_set(&mut self, storage_policy_id: impl Into<Option<String>>) -> &mut Self {
+        self.storage_policy_id = storage_policy_id.into(); self
+    }
+
+    pub  fn storage_policy_id(&mut self) -> &mut String {
+        if self.storage_policy_id.is_none() { self.storage_policy_id = Some(Default::default()) }
+        self.storage_policy_id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_policy_id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_policy_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_policy_id.is_none() { self.storage_policy_id = Some(Default::default()) };
+        func(self.storage_policy_id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_policy_name`]
+    pub  fn storage_policy_name_set(&mut self, storage_policy_name: impl Into<Option<String>>) -> &mut Self {
+        self.storage_policy_name = storage_policy_name.into(); self
+    }
+
+    pub  fn storage_policy_name(&mut self) -> &mut String {
+        if self.storage_policy_name.is_none() { self.storage_policy_name = Some(Default::default()) }
+        self.storage_policy_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_policy_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_policy_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_policy_name.is_none() { self.storage_policy_name = Some(Default::default()) };
+        func(self.storage_policy_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_path`]
+    pub  fn volume_path_set(&mut self, volume_path: impl Into<String>) -> &mut Self {
+        self.volume_path = volume_path.into(); self
+    }
+
+    pub  fn volume_path(&mut self) -> &mut String {
+        &mut self.volume_path
+    }
+
+    /// Modify [`Self::volume_path`] with a `func`
+    pub  fn volume_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.volume_path); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

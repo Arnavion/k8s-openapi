@@ -18,7 +18,43 @@ pub struct WatchOptional<'a> {
 
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<'a> WatchOptional<'a>  {
+    /// Set [`Self::allow_watch_bookmarks`]
+    pub  fn allow_watch_bookmarks_set(&mut self, allow_watch_bookmarks: impl Into<Option<bool>>) -> &mut Self {
+        self.allow_watch_bookmarks = allow_watch_bookmarks.into(); self
+    }
+
+
+    /// Set [`Self::field_selector`]
+    pub  fn field_selector_set(&mut self, field_selector: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_selector = field_selector.into(); self
+    }
+
+
+    /// Set [`Self::label_selector`]
+    pub  fn label_selector_set(&mut self, label_selector: impl Into<Option<&'a str>>) -> &mut Self {
+        self.label_selector = label_selector.into(); self
+    }
+
+
+    /// Set [`Self::resource_version`]
+    pub  fn resource_version_set(&mut self, resource_version: impl Into<Option<&'a str>>) -> &mut Self {
+        self.resource_version = resource_version.into(); self
+    }
+
+
+    /// Set [`Self::timeout_seconds`]
+    pub  fn timeout_seconds_set(&mut self, timeout_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.timeout_seconds = timeout_seconds.into(); self
+    }
+
+
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> WatchOptional<'a> {

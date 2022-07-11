@@ -20,7 +20,115 @@ pub struct CustomResourceColumnDefinition {
 
     /// type is an OpenAPI type definition for this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceColumnDefinition  {
+    /// Set [`Self::description`]
+    pub  fn description_set(&mut self, description: impl Into<Option<String>>) -> &mut Self {
+        self.description = description.into(); self
+    }
+
+    pub  fn description(&mut self) -> &mut String {
+        if self.description.is_none() { self.description = Some(Default::default()) }
+        self.description.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::description`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn description_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.description.is_none() { self.description = Some(Default::default()) };
+        func(self.description.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::format`]
+    pub  fn format_set(&mut self, format: impl Into<Option<String>>) -> &mut Self {
+        self.format = format.into(); self
+    }
+
+    pub  fn format(&mut self) -> &mut String {
+        if self.format.is_none() { self.format = Some(Default::default()) }
+        self.format.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::format`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn format_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.format.is_none() { self.format = Some(Default::default()) };
+        func(self.format.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::json_path`]
+    pub  fn json_path_set(&mut self, json_path: impl Into<String>) -> &mut Self {
+        self.json_path = json_path.into(); self
+    }
+
+    pub  fn json_path(&mut self) -> &mut String {
+        &mut self.json_path
+    }
+
+    /// Modify [`Self::json_path`] with a `func`
+    pub  fn json_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.json_path); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::priority`]
+    pub  fn priority_set(&mut self, priority: impl Into<Option<i32>>) -> &mut Self {
+        self.priority = priority.into(); self
+    }
+
+    pub  fn priority(&mut self) -> &mut i32 {
+        if self.priority.is_none() { self.priority = Some(Default::default()) }
+        self.priority.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::priority`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn priority_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.priority.is_none() { self.priority = Some(Default::default()) };
+        func(self.priority.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceColumnDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

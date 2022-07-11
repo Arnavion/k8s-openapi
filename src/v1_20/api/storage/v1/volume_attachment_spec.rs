@@ -11,7 +11,58 @@ pub struct VolumeAttachmentSpec {
 
     /// Source represents the volume that should be attached.
     pub source: crate::api::storage::v1::VolumeAttachmentSource,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeAttachmentSpec  {
+    /// Set [`Self::attacher`]
+    pub  fn attacher_set(&mut self, attacher: impl Into<String>) -> &mut Self {
+        self.attacher = attacher.into(); self
+    }
+
+    pub  fn attacher(&mut self) -> &mut String {
+        &mut self.attacher
+    }
+
+    /// Modify [`Self::attacher`] with a `func`
+    pub  fn attacher_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.attacher); self
+    }
+
+
+    /// Set [`Self::node_name`]
+    pub  fn node_name_set(&mut self, node_name: impl Into<String>) -> &mut Self {
+        self.node_name = node_name.into(); self
+    }
+
+    pub  fn node_name(&mut self) -> &mut String {
+        &mut self.node_name
+    }
+
+    /// Modify [`Self::node_name`] with a `func`
+    pub  fn node_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.node_name); self
+    }
+
+
+    /// Set [`Self::source`]
+    pub  fn source_set(&mut self, source: impl Into<crate::api::storage::v1::VolumeAttachmentSource>) -> &mut Self {
+        self.source = source.into(); self
+    }
+
+    pub  fn source(&mut self) -> &mut crate::api::storage::v1::VolumeAttachmentSource {
+        &mut self.source
+    }
+
+    /// Modify [`Self::source`] with a `func`
+    pub  fn source_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1::VolumeAttachmentSource)) -> &mut Self {
+        func(&mut self.source); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

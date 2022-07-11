@@ -11,7 +11,70 @@ pub struct ContainerState {
 
     /// Details about a waiting container
     pub waiting: Option<crate::api::core::v1::ContainerStateWaiting>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerState  {
+    /// Set [`Self::running`]
+    pub  fn running_set(&mut self, running: impl Into<Option<crate::api::core::v1::ContainerStateRunning>>) -> &mut Self {
+        self.running = running.into(); self
+    }
+
+    pub  fn running(&mut self) -> &mut crate::api::core::v1::ContainerStateRunning {
+        if self.running.is_none() { self.running = Some(Default::default()) }
+        self.running.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::running`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn running_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStateRunning)) -> &mut Self {
+        if self.running.is_none() { self.running = Some(Default::default()) };
+        func(self.running.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::terminated`]
+    pub  fn terminated_set(&mut self, terminated: impl Into<Option<crate::api::core::v1::ContainerStateTerminated>>) -> &mut Self {
+        self.terminated = terminated.into(); self
+    }
+
+    pub  fn terminated(&mut self) -> &mut crate::api::core::v1::ContainerStateTerminated {
+        if self.terminated.is_none() { self.terminated = Some(Default::default()) }
+        self.terminated.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::terminated`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn terminated_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStateTerminated)) -> &mut Self {
+        if self.terminated.is_none() { self.terminated = Some(Default::default()) };
+        func(self.terminated.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::waiting`]
+    pub  fn waiting_set(&mut self, waiting: impl Into<Option<crate::api::core::v1::ContainerStateWaiting>>) -> &mut Self {
+        self.waiting = waiting.into(); self
+    }
+
+    pub  fn waiting(&mut self) -> &mut crate::api::core::v1::ContainerStateWaiting {
+        if self.waiting.is_none() { self.waiting = Some(Default::default()) }
+        self.waiting.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::waiting`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn waiting_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerStateWaiting)) -> &mut Self {
+        if self.waiting.is_none() { self.waiting = Some(Default::default()) };
+        func(self.waiting.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerState {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

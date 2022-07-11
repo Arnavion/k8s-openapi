@@ -29,7 +29,199 @@ pub struct CSIPersistentVolumeSource {
 
     /// VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
     pub volume_handle: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSIPersistentVolumeSource  {
+    /// Set [`Self::controller_expand_secret_ref`]
+    pub  fn controller_expand_secret_ref_set(&mut self, controller_expand_secret_ref: impl Into<Option<crate::api::core::v1::SecretReference>>) -> &mut Self {
+        self.controller_expand_secret_ref = controller_expand_secret_ref.into(); self
+    }
+
+    pub  fn controller_expand_secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        if self.controller_expand_secret_ref.is_none() { self.controller_expand_secret_ref = Some(Default::default()) }
+        self.controller_expand_secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::controller_expand_secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn controller_expand_secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        if self.controller_expand_secret_ref.is_none() { self.controller_expand_secret_ref = Some(Default::default()) };
+        func(self.controller_expand_secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::controller_publish_secret_ref`]
+    pub  fn controller_publish_secret_ref_set(&mut self, controller_publish_secret_ref: impl Into<Option<crate::api::core::v1::SecretReference>>) -> &mut Self {
+        self.controller_publish_secret_ref = controller_publish_secret_ref.into(); self
+    }
+
+    pub  fn controller_publish_secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        if self.controller_publish_secret_ref.is_none() { self.controller_publish_secret_ref = Some(Default::default()) }
+        self.controller_publish_secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::controller_publish_secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn controller_publish_secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        if self.controller_publish_secret_ref.is_none() { self.controller_publish_secret_ref = Some(Default::default()) };
+        func(self.controller_publish_secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::driver`]
+    pub  fn driver_set(&mut self, driver: impl Into<String>) -> &mut Self {
+        self.driver = driver.into(); self
+    }
+
+    pub  fn driver(&mut self) -> &mut String {
+        &mut self.driver
+    }
+
+    /// Modify [`Self::driver`] with a `func`
+    pub  fn driver_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.driver); self
+    }
+
+
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::node_publish_secret_ref`]
+    pub  fn node_publish_secret_ref_set(&mut self, node_publish_secret_ref: impl Into<Option<crate::api::core::v1::SecretReference>>) -> &mut Self {
+        self.node_publish_secret_ref = node_publish_secret_ref.into(); self
+    }
+
+    pub  fn node_publish_secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        if self.node_publish_secret_ref.is_none() { self.node_publish_secret_ref = Some(Default::default()) }
+        self.node_publish_secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_publish_secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_publish_secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        if self.node_publish_secret_ref.is_none() { self.node_publish_secret_ref = Some(Default::default()) };
+        func(self.node_publish_secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::node_stage_secret_ref`]
+    pub  fn node_stage_secret_ref_set(&mut self, node_stage_secret_ref: impl Into<Option<crate::api::core::v1::SecretReference>>) -> &mut Self {
+        self.node_stage_secret_ref = node_stage_secret_ref.into(); self
+    }
+
+    pub  fn node_stage_secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        if self.node_stage_secret_ref.is_none() { self.node_stage_secret_ref = Some(Default::default()) }
+        self.node_stage_secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_stage_secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_stage_secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        if self.node_stage_secret_ref.is_none() { self.node_stage_secret_ref = Some(Default::default()) };
+        func(self.node_stage_secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_attributes`]
+    pub  fn volume_attributes_set(&mut self, volume_attributes: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.volume_attributes = volume_attributes.into(); self
+    }
+
+    pub  fn volume_attributes(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.volume_attributes.is_none() { self.volume_attributes = Some(Default::default()) }
+        self.volume_attributes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_attributes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_attributes_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.volume_attributes.is_none() { self.volume_attributes = Some(Default::default()) };
+        func(self.volume_attributes.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::volume_attributes`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn volume_attributes_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_attributes.is_none() {
+            self.volume_attributes = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_attributes.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::volume_attributes`]
+    pub  fn volume_attributes_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.volume_attributes.is_none() { self.volume_attributes = Some(std::collections::BTreeMap::new()); }
+         let volume_attributes = &mut self.volume_attributes.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             volume_attributes.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::volume_handle`]
+    pub  fn volume_handle_set(&mut self, volume_handle: impl Into<String>) -> &mut Self {
+        self.volume_handle = volume_handle.into(); self
+    }
+
+    pub  fn volume_handle(&mut self) -> &mut String {
+        &mut self.volume_handle
+    }
+
+    /// Modify [`Self::volume_handle`] with a `func`
+    pub  fn volume_handle_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.volume_handle); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

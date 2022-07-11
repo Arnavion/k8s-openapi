@@ -32,7 +32,247 @@ pub struct APIResource {
 
     /// version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)".
     pub version: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIResource  {
+    /// Set [`Self::categories`]
+    pub  fn categories_set(&mut self, categories: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.categories = categories.into(); self
+    }
+
+    pub  fn categories(&mut self) -> &mut Vec<String> {
+        if self.categories.is_none() { self.categories = Some(Default::default()) }
+        self.categories.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::categories`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn categories_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.categories.is_none() { self.categories = Some(Default::default()) };
+        func(self.categories.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::categories`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn categories_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.categories.is_none() {
+            self.categories = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.categories.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::categories`]
+    pub  fn categories_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.categories.is_none() { self.categories = Some(Vec::new()); }
+         let categories = &mut self.categories.as_mut().unwrap();
+         for item in other.borrow() {
+             categories.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<String>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::namespaced`]
+    pub  fn namespaced_set(&mut self, namespaced: impl Into<bool>) -> &mut Self {
+        self.namespaced = namespaced.into(); self
+    }
+
+    pub  fn namespaced(&mut self) -> &mut bool {
+        &mut self.namespaced
+    }
+
+    /// Modify [`Self::namespaced`] with a `func`
+    pub  fn namespaced_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        func(&mut self.namespaced); self
+    }
+
+
+    /// Set [`Self::short_names`]
+    pub  fn short_names_set(&mut self, short_names: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.short_names = short_names.into(); self
+    }
+
+    pub  fn short_names(&mut self) -> &mut Vec<String> {
+        if self.short_names.is_none() { self.short_names = Some(Default::default()) }
+        self.short_names.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::short_names`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn short_names_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.short_names.is_none() { self.short_names = Some(Default::default()) };
+        func(self.short_names.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::short_names`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn short_names_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.short_names.is_none() {
+            self.short_names = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.short_names.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::short_names`]
+    pub  fn short_names_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.short_names.is_none() { self.short_names = Some(Vec::new()); }
+         let short_names = &mut self.short_names.as_mut().unwrap();
+         for item in other.borrow() {
+             short_names.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::singular_name`]
+    pub  fn singular_name_set(&mut self, singular_name: impl Into<String>) -> &mut Self {
+        self.singular_name = singular_name.into(); self
+    }
+
+    pub  fn singular_name(&mut self) -> &mut String {
+        &mut self.singular_name
+    }
+
+    /// Modify [`Self::singular_name`] with a `func`
+    pub  fn singular_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.singular_name); self
+    }
+
+
+    /// Set [`Self::storage_version_hash`]
+    pub  fn storage_version_hash_set(&mut self, storage_version_hash: impl Into<Option<String>>) -> &mut Self {
+        self.storage_version_hash = storage_version_hash.into(); self
+    }
+
+    pub  fn storage_version_hash(&mut self) -> &mut String {
+        if self.storage_version_hash.is_none() { self.storage_version_hash = Some(Default::default()) }
+        self.storage_version_hash.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_version_hash`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_version_hash_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.storage_version_hash.is_none() { self.storage_version_hash = Some(Default::default()) };
+        func(self.storage_version_hash.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::verbs`]
+    pub  fn verbs_set(&mut self, verbs: impl Into<Vec<String>>) -> &mut Self {
+        self.verbs = verbs.into(); self
+    }
+
+    pub  fn verbs(&mut self) -> &mut Vec<String> {
+        &mut self.verbs
+    }
+
+    /// Modify [`Self::verbs`] with a `func`
+    pub  fn verbs_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.verbs); self
+    }
+
+    /// Push new element to [`Self::verbs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn verbs_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.verbs.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::verbs`]
+    pub  fn verbs_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.verbs.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::version`]
+    pub  fn version_set(&mut self, version: impl Into<Option<String>>) -> &mut Self {
+        self.version = version.into(); self
+    }
+
+    pub  fn version(&mut self) -> &mut String {
+        if self.version.is_none() { self.version = Some(Default::default()) }
+        self.version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.version.is_none() { self.version = Some(Default::default()) };
+        func(self.version.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for APIResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

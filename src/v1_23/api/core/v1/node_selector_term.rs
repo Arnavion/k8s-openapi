@@ -8,7 +8,97 @@ pub struct NodeSelectorTerm {
 
     /// A list of node selector requirements by node's fields.
     pub match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeSelectorTerm  {
+    /// Set [`Self::match_expressions`]
+    pub  fn match_expressions_set(&mut self, match_expressions: impl Into<Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>>) -> &mut Self {
+        self.match_expressions = match_expressions.into(); self
+    }
+
+    pub  fn match_expressions(&mut self) -> &mut Vec<crate::api::core::v1::NodeSelectorRequirement> {
+        if self.match_expressions.is_none() { self.match_expressions = Some(Default::default()) }
+        self.match_expressions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_expressions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_expressions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::NodeSelectorRequirement>)) -> &mut Self {
+        if self.match_expressions.is_none() { self.match_expressions = Some(Default::default()) };
+        func(self.match_expressions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::match_expressions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn match_expressions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeSelectorRequirement)) -> &mut Self {
+        if self.match_expressions.is_none() {
+            self.match_expressions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.match_expressions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::match_expressions`]
+    pub  fn match_expressions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::NodeSelectorRequirement]>) -> &mut Self {
+         if self.match_expressions.is_none() { self.match_expressions = Some(Vec::new()); }
+         let match_expressions = &mut self.match_expressions.as_mut().unwrap();
+         for item in other.borrow() {
+             match_expressions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::match_fields`]
+    pub  fn match_fields_set(&mut self, match_fields: impl Into<Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>>) -> &mut Self {
+        self.match_fields = match_fields.into(); self
+    }
+
+    pub  fn match_fields(&mut self) -> &mut Vec<crate::api::core::v1::NodeSelectorRequirement> {
+        if self.match_fields.is_none() { self.match_fields = Some(Default::default()) }
+        self.match_fields.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_fields`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_fields_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::NodeSelectorRequirement>)) -> &mut Self {
+        if self.match_fields.is_none() { self.match_fields = Some(Default::default()) };
+        func(self.match_fields.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::match_fields`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn match_fields_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeSelectorRequirement)) -> &mut Self {
+        if self.match_fields.is_none() {
+            self.match_fields = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.match_fields.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::match_fields`]
+    pub  fn match_fields_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::NodeSelectorRequirement]>) -> &mut Self {
+         if self.match_fields.is_none() { self.match_fields = Some(Vec::new()); }
+         let match_fields = &mut self.match_fields.as_mut().unwrap();
+         for item in other.borrow() {
+             match_fields.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

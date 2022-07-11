@@ -5,7 +5,46 @@
 pub struct NodeSelector {
     /// Required. A list of node selector terms. The terms are ORed.
     pub node_selector_terms: Vec<crate::api::core::v1::NodeSelectorTerm>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeSelector  {
+    /// Set [`Self::node_selector_terms`]
+    pub  fn node_selector_terms_set(&mut self, node_selector_terms: impl Into<Vec<crate::api::core::v1::NodeSelectorTerm>>) -> &mut Self {
+        self.node_selector_terms = node_selector_terms.into(); self
+    }
+
+    pub  fn node_selector_terms(&mut self) -> &mut Vec<crate::api::core::v1::NodeSelectorTerm> {
+        &mut self.node_selector_terms
+    }
+
+    /// Modify [`Self::node_selector_terms`] with a `func`
+    pub  fn node_selector_terms_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::NodeSelectorTerm>)) -> &mut Self {
+        func(&mut self.node_selector_terms); self
+    }
+
+    /// Push new element to [`Self::node_selector_terms`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn node_selector_terms_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeSelectorTerm)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.node_selector_terms.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::node_selector_terms`]
+    pub  fn node_selector_terms_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::NodeSelectorTerm]>) -> &mut Self {
+         for item in other.borrow() {
+             self.node_selector_terms.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

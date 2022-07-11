@@ -14,7 +14,51 @@ pub struct IngressRule {
     pub host: Option<String>,
 
     pub http: Option<crate::api::networking::v1::HTTPIngressRuleValue>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressRule  {
+    /// Set [`Self::host`]
+    pub  fn host_set(&mut self, host: impl Into<Option<String>>) -> &mut Self {
+        self.host = host.into(); self
+    }
+
+    pub  fn host(&mut self) -> &mut String {
+        if self.host.is_none() { self.host = Some(Default::default()) }
+        self.host.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::host`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn host_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.host.is_none() { self.host = Some(Default::default()) };
+        func(self.host.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::http`]
+    pub  fn http_set(&mut self, http: impl Into<Option<crate::api::networking::v1::HTTPIngressRuleValue>>) -> &mut Self {
+        self.http = http.into(); self
+    }
+
+    pub  fn http(&mut self) -> &mut crate::api::networking::v1::HTTPIngressRuleValue {
+        if self.http.is_none() { self.http = Some(Default::default()) }
+        self.http.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::http`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn http_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::HTTPIngressRuleValue)) -> &mut Self {
+        if self.http.is_none() { self.http = Some(Default::default()) };
+        func(self.http.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -17,7 +17,127 @@ pub struct FlexVolumeSource {
 
     /// Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.
     pub secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl FlexVolumeSource  {
+    /// Set [`Self::driver`]
+    pub  fn driver_set(&mut self, driver: impl Into<String>) -> &mut Self {
+        self.driver = driver.into(); self
+    }
+
+    pub  fn driver(&mut self) -> &mut String {
+        &mut self.driver
+    }
+
+    /// Modify [`Self::driver`] with a `func`
+    pub  fn driver_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.driver); self
+    }
+
+
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::options`]
+    pub  fn options_set(&mut self, options: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.options = options.into(); self
+    }
+
+    pub  fn options(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.options.is_none() { self.options = Some(Default::default()) }
+        self.options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn options_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.options.is_none() { self.options = Some(Default::default()) };
+        func(self.options.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::options`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn options_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.options.is_none() {
+            self.options = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.options.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::options`]
+    pub  fn options_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.options.is_none() { self.options = Some(std::collections::BTreeMap::new()); }
+         let options = &mut self.options.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             options.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<Option<crate::api::core::v1::LocalObjectReference>>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::LocalObjectReference {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) }
+        self.secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LocalObjectReference)) -> &mut Self {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) };
+        func(self.secret_ref.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlexVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

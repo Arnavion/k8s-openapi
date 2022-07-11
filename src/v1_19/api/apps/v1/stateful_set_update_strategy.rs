@@ -8,7 +8,51 @@ pub struct StatefulSetUpdateStrategy {
 
     /// Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
     pub type_: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatefulSetUpdateStrategy  {
+    /// Set [`Self::rolling_update`]
+    pub  fn rolling_update_set(&mut self, rolling_update: impl Into<Option<crate::api::apps::v1::RollingUpdateStatefulSetStrategy>>) -> &mut Self {
+        self.rolling_update = rolling_update.into(); self
+    }
+
+    pub  fn rolling_update(&mut self) -> &mut crate::api::apps::v1::RollingUpdateStatefulSetStrategy {
+        if self.rolling_update.is_none() { self.rolling_update = Some(Default::default()) }
+        self.rolling_update.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::rolling_update`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn rolling_update_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::RollingUpdateStatefulSetStrategy)) -> &mut Self {
+        if self.rolling_update.is_none() { self.rolling_update = Some(Default::default()) };
+        func(self.rolling_update.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetUpdateStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

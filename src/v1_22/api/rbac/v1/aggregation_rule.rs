@@ -5,7 +5,55 @@
 pub struct AggregationRule {
     /// ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
     pub cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AggregationRule  {
+    /// Set [`Self::cluster_role_selectors`]
+    pub  fn cluster_role_selectors_set(&mut self, cluster_role_selectors: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>>) -> &mut Self {
+        self.cluster_role_selectors = cluster_role_selectors.into(); self
+    }
+
+    pub  fn cluster_role_selectors(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector> {
+        if self.cluster_role_selectors.is_none() { self.cluster_role_selectors = Some(Default::default()) }
+        self.cluster_role_selectors.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::cluster_role_selectors`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn cluster_role_selectors_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>)) -> &mut Self {
+        if self.cluster_role_selectors.is_none() { self.cluster_role_selectors = Some(Default::default()) };
+        func(self.cluster_role_selectors.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::cluster_role_selectors`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn cluster_role_selectors_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.cluster_role_selectors.is_none() {
+            self.cluster_role_selectors = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.cluster_role_selectors.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::cluster_role_selectors`]
+    pub  fn cluster_role_selectors_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::LabelSelector]>) -> &mut Self {
+         if self.cluster_role_selectors.is_none() { self.cluster_role_selectors = Some(Vec::new()); }
+         let cluster_role_selectors = &mut self.cluster_role_selectors.as_mut().unwrap();
+         for item in other.borrow() {
+             cluster_role_selectors.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AggregationRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

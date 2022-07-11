@@ -14,7 +14,93 @@ pub struct CSIDriverSpec {
 
     /// volumeLifecycleModes defines what kind of volumes this CSI volume driver supports. The default if the list is empty is "Persistent", which is the usage defined by the CSI specification and implemented in Kubernetes via the usual PV/PVC mechanism. The other mode is "Ephemeral". In this mode, volumes are defined inline inside the pod spec with CSIVolumeSource and their lifecycle is tied to the lifecycle of that pod. A driver has to be aware of this because it is only going to get a NodePublishVolume call for such a volume. For more information about implementing this mode, see https://kubernetes-csi.github.io/docs/ephemeral-local-volumes.html A driver can support one or more of these modes and more modes may be added in the future. This field is beta.
     pub volume_lifecycle_modes: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSIDriverSpec  {
+    /// Set [`Self::attach_required`]
+    pub  fn attach_required_set(&mut self, attach_required: impl Into<Option<bool>>) -> &mut Self {
+        self.attach_required = attach_required.into(); self
+    }
+
+    pub  fn attach_required(&mut self) -> &mut bool {
+        if self.attach_required.is_none() { self.attach_required = Some(Default::default()) }
+        self.attach_required.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::attach_required`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn attach_required_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.attach_required.is_none() { self.attach_required = Some(Default::default()) };
+        func(self.attach_required.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_info_on_mount`]
+    pub  fn pod_info_on_mount_set(&mut self, pod_info_on_mount: impl Into<Option<bool>>) -> &mut Self {
+        self.pod_info_on_mount = pod_info_on_mount.into(); self
+    }
+
+    pub  fn pod_info_on_mount(&mut self) -> &mut bool {
+        if self.pod_info_on_mount.is_none() { self.pod_info_on_mount = Some(Default::default()) }
+        self.pod_info_on_mount.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_info_on_mount`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_info_on_mount_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.pod_info_on_mount.is_none() { self.pod_info_on_mount = Some(Default::default()) };
+        func(self.pod_info_on_mount.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_lifecycle_modes`]
+    pub  fn volume_lifecycle_modes_set(&mut self, volume_lifecycle_modes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.volume_lifecycle_modes = volume_lifecycle_modes.into(); self
+    }
+
+    pub  fn volume_lifecycle_modes(&mut self) -> &mut Vec<String> {
+        if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Default::default()) }
+        self.volume_lifecycle_modes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_lifecycle_modes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_lifecycle_modes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Default::default()) };
+        func(self.volume_lifecycle_modes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_lifecycle_modes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_lifecycle_modes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_lifecycle_modes.is_none() {
+            self.volume_lifecycle_modes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_lifecycle_modes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_lifecycle_modes`]
+    pub  fn volume_lifecycle_modes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Vec::new()); }
+         let volume_lifecycle_modes = &mut self.volume_lifecycle_modes.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_lifecycle_modes.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

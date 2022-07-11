@@ -15,7 +15,37 @@ pub struct PatchOptional<'a> {
 
     /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
     pub force: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl<'a> PatchOptional<'a>  {
+    /// Set [`Self::dry_run`]
+    pub  fn dry_run_set(&mut self, dry_run: impl Into<Option<&'a str>>) -> &mut Self {
+        self.dry_run = dry_run.into(); self
+    }
+
+
+    /// Set [`Self::field_manager`]
+    pub  fn field_manager_set(&mut self, field_manager: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_manager = field_manager.into(); self
+    }
+
+
+    /// Set [`Self::field_validation`]
+    pub  fn field_validation_set(&mut self, field_validation: impl Into<Option<&'a str>>) -> &mut Self {
+        self.field_validation = field_validation.into(); self
+    }
+
+
+    /// Set [`Self::force`]
+    pub  fn force_set(&mut self, force: impl Into<Option<bool>>) -> &mut Self {
+        self.force = force.into(); self
+    }
+
+
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> PatchOptional<'a> {

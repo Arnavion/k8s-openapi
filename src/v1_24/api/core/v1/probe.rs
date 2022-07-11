@@ -32,7 +32,203 @@ pub struct Probe {
 
     /// Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
     pub timeout_seconds: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Probe  {
+    /// Set [`Self::exec`]
+    pub  fn exec_set(&mut self, exec: impl Into<Option<crate::api::core::v1::ExecAction>>) -> &mut Self {
+        self.exec = exec.into(); self
+    }
+
+    pub  fn exec(&mut self) -> &mut crate::api::core::v1::ExecAction {
+        if self.exec.is_none() { self.exec = Some(Default::default()) }
+        self.exec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::exec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn exec_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ExecAction)) -> &mut Self {
+        if self.exec.is_none() { self.exec = Some(Default::default()) };
+        func(self.exec.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::failure_threshold`]
+    pub  fn failure_threshold_set(&mut self, failure_threshold: impl Into<Option<i32>>) -> &mut Self {
+        self.failure_threshold = failure_threshold.into(); self
+    }
+
+    pub  fn failure_threshold(&mut self) -> &mut i32 {
+        if self.failure_threshold.is_none() { self.failure_threshold = Some(Default::default()) }
+        self.failure_threshold.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::failure_threshold`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn failure_threshold_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.failure_threshold.is_none() { self.failure_threshold = Some(Default::default()) };
+        func(self.failure_threshold.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::grpc`]
+    pub  fn grpc_set(&mut self, grpc: impl Into<Option<crate::api::core::v1::GRPCAction>>) -> &mut Self {
+        self.grpc = grpc.into(); self
+    }
+
+    pub  fn grpc(&mut self) -> &mut crate::api::core::v1::GRPCAction {
+        if self.grpc.is_none() { self.grpc = Some(Default::default()) }
+        self.grpc.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::grpc`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn grpc_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::GRPCAction)) -> &mut Self {
+        if self.grpc.is_none() { self.grpc = Some(Default::default()) };
+        func(self.grpc.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::http_get`]
+    pub  fn http_get_set(&mut self, http_get: impl Into<Option<crate::api::core::v1::HTTPGetAction>>) -> &mut Self {
+        self.http_get = http_get.into(); self
+    }
+
+    pub  fn http_get(&mut self) -> &mut crate::api::core::v1::HTTPGetAction {
+        if self.http_get.is_none() { self.http_get = Some(Default::default()) }
+        self.http_get.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::http_get`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn http_get_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::HTTPGetAction)) -> &mut Self {
+        if self.http_get.is_none() { self.http_get = Some(Default::default()) };
+        func(self.http_get.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::initial_delay_seconds`]
+    pub  fn initial_delay_seconds_set(&mut self, initial_delay_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.initial_delay_seconds = initial_delay_seconds.into(); self
+    }
+
+    pub  fn initial_delay_seconds(&mut self) -> &mut i32 {
+        if self.initial_delay_seconds.is_none() { self.initial_delay_seconds = Some(Default::default()) }
+        self.initial_delay_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::initial_delay_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn initial_delay_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.initial_delay_seconds.is_none() { self.initial_delay_seconds = Some(Default::default()) };
+        func(self.initial_delay_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::period_seconds`]
+    pub  fn period_seconds_set(&mut self, period_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.period_seconds = period_seconds.into(); self
+    }
+
+    pub  fn period_seconds(&mut self) -> &mut i32 {
+        if self.period_seconds.is_none() { self.period_seconds = Some(Default::default()) }
+        self.period_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::period_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn period_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.period_seconds.is_none() { self.period_seconds = Some(Default::default()) };
+        func(self.period_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::success_threshold`]
+    pub  fn success_threshold_set(&mut self, success_threshold: impl Into<Option<i32>>) -> &mut Self {
+        self.success_threshold = success_threshold.into(); self
+    }
+
+    pub  fn success_threshold(&mut self) -> &mut i32 {
+        if self.success_threshold.is_none() { self.success_threshold = Some(Default::default()) }
+        self.success_threshold.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::success_threshold`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn success_threshold_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.success_threshold.is_none() { self.success_threshold = Some(Default::default()) };
+        func(self.success_threshold.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::tcp_socket`]
+    pub  fn tcp_socket_set(&mut self, tcp_socket: impl Into<Option<crate::api::core::v1::TCPSocketAction>>) -> &mut Self {
+        self.tcp_socket = tcp_socket.into(); self
+    }
+
+    pub  fn tcp_socket(&mut self) -> &mut crate::api::core::v1::TCPSocketAction {
+        if self.tcp_socket.is_none() { self.tcp_socket = Some(Default::default()) }
+        self.tcp_socket.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tcp_socket`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tcp_socket_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TCPSocketAction)) -> &mut Self {
+        if self.tcp_socket.is_none() { self.tcp_socket = Some(Default::default()) };
+        func(self.tcp_socket.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::termination_grace_period_seconds`]
+    pub  fn termination_grace_period_seconds_set(&mut self, termination_grace_period_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.termination_grace_period_seconds = termination_grace_period_seconds.into(); self
+    }
+
+    pub  fn termination_grace_period_seconds(&mut self) -> &mut i64 {
+        if self.termination_grace_period_seconds.is_none() { self.termination_grace_period_seconds = Some(Default::default()) }
+        self.termination_grace_period_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::termination_grace_period_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn termination_grace_period_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.termination_grace_period_seconds.is_none() { self.termination_grace_period_seconds = Some(Default::default()) };
+        func(self.termination_grace_period_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::timeout_seconds`]
+    pub  fn timeout_seconds_set(&mut self, timeout_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.timeout_seconds = timeout_seconds.into(); self
+    }
+
+    pub  fn timeout_seconds(&mut self) -> &mut i32 {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) }
+        self.timeout_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::timeout_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn timeout_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.timeout_seconds.is_none() { self.timeout_seconds = Some(Default::default()) };
+        func(self.timeout_seconds.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Probe {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

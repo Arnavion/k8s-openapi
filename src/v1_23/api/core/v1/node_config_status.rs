@@ -14,7 +14,89 @@ pub struct NodeConfigStatus {
 
     /// LastKnownGood reports the checkpointed config the node will fall back to when it encounters an error attempting to use the Assigned config. The Assigned config becomes the LastKnownGood config when the node determines that the Assigned config is stable and correct. This is currently implemented as a 10-minute soak period starting when the local record of Assigned config is updated. If the Assigned config is Active at the end of this period, it becomes the LastKnownGood. Note that if Spec.ConfigSource is reset to nil (use local defaults), the LastKnownGood is also immediately reset to nil, because the local default config is always assumed good. You should not make assumptions about the node's method of determining config stability and correctness, as this may change or become configurable in the future.
     pub last_known_good: Option<crate::api::core::v1::NodeConfigSource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeConfigStatus  {
+    /// Set [`Self::active`]
+    pub  fn active_set(&mut self, active: impl Into<Option<crate::api::core::v1::NodeConfigSource>>) -> &mut Self {
+        self.active = active.into(); self
+    }
+
+    pub  fn active(&mut self) -> &mut crate::api::core::v1::NodeConfigSource {
+        if self.active.is_none() { self.active = Some(Default::default()) }
+        self.active.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::active`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn active_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeConfigSource)) -> &mut Self {
+        if self.active.is_none() { self.active = Some(Default::default()) };
+        func(self.active.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::assigned`]
+    pub  fn assigned_set(&mut self, assigned: impl Into<Option<crate::api::core::v1::NodeConfigSource>>) -> &mut Self {
+        self.assigned = assigned.into(); self
+    }
+
+    pub  fn assigned(&mut self) -> &mut crate::api::core::v1::NodeConfigSource {
+        if self.assigned.is_none() { self.assigned = Some(Default::default()) }
+        self.assigned.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::assigned`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn assigned_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeConfigSource)) -> &mut Self {
+        if self.assigned.is_none() { self.assigned = Some(Default::default()) };
+        func(self.assigned.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::error`]
+    pub  fn error_set(&mut self, error: impl Into<Option<String>>) -> &mut Self {
+        self.error = error.into(); self
+    }
+
+    pub  fn error(&mut self) -> &mut String {
+        if self.error.is_none() { self.error = Some(Default::default()) }
+        self.error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn error_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.error.is_none() { self.error = Some(Default::default()) };
+        func(self.error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::last_known_good`]
+    pub  fn last_known_good_set(&mut self, last_known_good: impl Into<Option<crate::api::core::v1::NodeConfigSource>>) -> &mut Self {
+        self.last_known_good = last_known_good.into(); self
+    }
+
+    pub  fn last_known_good(&mut self) -> &mut crate::api::core::v1::NodeConfigSource {
+        if self.last_known_good.is_none() { self.last_known_good = Some(Default::default()) }
+        self.last_known_good.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::last_known_good`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn last_known_good_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeConfigSource)) -> &mut Self {
+        if self.last_known_good.is_none() { self.last_known_good = Some(Default::default()) };
+        func(self.last_known_good.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

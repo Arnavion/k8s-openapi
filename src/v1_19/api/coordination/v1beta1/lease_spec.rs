@@ -17,7 +17,82 @@ pub struct LeaseSpec {
 
     /// renewTime is a time when the current holder of a lease has last updated the lease.
     pub renew_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LeaseSpec  {
+    /// Set [`Self::acquire_time`]
+    pub  fn acquire_time_set(&mut self, acquire_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>>) -> &mut Self {
+        self.acquire_time = acquire_time.into(); self
+    }
+
+
+    /// Set [`Self::holder_identity`]
+    pub  fn holder_identity_set(&mut self, holder_identity: impl Into<Option<String>>) -> &mut Self {
+        self.holder_identity = holder_identity.into(); self
+    }
+
+    pub  fn holder_identity(&mut self) -> &mut String {
+        if self.holder_identity.is_none() { self.holder_identity = Some(Default::default()) }
+        self.holder_identity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::holder_identity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn holder_identity_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.holder_identity.is_none() { self.holder_identity = Some(Default::default()) };
+        func(self.holder_identity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::lease_duration_seconds`]
+    pub  fn lease_duration_seconds_set(&mut self, lease_duration_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.lease_duration_seconds = lease_duration_seconds.into(); self
+    }
+
+    pub  fn lease_duration_seconds(&mut self) -> &mut i32 {
+        if self.lease_duration_seconds.is_none() { self.lease_duration_seconds = Some(Default::default()) }
+        self.lease_duration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::lease_duration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn lease_duration_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.lease_duration_seconds.is_none() { self.lease_duration_seconds = Some(Default::default()) };
+        func(self.lease_duration_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::lease_transitions`]
+    pub  fn lease_transitions_set(&mut self, lease_transitions: impl Into<Option<i32>>) -> &mut Self {
+        self.lease_transitions = lease_transitions.into(); self
+    }
+
+    pub  fn lease_transitions(&mut self) -> &mut i32 {
+        if self.lease_transitions.is_none() { self.lease_transitions = Some(Default::default()) }
+        self.lease_transitions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::lease_transitions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn lease_transitions_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.lease_transitions.is_none() { self.lease_transitions = Some(Default::default()) };
+        func(self.lease_transitions.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::renew_time`]
+    pub  fn renew_time_set(&mut self, renew_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>>) -> &mut Self {
+        self.renew_time = renew_time.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LeaseSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,66 @@ pub struct ResourceFieldSelector {
 
     /// Required: resource to select
     pub resource: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceFieldSelector  {
+    /// Set [`Self::container_name`]
+    pub  fn container_name_set(&mut self, container_name: impl Into<Option<String>>) -> &mut Self {
+        self.container_name = container_name.into(); self
+    }
+
+    pub  fn container_name(&mut self) -> &mut String {
+        if self.container_name.is_none() { self.container_name = Some(Default::default()) }
+        self.container_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::container_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn container_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.container_name.is_none() { self.container_name = Some(Default::default()) };
+        func(self.container_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::divisor`]
+    pub  fn divisor_set(&mut self, divisor: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.divisor = divisor.into(); self
+    }
+
+    pub  fn divisor(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.divisor.is_none() { self.divisor = Some(Default::default()) }
+        self.divisor.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::divisor`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn divisor_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.divisor.is_none() { self.divisor = Some(Default::default()) };
+        func(self.divisor.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resource`]
+    pub  fn resource_set(&mut self, resource: impl Into<String>) -> &mut Self {
+        self.resource = resource.into(); self
+    }
+
+    pub  fn resource(&mut self) -> &mut String {
+        &mut self.resource
+    }
+
+    /// Modify [`Self::resource`] with a `func`
+    pub  fn resource_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.resource); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

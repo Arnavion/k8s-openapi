@@ -11,7 +11,32 @@ pub struct EphemeralVolumeSource {
     ///
     /// Required, must not be nil.
     pub volume_claim_template: Option<crate::api::core::v1::PersistentVolumeClaimTemplate>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EphemeralVolumeSource  {
+    /// Set [`Self::volume_claim_template`]
+    pub  fn volume_claim_template_set(&mut self, volume_claim_template: impl Into<Option<crate::api::core::v1::PersistentVolumeClaimTemplate>>) -> &mut Self {
+        self.volume_claim_template = volume_claim_template.into(); self
+    }
+
+    pub  fn volume_claim_template(&mut self) -> &mut crate::api::core::v1::PersistentVolumeClaimTemplate {
+        if self.volume_claim_template.is_none() { self.volume_claim_template = Some(Default::default()) }
+        self.volume_claim_template.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_claim_template`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_claim_template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeClaimTemplate)) -> &mut Self {
+        if self.volume_claim_template.is_none() { self.volume_claim_template = Some(Default::default()) };
+        func(self.volume_claim_template.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EphemeralVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,66 @@ pub struct ResourceMetricSource {
 
     /// targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
     pub target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceMetricSource  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::target_average_utilization`]
+    pub  fn target_average_utilization_set(&mut self, target_average_utilization: impl Into<Option<i32>>) -> &mut Self {
+        self.target_average_utilization = target_average_utilization.into(); self
+    }
+
+    pub  fn target_average_utilization(&mut self) -> &mut i32 {
+        if self.target_average_utilization.is_none() { self.target_average_utilization = Some(Default::default()) }
+        self.target_average_utilization.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_average_utilization`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_average_utilization_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.target_average_utilization.is_none() { self.target_average_utilization = Some(Default::default()) };
+        func(self.target_average_utilization.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_average_value`]
+    pub  fn target_average_value_set(&mut self, target_average_value: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.target_average_value = target_average_value.into(); self
+    }
+
+    pub  fn target_average_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.target_average_value.is_none() { self.target_average_value = Some(Default::default()) }
+        self.target_average_value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_average_value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_average_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.target_average_value.is_none() { self.target_average_value = Some(Default::default()) };
+        func(self.target_average_value.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

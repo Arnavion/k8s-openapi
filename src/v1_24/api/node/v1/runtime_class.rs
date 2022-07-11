@@ -15,7 +15,81 @@ pub struct RuntimeClass {
 
     /// Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.
     pub scheduling: Option<crate::api::node::v1::Scheduling>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RuntimeClass  {
+    /// Set [`Self::handler`]
+    pub  fn handler_set(&mut self, handler: impl Into<String>) -> &mut Self {
+        self.handler = handler.into(); self
+    }
+
+    pub  fn handler(&mut self) -> &mut String {
+        &mut self.handler
+    }
+
+    /// Modify [`Self::handler`] with a `func`
+    pub  fn handler_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.handler); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::overhead`]
+    pub  fn overhead_set(&mut self, overhead: impl Into<Option<crate::api::node::v1::Overhead>>) -> &mut Self {
+        self.overhead = overhead.into(); self
+    }
+
+    pub  fn overhead(&mut self) -> &mut crate::api::node::v1::Overhead {
+        if self.overhead.is_none() { self.overhead = Some(Default::default()) }
+        self.overhead.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::overhead`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn overhead_with(&mut self, func: impl FnOnce(&mut crate::api::node::v1::Overhead)) -> &mut Self {
+        if self.overhead.is_none() { self.overhead = Some(Default::default()) };
+        func(self.overhead.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scheduling`]
+    pub  fn scheduling_set(&mut self, scheduling: impl Into<Option<crate::api::node::v1::Scheduling>>) -> &mut Self {
+        self.scheduling = scheduling.into(); self
+    }
+
+    pub  fn scheduling(&mut self) -> &mut crate::api::node::v1::Scheduling {
+        if self.scheduling.is_none() { self.scheduling = Some(Default::default()) }
+        self.scheduling.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scheduling`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scheduling_with(&mut self, func: impl FnOnce(&mut crate::api::node::v1::Scheduling)) -> &mut Self {
+        if self.scheduling.is_none() { self.scheduling = Some(Default::default()) };
+        func(self.scheduling.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin node.k8s.io/v1/RuntimeClass
 

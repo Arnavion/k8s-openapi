@@ -8,7 +8,47 @@ pub struct TokenRequest {
 
     /// ExpirationSeconds is the duration of validity of the token in "TokenRequestSpec". It has the same default value of "ExpirationSeconds" in "TokenRequestSpec".
     pub expiration_seconds: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenRequest  {
+    /// Set [`Self::audience`]
+    pub  fn audience_set(&mut self, audience: impl Into<String>) -> &mut Self {
+        self.audience = audience.into(); self
+    }
+
+    pub  fn audience(&mut self) -> &mut String {
+        &mut self.audience
+    }
+
+    /// Modify [`Self::audience`] with a `func`
+    pub  fn audience_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.audience); self
+    }
+
+
+    /// Set [`Self::expiration_seconds`]
+    pub  fn expiration_seconds_set(&mut self, expiration_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.expiration_seconds = expiration_seconds.into(); self
+    }
+
+    pub  fn expiration_seconds(&mut self) -> &mut i64 {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) }
+        self.expiration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::expiration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn expiration_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) };
+        func(self.expiration_seconds.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,154 @@ pub struct NetworkPolicySpec {
 
     /// List of rule types that the NetworkPolicy relates to. Valid options are \["Ingress"\], \["Egress"\], or \["Ingress", "Egress"\]. If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes \[ "Egress" \]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just \[ "Ingress" \]). This field is beta-level in 1.8
     pub policy_types: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NetworkPolicySpec  {
+    /// Set [`Self::egress`]
+    pub  fn egress_set(&mut self, egress: impl Into<Option<Vec<crate::api::networking::v1::NetworkPolicyEgressRule>>>) -> &mut Self {
+        self.egress = egress.into(); self
+    }
+
+    pub  fn egress(&mut self) -> &mut Vec<crate::api::networking::v1::NetworkPolicyEgressRule> {
+        if self.egress.is_none() { self.egress = Some(Default::default()) }
+        self.egress.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::egress`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn egress_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1::NetworkPolicyEgressRule>)) -> &mut Self {
+        if self.egress.is_none() { self.egress = Some(Default::default()) };
+        func(self.egress.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::egress`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn egress_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::NetworkPolicyEgressRule)) -> &mut Self {
+        if self.egress.is_none() {
+            self.egress = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.egress.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::egress`]
+    pub  fn egress_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1::NetworkPolicyEgressRule]>) -> &mut Self {
+         if self.egress.is_none() { self.egress = Some(Vec::new()); }
+         let egress = &mut self.egress.as_mut().unwrap();
+         for item in other.borrow() {
+             egress.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::ingress`]
+    pub  fn ingress_set(&mut self, ingress: impl Into<Option<Vec<crate::api::networking::v1::NetworkPolicyIngressRule>>>) -> &mut Self {
+        self.ingress = ingress.into(); self
+    }
+
+    pub  fn ingress(&mut self) -> &mut Vec<crate::api::networking::v1::NetworkPolicyIngressRule> {
+        if self.ingress.is_none() { self.ingress = Some(Default::default()) }
+        self.ingress.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ingress`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ingress_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::networking::v1::NetworkPolicyIngressRule>)) -> &mut Self {
+        if self.ingress.is_none() { self.ingress = Some(Default::default()) };
+        func(self.ingress.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ingress`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ingress_push_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::NetworkPolicyIngressRule)) -> &mut Self {
+        if self.ingress.is_none() {
+            self.ingress = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ingress.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ingress`]
+    pub  fn ingress_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::networking::v1::NetworkPolicyIngressRule]>) -> &mut Self {
+         if self.ingress.is_none() { self.ingress = Some(Vec::new()); }
+         let ingress = &mut self.ingress.as_mut().unwrap();
+         for item in other.borrow() {
+             ingress.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::pod_selector`]
+    pub  fn pod_selector_set(&mut self, pod_selector: impl Into<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>) -> &mut Self {
+        self.pod_selector = pod_selector.into(); self
+    }
+
+    pub  fn pod_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        &mut self.pod_selector
+    }
+
+    /// Modify [`Self::pod_selector`] with a `func`
+    pub  fn pod_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        func(&mut self.pod_selector); self
+    }
+
+
+    /// Set [`Self::policy_types`]
+    pub  fn policy_types_set(&mut self, policy_types: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.policy_types = policy_types.into(); self
+    }
+
+    pub  fn policy_types(&mut self) -> &mut Vec<String> {
+        if self.policy_types.is_none() { self.policy_types = Some(Default::default()) }
+        self.policy_types.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::policy_types`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn policy_types_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.policy_types.is_none() { self.policy_types = Some(Default::default()) };
+        func(self.policy_types.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::policy_types`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn policy_types_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.policy_types.is_none() {
+            self.policy_types = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.policy_types.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::policy_types`]
+    pub  fn policy_types_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.policy_types.is_none() { self.policy_types = Some(Vec::new()); }
+         let policy_types = &mut self.policy_types.as_mut().unwrap();
+         for item in other.borrow() {
+             policy_types.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

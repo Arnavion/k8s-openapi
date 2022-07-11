@@ -11,7 +11,66 @@ pub struct ServiceAccountTokenProjection {
 
     /// path is the path relative to the mount point of the file to project the token into.
     pub path: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceAccountTokenProjection  {
+    /// Set [`Self::audience`]
+    pub  fn audience_set(&mut self, audience: impl Into<Option<String>>) -> &mut Self {
+        self.audience = audience.into(); self
+    }
+
+    pub  fn audience(&mut self) -> &mut String {
+        if self.audience.is_none() { self.audience = Some(Default::default()) }
+        self.audience.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::audience`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn audience_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.audience.is_none() { self.audience = Some(Default::default()) };
+        func(self.audience.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::expiration_seconds`]
+    pub  fn expiration_seconds_set(&mut self, expiration_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.expiration_seconds = expiration_seconds.into(); self
+    }
+
+    pub  fn expiration_seconds(&mut self) -> &mut i64 {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) }
+        self.expiration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::expiration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn expiration_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.expiration_seconds.is_none() { self.expiration_seconds = Some(Default::default()) };
+        func(self.expiration_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<String>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        &mut self.path
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.path); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceAccountTokenProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

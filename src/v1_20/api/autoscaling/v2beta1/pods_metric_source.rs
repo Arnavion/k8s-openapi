@@ -11,7 +11,62 @@ pub struct PodsMetricSource {
 
     /// targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
     pub target_average_value: crate::apimachinery::pkg::api::resource::Quantity,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodsMetricSource  {
+    /// Set [`Self::metric_name`]
+    pub  fn metric_name_set(&mut self, metric_name: impl Into<String>) -> &mut Self {
+        self.metric_name = metric_name.into(); self
+    }
+
+    pub  fn metric_name(&mut self) -> &mut String {
+        &mut self.metric_name
+    }
+
+    /// Modify [`Self::metric_name`] with a `func`
+    pub  fn metric_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.metric_name); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_average_value`]
+    pub  fn target_average_value_set(&mut self, target_average_value: impl Into<crate::apimachinery::pkg::api::resource::Quantity>) -> &mut Self {
+        self.target_average_value = target_average_value.into(); self
+    }
+
+    pub  fn target_average_value(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        &mut self.target_average_value
+    }
+
+    /// Modify [`Self::target_average_value`] with a `func`
+    pub  fn target_average_value_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        func(&mut self.target_average_value); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

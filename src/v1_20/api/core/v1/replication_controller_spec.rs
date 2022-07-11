@@ -14,7 +14,112 @@ pub struct ReplicationControllerSpec {
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ReplicationControllerSpec  {
+    /// Set [`Self::min_ready_seconds`]
+    pub  fn min_ready_seconds_set(&mut self, min_ready_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.min_ready_seconds = min_ready_seconds.into(); self
+    }
+
+    pub  fn min_ready_seconds(&mut self) -> &mut i32 {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) }
+        self.min_ready_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_ready_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_ready_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) };
+        func(self.min_ready_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) }
+        self.replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) };
+        func(self.replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::selector`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn selector_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.selector.is_none() {
+            self.selector = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.selector.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::selector`]
+    pub  fn selector_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.selector.is_none() { self.selector = Some(std::collections::BTreeMap::new()); }
+         let selector = &mut self.selector.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             selector.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<Option<crate::api::core::v1::PodTemplateSpec>>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        if self.template.is_none() { self.template = Some(Default::default()) }
+        self.template.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        if self.template.is_none() { self.template = Some(Default::default()) };
+        func(self.template.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

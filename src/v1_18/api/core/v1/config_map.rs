@@ -14,7 +14,131 @@ pub struct ConfigMap {
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ConfigMap  {
+    /// Set [`Self::binary_data`]
+    pub  fn binary_data_set(&mut self, binary_data: impl Into<Option<std::collections::BTreeMap<String, crate::ByteString>>>) -> &mut Self {
+        self.binary_data = binary_data.into(); self
+    }
+
+    pub  fn binary_data(&mut self) -> &mut std::collections::BTreeMap<String, crate::ByteString> {
+        if self.binary_data.is_none() { self.binary_data = Some(Default::default()) }
+        self.binary_data.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::binary_data`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn binary_data_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::ByteString>)) -> &mut Self {
+        if self.binary_data.is_none() { self.binary_data = Some(Default::default()) };
+        func(self.binary_data.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::binary_data`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn binary_data_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::ByteString)) -> &mut Self {
+        if self.binary_data.is_none() {
+            self.binary_data = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.binary_data.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::binary_data`]
+    pub  fn binary_data_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::ByteString>>) -> &mut Self {
+         if self.binary_data.is_none() { self.binary_data = Some(std::collections::BTreeMap::new()); }
+         let binary_data = &mut self.binary_data.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             binary_data.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::data`]
+    pub  fn data_set(&mut self, data: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.data = data.into(); self
+    }
+
+    pub  fn data(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.data.is_none() { self.data = Some(Default::default()) }
+        self.data.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::data`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn data_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.data.is_none() { self.data = Some(Default::default()) };
+        func(self.data.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::data`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn data_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.data.is_none() {
+            self.data = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.data.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::data`]
+    pub  fn data_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.data.is_none() { self.data = Some(std::collections::BTreeMap::new()); }
+         let data = &mut self.data.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             data.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::immutable`]
+    pub  fn immutable_set(&mut self, immutable: impl Into<Option<bool>>) -> &mut Self {
+        self.immutable = immutable.into(); self
+    }
+
+    pub  fn immutable(&mut self) -> &mut bool {
+        if self.immutable.is_none() { self.immutable = Some(Default::default()) }
+        self.immutable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::immutable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn immutable_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.immutable.is_none() { self.immutable = Some(Default::default()) };
+        func(self.immutable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+}
+
 
 // Begin /v1/ConfigMap
 

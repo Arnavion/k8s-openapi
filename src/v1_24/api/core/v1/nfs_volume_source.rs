@@ -11,7 +11,62 @@ pub struct NFSVolumeSource {
 
     /// server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
     pub server: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NFSVolumeSource  {
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<String>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        &mut self.path
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.path); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::server`]
+    pub  fn server_set(&mut self, server: impl Into<String>) -> &mut Self {
+        self.server = server.into(); self
+    }
+
+    pub  fn server(&mut self) -> &mut String {
+        &mut self.server
+    }
+
+    /// Modify [`Self::server`] with a `func`
+    pub  fn server_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.server); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NFSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

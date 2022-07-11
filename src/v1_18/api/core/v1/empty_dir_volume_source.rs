@@ -8,7 +8,51 @@ pub struct EmptyDirVolumeSource {
 
     /// Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
     pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EmptyDirVolumeSource  {
+    /// Set [`Self::medium`]
+    pub  fn medium_set(&mut self, medium: impl Into<Option<String>>) -> &mut Self {
+        self.medium = medium.into(); self
+    }
+
+    pub  fn medium(&mut self) -> &mut String {
+        if self.medium.is_none() { self.medium = Some(Default::default()) }
+        self.medium.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::medium`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn medium_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.medium.is_none() { self.medium = Some(Default::default()) };
+        func(self.medium.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::size_limit`]
+    pub  fn size_limit_set(&mut self, size_limit: impl Into<Option<crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+        self.size_limit = size_limit.into(); self
+    }
+
+    pub  fn size_limit(&mut self) -> &mut crate::apimachinery::pkg::api::resource::Quantity {
+        if self.size_limit.is_none() { self.size_limit = Some(Default::default()) }
+        self.size_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::size_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn size_limit_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.size_limit.is_none() { self.size_limit = Some(Default::default()) };
+        func(self.size_limit.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EmptyDirVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

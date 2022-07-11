@@ -11,7 +11,58 @@ pub struct EventSeries {
 
     /// Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18
     pub state: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EventSeries  {
+    /// Set [`Self::count`]
+    pub  fn count_set(&mut self, count: impl Into<i32>) -> &mut Self {
+        self.count = count.into(); self
+    }
+
+    pub  fn count(&mut self) -> &mut i32 {
+        &mut self.count
+    }
+
+    /// Modify [`Self::count`] with a `func`
+    pub  fn count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.count); self
+    }
+
+
+    /// Set [`Self::last_observed_time`]
+    pub  fn last_observed_time_set(&mut self, last_observed_time: impl Into<crate::apimachinery::pkg::apis::meta::v1::MicroTime>) -> &mut Self {
+        self.last_observed_time = last_observed_time.into(); self
+    }
+
+    pub  fn last_observed_time(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::MicroTime {
+        &mut self.last_observed_time
+    }
+
+    /// Modify [`Self::last_observed_time`] with a `func`
+    pub  fn last_observed_time_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::MicroTime)) -> &mut Self {
+        func(&mut self.last_observed_time); self
+    }
+
+
+    /// Set [`Self::state`]
+    pub  fn state_set(&mut self, state: impl Into<String>) -> &mut Self {
+        self.state = state.into(); self
+    }
+
+    pub  fn state(&mut self) -> &mut String {
+        &mut self.state
+    }
+
+    /// Modify [`Self::state`] with a `func`
+    pub  fn state_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.state); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EventSeries {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

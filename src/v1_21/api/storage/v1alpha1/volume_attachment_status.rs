@@ -14,7 +14,108 @@ pub struct VolumeAttachmentStatus {
 
     /// The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
     pub detach_error: Option<crate::api::storage::v1alpha1::VolumeError>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeAttachmentStatus  {
+    /// Set [`Self::attach_error`]
+    pub  fn attach_error_set(&mut self, attach_error: impl Into<Option<crate::api::storage::v1alpha1::VolumeError>>) -> &mut Self {
+        self.attach_error = attach_error.into(); self
+    }
+
+    pub  fn attach_error(&mut self) -> &mut crate::api::storage::v1alpha1::VolumeError {
+        if self.attach_error.is_none() { self.attach_error = Some(Default::default()) }
+        self.attach_error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::attach_error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn attach_error_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1alpha1::VolumeError)) -> &mut Self {
+        if self.attach_error.is_none() { self.attach_error = Some(Default::default()) };
+        func(self.attach_error.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::attached`]
+    pub  fn attached_set(&mut self, attached: impl Into<bool>) -> &mut Self {
+        self.attached = attached.into(); self
+    }
+
+    pub  fn attached(&mut self) -> &mut bool {
+        &mut self.attached
+    }
+
+    /// Modify [`Self::attached`] with a `func`
+    pub  fn attached_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        func(&mut self.attached); self
+    }
+
+
+    /// Set [`Self::attachment_metadata`]
+    pub  fn attachment_metadata_set(&mut self, attachment_metadata: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.attachment_metadata = attachment_metadata.into(); self
+    }
+
+    pub  fn attachment_metadata(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.attachment_metadata.is_none() { self.attachment_metadata = Some(Default::default()) }
+        self.attachment_metadata.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::attachment_metadata`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn attachment_metadata_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.attachment_metadata.is_none() { self.attachment_metadata = Some(Default::default()) };
+        func(self.attachment_metadata.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::attachment_metadata`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn attachment_metadata_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.attachment_metadata.is_none() {
+            self.attachment_metadata = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.attachment_metadata.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::attachment_metadata`]
+    pub  fn attachment_metadata_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.attachment_metadata.is_none() { self.attachment_metadata = Some(std::collections::BTreeMap::new()); }
+         let attachment_metadata = &mut self.attachment_metadata.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             attachment_metadata.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::detach_error`]
+    pub  fn detach_error_set(&mut self, detach_error: impl Into<Option<crate::api::storage::v1alpha1::VolumeError>>) -> &mut Self {
+        self.detach_error = detach_error.into(); self
+    }
+
+    pub  fn detach_error(&mut self) -> &mut crate::api::storage::v1alpha1::VolumeError {
+        if self.detach_error.is_none() { self.detach_error = Some(Default::default()) }
+        self.detach_error.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::detach_error`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn detach_error_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1alpha1::VolumeError)) -> &mut Self {
+        if self.detach_error.is_none() { self.detach_error = Some(Default::default()) };
+        func(self.detach_error.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

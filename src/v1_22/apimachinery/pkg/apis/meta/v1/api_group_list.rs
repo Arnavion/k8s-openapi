@@ -5,7 +5,46 @@
 pub struct APIGroupList {
     /// groups is a list of APIGroup.
     pub groups: Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIGroupList  {
+    /// Set [`Self::groups`]
+    pub  fn groups_set(&mut self, groups: impl Into<Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>>) -> &mut Self {
+        self.groups = groups.into(); self
+    }
+
+    pub  fn groups(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup> {
+        &mut self.groups
+    }
+
+    /// Modify [`Self::groups`] with a `func`
+    pub  fn groups_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>)) -> &mut Self {
+        func(&mut self.groups); self
+    }
+
+    /// Push new element to [`Self::groups`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn groups_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::APIGroup)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.groups.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::groups`]
+    pub  fn groups_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::APIGroup]>) -> &mut Self {
+         for item in other.borrow() {
+             self.groups.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl crate::Resource for APIGroupList {
     const API_VERSION: &'static str = "v1";

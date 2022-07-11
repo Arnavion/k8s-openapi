@@ -14,7 +14,85 @@ pub struct CinderPersistentVolumeSource {
 
     /// volume id used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
     pub volume_id: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CinderPersistentVolumeSource  {
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<Option<crate::api::core::v1::SecretReference>>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::SecretReference {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) }
+        self.secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretReference)) -> &mut Self {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) };
+        func(self.secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_id`]
+    pub  fn volume_id_set(&mut self, volume_id: impl Into<String>) -> &mut Self {
+        self.volume_id = volume_id.into(); self
+    }
+
+    pub  fn volume_id(&mut self) -> &mut String {
+        &mut self.volume_id
+    }
+
+    /// Modify [`Self::volume_id`] with a `func`
+    pub  fn volume_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.volume_id); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CinderPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,58 @@ pub struct ContainerResourceMetricStatus {
 
     /// Name is the name of the resource in question.
     pub name: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerResourceMetricStatus  {
+    /// Set [`Self::container`]
+    pub  fn container_set(&mut self, container: impl Into<String>) -> &mut Self {
+        self.container = container.into(); self
+    }
+
+    pub  fn container(&mut self) -> &mut String {
+        &mut self.container
+    }
+
+    /// Modify [`Self::container`] with a `func`
+    pub  fn container_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.container); self
+    }
+
+
+    /// Set [`Self::current`]
+    pub  fn current_set(&mut self, current: impl Into<crate::api::autoscaling::v2beta2::MetricValueStatus>) -> &mut Self {
+        self.current = current.into(); self
+    }
+
+    pub  fn current(&mut self) -> &mut crate::api::autoscaling::v2beta2::MetricValueStatus {
+        &mut self.current
+    }
+
+    /// Modify [`Self::current`] with a `func`
+    pub  fn current_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::MetricValueStatus)) -> &mut Self {
+        func(&mut self.current); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

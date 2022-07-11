@@ -8,7 +8,51 @@ pub struct SelfSubjectAccessReviewSpec {
 
     /// ResourceAuthorizationAttributes describes information for a resource access request
     pub resource_attributes: Option<crate::api::authorization::v1::ResourceAttributes>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SelfSubjectAccessReviewSpec  {
+    /// Set [`Self::non_resource_attributes`]
+    pub  fn non_resource_attributes_set(&mut self, non_resource_attributes: impl Into<Option<crate::api::authorization::v1::NonResourceAttributes>>) -> &mut Self {
+        self.non_resource_attributes = non_resource_attributes.into(); self
+    }
+
+    pub  fn non_resource_attributes(&mut self) -> &mut crate::api::authorization::v1::NonResourceAttributes {
+        if self.non_resource_attributes.is_none() { self.non_resource_attributes = Some(Default::default()) }
+        self.non_resource_attributes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::non_resource_attributes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn non_resource_attributes_with(&mut self, func: impl FnOnce(&mut crate::api::authorization::v1::NonResourceAttributes)) -> &mut Self {
+        if self.non_resource_attributes.is_none() { self.non_resource_attributes = Some(Default::default()) };
+        func(self.non_resource_attributes.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resource_attributes`]
+    pub  fn resource_attributes_set(&mut self, resource_attributes: impl Into<Option<crate::api::authorization::v1::ResourceAttributes>>) -> &mut Self {
+        self.resource_attributes = resource_attributes.into(); self
+    }
+
+    pub  fn resource_attributes(&mut self) -> &mut crate::api::authorization::v1::ResourceAttributes {
+        if self.resource_attributes.is_none() { self.resource_attributes = Some(Default::default()) }
+        self.resource_attributes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_attributes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_attributes_with(&mut self, func: impl FnOnce(&mut crate::api::authorization::v1::ResourceAttributes)) -> &mut Self {
+        if self.resource_attributes.is_none() { self.resource_attributes = Some(Default::default()) };
+        func(self.resource_attributes.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

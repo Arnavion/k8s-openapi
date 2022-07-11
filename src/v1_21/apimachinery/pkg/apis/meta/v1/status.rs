@@ -20,7 +20,123 @@ pub struct Status {
 
     /// Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub status: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Status  {
+    /// Set [`Self::code`]
+    pub  fn code_set(&mut self, code: impl Into<Option<i32>>) -> &mut Self {
+        self.code = code.into(); self
+    }
+
+    pub  fn code(&mut self) -> &mut i32 {
+        if self.code.is_none() { self.code = Some(Default::default()) }
+        self.code.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::code`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn code_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.code.is_none() { self.code = Some(Default::default()) };
+        func(self.code.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::details`]
+    pub  fn details_set(&mut self, details: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::StatusDetails>>) -> &mut Self {
+        self.details = details.into(); self
+    }
+
+    pub  fn details(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::StatusDetails {
+        if self.details.is_none() { self.details = Some(Default::default()) }
+        self.details.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::details`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn details_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::StatusDetails)) -> &mut Self {
+        if self.details.is_none() { self.details = Some(Default::default()) };
+        func(self.details.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ListMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ListMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ListMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<Option<String>>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        if self.reason.is_none() { self.reason = Some(Default::default()) }
+        self.reason.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reason.is_none() { self.reason = Some(Default::default()) };
+        func(self.reason.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<Option<String>>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut String {
+        if self.status.is_none() { self.status = Some(Default::default()) }
+        self.status.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.status.is_none() { self.status = Some(Default::default()) };
+        func(self.status.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl crate::Resource for Status {
     const API_VERSION: &'static str = "v1";

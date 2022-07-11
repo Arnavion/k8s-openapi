@@ -23,7 +23,145 @@ pub struct Endpoint {
     /// * topology.kubernetes.io/region: the value indicates the region where the
     ///   endpoint is located. This should match the corresponding node label.
     pub topology: Option<std::collections::BTreeMap<String, String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Endpoint  {
+    /// Set [`Self::addresses`]
+    pub  fn addresses_set(&mut self, addresses: impl Into<Vec<String>>) -> &mut Self {
+        self.addresses = addresses.into(); self
+    }
+
+    pub  fn addresses(&mut self) -> &mut Vec<String> {
+        &mut self.addresses
+    }
+
+    /// Modify [`Self::addresses`] with a `func`
+    pub  fn addresses_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.addresses); self
+    }
+
+    /// Push new element to [`Self::addresses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn addresses_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.addresses.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::addresses`]
+    pub  fn addresses_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.addresses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<crate::api::discovery::v1beta1::EndpointConditions>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut crate::api::discovery::v1beta1::EndpointConditions {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1beta1::EndpointConditions)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::hostname`]
+    pub  fn hostname_set(&mut self, hostname: impl Into<Option<String>>) -> &mut Self {
+        self.hostname = hostname.into(); self
+    }
+
+    pub  fn hostname(&mut self) -> &mut String {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) }
+        self.hostname.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostname`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostname_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) };
+        func(self.hostname.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_ref`]
+    pub  fn target_ref_set(&mut self, target_ref: impl Into<Option<crate::api::core::v1::ObjectReference>>) -> &mut Self {
+        self.target_ref = target_ref.into(); self
+    }
+
+    pub  fn target_ref(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) }
+        self.target_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) };
+        func(self.target_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::topology`]
+    pub  fn topology_set(&mut self, topology: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.topology = topology.into(); self
+    }
+
+    pub  fn topology(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.topology.is_none() { self.topology = Some(Default::default()) }
+        self.topology.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::topology`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn topology_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.topology.is_none() { self.topology = Some(Default::default()) };
+        func(self.topology.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::topology`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn topology_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.topology.is_none() {
+            self.topology = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.topology.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::topology`]
+    pub  fn topology_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.topology.is_none() { self.topology = Some(std::collections::BTreeMap::new()); }
+         let topology = &mut self.topology.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             topology.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Endpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

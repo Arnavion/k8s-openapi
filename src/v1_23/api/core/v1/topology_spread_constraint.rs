@@ -18,7 +18,77 @@ pub struct TopologySpreadConstraint {
     /// A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assignment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
     ///
     pub when_unsatisfiable: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TopologySpreadConstraint  {
+    /// Set [`Self::label_selector`]
+    pub  fn label_selector_set(&mut self, label_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.label_selector = label_selector.into(); self
+    }
+
+    pub  fn label_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.label_selector.is_none() { self.label_selector = Some(Default::default()) }
+        self.label_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::label_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn label_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.label_selector.is_none() { self.label_selector = Some(Default::default()) };
+        func(self.label_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::max_skew`]
+    pub  fn max_skew_set(&mut self, max_skew: impl Into<i32>) -> &mut Self {
+        self.max_skew = max_skew.into(); self
+    }
+
+    pub  fn max_skew(&mut self) -> &mut i32 {
+        &mut self.max_skew
+    }
+
+    /// Modify [`Self::max_skew`] with a `func`
+    pub  fn max_skew_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.max_skew); self
+    }
+
+
+    /// Set [`Self::topology_key`]
+    pub  fn topology_key_set(&mut self, topology_key: impl Into<String>) -> &mut Self {
+        self.topology_key = topology_key.into(); self
+    }
+
+    pub  fn topology_key(&mut self) -> &mut String {
+        &mut self.topology_key
+    }
+
+    /// Modify [`Self::topology_key`] with a `func`
+    pub  fn topology_key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.topology_key); self
+    }
+
+
+    /// Set [`Self::when_unsatisfiable`]
+    pub  fn when_unsatisfiable_set(&mut self, when_unsatisfiable: impl Into<String>) -> &mut Self {
+        self.when_unsatisfiable = when_unsatisfiable.into(); self
+    }
+
+    pub  fn when_unsatisfiable(&mut self) -> &mut String {
+        &mut self.when_unsatisfiable
+    }
+
+    /// Modify [`Self::when_unsatisfiable`] with a `func`
+    pub  fn when_unsatisfiable_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.when_unsatisfiable); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TopologySpreadConstraint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

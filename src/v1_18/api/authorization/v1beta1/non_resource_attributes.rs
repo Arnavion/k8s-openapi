@@ -8,7 +8,51 @@ pub struct NonResourceAttributes {
 
     /// Verb is the standard HTTP verb
     pub verb: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NonResourceAttributes  {
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<Option<String>>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        if self.path.is_none() { self.path = Some(Default::default()) }
+        self.path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.path.is_none() { self.path = Some(Default::default()) };
+        func(self.path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::verb`]
+    pub  fn verb_set(&mut self, verb: impl Into<Option<String>>) -> &mut Self {
+        self.verb = verb.into(); self
+    }
+
+    pub  fn verb(&mut self) -> &mut String {
+        if self.verb.is_none() { self.verb = Some(Default::default()) }
+        self.verb.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::verb`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn verb_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.verb.is_none() { self.verb = Some(Default::default()) };
+        func(self.verb.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NonResourceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

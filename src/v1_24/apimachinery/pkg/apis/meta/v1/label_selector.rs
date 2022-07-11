@@ -8,7 +8,97 @@ pub struct LabelSelector {
 
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
     pub match_labels: Option<std::collections::BTreeMap<String, String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LabelSelector  {
+    /// Set [`Self::match_expressions`]
+    pub  fn match_expressions_set(&mut self, match_expressions: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>>) -> &mut Self {
+        self.match_expressions = match_expressions.into(); self
+    }
+
+    pub  fn match_expressions(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement> {
+        if self.match_expressions.is_none() { self.match_expressions = Some(Default::default()) }
+        self.match_expressions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_expressions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_expressions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>)) -> &mut Self {
+        if self.match_expressions.is_none() { self.match_expressions = Some(Default::default()) };
+        func(self.match_expressions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::match_expressions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn match_expressions_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement)) -> &mut Self {
+        if self.match_expressions.is_none() {
+            self.match_expressions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.match_expressions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::match_expressions`]
+    pub  fn match_expressions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement]>) -> &mut Self {
+         if self.match_expressions.is_none() { self.match_expressions = Some(Vec::new()); }
+         let match_expressions = &mut self.match_expressions.as_mut().unwrap();
+         for item in other.borrow() {
+             match_expressions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::match_labels`]
+    pub  fn match_labels_set(&mut self, match_labels: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.match_labels = match_labels.into(); self
+    }
+
+    pub  fn match_labels(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.match_labels.is_none() { self.match_labels = Some(Default::default()) }
+        self.match_labels.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::match_labels`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn match_labels_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.match_labels.is_none() { self.match_labels = Some(Default::default()) };
+        func(self.match_labels.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::match_labels`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn match_labels_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.match_labels.is_none() {
+            self.match_labels = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.match_labels.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::match_labels`]
+    pub  fn match_labels_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.match_labels.is_none() { self.match_labels = Some(std::collections::BTreeMap::new()); }
+         let match_labels = &mut self.match_labels.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             match_labels.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LabelSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

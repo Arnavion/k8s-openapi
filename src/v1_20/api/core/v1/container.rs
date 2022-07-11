@@ -68,7 +68,588 @@ pub struct Container {
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
     pub working_dir: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Container  {
+    /// Set [`Self::args`]
+    pub  fn args_set(&mut self, args: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.args = args.into(); self
+    }
+
+    pub  fn args(&mut self) -> &mut Vec<String> {
+        if self.args.is_none() { self.args = Some(Default::default()) }
+        self.args.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::args`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn args_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.args.is_none() { self.args = Some(Default::default()) };
+        func(self.args.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::args`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn args_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.args.is_none() {
+            self.args = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.args.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::args`]
+    pub  fn args_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.args.is_none() { self.args = Some(Vec::new()); }
+         let args = &mut self.args.as_mut().unwrap();
+         for item in other.borrow() {
+             args.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::command`]
+    pub  fn command_set(&mut self, command: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.command = command.into(); self
+    }
+
+    pub  fn command(&mut self) -> &mut Vec<String> {
+        if self.command.is_none() { self.command = Some(Default::default()) }
+        self.command.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::command`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn command_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.command.is_none() { self.command = Some(Default::default()) };
+        func(self.command.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::command`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn command_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.command.is_none() {
+            self.command = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.command.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::command`]
+    pub  fn command_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.command.is_none() { self.command = Some(Vec::new()); }
+         let command = &mut self.command.as_mut().unwrap();
+         for item in other.borrow() {
+             command.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::env`]
+    pub  fn env_set(&mut self, env: impl Into<Option<Vec<crate::api::core::v1::EnvVar>>>) -> &mut Self {
+        self.env = env.into(); self
+    }
+
+    pub  fn env(&mut self) -> &mut Vec<crate::api::core::v1::EnvVar> {
+        if self.env.is_none() { self.env = Some(Default::default()) }
+        self.env.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::env`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn env_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EnvVar>)) -> &mut Self {
+        if self.env.is_none() { self.env = Some(Default::default()) };
+        func(self.env.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::env`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn env_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EnvVar)) -> &mut Self {
+        if self.env.is_none() {
+            self.env = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.env.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::env`]
+    pub  fn env_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EnvVar]>) -> &mut Self {
+         if self.env.is_none() { self.env = Some(Vec::new()); }
+         let env = &mut self.env.as_mut().unwrap();
+         for item in other.borrow() {
+             env.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::env_from`]
+    pub  fn env_from_set(&mut self, env_from: impl Into<Option<Vec<crate::api::core::v1::EnvFromSource>>>) -> &mut Self {
+        self.env_from = env_from.into(); self
+    }
+
+    pub  fn env_from(&mut self) -> &mut Vec<crate::api::core::v1::EnvFromSource> {
+        if self.env_from.is_none() { self.env_from = Some(Default::default()) }
+        self.env_from.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::env_from`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn env_from_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EnvFromSource>)) -> &mut Self {
+        if self.env_from.is_none() { self.env_from = Some(Default::default()) };
+        func(self.env_from.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::env_from`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn env_from_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EnvFromSource)) -> &mut Self {
+        if self.env_from.is_none() {
+            self.env_from = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.env_from.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::env_from`]
+    pub  fn env_from_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EnvFromSource]>) -> &mut Self {
+         if self.env_from.is_none() { self.env_from = Some(Vec::new()); }
+         let env_from = &mut self.env_from.as_mut().unwrap();
+         for item in other.borrow() {
+             env_from.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::image`]
+    pub  fn image_set(&mut self, image: impl Into<Option<String>>) -> &mut Self {
+        self.image = image.into(); self
+    }
+
+    pub  fn image(&mut self) -> &mut String {
+        if self.image.is_none() { self.image = Some(Default::default()) }
+        self.image.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::image`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn image_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.image.is_none() { self.image = Some(Default::default()) };
+        func(self.image.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::image_pull_policy`]
+    pub  fn image_pull_policy_set(&mut self, image_pull_policy: impl Into<Option<String>>) -> &mut Self {
+        self.image_pull_policy = image_pull_policy.into(); self
+    }
+
+    pub  fn image_pull_policy(&mut self) -> &mut String {
+        if self.image_pull_policy.is_none() { self.image_pull_policy = Some(Default::default()) }
+        self.image_pull_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::image_pull_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn image_pull_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.image_pull_policy.is_none() { self.image_pull_policy = Some(Default::default()) };
+        func(self.image_pull_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::lifecycle`]
+    pub  fn lifecycle_set(&mut self, lifecycle: impl Into<Option<crate::api::core::v1::Lifecycle>>) -> &mut Self {
+        self.lifecycle = lifecycle.into(); self
+    }
+
+    pub  fn lifecycle(&mut self) -> &mut crate::api::core::v1::Lifecycle {
+        if self.lifecycle.is_none() { self.lifecycle = Some(Default::default()) }
+        self.lifecycle.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::lifecycle`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn lifecycle_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Lifecycle)) -> &mut Self {
+        if self.lifecycle.is_none() { self.lifecycle = Some(Default::default()) };
+        func(self.lifecycle.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::liveness_probe`]
+    pub  fn liveness_probe_set(&mut self, liveness_probe: impl Into<Option<crate::api::core::v1::Probe>>) -> &mut Self {
+        self.liveness_probe = liveness_probe.into(); self
+    }
+
+    pub  fn liveness_probe(&mut self) -> &mut crate::api::core::v1::Probe {
+        if self.liveness_probe.is_none() { self.liveness_probe = Some(Default::default()) }
+        self.liveness_probe.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::liveness_probe`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn liveness_probe_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Probe)) -> &mut Self {
+        if self.liveness_probe.is_none() { self.liveness_probe = Some(Default::default()) };
+        func(self.liveness_probe.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::ports`]
+    pub  fn ports_set(&mut self, ports: impl Into<Option<Vec<crate::api::core::v1::ContainerPort>>>) -> &mut Self {
+        self.ports = ports.into(); self
+    }
+
+    pub  fn ports(&mut self) -> &mut Vec<crate::api::core::v1::ContainerPort> {
+        if self.ports.is_none() { self.ports = Some(Default::default()) }
+        self.ports.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ports`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ports_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ContainerPort>)) -> &mut Self {
+        if self.ports.is_none() { self.ports = Some(Default::default()) };
+        func(self.ports.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ports`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ports_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ContainerPort)) -> &mut Self {
+        if self.ports.is_none() {
+            self.ports = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ports.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ports`]
+    pub  fn ports_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ContainerPort]>) -> &mut Self {
+         if self.ports.is_none() { self.ports = Some(Vec::new()); }
+         let ports = &mut self.ports.as_mut().unwrap();
+         for item in other.borrow() {
+             ports.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::readiness_probe`]
+    pub  fn readiness_probe_set(&mut self, readiness_probe: impl Into<Option<crate::api::core::v1::Probe>>) -> &mut Self {
+        self.readiness_probe = readiness_probe.into(); self
+    }
+
+    pub  fn readiness_probe(&mut self) -> &mut crate::api::core::v1::Probe {
+        if self.readiness_probe.is_none() { self.readiness_probe = Some(Default::default()) }
+        self.readiness_probe.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::readiness_probe`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn readiness_probe_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Probe)) -> &mut Self {
+        if self.readiness_probe.is_none() { self.readiness_probe = Some(Default::default()) };
+        func(self.readiness_probe.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resources`]
+    pub  fn resources_set(&mut self, resources: impl Into<Option<crate::api::core::v1::ResourceRequirements>>) -> &mut Self {
+        self.resources = resources.into(); self
+    }
+
+    pub  fn resources(&mut self) -> &mut crate::api::core::v1::ResourceRequirements {
+        if self.resources.is_none() { self.resources = Some(Default::default()) }
+        self.resources.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resources`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resources_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ResourceRequirements)) -> &mut Self {
+        if self.resources.is_none() { self.resources = Some(Default::default()) };
+        func(self.resources.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::security_context`]
+    pub  fn security_context_set(&mut self, security_context: impl Into<Option<crate::api::core::v1::SecurityContext>>) -> &mut Self {
+        self.security_context = security_context.into(); self
+    }
+
+    pub  fn security_context(&mut self) -> &mut crate::api::core::v1::SecurityContext {
+        if self.security_context.is_none() { self.security_context = Some(Default::default()) }
+        self.security_context.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::security_context`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn security_context_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecurityContext)) -> &mut Self {
+        if self.security_context.is_none() { self.security_context = Some(Default::default()) };
+        func(self.security_context.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::startup_probe`]
+    pub  fn startup_probe_set(&mut self, startup_probe: impl Into<Option<crate::api::core::v1::Probe>>) -> &mut Self {
+        self.startup_probe = startup_probe.into(); self
+    }
+
+    pub  fn startup_probe(&mut self) -> &mut crate::api::core::v1::Probe {
+        if self.startup_probe.is_none() { self.startup_probe = Some(Default::default()) }
+        self.startup_probe.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::startup_probe`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn startup_probe_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Probe)) -> &mut Self {
+        if self.startup_probe.is_none() { self.startup_probe = Some(Default::default()) };
+        func(self.startup_probe.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::stdin`]
+    pub  fn stdin_set(&mut self, stdin: impl Into<Option<bool>>) -> &mut Self {
+        self.stdin = stdin.into(); self
+    }
+
+    pub  fn stdin(&mut self) -> &mut bool {
+        if self.stdin.is_none() { self.stdin = Some(Default::default()) }
+        self.stdin.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::stdin`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn stdin_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.stdin.is_none() { self.stdin = Some(Default::default()) };
+        func(self.stdin.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::stdin_once`]
+    pub  fn stdin_once_set(&mut self, stdin_once: impl Into<Option<bool>>) -> &mut Self {
+        self.stdin_once = stdin_once.into(); self
+    }
+
+    pub  fn stdin_once(&mut self) -> &mut bool {
+        if self.stdin_once.is_none() { self.stdin_once = Some(Default::default()) }
+        self.stdin_once.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::stdin_once`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn stdin_once_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.stdin_once.is_none() { self.stdin_once = Some(Default::default()) };
+        func(self.stdin_once.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::termination_message_path`]
+    pub  fn termination_message_path_set(&mut self, termination_message_path: impl Into<Option<String>>) -> &mut Self {
+        self.termination_message_path = termination_message_path.into(); self
+    }
+
+    pub  fn termination_message_path(&mut self) -> &mut String {
+        if self.termination_message_path.is_none() { self.termination_message_path = Some(Default::default()) }
+        self.termination_message_path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::termination_message_path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn termination_message_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.termination_message_path.is_none() { self.termination_message_path = Some(Default::default()) };
+        func(self.termination_message_path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::termination_message_policy`]
+    pub  fn termination_message_policy_set(&mut self, termination_message_policy: impl Into<Option<String>>) -> &mut Self {
+        self.termination_message_policy = termination_message_policy.into(); self
+    }
+
+    pub  fn termination_message_policy(&mut self) -> &mut String {
+        if self.termination_message_policy.is_none() { self.termination_message_policy = Some(Default::default()) }
+        self.termination_message_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::termination_message_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn termination_message_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.termination_message_policy.is_none() { self.termination_message_policy = Some(Default::default()) };
+        func(self.termination_message_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::tty`]
+    pub  fn tty_set(&mut self, tty: impl Into<Option<bool>>) -> &mut Self {
+        self.tty = tty.into(); self
+    }
+
+    pub  fn tty(&mut self) -> &mut bool {
+        if self.tty.is_none() { self.tty = Some(Default::default()) }
+        self.tty.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tty`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tty_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.tty.is_none() { self.tty = Some(Default::default()) };
+        func(self.tty.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_devices`]
+    pub  fn volume_devices_set(&mut self, volume_devices: impl Into<Option<Vec<crate::api::core::v1::VolumeDevice>>>) -> &mut Self {
+        self.volume_devices = volume_devices.into(); self
+    }
+
+    pub  fn volume_devices(&mut self) -> &mut Vec<crate::api::core::v1::VolumeDevice> {
+        if self.volume_devices.is_none() { self.volume_devices = Some(Default::default()) }
+        self.volume_devices.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_devices`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_devices_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::VolumeDevice>)) -> &mut Self {
+        if self.volume_devices.is_none() { self.volume_devices = Some(Default::default()) };
+        func(self.volume_devices.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_devices`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_devices_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VolumeDevice)) -> &mut Self {
+        if self.volume_devices.is_none() {
+            self.volume_devices = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_devices.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_devices`]
+    pub  fn volume_devices_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::VolumeDevice]>) -> &mut Self {
+         if self.volume_devices.is_none() { self.volume_devices = Some(Vec::new()); }
+         let volume_devices = &mut self.volume_devices.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_devices.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::volume_mounts`]
+    pub  fn volume_mounts_set(&mut self, volume_mounts: impl Into<Option<Vec<crate::api::core::v1::VolumeMount>>>) -> &mut Self {
+        self.volume_mounts = volume_mounts.into(); self
+    }
+
+    pub  fn volume_mounts(&mut self) -> &mut Vec<crate::api::core::v1::VolumeMount> {
+        if self.volume_mounts.is_none() { self.volume_mounts = Some(Default::default()) }
+        self.volume_mounts.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_mounts`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_mounts_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::VolumeMount>)) -> &mut Self {
+        if self.volume_mounts.is_none() { self.volume_mounts = Some(Default::default()) };
+        func(self.volume_mounts.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_mounts`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_mounts_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VolumeMount)) -> &mut Self {
+        if self.volume_mounts.is_none() {
+            self.volume_mounts = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_mounts.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_mounts`]
+    pub  fn volume_mounts_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::VolumeMount]>) -> &mut Self {
+         if self.volume_mounts.is_none() { self.volume_mounts = Some(Vec::new()); }
+         let volume_mounts = &mut self.volume_mounts.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_mounts.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::working_dir`]
+    pub  fn working_dir_set(&mut self, working_dir: impl Into<Option<String>>) -> &mut Self {
+        self.working_dir = working_dir.into(); self
+    }
+
+    pub  fn working_dir(&mut self) -> &mut String {
+        if self.working_dir.is_none() { self.working_dir = Some(Default::default()) }
+        self.working_dir.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::working_dir`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn working_dir_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.working_dir.is_none() { self.working_dir = Some(Default::default()) };
+        func(self.working_dir.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Container {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

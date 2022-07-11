@@ -8,7 +8,43 @@ pub struct WeightedPodAffinityTerm {
 
     /// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
     pub weight: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl WeightedPodAffinityTerm  {
+    /// Set [`Self::pod_affinity_term`]
+    pub  fn pod_affinity_term_set(&mut self, pod_affinity_term: impl Into<crate::api::core::v1::PodAffinityTerm>) -> &mut Self {
+        self.pod_affinity_term = pod_affinity_term.into(); self
+    }
+
+    pub  fn pod_affinity_term(&mut self) -> &mut crate::api::core::v1::PodAffinityTerm {
+        &mut self.pod_affinity_term
+    }
+
+    /// Modify [`Self::pod_affinity_term`] with a `func`
+    pub  fn pod_affinity_term_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodAffinityTerm)) -> &mut Self {
+        func(&mut self.pod_affinity_term); self
+    }
+
+
+    /// Set [`Self::weight`]
+    pub  fn weight_set(&mut self, weight: impl Into<i32>) -> &mut Self {
+        self.weight = weight.into(); self
+    }
+
+    pub  fn weight(&mut self) -> &mut i32 {
+        &mut self.weight
+    }
+
+    /// Modify [`Self::weight`] with a `func`
+    pub  fn weight_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.weight); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WeightedPodAffinityTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

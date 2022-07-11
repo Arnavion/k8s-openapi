@@ -8,7 +8,70 @@ pub struct Policy {
 
     /// Stages is a list of stages for which events are created.
     pub stages: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Policy  {
+    /// Set [`Self::level`]
+    pub  fn level_set(&mut self, level: impl Into<String>) -> &mut Self {
+        self.level = level.into(); self
+    }
+
+    pub  fn level(&mut self) -> &mut String {
+        &mut self.level
+    }
+
+    /// Modify [`Self::level`] with a `func`
+    pub  fn level_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.level); self
+    }
+
+
+    /// Set [`Self::stages`]
+    pub  fn stages_set(&mut self, stages: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.stages = stages.into(); self
+    }
+
+    pub  fn stages(&mut self) -> &mut Vec<String> {
+        if self.stages.is_none() { self.stages = Some(Default::default()) }
+        self.stages.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::stages`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn stages_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.stages.is_none() { self.stages = Some(Default::default()) };
+        func(self.stages.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::stages`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn stages_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.stages.is_none() {
+            self.stages = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.stages.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::stages`]
+    pub  fn stages_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.stages.is_none() { self.stages = Some(Vec::new()); }
+         let stages = &mut self.stages.as_mut().unwrap();
+         for item in other.borrow() {
+             stages.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Policy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

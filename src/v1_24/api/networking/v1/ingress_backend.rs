@@ -8,7 +8,51 @@ pub struct IngressBackend {
 
     /// Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
     pub service: Option<crate::api::networking::v1::IngressServiceBackend>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl IngressBackend  {
+    /// Set [`Self::resource`]
+    pub  fn resource_set(&mut self, resource: impl Into<Option<crate::api::core::v1::TypedLocalObjectReference>>) -> &mut Self {
+        self.resource = resource.into(); self
+    }
+
+    pub  fn resource(&mut self) -> &mut crate::api::core::v1::TypedLocalObjectReference {
+        if self.resource.is_none() { self.resource = Some(Default::default()) }
+        self.resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TypedLocalObjectReference)) -> &mut Self {
+        if self.resource.is_none() { self.resource = Some(Default::default()) };
+        func(self.resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service`]
+    pub  fn service_set(&mut self, service: impl Into<Option<crate::api::networking::v1::IngressServiceBackend>>) -> &mut Self {
+        self.service = service.into(); self
+    }
+
+    pub  fn service(&mut self) -> &mut crate::api::networking::v1::IngressServiceBackend {
+        if self.service.is_none() { self.service = Some(Default::default()) }
+        self.service.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::IngressServiceBackend)) -> &mut Self {
+        if self.service.is_none() { self.service = Some(Default::default()) };
+        func(self.service.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

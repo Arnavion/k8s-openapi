@@ -11,7 +11,85 @@ pub struct ClusterRoleBinding {
 
     /// Subjects holds references to the objects the role applies to.
     pub subjects: Option<Vec<crate::api::rbac::v1::Subject>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ClusterRoleBinding  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::role_ref`]
+    pub  fn role_ref_set(&mut self, role_ref: impl Into<crate::api::rbac::v1::RoleRef>) -> &mut Self {
+        self.role_ref = role_ref.into(); self
+    }
+
+    pub  fn role_ref(&mut self) -> &mut crate::api::rbac::v1::RoleRef {
+        &mut self.role_ref
+    }
+
+    /// Modify [`Self::role_ref`] with a `func`
+    pub  fn role_ref_with(&mut self, func: impl FnOnce(&mut crate::api::rbac::v1::RoleRef)) -> &mut Self {
+        func(&mut self.role_ref); self
+    }
+
+
+    /// Set [`Self::subjects`]
+    pub  fn subjects_set(&mut self, subjects: impl Into<Option<Vec<crate::api::rbac::v1::Subject>>>) -> &mut Self {
+        self.subjects = subjects.into(); self
+    }
+
+    pub  fn subjects(&mut self) -> &mut Vec<crate::api::rbac::v1::Subject> {
+        if self.subjects.is_none() { self.subjects = Some(Default::default()) }
+        self.subjects.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::subjects`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn subjects_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::rbac::v1::Subject>)) -> &mut Self {
+        if self.subjects.is_none() { self.subjects = Some(Default::default()) };
+        func(self.subjects.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::subjects`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn subjects_push_with(&mut self, func: impl FnOnce(&mut crate::api::rbac::v1::Subject)) -> &mut Self {
+        if self.subjects.is_none() {
+            self.subjects = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.subjects.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::subjects`]
+    pub  fn subjects_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::rbac::v1::Subject]>) -> &mut Self {
+         if self.subjects.is_none() { self.subjects = Some(Vec::new()); }
+         let subjects = &mut self.subjects.as_mut().unwrap();
+         for item in other.borrow() {
+             subjects.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin rbac.authorization.k8s.io/v1/ClusterRoleBinding
 

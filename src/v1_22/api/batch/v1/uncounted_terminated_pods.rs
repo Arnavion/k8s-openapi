@@ -8,7 +8,97 @@ pub struct UncountedTerminatedPods {
 
     /// Succeeded holds UIDs of succeeded Pods.
     pub succeeded: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl UncountedTerminatedPods  {
+    /// Set [`Self::failed`]
+    pub  fn failed_set(&mut self, failed: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.failed = failed.into(); self
+    }
+
+    pub  fn failed(&mut self) -> &mut Vec<String> {
+        if self.failed.is_none() { self.failed = Some(Default::default()) }
+        self.failed.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::failed`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn failed_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.failed.is_none() { self.failed = Some(Default::default()) };
+        func(self.failed.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::failed`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn failed_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.failed.is_none() {
+            self.failed = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.failed.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::failed`]
+    pub  fn failed_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.failed.is_none() { self.failed = Some(Vec::new()); }
+         let failed = &mut self.failed.as_mut().unwrap();
+         for item in other.borrow() {
+             failed.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::succeeded`]
+    pub  fn succeeded_set(&mut self, succeeded: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.succeeded = succeeded.into(); self
+    }
+
+    pub  fn succeeded(&mut self) -> &mut Vec<String> {
+        if self.succeeded.is_none() { self.succeeded = Some(Default::default()) }
+        self.succeeded.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::succeeded`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn succeeded_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.succeeded.is_none() { self.succeeded = Some(Default::default()) };
+        func(self.succeeded.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::succeeded`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn succeeded_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.succeeded.is_none() {
+            self.succeeded = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.succeeded.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::succeeded`]
+    pub  fn succeeded_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.succeeded.is_none() { self.succeeded = Some(Vec::new()); }
+         let succeeded = &mut self.succeeded.as_mut().unwrap();
+         for item in other.borrow() {
+             succeeded.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for UncountedTerminatedPods {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

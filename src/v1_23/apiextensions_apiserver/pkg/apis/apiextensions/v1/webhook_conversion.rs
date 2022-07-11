@@ -8,7 +8,65 @@ pub struct WebhookConversion {
 
     /// conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
     pub conversion_review_versions: Vec<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl WebhookConversion  {
+    /// Set [`Self::client_config`]
+    pub  fn client_config_set(&mut self, client_config: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig>>) -> &mut Self {
+        self.client_config = client_config.into(); self
+    }
+
+    pub  fn client_config(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig {
+        if self.client_config.is_none() { self.client_config = Some(Default::default()) }
+        self.client_config.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::client_config`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn client_config_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookClientConfig)) -> &mut Self {
+        if self.client_config.is_none() { self.client_config = Some(Default::default()) };
+        func(self.client_config.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::conversion_review_versions`]
+    pub  fn conversion_review_versions_set(&mut self, conversion_review_versions: impl Into<Vec<String>>) -> &mut Self {
+        self.conversion_review_versions = conversion_review_versions.into(); self
+    }
+
+    pub  fn conversion_review_versions(&mut self) -> &mut Vec<String> {
+        &mut self.conversion_review_versions
+    }
+
+    /// Modify [`Self::conversion_review_versions`] with a `func`
+    pub  fn conversion_review_versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.conversion_review_versions); self
+    }
+
+    /// Push new element to [`Self::conversion_review_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conversion_review_versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.conversion_review_versions.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::conversion_review_versions`]
+    pub  fn conversion_review_versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.conversion_review_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WebhookConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

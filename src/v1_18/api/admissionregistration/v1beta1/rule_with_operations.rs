@@ -23,7 +23,200 @@ pub struct RuleWithOperations {
 
     /// scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
     pub scope: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RuleWithOperations  {
+    /// Set [`Self::api_groups`]
+    pub  fn api_groups_set(&mut self, api_groups: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.api_groups = api_groups.into(); self
+    }
+
+    pub  fn api_groups(&mut self) -> &mut Vec<String> {
+        if self.api_groups.is_none() { self.api_groups = Some(Default::default()) }
+        self.api_groups.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_groups`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_groups_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.api_groups.is_none() { self.api_groups = Some(Default::default()) };
+        func(self.api_groups.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::api_groups`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn api_groups_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_groups.is_none() {
+            self.api_groups = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.api_groups.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::api_groups`]
+    pub  fn api_groups_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.api_groups.is_none() { self.api_groups = Some(Vec::new()); }
+         let api_groups = &mut self.api_groups.as_mut().unwrap();
+         for item in other.borrow() {
+             api_groups.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::api_versions`]
+    pub  fn api_versions_set(&mut self, api_versions: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.api_versions = api_versions.into(); self
+    }
+
+    pub  fn api_versions(&mut self) -> &mut Vec<String> {
+        if self.api_versions.is_none() { self.api_versions = Some(Default::default()) }
+        self.api_versions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_versions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_versions_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.api_versions.is_none() { self.api_versions = Some(Default::default()) };
+        func(self.api_versions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::api_versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn api_versions_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_versions.is_none() {
+            self.api_versions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.api_versions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::api_versions`]
+    pub  fn api_versions_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.api_versions.is_none() { self.api_versions = Some(Vec::new()); }
+         let api_versions = &mut self.api_versions.as_mut().unwrap();
+         for item in other.borrow() {
+             api_versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::operations`]
+    pub  fn operations_set(&mut self, operations: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.operations = operations.into(); self
+    }
+
+    pub  fn operations(&mut self) -> &mut Vec<String> {
+        if self.operations.is_none() { self.operations = Some(Default::default()) }
+        self.operations.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::operations`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn operations_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.operations.is_none() { self.operations = Some(Default::default()) };
+        func(self.operations.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::operations`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn operations_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.operations.is_none() {
+            self.operations = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.operations.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::operations`]
+    pub  fn operations_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.operations.is_none() { self.operations = Some(Vec::new()); }
+         let operations = &mut self.operations.as_mut().unwrap();
+         for item in other.borrow() {
+             operations.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::resources`]
+    pub  fn resources_set(&mut self, resources: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.resources = resources.into(); self
+    }
+
+    pub  fn resources(&mut self) -> &mut Vec<String> {
+        if self.resources.is_none() { self.resources = Some(Default::default()) }
+        self.resources.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resources`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resources_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.resources.is_none() { self.resources = Some(Default::default()) };
+        func(self.resources.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::resources`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn resources_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resources.is_none() {
+            self.resources = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.resources.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::resources`]
+    pub  fn resources_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.resources.is_none() { self.resources = Some(Vec::new()); }
+         let resources = &mut self.resources.as_mut().unwrap();
+         for item in other.borrow() {
+             resources.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::scope`]
+    pub  fn scope_set(&mut self, scope: impl Into<Option<String>>) -> &mut Self {
+        self.scope = scope.into(); self
+    }
+
+    pub  fn scope(&mut self) -> &mut String {
+        if self.scope.is_none() { self.scope = Some(Default::default()) }
+        self.scope.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scope`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scope_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.scope.is_none() { self.scope = Some(Default::default()) };
+        func(self.scope.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RuleWithOperations {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

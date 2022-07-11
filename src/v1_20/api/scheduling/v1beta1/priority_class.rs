@@ -17,7 +17,100 @@ pub struct PriorityClass {
 
     /// The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.
     pub value: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PriorityClass  {
+    /// Set [`Self::description`]
+    pub  fn description_set(&mut self, description: impl Into<Option<String>>) -> &mut Self {
+        self.description = description.into(); self
+    }
+
+    pub  fn description(&mut self) -> &mut String {
+        if self.description.is_none() { self.description = Some(Default::default()) }
+        self.description.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::description`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn description_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.description.is_none() { self.description = Some(Default::default()) };
+        func(self.description.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::global_default`]
+    pub  fn global_default_set(&mut self, global_default: impl Into<Option<bool>>) -> &mut Self {
+        self.global_default = global_default.into(); self
+    }
+
+    pub  fn global_default(&mut self) -> &mut bool {
+        if self.global_default.is_none() { self.global_default = Some(Default::default()) }
+        self.global_default.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::global_default`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn global_default_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.global_default.is_none() { self.global_default = Some(Default::default()) };
+        func(self.global_default.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::preemption_policy`]
+    pub  fn preemption_policy_set(&mut self, preemption_policy: impl Into<Option<String>>) -> &mut Self {
+        self.preemption_policy = preemption_policy.into(); self
+    }
+
+    pub  fn preemption_policy(&mut self) -> &mut String {
+        if self.preemption_policy.is_none() { self.preemption_policy = Some(Default::default()) }
+        self.preemption_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preemption_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preemption_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.preemption_policy.is_none() { self.preemption_policy = Some(Default::default()) };
+        func(self.preemption_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<i32>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut i32 {
+        &mut self.value
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.value); self
+    }
+
+
+}
+
 
 // Begin scheduling.k8s.io/v1beta1/PriorityClass
 

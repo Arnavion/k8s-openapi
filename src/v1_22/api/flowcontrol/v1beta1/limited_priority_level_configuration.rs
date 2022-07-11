@@ -14,7 +14,51 @@ pub struct LimitedPriorityLevelConfiguration {
 
     /// `limitResponse` indicates what to do with requests that can not be executed right now
     pub limit_response: Option<crate::api::flowcontrol::v1beta1::LimitResponse>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LimitedPriorityLevelConfiguration  {
+    /// Set [`Self::assured_concurrency_shares`]
+    pub  fn assured_concurrency_shares_set(&mut self, assured_concurrency_shares: impl Into<Option<i32>>) -> &mut Self {
+        self.assured_concurrency_shares = assured_concurrency_shares.into(); self
+    }
+
+    pub  fn assured_concurrency_shares(&mut self) -> &mut i32 {
+        if self.assured_concurrency_shares.is_none() { self.assured_concurrency_shares = Some(Default::default()) }
+        self.assured_concurrency_shares.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::assured_concurrency_shares`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn assured_concurrency_shares_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.assured_concurrency_shares.is_none() { self.assured_concurrency_shares = Some(Default::default()) };
+        func(self.assured_concurrency_shares.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::limit_response`]
+    pub  fn limit_response_set(&mut self, limit_response: impl Into<Option<crate::api::flowcontrol::v1beta1::LimitResponse>>) -> &mut Self {
+        self.limit_response = limit_response.into(); self
+    }
+
+    pub  fn limit_response(&mut self) -> &mut crate::api::flowcontrol::v1beta1::LimitResponse {
+        if self.limit_response.is_none() { self.limit_response = Some(Default::default()) }
+        self.limit_response.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::limit_response`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn limit_response_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::LimitResponse)) -> &mut Self {
+        if self.limit_response.is_none() { self.limit_response = Some(Default::default()) };
+        func(self.limit_response.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitedPriorityLevelConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -10,7 +10,51 @@ pub struct ConfigMapEnvSource {
 
     /// Specify whether the ConfigMap must be defined
     pub optional: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ConfigMapEnvSource  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::optional`]
+    pub  fn optional_set(&mut self, optional: impl Into<Option<bool>>) -> &mut Self {
+        self.optional = optional.into(); self
+    }
+
+    pub  fn optional(&mut self) -> &mut bool {
+        if self.optional.is_none() { self.optional = Some(Default::default()) }
+        self.optional.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::optional`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn optional_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.optional.is_none() { self.optional = Some(Default::default()) };
+        func(self.optional.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ConfigMapEnvSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

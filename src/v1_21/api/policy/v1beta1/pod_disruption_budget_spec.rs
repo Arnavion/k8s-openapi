@@ -11,7 +11,70 @@ pub struct PodDisruptionBudgetSpec {
 
     /// Label query over pods whose evictions are managed by the disruption budget. A null selector selects no pods. An empty selector ({}) also selects no pods, which differs from standard behavior of selecting all pods. In policy/v1, an empty selector will select all pods in the namespace.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodDisruptionBudgetSpec  {
+    /// Set [`Self::max_unavailable`]
+    pub  fn max_unavailable_set(&mut self, max_unavailable: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.max_unavailable = max_unavailable.into(); self
+    }
+
+    pub  fn max_unavailable(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) }
+        self.max_unavailable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_unavailable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_unavailable_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) };
+        func(self.max_unavailable.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::min_available`]
+    pub  fn min_available_set(&mut self, min_available: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.min_available = min_available.into(); self
+    }
+
+    pub  fn min_available(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.min_available.is_none() { self.min_available = Some(Default::default()) }
+        self.min_available.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_available`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_available_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.min_available.is_none() { self.min_available = Some(Default::default()) };
+        func(self.min_available.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.selector.is_none() { self.selector = Some(Default::default()) }
+        self.selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.selector.is_none() { self.selector = Some(Default::default()) };
+        func(self.selector.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

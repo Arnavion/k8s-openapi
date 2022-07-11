@@ -28,7 +28,226 @@ pub struct StorageClass {
 
     /// VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.
     pub volume_binding_mode: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StorageClass  {
+    /// Set [`Self::allow_volume_expansion`]
+    pub  fn allow_volume_expansion_set(&mut self, allow_volume_expansion: impl Into<Option<bool>>) -> &mut Self {
+        self.allow_volume_expansion = allow_volume_expansion.into(); self
+    }
+
+    pub  fn allow_volume_expansion(&mut self) -> &mut bool {
+        if self.allow_volume_expansion.is_none() { self.allow_volume_expansion = Some(Default::default()) }
+        self.allow_volume_expansion.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allow_volume_expansion`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allow_volume_expansion_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.allow_volume_expansion.is_none() { self.allow_volume_expansion = Some(Default::default()) };
+        func(self.allow_volume_expansion.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::allowed_topologies`]
+    pub  fn allowed_topologies_set(&mut self, allowed_topologies: impl Into<Option<Vec<crate::api::core::v1::TopologySelectorTerm>>>) -> &mut Self {
+        self.allowed_topologies = allowed_topologies.into(); self
+    }
+
+    pub  fn allowed_topologies(&mut self) -> &mut Vec<crate::api::core::v1::TopologySelectorTerm> {
+        if self.allowed_topologies.is_none() { self.allowed_topologies = Some(Default::default()) }
+        self.allowed_topologies.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::allowed_topologies`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn allowed_topologies_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::TopologySelectorTerm>)) -> &mut Self {
+        if self.allowed_topologies.is_none() { self.allowed_topologies = Some(Default::default()) };
+        func(self.allowed_topologies.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::allowed_topologies`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn allowed_topologies_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::TopologySelectorTerm)) -> &mut Self {
+        if self.allowed_topologies.is_none() {
+            self.allowed_topologies = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.allowed_topologies.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::allowed_topologies`]
+    pub  fn allowed_topologies_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::TopologySelectorTerm]>) -> &mut Self {
+         if self.allowed_topologies.is_none() { self.allowed_topologies = Some(Vec::new()); }
+         let allowed_topologies = &mut self.allowed_topologies.as_mut().unwrap();
+         for item in other.borrow() {
+             allowed_topologies.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::mount_options`]
+    pub  fn mount_options_set(&mut self, mount_options: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.mount_options = mount_options.into(); self
+    }
+
+    pub  fn mount_options(&mut self) -> &mut Vec<String> {
+        if self.mount_options.is_none() { self.mount_options = Some(Default::default()) }
+        self.mount_options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::mount_options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn mount_options_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.mount_options.is_none() { self.mount_options = Some(Default::default()) };
+        func(self.mount_options.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::mount_options`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn mount_options_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.mount_options.is_none() {
+            self.mount_options = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.mount_options.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::mount_options`]
+    pub  fn mount_options_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.mount_options.is_none() { self.mount_options = Some(Vec::new()); }
+         let mount_options = &mut self.mount_options.as_mut().unwrap();
+         for item in other.borrow() {
+             mount_options.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::parameters`]
+    pub  fn parameters_set(&mut self, parameters: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.parameters = parameters.into(); self
+    }
+
+    pub  fn parameters(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.parameters.is_none() { self.parameters = Some(Default::default()) }
+        self.parameters.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::parameters`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn parameters_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.parameters.is_none() { self.parameters = Some(Default::default()) };
+        func(self.parameters.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::parameters`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn parameters_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.parameters.is_none() {
+            self.parameters = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.parameters.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::parameters`]
+    pub  fn parameters_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.parameters.is_none() { self.parameters = Some(std::collections::BTreeMap::new()); }
+         let parameters = &mut self.parameters.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             parameters.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::provisioner`]
+    pub  fn provisioner_set(&mut self, provisioner: impl Into<String>) -> &mut Self {
+        self.provisioner = provisioner.into(); self
+    }
+
+    pub  fn provisioner(&mut self) -> &mut String {
+        &mut self.provisioner
+    }
+
+    /// Modify [`Self::provisioner`] with a `func`
+    pub  fn provisioner_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.provisioner); self
+    }
+
+
+    /// Set [`Self::reclaim_policy`]
+    pub  fn reclaim_policy_set(&mut self, reclaim_policy: impl Into<Option<String>>) -> &mut Self {
+        self.reclaim_policy = reclaim_policy.into(); self
+    }
+
+    pub  fn reclaim_policy(&mut self) -> &mut String {
+        if self.reclaim_policy.is_none() { self.reclaim_policy = Some(Default::default()) }
+        self.reclaim_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::reclaim_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn reclaim_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.reclaim_policy.is_none() { self.reclaim_policy = Some(Default::default()) };
+        func(self.reclaim_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_binding_mode`]
+    pub  fn volume_binding_mode_set(&mut self, volume_binding_mode: impl Into<Option<String>>) -> &mut Self {
+        self.volume_binding_mode = volume_binding_mode.into(); self
+    }
+
+    pub  fn volume_binding_mode(&mut self) -> &mut String {
+        if self.volume_binding_mode.is_none() { self.volume_binding_mode = Some(Default::default()) }
+        self.volume_binding_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_binding_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_binding_mode_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_binding_mode.is_none() { self.volume_binding_mode = Some(Default::default()) };
+        func(self.volume_binding_mode.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin storage.k8s.io/v1beta1/StorageClass
 

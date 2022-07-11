@@ -20,7 +20,107 @@ pub struct Condition {
 
     /// type of condition in CamelCase or in foo.example.com/CamelCase.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Condition  {
+    /// Set [`Self::last_transition_time`]
+    pub  fn last_transition_time_set(&mut self, last_transition_time: impl Into<crate::apimachinery::pkg::apis::meta::v1::Time>) -> &mut Self {
+        self.last_transition_time = last_transition_time.into(); self
+    }
+
+    pub  fn last_transition_time(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::Time {
+        &mut self.last_transition_time
+    }
+
+    /// Modify [`Self::last_transition_time`] with a `func`
+    pub  fn last_transition_time_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::Time)) -> &mut Self {
+        func(&mut self.last_transition_time); self
+    }
+
+
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<String>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        &mut self.message
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.message); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::reason`]
+    pub  fn reason_set(&mut self, reason: impl Into<String>) -> &mut Self {
+        self.reason = reason.into(); self
+    }
+
+    pub  fn reason(&mut self) -> &mut String {
+        &mut self.reason
+    }
+
+    /// Modify [`Self::reason`] with a `func`
+    pub  fn reason_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.reason); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<String>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut String {
+        &mut self.status
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.status); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Condition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

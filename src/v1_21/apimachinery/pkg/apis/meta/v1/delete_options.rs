@@ -23,7 +23,169 @@ pub struct DeleteOptions {
 
     /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub propagation_policy: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DeleteOptions  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<Option<String>>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+    pub  fn api_version(&mut self) -> &mut String {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) }
+        self.api_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_version.is_none() { self.api_version = Some(Default::default()) };
+        func(self.api_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::dry_run`]
+    pub  fn dry_run_set(&mut self, dry_run: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.dry_run = dry_run.into(); self
+    }
+
+    pub  fn dry_run(&mut self) -> &mut Vec<String> {
+        if self.dry_run.is_none() { self.dry_run = Some(Default::default()) }
+        self.dry_run.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::dry_run`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn dry_run_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.dry_run.is_none() { self.dry_run = Some(Default::default()) };
+        func(self.dry_run.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::dry_run`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn dry_run_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.dry_run.is_none() {
+            self.dry_run = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.dry_run.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::dry_run`]
+    pub  fn dry_run_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.dry_run.is_none() { self.dry_run = Some(Vec::new()); }
+         let dry_run = &mut self.dry_run.as_mut().unwrap();
+         for item in other.borrow() {
+             dry_run.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::grace_period_seconds`]
+    pub  fn grace_period_seconds_set(&mut self, grace_period_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.grace_period_seconds = grace_period_seconds.into(); self
+    }
+
+    pub  fn grace_period_seconds(&mut self) -> &mut i64 {
+        if self.grace_period_seconds.is_none() { self.grace_period_seconds = Some(Default::default()) }
+        self.grace_period_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::grace_period_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn grace_period_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.grace_period_seconds.is_none() { self.grace_period_seconds = Some(Default::default()) };
+        func(self.grace_period_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<Option<String>>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        if self.kind.is_none() { self.kind = Some(Default::default()) }
+        self.kind.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.kind.is_none() { self.kind = Some(Default::default()) };
+        func(self.kind.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::orphan_dependents`]
+    pub  fn orphan_dependents_set(&mut self, orphan_dependents: impl Into<Option<bool>>) -> &mut Self {
+        self.orphan_dependents = orphan_dependents.into(); self
+    }
+
+    pub  fn orphan_dependents(&mut self) -> &mut bool {
+        if self.orphan_dependents.is_none() { self.orphan_dependents = Some(Default::default()) }
+        self.orphan_dependents.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::orphan_dependents`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn orphan_dependents_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.orphan_dependents.is_none() { self.orphan_dependents = Some(Default::default()) };
+        func(self.orphan_dependents.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::preconditions`]
+    pub  fn preconditions_set(&mut self, preconditions: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions>>) -> &mut Self {
+        self.preconditions = preconditions.into(); self
+    }
+
+    pub  fn preconditions(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::Preconditions {
+        if self.preconditions.is_none() { self.preconditions = Some(Default::default()) }
+        self.preconditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preconditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preconditions_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::Preconditions)) -> &mut Self {
+        if self.preconditions.is_none() { self.preconditions = Some(Default::default()) };
+        func(self.preconditions.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::propagation_policy`]
+    pub  fn propagation_policy_set(&mut self, propagation_policy: impl Into<Option<String>>) -> &mut Self {
+        self.propagation_policy = propagation_policy.into(); self
+    }
+
+    pub  fn propagation_policy(&mut self) -> &mut String {
+        if self.propagation_policy.is_none() { self.propagation_policy = Some(Default::default()) }
+        self.propagation_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::propagation_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn propagation_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.propagation_policy.is_none() { self.propagation_policy = Some(Default::default()) };
+        func(self.propagation_policy.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

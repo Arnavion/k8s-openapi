@@ -8,7 +8,43 @@ pub struct CSINode {
 
     /// spec is the specification of CSINode
     pub spec: crate::api::storage::v1::CSINodeSpec,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSINode  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::storage::v1::CSINodeSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::storage::v1::CSINodeSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1::CSINodeSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+}
+
 
 // Begin storage.k8s.io/v1/CSINode
 

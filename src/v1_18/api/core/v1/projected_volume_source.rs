@@ -8,7 +8,65 @@ pub struct ProjectedVolumeSource {
 
     /// list of volume projections
     pub sources: Vec<crate::api::core::v1::VolumeProjection>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ProjectedVolumeSource  {
+    /// Set [`Self::default_mode`]
+    pub  fn default_mode_set(&mut self, default_mode: impl Into<Option<i32>>) -> &mut Self {
+        self.default_mode = default_mode.into(); self
+    }
+
+    pub  fn default_mode(&mut self) -> &mut i32 {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) }
+        self.default_mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::default_mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn default_mode_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.default_mode.is_none() { self.default_mode = Some(Default::default()) };
+        func(self.default_mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::sources`]
+    pub  fn sources_set(&mut self, sources: impl Into<Vec<crate::api::core::v1::VolumeProjection>>) -> &mut Self {
+        self.sources = sources.into(); self
+    }
+
+    pub  fn sources(&mut self) -> &mut Vec<crate::api::core::v1::VolumeProjection> {
+        &mut self.sources
+    }
+
+    /// Modify [`Self::sources`] with a `func`
+    pub  fn sources_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::VolumeProjection>)) -> &mut Self {
+        func(&mut self.sources); self
+    }
+
+    /// Push new element to [`Self::sources`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn sources_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::VolumeProjection)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.sources.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::sources`]
+    pub  fn sources_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::VolumeProjection]>) -> &mut Self {
+         for item in other.borrow() {
+             self.sources.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

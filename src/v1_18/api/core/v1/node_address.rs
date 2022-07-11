@@ -8,7 +8,43 @@ pub struct NodeAddress {
 
     /// Node address type, one of Hostname, ExternalIP or InternalIP.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeAddress  {
+    /// Set [`Self::address`]
+    pub  fn address_set(&mut self, address: impl Into<String>) -> &mut Self {
+        self.address = address.into(); self
+    }
+
+    pub  fn address(&mut self) -> &mut String {
+        &mut self.address
+    }
+
+    /// Modify [`Self::address`] with a `func`
+    pub  fn address_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.address); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeAddress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

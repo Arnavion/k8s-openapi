@@ -5,7 +5,32 @@
 pub struct RollingUpdateDaemonSet {
     /// The maximum number of DaemonSet pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of total number of DaemonSet pods at the start of the update (ex: 10%). Absolute number is calculated from percentage by rounding up. This cannot be 0. Default value is 1. Example: when this is set to 30%, at most 30% of the total number of nodes that should be running the daemon pod (i.e. status.desiredNumberScheduled) can have their pods stopped for an update at any given time. The update starts by stopping at most 30% of those DaemonSet pods and then brings up new DaemonSet pods in their place. Once the new pods are available, it then proceeds onto other DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are available at all times during the update.
     pub max_unavailable: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RollingUpdateDaemonSet  {
+    /// Set [`Self::max_unavailable`]
+    pub  fn max_unavailable_set(&mut self, max_unavailable: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.max_unavailable = max_unavailable.into(); self
+    }
+
+    pub  fn max_unavailable(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) }
+        self.max_unavailable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_unavailable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_unavailable_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) };
+        func(self.max_unavailable.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateDaemonSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

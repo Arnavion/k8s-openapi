@@ -31,7 +31,150 @@ pub struct PodDisruptionBudgetStatus {
 
     /// Most recent generation observed when updating this PDB status. DisruptionsAllowed and other status information is valid only if observedGeneration equals to PDB's object generation.
     pub observed_generation: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodDisruptionBudgetStatus  {
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::Condition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::Condition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::current_healthy`]
+    pub  fn current_healthy_set(&mut self, current_healthy: impl Into<i32>) -> &mut Self {
+        self.current_healthy = current_healthy.into(); self
+    }
+
+    pub  fn current_healthy(&mut self) -> &mut i32 {
+        &mut self.current_healthy
+    }
+
+    /// Modify [`Self::current_healthy`] with a `func`
+    pub  fn current_healthy_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.current_healthy); self
+    }
+
+
+    /// Set [`Self::desired_healthy`]
+    pub  fn desired_healthy_set(&mut self, desired_healthy: impl Into<i32>) -> &mut Self {
+        self.desired_healthy = desired_healthy.into(); self
+    }
+
+    pub  fn desired_healthy(&mut self) -> &mut i32 {
+        &mut self.desired_healthy
+    }
+
+    /// Modify [`Self::desired_healthy`] with a `func`
+    pub  fn desired_healthy_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.desired_healthy); self
+    }
+
+
+    /// Set [`Self::disrupted_pods`]
+    pub  fn disrupted_pods_set(&mut self, disrupted_pods: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>>>) -> &mut Self {
+        self.disrupted_pods = disrupted_pods.into(); self
+    }
+
+    pub  fn disrupted_pods(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time> {
+        if self.disrupted_pods.is_none() { self.disrupted_pods = Some(Default::default()) }
+        self.disrupted_pods.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::disrupted_pods`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn disrupted_pods_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>)) -> &mut Self {
+        if self.disrupted_pods.is_none() { self.disrupted_pods = Some(Default::default()) };
+        func(self.disrupted_pods.as_mut().unwrap()); self
+    }
+
+    /// Insert all elements from `other` into [`Self::disrupted_pods`]
+    pub  fn disrupted_pods_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+         if self.disrupted_pods.is_none() { self.disrupted_pods = Some(std::collections::BTreeMap::new()); }
+         let disrupted_pods = &mut self.disrupted_pods.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             disrupted_pods.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::disruptions_allowed`]
+    pub  fn disruptions_allowed_set(&mut self, disruptions_allowed: impl Into<i32>) -> &mut Self {
+        self.disruptions_allowed = disruptions_allowed.into(); self
+    }
+
+    pub  fn disruptions_allowed(&mut self) -> &mut i32 {
+        &mut self.disruptions_allowed
+    }
+
+    /// Modify [`Self::disruptions_allowed`] with a `func`
+    pub  fn disruptions_allowed_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.disruptions_allowed); self
+    }
+
+
+    /// Set [`Self::expected_pods`]
+    pub  fn expected_pods_set(&mut self, expected_pods: impl Into<i32>) -> &mut Self {
+        self.expected_pods = expected_pods.into(); self
+    }
+
+    pub  fn expected_pods(&mut self) -> &mut i32 {
+        &mut self.expected_pods
+    }
+
+    /// Modify [`Self::expected_pods`] with a `func`
+    pub  fn expected_pods_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.expected_pods); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

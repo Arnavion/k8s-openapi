@@ -6,7 +6,51 @@ pub struct ExternalDocumentation {
     pub description: Option<String>,
 
     pub url: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ExternalDocumentation  {
+    /// Set [`Self::description`]
+    pub  fn description_set(&mut self, description: impl Into<Option<String>>) -> &mut Self {
+        self.description = description.into(); self
+    }
+
+    pub  fn description(&mut self) -> &mut String {
+        if self.description.is_none() { self.description = Some(Default::default()) }
+        self.description.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::description`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn description_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.description.is_none() { self.description = Some(Default::default()) };
+        func(self.description.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::url`]
+    pub  fn url_set(&mut self, url: impl Into<Option<String>>) -> &mut Self {
+        self.url = url.into(); self
+    }
+
+    pub  fn url(&mut self) -> &mut String {
+        if self.url.is_none() { self.url = Some(Default::default()) }
+        self.url.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::url`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn url_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.url.is_none() { self.url = Some(Default::default()) };
+        func(self.url.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExternalDocumentation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

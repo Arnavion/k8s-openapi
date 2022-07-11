@@ -8,7 +8,51 @@ pub struct FlockerVolumeSource {
 
     /// UUID of the dataset. This is unique identifier of a Flocker dataset
     pub dataset_uuid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl FlockerVolumeSource  {
+    /// Set [`Self::dataset_name`]
+    pub  fn dataset_name_set(&mut self, dataset_name: impl Into<Option<String>>) -> &mut Self {
+        self.dataset_name = dataset_name.into(); self
+    }
+
+    pub  fn dataset_name(&mut self) -> &mut String {
+        if self.dataset_name.is_none() { self.dataset_name = Some(Default::default()) }
+        self.dataset_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::dataset_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn dataset_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.dataset_name.is_none() { self.dataset_name = Some(Default::default()) };
+        func(self.dataset_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::dataset_uuid`]
+    pub  fn dataset_uuid_set(&mut self, dataset_uuid: impl Into<Option<String>>) -> &mut Self {
+        self.dataset_uuid = dataset_uuid.into(); self
+    }
+
+    pub  fn dataset_uuid(&mut self) -> &mut String {
+        if self.dataset_uuid.is_none() { self.dataset_uuid = Some(Default::default()) }
+        self.dataset_uuid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::dataset_uuid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn dataset_uuid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.dataset_uuid.is_none() { self.dataset_uuid = Some(Default::default()) };
+        func(self.dataset_uuid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlockerVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

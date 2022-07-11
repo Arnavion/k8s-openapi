@@ -14,7 +14,89 @@ pub struct SELinuxOptions {
 
     /// User is a SELinux user label that applies to the container.
     pub user: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SELinuxOptions  {
+    /// Set [`Self::level`]
+    pub  fn level_set(&mut self, level: impl Into<Option<String>>) -> &mut Self {
+        self.level = level.into(); self
+    }
+
+    pub  fn level(&mut self) -> &mut String {
+        if self.level.is_none() { self.level = Some(Default::default()) }
+        self.level.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::level`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn level_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.level.is_none() { self.level = Some(Default::default()) };
+        func(self.level.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::role`]
+    pub  fn role_set(&mut self, role: impl Into<Option<String>>) -> &mut Self {
+        self.role = role.into(); self
+    }
+
+    pub  fn role(&mut self) -> &mut String {
+        if self.role.is_none() { self.role = Some(Default::default()) }
+        self.role.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::role`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn role_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.role.is_none() { self.role = Some(Default::default()) };
+        func(self.role.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<Option<String>>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) }
+        self.type_.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.type_.is_none() { self.type_ = Some(Default::default()) };
+        func(self.type_.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::user`]
+    pub  fn user_set(&mut self, user: impl Into<Option<String>>) -> &mut Self {
+        self.user = user.into(); self
+    }
+
+    pub  fn user(&mut self) -> &mut String {
+        if self.user.is_none() { self.user = Some(Default::default()) }
+        self.user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn user_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.user.is_none() { self.user = Some(Default::default()) };
+        func(self.user.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SELinuxOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

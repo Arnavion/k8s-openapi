@@ -8,7 +8,47 @@ pub struct PodTemplate {
 
     /// Template defines the pods that will be created from this pod template. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodTemplate  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<Option<crate::api::core::v1::PodTemplateSpec>>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        if self.template.is_none() { self.template = Some(Default::default()) }
+        self.template.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        if self.template.is_none() { self.template = Some(Default::default()) };
+        func(self.template.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin /v1/PodTemplate
 

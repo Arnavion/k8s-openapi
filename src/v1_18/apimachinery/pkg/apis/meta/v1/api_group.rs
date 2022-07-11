@@ -14,7 +14,122 @@ pub struct APIGroup {
 
     /// versions are the versions supported in this group.
     pub versions: Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl APIGroup  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::preferred_version`]
+    pub  fn preferred_version_set(&mut self, preferred_version: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>>) -> &mut Self {
+        self.preferred_version = preferred_version.into(); self
+    }
+
+    pub  fn preferred_version(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery {
+        if self.preferred_version.is_none() { self.preferred_version = Some(Default::default()) }
+        self.preferred_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preferred_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preferred_version_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery)) -> &mut Self {
+        if self.preferred_version.is_none() { self.preferred_version = Some(Default::default()) };
+        func(self.preferred_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::server_address_by_client_cidrs`]
+    pub  fn server_address_by_client_cidrs_set(&mut self, server_address_by_client_cidrs: impl Into<Option<Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>>>) -> &mut Self {
+        self.server_address_by_client_cidrs = server_address_by_client_cidrs.into(); self
+    }
+
+    pub  fn server_address_by_client_cidrs(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR> {
+        if self.server_address_by_client_cidrs.is_none() { self.server_address_by_client_cidrs = Some(Default::default()) }
+        self.server_address_by_client_cidrs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::server_address_by_client_cidrs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn server_address_by_client_cidrs_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>)) -> &mut Self {
+        if self.server_address_by_client_cidrs.is_none() { self.server_address_by_client_cidrs = Some(Default::default()) };
+        func(self.server_address_by_client_cidrs.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::server_address_by_client_cidrs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn server_address_by_client_cidrs_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR)) -> &mut Self {
+        if self.server_address_by_client_cidrs.is_none() {
+            self.server_address_by_client_cidrs = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.server_address_by_client_cidrs.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::server_address_by_client_cidrs`]
+    pub  fn server_address_by_client_cidrs_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR]>) -> &mut Self {
+         if self.server_address_by_client_cidrs.is_none() { self.server_address_by_client_cidrs = Some(Vec::new()); }
+         let server_address_by_client_cidrs = &mut self.server_address_by_client_cidrs.as_mut().unwrap();
+         for item in other.borrow() {
+             server_address_by_client_cidrs.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::versions`]
+    pub  fn versions_set(&mut self, versions: impl Into<Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>>) -> &mut Self {
+        self.versions = versions.into(); self
+    }
+
+    pub  fn versions(&mut self) -> &mut Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery> {
+        &mut self.versions
+    }
+
+    /// Modify [`Self::versions`] with a `func`
+    pub  fn versions_with(&mut self, func: impl FnOnce(&mut Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>)) -> &mut Self {
+        func(&mut self.versions); self
+    }
+
+    /// Push new element to [`Self::versions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn versions_push_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.versions.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::versions`]
+    pub  fn versions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery]>) -> &mut Self {
+         for item in other.borrow() {
+             self.versions.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl crate::Resource for APIGroup {
     const API_VERSION: &'static str = "v1";

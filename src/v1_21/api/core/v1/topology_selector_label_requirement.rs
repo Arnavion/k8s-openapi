@@ -8,7 +8,61 @@ pub struct TopologySelectorLabelRequirement {
 
     /// An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
     pub values: Vec<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TopologySelectorLabelRequirement  {
+    /// Set [`Self::key`]
+    pub  fn key_set(&mut self, key: impl Into<String>) -> &mut Self {
+        self.key = key.into(); self
+    }
+
+    pub  fn key(&mut self) -> &mut String {
+        &mut self.key
+    }
+
+    /// Modify [`Self::key`] with a `func`
+    pub  fn key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.key); self
+    }
+
+
+    /// Set [`Self::values`]
+    pub  fn values_set(&mut self, values: impl Into<Vec<String>>) -> &mut Self {
+        self.values = values.into(); self
+    }
+
+    pub  fn values(&mut self) -> &mut Vec<String> {
+        &mut self.values
+    }
+
+    /// Modify [`Self::values`] with a `func`
+    pub  fn values_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.values); self
+    }
+
+    /// Push new element to [`Self::values`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn values_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.values.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::values`]
+    pub  fn values_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.values.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TopologySelectorLabelRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

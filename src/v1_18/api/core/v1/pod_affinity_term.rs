@@ -11,7 +11,89 @@ pub struct PodAffinityTerm {
 
     /// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
     pub topology_key: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodAffinityTerm  {
+    /// Set [`Self::label_selector`]
+    pub  fn label_selector_set(&mut self, label_selector: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>) -> &mut Self {
+        self.label_selector = label_selector.into(); self
+    }
+
+    pub  fn label_selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        if self.label_selector.is_none() { self.label_selector = Some(Default::default()) }
+        self.label_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::label_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn label_selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        if self.label_selector.is_none() { self.label_selector = Some(Default::default()) };
+        func(self.label_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespaces`]
+    pub  fn namespaces_set(&mut self, namespaces: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.namespaces = namespaces.into(); self
+    }
+
+    pub  fn namespaces(&mut self) -> &mut Vec<String> {
+        if self.namespaces.is_none() { self.namespaces = Some(Default::default()) }
+        self.namespaces.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespaces`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespaces_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.namespaces.is_none() { self.namespaces = Some(Default::default()) };
+        func(self.namespaces.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::namespaces`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn namespaces_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespaces.is_none() {
+            self.namespaces = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.namespaces.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::namespaces`]
+    pub  fn namespaces_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.namespaces.is_none() { self.namespaces = Some(Vec::new()); }
+         let namespaces = &mut self.namespaces.as_mut().unwrap();
+         for item in other.borrow() {
+             namespaces.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::topology_key`]
+    pub  fn topology_key_set(&mut self, topology_key: impl Into<String>) -> &mut Self {
+        self.topology_key = topology_key.into(); self
+    }
+
+    pub  fn topology_key(&mut self) -> &mut String {
+        &mut self.topology_key
+    }
+
+    /// Modify [`Self::topology_key`] with a `func`
+    pub  fn topology_key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.topology_key); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodAffinityTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

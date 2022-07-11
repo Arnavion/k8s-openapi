@@ -20,7 +20,146 @@ pub struct ReplicationControllerStatus {
 
     /// Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
     pub replicas: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ReplicationControllerStatus  {
+    /// Set [`Self::available_replicas`]
+    pub  fn available_replicas_set(&mut self, available_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.available_replicas = available_replicas.into(); self
+    }
+
+    pub  fn available_replicas(&mut self) -> &mut i32 {
+        if self.available_replicas.is_none() { self.available_replicas = Some(Default::default()) }
+        self.available_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::available_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn available_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.available_replicas.is_none() { self.available_replicas = Some(Default::default()) };
+        func(self.available_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::core::v1::ReplicationControllerCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::core::v1::ReplicationControllerCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ReplicationControllerCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ReplicationControllerCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ReplicationControllerCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::fully_labeled_replicas`]
+    pub  fn fully_labeled_replicas_set(&mut self, fully_labeled_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.fully_labeled_replicas = fully_labeled_replicas.into(); self
+    }
+
+    pub  fn fully_labeled_replicas(&mut self) -> &mut i32 {
+        if self.fully_labeled_replicas.is_none() { self.fully_labeled_replicas = Some(Default::default()) }
+        self.fully_labeled_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fully_labeled_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fully_labeled_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.fully_labeled_replicas.is_none() { self.fully_labeled_replicas = Some(Default::default()) };
+        func(self.fully_labeled_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ready_replicas`]
+    pub  fn ready_replicas_set(&mut self, ready_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.ready_replicas = ready_replicas.into(); self
+    }
+
+    pub  fn ready_replicas(&mut self) -> &mut i32 {
+        if self.ready_replicas.is_none() { self.ready_replicas = Some(Default::default()) }
+        self.ready_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ready_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ready_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.ready_replicas.is_none() { self.ready_replicas = Some(Default::default()) };
+        func(self.ready_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<i32>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        &mut self.replicas
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.replicas); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

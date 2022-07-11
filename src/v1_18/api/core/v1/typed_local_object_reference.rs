@@ -11,7 +11,62 @@ pub struct TypedLocalObjectReference {
 
     /// Name is the name of resource being referenced
     pub name: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TypedLocalObjectReference  {
+    /// Set [`Self::api_group`]
+    pub  fn api_group_set(&mut self, api_group: impl Into<Option<String>>) -> &mut Self {
+        self.api_group = api_group.into(); self
+    }
+
+    pub  fn api_group(&mut self) -> &mut String {
+        if self.api_group.is_none() { self.api_group = Some(Default::default()) }
+        self.api_group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::api_group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn api_group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.api_group.is_none() { self.api_group = Some(Default::default()) };
+        func(self.api_group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TypedLocalObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

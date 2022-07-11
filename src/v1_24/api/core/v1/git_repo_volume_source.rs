@@ -13,7 +13,66 @@ pub struct GitRepoVolumeSource {
 
     /// revision is the commit hash for the specified revision.
     pub revision: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl GitRepoVolumeSource  {
+    /// Set [`Self::directory`]
+    pub  fn directory_set(&mut self, directory: impl Into<Option<String>>) -> &mut Self {
+        self.directory = directory.into(); self
+    }
+
+    pub  fn directory(&mut self) -> &mut String {
+        if self.directory.is_none() { self.directory = Some(Default::default()) }
+        self.directory.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::directory`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn directory_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.directory.is_none() { self.directory = Some(Default::default()) };
+        func(self.directory.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::repository`]
+    pub  fn repository_set(&mut self, repository: impl Into<String>) -> &mut Self {
+        self.repository = repository.into(); self
+    }
+
+    pub  fn repository(&mut self) -> &mut String {
+        &mut self.repository
+    }
+
+    /// Modify [`Self::repository`] with a `func`
+    pub  fn repository_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.repository); self
+    }
+
+
+    /// Set [`Self::revision`]
+    pub  fn revision_set(&mut self, revision: impl Into<Option<String>>) -> &mut Self {
+        self.revision = revision.into(); self
+    }
+
+    pub  fn revision(&mut self) -> &mut String {
+        if self.revision.is_none() { self.revision = Some(Default::default()) }
+        self.revision.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::revision`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn revision_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.revision.is_none() { self.revision = Some(Default::default()) };
+        func(self.revision.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GitRepoVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

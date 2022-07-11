@@ -14,7 +14,158 @@ pub struct PersistentVolumeClaimStatus {
 
     /// Phase represents the current phase of PersistentVolumeClaim.
     pub phase: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PersistentVolumeClaimStatus  {
+    /// Set [`Self::access_modes`]
+    pub  fn access_modes_set(&mut self, access_modes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.access_modes = access_modes.into(); self
+    }
+
+    pub  fn access_modes(&mut self) -> &mut Vec<String> {
+        if self.access_modes.is_none() { self.access_modes = Some(Default::default()) }
+        self.access_modes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::access_modes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn access_modes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.access_modes.is_none() { self.access_modes = Some(Default::default()) };
+        func(self.access_modes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::access_modes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn access_modes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.access_modes.is_none() {
+            self.access_modes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.access_modes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::access_modes`]
+    pub  fn access_modes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.access_modes.is_none() { self.access_modes = Some(Vec::new()); }
+         let access_modes = &mut self.access_modes.as_mut().unwrap();
+         for item in other.borrow() {
+             access_modes.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::capacity`]
+    pub  fn capacity_set(&mut self, capacity: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.capacity = capacity.into(); self
+    }
+
+    pub  fn capacity(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.capacity.is_none() { self.capacity = Some(Default::default()) }
+        self.capacity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::capacity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn capacity_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.capacity.is_none() { self.capacity = Some(Default::default()) };
+        func(self.capacity.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::capacity`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn capacity_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.capacity.is_none() {
+            self.capacity = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.capacity.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::capacity`]
+    pub  fn capacity_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.capacity.is_none() { self.capacity = Some(std::collections::BTreeMap::new()); }
+         let capacity = &mut self.capacity.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             capacity.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::core::v1::PersistentVolumeClaimCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::core::v1::PersistentVolumeClaimCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PersistentVolumeClaimCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeClaimCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PersistentVolumeClaimCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::phase`]
+    pub  fn phase_set(&mut self, phase: impl Into<Option<String>>) -> &mut Self {
+        self.phase = phase.into(); self
+    }
+
+    pub  fn phase(&mut self) -> &mut String {
+        if self.phase.is_none() { self.phase = Some(Default::default()) }
+        self.phase.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::phase`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn phase_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.phase.is_none() { self.phase = Some(Default::default()) };
+        func(self.phase.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

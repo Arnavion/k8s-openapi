@@ -14,7 +14,89 @@ pub struct VolumeProjection {
 
     /// information about the serviceAccountToken data to project
     pub service_account_token: Option<crate::api::core::v1::ServiceAccountTokenProjection>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl VolumeProjection  {
+    /// Set [`Self::config_map`]
+    pub  fn config_map_set(&mut self, config_map: impl Into<Option<crate::api::core::v1::ConfigMapProjection>>) -> &mut Self {
+        self.config_map = config_map.into(); self
+    }
+
+    pub  fn config_map(&mut self) -> &mut crate::api::core::v1::ConfigMapProjection {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) }
+        self.config_map.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::config_map`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn config_map_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ConfigMapProjection)) -> &mut Self {
+        if self.config_map.is_none() { self.config_map = Some(Default::default()) };
+        func(self.config_map.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::downward_api`]
+    pub  fn downward_api_set(&mut self, downward_api: impl Into<Option<crate::api::core::v1::DownwardAPIProjection>>) -> &mut Self {
+        self.downward_api = downward_api.into(); self
+    }
+
+    pub  fn downward_api(&mut self) -> &mut crate::api::core::v1::DownwardAPIProjection {
+        if self.downward_api.is_none() { self.downward_api = Some(Default::default()) }
+        self.downward_api.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::downward_api`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn downward_api_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::DownwardAPIProjection)) -> &mut Self {
+        if self.downward_api.is_none() { self.downward_api = Some(Default::default()) };
+        func(self.downward_api.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret`]
+    pub  fn secret_set(&mut self, secret: impl Into<Option<crate::api::core::v1::SecretProjection>>) -> &mut Self {
+        self.secret = secret.into(); self
+    }
+
+    pub  fn secret(&mut self) -> &mut crate::api::core::v1::SecretProjection {
+        if self.secret.is_none() { self.secret = Some(Default::default()) }
+        self.secret.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretProjection)) -> &mut Self {
+        if self.secret.is_none() { self.secret = Some(Default::default()) };
+        func(self.secret.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::service_account_token`]
+    pub  fn service_account_token_set(&mut self, service_account_token: impl Into<Option<crate::api::core::v1::ServiceAccountTokenProjection>>) -> &mut Self {
+        self.service_account_token = service_account_token.into(); self
+    }
+
+    pub  fn service_account_token(&mut self) -> &mut crate::api::core::v1::ServiceAccountTokenProjection {
+        if self.service_account_token.is_none() { self.service_account_token = Some(Default::default()) }
+        self.service_account_token.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service_account_token`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_account_token_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ServiceAccountTokenProjection)) -> &mut Self {
+        if self.service_account_token.is_none() { self.service_account_token = Some(Default::default()) };
+        func(self.service_account_token.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

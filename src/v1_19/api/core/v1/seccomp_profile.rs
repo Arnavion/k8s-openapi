@@ -10,7 +10,47 @@ pub struct SeccompProfile {
     ///
     /// Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SeccompProfile  {
+    /// Set [`Self::localhost_profile`]
+    pub  fn localhost_profile_set(&mut self, localhost_profile: impl Into<Option<String>>) -> &mut Self {
+        self.localhost_profile = localhost_profile.into(); self
+    }
+
+    pub  fn localhost_profile(&mut self) -> &mut String {
+        if self.localhost_profile.is_none() { self.localhost_profile = Some(Default::default()) }
+        self.localhost_profile.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::localhost_profile`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn localhost_profile_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.localhost_profile.is_none() { self.localhost_profile = Some(Default::default()) };
+        func(self.localhost_profile.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SeccompProfile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

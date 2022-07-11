@@ -8,7 +8,51 @@ pub struct RollingUpdateDeployment {
 
     /// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
     pub max_unavailable: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl RollingUpdateDeployment  {
+    /// Set [`Self::max_surge`]
+    pub  fn max_surge_set(&mut self, max_surge: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.max_surge = max_surge.into(); self
+    }
+
+    pub  fn max_surge(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.max_surge.is_none() { self.max_surge = Some(Default::default()) }
+        self.max_surge.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_surge`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_surge_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.max_surge.is_none() { self.max_surge = Some(Default::default()) };
+        func(self.max_surge.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::max_unavailable`]
+    pub  fn max_unavailable_set(&mut self, max_unavailable: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.max_unavailable = max_unavailable.into(); self
+    }
+
+    pub  fn max_unavailable(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) }
+        self.max_unavailable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::max_unavailable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn max_unavailable_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.max_unavailable.is_none() { self.max_unavailable = Some(Default::default()) };
+        func(self.max_unavailable.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateDeployment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

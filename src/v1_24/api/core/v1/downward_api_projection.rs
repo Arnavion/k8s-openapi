@@ -5,7 +5,55 @@
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
     pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DownwardAPIProjection  {
+    /// Set [`Self::items`]
+    pub  fn items_set(&mut self, items: impl Into<Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>>) -> &mut Self {
+        self.items = items.into(); self
+    }
+
+    pub  fn items(&mut self) -> &mut Vec<crate::api::core::v1::DownwardAPIVolumeFile> {
+        if self.items.is_none() { self.items = Some(Default::default()) }
+        self.items.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::items`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn items_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::DownwardAPIVolumeFile>)) -> &mut Self {
+        if self.items.is_none() { self.items = Some(Default::default()) };
+        func(self.items.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::items`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn items_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::DownwardAPIVolumeFile)) -> &mut Self {
+        if self.items.is_none() {
+            self.items = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.items.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::items`]
+    pub  fn items_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::DownwardAPIVolumeFile]>) -> &mut Self {
+         if self.items.is_none() { self.items = Some(Vec::new()); }
+         let items = &mut self.items.as_mut().unwrap();
+         for item in other.borrow() {
+             items.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

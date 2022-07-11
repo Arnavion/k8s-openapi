@@ -56,7 +56,192 @@ pub struct CSIDriverSpec {
     ///
     /// This field is immutable.
     pub volume_lifecycle_modes: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSIDriverSpec  {
+    /// Set [`Self::attach_required`]
+    pub  fn attach_required_set(&mut self, attach_required: impl Into<Option<bool>>) -> &mut Self {
+        self.attach_required = attach_required.into(); self
+    }
+
+    pub  fn attach_required(&mut self) -> &mut bool {
+        if self.attach_required.is_none() { self.attach_required = Some(Default::default()) }
+        self.attach_required.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::attach_required`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn attach_required_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.attach_required.is_none() { self.attach_required = Some(Default::default()) };
+        func(self.attach_required.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::fs_group_policy`]
+    pub  fn fs_group_policy_set(&mut self, fs_group_policy: impl Into<Option<String>>) -> &mut Self {
+        self.fs_group_policy = fs_group_policy.into(); self
+    }
+
+    pub  fn fs_group_policy(&mut self) -> &mut String {
+        if self.fs_group_policy.is_none() { self.fs_group_policy = Some(Default::default()) }
+        self.fs_group_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_group_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_group_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_group_policy.is_none() { self.fs_group_policy = Some(Default::default()) };
+        func(self.fs_group_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_info_on_mount`]
+    pub  fn pod_info_on_mount_set(&mut self, pod_info_on_mount: impl Into<Option<bool>>) -> &mut Self {
+        self.pod_info_on_mount = pod_info_on_mount.into(); self
+    }
+
+    pub  fn pod_info_on_mount(&mut self) -> &mut bool {
+        if self.pod_info_on_mount.is_none() { self.pod_info_on_mount = Some(Default::default()) }
+        self.pod_info_on_mount.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_info_on_mount`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_info_on_mount_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.pod_info_on_mount.is_none() { self.pod_info_on_mount = Some(Default::default()) };
+        func(self.pod_info_on_mount.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::requires_republish`]
+    pub  fn requires_republish_set(&mut self, requires_republish: impl Into<Option<bool>>) -> &mut Self {
+        self.requires_republish = requires_republish.into(); self
+    }
+
+    pub  fn requires_republish(&mut self) -> &mut bool {
+        if self.requires_republish.is_none() { self.requires_republish = Some(Default::default()) }
+        self.requires_republish.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::requires_republish`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn requires_republish_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.requires_republish.is_none() { self.requires_republish = Some(Default::default()) };
+        func(self.requires_republish.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::storage_capacity`]
+    pub  fn storage_capacity_set(&mut self, storage_capacity: impl Into<Option<bool>>) -> &mut Self {
+        self.storage_capacity = storage_capacity.into(); self
+    }
+
+    pub  fn storage_capacity(&mut self) -> &mut bool {
+        if self.storage_capacity.is_none() { self.storage_capacity = Some(Default::default()) }
+        self.storage_capacity.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::storage_capacity`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn storage_capacity_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.storage_capacity.is_none() { self.storage_capacity = Some(Default::default()) };
+        func(self.storage_capacity.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::token_requests`]
+    pub  fn token_requests_set(&mut self, token_requests: impl Into<Option<Vec<crate::api::storage::v1::TokenRequest>>>) -> &mut Self {
+        self.token_requests = token_requests.into(); self
+    }
+
+    pub  fn token_requests(&mut self) -> &mut Vec<crate::api::storage::v1::TokenRequest> {
+        if self.token_requests.is_none() { self.token_requests = Some(Default::default()) }
+        self.token_requests.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::token_requests`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn token_requests_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::storage::v1::TokenRequest>)) -> &mut Self {
+        if self.token_requests.is_none() { self.token_requests = Some(Default::default()) };
+        func(self.token_requests.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::token_requests`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn token_requests_push_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1::TokenRequest)) -> &mut Self {
+        if self.token_requests.is_none() {
+            self.token_requests = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.token_requests.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::token_requests`]
+    pub  fn token_requests_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::storage::v1::TokenRequest]>) -> &mut Self {
+         if self.token_requests.is_none() { self.token_requests = Some(Vec::new()); }
+         let token_requests = &mut self.token_requests.as_mut().unwrap();
+         for item in other.borrow() {
+             token_requests.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::volume_lifecycle_modes`]
+    pub  fn volume_lifecycle_modes_set(&mut self, volume_lifecycle_modes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.volume_lifecycle_modes = volume_lifecycle_modes.into(); self
+    }
+
+    pub  fn volume_lifecycle_modes(&mut self) -> &mut Vec<String> {
+        if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Default::default()) }
+        self.volume_lifecycle_modes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_lifecycle_modes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_lifecycle_modes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Default::default()) };
+        func(self.volume_lifecycle_modes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_lifecycle_modes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_lifecycle_modes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_lifecycle_modes.is_none() {
+            self.volume_lifecycle_modes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_lifecycle_modes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_lifecycle_modes`]
+    pub  fn volume_lifecycle_modes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.volume_lifecycle_modes.is_none() { self.volume_lifecycle_modes = Some(Vec::new()); }
+         let volume_lifecycle_modes = &mut self.volume_lifecycle_modes.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_lifecycle_modes.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

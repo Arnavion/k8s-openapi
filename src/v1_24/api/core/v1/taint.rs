@@ -15,7 +15,68 @@ pub struct Taint {
 
     /// The taint value corresponding to the taint key.
     pub value: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Taint  {
+    /// Set [`Self::effect`]
+    pub  fn effect_set(&mut self, effect: impl Into<String>) -> &mut Self {
+        self.effect = effect.into(); self
+    }
+
+    pub  fn effect(&mut self) -> &mut String {
+        &mut self.effect
+    }
+
+    /// Modify [`Self::effect`] with a `func`
+    pub  fn effect_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.effect); self
+    }
+
+
+    /// Set [`Self::key`]
+    pub  fn key_set(&mut self, key: impl Into<String>) -> &mut Self {
+        self.key = key.into(); self
+    }
+
+    pub  fn key(&mut self) -> &mut String {
+        &mut self.key
+    }
+
+    /// Modify [`Self::key`] with a `func`
+    pub  fn key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.key); self
+    }
+
+
+    /// Set [`Self::time_added`]
+    pub  fn time_added_set(&mut self, time_added: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.time_added = time_added.into(); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<Option<String>>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut String {
+        if self.value.is_none() { self.value = Some(Default::default()) }
+        self.value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.value.is_none() { self.value = Some(Default::default()) };
+        func(self.value.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Taint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

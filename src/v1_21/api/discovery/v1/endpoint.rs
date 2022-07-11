@@ -26,7 +26,202 @@ pub struct Endpoint {
 
     /// zone is the name of the Zone this endpoint exists in.
     pub zone: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Endpoint  {
+    /// Set [`Self::addresses`]
+    pub  fn addresses_set(&mut self, addresses: impl Into<Vec<String>>) -> &mut Self {
+        self.addresses = addresses.into(); self
+    }
+
+    pub  fn addresses(&mut self) -> &mut Vec<String> {
+        &mut self.addresses
+    }
+
+    /// Modify [`Self::addresses`] with a `func`
+    pub  fn addresses_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        func(&mut self.addresses); self
+    }
+
+    /// Push new element to [`Self::addresses`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn addresses_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.addresses.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::addresses`]
+    pub  fn addresses_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         for item in other.borrow() {
+             self.addresses.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<crate::api::discovery::v1::EndpointConditions>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut crate::api::discovery::v1::EndpointConditions {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1::EndpointConditions)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::deprecated_topology`]
+    pub  fn deprecated_topology_set(&mut self, deprecated_topology: impl Into<Option<std::collections::BTreeMap<String, String>>>) -> &mut Self {
+        self.deprecated_topology = deprecated_topology.into(); self
+    }
+
+    pub  fn deprecated_topology(&mut self) -> &mut std::collections::BTreeMap<String, String> {
+        if self.deprecated_topology.is_none() { self.deprecated_topology = Some(Default::default()) }
+        self.deprecated_topology.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::deprecated_topology`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn deprecated_topology_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, String>)) -> &mut Self {
+        if self.deprecated_topology.is_none() { self.deprecated_topology = Some(Default::default()) };
+        func(self.deprecated_topology.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::deprecated_topology`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn deprecated_topology_insert_with(&mut self, name: &str, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.deprecated_topology.is_none() {
+            self.deprecated_topology = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.deprecated_topology.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::deprecated_topology`]
+    pub  fn deprecated_topology_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, String>>) -> &mut Self {
+         if self.deprecated_topology.is_none() { self.deprecated_topology = Some(std::collections::BTreeMap::new()); }
+         let deprecated_topology = &mut self.deprecated_topology.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             deprecated_topology.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::hints`]
+    pub  fn hints_set(&mut self, hints: impl Into<Option<crate::api::discovery::v1::EndpointHints>>) -> &mut Self {
+        self.hints = hints.into(); self
+    }
+
+    pub  fn hints(&mut self) -> &mut crate::api::discovery::v1::EndpointHints {
+        if self.hints.is_none() { self.hints = Some(Default::default()) }
+        self.hints.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hints`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hints_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1::EndpointHints)) -> &mut Self {
+        if self.hints.is_none() { self.hints = Some(Default::default()) };
+        func(self.hints.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::hostname`]
+    pub  fn hostname_set(&mut self, hostname: impl Into<Option<String>>) -> &mut Self {
+        self.hostname = hostname.into(); self
+    }
+
+    pub  fn hostname(&mut self) -> &mut String {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) }
+        self.hostname.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hostname`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hostname_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.hostname.is_none() { self.hostname = Some(Default::default()) };
+        func(self.hostname.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::node_name`]
+    pub  fn node_name_set(&mut self, node_name: impl Into<Option<String>>) -> &mut Self {
+        self.node_name = node_name.into(); self
+    }
+
+    pub  fn node_name(&mut self) -> &mut String {
+        if self.node_name.is_none() { self.node_name = Some(Default::default()) }
+        self.node_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.node_name.is_none() { self.node_name = Some(Default::default()) };
+        func(self.node_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_ref`]
+    pub  fn target_ref_set(&mut self, target_ref: impl Into<Option<crate::api::core::v1::ObjectReference>>) -> &mut Self {
+        self.target_ref = target_ref.into(); self
+    }
+
+    pub  fn target_ref(&mut self) -> &mut crate::api::core::v1::ObjectReference {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) }
+        self.target_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.target_ref.is_none() { self.target_ref = Some(Default::default()) };
+        func(self.target_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::zone`]
+    pub  fn zone_set(&mut self, zone: impl Into<Option<String>>) -> &mut Self {
+        self.zone = zone.into(); self
+    }
+
+    pub  fn zone(&mut self) -> &mut String {
+        if self.zone.is_none() { self.zone = Some(Default::default()) }
+        self.zone.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::zone`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn zone_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.zone.is_none() { self.zone = Some(Default::default()) };
+        func(self.zone.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Endpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,67 @@ pub struct CronJobStatus {
 
     /// Information when was the last time the job successfully completed.
     pub last_successful_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CronJobStatus  {
+    /// Set [`Self::active`]
+    pub  fn active_set(&mut self, active: impl Into<Option<Vec<crate::api::core::v1::ObjectReference>>>) -> &mut Self {
+        self.active = active.into(); self
+    }
+
+    pub  fn active(&mut self) -> &mut Vec<crate::api::core::v1::ObjectReference> {
+        if self.active.is_none() { self.active = Some(Default::default()) }
+        self.active.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::active`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn active_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ObjectReference>)) -> &mut Self {
+        if self.active.is_none() { self.active = Some(Default::default()) };
+        func(self.active.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::active`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn active_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.active.is_none() {
+            self.active = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.active.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::active`]
+    pub  fn active_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ObjectReference]>) -> &mut Self {
+         if self.active.is_none() { self.active = Some(Vec::new()); }
+         let active = &mut self.active.as_mut().unwrap();
+         for item in other.borrow() {
+             active.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::last_schedule_time`]
+    pub  fn last_schedule_time_set(&mut self, last_schedule_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.last_schedule_time = last_schedule_time.into(); self
+    }
+
+
+    /// Set [`Self::last_successful_time`]
+    pub  fn last_successful_time_set(&mut self, last_successful_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.last_successful_time = last_successful_time.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CronJobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

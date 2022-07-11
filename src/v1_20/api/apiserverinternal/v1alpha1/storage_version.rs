@@ -12,7 +12,58 @@ pub struct StorageVersion {
 
     /// API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.
     pub status: crate::api::apiserverinternal::v1alpha1::StorageVersionStatus,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StorageVersion  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::apiserverinternal::v1alpha1::StorageVersionSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::apiserverinternal::v1alpha1::StorageVersionSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::apiserverinternal::v1alpha1::StorageVersionSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+    /// Set [`Self::status`]
+    pub  fn status_set(&mut self, status: impl Into<crate::api::apiserverinternal::v1alpha1::StorageVersionStatus>) -> &mut Self {
+        self.status = status.into(); self
+    }
+
+    pub  fn status(&mut self) -> &mut crate::api::apiserverinternal::v1alpha1::StorageVersionStatus {
+        &mut self.status
+    }
+
+    /// Modify [`Self::status`] with a `func`
+    pub  fn status_with(&mut self, func: impl FnOnce(&mut crate::api::apiserverinternal::v1alpha1::StorageVersionStatus)) -> &mut Self {
+        func(&mut self.status); self
+    }
+
+
+}
+
 
 // Begin internal.apiserver.k8s.io/v1alpha1/StorageVersion
 

@@ -8,7 +8,97 @@ pub struct ResourceQuotaStatus {
 
     /// Used is the current observed total usage of the resource in the namespace.
     pub used: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceQuotaStatus  {
+    /// Set [`Self::hard`]
+    pub  fn hard_set(&mut self, hard: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.hard = hard.into(); self
+    }
+
+    pub  fn hard(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.hard.is_none() { self.hard = Some(Default::default()) }
+        self.hard.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hard`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hard_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.hard.is_none() { self.hard = Some(Default::default()) };
+        func(self.hard.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::hard`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn hard_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.hard.is_none() {
+            self.hard = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.hard.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::hard`]
+    pub  fn hard_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.hard.is_none() { self.hard = Some(std::collections::BTreeMap::new()); }
+         let hard = &mut self.hard.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             hard.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::used`]
+    pub  fn used_set(&mut self, used: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.used = used.into(); self
+    }
+
+    pub  fn used(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.used.is_none() { self.used = Some(Default::default()) }
+        self.used.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::used`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn used_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.used.is_none() { self.used = Some(Default::default()) };
+        func(self.used.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::used`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn used_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.used.is_none() {
+            self.used = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.used.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::used`]
+    pub  fn used_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.used.is_none() { self.used = Some(std::collections::BTreeMap::new()); }
+         let used = &mut self.used.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             used.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

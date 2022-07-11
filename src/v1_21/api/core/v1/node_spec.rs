@@ -23,7 +23,192 @@ pub struct NodeSpec {
 
     /// Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration
     pub unschedulable: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NodeSpec  {
+    /// Set [`Self::config_source`]
+    pub  fn config_source_set(&mut self, config_source: impl Into<Option<crate::api::core::v1::NodeConfigSource>>) -> &mut Self {
+        self.config_source = config_source.into(); self
+    }
+
+    pub  fn config_source(&mut self) -> &mut crate::api::core::v1::NodeConfigSource {
+        if self.config_source.is_none() { self.config_source = Some(Default::default()) }
+        self.config_source.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::config_source`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn config_source_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::NodeConfigSource)) -> &mut Self {
+        if self.config_source.is_none() { self.config_source = Some(Default::default()) };
+        func(self.config_source.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::external_id`]
+    pub  fn external_id_set(&mut self, external_id: impl Into<Option<String>>) -> &mut Self {
+        self.external_id = external_id.into(); self
+    }
+
+    pub  fn external_id(&mut self) -> &mut String {
+        if self.external_id.is_none() { self.external_id = Some(Default::default()) }
+        self.external_id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::external_id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn external_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.external_id.is_none() { self.external_id = Some(Default::default()) };
+        func(self.external_id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_cidr`]
+    pub  fn pod_cidr_set(&mut self, pod_cidr: impl Into<Option<String>>) -> &mut Self {
+        self.pod_cidr = pod_cidr.into(); self
+    }
+
+    pub  fn pod_cidr(&mut self) -> &mut String {
+        if self.pod_cidr.is_none() { self.pod_cidr = Some(Default::default()) }
+        self.pod_cidr.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_cidr`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_cidr_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.pod_cidr.is_none() { self.pod_cidr = Some(Default::default()) };
+        func(self.pod_cidr.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_cidrs`]
+    pub  fn pod_cidrs_set(&mut self, pod_cidrs: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.pod_cidrs = pod_cidrs.into(); self
+    }
+
+    pub  fn pod_cidrs(&mut self) -> &mut Vec<String> {
+        if self.pod_cidrs.is_none() { self.pod_cidrs = Some(Default::default()) }
+        self.pod_cidrs.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_cidrs`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_cidrs_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.pod_cidrs.is_none() { self.pod_cidrs = Some(Default::default()) };
+        func(self.pod_cidrs.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::pod_cidrs`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn pod_cidrs_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.pod_cidrs.is_none() {
+            self.pod_cidrs = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.pod_cidrs.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::pod_cidrs`]
+    pub  fn pod_cidrs_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.pod_cidrs.is_none() { self.pod_cidrs = Some(Vec::new()); }
+         let pod_cidrs = &mut self.pod_cidrs.as_mut().unwrap();
+         for item in other.borrow() {
+             pod_cidrs.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::provider_id`]
+    pub  fn provider_id_set(&mut self, provider_id: impl Into<Option<String>>) -> &mut Self {
+        self.provider_id = provider_id.into(); self
+    }
+
+    pub  fn provider_id(&mut self) -> &mut String {
+        if self.provider_id.is_none() { self.provider_id = Some(Default::default()) }
+        self.provider_id.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::provider_id`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn provider_id_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.provider_id.is_none() { self.provider_id = Some(Default::default()) };
+        func(self.provider_id.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::taints`]
+    pub  fn taints_set(&mut self, taints: impl Into<Option<Vec<crate::api::core::v1::Taint>>>) -> &mut Self {
+        self.taints = taints.into(); self
+    }
+
+    pub  fn taints(&mut self) -> &mut Vec<crate::api::core::v1::Taint> {
+        if self.taints.is_none() { self.taints = Some(Default::default()) }
+        self.taints.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::taints`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn taints_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::Taint>)) -> &mut Self {
+        if self.taints.is_none() { self.taints = Some(Default::default()) };
+        func(self.taints.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::taints`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn taints_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::Taint)) -> &mut Self {
+        if self.taints.is_none() {
+            self.taints = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.taints.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::taints`]
+    pub  fn taints_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::Taint]>) -> &mut Self {
+         if self.taints.is_none() { self.taints = Some(Vec::new()); }
+         let taints = &mut self.taints.as_mut().unwrap();
+         for item in other.borrow() {
+             taints.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::unschedulable`]
+    pub  fn unschedulable_set(&mut self, unschedulable: impl Into<Option<bool>>) -> &mut Self {
+        self.unschedulable = unschedulable.into(); self
+    }
+
+    pub  fn unschedulable(&mut self) -> &mut bool {
+        if self.unschedulable.is_none() { self.unschedulable = Some(Default::default()) }
+        self.unschedulable.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::unschedulable`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn unschedulable_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.unschedulable.is_none() { self.unschedulable = Some(Default::default()) };
+        func(self.unschedulable.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

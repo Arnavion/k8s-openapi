@@ -5,7 +5,55 @@
 pub struct LoadBalancerStatus {
     /// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
     pub ingress: Option<Vec<crate::api::core::v1::LoadBalancerIngress>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LoadBalancerStatus  {
+    /// Set [`Self::ingress`]
+    pub  fn ingress_set(&mut self, ingress: impl Into<Option<Vec<crate::api::core::v1::LoadBalancerIngress>>>) -> &mut Self {
+        self.ingress = ingress.into(); self
+    }
+
+    pub  fn ingress(&mut self) -> &mut Vec<crate::api::core::v1::LoadBalancerIngress> {
+        if self.ingress.is_none() { self.ingress = Some(Default::default()) }
+        self.ingress.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ingress`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ingress_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::LoadBalancerIngress>)) -> &mut Self {
+        if self.ingress.is_none() { self.ingress = Some(Default::default()) };
+        func(self.ingress.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::ingress`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ingress_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LoadBalancerIngress)) -> &mut Self {
+        if self.ingress.is_none() {
+            self.ingress = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.ingress.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::ingress`]
+    pub  fn ingress_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::LoadBalancerIngress]>) -> &mut Self {
+         if self.ingress.is_none() { self.ingress = Some(Vec::new()); }
+         let ingress = &mut self.ingress.as_mut().unwrap();
+         for item in other.borrow() {
+             ingress.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

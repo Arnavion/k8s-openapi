@@ -14,7 +14,131 @@ pub struct ServiceAccount {
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
     pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServiceAccount  {
+    /// Set [`Self::automount_service_account_token`]
+    pub  fn automount_service_account_token_set(&mut self, automount_service_account_token: impl Into<Option<bool>>) -> &mut Self {
+        self.automount_service_account_token = automount_service_account_token.into(); self
+    }
+
+    pub  fn automount_service_account_token(&mut self) -> &mut bool {
+        if self.automount_service_account_token.is_none() { self.automount_service_account_token = Some(Default::default()) }
+        self.automount_service_account_token.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::automount_service_account_token`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn automount_service_account_token_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.automount_service_account_token.is_none() { self.automount_service_account_token = Some(Default::default()) };
+        func(self.automount_service_account_token.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::image_pull_secrets`]
+    pub  fn image_pull_secrets_set(&mut self, image_pull_secrets: impl Into<Option<Vec<crate::api::core::v1::LocalObjectReference>>>) -> &mut Self {
+        self.image_pull_secrets = image_pull_secrets.into(); self
+    }
+
+    pub  fn image_pull_secrets(&mut self) -> &mut Vec<crate::api::core::v1::LocalObjectReference> {
+        if self.image_pull_secrets.is_none() { self.image_pull_secrets = Some(Default::default()) }
+        self.image_pull_secrets.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::image_pull_secrets`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn image_pull_secrets_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::LocalObjectReference>)) -> &mut Self {
+        if self.image_pull_secrets.is_none() { self.image_pull_secrets = Some(Default::default()) };
+        func(self.image_pull_secrets.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::image_pull_secrets`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn image_pull_secrets_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LocalObjectReference)) -> &mut Self {
+        if self.image_pull_secrets.is_none() {
+            self.image_pull_secrets = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.image_pull_secrets.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::image_pull_secrets`]
+    pub  fn image_pull_secrets_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::LocalObjectReference]>) -> &mut Self {
+         if self.image_pull_secrets.is_none() { self.image_pull_secrets = Some(Vec::new()); }
+         let image_pull_secrets = &mut self.image_pull_secrets.as_mut().unwrap();
+         for item in other.borrow() {
+             image_pull_secrets.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::secrets`]
+    pub  fn secrets_set(&mut self, secrets: impl Into<Option<Vec<crate::api::core::v1::ObjectReference>>>) -> &mut Self {
+        self.secrets = secrets.into(); self
+    }
+
+    pub  fn secrets(&mut self) -> &mut Vec<crate::api::core::v1::ObjectReference> {
+        if self.secrets.is_none() { self.secrets = Some(Default::default()) }
+        self.secrets.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secrets`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secrets_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::ObjectReference>)) -> &mut Self {
+        if self.secrets.is_none() { self.secrets = Some(Default::default()) };
+        func(self.secrets.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::secrets`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn secrets_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectReference)) -> &mut Self {
+        if self.secrets.is_none() {
+            self.secrets = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.secrets.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::secrets`]
+    pub  fn secrets_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::ObjectReference]>) -> &mut Self {
+         if self.secrets.is_none() { self.secrets = Some(Vec::new()); }
+         let secrets = &mut self.secrets.as_mut().unwrap();
+         for item in other.borrow() {
+             secrets.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 // Begin /v1/ServiceAccount
 

@@ -14,7 +14,85 @@ pub struct DownwardAPIVolumeFile {
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
     pub resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DownwardAPIVolumeFile  {
+    /// Set [`Self::field_ref`]
+    pub  fn field_ref_set(&mut self, field_ref: impl Into<Option<crate::api::core::v1::ObjectFieldSelector>>) -> &mut Self {
+        self.field_ref = field_ref.into(); self
+    }
+
+    pub  fn field_ref(&mut self) -> &mut crate::api::core::v1::ObjectFieldSelector {
+        if self.field_ref.is_none() { self.field_ref = Some(Default::default()) }
+        self.field_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::field_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn field_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ObjectFieldSelector)) -> &mut Self {
+        if self.field_ref.is_none() { self.field_ref = Some(Default::default()) };
+        func(self.field_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::mode`]
+    pub  fn mode_set(&mut self, mode: impl Into<Option<i32>>) -> &mut Self {
+        self.mode = mode.into(); self
+    }
+
+    pub  fn mode(&mut self) -> &mut i32 {
+        if self.mode.is_none() { self.mode = Some(Default::default()) }
+        self.mode.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::mode`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn mode_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.mode.is_none() { self.mode = Some(Default::default()) };
+        func(self.mode.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::path`]
+    pub  fn path_set(&mut self, path: impl Into<String>) -> &mut Self {
+        self.path = path.into(); self
+    }
+
+    pub  fn path(&mut self) -> &mut String {
+        &mut self.path
+    }
+
+    /// Modify [`Self::path`] with a `func`
+    pub  fn path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.path); self
+    }
+
+
+    /// Set [`Self::resource_field_ref`]
+    pub  fn resource_field_ref_set(&mut self, resource_field_ref: impl Into<Option<crate::api::core::v1::ResourceFieldSelector>>) -> &mut Self {
+        self.resource_field_ref = resource_field_ref.into(); self
+    }
+
+    pub  fn resource_field_ref(&mut self) -> &mut crate::api::core::v1::ResourceFieldSelector {
+        if self.resource_field_ref.is_none() { self.resource_field_ref = Some(Default::default()) }
+        self.resource_field_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_field_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_field_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ResourceFieldSelector)) -> &mut Self {
+        if self.resource_field_ref.is_none() { self.resource_field_ref = Some(Default::default()) };
+        func(self.resource_field_ref.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeFile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

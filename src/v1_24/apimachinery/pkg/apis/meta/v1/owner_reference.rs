@@ -20,7 +20,111 @@ pub struct OwnerReference {
 
     /// UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl OwnerReference  {
+    /// Set [`Self::api_version`]
+    pub  fn api_version_set(&mut self, api_version: impl Into<String>) -> &mut Self {
+        self.api_version = api_version.into(); self
+    }
+
+    pub  fn api_version(&mut self) -> &mut String {
+        &mut self.api_version
+    }
+
+    /// Modify [`Self::api_version`] with a `func`
+    pub  fn api_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.api_version); self
+    }
+
+
+    /// Set [`Self::block_owner_deletion`]
+    pub  fn block_owner_deletion_set(&mut self, block_owner_deletion: impl Into<Option<bool>>) -> &mut Self {
+        self.block_owner_deletion = block_owner_deletion.into(); self
+    }
+
+    pub  fn block_owner_deletion(&mut self) -> &mut bool {
+        if self.block_owner_deletion.is_none() { self.block_owner_deletion = Some(Default::default()) }
+        self.block_owner_deletion.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::block_owner_deletion`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn block_owner_deletion_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.block_owner_deletion.is_none() { self.block_owner_deletion = Some(Default::default()) };
+        func(self.block_owner_deletion.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::controller`]
+    pub  fn controller_set(&mut self, controller: impl Into<Option<bool>>) -> &mut Self {
+        self.controller = controller.into(); self
+    }
+
+    pub  fn controller(&mut self) -> &mut bool {
+        if self.controller.is_none() { self.controller = Some(Default::default()) }
+        self.controller.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::controller`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn controller_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.controller.is_none() { self.controller = Some(Default::default()) };
+        func(self.controller.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<String>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        &mut self.uid
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.uid); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for OwnerReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

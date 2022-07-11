@@ -7,7 +7,61 @@ pub struct EphemeralContainers {
     pub ephemeral_containers: Vec<crate::api::core::v1::EphemeralContainer>,
 
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EphemeralContainers  {
+    /// Set [`Self::ephemeral_containers`]
+    pub  fn ephemeral_containers_set(&mut self, ephemeral_containers: impl Into<Vec<crate::api::core::v1::EphemeralContainer>>) -> &mut Self {
+        self.ephemeral_containers = ephemeral_containers.into(); self
+    }
+
+    pub  fn ephemeral_containers(&mut self) -> &mut Vec<crate::api::core::v1::EphemeralContainer> {
+        &mut self.ephemeral_containers
+    }
+
+    /// Modify [`Self::ephemeral_containers`] with a `func`
+    pub  fn ephemeral_containers_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::EphemeralContainer>)) -> &mut Self {
+        func(&mut self.ephemeral_containers); self
+    }
+
+    /// Push new element to [`Self::ephemeral_containers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn ephemeral_containers_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EphemeralContainer)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.ephemeral_containers.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::ephemeral_containers`]
+    pub  fn ephemeral_containers_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::EphemeralContainer]>) -> &mut Self {
+         for item in other.borrow() {
+             self.ephemeral_containers.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+}
+
 
 // Begin /v1/EphemeralContainers
 

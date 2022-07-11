@@ -17,7 +17,87 @@ pub struct HorizontalPodAutoscalerStatus {
 
     /// most recent generation observed by this autoscaler.
     pub observed_generation: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HorizontalPodAutoscalerStatus  {
+    /// Set [`Self::current_cpu_utilization_percentage`]
+    pub  fn current_cpu_utilization_percentage_set(&mut self, current_cpu_utilization_percentage: impl Into<Option<i32>>) -> &mut Self {
+        self.current_cpu_utilization_percentage = current_cpu_utilization_percentage.into(); self
+    }
+
+    pub  fn current_cpu_utilization_percentage(&mut self) -> &mut i32 {
+        if self.current_cpu_utilization_percentage.is_none() { self.current_cpu_utilization_percentage = Some(Default::default()) }
+        self.current_cpu_utilization_percentage.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::current_cpu_utilization_percentage`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn current_cpu_utilization_percentage_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.current_cpu_utilization_percentage.is_none() { self.current_cpu_utilization_percentage = Some(Default::default()) };
+        func(self.current_cpu_utilization_percentage.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::current_replicas`]
+    pub  fn current_replicas_set(&mut self, current_replicas: impl Into<i32>) -> &mut Self {
+        self.current_replicas = current_replicas.into(); self
+    }
+
+    pub  fn current_replicas(&mut self) -> &mut i32 {
+        &mut self.current_replicas
+    }
+
+    /// Modify [`Self::current_replicas`] with a `func`
+    pub  fn current_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.current_replicas); self
+    }
+
+
+    /// Set [`Self::desired_replicas`]
+    pub  fn desired_replicas_set(&mut self, desired_replicas: impl Into<i32>) -> &mut Self {
+        self.desired_replicas = desired_replicas.into(); self
+    }
+
+    pub  fn desired_replicas(&mut self) -> &mut i32 {
+        &mut self.desired_replicas
+    }
+
+    /// Modify [`Self::desired_replicas`] with a `func`
+    pub  fn desired_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.desired_replicas); self
+    }
+
+
+    /// Set [`Self::last_scale_time`]
+    pub  fn last_scale_time_set(&mut self, last_scale_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.last_scale_time = last_scale_time.into(); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

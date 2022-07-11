@@ -5,7 +5,28 @@
 pub struct DaemonEndpoint {
     /// Port number of the given endpoint.
     pub port: i32,
+
 }
+
+#[cfg(feature = "dsl")]
+impl DaemonEndpoint  {
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<i32>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonEndpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -31,7 +31,162 @@ pub struct JobStatus {
     ///
     /// This field is alpha-level. The job controller only makes use of this field when the feature gate PodTrackingWithFinalizers is enabled. Old jobs might not be tracked using this field, in which case the field remains null.
     pub uncounted_terminated_pods: Option<crate::api::batch::v1::UncountedTerminatedPods>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl JobStatus  {
+    /// Set [`Self::active`]
+    pub  fn active_set(&mut self, active: impl Into<Option<i32>>) -> &mut Self {
+        self.active = active.into(); self
+    }
+
+    pub  fn active(&mut self) -> &mut i32 {
+        if self.active.is_none() { self.active = Some(Default::default()) }
+        self.active.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::active`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn active_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.active.is_none() { self.active = Some(Default::default()) };
+        func(self.active.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::completed_indexes`]
+    pub  fn completed_indexes_set(&mut self, completed_indexes: impl Into<Option<String>>) -> &mut Self {
+        self.completed_indexes = completed_indexes.into(); self
+    }
+
+    pub  fn completed_indexes(&mut self) -> &mut String {
+        if self.completed_indexes.is_none() { self.completed_indexes = Some(Default::default()) }
+        self.completed_indexes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::completed_indexes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn completed_indexes_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.completed_indexes.is_none() { self.completed_indexes = Some(Default::default()) };
+        func(self.completed_indexes.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::completion_time`]
+    pub  fn completion_time_set(&mut self, completion_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.completion_time = completion_time.into(); self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::batch::v1::JobCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::batch::v1::JobCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::batch::v1::JobCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::batch::v1::JobCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::batch::v1::JobCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::failed`]
+    pub  fn failed_set(&mut self, failed: impl Into<Option<i32>>) -> &mut Self {
+        self.failed = failed.into(); self
+    }
+
+    pub  fn failed(&mut self) -> &mut i32 {
+        if self.failed.is_none() { self.failed = Some(Default::default()) }
+        self.failed.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::failed`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn failed_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.failed.is_none() { self.failed = Some(Default::default()) };
+        func(self.failed.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::start_time`]
+    pub  fn start_time_set(&mut self, start_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.start_time = start_time.into(); self
+    }
+
+
+    /// Set [`Self::succeeded`]
+    pub  fn succeeded_set(&mut self, succeeded: impl Into<Option<i32>>) -> &mut Self {
+        self.succeeded = succeeded.into(); self
+    }
+
+    pub  fn succeeded(&mut self) -> &mut i32 {
+        if self.succeeded.is_none() { self.succeeded = Some(Default::default()) }
+        self.succeeded.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::succeeded`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn succeeded_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.succeeded.is_none() { self.succeeded = Some(Default::default()) };
+        func(self.succeeded.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uncounted_terminated_pods`]
+    pub  fn uncounted_terminated_pods_set(&mut self, uncounted_terminated_pods: impl Into<Option<crate::api::batch::v1::UncountedTerminatedPods>>) -> &mut Self {
+        self.uncounted_terminated_pods = uncounted_terminated_pods.into(); self
+    }
+
+    pub  fn uncounted_terminated_pods(&mut self) -> &mut crate::api::batch::v1::UncountedTerminatedPods {
+        if self.uncounted_terminated_pods.is_none() { self.uncounted_terminated_pods = Some(Default::default()) }
+        self.uncounted_terminated_pods.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uncounted_terminated_pods`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uncounted_terminated_pods_with(&mut self, func: impl FnOnce(&mut crate::api::batch::v1::UncountedTerminatedPods)) -> &mut Self {
+        if self.uncounted_terminated_pods.is_none() { self.uncounted_terminated_pods = Some(Default::default()) };
+        func(self.uncounted_terminated_pods.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

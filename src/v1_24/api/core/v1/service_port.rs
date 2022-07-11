@@ -21,7 +21,123 @@ pub struct ServicePort {
 
     /// Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
     pub target_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServicePort  {
+    /// Set [`Self::app_protocol`]
+    pub  fn app_protocol_set(&mut self, app_protocol: impl Into<Option<String>>) -> &mut Self {
+        self.app_protocol = app_protocol.into(); self
+    }
+
+    pub  fn app_protocol(&mut self) -> &mut String {
+        if self.app_protocol.is_none() { self.app_protocol = Some(Default::default()) }
+        self.app_protocol.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::app_protocol`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn app_protocol_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.app_protocol.is_none() { self.app_protocol = Some(Default::default()) };
+        func(self.app_protocol.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::node_port`]
+    pub  fn node_port_set(&mut self, node_port: impl Into<Option<i32>>) -> &mut Self {
+        self.node_port = node_port.into(); self
+    }
+
+    pub  fn node_port(&mut self) -> &mut i32 {
+        if self.node_port.is_none() { self.node_port = Some(Default::default()) }
+        self.node_port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::node_port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn node_port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.node_port.is_none() { self.node_port = Some(Default::default()) };
+        func(self.node_port.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::port`]
+    pub  fn port_set(&mut self, port: impl Into<i32>) -> &mut Self {
+        self.port = port.into(); self
+    }
+
+    pub  fn port(&mut self) -> &mut i32 {
+        &mut self.port
+    }
+
+    /// Modify [`Self::port`] with a `func`
+    pub  fn port_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.port); self
+    }
+
+
+    /// Set [`Self::protocol`]
+    pub  fn protocol_set(&mut self, protocol: impl Into<Option<String>>) -> &mut Self {
+        self.protocol = protocol.into(); self
+    }
+
+    pub  fn protocol(&mut self) -> &mut String {
+        if self.protocol.is_none() { self.protocol = Some(Default::default()) }
+        self.protocol.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::protocol`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn protocol_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.protocol.is_none() { self.protocol = Some(Default::default()) };
+        func(self.protocol.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::target_port`]
+    pub  fn target_port_set(&mut self, target_port: impl Into<Option<crate::apimachinery::pkg::util::intstr::IntOrString>>) -> &mut Self {
+        self.target_port = target_port.into(); self
+    }
+
+    pub  fn target_port(&mut self) -> &mut crate::apimachinery::pkg::util::intstr::IntOrString {
+        if self.target_port.is_none() { self.target_port = Some(Default::default()) }
+        self.target_port.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::target_port`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn target_port_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::util::intstr::IntOrString)) -> &mut Self {
+        if self.target_port.is_none() { self.target_port = Some(Default::default()) };
+        func(self.target_port.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServicePort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

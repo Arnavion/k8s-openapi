@@ -11,7 +11,70 @@ pub struct EnvFromSource {
 
     /// The Secret to select from
     pub secret_ref: Option<crate::api::core::v1::SecretEnvSource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EnvFromSource  {
+    /// Set [`Self::config_map_ref`]
+    pub  fn config_map_ref_set(&mut self, config_map_ref: impl Into<Option<crate::api::core::v1::ConfigMapEnvSource>>) -> &mut Self {
+        self.config_map_ref = config_map_ref.into(); self
+    }
+
+    pub  fn config_map_ref(&mut self) -> &mut crate::api::core::v1::ConfigMapEnvSource {
+        if self.config_map_ref.is_none() { self.config_map_ref = Some(Default::default()) }
+        self.config_map_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::config_map_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn config_map_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ConfigMapEnvSource)) -> &mut Self {
+        if self.config_map_ref.is_none() { self.config_map_ref = Some(Default::default()) };
+        func(self.config_map_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::prefix`]
+    pub  fn prefix_set(&mut self, prefix: impl Into<Option<String>>) -> &mut Self {
+        self.prefix = prefix.into(); self
+    }
+
+    pub  fn prefix(&mut self) -> &mut String {
+        if self.prefix.is_none() { self.prefix = Some(Default::default()) }
+        self.prefix.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::prefix`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn prefix_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.prefix.is_none() { self.prefix = Some(Default::default()) };
+        func(self.prefix.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<Option<crate::api::core::v1::SecretEnvSource>>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::SecretEnvSource {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) }
+        self.secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SecretEnvSource)) -> &mut Self {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) };
+        func(self.secret_ref.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EnvFromSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

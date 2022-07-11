@@ -11,7 +11,62 @@ pub struct CustomResourceSubresourceScale {
 
     /// statusReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `status.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status`. If there is no value under the given path in the custom resource, the `status.replicas` value in the `/scale` subresource will default to 0.
     pub status_replicas_path: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceSubresourceScale  {
+    /// Set [`Self::label_selector_path`]
+    pub  fn label_selector_path_set(&mut self, label_selector_path: impl Into<Option<String>>) -> &mut Self {
+        self.label_selector_path = label_selector_path.into(); self
+    }
+
+    pub  fn label_selector_path(&mut self) -> &mut String {
+        if self.label_selector_path.is_none() { self.label_selector_path = Some(Default::default()) }
+        self.label_selector_path.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::label_selector_path`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn label_selector_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.label_selector_path.is_none() { self.label_selector_path = Some(Default::default()) };
+        func(self.label_selector_path.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::spec_replicas_path`]
+    pub  fn spec_replicas_path_set(&mut self, spec_replicas_path: impl Into<String>) -> &mut Self {
+        self.spec_replicas_path = spec_replicas_path.into(); self
+    }
+
+    pub  fn spec_replicas_path(&mut self) -> &mut String {
+        &mut self.spec_replicas_path
+    }
+
+    /// Modify [`Self::spec_replicas_path`] with a `func`
+    pub  fn spec_replicas_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.spec_replicas_path); self
+    }
+
+
+    /// Set [`Self::status_replicas_path`]
+    pub  fn status_replicas_path_set(&mut self, status_replicas_path: impl Into<String>) -> &mut Self {
+        self.status_replicas_path = status_replicas_path.into(); self
+    }
+
+    pub  fn status_replicas_path(&mut self) -> &mut String {
+        &mut self.status_replicas_path
+    }
+
+    /// Modify [`Self::status_replicas_path`] with a `func`
+    pub  fn status_replicas_path_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.status_replicas_path); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresourceScale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

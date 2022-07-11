@@ -11,7 +11,116 @@ pub struct ResourceQuotaSpec {
 
     /// A collection of filters that must match each object tracked by a quota. If not specified, the quota matches all objects.
     pub scopes: Option<Vec<String>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceQuotaSpec  {
+    /// Set [`Self::hard`]
+    pub  fn hard_set(&mut self, hard: impl Into<Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>>) -> &mut Self {
+        self.hard = hard.into(); self
+    }
+
+    pub  fn hard(&mut self) -> &mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity> {
+        if self.hard.is_none() { self.hard = Some(Default::default()) }
+        self.hard.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::hard`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn hard_with(&mut self, func: impl FnOnce(&mut std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>)) -> &mut Self {
+        if self.hard.is_none() { self.hard = Some(Default::default()) };
+        func(self.hard.as_mut().unwrap()); self
+    }
+
+    /// Insert a new element to [`Self::hard`] and modify with a `func`
+    ///
+    /// The field will be overwritten or set to `Default::default()` if not set before 
+    pub  fn hard_insert_with(&mut self, name: &str, func: impl FnOnce(&mut crate::apimachinery::pkg::api::resource::Quantity)) -> &mut Self {
+        if self.hard.is_none() {
+            self.hard = Some(std::collections::BTreeMap::new());
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.hard.as_mut().unwrap().insert(name.to_owned(), new);
+        self
+    }
+
+    /// Insert all elements from `other` into [`Self::hard`]
+    pub  fn hard_insert_from(&mut self, other: impl std::borrow::Borrow<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>) -> &mut Self {
+         if self.hard.is_none() { self.hard = Some(std::collections::BTreeMap::new()); }
+         let hard = &mut self.hard.as_mut().unwrap();
+         for (name, value) in other.borrow() {
+             hard.insert(name.to_owned(), value.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::scope_selector`]
+    pub  fn scope_selector_set(&mut self, scope_selector: impl Into<Option<crate::api::core::v1::ScopeSelector>>) -> &mut Self {
+        self.scope_selector = scope_selector.into(); self
+    }
+
+    pub  fn scope_selector(&mut self) -> &mut crate::api::core::v1::ScopeSelector {
+        if self.scope_selector.is_none() { self.scope_selector = Some(Default::default()) }
+        self.scope_selector.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scope_selector`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scope_selector_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::ScopeSelector)) -> &mut Self {
+        if self.scope_selector.is_none() { self.scope_selector = Some(Default::default()) };
+        func(self.scope_selector.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scopes`]
+    pub  fn scopes_set(&mut self, scopes: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.scopes = scopes.into(); self
+    }
+
+    pub  fn scopes(&mut self) -> &mut Vec<String> {
+        if self.scopes.is_none() { self.scopes = Some(Default::default()) }
+        self.scopes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scopes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scopes_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.scopes.is_none() { self.scopes = Some(Default::default()) };
+        func(self.scopes.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::scopes`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn scopes_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.scopes.is_none() {
+            self.scopes = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.scopes.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::scopes`]
+    pub  fn scopes_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.scopes.is_none() { self.scopes = Some(Vec::new()); }
+         let scopes = &mut self.scopes.as_mut().unwrap();
+         for item in other.borrow() {
+             scopes.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

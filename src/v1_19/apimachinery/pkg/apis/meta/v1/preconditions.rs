@@ -8,7 +8,51 @@ pub struct Preconditions {
 
     /// Specifies the target UID.
     pub uid: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Preconditions  {
+    /// Set [`Self::resource_version`]
+    pub  fn resource_version_set(&mut self, resource_version: impl Into<Option<String>>) -> &mut Self {
+        self.resource_version = resource_version.into(); self
+    }
+
+    pub  fn resource_version(&mut self) -> &mut String {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) }
+        self.resource_version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resource_version.is_none() { self.resource_version = Some(Default::default()) };
+        func(self.resource_version.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::uid`]
+    pub  fn uid_set(&mut self, uid: impl Into<Option<String>>) -> &mut Self {
+        self.uid = uid.into(); self
+    }
+
+    pub  fn uid(&mut self) -> &mut String {
+        if self.uid.is_none() { self.uid = Some(Default::default()) }
+        self.uid.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::uid`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn uid_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.uid.is_none() { self.uid = Some(Default::default()) };
+        func(self.uid.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Preconditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,85 @@ pub struct Subject {
 
     /// `user` matches based on username.
     pub user: Option<crate::api::flowcontrol::v1beta2::UserSubject>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Subject  {
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<crate::api::flowcontrol::v1beta2::GroupSubject>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut crate::api::flowcontrol::v1beta2::GroupSubject {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta2::GroupSubject)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::kind`]
+    pub  fn kind_set(&mut self, kind: impl Into<String>) -> &mut Self {
+        self.kind = kind.into(); self
+    }
+
+    pub  fn kind(&mut self) -> &mut String {
+        &mut self.kind
+    }
+
+    /// Modify [`Self::kind`] with a `func`
+    pub  fn kind_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.kind); self
+    }
+
+
+    /// Set [`Self::service_account`]
+    pub  fn service_account_set(&mut self, service_account: impl Into<Option<crate::api::flowcontrol::v1beta2::ServiceAccountSubject>>) -> &mut Self {
+        self.service_account = service_account.into(); self
+    }
+
+    pub  fn service_account(&mut self) -> &mut crate::api::flowcontrol::v1beta2::ServiceAccountSubject {
+        if self.service_account.is_none() { self.service_account = Some(Default::default()) }
+        self.service_account.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::service_account`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn service_account_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta2::ServiceAccountSubject)) -> &mut Self {
+        if self.service_account.is_none() { self.service_account = Some(Default::default()) };
+        func(self.service_account.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::user`]
+    pub  fn user_set(&mut self, user: impl Into<Option<crate::api::flowcontrol::v1beta2::UserSubject>>) -> &mut Self {
+        self.user = user.into(); self
+    }
+
+    pub  fn user(&mut self) -> &mut crate::api::flowcontrol::v1beta2::UserSubject {
+        if self.user.is_none() { self.user = Some(Default::default()) }
+        self.user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn user_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta2::UserSubject)) -> &mut Self {
+        if self.user.is_none() { self.user = Some(Default::default()) };
+        func(self.user.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Subject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

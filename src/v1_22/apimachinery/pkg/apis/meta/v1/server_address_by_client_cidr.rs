@@ -8,7 +8,43 @@ pub struct ServerAddressByClientCIDR {
 
     /// Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
     pub server_address: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ServerAddressByClientCIDR  {
+    /// Set [`Self::client_cidr`]
+    pub  fn client_cidr_set(&mut self, client_cidr: impl Into<String>) -> &mut Self {
+        self.client_cidr = client_cidr.into(); self
+    }
+
+    pub  fn client_cidr(&mut self) -> &mut String {
+        &mut self.client_cidr
+    }
+
+    /// Modify [`Self::client_cidr`] with a `func`
+    pub  fn client_cidr_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.client_cidr); self
+    }
+
+
+    /// Set [`Self::server_address`]
+    pub  fn server_address_set(&mut self, server_address: impl Into<String>) -> &mut Self {
+        self.server_address = server_address.into(); self
+    }
+
+    pub  fn server_address(&mut self) -> &mut String {
+        &mut self.server_address
+    }
+
+    /// Modify [`Self::server_address`] with a `func`
+    pub  fn server_address_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.server_address); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServerAddressByClientCIDR {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

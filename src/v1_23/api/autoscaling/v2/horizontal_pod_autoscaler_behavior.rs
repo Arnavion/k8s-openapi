@@ -11,7 +11,51 @@ pub struct HorizontalPodAutoscalerBehavior {
     ///   * double the number of pods per 60 seconds
     /// No stabilization is used.
     pub scale_up: Option<crate::api::autoscaling::v2::HPAScalingRules>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl HorizontalPodAutoscalerBehavior  {
+    /// Set [`Self::scale_down`]
+    pub  fn scale_down_set(&mut self, scale_down: impl Into<Option<crate::api::autoscaling::v2::HPAScalingRules>>) -> &mut Self {
+        self.scale_down = scale_down.into(); self
+    }
+
+    pub  fn scale_down(&mut self) -> &mut crate::api::autoscaling::v2::HPAScalingRules {
+        if self.scale_down.is_none() { self.scale_down = Some(Default::default()) }
+        self.scale_down.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scale_down`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scale_down_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2::HPAScalingRules)) -> &mut Self {
+        if self.scale_down.is_none() { self.scale_down = Some(Default::default()) };
+        func(self.scale_down.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::scale_up`]
+    pub  fn scale_up_set(&mut self, scale_up: impl Into<Option<crate::api::autoscaling::v2::HPAScalingRules>>) -> &mut Self {
+        self.scale_up = scale_up.into(); self
+    }
+
+    pub  fn scale_up(&mut self) -> &mut crate::api::autoscaling::v2::HPAScalingRules {
+        if self.scale_up.is_none() { self.scale_up = Some(Default::default()) }
+        self.scale_up.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::scale_up`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn scale_up_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2::HPAScalingRules)) -> &mut Self {
+        if self.scale_up.is_none() { self.scale_up = Some(Default::default()) };
+        func(self.scale_up.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

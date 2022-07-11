@@ -9,7 +9,47 @@ pub struct CustomResourceConversion {
 
     /// webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
     pub webhook: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CustomResourceConversion  {
+    /// Set [`Self::strategy`]
+    pub  fn strategy_set(&mut self, strategy: impl Into<String>) -> &mut Self {
+        self.strategy = strategy.into(); self
+    }
+
+    pub  fn strategy(&mut self) -> &mut String {
+        &mut self.strategy
+    }
+
+    /// Modify [`Self::strategy`] with a `func`
+    pub  fn strategy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.strategy); self
+    }
+
+
+    /// Set [`Self::webhook`]
+    pub  fn webhook_set(&mut self, webhook: impl Into<Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>>) -> &mut Self {
+        self.webhook = webhook.into(); self
+    }
+
+    pub  fn webhook(&mut self) -> &mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion {
+        if self.webhook.is_none() { self.webhook = Some(Default::default()) }
+        self.webhook.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::webhook`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn webhook_with(&mut self, func: impl FnOnce(&mut crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion)) -> &mut Self {
+        if self.webhook.is_none() { self.webhook = Some(Default::default()) };
+        func(self.webhook.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

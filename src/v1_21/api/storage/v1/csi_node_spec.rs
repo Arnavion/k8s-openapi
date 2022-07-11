@@ -5,7 +5,46 @@
 pub struct CSINodeSpec {
     /// drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     pub drivers: Vec<crate::api::storage::v1::CSINodeDriver>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl CSINodeSpec  {
+    /// Set [`Self::drivers`]
+    pub  fn drivers_set(&mut self, drivers: impl Into<Vec<crate::api::storage::v1::CSINodeDriver>>) -> &mut Self {
+        self.drivers = drivers.into(); self
+    }
+
+    pub  fn drivers(&mut self) -> &mut Vec<crate::api::storage::v1::CSINodeDriver> {
+        &mut self.drivers
+    }
+
+    /// Modify [`Self::drivers`] with a `func`
+    pub  fn drivers_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::storage::v1::CSINodeDriver>)) -> &mut Self {
+        func(&mut self.drivers); self
+    }
+
+    /// Push new element to [`Self::drivers`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn drivers_push_with(&mut self, func: impl FnOnce(&mut crate::api::storage::v1::CSINodeDriver)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.drivers.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::drivers`]
+    pub  fn drivers_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::storage::v1::CSINodeDriver]>) -> &mut Self {
+         for item in other.borrow() {
+             self.drivers.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSINodeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

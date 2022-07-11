@@ -8,7 +8,43 @@ pub struct TokenRequestStatus {
 
     /// Token is the opaque bearer token.
     pub token: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl TokenRequestStatus  {
+    /// Set [`Self::expiration_timestamp`]
+    pub  fn expiration_timestamp_set(&mut self, expiration_timestamp: impl Into<crate::apimachinery::pkg::apis::meta::v1::Time>) -> &mut Self {
+        self.expiration_timestamp = expiration_timestamp.into(); self
+    }
+
+    pub  fn expiration_timestamp(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::Time {
+        &mut self.expiration_timestamp
+    }
+
+    /// Modify [`Self::expiration_timestamp`] with a `func`
+    pub  fn expiration_timestamp_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::Time)) -> &mut Self {
+        func(&mut self.expiration_timestamp); self
+    }
+
+
+    /// Set [`Self::token`]
+    pub  fn token_set(&mut self, token: impl Into<String>) -> &mut Self {
+        self.token = token.into(); self
+    }
+
+    pub  fn token(&mut self) -> &mut String {
+        &mut self.token
+    }
+
+    /// Modify [`Self::token`] with a `func`
+    pub  fn token_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.token); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

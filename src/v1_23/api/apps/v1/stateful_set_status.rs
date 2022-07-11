@@ -32,7 +32,218 @@ pub struct StatefulSetStatus {
 
     /// updatedReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by updateRevision.
     pub updated_replicas: Option<i32>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatefulSetStatus  {
+    /// Set [`Self::available_replicas`]
+    pub  fn available_replicas_set(&mut self, available_replicas: impl Into<i32>) -> &mut Self {
+        self.available_replicas = available_replicas.into(); self
+    }
+
+    pub  fn available_replicas(&mut self) -> &mut i32 {
+        &mut self.available_replicas
+    }
+
+    /// Modify [`Self::available_replicas`] with a `func`
+    pub  fn available_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.available_replicas); self
+    }
+
+
+    /// Set [`Self::collision_count`]
+    pub  fn collision_count_set(&mut self, collision_count: impl Into<Option<i32>>) -> &mut Self {
+        self.collision_count = collision_count.into(); self
+    }
+
+    pub  fn collision_count(&mut self) -> &mut i32 {
+        if self.collision_count.is_none() { self.collision_count = Some(Default::default()) }
+        self.collision_count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::collision_count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn collision_count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.collision_count.is_none() { self.collision_count = Some(Default::default()) };
+        func(self.collision_count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::conditions`]
+    pub  fn conditions_set(&mut self, conditions: impl Into<Option<Vec<crate::api::apps::v1::StatefulSetCondition>>>) -> &mut Self {
+        self.conditions = conditions.into(); self
+    }
+
+    pub  fn conditions(&mut self) -> &mut Vec<crate::api::apps::v1::StatefulSetCondition> {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) }
+        self.conditions.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::conditions`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn conditions_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::apps::v1::StatefulSetCondition>)) -> &mut Self {
+        if self.conditions.is_none() { self.conditions = Some(Default::default()) };
+        func(self.conditions.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::conditions`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn conditions_push_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::StatefulSetCondition)) -> &mut Self {
+        if self.conditions.is_none() {
+            self.conditions = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.conditions.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::conditions`]
+    pub  fn conditions_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::apps::v1::StatefulSetCondition]>) -> &mut Self {
+         if self.conditions.is_none() { self.conditions = Some(Vec::new()); }
+         let conditions = &mut self.conditions.as_mut().unwrap();
+         for item in other.borrow() {
+             conditions.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::current_replicas`]
+    pub  fn current_replicas_set(&mut self, current_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.current_replicas = current_replicas.into(); self
+    }
+
+    pub  fn current_replicas(&mut self) -> &mut i32 {
+        if self.current_replicas.is_none() { self.current_replicas = Some(Default::default()) }
+        self.current_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::current_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn current_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.current_replicas.is_none() { self.current_replicas = Some(Default::default()) };
+        func(self.current_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::current_revision`]
+    pub  fn current_revision_set(&mut self, current_revision: impl Into<Option<String>>) -> &mut Self {
+        self.current_revision = current_revision.into(); self
+    }
+
+    pub  fn current_revision(&mut self) -> &mut String {
+        if self.current_revision.is_none() { self.current_revision = Some(Default::default()) }
+        self.current_revision.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::current_revision`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn current_revision_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.current_revision.is_none() { self.current_revision = Some(Default::default()) };
+        func(self.current_revision.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::observed_generation`]
+    pub  fn observed_generation_set(&mut self, observed_generation: impl Into<Option<i64>>) -> &mut Self {
+        self.observed_generation = observed_generation.into(); self
+    }
+
+    pub  fn observed_generation(&mut self) -> &mut i64 {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) }
+        self.observed_generation.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::observed_generation`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn observed_generation_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.observed_generation.is_none() { self.observed_generation = Some(Default::default()) };
+        func(self.observed_generation.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::ready_replicas`]
+    pub  fn ready_replicas_set(&mut self, ready_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.ready_replicas = ready_replicas.into(); self
+    }
+
+    pub  fn ready_replicas(&mut self) -> &mut i32 {
+        if self.ready_replicas.is_none() { self.ready_replicas = Some(Default::default()) }
+        self.ready_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ready_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ready_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.ready_replicas.is_none() { self.ready_replicas = Some(Default::default()) };
+        func(self.ready_replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<i32>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        &mut self.replicas
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        func(&mut self.replicas); self
+    }
+
+
+    /// Set [`Self::update_revision`]
+    pub  fn update_revision_set(&mut self, update_revision: impl Into<Option<String>>) -> &mut Self {
+        self.update_revision = update_revision.into(); self
+    }
+
+    pub  fn update_revision(&mut self) -> &mut String {
+        if self.update_revision.is_none() { self.update_revision = Some(Default::default()) }
+        self.update_revision.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::update_revision`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn update_revision_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.update_revision.is_none() { self.update_revision = Some(Default::default()) };
+        func(self.update_revision.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::updated_replicas`]
+    pub  fn updated_replicas_set(&mut self, updated_replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.updated_replicas = updated_replicas.into(); self
+    }
+
+    pub  fn updated_replicas(&mut self) -> &mut i32 {
+        if self.updated_replicas.is_none() { self.updated_replicas = Some(Default::default()) }
+        self.updated_replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::updated_replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn updated_replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.updated_replicas.is_none() { self.updated_replicas = Some(Default::default()) };
+        func(self.updated_replicas.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

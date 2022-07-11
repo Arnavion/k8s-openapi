@@ -8,7 +8,47 @@ pub struct SELinuxStrategyOptions {
 
     /// seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl SELinuxStrategyOptions  {
+    /// Set [`Self::rule`]
+    pub  fn rule_set(&mut self, rule: impl Into<String>) -> &mut Self {
+        self.rule = rule.into(); self
+    }
+
+    pub  fn rule(&mut self) -> &mut String {
+        &mut self.rule
+    }
+
+    /// Modify [`Self::rule`] with a `func`
+    pub  fn rule_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.rule); self
+    }
+
+
+    /// Set [`Self::se_linux_options`]
+    pub  fn se_linux_options_set(&mut self, se_linux_options: impl Into<Option<crate::api::core::v1::SELinuxOptions>>) -> &mut Self {
+        self.se_linux_options = se_linux_options.into(); self
+    }
+
+    pub  fn se_linux_options(&mut self) -> &mut crate::api::core::v1::SELinuxOptions {
+        if self.se_linux_options.is_none() { self.se_linux_options = Some(Default::default()) }
+        self.se_linux_options.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::se_linux_options`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn se_linux_options_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::SELinuxOptions)) -> &mut Self {
+        if self.se_linux_options.is_none() { self.se_linux_options = Some(Default::default()) };
+        func(self.se_linux_options.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SELinuxStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

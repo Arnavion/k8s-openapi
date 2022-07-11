@@ -11,7 +11,70 @@ pub struct WindowsSecurityContextOptions {
 
     /// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     pub run_as_user_name: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl WindowsSecurityContextOptions  {
+    /// Set [`Self::gmsa_credential_spec`]
+    pub  fn gmsa_credential_spec_set(&mut self, gmsa_credential_spec: impl Into<Option<String>>) -> &mut Self {
+        self.gmsa_credential_spec = gmsa_credential_spec.into(); self
+    }
+
+    pub  fn gmsa_credential_spec(&mut self) -> &mut String {
+        if self.gmsa_credential_spec.is_none() { self.gmsa_credential_spec = Some(Default::default()) }
+        self.gmsa_credential_spec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::gmsa_credential_spec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn gmsa_credential_spec_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.gmsa_credential_spec.is_none() { self.gmsa_credential_spec = Some(Default::default()) };
+        func(self.gmsa_credential_spec.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::gmsa_credential_spec_name`]
+    pub  fn gmsa_credential_spec_name_set(&mut self, gmsa_credential_spec_name: impl Into<Option<String>>) -> &mut Self {
+        self.gmsa_credential_spec_name = gmsa_credential_spec_name.into(); self
+    }
+
+    pub  fn gmsa_credential_spec_name(&mut self) -> &mut String {
+        if self.gmsa_credential_spec_name.is_none() { self.gmsa_credential_spec_name = Some(Default::default()) }
+        self.gmsa_credential_spec_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::gmsa_credential_spec_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn gmsa_credential_spec_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.gmsa_credential_spec_name.is_none() { self.gmsa_credential_spec_name = Some(Default::default()) };
+        func(self.gmsa_credential_spec_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::run_as_user_name`]
+    pub  fn run_as_user_name_set(&mut self, run_as_user_name: impl Into<Option<String>>) -> &mut Self {
+        self.run_as_user_name = run_as_user_name.into(); self
+    }
+
+    pub  fn run_as_user_name(&mut self) -> &mut String {
+        if self.run_as_user_name.is_none() { self.run_as_user_name = Some(Default::default()) }
+        self.run_as_user_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::run_as_user_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn run_as_user_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.run_as_user_name.is_none() { self.run_as_user_name = Some(Default::default()) };
+        func(self.run_as_user_name.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WindowsSecurityContextOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,130 @@ pub struct PolicyRulesWithSubjects {
 
     /// subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
     pub subjects: Vec<crate::api::flowcontrol::v1beta1::Subject>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PolicyRulesWithSubjects  {
+    /// Set [`Self::non_resource_rules`]
+    pub  fn non_resource_rules_set(&mut self, non_resource_rules: impl Into<Option<Vec<crate::api::flowcontrol::v1beta1::NonResourcePolicyRule>>>) -> &mut Self {
+        self.non_resource_rules = non_resource_rules.into(); self
+    }
+
+    pub  fn non_resource_rules(&mut self) -> &mut Vec<crate::api::flowcontrol::v1beta1::NonResourcePolicyRule> {
+        if self.non_resource_rules.is_none() { self.non_resource_rules = Some(Default::default()) }
+        self.non_resource_rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::non_resource_rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn non_resource_rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::flowcontrol::v1beta1::NonResourcePolicyRule>)) -> &mut Self {
+        if self.non_resource_rules.is_none() { self.non_resource_rules = Some(Default::default()) };
+        func(self.non_resource_rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::non_resource_rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn non_resource_rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::NonResourcePolicyRule)) -> &mut Self {
+        if self.non_resource_rules.is_none() {
+            self.non_resource_rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.non_resource_rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::non_resource_rules`]
+    pub  fn non_resource_rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::flowcontrol::v1beta1::NonResourcePolicyRule]>) -> &mut Self {
+         if self.non_resource_rules.is_none() { self.non_resource_rules = Some(Vec::new()); }
+         let non_resource_rules = &mut self.non_resource_rules.as_mut().unwrap();
+         for item in other.borrow() {
+             non_resource_rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::resource_rules`]
+    pub  fn resource_rules_set(&mut self, resource_rules: impl Into<Option<Vec<crate::api::flowcontrol::v1beta1::ResourcePolicyRule>>>) -> &mut Self {
+        self.resource_rules = resource_rules.into(); self
+    }
+
+    pub  fn resource_rules(&mut self) -> &mut Vec<crate::api::flowcontrol::v1beta1::ResourcePolicyRule> {
+        if self.resource_rules.is_none() { self.resource_rules = Some(Default::default()) }
+        self.resource_rules.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource_rules`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_rules_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::flowcontrol::v1beta1::ResourcePolicyRule>)) -> &mut Self {
+        if self.resource_rules.is_none() { self.resource_rules = Some(Default::default()) };
+        func(self.resource_rules.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::resource_rules`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn resource_rules_push_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::ResourcePolicyRule)) -> &mut Self {
+        if self.resource_rules.is_none() {
+            self.resource_rules = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.resource_rules.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::resource_rules`]
+    pub  fn resource_rules_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::flowcontrol::v1beta1::ResourcePolicyRule]>) -> &mut Self {
+         if self.resource_rules.is_none() { self.resource_rules = Some(Vec::new()); }
+         let resource_rules = &mut self.resource_rules.as_mut().unwrap();
+         for item in other.borrow() {
+             resource_rules.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::subjects`]
+    pub  fn subjects_set(&mut self, subjects: impl Into<Vec<crate::api::flowcontrol::v1beta1::Subject>>) -> &mut Self {
+        self.subjects = subjects.into(); self
+    }
+
+    pub  fn subjects(&mut self) -> &mut Vec<crate::api::flowcontrol::v1beta1::Subject> {
+        &mut self.subjects
+    }
+
+    /// Modify [`Self::subjects`] with a `func`
+    pub  fn subjects_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::flowcontrol::v1beta1::Subject>)) -> &mut Self {
+        func(&mut self.subjects); self
+    }
+
+    /// Push new element to [`Self::subjects`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn subjects_push_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::Subject)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.subjects.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::subjects`]
+    pub  fn subjects_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::flowcontrol::v1beta1::Subject]>) -> &mut Self {
+         for item in other.borrow() {
+             self.subjects.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,47 @@ pub struct Webhook {
 
     /// Throttle holds the options for throttling the webhook
     pub throttle: Option<crate::api::auditregistration::v1alpha1::WebhookThrottleConfig>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Webhook  {
+    /// Set [`Self::client_config`]
+    pub  fn client_config_set(&mut self, client_config: impl Into<crate::api::auditregistration::v1alpha1::WebhookClientConfig>) -> &mut Self {
+        self.client_config = client_config.into(); self
+    }
+
+    pub  fn client_config(&mut self) -> &mut crate::api::auditregistration::v1alpha1::WebhookClientConfig {
+        &mut self.client_config
+    }
+
+    /// Modify [`Self::client_config`] with a `func`
+    pub  fn client_config_with(&mut self, func: impl FnOnce(&mut crate::api::auditregistration::v1alpha1::WebhookClientConfig)) -> &mut Self {
+        func(&mut self.client_config); self
+    }
+
+
+    /// Set [`Self::throttle`]
+    pub  fn throttle_set(&mut self, throttle: impl Into<Option<crate::api::auditregistration::v1alpha1::WebhookThrottleConfig>>) -> &mut Self {
+        self.throttle = throttle.into(); self
+    }
+
+    pub  fn throttle(&mut self) -> &mut crate::api::auditregistration::v1alpha1::WebhookThrottleConfig {
+        if self.throttle.is_none() { self.throttle = Some(Default::default()) }
+        self.throttle.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::throttle`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn throttle_with(&mut self, func: impl FnOnce(&mut crate::api::auditregistration::v1alpha1::WebhookThrottleConfig)) -> &mut Self {
+        if self.throttle.is_none() { self.throttle = Some(Default::default()) };
+        func(self.throttle.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Webhook {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

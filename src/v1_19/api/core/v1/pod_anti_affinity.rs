@@ -8,7 +8,97 @@ pub struct PodAntiAffinity {
 
     /// If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
     pub required_during_scheduling_ignored_during_execution: Option<Vec<crate::api::core::v1::PodAffinityTerm>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodAntiAffinity  {
+    /// Set [`Self::preferred_during_scheduling_ignored_during_execution`]
+    pub  fn preferred_during_scheduling_ignored_during_execution_set(&mut self, preferred_during_scheduling_ignored_during_execution: impl Into<Option<Vec<crate::api::core::v1::WeightedPodAffinityTerm>>>) -> &mut Self {
+        self.preferred_during_scheduling_ignored_during_execution = preferred_during_scheduling_ignored_during_execution.into(); self
+    }
+
+    pub  fn preferred_during_scheduling_ignored_during_execution(&mut self) -> &mut Vec<crate::api::core::v1::WeightedPodAffinityTerm> {
+        if self.preferred_during_scheduling_ignored_during_execution.is_none() { self.preferred_during_scheduling_ignored_during_execution = Some(Default::default()) }
+        self.preferred_during_scheduling_ignored_during_execution.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::preferred_during_scheduling_ignored_during_execution`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn preferred_during_scheduling_ignored_during_execution_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::WeightedPodAffinityTerm>)) -> &mut Self {
+        if self.preferred_during_scheduling_ignored_during_execution.is_none() { self.preferred_during_scheduling_ignored_during_execution = Some(Default::default()) };
+        func(self.preferred_during_scheduling_ignored_during_execution.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::preferred_during_scheduling_ignored_during_execution`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn preferred_during_scheduling_ignored_during_execution_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::WeightedPodAffinityTerm)) -> &mut Self {
+        if self.preferred_during_scheduling_ignored_during_execution.is_none() {
+            self.preferred_during_scheduling_ignored_during_execution = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.preferred_during_scheduling_ignored_during_execution.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::preferred_during_scheduling_ignored_during_execution`]
+    pub  fn preferred_during_scheduling_ignored_during_execution_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::WeightedPodAffinityTerm]>) -> &mut Self {
+         if self.preferred_during_scheduling_ignored_during_execution.is_none() { self.preferred_during_scheduling_ignored_during_execution = Some(Vec::new()); }
+         let preferred_during_scheduling_ignored_during_execution = &mut self.preferred_during_scheduling_ignored_during_execution.as_mut().unwrap();
+         for item in other.borrow() {
+             preferred_during_scheduling_ignored_during_execution.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::required_during_scheduling_ignored_during_execution`]
+    pub  fn required_during_scheduling_ignored_during_execution_set(&mut self, required_during_scheduling_ignored_during_execution: impl Into<Option<Vec<crate::api::core::v1::PodAffinityTerm>>>) -> &mut Self {
+        self.required_during_scheduling_ignored_during_execution = required_during_scheduling_ignored_during_execution.into(); self
+    }
+
+    pub  fn required_during_scheduling_ignored_during_execution(&mut self) -> &mut Vec<crate::api::core::v1::PodAffinityTerm> {
+        if self.required_during_scheduling_ignored_during_execution.is_none() { self.required_during_scheduling_ignored_during_execution = Some(Default::default()) }
+        self.required_during_scheduling_ignored_during_execution.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::required_during_scheduling_ignored_during_execution`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn required_during_scheduling_ignored_during_execution_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PodAffinityTerm>)) -> &mut Self {
+        if self.required_during_scheduling_ignored_during_execution.is_none() { self.required_during_scheduling_ignored_during_execution = Some(Default::default()) };
+        func(self.required_during_scheduling_ignored_during_execution.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::required_during_scheduling_ignored_during_execution`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn required_during_scheduling_ignored_during_execution_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodAffinityTerm)) -> &mut Self {
+        if self.required_during_scheduling_ignored_during_execution.is_none() {
+            self.required_during_scheduling_ignored_during_execution = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.required_during_scheduling_ignored_during_execution.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::required_during_scheduling_ignored_during_execution`]
+    pub  fn required_during_scheduling_ignored_during_execution_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PodAffinityTerm]>) -> &mut Self {
+         if self.required_during_scheduling_ignored_during_execution.is_none() { self.required_during_scheduling_ignored_during_execution = Some(Vec::new()); }
+         let required_during_scheduling_ignored_during_execution = &mut self.required_during_scheduling_ignored_during_execution.as_mut().unwrap();
+         for item in other.borrow() {
+             required_during_scheduling_ignored_during_execution.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodAntiAffinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

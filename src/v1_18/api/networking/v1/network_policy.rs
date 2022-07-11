@@ -8,7 +8,47 @@ pub struct NetworkPolicy {
 
     /// Specification of the desired behavior for this NetworkPolicy.
     pub spec: Option<crate::api::networking::v1::NetworkPolicySpec>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl NetworkPolicy  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        &mut self.metadata
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        func(&mut self.metadata); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<Option<crate::api::networking::v1::NetworkPolicySpec>>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::networking::v1::NetworkPolicySpec {
+        if self.spec.is_none() { self.spec = Some(Default::default()) }
+        self.spec.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::networking::v1::NetworkPolicySpec)) -> &mut Self {
+        if self.spec.is_none() { self.spec = Some(Default::default()) };
+        func(self.spec.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 // Begin networking.k8s.io/v1/NetworkPolicy
 

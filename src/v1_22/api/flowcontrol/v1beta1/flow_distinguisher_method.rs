@@ -5,7 +5,28 @@
 pub struct FlowDistinguisherMethod {
     /// `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl FlowDistinguisherMethod  {
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlowDistinguisherMethod {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,28 @@
 pub struct AllowedFlexVolume {
     /// driver is the name of the Flexvolume driver.
     pub driver: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AllowedFlexVolume  {
+    /// Set [`Self::driver`]
+    pub  fn driver_set(&mut self, driver: impl Into<String>) -> &mut Self {
+        self.driver = driver.into(); self
+    }
+
+    pub  fn driver(&mut self) -> &mut String {
+        &mut self.driver
+    }
+
+    /// Modify [`Self::driver`] with a `func`
+    pub  fn driver_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.driver); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AllowedFlexVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,70 @@ pub struct EndpointConditions {
 
     /// terminating indicates that this endpoint is terminating. A nil value indicates an unknown state. Consumers should interpret this unknown state to mean that the endpoint is not terminating. This field can be enabled with the EndpointSliceTerminatingCondition feature gate.
     pub terminating: Option<bool>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointConditions  {
+    /// Set [`Self::ready`]
+    pub  fn ready_set(&mut self, ready: impl Into<Option<bool>>) -> &mut Self {
+        self.ready = ready.into(); self
+    }
+
+    pub  fn ready(&mut self) -> &mut bool {
+        if self.ready.is_none() { self.ready = Some(Default::default()) }
+        self.ready.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::ready`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn ready_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.ready.is_none() { self.ready = Some(Default::default()) };
+        func(self.ready.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::serving`]
+    pub  fn serving_set(&mut self, serving: impl Into<Option<bool>>) -> &mut Self {
+        self.serving = serving.into(); self
+    }
+
+    pub  fn serving(&mut self) -> &mut bool {
+        if self.serving.is_none() { self.serving = Some(Default::default()) }
+        self.serving.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::serving`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn serving_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.serving.is_none() { self.serving = Some(Default::default()) };
+        func(self.serving.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::terminating`]
+    pub  fn terminating_set(&mut self, terminating: impl Into<Option<bool>>) -> &mut Self {
+        self.terminating = terminating.into(); self
+    }
+
+    pub  fn terminating(&mut self) -> &mut bool {
+        if self.terminating.is_none() { self.terminating = Some(Default::default()) }
+        self.terminating.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::terminating`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn terminating_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.terminating.is_none() { self.terminating = Some(Default::default()) };
+        func(self.terminating.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointConditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

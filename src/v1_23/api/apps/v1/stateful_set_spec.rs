@@ -33,7 +33,214 @@ pub struct StatefulSetSpec {
 
     /// volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
     pub volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StatefulSetSpec  {
+    /// Set [`Self::min_ready_seconds`]
+    pub  fn min_ready_seconds_set(&mut self, min_ready_seconds: impl Into<Option<i32>>) -> &mut Self {
+        self.min_ready_seconds = min_ready_seconds.into(); self
+    }
+
+    pub  fn min_ready_seconds(&mut self) -> &mut i32 {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) }
+        self.min_ready_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::min_ready_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn min_ready_seconds_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.min_ready_seconds.is_none() { self.min_ready_seconds = Some(Default::default()) };
+        func(self.min_ready_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::persistent_volume_claim_retention_policy`]
+    pub  fn persistent_volume_claim_retention_policy_set(&mut self, persistent_volume_claim_retention_policy: impl Into<Option<crate::api::apps::v1::StatefulSetPersistentVolumeClaimRetentionPolicy>>) -> &mut Self {
+        self.persistent_volume_claim_retention_policy = persistent_volume_claim_retention_policy.into(); self
+    }
+
+    pub  fn persistent_volume_claim_retention_policy(&mut self) -> &mut crate::api::apps::v1::StatefulSetPersistentVolumeClaimRetentionPolicy {
+        if self.persistent_volume_claim_retention_policy.is_none() { self.persistent_volume_claim_retention_policy = Some(Default::default()) }
+        self.persistent_volume_claim_retention_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::persistent_volume_claim_retention_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn persistent_volume_claim_retention_policy_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::StatefulSetPersistentVolumeClaimRetentionPolicy)) -> &mut Self {
+        if self.persistent_volume_claim_retention_policy.is_none() { self.persistent_volume_claim_retention_policy = Some(Default::default()) };
+        func(self.persistent_volume_claim_retention_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::pod_management_policy`]
+    pub  fn pod_management_policy_set(&mut self, pod_management_policy: impl Into<Option<String>>) -> &mut Self {
+        self.pod_management_policy = pod_management_policy.into(); self
+    }
+
+    pub  fn pod_management_policy(&mut self) -> &mut String {
+        if self.pod_management_policy.is_none() { self.pod_management_policy = Some(Default::default()) }
+        self.pod_management_policy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::pod_management_policy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn pod_management_policy_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.pod_management_policy.is_none() { self.pod_management_policy = Some(Default::default()) };
+        func(self.pod_management_policy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::replicas`]
+    pub  fn replicas_set(&mut self, replicas: impl Into<Option<i32>>) -> &mut Self {
+        self.replicas = replicas.into(); self
+    }
+
+    pub  fn replicas(&mut self) -> &mut i32 {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) }
+        self.replicas.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::replicas`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn replicas_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.replicas.is_none() { self.replicas = Some(Default::default()) };
+        func(self.replicas.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::revision_history_limit`]
+    pub  fn revision_history_limit_set(&mut self, revision_history_limit: impl Into<Option<i32>>) -> &mut Self {
+        self.revision_history_limit = revision_history_limit.into(); self
+    }
+
+    pub  fn revision_history_limit(&mut self) -> &mut i32 {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) }
+        self.revision_history_limit.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::revision_history_limit`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn revision_history_limit_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.revision_history_limit.is_none() { self.revision_history_limit = Some(Default::default()) };
+        func(self.revision_history_limit.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::selector`]
+    pub  fn selector_set(&mut self, selector: impl Into<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>) -> &mut Self {
+        self.selector = selector.into(); self
+    }
+
+    pub  fn selector(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector {
+        &mut self.selector
+    }
+
+    /// Modify [`Self::selector`] with a `func`
+    pub  fn selector_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::LabelSelector)) -> &mut Self {
+        func(&mut self.selector); self
+    }
+
+
+    /// Set [`Self::service_name`]
+    pub  fn service_name_set(&mut self, service_name: impl Into<String>) -> &mut Self {
+        self.service_name = service_name.into(); self
+    }
+
+    pub  fn service_name(&mut self) -> &mut String {
+        &mut self.service_name
+    }
+
+    /// Modify [`Self::service_name`] with a `func`
+    pub  fn service_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.service_name); self
+    }
+
+
+    /// Set [`Self::template`]
+    pub  fn template_set(&mut self, template: impl Into<crate::api::core::v1::PodTemplateSpec>) -> &mut Self {
+        self.template = template.into(); self
+    }
+
+    pub  fn template(&mut self) -> &mut crate::api::core::v1::PodTemplateSpec {
+        &mut self.template
+    }
+
+    /// Modify [`Self::template`] with a `func`
+    pub  fn template_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PodTemplateSpec)) -> &mut Self {
+        func(&mut self.template); self
+    }
+
+
+    /// Set [`Self::update_strategy`]
+    pub  fn update_strategy_set(&mut self, update_strategy: impl Into<Option<crate::api::apps::v1::StatefulSetUpdateStrategy>>) -> &mut Self {
+        self.update_strategy = update_strategy.into(); self
+    }
+
+    pub  fn update_strategy(&mut self) -> &mut crate::api::apps::v1::StatefulSetUpdateStrategy {
+        if self.update_strategy.is_none() { self.update_strategy = Some(Default::default()) }
+        self.update_strategy.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::update_strategy`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn update_strategy_with(&mut self, func: impl FnOnce(&mut crate::api::apps::v1::StatefulSetUpdateStrategy)) -> &mut Self {
+        if self.update_strategy.is_none() { self.update_strategy = Some(Default::default()) };
+        func(self.update_strategy.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_claim_templates`]
+    pub  fn volume_claim_templates_set(&mut self, volume_claim_templates: impl Into<Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>>) -> &mut Self {
+        self.volume_claim_templates = volume_claim_templates.into(); self
+    }
+
+    pub  fn volume_claim_templates(&mut self) -> &mut Vec<crate::api::core::v1::PersistentVolumeClaim> {
+        if self.volume_claim_templates.is_none() { self.volume_claim_templates = Some(Default::default()) }
+        self.volume_claim_templates.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_claim_templates`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_claim_templates_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::PersistentVolumeClaim>)) -> &mut Self {
+        if self.volume_claim_templates.is_none() { self.volume_claim_templates = Some(Default::default()) };
+        func(self.volume_claim_templates.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::volume_claim_templates`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn volume_claim_templates_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeClaim)) -> &mut Self {
+        if self.volume_claim_templates.is_none() {
+            self.volume_claim_templates = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.volume_claim_templates.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::volume_claim_templates`]
+    pub  fn volume_claim_templates_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::PersistentVolumeClaim]>) -> &mut Self {
+         if self.volume_claim_templates.is_none() { self.volume_claim_templates = Some(Vec::new()); }
+         let volume_claim_templates = &mut self.volume_claim_templates.as_mut().unwrap();
+         for item in other.borrow() {
+             volume_claim_templates.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

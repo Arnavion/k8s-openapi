@@ -8,7 +8,74 @@ pub struct ContainerImage {
 
     /// The size of the image in bytes.
     pub size_bytes: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerImage  {
+    /// Set [`Self::names`]
+    pub  fn names_set(&mut self, names: impl Into<Option<Vec<String>>>) -> &mut Self {
+        self.names = names.into(); self
+    }
+
+    pub  fn names(&mut self) -> &mut Vec<String> {
+        if self.names.is_none() { self.names = Some(Default::default()) }
+        self.names.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::names`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn names_with(&mut self, func: impl FnOnce(&mut Vec<String>)) -> &mut Self {
+        if self.names.is_none() { self.names = Some(Default::default()) };
+        func(self.names.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::names`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn names_push_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.names.is_none() {
+            self.names = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.names.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::names`]
+    pub  fn names_append_from(&mut self, other: impl std::borrow::Borrow<[String]>) -> &mut Self {
+         if self.names.is_none() { self.names = Some(Vec::new()); }
+         let names = &mut self.names.as_mut().unwrap();
+         for item in other.borrow() {
+             names.push(item.to_owned());
+         }
+         self
+    }
+
+
+    /// Set [`Self::size_bytes`]
+    pub  fn size_bytes_set(&mut self, size_bytes: impl Into<Option<i64>>) -> &mut Self {
+        self.size_bytes = size_bytes.into(); self
+    }
+
+    pub  fn size_bytes(&mut self) -> &mut i64 {
+        if self.size_bytes.is_none() { self.size_bytes = Some(Default::default()) }
+        self.size_bytes.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::size_bytes`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn size_bytes_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.size_bytes.is_none() { self.size_bytes = Some(Default::default()) };
+        func(self.size_bytes.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerImage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

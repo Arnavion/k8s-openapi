@@ -20,7 +20,119 @@ pub struct QuobyteVolumeSource {
 
     /// volume is a string that references an already created Quobyte volume by name.
     pub volume: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl QuobyteVolumeSource  {
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<String>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::registry`]
+    pub  fn registry_set(&mut self, registry: impl Into<String>) -> &mut Self {
+        self.registry = registry.into(); self
+    }
+
+    pub  fn registry(&mut self) -> &mut String {
+        &mut self.registry
+    }
+
+    /// Modify [`Self::registry`] with a `func`
+    pub  fn registry_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.registry); self
+    }
+
+
+    /// Set [`Self::tenant`]
+    pub  fn tenant_set(&mut self, tenant: impl Into<Option<String>>) -> &mut Self {
+        self.tenant = tenant.into(); self
+    }
+
+    pub  fn tenant(&mut self) -> &mut String {
+        if self.tenant.is_none() { self.tenant = Some(Default::default()) }
+        self.tenant.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::tenant`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn tenant_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.tenant.is_none() { self.tenant = Some(Default::default()) };
+        func(self.tenant.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::user`]
+    pub  fn user_set(&mut self, user: impl Into<Option<String>>) -> &mut Self {
+        self.user = user.into(); self
+    }
+
+    pub  fn user(&mut self) -> &mut String {
+        if self.user.is_none() { self.user = Some(Default::default()) }
+        self.user.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::user`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn user_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.user.is_none() { self.user = Some(Default::default()) };
+        func(self.user.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume`]
+    pub  fn volume_set(&mut self, volume: impl Into<String>) -> &mut Self {
+        self.volume = volume.into(); self
+    }
+
+    pub  fn volume(&mut self) -> &mut String {
+        &mut self.volume
+    }
+
+    /// Modify [`Self::volume`] with a `func`
+    pub  fn volume_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.volume); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for QuobyteVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

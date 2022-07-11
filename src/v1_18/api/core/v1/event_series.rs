@@ -11,7 +11,57 @@ pub struct EventSeries {
 
     /// State of this Series: Ongoing or Finished Deprecated. Planned removal for 1.18
     pub state: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EventSeries  {
+    /// Set [`Self::count`]
+    pub  fn count_set(&mut self, count: impl Into<Option<i32>>) -> &mut Self {
+        self.count = count.into(); self
+    }
+
+    pub  fn count(&mut self) -> &mut i32 {
+        if self.count.is_none() { self.count = Some(Default::default()) }
+        self.count.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::count`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn count_with(&mut self, func: impl FnOnce(&mut i32)) -> &mut Self {
+        if self.count.is_none() { self.count = Some(Default::default()) };
+        func(self.count.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::last_observed_time`]
+    pub  fn last_observed_time_set(&mut self, last_observed_time: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>>) -> &mut Self {
+        self.last_observed_time = last_observed_time.into(); self
+    }
+
+
+    /// Set [`Self::state`]
+    pub  fn state_set(&mut self, state: impl Into<Option<String>>) -> &mut Self {
+        self.state = state.into(); self
+    }
+
+    pub  fn state(&mut self) -> &mut String {
+        if self.state.is_none() { self.state = Some(Default::default()) }
+        self.state.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::state`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn state_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.state.is_none() { self.state = Some(Default::default()) };
+        func(self.state.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EventSeries {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

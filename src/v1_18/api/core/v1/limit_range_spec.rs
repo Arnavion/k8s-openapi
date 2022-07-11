@@ -5,7 +5,46 @@
 pub struct LimitRangeSpec {
     /// Limits is the list of LimitRangeItem objects that are enforced.
     pub limits: Vec<crate::api::core::v1::LimitRangeItem>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LimitRangeSpec  {
+    /// Set [`Self::limits`]
+    pub  fn limits_set(&mut self, limits: impl Into<Vec<crate::api::core::v1::LimitRangeItem>>) -> &mut Self {
+        self.limits = limits.into(); self
+    }
+
+    pub  fn limits(&mut self) -> &mut Vec<crate::api::core::v1::LimitRangeItem> {
+        &mut self.limits
+    }
+
+    /// Modify [`Self::limits`] with a `func`
+    pub  fn limits_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::core::v1::LimitRangeItem>)) -> &mut Self {
+        func(&mut self.limits); self
+    }
+
+    /// Push new element to [`Self::limits`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn limits_push_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LimitRangeItem)) -> &mut Self {
+      let mut new = Default::default();
+      func(&mut new);
+      self.limits.push(new);
+      self
+    }
+
+    /// Append all elements from `other` into [`Self::limits`]
+    pub  fn limits_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::core::v1::LimitRangeItem]>) -> &mut Self {
+         for item in other.borrow() {
+             self.limits.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitRangeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

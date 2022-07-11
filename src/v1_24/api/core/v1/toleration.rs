@@ -19,7 +19,108 @@ pub struct Toleration {
 
     /// Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
     pub value: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl Toleration  {
+    /// Set [`Self::effect`]
+    pub  fn effect_set(&mut self, effect: impl Into<Option<String>>) -> &mut Self {
+        self.effect = effect.into(); self
+    }
+
+    pub  fn effect(&mut self) -> &mut String {
+        if self.effect.is_none() { self.effect = Some(Default::default()) }
+        self.effect.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::effect`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn effect_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.effect.is_none() { self.effect = Some(Default::default()) };
+        func(self.effect.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::key`]
+    pub  fn key_set(&mut self, key: impl Into<Option<String>>) -> &mut Self {
+        self.key = key.into(); self
+    }
+
+    pub  fn key(&mut self) -> &mut String {
+        if self.key.is_none() { self.key = Some(Default::default()) }
+        self.key.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::key`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn key_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.key.is_none() { self.key = Some(Default::default()) };
+        func(self.key.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::operator`]
+    pub  fn operator_set(&mut self, operator: impl Into<Option<String>>) -> &mut Self {
+        self.operator = operator.into(); self
+    }
+
+    pub  fn operator(&mut self) -> &mut String {
+        if self.operator.is_none() { self.operator = Some(Default::default()) }
+        self.operator.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::operator`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn operator_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.operator.is_none() { self.operator = Some(Default::default()) };
+        func(self.operator.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::toleration_seconds`]
+    pub  fn toleration_seconds_set(&mut self, toleration_seconds: impl Into<Option<i64>>) -> &mut Self {
+        self.toleration_seconds = toleration_seconds.into(); self
+    }
+
+    pub  fn toleration_seconds(&mut self) -> &mut i64 {
+        if self.toleration_seconds.is_none() { self.toleration_seconds = Some(Default::default()) }
+        self.toleration_seconds.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::toleration_seconds`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn toleration_seconds_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.toleration_seconds.is_none() { self.toleration_seconds = Some(Default::default()) };
+        func(self.toleration_seconds.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<Option<String>>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut String {
+        if self.value.is_none() { self.value = Some(Default::default()) }
+        self.value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.value.is_none() { self.value = Some(Default::default()) };
+        func(self.value.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Toleration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

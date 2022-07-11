@@ -32,7 +32,47 @@ pub struct ValidationRule {
     ///     are overwritten by values in `Y` when the key sets of `X` and `Y` intersect. Elements in `Y` with
     ///     non-intersecting keys are appended, retaining their partial order.
     pub rule: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ValidationRule  {
+    /// Set [`Self::message`]
+    pub  fn message_set(&mut self, message: impl Into<Option<String>>) -> &mut Self {
+        self.message = message.into(); self
+    }
+
+    pub  fn message(&mut self) -> &mut String {
+        if self.message.is_none() { self.message = Some(Default::default()) }
+        self.message.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::message`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn message_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.message.is_none() { self.message = Some(Default::default()) };
+        func(self.message.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::rule`]
+    pub  fn rule_set(&mut self, rule: impl Into<String>) -> &mut Self {
+        self.rule = rule.into(); self
+    }
+
+    pub  fn rule(&mut self) -> &mut String {
+        &mut self.rule
+    }
+
+    /// Modify [`Self::rule`] with a `func`
+    pub  fn rule_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.rule); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ValidationRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,55 @@
 pub struct EndpointHints {
     /// forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.
     pub for_zones: Option<Vec<crate::api::discovery::v1beta1::ForZone>>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EndpointHints  {
+    /// Set [`Self::for_zones`]
+    pub  fn for_zones_set(&mut self, for_zones: impl Into<Option<Vec<crate::api::discovery::v1beta1::ForZone>>>) -> &mut Self {
+        self.for_zones = for_zones.into(); self
+    }
+
+    pub  fn for_zones(&mut self) -> &mut Vec<crate::api::discovery::v1beta1::ForZone> {
+        if self.for_zones.is_none() { self.for_zones = Some(Default::default()) }
+        self.for_zones.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::for_zones`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn for_zones_with(&mut self, func: impl FnOnce(&mut Vec<crate::api::discovery::v1beta1::ForZone>)) -> &mut Self {
+        if self.for_zones.is_none() { self.for_zones = Some(Default::default()) };
+        func(self.for_zones.as_mut().unwrap()); self
+    }
+
+    /// Push new element to [`Self::for_zones`] and modify with a `func`
+    ///
+    /// The field will initially set to `Default::default()`
+    pub  fn for_zones_push_with(&mut self, func: impl FnOnce(&mut crate::api::discovery::v1beta1::ForZone)) -> &mut Self {
+        if self.for_zones.is_none() {
+            self.for_zones = Some(vec![]);
+        }
+        let mut new = Default::default();
+        func(&mut new);
+        self.for_zones.as_mut().unwrap().push(new);
+        self
+    }
+
+    /// Append all elements from `other` into [`Self::for_zones`]
+    pub  fn for_zones_append_from(&mut self, other: impl std::borrow::Borrow<[crate::api::discovery::v1beta1::ForZone]>) -> &mut Self {
+         if self.for_zones.is_none() { self.for_zones = Some(Vec::new()); }
+         let for_zones = &mut self.for_zones.as_mut().unwrap();
+         for item in other.borrow() {
+             for_zones.push(item.to_owned());
+         }
+         self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointHints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

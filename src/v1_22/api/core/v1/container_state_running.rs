@@ -5,7 +5,19 @@
 pub struct ContainerStateRunning {
     /// Time at which the container was last (re-)started
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ContainerStateRunning  {
+    /// Set [`Self::started_at`]
+    pub  fn started_at_set(&mut self, started_at: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::Time>>) -> &mut Self {
+        self.started_at = started_at.into(); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerStateRunning {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

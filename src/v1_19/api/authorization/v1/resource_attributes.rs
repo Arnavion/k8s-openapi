@@ -23,7 +23,146 @@ pub struct ResourceAttributes {
 
     /// Version is the API Version of the Resource.  "*" means all.
     pub version: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl ResourceAttributes  {
+    /// Set [`Self::group`]
+    pub  fn group_set(&mut self, group: impl Into<Option<String>>) -> &mut Self {
+        self.group = group.into(); self
+    }
+
+    pub  fn group(&mut self) -> &mut String {
+        if self.group.is_none() { self.group = Some(Default::default()) }
+        self.group.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::group`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn group_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.group.is_none() { self.group = Some(Default::default()) };
+        func(self.group.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<Option<String>>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        if self.name.is_none() { self.name = Some(Default::default()) }
+        self.name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.name.is_none() { self.name = Some(Default::default()) };
+        func(self.name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::namespace`]
+    pub  fn namespace_set(&mut self, namespace: impl Into<Option<String>>) -> &mut Self {
+        self.namespace = namespace.into(); self
+    }
+
+    pub  fn namespace(&mut self) -> &mut String {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) }
+        self.namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.namespace.is_none() { self.namespace = Some(Default::default()) };
+        func(self.namespace.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::resource`]
+    pub  fn resource_set(&mut self, resource: impl Into<Option<String>>) -> &mut Self {
+        self.resource = resource.into(); self
+    }
+
+    pub  fn resource(&mut self) -> &mut String {
+        if self.resource.is_none() { self.resource = Some(Default::default()) }
+        self.resource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::resource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn resource_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.resource.is_none() { self.resource = Some(Default::default()) };
+        func(self.resource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::subresource`]
+    pub  fn subresource_set(&mut self, subresource: impl Into<Option<String>>) -> &mut Self {
+        self.subresource = subresource.into(); self
+    }
+
+    pub  fn subresource(&mut self) -> &mut String {
+        if self.subresource.is_none() { self.subresource = Some(Default::default()) }
+        self.subresource.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::subresource`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn subresource_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.subresource.is_none() { self.subresource = Some(Default::default()) };
+        func(self.subresource.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::verb`]
+    pub  fn verb_set(&mut self, verb: impl Into<Option<String>>) -> &mut Self {
+        self.verb = verb.into(); self
+    }
+
+    pub  fn verb(&mut self) -> &mut String {
+        if self.verb.is_none() { self.verb = Some(Default::default()) }
+        self.verb.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::verb`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn verb_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.verb.is_none() { self.verb = Some(Default::default()) };
+        func(self.verb.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::version`]
+    pub  fn version_set(&mut self, version: impl Into<Option<String>>) -> &mut Self {
+        self.version = version.into(); self
+    }
+
+    pub  fn version(&mut self) -> &mut String {
+        if self.version.is_none() { self.version = Some(Default::default()) }
+        self.version.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::version`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn version_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.version.is_none() { self.version = Some(Default::default()) };
+        func(self.version.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

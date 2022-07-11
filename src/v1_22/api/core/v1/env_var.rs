@@ -11,7 +11,66 @@ pub struct EnvVar {
 
     /// Source for the environment variable's value. Cannot be used if value is not empty.
     pub value_from: Option<crate::api::core::v1::EnvVarSource>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl EnvVar  {
+    /// Set [`Self::name`]
+    pub  fn name_set(&mut self, name: impl Into<String>) -> &mut Self {
+        self.name = name.into(); self
+    }
+
+    pub  fn name(&mut self) -> &mut String {
+        &mut self.name
+    }
+
+    /// Modify [`Self::name`] with a `func`
+    pub  fn name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.name); self
+    }
+
+
+    /// Set [`Self::value`]
+    pub  fn value_set(&mut self, value: impl Into<Option<String>>) -> &mut Self {
+        self.value = value.into(); self
+    }
+
+    pub  fn value(&mut self) -> &mut String {
+        if self.value.is_none() { self.value = Some(Default::default()) }
+        self.value.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::value`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn value_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.value.is_none() { self.value = Some(Default::default()) };
+        func(self.value.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::value_from`]
+    pub  fn value_from_set(&mut self, value_from: impl Into<Option<crate::api::core::v1::EnvVarSource>>) -> &mut Self {
+        self.value_from = value_from.into(); self
+    }
+
+    pub  fn value_from(&mut self) -> &mut crate::api::core::v1::EnvVarSource {
+        if self.value_from.is_none() { self.value_from = Some(Default::default()) }
+        self.value_from.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::value_from`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn value_from_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::EnvVarSource)) -> &mut Self {
+        if self.value_from.is_none() { self.value_from = Some(Default::default()) };
+        func(self.value_from.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EnvVar {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

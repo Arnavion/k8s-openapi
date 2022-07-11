@@ -8,7 +8,47 @@ pub struct PersistentVolumeClaimTemplate {
 
     /// The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
     pub spec: crate::api::core::v1::PersistentVolumeClaimSpec,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PersistentVolumeClaimTemplate  {
+    /// Set [`Self::metadata`]
+    pub  fn metadata_set(&mut self, metadata: impl Into<Option<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>>) -> &mut Self {
+        self.metadata = metadata.into(); self
+    }
+
+    pub  fn metadata(&mut self) -> &mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta {
+        if self.metadata.is_none() { self.metadata = Some(Default::default()) }
+        self.metadata.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::metadata`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn metadata_with(&mut self, func: impl FnOnce(&mut crate::apimachinery::pkg::apis::meta::v1::ObjectMeta)) -> &mut Self {
+        if self.metadata.is_none() { self.metadata = Some(Default::default()) };
+        func(self.metadata.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::spec`]
+    pub  fn spec_set(&mut self, spec: impl Into<crate::api::core::v1::PersistentVolumeClaimSpec>) -> &mut Self {
+        self.spec = spec.into(); self
+    }
+
+    pub  fn spec(&mut self) -> &mut crate::api::core::v1::PersistentVolumeClaimSpec {
+        &mut self.spec
+    }
+
+    /// Modify [`Self::spec`] with a `func`
+    pub  fn spec_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::PersistentVolumeClaimSpec)) -> &mut Self {
+        func(&mut self.spec); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimTemplate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

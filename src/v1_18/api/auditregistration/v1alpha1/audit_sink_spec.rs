@@ -8,7 +8,43 @@ pub struct AuditSinkSpec {
 
     /// Webhook to send events required
     pub webhook: crate::api::auditregistration::v1alpha1::Webhook,
+
 }
+
+#[cfg(feature = "dsl")]
+impl AuditSinkSpec  {
+    /// Set [`Self::policy`]
+    pub  fn policy_set(&mut self, policy: impl Into<crate::api::auditregistration::v1alpha1::Policy>) -> &mut Self {
+        self.policy = policy.into(); self
+    }
+
+    pub  fn policy(&mut self) -> &mut crate::api::auditregistration::v1alpha1::Policy {
+        &mut self.policy
+    }
+
+    /// Modify [`Self::policy`] with a `func`
+    pub  fn policy_with(&mut self, func: impl FnOnce(&mut crate::api::auditregistration::v1alpha1::Policy)) -> &mut Self {
+        func(&mut self.policy); self
+    }
+
+
+    /// Set [`Self::webhook`]
+    pub  fn webhook_set(&mut self, webhook: impl Into<crate::api::auditregistration::v1alpha1::Webhook>) -> &mut Self {
+        self.webhook = webhook.into(); self
+    }
+
+    pub  fn webhook(&mut self) -> &mut crate::api::auditregistration::v1alpha1::Webhook {
+        &mut self.webhook
+    }
+
+    /// Modify [`Self::webhook`] with a `func`
+    pub  fn webhook_with(&mut self, func: impl FnOnce(&mut crate::api::auditregistration::v1alpha1::Webhook)) -> &mut Self {
+        func(&mut self.webhook); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AuditSinkSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

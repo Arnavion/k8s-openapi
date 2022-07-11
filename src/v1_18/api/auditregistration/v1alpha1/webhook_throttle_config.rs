@@ -8,7 +8,51 @@ pub struct WebhookThrottleConfig {
 
     /// ThrottleQPS maximum number of batches per second default 10 QPS
     pub qps: Option<i64>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl WebhookThrottleConfig  {
+    /// Set [`Self::burst`]
+    pub  fn burst_set(&mut self, burst: impl Into<Option<i64>>) -> &mut Self {
+        self.burst = burst.into(); self
+    }
+
+    pub  fn burst(&mut self) -> &mut i64 {
+        if self.burst.is_none() { self.burst = Some(Default::default()) }
+        self.burst.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::burst`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn burst_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.burst.is_none() { self.burst = Some(Default::default()) };
+        func(self.burst.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::qps`]
+    pub  fn qps_set(&mut self, qps: impl Into<Option<i64>>) -> &mut Self {
+        self.qps = qps.into(); self
+    }
+
+    pub  fn qps(&mut self) -> &mut i64 {
+        if self.qps.is_none() { self.qps = Some(Default::default()) }
+        self.qps.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::qps`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn qps_with(&mut self, func: impl FnOnce(&mut i64)) -> &mut Self {
+        if self.qps.is_none() { self.qps = Some(Default::default()) };
+        func(self.qps.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WebhookThrottleConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

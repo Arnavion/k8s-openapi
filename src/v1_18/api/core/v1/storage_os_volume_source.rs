@@ -17,7 +17,108 @@ pub struct StorageOSVolumeSource {
 
     /// VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
     pub volume_namespace: Option<String>,
+
 }
+
+#[cfg(feature = "dsl")]
+impl StorageOSVolumeSource  {
+    /// Set [`Self::fs_type`]
+    pub  fn fs_type_set(&mut self, fs_type: impl Into<Option<String>>) -> &mut Self {
+        self.fs_type = fs_type.into(); self
+    }
+
+    pub  fn fs_type(&mut self) -> &mut String {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) }
+        self.fs_type.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::fs_type`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn fs_type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.fs_type.is_none() { self.fs_type = Some(Default::default()) };
+        func(self.fs_type.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::read_only`]
+    pub  fn read_only_set(&mut self, read_only: impl Into<Option<bool>>) -> &mut Self {
+        self.read_only = read_only.into(); self
+    }
+
+    pub  fn read_only(&mut self) -> &mut bool {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) }
+        self.read_only.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::read_only`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn read_only_with(&mut self, func: impl FnOnce(&mut bool)) -> &mut Self {
+        if self.read_only.is_none() { self.read_only = Some(Default::default()) };
+        func(self.read_only.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::secret_ref`]
+    pub  fn secret_ref_set(&mut self, secret_ref: impl Into<Option<crate::api::core::v1::LocalObjectReference>>) -> &mut Self {
+        self.secret_ref = secret_ref.into(); self
+    }
+
+    pub  fn secret_ref(&mut self) -> &mut crate::api::core::v1::LocalObjectReference {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) }
+        self.secret_ref.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::secret_ref`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn secret_ref_with(&mut self, func: impl FnOnce(&mut crate::api::core::v1::LocalObjectReference)) -> &mut Self {
+        if self.secret_ref.is_none() { self.secret_ref = Some(Default::default()) };
+        func(self.secret_ref.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_name`]
+    pub  fn volume_name_set(&mut self, volume_name: impl Into<Option<String>>) -> &mut Self {
+        self.volume_name = volume_name.into(); self
+    }
+
+    pub  fn volume_name(&mut self) -> &mut String {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) }
+        self.volume_name.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_name`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_name_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_name.is_none() { self.volume_name = Some(Default::default()) };
+        func(self.volume_name.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::volume_namespace`]
+    pub  fn volume_namespace_set(&mut self, volume_namespace: impl Into<Option<String>>) -> &mut Self {
+        self.volume_namespace = volume_namespace.into(); self
+    }
+
+    pub  fn volume_namespace(&mut self) -> &mut String {
+        if self.volume_namespace.is_none() { self.volume_namespace = Some(Default::default()) }
+        self.volume_namespace.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::volume_namespace`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn volume_namespace_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        if self.volume_namespace.is_none() { self.volume_namespace = Some(Default::default()) };
+        func(self.volume_namespace.as_mut().unwrap()); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StorageOSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

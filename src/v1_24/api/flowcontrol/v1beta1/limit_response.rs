@@ -8,7 +8,47 @@ pub struct LimitResponse {
 
     /// `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
     pub type_: String,
+
 }
+
+#[cfg(feature = "dsl")]
+impl LimitResponse  {
+    /// Set [`Self::queuing`]
+    pub  fn queuing_set(&mut self, queuing: impl Into<Option<crate::api::flowcontrol::v1beta1::QueuingConfiguration>>) -> &mut Self {
+        self.queuing = queuing.into(); self
+    }
+
+    pub  fn queuing(&mut self) -> &mut crate::api::flowcontrol::v1beta1::QueuingConfiguration {
+        if self.queuing.is_none() { self.queuing = Some(Default::default()) }
+        self.queuing.as_mut().unwrap()
+    }
+
+    /// Modify [`Self::queuing`] with a `func`
+    ///
+    /// The field will be set to `Default::default()` if not set before
+    pub  fn queuing_with(&mut self, func: impl FnOnce(&mut crate::api::flowcontrol::v1beta1::QueuingConfiguration)) -> &mut Self {
+        if self.queuing.is_none() { self.queuing = Some(Default::default()) };
+        func(self.queuing.as_mut().unwrap()); self
+    }
+
+
+    /// Set [`Self::type_`]
+    pub  fn type_set(&mut self, type_: impl Into<String>) -> &mut Self {
+        self.type_ = type_.into(); self
+    }
+
+    pub  fn type_(&mut self) -> &mut String {
+        &mut self.type_
+    }
+
+    /// Modify [`Self::type_`] with a `func`
+    pub  fn type_with(&mut self, func: impl FnOnce(&mut String)) -> &mut Self {
+        func(&mut self.type_); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,43 @@ pub struct PodsMetricSource {
 
     /// target specifies the target value for the given metric
     pub target: crate::api::autoscaling::v2beta2::MetricTarget,
+
 }
+
+#[cfg(feature = "dsl")]
+impl PodsMetricSource  {
+    /// Set [`Self::metric`]
+    pub  fn metric_set(&mut self, metric: impl Into<crate::api::autoscaling::v2beta2::MetricIdentifier>) -> &mut Self {
+        self.metric = metric.into(); self
+    }
+
+    pub  fn metric(&mut self) -> &mut crate::api::autoscaling::v2beta2::MetricIdentifier {
+        &mut self.metric
+    }
+
+    /// Modify [`Self::metric`] with a `func`
+    pub  fn metric_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::MetricIdentifier)) -> &mut Self {
+        func(&mut self.metric); self
+    }
+
+
+    /// Set [`Self::target`]
+    pub  fn target_set(&mut self, target: impl Into<crate::api::autoscaling::v2beta2::MetricTarget>) -> &mut Self {
+        self.target = target.into(); self
+    }
+
+    pub  fn target(&mut self) -> &mut crate::api::autoscaling::v2beta2::MetricTarget {
+        &mut self.target
+    }
+
+    /// Modify [`Self::target`] with a `func`
+    pub  fn target_with(&mut self, func: impl FnOnce(&mut crate::api::autoscaling::v2beta2::MetricTarget)) -> &mut Self {
+        func(&mut self.target); self
+    }
+
+
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
