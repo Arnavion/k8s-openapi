@@ -8,7 +8,17 @@ pub struct RuntimeClassStrategyOptions {
 
     /// defaultRuntimeClassName is the default RuntimeClassName to set on the pod. The default MUST be allowed by the allowedRuntimeClassNames list. A value of nil does not mutate the Pod.
     pub default_runtime_class_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for RuntimeClassStrategyOptions  {
+    fn merge_from(&mut self, other: Self) {
+        self.allowed_runtime_class_names.merge_from(other.allowed_runtime_class_names);
+        self.default_runtime_class_name.merge_from(other.default_runtime_class_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClassStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

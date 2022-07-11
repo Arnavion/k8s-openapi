@@ -17,7 +17,20 @@ pub struct HorizontalPodAutoscalerStatus {
 
     /// most recent generation observed by this autoscaler.
     pub observed_generation: Option<i64>,
+
 }
+
+impl crate::DeepMerge for HorizontalPodAutoscalerStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.current_cpu_utilization_percentage.merge_from(other.current_cpu_utilization_percentage);
+        self.current_replicas.merge_from(other.current_replicas);
+        self.desired_replicas.merge_from(other.desired_replicas);
+        self.last_scale_time.merge_from(other.last_scale_time);
+        self.observed_generation.merge_from(other.observed_generation);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

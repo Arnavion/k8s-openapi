@@ -11,7 +11,18 @@ pub struct PriorityLevelConfiguration {
 
     /// `status` is the current status of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
     pub status: Option<crate::api::flowcontrol::v1alpha1::PriorityLevelConfigurationStatus>,
+
 }
+
+impl crate::DeepMerge for PriorityLevelConfiguration  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin flowcontrol.apiserver.k8s.io/v1alpha1/PriorityLevelConfiguration
 

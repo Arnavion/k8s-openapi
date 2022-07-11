@@ -14,7 +14,19 @@ pub struct VsphereVirtualDiskVolumeSource {
 
     /// volumePath is the path that identifies vSphere volume vmdk
     pub volume_path: String,
+
 }
+
+impl crate::DeepMerge for VsphereVirtualDiskVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.storage_policy_id.merge_from(other.storage_policy_id);
+        self.storage_policy_name.merge_from(other.storage_policy_name);
+        self.volume_path.merge_from(other.volume_path);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

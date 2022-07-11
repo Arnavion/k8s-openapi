@@ -11,7 +11,18 @@ pub struct ResourceFieldSelector {
 
     /// Required: resource to select
     pub resource: String,
+
 }
+
+impl crate::DeepMerge for ResourceFieldSelector  {
+    fn merge_from(&mut self, other: Self) {
+        self.container_name.merge_from(other.container_name);
+        self.divisor.merge_from(other.divisor);
+        self.resource.merge_from(other.resource);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

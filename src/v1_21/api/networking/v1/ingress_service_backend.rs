@@ -8,7 +8,17 @@ pub struct IngressServiceBackend {
 
     /// Port of the referenced service. A port name or port number is required for a IngressServiceBackend.
     pub port: Option<crate::api::networking::v1::ServiceBackendPort>,
+
 }
+
+impl crate::DeepMerge for IngressServiceBackend  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.port.merge_from(other.port);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressServiceBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

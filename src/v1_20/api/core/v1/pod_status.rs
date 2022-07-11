@@ -45,7 +45,28 @@ pub struct PodStatus {
 
     /// RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
     pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+impl crate::DeepMerge for PodStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+        self.container_statuses.merge_from(other.container_statuses);
+        self.ephemeral_container_statuses.merge_from(other.ephemeral_container_statuses);
+        self.host_ip.merge_from(other.host_ip);
+        self.init_container_statuses.merge_from(other.init_container_statuses);
+        self.message.merge_from(other.message);
+        self.nominated_node_name.merge_from(other.nominated_node_name);
+        self.phase.merge_from(other.phase);
+        self.pod_ip.merge_from(other.pod_ip);
+        self.pod_ips.merge_from(other.pod_ips);
+        self.qos_class.merge_from(other.qos_class);
+        self.reason.merge_from(other.reason);
+        self.start_time.merge_from(other.start_time);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,18 @@ pub struct PortworxVolumeSource {
 
     /// VolumeID uniquely identifies a Portworx volume
     pub volume_id: String,
+
 }
+
+impl crate::DeepMerge for PortworxVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.read_only.merge_from(other.read_only);
+        self.volume_id.merge_from(other.volume_id);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PortworxVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

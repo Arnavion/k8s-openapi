@@ -11,7 +11,18 @@ pub struct ResourceMetricSource {
 
     /// targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
     pub target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+impl crate::DeepMerge for ResourceMetricSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.target_average_utilization.merge_from(other.target_average_utilization);
+        self.target_average_value.merge_from(other.target_average_value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

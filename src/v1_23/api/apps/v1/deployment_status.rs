@@ -26,7 +26,23 @@ pub struct DeploymentStatus {
 
     /// Total number of non-terminated pods targeted by this deployment that have the desired template spec.
     pub updated_replicas: Option<i32>,
+
 }
+
+impl crate::DeepMerge for DeploymentStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.available_replicas.merge_from(other.available_replicas);
+        self.collision_count.merge_from(other.collision_count);
+        self.conditions.merge_from(other.conditions);
+        self.observed_generation.merge_from(other.observed_generation);
+        self.ready_replicas.merge_from(other.ready_replicas);
+        self.replicas.merge_from(other.replicas);
+        self.unavailable_replicas.merge_from(other.unavailable_replicas);
+        self.updated_replicas.merge_from(other.updated_replicas);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DeploymentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

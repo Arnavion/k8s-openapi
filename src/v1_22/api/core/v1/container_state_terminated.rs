@@ -23,7 +23,22 @@ pub struct ContainerStateTerminated {
 
     /// Time at which previous execution of the container started
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+impl crate::DeepMerge for ContainerStateTerminated  {
+    fn merge_from(&mut self, other: Self) {
+        self.container_id.merge_from(other.container_id);
+        self.exit_code.merge_from(other.exit_code);
+        self.finished_at.merge_from(other.finished_at);
+        self.message.merge_from(other.message);
+        self.reason.merge_from(other.reason);
+        self.signal.merge_from(other.signal);
+        self.started_at.merge_from(other.started_at);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

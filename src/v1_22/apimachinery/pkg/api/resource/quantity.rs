@@ -34,6 +34,12 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Quantity(pub String);
 
+impl crate::DeepMerge for Quantity {
+    fn merge_from(&mut self, other: Self) {
+        self.0.merge_from(other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Quantity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;
@@ -59,6 +65,7 @@ impl crate::serde::Serialize for Quantity {
         serializer.serialize_newtype_struct("Quantity", &self.0)
     }
 }
+
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Quantity {

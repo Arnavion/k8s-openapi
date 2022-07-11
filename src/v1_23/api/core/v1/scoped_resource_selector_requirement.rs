@@ -13,7 +13,18 @@ pub struct ScopedResourceSelectorRequirement {
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
     pub values: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for ScopedResourceSelectorRequirement  {
+    fn merge_from(&mut self, other: Self) {
+        self.operator.merge_from(other.operator);
+        self.scope_name.merge_from(other.scope_name);
+        self.values.merge_from(other.values);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScopedResourceSelectorRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

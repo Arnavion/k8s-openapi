@@ -134,7 +134,59 @@ pub struct JSONSchemaProps {
 
     /// x-kubernetes-validations describes a list of validation rules written in the CEL expression language. This field is an alpha-level. Using this field requires the feature gate `CustomResourceValidationExpressions` to be enabled.
     pub x_kubernetes_validations: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::ValidationRule>>,
+
 }
+
+impl crate::DeepMerge for JSONSchemaProps  {
+    fn merge_from(&mut self, other: Self) {
+        self.ref_path.merge_from(other.ref_path);
+        self.schema.merge_from(other.schema);
+        self.additional_items.merge_from(other.additional_items);
+        self.additional_properties.merge_from(other.additional_properties);
+        self.all_of.merge_from(other.all_of);
+        self.any_of.merge_from(other.any_of);
+        self.default.merge_from(other.default);
+        self.definitions.merge_from(other.definitions);
+        self.dependencies.merge_from(other.dependencies);
+        self.description.merge_from(other.description);
+        self.enum_.merge_from(other.enum_);
+        self.example.merge_from(other.example);
+        self.exclusive_maximum.merge_from(other.exclusive_maximum);
+        self.exclusive_minimum.merge_from(other.exclusive_minimum);
+        self.external_docs.merge_from(other.external_docs);
+        self.format.merge_from(other.format);
+        self.id.merge_from(other.id);
+        self.items.merge_from(other.items);
+        self.max_items.merge_from(other.max_items);
+        self.max_length.merge_from(other.max_length);
+        self.max_properties.merge_from(other.max_properties);
+        self.maximum.merge_from(other.maximum);
+        self.min_items.merge_from(other.min_items);
+        self.min_length.merge_from(other.min_length);
+        self.min_properties.merge_from(other.min_properties);
+        self.minimum.merge_from(other.minimum);
+        self.multiple_of.merge_from(other.multiple_of);
+        self.not.merge_from(other.not);
+        self.nullable.merge_from(other.nullable);
+        self.one_of.merge_from(other.one_of);
+        self.pattern.merge_from(other.pattern);
+        self.pattern_properties.merge_from(other.pattern_properties);
+        self.properties.merge_from(other.properties);
+        self.required.merge_from(other.required);
+        self.title.merge_from(other.title);
+        self.type_.merge_from(other.type_);
+        self.unique_items.merge_from(other.unique_items);
+        self.x_kubernetes_embedded_resource.merge_from(other.x_kubernetes_embedded_resource);
+        self.x_kubernetes_int_or_string.merge_from(other.x_kubernetes_int_or_string);
+        self.x_kubernetes_list_map_keys.merge_from(other.x_kubernetes_list_map_keys);
+        self.x_kubernetes_list_type.merge_from(other.x_kubernetes_list_type);
+        self.x_kubernetes_map_type.merge_from(other.x_kubernetes_map_type);
+        self.x_kubernetes_preserve_unknown_fields.merge_from(other.x_kubernetes_preserve_unknown_fields);
+        self.x_kubernetes_validations.merge_from(other.x_kubernetes_validations);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

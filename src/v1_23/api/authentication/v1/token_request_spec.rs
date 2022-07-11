@@ -11,7 +11,18 @@ pub struct TokenRequestSpec {
 
     /// ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.
     pub expiration_seconds: Option<i64>,
+
 }
+
+impl crate::DeepMerge for TokenRequestSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.audiences.merge_from(other.audiences);
+        self.bound_object_ref.merge_from(other.bound_object_ref);
+        self.expiration_seconds.merge_from(other.expiration_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

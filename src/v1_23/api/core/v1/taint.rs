@@ -15,7 +15,19 @@ pub struct Taint {
 
     /// The taint value corresponding to the taint key.
     pub value: Option<String>,
+
 }
+
+impl crate::DeepMerge for Taint  {
+    fn merge_from(&mut self, other: Self) {
+        self.effect.merge_from(other.effect);
+        self.key.merge_from(other.key);
+        self.time_added.merge_from(other.time_added);
+        self.value.merge_from(other.value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Taint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

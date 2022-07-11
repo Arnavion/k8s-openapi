@@ -14,7 +14,19 @@ pub struct ConfigMap {
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+impl crate::DeepMerge for ConfigMap  {
+    fn merge_from(&mut self, other: Self) {
+        self.binary_data.merge_from(other.binary_data);
+        self.data.merge_from(other.data);
+        self.immutable.merge_from(other.immutable);
+        self.metadata.merge_from(other.metadata);
+
+    }
+}
+
 
 // Begin /v1/ConfigMap
 

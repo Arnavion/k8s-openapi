@@ -5,7 +5,16 @@
 pub struct APIServiceStatus {
     /// Current service state of apiService.
     pub conditions: Option<Vec<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceCondition>>,
+
 }
+
+impl crate::DeepMerge for APIServiceStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for APIServiceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

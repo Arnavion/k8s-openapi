@@ -8,7 +8,17 @@ pub struct List<T> where T: crate::ListableResource {
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ListMeta,
+
 }
+
+impl<T> crate::DeepMerge for List<T>  where T: crate::ListableResource {
+    fn merge_from(&mut self, other: Self) {
+        self.items.merge_from(other.items);
+        self.metadata.merge_from(other.metadata);
+
+    }
+}
+
 
 impl<T> crate::Resource for List<T> where T: crate::ListableResource {
     const API_VERSION: &'static str = <T as crate::Resource>::API_VERSION;

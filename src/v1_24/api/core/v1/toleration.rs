@@ -19,7 +19,20 @@ pub struct Toleration {
 
     /// Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
     pub value: Option<String>,
+
 }
+
+impl crate::DeepMerge for Toleration  {
+    fn merge_from(&mut self, other: Self) {
+        self.effect.merge_from(other.effect);
+        self.key.merge_from(other.key);
+        self.operator.merge_from(other.operator);
+        self.toleration_seconds.merge_from(other.toleration_seconds);
+        self.value.merge_from(other.value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Toleration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

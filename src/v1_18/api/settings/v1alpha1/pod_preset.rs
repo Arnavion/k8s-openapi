@@ -6,7 +6,17 @@ pub struct PodPreset {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     pub spec: Option<crate::api::settings::v1alpha1::PodPresetSpec>,
+
 }
+
+impl crate::DeepMerge for PodPreset  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin settings.k8s.io/v1alpha1/PodPreset
 

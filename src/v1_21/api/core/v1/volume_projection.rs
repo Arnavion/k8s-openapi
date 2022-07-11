@@ -14,7 +14,19 @@ pub struct VolumeProjection {
 
     /// information about the serviceAccountToken data to project
     pub service_account_token: Option<crate::api::core::v1::ServiceAccountTokenProjection>,
+
 }
+
+impl crate::DeepMerge for VolumeProjection  {
+    fn merge_from(&mut self, other: Self) {
+        self.config_map.merge_from(other.config_map);
+        self.downward_api.merge_from(other.downward_api);
+        self.secret.merge_from(other.secret);
+        self.service_account_token.merge_from(other.service_account_token);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

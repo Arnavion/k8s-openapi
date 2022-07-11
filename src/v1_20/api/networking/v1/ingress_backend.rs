@@ -8,7 +8,17 @@ pub struct IngressBackend {
 
     /// Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
     pub service: Option<crate::api::networking::v1::IngressServiceBackend>,
+
 }
+
+impl crate::DeepMerge for IngressBackend  {
+    fn merge_from(&mut self, other: Self) {
+        self.resource.merge_from(other.resource);
+        self.service.merge_from(other.service);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

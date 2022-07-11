@@ -12,7 +12,18 @@ pub struct CreateOptional<'a> {
 
     /// fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields, provided that the `ServerSideFieldValidation` feature gate is also enabled. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23 and is the default behavior when the `ServerSideFieldValidation` feature gate is disabled. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default when the `ServerSideFieldValidation` feature gate is enabled. - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
     pub field_validation: Option<&'a str>,
+
 }
+
+impl<'a> crate::DeepMerge for CreateOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.dry_run.merge_from(other.dry_run);
+        self.field_manager.merge_from(other.field_manager);
+        self.field_validation.merge_from(other.field_validation);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> CreateOptional<'a> {

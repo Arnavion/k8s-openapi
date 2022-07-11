@@ -12,7 +12,18 @@ pub struct ReplaceOptional<'a> {
 
     /// fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the `ServerSideFieldValidation` feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields.
     pub field_validation: Option<&'a str>,
+
 }
+
+impl<'a> crate::DeepMerge for ReplaceOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.dry_run.merge_from(other.dry_run);
+        self.field_manager.merge_from(other.field_manager);
+        self.field_validation.merge_from(other.field_validation);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> ReplaceOptional<'a> {

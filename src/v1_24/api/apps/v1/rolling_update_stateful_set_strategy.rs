@@ -8,7 +8,17 @@ pub struct RollingUpdateStatefulSetStrategy {
 
     /// Partition indicates the ordinal at which the StatefulSet should be partitioned for updates. During a rolling update, all pods from ordinal Replicas-1 to Partition are updated. All pods from ordinal Partition-1 to 0 remain untouched. This is helpful in being able to do a canary based deployment. The default value is 0.
     pub partition: Option<i32>,
+
 }
+
+impl crate::DeepMerge for RollingUpdateStatefulSetStrategy  {
+    fn merge_from(&mut self, other: Self) {
+        self.max_unavailable.merge_from(other.max_unavailable);
+        self.partition.merge_from(other.partition);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateStatefulSetStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

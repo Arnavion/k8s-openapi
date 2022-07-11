@@ -11,7 +11,18 @@ pub struct StorageVersionStatus {
 
     /// The reported versions per API server instance.
     pub storage_versions: Option<Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>>,
+
 }
+
+impl crate::DeepMerge for StorageVersionStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.common_encoding_version.merge_from(other.common_encoding_version);
+        self.conditions.merge_from(other.conditions);
+        self.storage_versions.merge_from(other.storage_versions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StorageVersionStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

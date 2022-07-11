@@ -4,6 +4,12 @@
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
+impl crate::DeepMerge for Time {
+    fn merge_from(&mut self, other: Self) {
+        self.0.merge_from(other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Time {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;
@@ -29,6 +35,7 @@ impl crate::serde::Serialize for Time {
         serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
     }
 }
+
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Time {

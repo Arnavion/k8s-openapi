@@ -8,7 +8,17 @@ pub struct APIResourceList {
 
     /// resources contains the name of the resources and if they are namespaced.
     pub resources: Vec<crate::apimachinery::pkg::apis::meta::v1::APIResource>,
+
 }
+
+impl crate::DeepMerge for APIResourceList  {
+    fn merge_from(&mut self, other: Self) {
+        self.group_version.merge_from(other.group_version);
+        self.resources.merge_from(other.resources);
+
+    }
+}
+
 
 impl crate::Resource for APIResourceList {
     const API_VERSION: &'static str = "v1";

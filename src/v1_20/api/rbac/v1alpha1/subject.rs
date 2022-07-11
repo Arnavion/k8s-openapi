@@ -14,7 +14,19 @@ pub struct Subject {
 
     /// Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or "Group", and this value is not empty the Authorizer should report an error.
     pub namespace: Option<String>,
+
 }
+
+impl crate::DeepMerge for Subject  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Subject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -36,7 +36,26 @@ pub struct NodeStatus {
 
     /// List of attachable volumes in use (mounted) by the node.
     pub volumes_in_use: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for NodeStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.addresses.merge_from(other.addresses);
+        self.allocatable.merge_from(other.allocatable);
+        self.capacity.merge_from(other.capacity);
+        self.conditions.merge_from(other.conditions);
+        self.config.merge_from(other.config);
+        self.daemon_endpoints.merge_from(other.daemon_endpoints);
+        self.images.merge_from(other.images);
+        self.node_info.merge_from(other.node_info);
+        self.phase.merge_from(other.phase);
+        self.volumes_attached.merge_from(other.volumes_attached);
+        self.volumes_in_use.merge_from(other.volumes_in_use);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

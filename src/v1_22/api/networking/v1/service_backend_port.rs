@@ -8,7 +8,17 @@ pub struct ServiceBackendPort {
 
     /// Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with "Name".
     pub number: Option<i32>,
+
 }
+
+impl crate::DeepMerge for ServiceBackendPort  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.number.merge_from(other.number);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceBackendPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

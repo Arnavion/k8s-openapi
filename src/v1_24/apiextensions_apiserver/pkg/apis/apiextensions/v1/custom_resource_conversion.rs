@@ -9,7 +9,17 @@ pub struct CustomResourceConversion {
 
     /// webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
     pub webhook: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>,
+
 }
+
+impl crate::DeepMerge for CustomResourceConversion  {
+    fn merge_from(&mut self, other: Self) {
+        self.strategy.merge_from(other.strategy);
+        self.webhook.merge_from(other.webhook);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

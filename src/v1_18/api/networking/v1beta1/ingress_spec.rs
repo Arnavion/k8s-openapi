@@ -14,7 +14,19 @@ pub struct IngressSpec {
 
     /// TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
     pub tls: Option<Vec<crate::api::networking::v1beta1::IngressTLS>>,
+
 }
+
+impl crate::DeepMerge for IngressSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.backend.merge_from(other.backend);
+        self.ingress_class_name.merge_from(other.ingress_class_name);
+        self.rules.merge_from(other.rules);
+        self.tls.merge_from(other.tls);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

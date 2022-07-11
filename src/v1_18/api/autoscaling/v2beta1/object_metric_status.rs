@@ -17,7 +17,20 @@ pub struct ObjectMetricStatus {
 
     /// target is the described Kubernetes object.
     pub target: crate::api::autoscaling::v2beta1::CrossVersionObjectReference,
+
 }
+
+impl crate::DeepMerge for ObjectMetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.average_value.merge_from(other.average_value);
+        self.current_value.merge_from(other.current_value);
+        self.metric_name.merge_from(other.metric_name);
+        self.selector.merge_from(other.selector);
+        self.target.merge_from(other.target);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

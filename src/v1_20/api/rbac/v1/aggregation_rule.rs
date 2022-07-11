@@ -5,7 +5,16 @@
 pub struct AggregationRule {
     /// ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
     pub cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
+
 }
+
+impl crate::DeepMerge for AggregationRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.cluster_role_selectors.merge_from(other.cluster_role_selectors);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AggregationRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

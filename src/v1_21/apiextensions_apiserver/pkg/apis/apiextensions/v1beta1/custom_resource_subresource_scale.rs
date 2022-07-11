@@ -11,7 +11,18 @@ pub struct CustomResourceSubresourceScale {
 
     /// statusReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `status.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status`. If there is no value under the given path in the custom resource, the `status.replicas` value in the `/scale` subresource will default to 0.
     pub status_replicas_path: String,
+
 }
+
+impl crate::DeepMerge for CustomResourceSubresourceScale  {
+    fn merge_from(&mut self, other: Self) {
+        self.label_selector_path.merge_from(other.label_selector_path);
+        self.spec_replicas_path.merge_from(other.spec_replicas_path);
+        self.status_replicas_path.merge_from(other.status_replicas_path);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresourceScale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

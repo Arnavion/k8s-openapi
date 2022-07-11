@@ -33,7 +33,20 @@ pub struct CSIStorageCapacity {
 
     /// The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
     pub storage_class_name: String,
+
 }
+
+impl crate::DeepMerge for CSIStorageCapacity  {
+    fn merge_from(&mut self, other: Self) {
+        self.capacity.merge_from(other.capacity);
+        self.maximum_volume_size.merge_from(other.maximum_volume_size);
+        self.metadata.merge_from(other.metadata);
+        self.node_topology.merge_from(other.node_topology);
+        self.storage_class_name.merge_from(other.storage_class_name);
+
+    }
+}
+
 
 // Begin storage.k8s.io/v1alpha1/CSIStorageCapacity
 

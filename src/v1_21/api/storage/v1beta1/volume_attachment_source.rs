@@ -8,7 +8,17 @@ pub struct VolumeAttachmentSource {
 
     /// Name of the persistent volume to attach.
     pub persistent_volume_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for VolumeAttachmentSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.inline_volume_spec.merge_from(other.inline_volume_spec);
+        self.persistent_volume_name.merge_from(other.persistent_volume_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

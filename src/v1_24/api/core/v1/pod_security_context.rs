@@ -36,7 +36,25 @@ pub struct PodSecurityContext {
 
     /// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is linux.
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
+
 }
+
+impl crate::DeepMerge for PodSecurityContext  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_group.merge_from(other.fs_group);
+        self.fs_group_change_policy.merge_from(other.fs_group_change_policy);
+        self.run_as_group.merge_from(other.run_as_group);
+        self.run_as_non_root.merge_from(other.run_as_non_root);
+        self.run_as_user.merge_from(other.run_as_user);
+        self.se_linux_options.merge_from(other.se_linux_options);
+        self.seccomp_profile.merge_from(other.seccomp_profile);
+        self.supplemental_groups.merge_from(other.supplemental_groups);
+        self.sysctls.merge_from(other.sysctls);
+        self.windows_options.merge_from(other.windows_options);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

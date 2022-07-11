@@ -17,7 +17,20 @@ pub struct Secret {
 
     /// Used to facilitate programmatic handling of secret data. More info: https://kubernetes.io/docs/concepts/configuration/secret/#secret-types
     pub type_: Option<String>,
+
 }
+
+impl crate::DeepMerge for Secret  {
+    fn merge_from(&mut self, other: Self) {
+        self.data.merge_from(other.data);
+        self.immutable.merge_from(other.immutable);
+        self.metadata.merge_from(other.metadata);
+        self.string_data.merge_from(other.string_data);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 // Begin /v1/Secret
 

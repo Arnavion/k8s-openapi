@@ -11,7 +11,18 @@ pub struct PodsMetricStatus {
 
     /// selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+impl crate::DeepMerge for PodsMetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.current_average_value.merge_from(other.current_average_value);
+        self.metric_name.merge_from(other.metric_name);
+        self.selector.merge_from(other.selector);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -17,7 +17,20 @@ pub struct FlexPersistentVolumeSource {
 
     /// secretRef is Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.
     pub secret_ref: Option<crate::api::core::v1::SecretReference>,
+
 }
+
+impl crate::DeepMerge for FlexPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.driver.merge_from(other.driver);
+        self.fs_type.merge_from(other.fs_type);
+        self.options.merge_from(other.options);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlexPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct TokenRequest {
 
     /// ExpirationSeconds is the duration of validity of the token in "TokenRequestSpec". It has the same default value of "ExpirationSeconds" in "TokenRequestSpec"
     pub expiration_seconds: Option<i64>,
+
 }
+
+impl crate::DeepMerge for TokenRequest  {
+    fn merge_from(&mut self, other: Self) {
+        self.audience.merge_from(other.audience);
+        self.expiration_seconds.merge_from(other.expiration_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

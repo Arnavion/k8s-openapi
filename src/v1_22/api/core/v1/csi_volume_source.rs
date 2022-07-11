@@ -17,7 +17,20 @@ pub struct CSIVolumeSource {
 
     /// VolumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
     pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
+
 }
+
+impl crate::DeepMerge for CSIVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.driver.merge_from(other.driver);
+        self.fs_type.merge_from(other.fs_type);
+        self.node_publish_secret_ref.merge_from(other.node_publish_secret_ref);
+        self.read_only.merge_from(other.read_only);
+        self.volume_attributes.merge_from(other.volume_attributes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct GroupSubject {
     /// name is the user group that matches, or "*" to match all user groups. See https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.
     pub name: String,
+
 }
+
+impl crate::DeepMerge for GroupSubject  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GroupSubject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

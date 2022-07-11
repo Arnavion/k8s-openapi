@@ -8,7 +8,17 @@ pub struct DownwardAPIVolumeSource {
 
     /// Items is a list of downward API volume file
     pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+
 }
+
+impl crate::DeepMerge for DownwardAPIVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.default_mode.merge_from(other.default_mode);
+        self.items.merge_from(other.items);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

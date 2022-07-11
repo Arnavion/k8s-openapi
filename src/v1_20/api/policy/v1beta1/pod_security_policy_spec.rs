@@ -78,7 +78,39 @@ pub struct PodSecurityPolicySpec {
 
     /// volumes is an allowlist of volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
     pub volumes: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for PodSecurityPolicySpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.allow_privilege_escalation.merge_from(other.allow_privilege_escalation);
+        self.allowed_csi_drivers.merge_from(other.allowed_csi_drivers);
+        self.allowed_capabilities.merge_from(other.allowed_capabilities);
+        self.allowed_flex_volumes.merge_from(other.allowed_flex_volumes);
+        self.allowed_host_paths.merge_from(other.allowed_host_paths);
+        self.allowed_proc_mount_types.merge_from(other.allowed_proc_mount_types);
+        self.allowed_unsafe_sysctls.merge_from(other.allowed_unsafe_sysctls);
+        self.default_add_capabilities.merge_from(other.default_add_capabilities);
+        self.default_allow_privilege_escalation.merge_from(other.default_allow_privilege_escalation);
+        self.forbidden_sysctls.merge_from(other.forbidden_sysctls);
+        self.fs_group.merge_from(other.fs_group);
+        self.host_ipc.merge_from(other.host_ipc);
+        self.host_network.merge_from(other.host_network);
+        self.host_pid.merge_from(other.host_pid);
+        self.host_ports.merge_from(other.host_ports);
+        self.privileged.merge_from(other.privileged);
+        self.read_only_root_filesystem.merge_from(other.read_only_root_filesystem);
+        self.required_drop_capabilities.merge_from(other.required_drop_capabilities);
+        self.run_as_group.merge_from(other.run_as_group);
+        self.run_as_user.merge_from(other.run_as_user);
+        self.runtime_class.merge_from(other.runtime_class);
+        self.se_linux.merge_from(other.se_linux);
+        self.supplemental_groups.merge_from(other.supplemental_groups);
+        self.volumes.merge_from(other.volumes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

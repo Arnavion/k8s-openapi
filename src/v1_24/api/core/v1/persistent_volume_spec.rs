@@ -93,7 +93,45 @@ pub struct PersistentVolumeSpec {
 
     /// vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
     pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.access_modes.merge_from(other.access_modes);
+        self.aws_elastic_block_store.merge_from(other.aws_elastic_block_store);
+        self.azure_disk.merge_from(other.azure_disk);
+        self.azure_file.merge_from(other.azure_file);
+        self.capacity.merge_from(other.capacity);
+        self.cephfs.merge_from(other.cephfs);
+        self.cinder.merge_from(other.cinder);
+        self.claim_ref.merge_from(other.claim_ref);
+        self.csi.merge_from(other.csi);
+        self.fc.merge_from(other.fc);
+        self.flex_volume.merge_from(other.flex_volume);
+        self.flocker.merge_from(other.flocker);
+        self.gce_persistent_disk.merge_from(other.gce_persistent_disk);
+        self.glusterfs.merge_from(other.glusterfs);
+        self.host_path.merge_from(other.host_path);
+        self.iscsi.merge_from(other.iscsi);
+        self.local.merge_from(other.local);
+        self.mount_options.merge_from(other.mount_options);
+        self.nfs.merge_from(other.nfs);
+        self.node_affinity.merge_from(other.node_affinity);
+        self.persistent_volume_reclaim_policy.merge_from(other.persistent_volume_reclaim_policy);
+        self.photon_persistent_disk.merge_from(other.photon_persistent_disk);
+        self.portworx_volume.merge_from(other.portworx_volume);
+        self.quobyte.merge_from(other.quobyte);
+        self.rbd.merge_from(other.rbd);
+        self.scale_io.merge_from(other.scale_io);
+        self.storage_class_name.merge_from(other.storage_class_name);
+        self.storageos.merge_from(other.storageos);
+        self.volume_mode.merge_from(other.volume_mode);
+        self.vsphere_volume.merge_from(other.vsphere_volume);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

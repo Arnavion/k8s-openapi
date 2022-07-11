@@ -11,7 +11,18 @@ pub struct AzureFileVolumeSource {
 
     /// Share Name
     pub share_name: String,
+
 }
+
+impl crate::DeepMerge for AzureFileVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.read_only.merge_from(other.read_only);
+        self.secret_name.merge_from(other.secret_name);
+        self.share_name.merge_from(other.share_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AzureFileVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

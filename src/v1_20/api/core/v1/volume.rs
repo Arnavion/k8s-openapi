@@ -105,7 +105,45 @@ pub struct Volume {
 
     /// VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
     pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
+
 }
+
+impl crate::DeepMerge for Volume  {
+    fn merge_from(&mut self, other: Self) {
+        self.aws_elastic_block_store.merge_from(other.aws_elastic_block_store);
+        self.azure_disk.merge_from(other.azure_disk);
+        self.azure_file.merge_from(other.azure_file);
+        self.cephfs.merge_from(other.cephfs);
+        self.cinder.merge_from(other.cinder);
+        self.config_map.merge_from(other.config_map);
+        self.csi.merge_from(other.csi);
+        self.downward_api.merge_from(other.downward_api);
+        self.empty_dir.merge_from(other.empty_dir);
+        self.ephemeral.merge_from(other.ephemeral);
+        self.fc.merge_from(other.fc);
+        self.flex_volume.merge_from(other.flex_volume);
+        self.flocker.merge_from(other.flocker);
+        self.gce_persistent_disk.merge_from(other.gce_persistent_disk);
+        self.git_repo.merge_from(other.git_repo);
+        self.glusterfs.merge_from(other.glusterfs);
+        self.host_path.merge_from(other.host_path);
+        self.iscsi.merge_from(other.iscsi);
+        self.name.merge_from(other.name);
+        self.nfs.merge_from(other.nfs);
+        self.persistent_volume_claim.merge_from(other.persistent_volume_claim);
+        self.photon_persistent_disk.merge_from(other.photon_persistent_disk);
+        self.portworx_volume.merge_from(other.portworx_volume);
+        self.projected.merge_from(other.projected);
+        self.quobyte.merge_from(other.quobyte);
+        self.rbd.merge_from(other.rbd);
+        self.scale_io.merge_from(other.scale_io);
+        self.secret.merge_from(other.secret);
+        self.storageos.merge_from(other.storageos);
+        self.vsphere_volume.merge_from(other.vsphere_volume);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Volume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

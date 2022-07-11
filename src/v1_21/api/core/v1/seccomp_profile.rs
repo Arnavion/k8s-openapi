@@ -10,7 +10,17 @@ pub struct SeccompProfile {
     ///
     /// Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for SeccompProfile  {
+    fn merge_from(&mut self, other: Self) {
+        self.localhost_profile.merge_from(other.localhost_profile);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SeccompProfile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,19 @@ pub struct ServiceAccount {
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
     pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
+
 }
+
+impl crate::DeepMerge for ServiceAccount  {
+    fn merge_from(&mut self, other: Self) {
+        self.automount_service_account_token.merge_from(other.automount_service_account_token);
+        self.image_pull_secrets.merge_from(other.image_pull_secrets);
+        self.metadata.merge_from(other.metadata);
+        self.secrets.merge_from(other.secrets);
+
+    }
+}
+
 
 // Begin /v1/ServiceAccount
 

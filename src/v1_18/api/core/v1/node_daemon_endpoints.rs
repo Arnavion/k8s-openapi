@@ -5,7 +5,16 @@
 pub struct NodeDaemonEndpoints {
     /// Endpoint on which Kubelet is listening.
     pub kubelet_endpoint: Option<crate::api::core::v1::DaemonEndpoint>,
+
 }
+
+impl crate::DeepMerge for NodeDaemonEndpoints  {
+    fn merge_from(&mut self, other: Self) {
+        self.kubelet_endpoint.merge_from(other.kubelet_endpoint);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeDaemonEndpoints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

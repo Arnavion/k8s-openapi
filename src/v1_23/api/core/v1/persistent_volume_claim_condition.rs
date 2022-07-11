@@ -18,7 +18,21 @@ pub struct PersistentVolumeClaimCondition {
     pub status: String,
 
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaimCondition  {
+    fn merge_from(&mut self, other: Self) {
+        self.last_probe_time.merge_from(other.last_probe_time);
+        self.last_transition_time.merge_from(other.last_transition_time);
+        self.message.merge_from(other.message);
+        self.reason.merge_from(other.reason);
+        self.status.merge_from(other.status);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimCondition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

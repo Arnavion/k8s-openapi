@@ -32,7 +32,25 @@ pub struct ScaleIOVolumeSource {
 
     /// The name of a volume already created in the ScaleIO system that is associated with this volume source.
     pub volume_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for ScaleIOVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.gateway.merge_from(other.gateway);
+        self.protection_domain.merge_from(other.protection_domain);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.ssl_enabled.merge_from(other.ssl_enabled);
+        self.storage_mode.merge_from(other.storage_mode);
+        self.storage_pool.merge_from(other.storage_pool);
+        self.system.merge_from(other.system);
+        self.volume_name.merge_from(other.volume_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleIOVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

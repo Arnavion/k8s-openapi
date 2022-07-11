@@ -35,7 +35,26 @@ pub struct ISCSIPersistentVolumeSource {
 
     /// iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
     pub target_portal: String,
+
 }
+
+impl crate::DeepMerge for ISCSIPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.chap_auth_discovery.merge_from(other.chap_auth_discovery);
+        self.chap_auth_session.merge_from(other.chap_auth_session);
+        self.fs_type.merge_from(other.fs_type);
+        self.initiator_name.merge_from(other.initiator_name);
+        self.iqn.merge_from(other.iqn);
+        self.iscsi_interface.merge_from(other.iscsi_interface);
+        self.lun.merge_from(other.lun);
+        self.portals.merge_from(other.portals);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.target_portal.merge_from(other.target_portal);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

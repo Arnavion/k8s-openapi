@@ -20,7 +20,21 @@ pub struct QuobyteVolumeSource {
 
     /// volume is a string that references an already created Quobyte volume by name.
     pub volume: String,
+
 }
+
+impl crate::DeepMerge for QuobyteVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.group.merge_from(other.group);
+        self.read_only.merge_from(other.read_only);
+        self.registry.merge_from(other.registry);
+        self.tenant.merge_from(other.tenant);
+        self.user.merge_from(other.user);
+        self.volume.merge_from(other.volume);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for QuobyteVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct ScaleStatus {
 
     /// label query over pods that should match the replicas count. This is same as the label selector but in the string format to avoid introspection by clients. The string will be in the same format as the query-param syntax. More info about label selectors: http://kubernetes.io/docs/user-guide/labels#label-selectors
     pub selector: Option<String>,
+
 }
+
+impl crate::DeepMerge for ScaleStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.replicas.merge_from(other.replicas);
+        self.selector.merge_from(other.selector);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

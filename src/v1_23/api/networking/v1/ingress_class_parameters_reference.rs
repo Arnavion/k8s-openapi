@@ -17,7 +17,20 @@ pub struct IngressClassParametersReference {
 
     /// Scope represents if this refers to a cluster or namespace scoped resource. This may be set to "Cluster" (default) or "Namespace".
     pub scope: Option<String>,
+
 }
+
+impl crate::DeepMerge for IngressClassParametersReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_group.merge_from(other.api_group);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+        self.scope.merge_from(other.scope);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressClassParametersReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -10,7 +10,18 @@ pub struct ObjectMetricSource {
 
     /// target specifies the target value for the given metric
     pub target: crate::api::autoscaling::v2beta2::MetricTarget,
+
 }
+
+impl crate::DeepMerge for ObjectMetricSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.described_object.merge_from(other.described_object);
+        self.metric.merge_from(other.metric);
+        self.target.merge_from(other.target);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct NetworkPolicy {
 
     /// Specification of the desired behavior for this NetworkPolicy.
     pub spec: Option<crate::api::networking::v1::NetworkPolicySpec>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicy  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin networking.k8s.io/v1/NetworkPolicy
 

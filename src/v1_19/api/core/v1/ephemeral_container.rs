@@ -71,7 +71,38 @@ pub struct EphemeralContainer {
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
     pub working_dir: Option<String>,
+
 }
+
+impl crate::DeepMerge for EphemeralContainer  {
+    fn merge_from(&mut self, other: Self) {
+        self.args.merge_from(other.args);
+        self.command.merge_from(other.command);
+        self.env.merge_from(other.env);
+        self.env_from.merge_from(other.env_from);
+        self.image.merge_from(other.image);
+        self.image_pull_policy.merge_from(other.image_pull_policy);
+        self.lifecycle.merge_from(other.lifecycle);
+        self.liveness_probe.merge_from(other.liveness_probe);
+        self.name.merge_from(other.name);
+        self.ports.merge_from(other.ports);
+        self.readiness_probe.merge_from(other.readiness_probe);
+        self.resources.merge_from(other.resources);
+        self.security_context.merge_from(other.security_context);
+        self.startup_probe.merge_from(other.startup_probe);
+        self.stdin.merge_from(other.stdin);
+        self.stdin_once.merge_from(other.stdin_once);
+        self.target_container_name.merge_from(other.target_container_name);
+        self.termination_message_path.merge_from(other.termination_message_path);
+        self.termination_message_policy.merge_from(other.termination_message_policy);
+        self.tty.merge_from(other.tty);
+        self.volume_devices.merge_from(other.volume_devices);
+        self.volume_mounts.merge_from(other.volume_mounts);
+        self.working_dir.merge_from(other.working_dir);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EphemeralContainer {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,18 @@ pub struct ReplicationController {
 
     /// Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub status: Option<crate::api::core::v1::ReplicationControllerStatus>,
+
 }
+
+impl crate::DeepMerge for ReplicationController  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin /v1/ReplicationController
 

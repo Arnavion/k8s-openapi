@@ -8,7 +8,17 @@ pub struct PodSecurityPolicy {
 
     /// spec defines the policy enforced.
     pub spec: Option<crate::api::policy::v1beta1::PodSecurityPolicySpec>,
+
 }
+
+impl crate::DeepMerge for PodSecurityPolicy  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin policy/v1beta1/PodSecurityPolicy
 

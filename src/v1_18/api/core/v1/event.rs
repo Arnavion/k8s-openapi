@@ -47,7 +47,30 @@ pub struct Event {
 
     /// Type of this event (Normal, Warning), new types could be added in the future
     pub type_: Option<String>,
+
 }
+
+impl crate::DeepMerge for Event  {
+    fn merge_from(&mut self, other: Self) {
+        self.action.merge_from(other.action);
+        self.count.merge_from(other.count);
+        self.event_time.merge_from(other.event_time);
+        self.first_timestamp.merge_from(other.first_timestamp);
+        self.involved_object.merge_from(other.involved_object);
+        self.last_timestamp.merge_from(other.last_timestamp);
+        self.message.merge_from(other.message);
+        self.metadata.merge_from(other.metadata);
+        self.reason.merge_from(other.reason);
+        self.related.merge_from(other.related);
+        self.reporting_component.merge_from(other.reporting_component);
+        self.reporting_instance.merge_from(other.reporting_instance);
+        self.series.merge_from(other.series);
+        self.source.merge_from(other.source);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 // Begin /v1/Event
 

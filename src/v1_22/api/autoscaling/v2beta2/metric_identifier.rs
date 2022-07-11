@@ -8,7 +8,17 @@ pub struct MetricIdentifier {
 
     /// selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+impl crate::DeepMerge for MetricIdentifier  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.selector.merge_from(other.selector);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MetricIdentifier {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

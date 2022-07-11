@@ -13,7 +13,18 @@ pub struct SecretProjection {
 
     /// optional field specify whether the Secret or its key must be defined
     pub optional: Option<bool>,
+
 }
+
+impl crate::DeepMerge for SecretProjection  {
+    fn merge_from(&mut self, other: Self) {
+        self.items.merge_from(other.items);
+        self.name.merge_from(other.name);
+        self.optional.merge_from(other.optional);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SecretProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

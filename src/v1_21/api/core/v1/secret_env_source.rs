@@ -10,7 +10,17 @@ pub struct SecretEnvSource {
 
     /// Specify whether the Secret must be defined
     pub optional: Option<bool>,
+
 }
+
+impl crate::DeepMerge for SecretEnvSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.optional.merge_from(other.optional);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SecretEnvSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

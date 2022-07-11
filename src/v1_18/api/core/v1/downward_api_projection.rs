@@ -5,7 +5,16 @@
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
     pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+
 }
+
+impl crate::DeepMerge for DownwardAPIProjection  {
+    fn merge_from(&mut self, other: Self) {
+        self.items.merge_from(other.items);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -26,7 +26,23 @@ pub struct JobSpec {
 
     /// ttlSecondsAfterFinished limits the lifetime of a Job that has finished execution (either Complete or Failed). If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. When the Job is being deleted, its lifecycle guarantees (e.g. finalizers) will be honored. If this field is unset, the Job won't be automatically deleted. If this field is set to zero, the Job becomes eligible to be deleted immediately after it finishes. This field is alpha-level and is only honored by servers that enable the TTLAfterFinished feature.
     pub ttl_seconds_after_finished: Option<i32>,
+
 }
+
+impl crate::DeepMerge for JobSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.active_deadline_seconds.merge_from(other.active_deadline_seconds);
+        self.backoff_limit.merge_from(other.backoff_limit);
+        self.completions.merge_from(other.completions);
+        self.manual_selector.merge_from(other.manual_selector);
+        self.parallelism.merge_from(other.parallelism);
+        self.selector.merge_from(other.selector);
+        self.template.merge_from(other.template);
+        self.ttl_seconds_after_finished.merge_from(other.ttl_seconds_after_finished);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JobSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

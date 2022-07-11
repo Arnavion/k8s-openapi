@@ -14,7 +14,19 @@ pub struct ComponentCondition {
 
     /// Type of condition for a component. Valid value: "Healthy"
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for ComponentCondition  {
+    fn merge_from(&mut self, other: Self) {
+        self.error.merge_from(other.error);
+        self.message.merge_from(other.message);
+        self.status.merge_from(other.status);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ComponentCondition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

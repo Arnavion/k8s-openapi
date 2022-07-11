@@ -8,7 +8,17 @@ pub struct SelfSubjectAccessReviewSpec {
 
     /// ResourceAuthorizationAttributes describes information for a resource access request
     pub resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes>,
+
 }
+
+impl crate::DeepMerge for SelfSubjectAccessReviewSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.non_resource_attributes.merge_from(other.non_resource_attributes);
+        self.resource_attributes.merge_from(other.resource_attributes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

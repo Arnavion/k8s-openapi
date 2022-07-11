@@ -11,7 +11,18 @@ pub struct LifecycleHandler {
 
     /// Deprecated. TCPSocket is NOT supported as a LifecycleHandler and kept for the backward compatibility. There are no validation of this field and lifecycle hooks will fail in runtime when tcp handler is specified.
     pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
+
 }
+
+impl crate::DeepMerge for LifecycleHandler  {
+    fn merge_from(&mut self, other: Self) {
+        self.exec.merge_from(other.exec);
+        self.http_get.merge_from(other.http_get);
+        self.tcp_socket.merge_from(other.tcp_socket);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LifecycleHandler {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

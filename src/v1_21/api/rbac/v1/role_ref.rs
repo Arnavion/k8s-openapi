@@ -11,7 +11,18 @@ pub struct RoleRef {
 
     /// Name is the name of resource being referenced
     pub name: String,
+
 }
+
+impl crate::DeepMerge for RoleRef  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_group.merge_from(other.api_group);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RoleRef {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

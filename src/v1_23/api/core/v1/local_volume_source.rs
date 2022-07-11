@@ -8,7 +8,17 @@ pub struct LocalVolumeSource {
 
     /// The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).
     pub path: String,
+
 }
+
+impl crate::DeepMerge for LocalVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.path.merge_from(other.path);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LocalVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

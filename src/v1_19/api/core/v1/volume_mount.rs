@@ -20,7 +20,21 @@ pub struct VolumeMount {
 
     /// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
     pub sub_path_expr: Option<String>,
+
 }
+
+impl crate::DeepMerge for VolumeMount  {
+    fn merge_from(&mut self, other: Self) {
+        self.mount_path.merge_from(other.mount_path);
+        self.mount_propagation.merge_from(other.mount_propagation);
+        self.name.merge_from(other.name);
+        self.read_only.merge_from(other.read_only);
+        self.sub_path.merge_from(other.sub_path);
+        self.sub_path_expr.merge_from(other.sub_path_expr);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

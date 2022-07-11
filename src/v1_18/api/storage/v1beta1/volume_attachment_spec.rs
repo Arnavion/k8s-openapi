@@ -11,7 +11,18 @@ pub struct VolumeAttachmentSpec {
 
     /// Source represents the volume that should be attached.
     pub source: crate::api::storage::v1beta1::VolumeAttachmentSource,
+
 }
+
+impl crate::DeepMerge for VolumeAttachmentSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.attacher.merge_from(other.attacher);
+        self.node_name.merge_from(other.node_name);
+        self.source.merge_from(other.source);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

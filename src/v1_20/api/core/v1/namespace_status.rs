@@ -8,7 +8,17 @@ pub struct NamespaceStatus {
 
     /// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub phase: Option<String>,
+
 }
+
+impl crate::DeepMerge for NamespaceStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+        self.phase.merge_from(other.phase);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NamespaceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

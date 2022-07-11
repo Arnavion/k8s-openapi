@@ -5,7 +5,16 @@
 pub struct LoadBalancerStatus {
     /// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
     pub ingress: Option<Vec<crate::api::core::v1::LoadBalancerIngress>>,
+
 }
+
+impl crate::DeepMerge for LoadBalancerStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.ingress.merge_from(other.ingress);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

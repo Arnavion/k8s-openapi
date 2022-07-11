@@ -11,7 +11,18 @@ pub struct HorizontalPodAutoscaler {
 
     /// current information about the autoscaler.
     pub status: Option<crate::api::autoscaling::v1::HorizontalPodAutoscalerStatus>,
+
 }
+
+impl crate::DeepMerge for HorizontalPodAutoscaler  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin autoscaling/v1/HorizontalPodAutoscaler
 

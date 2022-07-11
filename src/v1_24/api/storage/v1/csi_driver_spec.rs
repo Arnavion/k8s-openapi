@@ -52,7 +52,22 @@ pub struct CSIDriverSpec {
     ///
     /// This field is immutable.
     pub volume_lifecycle_modes: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for CSIDriverSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.attach_required.merge_from(other.attach_required);
+        self.fs_group_policy.merge_from(other.fs_group_policy);
+        self.pod_info_on_mount.merge_from(other.pod_info_on_mount);
+        self.requires_republish.merge_from(other.requires_republish);
+        self.storage_capacity.merge_from(other.storage_capacity);
+        self.token_requests.merge_from(other.token_requests);
+        self.volume_lifecycle_modes.merge_from(other.volume_lifecycle_modes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

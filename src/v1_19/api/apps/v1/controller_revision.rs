@@ -11,7 +11,18 @@ pub struct ControllerRevision {
 
     /// Revision indicates the revision of the state represented by Data.
     pub revision: i64,
+
 }
+
+impl crate::DeepMerge for ControllerRevision  {
+    fn merge_from(&mut self, other: Self) {
+        self.data.merge_from(other.data);
+        self.metadata.merge_from(other.metadata);
+        self.revision.merge_from(other.revision);
+
+    }
+}
+
 
 // Begin apps/v1/ControllerRevision
 

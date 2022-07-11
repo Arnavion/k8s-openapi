@@ -14,7 +14,19 @@ pub struct BoundObjectReference {
 
     /// UID of the referent.
     pub uid: Option<String>,
+
 }
+
+impl crate::DeepMerge for BoundObjectReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.uid.merge_from(other.uid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for BoundObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

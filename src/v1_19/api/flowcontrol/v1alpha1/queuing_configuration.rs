@@ -11,7 +11,18 @@ pub struct QueuingConfiguration {
 
     /// `queues` is the number of queues for this priority level. The queues exist independently at each apiserver. The value must be positive.  Setting it to 1 effectively precludes shufflesharding and thus makes the distinguisher method of associated flow schemas irrelevant.  This field has a default value of 64.
     pub queues: Option<i32>,
+
 }
+
+impl crate::DeepMerge for QueuingConfiguration  {
+    fn merge_from(&mut self, other: Self) {
+        self.hand_size.merge_from(other.hand_size);
+        self.queue_length_limit.merge_from(other.queue_length_limit);
+        self.queues.merge_from(other.queues);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for QueuingConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

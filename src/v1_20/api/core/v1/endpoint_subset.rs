@@ -18,7 +18,18 @@ pub struct EndpointSubset {
 
     /// Port numbers available on the related IP addresses.
     pub ports: Option<Vec<crate::api::core::v1::EndpointPort>>,
+
 }
+
+impl crate::DeepMerge for EndpointSubset  {
+    fn merge_from(&mut self, other: Self) {
+        self.addresses.merge_from(other.addresses);
+        self.not_ready_addresses.merge_from(other.not_ready_addresses);
+        self.ports.merge_from(other.ports);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointSubset {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

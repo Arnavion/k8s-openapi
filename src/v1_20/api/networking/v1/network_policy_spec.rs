@@ -14,7 +14,19 @@ pub struct NetworkPolicySpec {
 
     /// List of rule types that the NetworkPolicy relates to. Valid options are "Ingress", "Egress", or "Ingress,Egress". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes \[ "Egress" \]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just \[ "Ingress" \]). This field is beta-level in 1.8
     pub policy_types: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicySpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.egress.merge_from(other.egress);
+        self.ingress.merge_from(other.ingress);
+        self.pod_selector.merge_from(other.pod_selector);
+        self.policy_types.merge_from(other.policy_types);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

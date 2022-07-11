@@ -11,7 +11,18 @@ pub struct ClusterRole {
 
     /// Rules holds all the PolicyRules for this ClusterRole
     pub rules: Option<Vec<crate::api::rbac::v1beta1::PolicyRule>>,
+
 }
+
+impl crate::DeepMerge for ClusterRole  {
+    fn merge_from(&mut self, other: Self) {
+        self.aggregation_rule.merge_from(other.aggregation_rule);
+        self.metadata.merge_from(other.metadata);
+        self.rules.merge_from(other.rules);
+
+    }
+}
+
 
 // Begin rbac.authorization.k8s.io/v1beta1/ClusterRole
 

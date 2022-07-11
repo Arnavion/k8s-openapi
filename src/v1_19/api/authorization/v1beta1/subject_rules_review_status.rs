@@ -14,7 +14,19 @@ pub struct SubjectRulesReviewStatus {
 
     /// ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.
     pub resource_rules: Vec<crate::api::authorization::v1beta1::ResourceRule>,
+
 }
+
+impl crate::DeepMerge for SubjectRulesReviewStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.evaluation_error.merge_from(other.evaluation_error);
+        self.incomplete.merge_from(other.incomplete);
+        self.non_resource_rules.merge_from(other.non_resource_rules);
+        self.resource_rules.merge_from(other.resource_rules);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SubjectRulesReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

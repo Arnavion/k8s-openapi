@@ -13,7 +13,18 @@ pub struct StatefulSet {
 
     /// Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.
     pub status: Option<crate::api::apps::v1::StatefulSetStatus>,
+
 }
+
+impl crate::DeepMerge for StatefulSet  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin apps/v1/StatefulSet
 

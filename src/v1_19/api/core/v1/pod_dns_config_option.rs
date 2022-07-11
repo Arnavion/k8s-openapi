@@ -7,7 +7,17 @@ pub struct PodDNSConfigOption {
     pub name: Option<String>,
 
     pub value: Option<String>,
+
 }
+
+impl crate::DeepMerge for PodDNSConfigOption  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.value.merge_from(other.value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDNSConfigOption {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

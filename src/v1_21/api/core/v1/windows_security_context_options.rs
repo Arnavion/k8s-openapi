@@ -11,7 +11,18 @@ pub struct WindowsSecurityContextOptions {
 
     /// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     pub run_as_user_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for WindowsSecurityContextOptions  {
+    fn merge_from(&mut self, other: Self) {
+        self.gmsa_credential_spec.merge_from(other.gmsa_credential_spec);
+        self.gmsa_credential_spec_name.merge_from(other.gmsa_credential_spec_name);
+        self.run_as_user_name.merge_from(other.run_as_user_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WindowsSecurityContextOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

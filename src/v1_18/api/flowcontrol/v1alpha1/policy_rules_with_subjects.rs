@@ -11,7 +11,18 @@ pub struct PolicyRulesWithSubjects {
 
     /// subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
     pub subjects: Vec<crate::api::flowcontrol::v1alpha1::Subject>,
+
 }
+
+impl crate::DeepMerge for PolicyRulesWithSubjects  {
+    fn merge_from(&mut self, other: Self) {
+        self.non_resource_rules.merge_from(other.non_resource_rules);
+        self.resource_rules.merge_from(other.resource_rules);
+        self.subjects.merge_from(other.subjects);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -7,7 +7,17 @@ pub struct AuditSink {
 
     /// Spec defines the audit configuration spec
     pub spec: Option<crate::api::auditregistration::v1alpha1::AuditSinkSpec>,
+
 }
+
+impl crate::DeepMerge for AuditSink  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin auditregistration.k8s.io/v1alpha1/AuditSink
 

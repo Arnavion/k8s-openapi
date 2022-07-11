@@ -16,7 +16,18 @@ pub struct CertificateSigningRequest {
 
     /// status contains information about whether the request is approved or denied, and the certificate issued by the signer, or the failure condition indicating signer failure.
     pub status: Option<crate::api::certificates::v1::CertificateSigningRequestStatus>,
+
 }
+
+impl crate::DeepMerge for CertificateSigningRequest  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin certificates.k8s.io/v1/CertificateSigningRequest
 

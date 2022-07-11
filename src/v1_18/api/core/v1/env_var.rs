@@ -11,7 +11,18 @@ pub struct EnvVar {
 
     /// Source for the environment variable's value. Cannot be used if value is not empty.
     pub value_from: Option<crate::api::core::v1::EnvVarSource>,
+
 }
+
+impl crate::DeepMerge for EnvVar  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.value.merge_from(other.value);
+        self.value_from.merge_from(other.value_from);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EnvVar {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

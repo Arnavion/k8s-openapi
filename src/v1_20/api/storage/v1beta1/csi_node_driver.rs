@@ -14,7 +14,19 @@ pub struct CSINodeDriver {
 
     /// topologyKeys is the list of keys supported by the driver. When a driver is initialized on a cluster, it provides a set of topology keys that it understands (e.g. "company.com/zone", "company.com/region"). When a driver is initialized on a node, it provides the same topology keys along with values. Kubelet will expose these topology keys as labels on its own node object. When Kubernetes does topology aware provisioning, it can use this list to determine which labels it should retrieve from the node object and pass back to the driver. It is possible for different nodes to use different topology keys. This can be empty if driver does not support topology.
     pub topology_keys: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for CSINodeDriver  {
+    fn merge_from(&mut self, other: Self) {
+        self.allocatable.merge_from(other.allocatable);
+        self.name.merge_from(other.name);
+        self.node_id.merge_from(other.node_id);
+        self.topology_keys.merge_from(other.topology_keys);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

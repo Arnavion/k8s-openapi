@@ -9,7 +9,17 @@ pub struct CreateOptional<'a> {
 
     /// fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
     pub field_manager: Option<&'a str>,
+
 }
+
+impl<'a> crate::DeepMerge for CreateOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.dry_run.merge_from(other.dry_run);
+        self.field_manager.merge_from(other.field_manager);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> CreateOptional<'a> {

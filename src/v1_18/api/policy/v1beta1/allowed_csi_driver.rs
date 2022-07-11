@@ -5,7 +5,16 @@
 pub struct AllowedCSIDriver {
     /// Name is the registered name of the CSI driver
     pub name: String,
+
 }
+
+impl crate::DeepMerge for AllowedCSIDriver  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AllowedCSIDriver {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

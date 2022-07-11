@@ -8,7 +8,17 @@ pub struct ServerAddressByClientCIDR {
 
     /// Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
     pub server_address: String,
+
 }
+
+impl crate::DeepMerge for ServerAddressByClientCIDR  {
+    fn merge_from(&mut self, other: Self) {
+        self.client_cidr.merge_from(other.client_cidr);
+        self.server_address.merge_from(other.server_address);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServerAddressByClientCIDR {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

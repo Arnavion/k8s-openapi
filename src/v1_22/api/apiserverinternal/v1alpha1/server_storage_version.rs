@@ -11,7 +11,18 @@ pub struct ServerStorageVersion {
 
     /// The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
     pub encoding_version: Option<String>,
+
 }
+
+impl crate::DeepMerge for ServerStorageVersion  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_server_id.merge_from(other.api_server_id);
+        self.decodable_versions.merge_from(other.decodable_versions);
+        self.encoding_version.merge_from(other.encoding_version);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

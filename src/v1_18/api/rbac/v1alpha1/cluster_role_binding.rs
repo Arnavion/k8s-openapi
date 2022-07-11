@@ -11,7 +11,18 @@ pub struct ClusterRoleBinding {
 
     /// Subjects holds references to the objects the role applies to.
     pub subjects: Option<Vec<crate::api::rbac::v1alpha1::Subject>>,
+
 }
+
+impl crate::DeepMerge for ClusterRoleBinding  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.role_ref.merge_from(other.role_ref);
+        self.subjects.merge_from(other.subjects);
+
+    }
+}
+
 
 // Begin rbac.authorization.k8s.io/v1alpha1/ClusterRoleBinding
 

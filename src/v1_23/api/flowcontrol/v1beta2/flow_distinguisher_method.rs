@@ -5,7 +5,16 @@
 pub struct FlowDistinguisherMethod {
     /// `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for FlowDistinguisherMethod  {
+    fn merge_from(&mut self, other: Self) {
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlowDistinguisherMethod {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

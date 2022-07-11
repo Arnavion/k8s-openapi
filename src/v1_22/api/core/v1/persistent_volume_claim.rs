@@ -11,7 +11,18 @@ pub struct PersistentVolumeClaim {
 
     /// Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
     pub status: Option<crate::api::core::v1::PersistentVolumeClaimStatus>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaim  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin /v1/PersistentVolumeClaim
 

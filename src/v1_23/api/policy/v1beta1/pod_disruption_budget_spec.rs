@@ -11,7 +11,18 @@ pub struct PodDisruptionBudgetSpec {
 
     /// Label query over pods whose evictions are managed by the disruption budget. A null selector selects no pods. An empty selector ({}) also selects no pods, which differs from standard behavior of selecting all pods. In policy/v1, an empty selector will select all pods in the namespace.
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+impl crate::DeepMerge for PodDisruptionBudgetSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.max_unavailable.merge_from(other.max_unavailable);
+        self.min_available.merge_from(other.min_available);
+        self.selector.merge_from(other.selector);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

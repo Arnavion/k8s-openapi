@@ -11,7 +11,18 @@ pub struct IngressBackend {
 
     /// Specifies the port of the referenced service.
     pub service_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
+
 }
+
+impl crate::DeepMerge for IngressBackend  {
+    fn merge_from(&mut self, other: Self) {
+        self.resource.merge_from(other.resource);
+        self.service_name.merge_from(other.service_name);
+        self.service_port.merge_from(other.service_port);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

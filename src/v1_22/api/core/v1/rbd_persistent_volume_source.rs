@@ -26,7 +26,23 @@ pub struct RBDPersistentVolumeSource {
 
     /// The rados user name. Default is admin. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
     pub user: Option<String>,
+
 }
+
+impl crate::DeepMerge for RBDPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.image.merge_from(other.image);
+        self.keyring.merge_from(other.keyring);
+        self.monitors.merge_from(other.monitors);
+        self.pool.merge_from(other.pool);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.user.merge_from(other.user);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for RBDPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

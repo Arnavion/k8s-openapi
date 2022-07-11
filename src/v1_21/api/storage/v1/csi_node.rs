@@ -8,7 +8,17 @@ pub struct CSINode {
 
     /// spec is the specification of CSINode
     pub spec: crate::api::storage::v1::CSINodeSpec,
+
 }
+
+impl crate::DeepMerge for CSINode  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin storage.k8s.io/v1/CSINode
 

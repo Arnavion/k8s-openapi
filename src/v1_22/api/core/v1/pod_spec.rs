@@ -107,7 +107,50 @@ pub struct PodSpec {
 
     /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
     pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
+
 }
+
+impl crate::DeepMerge for PodSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.active_deadline_seconds.merge_from(other.active_deadline_seconds);
+        self.affinity.merge_from(other.affinity);
+        self.automount_service_account_token.merge_from(other.automount_service_account_token);
+        self.containers.merge_from(other.containers);
+        self.dns_config.merge_from(other.dns_config);
+        self.dns_policy.merge_from(other.dns_policy);
+        self.enable_service_links.merge_from(other.enable_service_links);
+        self.ephemeral_containers.merge_from(other.ephemeral_containers);
+        self.host_aliases.merge_from(other.host_aliases);
+        self.host_ipc.merge_from(other.host_ipc);
+        self.host_network.merge_from(other.host_network);
+        self.host_pid.merge_from(other.host_pid);
+        self.hostname.merge_from(other.hostname);
+        self.image_pull_secrets.merge_from(other.image_pull_secrets);
+        self.init_containers.merge_from(other.init_containers);
+        self.node_name.merge_from(other.node_name);
+        self.node_selector.merge_from(other.node_selector);
+        self.overhead.merge_from(other.overhead);
+        self.preemption_policy.merge_from(other.preemption_policy);
+        self.priority.merge_from(other.priority);
+        self.priority_class_name.merge_from(other.priority_class_name);
+        self.readiness_gates.merge_from(other.readiness_gates);
+        self.restart_policy.merge_from(other.restart_policy);
+        self.runtime_class_name.merge_from(other.runtime_class_name);
+        self.scheduler_name.merge_from(other.scheduler_name);
+        self.security_context.merge_from(other.security_context);
+        self.service_account.merge_from(other.service_account);
+        self.service_account_name.merge_from(other.service_account_name);
+        self.set_hostname_as_fqdn.merge_from(other.set_hostname_as_fqdn);
+        self.share_process_namespace.merge_from(other.share_process_namespace);
+        self.subdomain.merge_from(other.subdomain);
+        self.termination_grace_period_seconds.merge_from(other.termination_grace_period_seconds);
+        self.tolerations.merge_from(other.tolerations);
+        self.topology_spread_constraints.merge_from(other.topology_spread_constraints);
+        self.volumes.merge_from(other.volumes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

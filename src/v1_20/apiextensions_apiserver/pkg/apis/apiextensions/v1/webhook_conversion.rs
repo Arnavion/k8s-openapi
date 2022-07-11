@@ -8,7 +8,17 @@ pub struct WebhookConversion {
 
     /// conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
     pub conversion_review_versions: Vec<String>,
+
 }
+
+impl crate::DeepMerge for WebhookConversion  {
+    fn merge_from(&mut self, other: Self) {
+        self.client_config.merge_from(other.client_config);
+        self.conversion_review_versions.merge_from(other.conversion_review_versions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WebhookConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

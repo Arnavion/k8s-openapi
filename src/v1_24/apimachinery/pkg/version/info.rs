@@ -20,7 +20,24 @@ pub struct Info {
     pub minor: String,
 
     pub platform: String,
+
 }
+
+impl crate::DeepMerge for Info  {
+    fn merge_from(&mut self, other: Self) {
+        self.build_date.merge_from(other.build_date);
+        self.compiler.merge_from(other.compiler);
+        self.git_commit.merge_from(other.git_commit);
+        self.git_tree_state.merge_from(other.git_tree_state);
+        self.git_version.merge_from(other.git_version);
+        self.go_version.merge_from(other.go_version);
+        self.major.merge_from(other.major);
+        self.minor.merge_from(other.minor);
+        self.platform.merge_from(other.platform);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Info {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

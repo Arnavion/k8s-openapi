@@ -8,7 +8,17 @@ pub struct APIVersions {
 
     /// versions are the api versions that are available.
     pub versions: Vec<String>,
+
 }
+
+impl crate::DeepMerge for APIVersions  {
+    fn merge_from(&mut self, other: Self) {
+        self.server_address_by_client_cidrs.merge_from(other.server_address_by_client_cidrs);
+        self.versions.merge_from(other.versions);
+
+    }
+}
+
 
 impl crate::Resource for APIVersions {
     const API_VERSION: &'static str = "v1";

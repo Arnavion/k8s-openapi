@@ -14,7 +14,19 @@ pub struct APIGroup {
 
     /// versions are the versions supported in this group.
     pub versions: Vec<crate::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>,
+
 }
+
+impl crate::DeepMerge for APIGroup  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.preferred_version.merge_from(other.preferred_version);
+        self.server_address_by_client_cidrs.merge_from(other.server_address_by_client_cidrs);
+        self.versions.merge_from(other.versions);
+
+    }
+}
+
 
 impl crate::Resource for APIGroup {
     const API_VERSION: &'static str = "v1";

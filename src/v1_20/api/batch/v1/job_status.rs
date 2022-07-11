@@ -20,7 +20,21 @@ pub struct JobStatus {
 
     /// The number of pods which reached phase Succeeded.
     pub succeeded: Option<i32>,
+
 }
+
+impl crate::DeepMerge for JobStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.active.merge_from(other.active);
+        self.completion_time.merge_from(other.completion_time);
+        self.conditions.merge_from(other.conditions);
+        self.failed.merge_from(other.failed);
+        self.start_time.merge_from(other.start_time);
+        self.succeeded.merge_from(other.succeeded);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

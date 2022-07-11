@@ -8,7 +8,17 @@ pub struct ResourceMetricSource {
 
     /// target specifies the target value for the given metric
     pub target: crate::api::autoscaling::v2beta2::MetricTarget,
+
 }
+
+impl crate::DeepMerge for ResourceMetricSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.target.merge_from(other.target);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

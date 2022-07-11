@@ -8,7 +8,17 @@ pub struct HostAlias {
 
     /// IP address of the host file entry.
     pub ip: Option<String>,
+
 }
+
+impl crate::DeepMerge for HostAlias  {
+    fn merge_from(&mut self, other: Self) {
+        self.hostnames.merge_from(other.hostnames);
+        self.ip.merge_from(other.ip);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HostAlias {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

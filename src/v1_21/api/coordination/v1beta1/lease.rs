@@ -8,7 +8,17 @@ pub struct Lease {
 
     /// Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: Option<crate::api::coordination::v1beta1::LeaseSpec>,
+
 }
+
+impl crate::DeepMerge for Lease  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin coordination.k8s.io/v1beta1/Lease
 

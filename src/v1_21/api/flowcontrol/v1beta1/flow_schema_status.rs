@@ -5,7 +5,16 @@
 pub struct FlowSchemaStatus {
     /// `conditions` is a list of the current states of FlowSchema.
     pub conditions: Option<Vec<crate::api::flowcontrol::v1beta1::FlowSchemaCondition>>,
+
 }
+
+impl crate::DeepMerge for FlowSchemaStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

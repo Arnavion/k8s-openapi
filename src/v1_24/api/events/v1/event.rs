@@ -47,7 +47,30 @@ pub struct Event {
 
     /// type is the type of this event (Normal, Warning), new types could be added in the future. It is machine-readable. This field cannot be empty for new Events.
     pub type_: Option<String>,
+
 }
+
+impl crate::DeepMerge for Event  {
+    fn merge_from(&mut self, other: Self) {
+        self.action.merge_from(other.action);
+        self.deprecated_count.merge_from(other.deprecated_count);
+        self.deprecated_first_timestamp.merge_from(other.deprecated_first_timestamp);
+        self.deprecated_last_timestamp.merge_from(other.deprecated_last_timestamp);
+        self.deprecated_source.merge_from(other.deprecated_source);
+        self.event_time.merge_from(other.event_time);
+        self.metadata.merge_from(other.metadata);
+        self.note.merge_from(other.note);
+        self.reason.merge_from(other.reason);
+        self.regarding.merge_from(other.regarding);
+        self.related.merge_from(other.related);
+        self.reporting_controller.merge_from(other.reporting_controller);
+        self.reporting_instance.merge_from(other.reporting_instance);
+        self.series.merge_from(other.series);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 // Begin events.k8s.io/v1/Event
 

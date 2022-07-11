@@ -5,7 +5,16 @@
 pub struct ScaleSpec {
     /// desired number of instances for the scaled object.
     pub replicas: Option<i32>,
+
 }
+
+impl crate::DeepMerge for ScaleSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.replicas.merge_from(other.replicas);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScaleSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -10,7 +10,18 @@ pub struct SelfSubjectRulesReview {
 
     /// Status is filled in by the server and indicates the set of actions a user can perform.
     pub status: Option<crate::api::authorization::v1beta1::SubjectRulesReviewStatus>,
+
 }
+
+impl crate::DeepMerge for SelfSubjectRulesReview  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin authorization.k8s.io/v1beta1/SelfSubjectRulesReview
 

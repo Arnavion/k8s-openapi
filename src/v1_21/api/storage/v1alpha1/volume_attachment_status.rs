@@ -14,7 +14,19 @@ pub struct VolumeAttachmentStatus {
 
     /// The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
     pub detach_error: Option<crate::api::storage::v1alpha1::VolumeError>,
+
 }
+
+impl crate::DeepMerge for VolumeAttachmentStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.attach_error.merge_from(other.attach_error);
+        self.attached.merge_from(other.attached);
+        self.attachment_metadata.merge_from(other.attachment_metadata);
+        self.detach_error.merge_from(other.detach_error);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

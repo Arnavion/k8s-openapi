@@ -29,7 +29,24 @@ pub struct CSIPersistentVolumeSource {
 
     /// VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
     pub volume_handle: String,
+
 }
+
+impl crate::DeepMerge for CSIPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.controller_expand_secret_ref.merge_from(other.controller_expand_secret_ref);
+        self.controller_publish_secret_ref.merge_from(other.controller_publish_secret_ref);
+        self.driver.merge_from(other.driver);
+        self.fs_type.merge_from(other.fs_type);
+        self.node_publish_secret_ref.merge_from(other.node_publish_secret_ref);
+        self.node_stage_secret_ref.merge_from(other.node_stage_secret_ref);
+        self.read_only.merge_from(other.read_only);
+        self.volume_attributes.merge_from(other.volume_attributes);
+        self.volume_handle.merge_from(other.volume_handle);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSIPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

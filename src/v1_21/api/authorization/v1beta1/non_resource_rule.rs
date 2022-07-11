@@ -8,7 +8,17 @@ pub struct NonResourceRule {
 
     /// Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
     pub verbs: Vec<String>,
+
 }
+
+impl crate::DeepMerge for NonResourceRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.non_resource_urls.merge_from(other.non_resource_urls);
+        self.verbs.merge_from(other.verbs);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NonResourceRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

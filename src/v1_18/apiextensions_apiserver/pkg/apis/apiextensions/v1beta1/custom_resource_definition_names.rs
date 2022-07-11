@@ -20,7 +20,21 @@ pub struct CustomResourceDefinitionNames {
 
     /// singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.
     pub singular: Option<String>,
+
 }
+
+impl crate::DeepMerge for CustomResourceDefinitionNames  {
+    fn merge_from(&mut self, other: Self) {
+        self.categories.merge_from(other.categories);
+        self.kind.merge_from(other.kind);
+        self.list_kind.merge_from(other.list_kind);
+        self.plural.merge_from(other.plural);
+        self.short_names.merge_from(other.short_names);
+        self.singular.merge_from(other.singular);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

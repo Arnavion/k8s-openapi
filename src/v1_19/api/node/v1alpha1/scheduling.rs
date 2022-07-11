@@ -8,7 +8,17 @@ pub struct Scheduling {
 
     /// tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
     pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
+
 }
+
+impl crate::DeepMerge for Scheduling  {
+    fn merge_from(&mut self, other: Self) {
+        self.node_selector.merge_from(other.node_selector);
+        self.tolerations.merge_from(other.tolerations);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Scheduling {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

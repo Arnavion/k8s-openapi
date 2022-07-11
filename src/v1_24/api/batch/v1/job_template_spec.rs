@@ -8,7 +8,17 @@ pub struct JobTemplateSpec {
 
     /// Specification of the desired behavior of the job. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: Option<crate::api::batch::v1::JobSpec>,
+
 }
+
+impl crate::DeepMerge for JobTemplateSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for JobTemplateSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

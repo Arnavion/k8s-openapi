@@ -20,7 +20,21 @@ pub struct ReplicaSetStatus {
 
     /// Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
     pub replicas: i32,
+
 }
+
+impl crate::DeepMerge for ReplicaSetStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.available_replicas.merge_from(other.available_replicas);
+        self.conditions.merge_from(other.conditions);
+        self.fully_labeled_replicas.merge_from(other.fully_labeled_replicas);
+        self.observed_generation.merge_from(other.observed_generation);
+        self.ready_replicas.merge_from(other.ready_replicas);
+        self.replicas.merge_from(other.replicas);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ReplicaSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct PodOS {
     /// Name is the name of the operating system. The currently supported values are linux and windows. Additional value may be defined in future and can be one of: https://github.com/opencontainers/runtime-spec/blob/master/config.md#platform-specific-configuration Clients should expect to handle additional values and treat unrecognized values in this field as os: null
     pub name: String,
+
 }
+
+impl crate::DeepMerge for PodOS  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodOS {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

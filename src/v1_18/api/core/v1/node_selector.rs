@@ -5,7 +5,16 @@
 pub struct NodeSelector {
     /// Required. A list of node selector terms. The terms are ORed.
     pub node_selector_terms: Vec<crate::api::core::v1::NodeSelectorTerm>,
+
 }
+
+impl crate::DeepMerge for NodeSelector  {
+    fn merge_from(&mut self, other: Self) {
+        self.node_selector_terms.merge_from(other.node_selector_terms);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -20,7 +20,21 @@ pub struct AzureDiskVolumeSource {
 
     /// readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,
+
 }
+
+impl crate::DeepMerge for AzureDiskVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.caching_mode.merge_from(other.caching_mode);
+        self.disk_name.merge_from(other.disk_name);
+        self.disk_uri.merge_from(other.disk_uri);
+        self.fs_type.merge_from(other.fs_type);
+        self.kind.merge_from(other.kind);
+        self.read_only.merge_from(other.read_only);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AzureDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

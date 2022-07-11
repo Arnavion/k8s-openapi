@@ -17,7 +17,20 @@ pub struct MetricSpec {
 
     /// type is the type of metric source.  It should be one of "Object", "Pods" or "Resource", each mapping to a matching field in the object.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for MetricSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.external.merge_from(other.external);
+        self.object.merge_from(other.object);
+        self.pods.merge_from(other.pods);
+        self.resource.merge_from(other.resource);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MetricSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct PriorityLevelConfigurationStatus {
     /// `conditions` is the current state of "request-priority".
     pub conditions: Option<Vec<crate::api::flowcontrol::v1beta1::PriorityLevelConfigurationCondition>>,
+
 }
+
+impl crate::DeepMerge for PriorityLevelConfigurationStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PriorityLevelConfigurationStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

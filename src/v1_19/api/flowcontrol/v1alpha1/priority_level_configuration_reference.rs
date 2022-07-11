@@ -5,7 +5,16 @@
 pub struct PriorityLevelConfigurationReference {
     /// `name` is the name of the priority level configuration being referenced Required.
     pub name: String,
+
 }
+
+impl crate::DeepMerge for PriorityLevelConfigurationReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PriorityLevelConfigurationReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

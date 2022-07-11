@@ -8,7 +8,17 @@ pub struct PodTemplate {
 
     /// Template defines the pods that will be created from this pod template. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
+
 }
+
+impl crate::DeepMerge for PodTemplate  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.template.merge_from(other.template);
+
+    }
+}
+
 
 // Begin /v1/PodTemplate
 

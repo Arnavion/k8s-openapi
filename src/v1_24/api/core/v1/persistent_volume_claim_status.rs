@@ -21,7 +21,21 @@ pub struct PersistentVolumeClaimStatus {
 
     /// resizeStatus stores status of resize operation. ResizeStatus is not set by default but when expansion is complete resizeStatus is set to empty string by resize controller or kubelet. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.
     pub resize_status: Option<String>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaimStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.access_modes.merge_from(other.access_modes);
+        self.allocated_resources.merge_from(other.allocated_resources);
+        self.capacity.merge_from(other.capacity);
+        self.conditions.merge_from(other.conditions);
+        self.phase.merge_from(other.phase);
+        self.resize_status.merge_from(other.resize_status);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

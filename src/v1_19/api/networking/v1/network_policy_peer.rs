@@ -15,7 +15,18 @@ pub struct NetworkPolicyPeer {
     ///
     /// If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.
     pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicyPeer  {
+    fn merge_from(&mut self, other: Self) {
+        self.ip_block.merge_from(other.ip_block);
+        self.namespace_selector.merge_from(other.namespace_selector);
+        self.pod_selector.merge_from(other.pod_selector);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyPeer {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -21,7 +21,18 @@ pub struct HTTPIngressPath {
     ///   or treat it identically to Prefix or Exact path types.
     /// Implementations are required to support all path types.
     pub path_type: String,
+
 }
+
+impl crate::DeepMerge for HTTPIngressPath  {
+    fn merge_from(&mut self, other: Self) {
+        self.backend.merge_from(other.backend);
+        self.path.merge_from(other.path);
+        self.path_type.merge_from(other.path_type);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HTTPIngressPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

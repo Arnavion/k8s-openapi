@@ -20,7 +20,21 @@ pub struct MetricStatus {
 
     /// type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for MetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.container_resource.merge_from(other.container_resource);
+        self.external.merge_from(other.external);
+        self.object.merge_from(other.object);
+        self.pods.merge_from(other.pods);
+        self.resource.merge_from(other.resource);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

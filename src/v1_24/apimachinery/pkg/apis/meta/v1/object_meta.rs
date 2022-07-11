@@ -66,7 +66,31 @@ pub struct ObjectMeta {
     ///
     /// Populated by the system. Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: Option<String>,
+
 }
+
+impl crate::DeepMerge for ObjectMeta  {
+    fn merge_from(&mut self, other: Self) {
+        self.annotations.merge_from(other.annotations);
+        self.cluster_name.merge_from(other.cluster_name);
+        self.creation_timestamp.merge_from(other.creation_timestamp);
+        self.deletion_grace_period_seconds.merge_from(other.deletion_grace_period_seconds);
+        self.deletion_timestamp.merge_from(other.deletion_timestamp);
+        self.finalizers.merge_from(other.finalizers);
+        self.generate_name.merge_from(other.generate_name);
+        self.generation.merge_from(other.generation);
+        self.labels.merge_from(other.labels);
+        self.managed_fields.merge_from(other.managed_fields);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+        self.owner_references.merge_from(other.owner_references);
+        self.resource_version.merge_from(other.resource_version);
+        self.self_link.merge_from(other.self_link);
+        self.uid.merge_from(other.uid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,19 @@ pub struct PersistentVolumeClaimStatus {
 
     /// Phase represents the current phase of PersistentVolumeClaim.
     pub phase: Option<String>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaimStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.access_modes.merge_from(other.access_modes);
+        self.capacity.merge_from(other.capacity);
+        self.conditions.merge_from(other.conditions);
+        self.phase.merge_from(other.phase);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

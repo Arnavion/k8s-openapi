@@ -8,7 +8,17 @@ pub struct FlockerVolumeSource {
 
     /// UUID of the dataset. This is unique identifier of a Flocker dataset
     pub dataset_uuid: Option<String>,
+
 }
+
+impl crate::DeepMerge for FlockerVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.dataset_name.merge_from(other.dataset_name);
+        self.dataset_uuid.merge_from(other.dataset_uuid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlockerVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,18 @@ pub struct LoadBalancerIngress {
 
     /// Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
     pub ports: Option<Vec<crate::api::core::v1::PortStatus>>,
+
 }
+
+impl crate::DeepMerge for LoadBalancerIngress  {
+    fn merge_from(&mut self, other: Self) {
+        self.hostname.merge_from(other.hostname);
+        self.ip.merge_from(other.ip);
+        self.ports.merge_from(other.ports);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

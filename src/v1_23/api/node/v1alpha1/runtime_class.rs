@@ -8,7 +8,17 @@ pub struct RuntimeClass {
 
     /// Specification of the RuntimeClass More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: crate::api::node::v1alpha1::RuntimeClassSpec,
+
 }
+
+impl crate::DeepMerge for RuntimeClass  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin node.k8s.io/v1alpha1/RuntimeClass
 

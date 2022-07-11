@@ -5,7 +5,16 @@
 pub struct HTTPIngressRuleValue {
     /// A collection of paths that map requests to backends.
     pub paths: Vec<crate::api::networking::v1beta1::HTTPIngressPath>,
+
 }
+
+impl crate::DeepMerge for HTTPIngressRuleValue  {
+    fn merge_from(&mut self, other: Self) {
+        self.paths.merge_from(other.paths);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HTTPIngressRuleValue {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

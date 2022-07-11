@@ -14,7 +14,19 @@ pub struct CinderPersistentVolumeSource {
 
     /// volumeID used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
     pub volume_id: String,
+
 }
+
+impl crate::DeepMerge for CinderPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.volume_id.merge_from(other.volume_id);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CinderPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

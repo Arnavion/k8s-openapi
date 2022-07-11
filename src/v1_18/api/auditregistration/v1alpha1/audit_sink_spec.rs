@@ -8,7 +8,17 @@ pub struct AuditSinkSpec {
 
     /// Webhook to send events required
     pub webhook: crate::api::auditregistration::v1alpha1::Webhook,
+
 }
+
+impl crate::DeepMerge for AuditSinkSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.policy.merge_from(other.policy);
+        self.webhook.merge_from(other.webhook);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AuditSinkSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

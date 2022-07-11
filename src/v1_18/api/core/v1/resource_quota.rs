@@ -11,7 +11,18 @@ pub struct ResourceQuota {
 
     /// Status defines the actual enforced quota and its current usage. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub status: Option<crate::api::core::v1::ResourceQuotaStatus>,
+
 }
+
+impl crate::DeepMerge for ResourceQuota  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin /v1/ResourceQuota
 

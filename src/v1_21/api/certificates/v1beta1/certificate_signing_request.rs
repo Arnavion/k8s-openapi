@@ -10,7 +10,18 @@ pub struct CertificateSigningRequest {
 
     /// Derived information about the request.
     pub status: Option<crate::api::certificates::v1beta1::CertificateSigningRequestStatus>,
+
 }
+
+impl crate::DeepMerge for CertificateSigningRequest  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin certificates.k8s.io/v1beta1/CertificateSigningRequest
 

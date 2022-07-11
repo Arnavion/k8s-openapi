@@ -11,7 +11,18 @@ pub struct CronJob {
 
     /// Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub status: Option<crate::api::batch::v1::CronJobStatus>,
+
 }
+
+impl crate::DeepMerge for CronJob  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin batch/v1/CronJob
 

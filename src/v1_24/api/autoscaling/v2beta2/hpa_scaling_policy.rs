@@ -11,7 +11,18 @@ pub struct HPAScalingPolicy {
 
     /// Value contains the amount of change which is permitted by the policy. It must be greater than zero
     pub value: i32,
+
 }
+
+impl crate::DeepMerge for HPAScalingPolicy  {
+    fn merge_from(&mut self, other: Self) {
+        self.period_seconds.merge_from(other.period_seconds);
+        self.type_.merge_from(other.type_);
+        self.value.merge_from(other.value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HPAScalingPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

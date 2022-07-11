@@ -17,7 +17,20 @@ pub struct ObjectMetricSource {
 
     /// targetValue is the target value of the metric (as a quantity).
     pub target_value: crate::apimachinery::pkg::api::resource::Quantity,
+
 }
+
+impl crate::DeepMerge for ObjectMetricSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.average_value.merge_from(other.average_value);
+        self.metric_name.merge_from(other.metric_name);
+        self.selector.merge_from(other.selector);
+        self.target.merge_from(other.target);
+        self.target_value.merge_from(other.target_value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -23,7 +23,22 @@ pub struct DeleteOptions {
 
     /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub propagation_policy: Option<String>,
+
 }
+
+impl crate::DeepMerge for DeleteOptions  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.dry_run.merge_from(other.dry_run);
+        self.grace_period_seconds.merge_from(other.grace_period_seconds);
+        self.kind.merge_from(other.kind);
+        self.orphan_dependents.merge_from(other.orphan_dependents);
+        self.preconditions.merge_from(other.preconditions);
+        self.propagation_policy.merge_from(other.propagation_policy);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

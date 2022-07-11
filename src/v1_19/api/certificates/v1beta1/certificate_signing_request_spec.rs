@@ -54,7 +54,22 @@ pub struct CertificateSigningRequestSpec {
 
     /// Information about the requesting user. See user.Info interface for details.
     pub username: Option<String>,
+
 }
+
+impl crate::DeepMerge for CertificateSigningRequestSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.extra.merge_from(other.extra);
+        self.groups.merge_from(other.groups);
+        self.request.merge_from(other.request);
+        self.signer_name.merge_from(other.signer_name);
+        self.uid.merge_from(other.uid);
+        self.usages.merge_from(other.usages);
+        self.username.merge_from(other.username);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

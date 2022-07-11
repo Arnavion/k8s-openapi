@@ -8,7 +8,17 @@ pub struct PriorityLevelConfigurationSpec {
 
     /// `type` indicates whether this priority level is subject to limitation on request execution.  A value of `"Exempt"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `"Limited"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for PriorityLevelConfigurationSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.limited.merge_from(other.limited);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PriorityLevelConfigurationSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

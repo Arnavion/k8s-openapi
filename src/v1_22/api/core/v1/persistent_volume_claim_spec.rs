@@ -31,7 +31,23 @@ pub struct PersistentVolumeClaimSpec {
 
     /// VolumeName is the binding reference to the PersistentVolume backing this claim.
     pub volume_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaimSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.access_modes.merge_from(other.access_modes);
+        self.data_source.merge_from(other.data_source);
+        self.data_source_ref.merge_from(other.data_source_ref);
+        self.resources.merge_from(other.resources);
+        self.selector.merge_from(other.selector);
+        self.storage_class_name.merge_from(other.storage_class_name);
+        self.volume_mode.merge_from(other.volume_mode);
+        self.volume_name.merge_from(other.volume_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

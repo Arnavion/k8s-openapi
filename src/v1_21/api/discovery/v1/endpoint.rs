@@ -26,7 +26,23 @@ pub struct Endpoint {
 
     /// zone is the name of the Zone this endpoint exists in.
     pub zone: Option<String>,
+
 }
+
+impl crate::DeepMerge for Endpoint  {
+    fn merge_from(&mut self, other: Self) {
+        self.addresses.merge_from(other.addresses);
+        self.conditions.merge_from(other.conditions);
+        self.deprecated_topology.merge_from(other.deprecated_topology);
+        self.hints.merge_from(other.hints);
+        self.hostname.merge_from(other.hostname);
+        self.node_name.merge_from(other.node_name);
+        self.target_ref.merge_from(other.target_ref);
+        self.zone.merge_from(other.zone);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Endpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

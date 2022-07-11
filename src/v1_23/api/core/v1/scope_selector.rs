@@ -5,7 +5,16 @@
 pub struct ScopeSelector {
     /// A list of scope selector requirements by scope of the resources.
     pub match_expressions: Option<Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>>,
+
 }
+
+impl crate::DeepMerge for ScopeSelector  {
+    fn merge_from(&mut self, other: Self) {
+        self.match_expressions.merge_from(other.match_expressions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ScopeSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,18 @@ pub struct ContainerResourceMetricStatus {
 
     /// Name is the name of the resource in question.
     pub name: String,
+
 }
+
+impl crate::DeepMerge for ContainerResourceMetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.container.merge_from(other.container);
+        self.current.merge_from(other.current);
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

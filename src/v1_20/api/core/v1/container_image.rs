@@ -8,7 +8,17 @@ pub struct ContainerImage {
 
     /// The size of the image in bytes.
     pub size_bytes: Option<i64>,
+
 }
+
+impl crate::DeepMerge for ContainerImage  {
+    fn merge_from(&mut self, other: Self) {
+        self.names.merge_from(other.names);
+        self.size_bytes.merge_from(other.size_bytes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerImage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

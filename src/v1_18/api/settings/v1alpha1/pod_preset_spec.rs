@@ -17,7 +17,20 @@ pub struct PodPresetSpec {
 
     /// Volumes defines the collection of Volume to inject into the pod.
     pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
+
 }
+
+impl crate::DeepMerge for PodPresetSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.env.merge_from(other.env);
+        self.env_from.merge_from(other.env_from);
+        self.selector.merge_from(other.selector);
+        self.volume_mounts.merge_from(other.volume_mounts);
+        self.volumes.merge_from(other.volumes);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodPresetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

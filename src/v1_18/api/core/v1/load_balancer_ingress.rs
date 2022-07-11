@@ -8,7 +8,17 @@ pub struct LoadBalancerIngress {
 
     /// IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
     pub ip: Option<String>,
+
 }
+
+impl crate::DeepMerge for LoadBalancerIngress  {
+    fn merge_from(&mut self, other: Self) {
+        self.hostname.merge_from(other.hostname);
+        self.ip.merge_from(other.ip);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

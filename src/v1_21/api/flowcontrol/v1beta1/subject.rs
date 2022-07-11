@@ -11,7 +11,19 @@ pub struct Subject {
     pub service_account: Option<crate::api::flowcontrol::v1beta1::ServiceAccountSubject>,
 
     pub user: Option<crate::api::flowcontrol::v1beta1::UserSubject>,
+
 }
+
+impl crate::DeepMerge for Subject  {
+    fn merge_from(&mut self, other: Self) {
+        self.group.merge_from(other.group);
+        self.kind.merge_from(other.kind);
+        self.service_account.merge_from(other.service_account);
+        self.user.merge_from(other.user);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Subject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

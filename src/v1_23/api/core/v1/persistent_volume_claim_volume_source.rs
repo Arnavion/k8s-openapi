@@ -8,7 +8,17 @@ pub struct PersistentVolumeClaimVolumeSource {
 
     /// Will force the ReadOnly setting in VolumeMounts. Default false.
     pub read_only: Option<bool>,
+
 }
+
+impl crate::DeepMerge for PersistentVolumeClaimVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.claim_name.merge_from(other.claim_name);
+        self.read_only.merge_from(other.read_only);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

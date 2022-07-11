@@ -17,7 +17,20 @@ pub struct ResourcePolicyRule {
 
     /// `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs and, if present, must be the only entry. Required.
     pub verbs: Vec<String>,
+
 }
+
+impl crate::DeepMerge for ResourcePolicyRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_groups.merge_from(other.api_groups);
+        self.cluster_scope.merge_from(other.cluster_scope);
+        self.namespaces.merge_from(other.namespaces);
+        self.resources.merge_from(other.resources);
+        self.verbs.merge_from(other.verbs);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourcePolicyRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

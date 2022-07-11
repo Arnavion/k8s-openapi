@@ -19,7 +19,17 @@ pub struct Endpoints {
 
     /// The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
     pub subsets: Option<Vec<crate::api::core::v1::EndpointSubset>>,
+
 }
+
+impl crate::DeepMerge for Endpoints  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.subsets.merge_from(other.subsets);
+
+    }
+}
+
 
 // Begin /v1/Endpoints
 

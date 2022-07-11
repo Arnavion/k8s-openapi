@@ -17,7 +17,20 @@ pub struct DaemonSetSpec {
 
     /// An update strategy to replace existing DaemonSet pods with new pods.
     pub update_strategy: Option<crate::api::apps::v1::DaemonSetUpdateStrategy>,
+
 }
+
+impl crate::DeepMerge for DaemonSetSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.min_ready_seconds.merge_from(other.min_ready_seconds);
+        self.revision_history_limit.merge_from(other.revision_history_limit);
+        self.selector.merge_from(other.selector);
+        self.template.merge_from(other.template);
+        self.update_strategy.merge_from(other.update_strategy);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

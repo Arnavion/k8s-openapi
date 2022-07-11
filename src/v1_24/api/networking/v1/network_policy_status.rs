@@ -5,7 +5,16 @@
 pub struct NetworkPolicyStatus {
     /// Conditions holds an array of metav1.Condition that describe the state of the NetworkPolicy. Current service state
     pub conditions: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::Condition>>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicyStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

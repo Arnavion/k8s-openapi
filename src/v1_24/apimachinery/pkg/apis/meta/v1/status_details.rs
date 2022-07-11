@@ -20,7 +20,21 @@ pub struct StatusDetails {
 
     /// UID of the resource. (when there is a single resource which can be described). More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: Option<String>,
+
 }
+
+impl crate::DeepMerge for StatusDetails  {
+    fn merge_from(&mut self, other: Self) {
+        self.causes.merge_from(other.causes);
+        self.group.merge_from(other.group);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.retry_after_seconds.merge_from(other.retry_after_seconds);
+        self.uid.merge_from(other.uid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatusDetails {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct Role {
 
     /// Rules holds all the PolicyRules for this Role
     pub rules: Option<Vec<crate::api::rbac::v1alpha1::PolicyRule>>,
+
 }
+
+impl crate::DeepMerge for Role  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.rules.merge_from(other.rules);
+
+    }
+}
+
 
 // Begin rbac.authorization.k8s.io/v1alpha1/Role
 

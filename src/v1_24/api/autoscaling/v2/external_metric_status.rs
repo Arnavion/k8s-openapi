@@ -8,7 +8,17 @@ pub struct ExternalMetricStatus {
 
     /// metric identifies the target metric by name and selector
     pub metric: crate::api::autoscaling::v2::MetricIdentifier,
+
 }
+
+impl crate::DeepMerge for ExternalMetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.current.merge_from(other.current);
+        self.metric.merge_from(other.metric);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

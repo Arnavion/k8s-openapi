@@ -8,7 +8,17 @@ pub struct SELinuxStrategyOptions {
 
     /// seLinuxOptions required to run as; required for MustRunAs More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
+
 }
+
+impl crate::DeepMerge for SELinuxStrategyOptions  {
+    fn merge_from(&mut self, other: Self) {
+        self.rule.merge_from(other.rule);
+        self.se_linux_options.merge_from(other.se_linux_options);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SELinuxStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

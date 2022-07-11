@@ -17,7 +17,20 @@ pub struct LeaseSpec {
 
     /// renewTime is a time when the current holder of a lease has last updated the lease.
     pub renew_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
+
 }
+
+impl crate::DeepMerge for LeaseSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.acquire_time.merge_from(other.acquire_time);
+        self.holder_identity.merge_from(other.holder_identity);
+        self.lease_duration_seconds.merge_from(other.lease_duration_seconds);
+        self.lease_transitions.merge_from(other.lease_transitions);
+        self.renew_time.merge_from(other.renew_time);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LeaseSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

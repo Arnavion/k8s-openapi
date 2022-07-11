@@ -8,7 +8,17 @@ pub struct NodeSelectorTerm {
 
     /// A list of node selector requirements by node's fields.
     pub match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
+
 }
+
+impl crate::DeepMerge for NodeSelectorTerm  {
+    fn merge_from(&mut self, other: Self) {
+        self.match_expressions.merge_from(other.match_expressions);
+        self.match_fields.merge_from(other.match_fields);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -29,7 +29,24 @@ pub struct ContainerStatus {
 
     /// Details about the container's current condition.
     pub state: Option<crate::api::core::v1::ContainerState>,
+
 }
+
+impl crate::DeepMerge for ContainerStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.container_id.merge_from(other.container_id);
+        self.image.merge_from(other.image);
+        self.image_id.merge_from(other.image_id);
+        self.last_state.merge_from(other.last_state);
+        self.name.merge_from(other.name);
+        self.ready.merge_from(other.ready);
+        self.restart_count.merge_from(other.restart_count);
+        self.started.merge_from(other.started);
+        self.state.merge_from(other.state);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

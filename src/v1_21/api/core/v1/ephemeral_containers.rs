@@ -7,7 +7,17 @@ pub struct EphemeralContainers {
     pub ephemeral_containers: Vec<crate::api::core::v1::EphemeralContainer>,
 
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+impl crate::DeepMerge for EphemeralContainers  {
+    fn merge_from(&mut self, other: Self) {
+        self.ephemeral_containers.merge_from(other.ephemeral_containers);
+        self.metadata.merge_from(other.metadata);
+
+    }
+}
+
 
 // Begin /v1/EphemeralContainers
 

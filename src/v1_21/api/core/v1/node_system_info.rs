@@ -32,7 +32,25 @@ pub struct NodeSystemInfo {
 
     /// SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid
     pub system_uuid: String,
+
 }
+
+impl crate::DeepMerge for NodeSystemInfo  {
+    fn merge_from(&mut self, other: Self) {
+        self.architecture.merge_from(other.architecture);
+        self.boot_id.merge_from(other.boot_id);
+        self.container_runtime_version.merge_from(other.container_runtime_version);
+        self.kernel_version.merge_from(other.kernel_version);
+        self.kube_proxy_version.merge_from(other.kube_proxy_version);
+        self.kubelet_version.merge_from(other.kubelet_version);
+        self.machine_id.merge_from(other.machine_id);
+        self.operating_system.merge_from(other.operating_system);
+        self.os_image.merge_from(other.os_image);
+        self.system_uuid.merge_from(other.system_uuid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

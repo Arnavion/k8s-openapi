@@ -14,7 +14,19 @@ pub struct EndpointSlice {
 
     /// ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
     pub ports: Option<Vec<crate::api::discovery::v1::EndpointPort>>,
+
 }
+
+impl crate::DeepMerge for EndpointSlice  {
+    fn merge_from(&mut self, other: Self) {
+        self.address_type.merge_from(other.address_type);
+        self.endpoints.merge_from(other.endpoints);
+        self.metadata.merge_from(other.metadata);
+        self.ports.merge_from(other.ports);
+
+    }
+}
+
 
 // Begin discovery.k8s.io/v1/EndpointSlice
 

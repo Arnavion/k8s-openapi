@@ -8,7 +8,17 @@ pub struct CronJobStatus {
 
     /// Information when was the last time the job was successfully scheduled.
     pub last_schedule_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+impl crate::DeepMerge for CronJobStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.active.merge_from(other.active);
+        self.last_schedule_time.merge_from(other.last_schedule_time);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CronJobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

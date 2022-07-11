@@ -11,7 +11,18 @@ pub struct Deployment {
 
     /// Most recently observed status of the Deployment.
     pub status: Option<crate::api::apps::v1::DeploymentStatus>,
+
 }
+
+impl crate::DeepMerge for Deployment  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin apps/v1/Deployment
 

@@ -23,7 +23,22 @@ pub struct APIServiceSpec {
 
     /// VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
     pub version_priority: i32,
+
 }
+
+impl crate::DeepMerge for APIServiceSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.ca_bundle.merge_from(other.ca_bundle);
+        self.group.merge_from(other.group);
+        self.group_priority_minimum.merge_from(other.group_priority_minimum);
+        self.insecure_skip_tls_verify.merge_from(other.insecure_skip_tls_verify);
+        self.service.merge_from(other.service);
+        self.version.merge_from(other.version);
+        self.version_priority.merge_from(other.version_priority);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct PodReadinessGate {
     /// ConditionType refers to a condition in the pod's condition list with matching type.
     pub condition_type: String,
+
 }
+
+impl crate::DeepMerge for PodReadinessGate  {
+    fn merge_from(&mut self, other: Self) {
+        self.condition_type.merge_from(other.condition_type);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodReadinessGate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

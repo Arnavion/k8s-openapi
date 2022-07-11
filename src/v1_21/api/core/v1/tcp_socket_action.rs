@@ -8,7 +8,17 @@ pub struct TCPSocketAction {
 
     /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
     pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
+
 }
+
+impl crate::DeepMerge for TCPSocketAction  {
+    fn merge_from(&mut self, other: Self) {
+        self.host.merge_from(other.host);
+        self.port.merge_from(other.port);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TCPSocketAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -14,7 +14,19 @@ pub struct ServiceAccount {
 
     /// Secrets is a list of the secrets in the same namespace that pods running using this ServiceAccount are allowed to use. Pods are only limited to this list if this service account has a "kubernetes.io/enforce-mountable-secrets" annotation set to "true". This field should not be used to find auto-generated service account token secrets for use outside of pods. Instead, tokens can be requested directly using the TokenRequest API, or service account token secrets can be manually created. More info: https://kubernetes.io/docs/concepts/configuration/secret
     pub secrets: Option<Vec<crate::api::core::v1::ObjectReference>>,
+
 }
+
+impl crate::DeepMerge for ServiceAccount  {
+    fn merge_from(&mut self, other: Self) {
+        self.automount_service_account_token.merge_from(other.automount_service_account_token);
+        self.image_pull_secrets.merge_from(other.image_pull_secrets);
+        self.metadata.merge_from(other.metadata);
+        self.secrets.merge_from(other.secrets);
+
+    }
+}
+
 
 // Begin /v1/ServiceAccount
 

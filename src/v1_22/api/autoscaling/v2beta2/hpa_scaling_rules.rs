@@ -11,7 +11,18 @@ pub struct HPAScalingRules {
 
     /// StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
     pub stabilization_window_seconds: Option<i32>,
+
 }
+
+impl crate::DeepMerge for HPAScalingRules  {
+    fn merge_from(&mut self, other: Self) {
+        self.policies.merge_from(other.policies);
+        self.select_policy.merge_from(other.select_policy);
+        self.stabilization_window_seconds.merge_from(other.stabilization_window_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HPAScalingRules {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct CSIDriver {
 
     /// Specification of the CSI Driver.
     pub spec: crate::api::storage::v1::CSIDriverSpec,
+
 }
+
+impl crate::DeepMerge for CSIDriver  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin storage.k8s.io/v1/CSIDriver
 

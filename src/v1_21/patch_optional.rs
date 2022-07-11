@@ -12,7 +12,18 @@ pub struct PatchOptional<'a> {
 
     /// Force is going to "force" Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
     pub force: Option<bool>,
+
 }
+
+impl<'a> crate::DeepMerge for PatchOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.dry_run.merge_from(other.dry_run);
+        self.field_manager.merge_from(other.field_manager);
+        self.force.merge_from(other.force);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> PatchOptional<'a> {

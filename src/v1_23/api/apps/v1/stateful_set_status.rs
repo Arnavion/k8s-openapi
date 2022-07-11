@@ -32,7 +32,25 @@ pub struct StatefulSetStatus {
 
     /// updatedReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by updateRevision.
     pub updated_replicas: Option<i32>,
+
 }
+
+impl crate::DeepMerge for StatefulSetStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.available_replicas.merge_from(other.available_replicas);
+        self.collision_count.merge_from(other.collision_count);
+        self.conditions.merge_from(other.conditions);
+        self.current_replicas.merge_from(other.current_replicas);
+        self.current_revision.merge_from(other.current_revision);
+        self.observed_generation.merge_from(other.observed_generation);
+        self.ready_replicas.merge_from(other.ready_replicas);
+        self.replicas.merge_from(other.replicas);
+        self.update_revision.merge_from(other.update_revision);
+        self.updated_replicas.merge_from(other.updated_replicas);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

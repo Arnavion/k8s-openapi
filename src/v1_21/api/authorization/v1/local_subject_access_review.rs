@@ -10,7 +10,18 @@ pub struct LocalSubjectAccessReview {
 
     /// Status is filled in by the server and indicates whether the request is allowed or not
     pub status: Option<crate::api::authorization::v1::SubjectAccessReviewStatus>,
+
 }
+
+impl crate::DeepMerge for LocalSubjectAccessReview  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin authorization.k8s.io/v1/LocalSubjectAccessReview
 

@@ -14,7 +14,17 @@ pub struct LimitedPriorityLevelConfiguration {
 
     /// `limitResponse` indicates what to do with requests that can not be executed right now
     pub limit_response: Option<crate::api::flowcontrol::v1alpha1::LimitResponse>,
+
 }
+
+impl crate::DeepMerge for LimitedPriorityLevelConfiguration  {
+    fn merge_from(&mut self, other: Self) {
+        self.assured_concurrency_shares.merge_from(other.assured_concurrency_shares);
+        self.limit_response.merge_from(other.limit_response);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitedPriorityLevelConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

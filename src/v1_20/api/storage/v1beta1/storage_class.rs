@@ -28,7 +28,23 @@ pub struct StorageClass {
 
     /// VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.
     pub volume_binding_mode: Option<String>,
+
 }
+
+impl crate::DeepMerge for StorageClass  {
+    fn merge_from(&mut self, other: Self) {
+        self.allow_volume_expansion.merge_from(other.allow_volume_expansion);
+        self.allowed_topologies.merge_from(other.allowed_topologies);
+        self.metadata.merge_from(other.metadata);
+        self.mount_options.merge_from(other.mount_options);
+        self.parameters.merge_from(other.parameters);
+        self.provisioner.merge_from(other.provisioner);
+        self.reclaim_policy.merge_from(other.reclaim_policy);
+        self.volume_binding_mode.merge_from(other.volume_binding_mode);
+
+    }
+}
+
 
 // Begin storage.k8s.io/v1beta1/StorageClass
 

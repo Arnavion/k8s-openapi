@@ -60,7 +60,33 @@ pub struct ServiceSpec {
 
     /// type determines how the Service is exposed. Defaults to ClusterIP. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. "ClusterIP" allocates a cluster-internal IP address for load-balancing to endpoints. Endpoints are determined by the selector or if that is not specified, by manual construction of an Endpoints object or EndpointSlice objects. If clusterIP is "None", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a virtual IP. "NodePort" builds on ClusterIP and allocates a port on every node which routes to the same endpoints as the clusterIP. "LoadBalancer" builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP. "ExternalName" aliases this service to the specified externalName. Several other fields do not apply to ExternalName services. More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
     pub type_: Option<String>,
+
 }
+
+impl crate::DeepMerge for ServiceSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.allocate_load_balancer_node_ports.merge_from(other.allocate_load_balancer_node_ports);
+        self.cluster_ip.merge_from(other.cluster_ip);
+        self.cluster_ips.merge_from(other.cluster_ips);
+        self.external_ips.merge_from(other.external_ips);
+        self.external_name.merge_from(other.external_name);
+        self.external_traffic_policy.merge_from(other.external_traffic_policy);
+        self.health_check_node_port.merge_from(other.health_check_node_port);
+        self.ip_families.merge_from(other.ip_families);
+        self.ip_family_policy.merge_from(other.ip_family_policy);
+        self.load_balancer_ip.merge_from(other.load_balancer_ip);
+        self.load_balancer_source_ranges.merge_from(other.load_balancer_source_ranges);
+        self.ports.merge_from(other.ports);
+        self.publish_not_ready_addresses.merge_from(other.publish_not_ready_addresses);
+        self.selector.merge_from(other.selector);
+        self.session_affinity.merge_from(other.session_affinity);
+        self.session_affinity_config.merge_from(other.session_affinity_config);
+        self.topology_keys.merge_from(other.topology_keys);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -32,7 +32,17 @@ pub struct ValidationRule {
     ///     are overwritten by values in `Y` when the key sets of `X` and `Y` intersect. Elements in `Y` with
     ///     non-intersecting keys are appended, retaining their partial order.
     pub rule: String,
+
 }
+
+impl crate::DeepMerge for ValidationRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.message.merge_from(other.message);
+        self.rule.merge_from(other.rule);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ValidationRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

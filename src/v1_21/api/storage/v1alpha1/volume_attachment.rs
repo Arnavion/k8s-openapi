@@ -13,7 +13,18 @@ pub struct VolumeAttachment {
 
     /// Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.
     pub status: Option<crate::api::storage::v1alpha1::VolumeAttachmentStatus>,
+
 }
+
+impl crate::DeepMerge for VolumeAttachment  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin storage.k8s.io/v1alpha1/VolumeAttachment
 

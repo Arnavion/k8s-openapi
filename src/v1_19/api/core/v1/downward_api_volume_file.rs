@@ -14,7 +14,19 @@ pub struct DownwardAPIVolumeFile {
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
     pub resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector>,
+
 }
+
+impl crate::DeepMerge for DownwardAPIVolumeFile  {
+    fn merge_from(&mut self, other: Self) {
+        self.field_ref.merge_from(other.field_ref);
+        self.mode.merge_from(other.mode);
+        self.path.merge_from(other.path);
+        self.resource_field_ref.merge_from(other.resource_field_ref);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeFile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

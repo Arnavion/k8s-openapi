@@ -11,7 +11,18 @@ pub struct KeyToPath {
 
     /// path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
     pub path: String,
+
 }
+
+impl crate::DeepMerge for KeyToPath  {
+    fn merge_from(&mut self, other: Self) {
+        self.key.merge_from(other.key);
+        self.mode.merge_from(other.mode);
+        self.path.merge_from(other.path);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for KeyToPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

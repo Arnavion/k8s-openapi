@@ -12,7 +12,18 @@ pub struct StorageVersion {
 
     /// API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.
     pub status: crate::api::apiserverinternal::v1alpha1::StorageVersionStatus,
+
 }
+
+impl crate::DeepMerge for StorageVersion  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin internal.apiserver.k8s.io/v1alpha1/StorageVersion
 

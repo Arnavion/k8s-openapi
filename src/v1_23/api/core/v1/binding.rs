@@ -8,7 +8,17 @@ pub struct Binding {
 
     /// The target object that you want to bind to the standard object.
     pub target: crate::api::core::v1::ObjectReference,
+
 }
+
+impl crate::DeepMerge for Binding  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.target.merge_from(other.target);
+
+    }
+}
+
 
 // Begin /v1/Binding
 

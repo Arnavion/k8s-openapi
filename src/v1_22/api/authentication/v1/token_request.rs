@@ -11,7 +11,18 @@ pub struct TokenRequest {
 
     /// Status is filled in by the server and indicates whether the token can be authenticated.
     pub status: Option<crate::api::authentication::v1::TokenRequestStatus>,
+
 }
+
+impl crate::DeepMerge for TokenRequest  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin authentication.k8s.io/v1/TokenRequest
 

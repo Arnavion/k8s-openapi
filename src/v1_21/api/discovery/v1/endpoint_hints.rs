@@ -5,7 +5,16 @@
 pub struct EndpointHints {
     /// forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
     pub for_zones: Option<Vec<crate::api::discovery::v1::ForZone>>,
+
 }
+
+impl crate::DeepMerge for EndpointHints  {
+    fn merge_from(&mut self, other: Self) {
+        self.for_zones.merge_from(other.for_zones);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointHints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

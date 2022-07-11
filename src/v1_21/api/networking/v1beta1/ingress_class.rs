@@ -8,7 +8,17 @@ pub struct IngressClass {
 
     /// Spec is the desired state of the IngressClass. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: Option<crate::api::networking::v1beta1::IngressClassSpec>,
+
 }
+
+impl crate::DeepMerge for IngressClass  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin networking.k8s.io/v1beta1/IngressClass
 

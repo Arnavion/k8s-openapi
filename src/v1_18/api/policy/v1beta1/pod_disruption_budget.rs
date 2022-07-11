@@ -10,7 +10,18 @@ pub struct PodDisruptionBudget {
 
     /// Most recently observed status of the PodDisruptionBudget.
     pub status: Option<crate::api::policy::v1beta1::PodDisruptionBudgetStatus>,
+
 }
+
+impl crate::DeepMerge for PodDisruptionBudget  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin policy/v1beta1/PodDisruptionBudget
 

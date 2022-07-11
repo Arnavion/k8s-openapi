@@ -32,7 +32,22 @@ pub struct ListOptional<'a> {
 
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
+
 }
+
+impl<'a> crate::DeepMerge for ListOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.continue_.merge_from(other.continue_);
+        self.field_selector.merge_from(other.field_selector);
+        self.label_selector.merge_from(other.label_selector);
+        self.limit.merge_from(other.limit);
+        self.resource_version.merge_from(other.resource_version);
+        self.resource_version_match.merge_from(other.resource_version_match);
+        self.timeout_seconds.merge_from(other.timeout_seconds);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> ListOptional<'a> {

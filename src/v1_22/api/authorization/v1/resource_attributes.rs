@@ -23,7 +23,22 @@ pub struct ResourceAttributes {
 
     /// Version is the API Version of the Resource.  "*" means all.
     pub version: Option<String>,
+
 }
+
+impl crate::DeepMerge for ResourceAttributes  {
+    fn merge_from(&mut self, other: Self) {
+        self.group.merge_from(other.group);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+        self.resource.merge_from(other.resource);
+        self.subresource.merge_from(other.subresource);
+        self.verb.merge_from(other.verb);
+        self.version.merge_from(other.version);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

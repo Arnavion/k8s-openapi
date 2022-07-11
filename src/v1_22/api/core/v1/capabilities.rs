@@ -8,7 +8,17 @@ pub struct Capabilities {
 
     /// Removed capabilities
     pub drop: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for Capabilities  {
+    fn merge_from(&mut self, other: Self) {
+        self.add.merge_from(other.add);
+        self.drop.merge_from(other.drop);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Capabilities {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

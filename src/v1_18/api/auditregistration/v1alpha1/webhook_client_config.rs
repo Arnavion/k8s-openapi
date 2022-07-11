@@ -23,7 +23,18 @@ pub struct WebhookClientConfig {
     ///
     /// Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either.
     pub url: Option<String>,
+
 }
+
+impl crate::DeepMerge for WebhookClientConfig  {
+    fn merge_from(&mut self, other: Self) {
+        self.ca_bundle.merge_from(other.ca_bundle);
+        self.service.merge_from(other.service);
+        self.url.merge_from(other.url);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WebhookClientConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

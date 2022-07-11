@@ -11,7 +11,18 @@ pub struct ResourceMetricStatus {
 
     /// name is the name of the resource in question.
     pub name: String,
+
 }
+
+impl crate::DeepMerge for ResourceMetricStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.current_average_utilization.merge_from(other.current_average_utilization);
+        self.current_average_value.merge_from(other.current_average_value);
+        self.name.merge_from(other.name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ResourceMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -17,7 +17,20 @@ pub struct HTTPGetAction {
 
     /// Scheme to use for connecting to the host. Defaults to HTTP.
     pub scheme: Option<String>,
+
 }
+
+impl crate::DeepMerge for HTTPGetAction  {
+    fn merge_from(&mut self, other: Self) {
+        self.host.merge_from(other.host);
+        self.http_headers.merge_from(other.http_headers);
+        self.path.merge_from(other.path);
+        self.port.merge_from(other.port);
+        self.scheme.merge_from(other.scheme);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct NamespaceSpec {
     /// Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
     pub finalizers: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for NamespaceSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.finalizers.merge_from(other.finalizers);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NamespaceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

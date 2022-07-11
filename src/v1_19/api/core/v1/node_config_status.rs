@@ -14,7 +14,19 @@ pub struct NodeConfigStatus {
 
     /// LastKnownGood reports the checkpointed config the node will fall back to when it encounters an error attempting to use the Assigned config. The Assigned config becomes the LastKnownGood config when the node determines that the Assigned config is stable and correct. This is currently implemented as a 10-minute soak period starting when the local record of Assigned config is updated. If the Assigned config is Active at the end of this period, it becomes the LastKnownGood. Note that if Spec.ConfigSource is reset to nil (use local defaults), the LastKnownGood is also immediately reset to nil, because the local default config is always assumed good. You should not make assumptions about the node's method of determining config stability and correctness, as this may change or become configurable in the future.
     pub last_known_good: Option<crate::api::core::v1::NodeConfigSource>,
+
 }
+
+impl crate::DeepMerge for NodeConfigStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.active.merge_from(other.active);
+        self.assigned.merge_from(other.assigned);
+        self.error.merge_from(other.error);
+        self.last_known_good.merge_from(other.last_known_good);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

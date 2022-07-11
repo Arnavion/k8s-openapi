@@ -5,7 +5,16 @@
 pub struct VolumeNodeResources {
     /// Maximum number of unique volumes managed by the CSI driver that can be used on a node. A volume that is both attached and mounted on a node is considered to be used once, not twice. The same rule applies for a unique volume that is shared among multiple pods on the same node. If this field is not specified, then the supported number of volumes on this node is unbounded.
     pub count: Option<i32>,
+
 }
+
+impl crate::DeepMerge for VolumeNodeResources  {
+    fn merge_from(&mut self, other: Self) {
+        self.count.merge_from(other.count);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for VolumeNodeResources {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

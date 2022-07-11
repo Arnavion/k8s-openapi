@@ -31,7 +31,22 @@ pub struct PodDisruptionBudgetStatus {
 
     /// Most recent generation observed when updating this PDB status. DisruptionsAllowed and other status information is valid only if observedGeneration equals to PDB's object generation.
     pub observed_generation: Option<i64>,
+
 }
+
+impl crate::DeepMerge for PodDisruptionBudgetStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+        self.current_healthy.merge_from(other.current_healthy);
+        self.desired_healthy.merge_from(other.desired_healthy);
+        self.disrupted_pods.merge_from(other.disrupted_pods);
+        self.disruptions_allowed.merge_from(other.disruptions_allowed);
+        self.expected_pods.merge_from(other.expected_pods);
+        self.observed_generation.merge_from(other.observed_generation);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

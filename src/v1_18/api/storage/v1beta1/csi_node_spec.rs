@@ -5,7 +5,16 @@
 pub struct CSINodeSpec {
     /// drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     pub drivers: Vec<crate::api::storage::v1beta1::CSINodeDriver>,
+
 }
+
+impl crate::DeepMerge for CSINodeSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.drivers.merge_from(other.drivers);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CSINodeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

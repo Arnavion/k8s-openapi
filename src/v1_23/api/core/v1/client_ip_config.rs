@@ -5,7 +5,16 @@
 pub struct ClientIPConfig {
     /// timeoutSeconds specifies the seconds of ClientIP type session sticky time. The value must be \>0 && \<=86400(for 1 day) if ServiceAffinity == "ClientIP". Default value is 10800(for 3 hours).
     pub timeout_seconds: Option<i32>,
+
 }
+
+impl crate::DeepMerge for ClientIPConfig  {
+    fn merge_from(&mut self, other: Self) {
+        self.timeout_seconds.merge_from(other.timeout_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ClientIPConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

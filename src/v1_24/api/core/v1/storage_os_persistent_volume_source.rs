@@ -17,7 +17,20 @@ pub struct StorageOSPersistentVolumeSource {
 
     /// volumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
     pub volume_namespace: Option<String>,
+
 }
+
+impl crate::DeepMerge for StorageOSPersistentVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.volume_name.merge_from(other.volume_name);
+        self.volume_namespace.merge_from(other.volume_namespace);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for StorageOSPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

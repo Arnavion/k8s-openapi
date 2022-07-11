@@ -14,7 +14,19 @@ pub struct HorizontalPodAutoscalerSpec {
 
     /// target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.
     pub target_cpu_utilization_percentage: Option<i32>,
+
 }
+
+impl crate::DeepMerge for HorizontalPodAutoscalerSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.max_replicas.merge_from(other.max_replicas);
+        self.min_replicas.merge_from(other.min_replicas);
+        self.scale_target_ref.merge_from(other.scale_target_ref);
+        self.target_cpu_utilization_percentage.merge_from(other.target_cpu_utilization_percentage);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

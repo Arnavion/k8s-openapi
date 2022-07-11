@@ -20,7 +20,21 @@ pub struct LimitRangeItem {
 
     /// Type of resource that this limit applies to.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for LimitRangeItem  {
+    fn merge_from(&mut self, other: Self) {
+        self.default.merge_from(other.default);
+        self.default_request.merge_from(other.default_request);
+        self.max.merge_from(other.max);
+        self.max_limit_request_ratio.merge_from(other.max_limit_request_ratio);
+        self.min.merge_from(other.min);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitRangeItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

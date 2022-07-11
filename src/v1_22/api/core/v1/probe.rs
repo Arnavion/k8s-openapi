@@ -29,7 +29,24 @@ pub struct Probe {
 
     /// Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
     pub timeout_seconds: Option<i32>,
+
 }
+
+impl crate::DeepMerge for Probe  {
+    fn merge_from(&mut self, other: Self) {
+        self.exec.merge_from(other.exec);
+        self.failure_threshold.merge_from(other.failure_threshold);
+        self.http_get.merge_from(other.http_get);
+        self.initial_delay_seconds.merge_from(other.initial_delay_seconds);
+        self.period_seconds.merge_from(other.period_seconds);
+        self.success_threshold.merge_from(other.success_threshold);
+        self.tcp_socket.merge_from(other.tcp_socket);
+        self.termination_grace_period_seconds.merge_from(other.termination_grace_period_seconds);
+        self.timeout_seconds.merge_from(other.timeout_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Probe {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

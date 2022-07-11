@@ -5,7 +5,16 @@
 pub struct NodeConfigSource {
     /// ConfigMap is a reference to a Node's ConfigMap
     pub config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource>,
+
 }
+
+impl crate::DeepMerge for NodeConfigSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.config_map.merge_from(other.config_map);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

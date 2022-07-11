@@ -14,7 +14,19 @@ pub struct TokenReviewStatus {
 
     /// User is the UserInfo associated with the provided token.
     pub user: Option<crate::api::authentication::v1beta1::UserInfo>,
+
 }
+
+impl crate::DeepMerge for TokenReviewStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.audiences.merge_from(other.audiences);
+        self.authenticated.merge_from(other.authenticated);
+        self.error.merge_from(other.error);
+        self.user.merge_from(other.user);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TokenReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

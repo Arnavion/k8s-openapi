@@ -17,7 +17,20 @@ pub struct PriorityClass {
 
     /// The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.
     pub value: i32,
+
 }
+
+impl crate::DeepMerge for PriorityClass  {
+    fn merge_from(&mut self, other: Self) {
+        self.description.merge_from(other.description);
+        self.global_default.merge_from(other.global_default);
+        self.metadata.merge_from(other.metadata);
+        self.preemption_policy.merge_from(other.preemption_policy);
+        self.value.merge_from(other.value);
+
+    }
+}
+
 
 // Begin scheduling.k8s.io/v1beta1/PriorityClass
 

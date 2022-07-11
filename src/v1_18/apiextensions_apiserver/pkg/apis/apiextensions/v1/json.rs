@@ -4,6 +4,12 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct JSON(pub crate::serde_json::Value);
 
+impl crate::DeepMerge for JSON {
+    fn merge_from(&mut self, other: Self) {
+        self.0.merge_from(other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JSON {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;
@@ -29,6 +35,7 @@ impl crate::serde::Serialize for JSON {
         serializer.serialize_newtype_struct("JSON", &self.0)
     }
 }
+
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for JSON {

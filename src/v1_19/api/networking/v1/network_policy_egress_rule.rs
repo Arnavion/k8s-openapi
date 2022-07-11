@@ -8,7 +8,17 @@ pub struct NetworkPolicyEgressRule {
 
     /// List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
     pub to: Option<Vec<crate::api::networking::v1::NetworkPolicyPeer>>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicyEgressRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.ports.merge_from(other.ports);
+        self.to.merge_from(other.to);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyEgressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

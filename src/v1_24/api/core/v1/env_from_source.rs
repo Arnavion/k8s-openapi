@@ -11,7 +11,18 @@ pub struct EnvFromSource {
 
     /// The Secret to select from
     pub secret_ref: Option<crate::api::core::v1::SecretEnvSource>,
+
 }
+
+impl crate::DeepMerge for EnvFromSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.config_map_ref.merge_from(other.config_map_ref);
+        self.prefix.merge_from(other.prefix);
+        self.secret_ref.merge_from(other.secret_ref);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EnvFromSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

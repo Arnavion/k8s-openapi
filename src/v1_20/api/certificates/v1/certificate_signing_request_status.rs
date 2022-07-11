@@ -29,7 +29,17 @@ pub struct CertificateSigningRequestStatus {
 
     /// conditions applied to the request. Known conditions are "Approved", "Denied", and "Failed".
     pub conditions: Option<Vec<crate::api::certificates::v1::CertificateSigningRequestCondition>>,
+
 }
+
+impl crate::DeepMerge for CertificateSigningRequestStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.certificate.merge_from(other.certificate);
+        self.conditions.merge_from(other.conditions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

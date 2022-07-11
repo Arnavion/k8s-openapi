@@ -20,7 +20,21 @@ pub struct Condition {
 
     /// type of condition in CamelCase or in foo.example.com/CamelCase.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for Condition  {
+    fn merge_from(&mut self, other: Self) {
+        self.last_transition_time.merge_from(other.last_transition_time);
+        self.message.merge_from(other.message);
+        self.observed_generation.merge_from(other.observed_generation);
+        self.reason.merge_from(other.reason);
+        self.status.merge_from(other.status);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Condition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

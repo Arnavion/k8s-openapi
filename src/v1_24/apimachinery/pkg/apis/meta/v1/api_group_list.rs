@@ -5,7 +5,16 @@
 pub struct APIGroupList {
     /// groups is a list of APIGroup.
     pub groups: Vec<crate::apimachinery::pkg::apis::meta::v1::APIGroup>,
+
 }
+
+impl crate::DeepMerge for APIGroupList  {
+    fn merge_from(&mut self, other: Self) {
+        self.groups.merge_from(other.groups);
+
+    }
+}
+
 
 impl crate::Resource for APIGroupList {
     const API_VERSION: &'static str = "v1";

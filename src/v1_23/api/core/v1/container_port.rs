@@ -18,7 +18,20 @@ pub struct ContainerPort {
     /// Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
     ///
     pub protocol: Option<String>,
+
 }
+
+impl crate::DeepMerge for ContainerPort  {
+    fn merge_from(&mut self, other: Self) {
+        self.container_port.merge_from(other.container_port);
+        self.host_ip.merge_from(other.host_ip);
+        self.host_port.merge_from(other.host_port);
+        self.name.merge_from(other.name);
+        self.protocol.merge_from(other.protocol);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ContainerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -26,7 +26,23 @@ pub struct CronJobSpec {
 
     /// The time zone for the given schedule, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. If not specified, this will rely on the time zone of the kube-controller-manager process. ALPHA: This field is in alpha and must be enabled via the `CronJobTimeZone` feature gate.
     pub time_zone: Option<String>,
+
 }
+
+impl crate::DeepMerge for CronJobSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.concurrency_policy.merge_from(other.concurrency_policy);
+        self.failed_jobs_history_limit.merge_from(other.failed_jobs_history_limit);
+        self.job_template.merge_from(other.job_template);
+        self.schedule.merge_from(other.schedule);
+        self.starting_deadline_seconds.merge_from(other.starting_deadline_seconds);
+        self.successful_jobs_history_limit.merge_from(other.successful_jobs_history_limit);
+        self.suspend.merge_from(other.suspend);
+        self.time_zone.merge_from(other.time_zone);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CronJobSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

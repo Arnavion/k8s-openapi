@@ -8,7 +8,17 @@ pub struct GroupVersionForDiscovery {
 
     /// version specifies the version in the form of "version". This is to save the clients the trouble of splitting the GroupVersion.
     pub version: String,
+
 }
+
+impl crate::DeepMerge for GroupVersionForDiscovery  {
+    fn merge_from(&mut self, other: Self) {
+        self.group_version.merge_from(other.group_version);
+        self.version.merge_from(other.version);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GroupVersionForDiscovery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

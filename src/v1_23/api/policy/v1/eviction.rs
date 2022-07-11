@@ -8,7 +8,17 @@ pub struct Eviction {
 
     /// ObjectMeta describes the pod that is being evicted.
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+
 }
+
+impl crate::DeepMerge for Eviction  {
+    fn merge_from(&mut self, other: Self) {
+        self.delete_options.merge_from(other.delete_options);
+        self.metadata.merge_from(other.metadata);
+
+    }
+}
+
 
 // Begin policy/v1/Eviction
 

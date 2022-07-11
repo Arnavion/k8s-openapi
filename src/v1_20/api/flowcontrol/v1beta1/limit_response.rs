@@ -8,7 +8,17 @@ pub struct LimitResponse {
 
     /// `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for LimitResponse  {
+    fn merge_from(&mut self, other: Self) {
+        self.queuing.merge_from(other.queuing);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

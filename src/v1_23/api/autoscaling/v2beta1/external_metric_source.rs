@@ -14,7 +14,19 @@ pub struct ExternalMetricSource {
 
     /// targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
     pub target_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+impl crate::DeepMerge for ExternalMetricSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.metric_name.merge_from(other.metric_name);
+        self.metric_selector.merge_from(other.metric_selector);
+        self.target_average_value.merge_from(other.target_average_value);
+        self.target_value.merge_from(other.target_value);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ExternalMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

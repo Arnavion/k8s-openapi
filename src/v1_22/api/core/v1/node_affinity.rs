@@ -8,7 +8,17 @@ pub struct NodeAffinity {
 
     /// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
     pub required_during_scheduling_ignored_during_execution: Option<crate::api::core::v1::NodeSelector>,
+
 }
+
+impl crate::DeepMerge for NodeAffinity  {
+    fn merge_from(&mut self, other: Self) {
+        self.preferred_during_scheduling_ignored_during_execution.merge_from(other.preferred_during_scheduling_ignored_during_execution);
+        self.required_during_scheduling_ignored_during_execution.merge_from(other.required_during_scheduling_ignored_during_execution);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeAffinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

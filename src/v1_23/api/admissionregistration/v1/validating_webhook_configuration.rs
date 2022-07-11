@@ -8,7 +8,17 @@ pub struct ValidatingWebhookConfiguration {
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
     pub webhooks: Option<Vec<crate::api::admissionregistration::v1::ValidatingWebhook>>,
+
 }
+
+impl crate::DeepMerge for ValidatingWebhookConfiguration  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.webhooks.merge_from(other.webhooks);
+
+    }
+}
+
 
 // Begin admissionregistration.k8s.io/v1/ValidatingWebhookConfiguration
 

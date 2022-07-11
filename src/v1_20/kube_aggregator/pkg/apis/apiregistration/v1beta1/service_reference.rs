@@ -11,7 +11,18 @@ pub struct ServiceReference {
 
     /// If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive).
     pub port: Option<i32>,
+
 }
+
+impl crate::DeepMerge for ServiceReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+        self.port.merge_from(other.port);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -20,7 +20,21 @@ pub struct Status {
 
     /// Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub status: Option<String>,
+
 }
+
+impl crate::DeepMerge for Status  {
+    fn merge_from(&mut self, other: Self) {
+        self.code.merge_from(other.code);
+        self.details.merge_from(other.details);
+        self.message.merge_from(other.message);
+        self.metadata.merge_from(other.metadata);
+        self.reason.merge_from(other.reason);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 impl crate::Resource for Status {
     const API_VERSION: &'static str = "v1";

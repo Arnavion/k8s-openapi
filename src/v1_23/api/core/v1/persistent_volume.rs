@@ -11,7 +11,18 @@ pub struct PersistentVolume {
 
     /// Status represents the current information/status for the persistent volume. Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
     pub status: Option<crate::api::core::v1::PersistentVolumeStatus>,
+
 }
+
+impl crate::DeepMerge for PersistentVolume  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin /v1/PersistentVolume
 

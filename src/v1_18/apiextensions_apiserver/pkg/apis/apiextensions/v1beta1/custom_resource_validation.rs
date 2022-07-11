@@ -5,7 +5,16 @@
 pub struct CustomResourceValidation {
     /// openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
     pub open_api_v3_schema: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,
+
 }
+
+impl crate::DeepMerge for CustomResourceValidation  {
+    fn merge_from(&mut self, other: Self) {
+        self.open_api_v3_schema.merge_from(other.open_api_v3_schema);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceValidation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

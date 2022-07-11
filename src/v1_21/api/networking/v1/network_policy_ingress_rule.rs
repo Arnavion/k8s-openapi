@@ -8,7 +8,17 @@ pub struct NetworkPolicyIngressRule {
 
     /// List of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
     pub ports: Option<Vec<crate::api::networking::v1::NetworkPolicyPort>>,
+
 }
+
+impl crate::DeepMerge for NetworkPolicyIngressRule  {
+    fn merge_from(&mut self, other: Self) {
+        self.from.merge_from(other.from);
+        self.ports.merge_from(other.ports);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyIngressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

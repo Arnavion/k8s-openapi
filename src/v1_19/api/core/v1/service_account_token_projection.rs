@@ -11,7 +11,18 @@ pub struct ServiceAccountTokenProjection {
 
     /// Path is the path relative to the mount point of the file to project the token into.
     pub path: String,
+
 }
+
+impl crate::DeepMerge for ServiceAccountTokenProjection  {
+    fn merge_from(&mut self, other: Self) {
+        self.audience.merge_from(other.audience);
+        self.expiration_seconds.merge_from(other.expiration_seconds);
+        self.path.merge_from(other.path);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ServiceAccountTokenProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

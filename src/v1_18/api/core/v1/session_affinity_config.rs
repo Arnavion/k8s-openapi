@@ -5,7 +5,16 @@
 pub struct SessionAffinityConfig {
     /// clientIP contains the configurations of Client IP based session affinity.
     pub client_ip: Option<crate::api::core::v1::ClientIPConfig>,
+
 }
+
+impl crate::DeepMerge for SessionAffinityConfig  {
+    fn merge_from(&mut self, other: Self) {
+        self.client_ip.merge_from(other.client_ip);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SessionAffinityConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

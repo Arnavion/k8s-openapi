@@ -8,7 +8,17 @@ pub struct WeightedPodAffinityTerm {
 
     /// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
     pub weight: i32,
+
 }
+
+impl crate::DeepMerge for WeightedPodAffinityTerm  {
+    fn merge_from(&mut self, other: Self) {
+        self.pod_affinity_term.merge_from(other.pod_affinity_term);
+        self.weight.merge_from(other.weight);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for WeightedPodAffinityTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

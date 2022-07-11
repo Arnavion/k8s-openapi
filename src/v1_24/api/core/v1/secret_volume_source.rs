@@ -16,7 +16,19 @@ pub struct SecretVolumeSource {
 
     /// secretName is the name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
     pub secret_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for SecretVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.default_mode.merge_from(other.default_mode);
+        self.items.merge_from(other.items);
+        self.optional.merge_from(other.optional);
+        self.secret_name.merge_from(other.secret_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for SecretVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -5,7 +5,16 @@
 pub struct AllowedFlexVolume {
     /// driver is the name of the Flexvolume driver.
     pub driver: String,
+
 }
+
+impl crate::DeepMerge for AllowedFlexVolume  {
+    fn merge_from(&mut self, other: Self) {
+        self.driver.merge_from(other.driver);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for AllowedFlexVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

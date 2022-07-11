@@ -8,7 +8,17 @@ pub struct LabelSelector {
 
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
     pub match_labels: Option<std::collections::BTreeMap<String, String>>,
+
 }
+
+impl crate::DeepMerge for LabelSelector  {
+    fn merge_from(&mut self, other: Self) {
+        self.match_expressions.merge_from(other.match_expressions);
+        self.match_labels.merge_from(other.match_labels);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LabelSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

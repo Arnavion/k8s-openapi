@@ -11,7 +11,17 @@ pub struct HorizontalPodAutoscalerBehavior {
     ///   * double the number of pods per 60 seconds
     /// No stabilization is used.
     pub scale_up: Option<crate::api::autoscaling::v2::HPAScalingRules>,
+
 }
+
+impl crate::DeepMerge for HorizontalPodAutoscalerBehavior  {
+    fn merge_from(&mut self, other: Self) {
+        self.scale_down.merge_from(other.scale_down);
+        self.scale_up.merge_from(other.scale_up);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerBehavior {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

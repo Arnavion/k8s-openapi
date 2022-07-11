@@ -5,7 +5,16 @@
 pub struct LimitRangeSpec {
     /// Limits is the list of LimitRangeItem objects that are enforced.
     pub limits: Vec<crate::api::core::v1::LimitRangeItem>,
+
 }
+
+impl crate::DeepMerge for LimitRangeSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.limits.merge_from(other.limits);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for LimitRangeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

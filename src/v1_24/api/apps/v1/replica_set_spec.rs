@@ -14,7 +14,19 @@ pub struct ReplicaSetSpec {
 
     /// Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
+
 }
+
+impl crate::DeepMerge for ReplicaSetSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.min_ready_seconds.merge_from(other.min_ready_seconds);
+        self.replicas.merge_from(other.replicas);
+        self.selector.merge_from(other.selector);
+        self.template.merge_from(other.template);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ReplicaSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -77,7 +77,26 @@ pub struct MutatingWebhook {
 
     /// TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds.
     pub timeout_seconds: Option<i32>,
+
 }
+
+impl crate::DeepMerge for MutatingWebhook  {
+    fn merge_from(&mut self, other: Self) {
+        self.admission_review_versions.merge_from(other.admission_review_versions);
+        self.client_config.merge_from(other.client_config);
+        self.failure_policy.merge_from(other.failure_policy);
+        self.match_policy.merge_from(other.match_policy);
+        self.name.merge_from(other.name);
+        self.namespace_selector.merge_from(other.namespace_selector);
+        self.object_selector.merge_from(other.object_selector);
+        self.reinvocation_policy.merge_from(other.reinvocation_policy);
+        self.rules.merge_from(other.rules);
+        self.side_effects.merge_from(other.side_effects);
+        self.timeout_seconds.merge_from(other.timeout_seconds);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for MutatingWebhook {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

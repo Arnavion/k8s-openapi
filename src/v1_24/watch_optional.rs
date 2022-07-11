@@ -20,7 +20,20 @@ pub struct WatchOptional<'a> {
 
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
+
 }
+
+impl<'a> crate::DeepMerge for WatchOptional<'a>  {
+    fn merge_from(&mut self, other: Self) {
+        self.allow_watch_bookmarks.merge_from(other.allow_watch_bookmarks);
+        self.field_selector.merge_from(other.field_selector);
+        self.label_selector.merge_from(other.label_selector);
+        self.resource_version.merge_from(other.resource_version);
+        self.timeout_seconds.merge_from(other.timeout_seconds);
+
+    }
+}
+
 
 #[cfg(feature = "api")]
 impl<'a> WatchOptional<'a> {

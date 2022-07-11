@@ -8,7 +8,17 @@ pub struct LimitRange {
 
     /// Spec defines the limits enforced. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     pub spec: Option<crate::api::core::v1::LimitRangeSpec>,
+
 }
+
+impl crate::DeepMerge for LimitRange  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+
+    }
+}
+
 
 // Begin /v1/LimitRange
 

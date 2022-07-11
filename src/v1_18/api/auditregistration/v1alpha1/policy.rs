@@ -8,7 +8,17 @@ pub struct Policy {
 
     /// Stages is a list of stages for which events are created.
     pub stages: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for Policy  {
+    fn merge_from(&mut self, other: Self) {
+        self.level.merge_from(other.level);
+        self.stages.merge_from(other.stages);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for Policy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

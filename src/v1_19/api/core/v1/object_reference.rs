@@ -23,7 +23,22 @@ pub struct ObjectReference {
 
     /// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
     pub uid: Option<String>,
+
 }
+
+impl crate::DeepMerge for ObjectReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.field_path.merge_from(other.field_path);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+        self.resource_version.merge_from(other.resource_version);
+        self.uid.merge_from(other.uid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct EmptyDirVolumeSource {
 
     /// Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
     pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+
 }
+
+impl crate::DeepMerge for EmptyDirVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.medium.merge_from(other.medium);
+        self.size_limit.merge_from(other.size_limit);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EmptyDirVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

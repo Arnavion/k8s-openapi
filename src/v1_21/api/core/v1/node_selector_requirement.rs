@@ -11,7 +11,18 @@ pub struct NodeSelectorRequirement {
 
     /// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
     pub values: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for NodeSelectorRequirement  {
+    fn merge_from(&mut self, other: Self) {
+        self.key.merge_from(other.key);
+        self.operator.merge_from(other.operator);
+        self.values.merge_from(other.values);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

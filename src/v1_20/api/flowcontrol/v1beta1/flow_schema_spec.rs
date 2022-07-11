@@ -14,7 +14,19 @@ pub struct FlowSchemaSpec {
 
     /// `rules` describes which requests will match this flow schema. This FlowSchema matches a request if and only if at least one member of rules matches the request. if it is an empty slice, there will be no requests matching the FlowSchema.
     pub rules: Option<Vec<crate::api::flowcontrol::v1beta1::PolicyRulesWithSubjects>>,
+
 }
+
+impl crate::DeepMerge for FlowSchemaSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.distinguisher_method.merge_from(other.distinguisher_method);
+        self.matching_precedence.merge_from(other.matching_precedence);
+        self.priority_level_configuration.merge_from(other.priority_level_configuration);
+        self.rules.merge_from(other.rules);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

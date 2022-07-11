@@ -14,7 +14,17 @@ pub struct EphemeralVolumeSource {
     ///
     /// Required, must not be nil.
     pub volume_claim_template: Option<crate::api::core::v1::PersistentVolumeClaimTemplate>,
+
 }
+
+impl crate::DeepMerge for EphemeralVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.read_only.merge_from(other.read_only);
+        self.volume_claim_template.merge_from(other.volume_claim_template);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EphemeralVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

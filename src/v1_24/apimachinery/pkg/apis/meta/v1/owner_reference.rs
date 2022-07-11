@@ -20,7 +20,21 @@ pub struct OwnerReference {
 
     /// UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     pub uid: String,
+
 }
+
+impl crate::DeepMerge for OwnerReference  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.block_owner_deletion.merge_from(other.block_owner_deletion);
+        self.controller.merge_from(other.controller);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.uid.merge_from(other.uid);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for OwnerReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

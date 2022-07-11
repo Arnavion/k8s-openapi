@@ -15,7 +15,19 @@ pub struct RuntimeClass {
 
     /// Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.
     pub scheduling: Option<crate::api::node::v1::Scheduling>,
+
 }
+
+impl crate::DeepMerge for RuntimeClass  {
+    fn merge_from(&mut self, other: Self) {
+        self.handler.merge_from(other.handler);
+        self.metadata.merge_from(other.metadata);
+        self.overhead.merge_from(other.overhead);
+        self.scheduling.merge_from(other.scheduling);
+
+    }
+}
+
 
 // Begin node.k8s.io/v1/RuntimeClass
 

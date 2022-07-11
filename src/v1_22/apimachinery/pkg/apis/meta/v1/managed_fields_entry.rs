@@ -23,7 +23,22 @@ pub struct ManagedFieldsEntry {
 
     /// Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
     pub time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
 }
+
+impl crate::DeepMerge for ManagedFieldsEntry  {
+    fn merge_from(&mut self, other: Self) {
+        self.api_version.merge_from(other.api_version);
+        self.fields_type.merge_from(other.fields_type);
+        self.fields_v1.merge_from(other.fields_v1);
+        self.manager.merge_from(other.manager);
+        self.operation.merge_from(other.operation);
+        self.subresource.merge_from(other.subresource);
+        self.time.merge_from(other.time);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for ManagedFieldsEntry {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

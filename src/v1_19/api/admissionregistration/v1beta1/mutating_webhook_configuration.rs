@@ -8,7 +8,17 @@ pub struct MutatingWebhookConfiguration {
 
     /// Webhooks is a list of webhooks and the affected resources and operations.
     pub webhooks: Option<Vec<crate::api::admissionregistration::v1beta1::MutatingWebhook>>,
+
 }
+
+impl crate::DeepMerge for MutatingWebhookConfiguration  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.webhooks.merge_from(other.webhooks);
+
+    }
+}
+
 
 // Begin admissionregistration.k8s.io/v1beta1/MutatingWebhookConfiguration
 

@@ -13,7 +13,18 @@ pub struct GitRepoVolumeSource {
 
     /// revision is the commit hash for the specified revision.
     pub revision: Option<String>,
+
 }
+
+impl crate::DeepMerge for GitRepoVolumeSource  {
+    fn merge_from(&mut self, other: Self) {
+        self.directory.merge_from(other.directory);
+        self.repository.merge_from(other.repository);
+        self.revision.merge_from(other.revision);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for GitRepoVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

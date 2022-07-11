@@ -10,7 +10,18 @@ pub struct CustomResourceDefinition {
 
     /// status indicates the actual state of the CustomResourceDefinition
     pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceDefinitionStatus>,
+
 }
+
+impl crate::DeepMerge for CustomResourceDefinition  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin apiextensions.k8s.io/v1/CustomResourceDefinition
 

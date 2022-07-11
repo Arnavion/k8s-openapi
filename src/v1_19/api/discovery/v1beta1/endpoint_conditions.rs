@@ -5,7 +5,16 @@
 pub struct EndpointConditions {
     /// ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.
     pub ready: Option<bool>,
+
 }
+
+impl crate::DeepMerge for EndpointConditions  {
+    fn merge_from(&mut self, other: Self) {
+        self.ready.merge_from(other.ready);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EndpointConditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

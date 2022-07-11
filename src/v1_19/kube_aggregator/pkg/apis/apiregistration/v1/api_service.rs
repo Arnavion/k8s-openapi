@@ -10,7 +10,18 @@ pub struct APIService {
 
     /// Status contains derived information about an API server
     pub status: Option<crate::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
+
 }
+
+impl crate::DeepMerge for APIService  {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 // Begin apiregistration.k8s.io/v1/APIService
 

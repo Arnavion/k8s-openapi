@@ -5,7 +5,16 @@
 pub struct DaemonEndpoint {
     /// Port number of the given endpoint.
     pub port: i32,
+
 }
+
+impl crate::DeepMerge for DaemonEndpoint  {
+    fn merge_from(&mut self, other: Self) {
+        self.port.merge_from(other.port);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonEndpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

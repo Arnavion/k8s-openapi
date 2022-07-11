@@ -8,7 +8,17 @@ pub struct CustomResourceSubresources {
 
     /// status indicates the custom resource should serve a `/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.
     pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresourceStatus>,
+
 }
+
+impl crate::DeepMerge for CustomResourceSubresources  {
+    fn merge_from(&mut self, other: Self) {
+        self.scale.merge_from(other.scale);
+        self.status.merge_from(other.status);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresources {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

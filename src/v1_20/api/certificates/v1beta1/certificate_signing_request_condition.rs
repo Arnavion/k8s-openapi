@@ -19,7 +19,21 @@ pub struct CertificateSigningRequestCondition {
 
     /// type of the condition. Known conditions include "Approved", "Denied", and "Failed".
     pub type_: String,
+
 }
+
+impl crate::DeepMerge for CertificateSigningRequestCondition  {
+    fn merge_from(&mut self, other: Self) {
+        self.last_transition_time.merge_from(other.last_transition_time);
+        self.last_update_time.merge_from(other.last_update_time);
+        self.message.merge_from(other.message);
+        self.reason.merge_from(other.reason);
+        self.status.merge_from(other.status);
+        self.type_.merge_from(other.type_);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestCondition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

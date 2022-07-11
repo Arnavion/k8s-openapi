@@ -8,7 +8,17 @@ pub struct IPBlock {
 
     /// Except is a slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range
     pub except: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for IPBlock  {
+    fn merge_from(&mut self, other: Self) {
+        self.cidr.merge_from(other.cidr);
+        self.except.merge_from(other.except);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IPBlock {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -32,7 +32,25 @@ pub struct DaemonSetStatus {
 
     /// The total number of nodes that are running updated daemon pod
     pub updated_number_scheduled: Option<i32>,
+
 }
+
+impl crate::DeepMerge for DaemonSetStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.collision_count.merge_from(other.collision_count);
+        self.conditions.merge_from(other.conditions);
+        self.current_number_scheduled.merge_from(other.current_number_scheduled);
+        self.desired_number_scheduled.merge_from(other.desired_number_scheduled);
+        self.number_available.merge_from(other.number_available);
+        self.number_misscheduled.merge_from(other.number_misscheduled);
+        self.number_ready.merge_from(other.number_ready);
+        self.number_unavailable.merge_from(other.number_unavailable);
+        self.observed_generation.merge_from(other.observed_generation);
+        self.updated_number_scheduled.merge_from(other.updated_number_scheduled);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

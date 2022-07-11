@@ -17,7 +17,19 @@ pub struct TopologySpreadConstraint {
     ///   skew.
     /// A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assigment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
     pub when_unsatisfiable: String,
+
 }
+
+impl crate::DeepMerge for TopologySpreadConstraint  {
+    fn merge_from(&mut self, other: Self) {
+        self.label_selector.merge_from(other.label_selector);
+        self.max_skew.merge_from(other.max_skew);
+        self.topology_key.merge_from(other.topology_key);
+        self.when_unsatisfiable.merge_from(other.when_unsatisfiable);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for TopologySpreadConstraint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -11,7 +11,18 @@ pub struct CustomResourceDefinitionStatus {
 
     /// storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.
     pub stored_versions: Option<Vec<String>>,
+
 }
+
+impl crate::DeepMerge for CustomResourceDefinitionStatus  {
+    fn merge_from(&mut self, other: Self) {
+        self.accepted_names.merge_from(other.accepted_names);
+        self.conditions.merge_from(other.conditions);
+        self.stored_versions.merge_from(other.stored_versions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

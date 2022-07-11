@@ -32,7 +32,25 @@ pub struct CustomResourceDefinitionSpec {
 
     /// versions is the list of all API versions of the defined custom resource. Optional if `version` is specified. The name of the first item in the `versions` list must match the `version` field if `version` and `versions` are both specified. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA \> beta \> alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
     pub versions: Option<Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionVersion>>,
+
 }
+
+impl crate::DeepMerge for CustomResourceDefinitionSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.additional_printer_columns.merge_from(other.additional_printer_columns);
+        self.conversion.merge_from(other.conversion);
+        self.group.merge_from(other.group);
+        self.names.merge_from(other.names);
+        self.preserve_unknown_fields.merge_from(other.preserve_unknown_fields);
+        self.scope.merge_from(other.scope);
+        self.subresources.merge_from(other.subresources);
+        self.validation.merge_from(other.validation);
+        self.version.merge_from(other.version);
+        self.versions.merge_from(other.versions);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

@@ -8,7 +8,17 @@ pub struct IngressClassSpec {
 
     /// Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
     pub parameters: Option<crate::api::networking::v1beta1::IngressClassParametersReference>,
+
 }
+
+impl crate::DeepMerge for IngressClassSpec  {
+    fn merge_from(&mut self, other: Self) {
+        self.controller.merge_from(other.controller);
+        self.parameters.merge_from(other.parameters);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressClassSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

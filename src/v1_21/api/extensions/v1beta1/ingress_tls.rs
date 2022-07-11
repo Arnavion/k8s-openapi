@@ -8,7 +8,17 @@ pub struct IngressTLS {
 
     /// SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
     pub secret_name: Option<String>,
+
 }
+
+impl crate::DeepMerge for IngressTLS  {
+    fn merge_from(&mut self, other: Self) {
+        self.hosts.merge_from(other.hosts);
+        self.secret_name.merge_from(other.secret_name);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for IngressTLS {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {

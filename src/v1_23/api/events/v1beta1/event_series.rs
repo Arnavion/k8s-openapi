@@ -8,7 +8,17 @@ pub struct EventSeries {
 
     /// lastObservedTime is the time when last Event from the series was seen before last heartbeat.
     pub last_observed_time: crate::apimachinery::pkg::apis::meta::v1::MicroTime,
+
 }
+
+impl crate::DeepMerge for EventSeries  {
+    fn merge_from(&mut self, other: Self) {
+        self.count.merge_from(other.count);
+        self.last_observed_time.merge_from(other.last_observed_time);
+
+    }
+}
+
 
 impl<'de> crate::serde::Deserialize<'de> for EventSeries {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
