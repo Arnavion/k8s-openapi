@@ -7,7 +7,7 @@ impl std::ops::Deref for DefinitionPath {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
-		&*self.0
+		&self.0
 	}
 }
 
@@ -39,7 +39,7 @@ impl std::ops::Deref for PropertyName {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
-		&*self.0
+		&self.0
 	}
 }
 

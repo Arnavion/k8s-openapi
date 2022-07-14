@@ -139,7 +139,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 				},
 			),
 
-			_ => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&*value.location), &"a parameter location")),
+			_ => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value.location), &"a parameter location")),
 		};
 
 		let required = match (value.required, location) {
@@ -174,7 +174,7 @@ impl std::ops::Deref for Path {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
-		&*self.0
+		&self.0
 	}
 }
 

@@ -1060,7 +1060,7 @@ fn map_namespace_local_to_string(map_namespace: &impl MapNamespace) -> Result<St
 
 	let mut result = String::new();
 	for namespace_part in namespace_parts {
-		result.push_str(&*get_rust_ident(namespace_part));
+		result.push_str(&get_rust_ident(namespace_part));
 		result.push_str("::");
 	}
 	Ok(result)
@@ -1412,7 +1412,7 @@ fn get_fully_qualified_type_name(
 	if let Some(namespace_parts) = namespace_parts {
 		let mut result = String::new();
 		for namespace_part in namespace_parts {
-			result.push_str(&*get_rust_ident(namespace_part));
+			result.push_str(&get_rust_ident(namespace_part));
 			result.push_str("::");
 		}
 		result.push_str(path_parts[path_parts.len() - 1]);
@@ -1606,7 +1606,7 @@ fn get_rust_type(
 
 			let mut result = String::new();
 			for namespace_part in namespace_parts {
-				result.push_str(&*get_rust_ident(namespace_part));
+				result.push_str(&get_rust_ident(namespace_part));
 				result.push_str("::");
 			}
 			result.push_str("CustomResourceSubresources");

@@ -12,7 +12,7 @@ pub(crate) fn generate(
 			.ok_or(r#"unexpected path "io.k8s.apimachinery.pkg.apis.meta.v1""#)?;
 		let mut result = String::new();
 		for namespace_part in namespace_parts {
-			result.push_str(&*crate::get_rust_ident(namespace_part));
+			result.push_str(&crate::get_rust_ident(namespace_part));
 			result.push_str("::");
 		}
 		result
