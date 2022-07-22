@@ -153,7 +153,6 @@ impl super::CustomDerive for CustomResourceDefinition {
 			let cr_name_string = cr_spec_name_string[..(cr_spec_name_string.len() - 4)].to_owned();
 			(cr_spec_name_string, cr_name_string)
 		};
-		let cr_list_name = format!("{cr_name}List");
 
 		let body_parameter =
 			std::sync::Arc::new(swagger20::Parameter {
@@ -257,25 +256,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							version: version.clone(),
 						},
 					],
-					list_kind: Some(cr_list_name.clone()),
-				}),
-
-				(swagger20::DefinitionPath(cr_list_name.clone()), swagger20::Schema {
-					description: Some(format!("`{cr_list_name}` is a list of `{cr_name}`")),
-					kind: swagger20::SchemaKind::Ty(swagger20::Type::ListRef {
-						items: Box::new(swagger20::SchemaKind::Ref(swagger20::RefPath {
-							path: cr_name.clone(),
-							can_be_default: Some(true),
-						})),
-					}),
-					kubernetes_group_kind_versions: vec![
-						swagger20::KubernetesGroupKindVersion {
-							group: group.clone(),
-							kind: cr_list_name.clone(),
-							version: version.clone(),
-						},
-					],
-					list_kind: None,
+					list_kind: Some(format!("{cr_name}List")),
 				}),
 			].into_iter().collect(),
 			operations: vec![
@@ -672,20 +653,6 @@ impl super::CustomDerive for CustomResourceDefinition {
 				&spec.definitions,
 				&mut spec.operations,
 				&swagger20::DefinitionPath(cr_name),
-				&MapNamespace,
-				&vis,
-				if generate_schema { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },
-				None,
-				&mut run_state,
-			)
-			.map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err}"))
-			.spanning(&tokens)?;
-
-		let _ =
-			k8s_openapi_codegen_common::run(
-				&spec.definitions,
-				&mut spec.operations,
-				&swagger20::DefinitionPath(cr_list_name),
 				&MapNamespace,
 				&vis,
 				if generate_schema { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },

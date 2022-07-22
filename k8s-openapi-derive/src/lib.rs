@@ -316,9 +316,6 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///         >
 ///     { ... }
 /// }
-///
-/// /// FooBarList is a list of FooBar
-/// type FooBarList = k8s_openapi::List<FooBar>;
 /// ```
 ///
 /// (You may wish to generate your own crate's docs, or run it through `cargo-expand`, to be able to see the macro expansion.)

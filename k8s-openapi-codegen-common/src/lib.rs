@@ -773,18 +773,7 @@ pub fn run(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { items }) => {
-			let item_type_name = get_rust_type(items, map_namespace)?;
-			let alias_type_name = format!("{local}List<{item_type_name}>");
-
-			templates::type_alias::generate(
-				&mut out,
-				type_name,
-				&alias_type_name,
-			)?;
-
-			run_result.num_generated_structs += 1;
-		},
+		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => return Err(format!("definition {definition_path} is a ListRef").into()),
 
 		swagger20::SchemaKind::Ty(ty @ (
 			swagger20::Type::CreateOptional(_) |

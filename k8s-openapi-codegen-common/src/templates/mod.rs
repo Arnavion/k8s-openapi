@@ -24,8 +24,6 @@ pub(crate) mod query_string_optional;
 
 pub(crate) mod r#struct;
 
-pub(crate) mod type_alias;
-
 pub(crate) mod type_header;
 
 pub(crate) mod watch_event;

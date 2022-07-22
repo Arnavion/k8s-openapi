@@ -34,11 +34,6 @@ async fn test() {
 
 	assert_eq!(<FooBar as k8s_openapi::ListableResource>::LIST_KIND, "FooBarList");
 
-	assert_eq!(<FooBarList as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
-	assert_eq!(<FooBarList as k8s_openapi::Resource>::GROUP, "k8s-openapi-tests-custom-resource-definition.com");
-	assert_eq!(<FooBarList as k8s_openapi::Resource>::KIND, "FooBarList");
-	assert_eq!(<FooBarList as k8s_openapi::Resource>::VERSION, "v1");
-
 	{
 		let fb: FooBar =
 			serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 } }"#).unwrap();
@@ -213,7 +208,7 @@ async fn test() {
 
 	// List CR
 	let (request, response_body) = FooBar::list("default", Default::default()).expect("couldn't list FooBars");
-	let foo_bar_list = match client.get_single_value(request, response_body).await {
+	let foo_bar_list: k8s_openapi::List<FooBar> = match client.get_single_value(request, response_body).await {
 		(k8s_openapi::ListResponse::Ok(foo_bar_list), _) => foo_bar_list,
 		(other, status_code) => panic!("{other:?} {status_code}"),
 	};
