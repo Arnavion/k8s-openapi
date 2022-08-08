@@ -32,7 +32,7 @@ base64 = { version = "0.13", default-features = false, features = [
 	"alloc", # for base64::decode_config and base64::encode_config
 ] }
 bytes = { version = "1", default-features = false}
-chrono = { version = "0.4.1", default-features = false, features = [
+chrono = { version = "0.4.20", default-features = false, features = [
 	"alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
 	"serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
 ] }
