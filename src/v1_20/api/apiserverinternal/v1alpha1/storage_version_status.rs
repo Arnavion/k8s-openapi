@@ -13,6 +13,14 @@ pub struct StorageVersionStatus {
     pub storage_versions: Option<Vec<crate::api::apiserverinternal::v1alpha1::ServerStorageVersion>>,
 }
 
+impl crate::DeepMerge for StorageVersionStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.common_encoding_version, other.common_encoding_version);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.storage_versions, other.storage_versions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StorageVersionStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

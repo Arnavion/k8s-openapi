@@ -10,6 +10,13 @@ pub struct AuditSinkSpec {
     pub webhook: crate::api::auditregistration::v1alpha1::Webhook,
 }
 
+impl crate::DeepMerge for AuditSinkSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.policy, other.policy);
+        crate::DeepMerge::merge_from(&mut self.webhook, other.webhook);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AuditSinkSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

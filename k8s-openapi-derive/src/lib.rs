@@ -52,6 +52,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     generate_schema,
 ///     namespaced,
 ///     has_subresources = "v1",
+///     impl_deep_merge,
 /// )]
 /// struct FooBarSpec {
 ///     prop1: String,
@@ -111,6 +112,9 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// The `has_subresources` meta item is optional. If set, the generated custom resource type will have a `subresources` field. The value of the meta item
 /// specifies which namespace the type will be used from. For example, setting `has_subresources = "v1"` causes the field to be of the
 /// `k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources` type.
+///
+/// The `generate_schema` meta item is optional. If set, the generated custom resource type will impl the `k8s_openapi::DeepMerge` trait. This impl will require
+/// you to impl `k8s_openapi::DeepMerge` on the spec type yourself.
 ///
 /// You would then register this custom resource definition with Kubernetes, with code like this:
 ///

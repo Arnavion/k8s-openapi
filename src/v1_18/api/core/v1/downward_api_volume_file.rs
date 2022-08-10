@@ -16,6 +16,15 @@ pub struct DownwardAPIVolumeFile {
     pub resource_field_ref: Option<crate::api::core::v1::ResourceFieldSelector>,
 }
 
+impl crate::DeepMerge for DownwardAPIVolumeFile {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.field_ref, other.field_ref);
+        crate::DeepMerge::merge_from(&mut self.mode, other.mode);
+        crate::DeepMerge::merge_from(&mut self.path, other.path);
+        crate::DeepMerge::merge_from(&mut self.resource_field_ref, other.resource_field_ref);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeFile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

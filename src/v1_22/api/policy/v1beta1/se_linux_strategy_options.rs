@@ -10,6 +10,13 @@ pub struct SELinuxStrategyOptions {
     pub se_linux_options: Option<crate::api::core::v1::SELinuxOptions>,
 }
 
+impl crate::DeepMerge for SELinuxStrategyOptions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.rule, other.rule);
+        crate::DeepMerge::merge_from(&mut self.se_linux_options, other.se_linux_options);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SELinuxStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

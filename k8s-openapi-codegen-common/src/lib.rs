@@ -566,6 +566,16 @@ pub fn run(
 				)?;
 			}
 
+			if definition.impl_deep_merge {
+				templates::struct_deep_merge::generate(
+					&mut out,
+					type_name,
+					Default::default(),
+					&template_properties,
+					map_namespace,
+				)?;
+			}
+
 			templates::impl_deserialize::generate(
 				&mut out,
 				type_name,
@@ -735,6 +745,16 @@ pub fn run(
 				map_namespace,
 				&template_resource_metadata,
 			)?;
+
+			if definition.impl_deep_merge {
+				templates::struct_deep_merge::generate(
+					&mut out,
+					type_name,
+					template_generics,
+					&template_properties,
+					map_namespace,
+				)?;
+			}
 
 			{
 				let template_generics_where_part = format!("T: {local}serde::Deserialize<'de> + {local}ListableResource");

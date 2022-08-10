@@ -7,6 +7,12 @@ pub struct ScopeSelector {
     pub match_expressions: Option<Vec<crate::api::core::v1::ScopedResourceSelectorRequirement>>,
 }
 
+impl crate::DeepMerge for ScopeSelector {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.match_expressions, other.match_expressions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ScopeSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

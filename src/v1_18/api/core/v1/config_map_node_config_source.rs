@@ -19,6 +19,16 @@ pub struct ConfigMapNodeConfigSource {
     pub uid: Option<String>,
 }
 
+impl crate::DeepMerge for ConfigMapNodeConfigSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.kubelet_config_key, other.kubelet_config_key);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.namespace, other.namespace);
+        crate::DeepMerge::merge_from(&mut self.resource_version, other.resource_version);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ConfigMapNodeConfigSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

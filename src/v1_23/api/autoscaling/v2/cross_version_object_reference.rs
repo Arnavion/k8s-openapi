@@ -13,6 +13,14 @@ pub struct CrossVersionObjectReference {
     pub name: String,
 }
 
+impl crate::DeepMerge for CrossVersionObjectReference {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CrossVersionObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

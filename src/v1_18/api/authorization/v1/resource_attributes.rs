@@ -25,6 +25,18 @@ pub struct ResourceAttributes {
     pub version: Option<String>,
 }
 
+impl crate::DeepMerge for ResourceAttributes {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.group, other.group);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.namespace, other.namespace);
+        crate::DeepMerge::merge_from(&mut self.resource, other.resource);
+        crate::DeepMerge::merge_from(&mut self.subresource, other.subresource);
+        crate::DeepMerge::merge_from(&mut self.verb, other.verb);
+        crate::DeepMerge::merge_from(&mut self.version, other.version);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

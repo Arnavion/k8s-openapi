@@ -10,6 +10,13 @@ pub struct PersistentVolumeClaimVolumeSource {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for PersistentVolumeClaimVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.claim_name, other.claim_name);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

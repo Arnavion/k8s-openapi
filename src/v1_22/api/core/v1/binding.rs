@@ -123,6 +123,13 @@ impl crate::Metadata for Binding {
     }
 }
 
+impl crate::DeepMerge for Binding {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
+        crate::DeepMerge::merge_from(&mut self.target, other.target);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Binding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

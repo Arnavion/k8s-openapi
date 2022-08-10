@@ -16,6 +16,15 @@ pub struct VsphereVirtualDiskVolumeSource {
     pub volume_path: String,
 }
 
+impl crate::DeepMerge for VsphereVirtualDiskVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.storage_policy_id, other.storage_policy_id);
+        crate::DeepMerge::merge_from(&mut self.storage_policy_name, other.storage_policy_name);
+        crate::DeepMerge::merge_from(&mut self.volume_path, other.volume_path);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

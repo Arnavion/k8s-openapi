@@ -1,5 +1,11 @@
 struct {type_name}({vis}{inner_type_name});
 
+impl {local}DeepMerge for {type_name} {{
+    fn merge_from(&mut self, other: Self) {{
+        {local}DeepMerge::merge_from(&mut self.0, other.0);
+    }}
+}}
+
 impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
         struct Visitor;

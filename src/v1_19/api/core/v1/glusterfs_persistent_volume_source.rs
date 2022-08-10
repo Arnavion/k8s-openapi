@@ -16,6 +16,15 @@ pub struct GlusterfsPersistentVolumeSource {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for GlusterfsPersistentVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.endpoints, other.endpoints);
+        crate::DeepMerge::merge_from(&mut self.endpoints_namespace, other.endpoints_namespace);
+        crate::DeepMerge::merge_from(&mut self.path, other.path);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

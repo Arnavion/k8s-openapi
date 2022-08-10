@@ -13,6 +13,14 @@ pub struct LifecycleHandler {
     pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
 }
 
+impl crate::DeepMerge for LifecycleHandler {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.exec, other.exec);
+        crate::DeepMerge::merge_from(&mut self.http_get, other.http_get);
+        crate::DeepMerge::merge_from(&mut self.tcp_socket, other.tcp_socket);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for LifecycleHandler {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

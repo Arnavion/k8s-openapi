@@ -19,6 +19,16 @@ pub struct ContainerPort {
     pub protocol: Option<String>,
 }
 
+impl crate::DeepMerge for ContainerPort {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container_port, other.container_port);
+        crate::DeepMerge::merge_from(&mut self.host_ip, other.host_ip);
+        crate::DeepMerge::merge_from(&mut self.host_port, other.host_port);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.protocol, other.protocol);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

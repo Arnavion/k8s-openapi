@@ -16,6 +16,12 @@ impl crate::Resource for APIGroupList {
     type Scope = crate::ClusterResourceScope;
 }
 
+impl crate::DeepMerge for APIGroupList {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.groups, other.groups);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for APIGroupList {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

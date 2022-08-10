@@ -7,6 +7,12 @@ pub struct VolumeNodeAffinity {
     pub required: Option<crate::api::core::v1::NodeSelector>,
 }
 
+impl crate::DeepMerge for VolumeNodeAffinity {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.required, other.required);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for VolumeNodeAffinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

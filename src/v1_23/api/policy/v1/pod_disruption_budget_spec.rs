@@ -13,6 +13,14 @@ pub struct PodDisruptionBudgetSpec {
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
+impl crate::DeepMerge for PodDisruptionBudgetSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.max_unavailable, other.max_unavailable);
+        crate::DeepMerge::merge_from(&mut self.min_available, other.min_available);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

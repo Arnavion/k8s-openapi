@@ -104,6 +104,9 @@ pub struct Schema {
 
 	/// Used to store the definition path of the corresponding list type, if any.
 	pub list_kind: Option<String>,
+
+	/// Used to enable or disable the auto-generated impl of `k8s_openapi::DeepMerge` on the generated type.
+	pub impl_deep_merge: bool,
 }
 
 #[cfg(feature = "serde")]
@@ -170,6 +173,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			kind,
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
 			list_kind: None,
+			impl_deep_merge: true,
 		})
 	}
 }

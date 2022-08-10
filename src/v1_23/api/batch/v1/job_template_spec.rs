@@ -10,6 +10,13 @@ pub struct JobTemplateSpec {
     pub spec: Option<crate::api::batch::v1::JobSpec>,
 }
 
+impl crate::DeepMerge for JobTemplateSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
+        crate::DeepMerge::merge_from(&mut self.spec, other.spec);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JobTemplateSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -13,6 +13,14 @@ pub struct PodsMetricStatus {
     pub selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
+impl crate::DeepMerge for PodsMetricStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.current_average_value, other.current_average_value);
+        crate::DeepMerge::merge_from(&mut self.metric_name, other.metric_name);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

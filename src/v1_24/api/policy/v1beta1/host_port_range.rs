@@ -10,6 +10,13 @@ pub struct HostPortRange {
     pub min: i32,
 }
 
+impl crate::DeepMerge for HostPortRange {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.max, other.max);
+        crate::DeepMerge::merge_from(&mut self.min, other.min);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HostPortRange {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

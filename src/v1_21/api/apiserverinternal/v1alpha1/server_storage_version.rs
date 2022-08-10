@@ -13,6 +13,14 @@ pub struct ServerStorageVersion {
     pub encoding_version: Option<String>,
 }
 
+impl crate::DeepMerge for ServerStorageVersion {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_server_id, other.api_server_id);
+        crate::DeepMerge::merge_from(&mut self.decodable_versions, other.decodable_versions);
+        crate::DeepMerge::merge_from(&mut self.encoding_version, other.encoding_version);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

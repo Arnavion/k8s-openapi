@@ -7,6 +7,12 @@ pub struct ExecAction {
     pub command: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for ExecAction {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.command, other.command);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ExecAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

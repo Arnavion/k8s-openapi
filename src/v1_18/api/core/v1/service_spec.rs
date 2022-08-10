@@ -49,6 +49,26 @@ pub struct ServiceSpec {
     pub type_: Option<String>,
 }
 
+impl crate::DeepMerge for ServiceSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.cluster_ip, other.cluster_ip);
+        crate::DeepMerge::merge_from(&mut self.external_ips, other.external_ips);
+        crate::DeepMerge::merge_from(&mut self.external_name, other.external_name);
+        crate::DeepMerge::merge_from(&mut self.external_traffic_policy, other.external_traffic_policy);
+        crate::DeepMerge::merge_from(&mut self.health_check_node_port, other.health_check_node_port);
+        crate::DeepMerge::merge_from(&mut self.ip_family, other.ip_family);
+        crate::DeepMerge::merge_from(&mut self.load_balancer_ip, other.load_balancer_ip);
+        crate::DeepMerge::merge_from(&mut self.load_balancer_source_ranges, other.load_balancer_source_ranges);
+        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::DeepMerge::merge_from(&mut self.publish_not_ready_addresses, other.publish_not_ready_addresses);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.session_affinity, other.session_affinity);
+        crate::DeepMerge::merge_from(&mut self.session_affinity_config, other.session_affinity_config);
+        crate::DeepMerge::merge_from(&mut self.topology_keys, other.topology_keys);
+        crate::DeepMerge::merge_from(&mut self.type_, other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

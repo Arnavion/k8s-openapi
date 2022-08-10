@@ -28,6 +28,19 @@ pub struct CronJobSpec {
     pub time_zone: Option<String>,
 }
 
+impl crate::DeepMerge for CronJobSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.concurrency_policy, other.concurrency_policy);
+        crate::DeepMerge::merge_from(&mut self.failed_jobs_history_limit, other.failed_jobs_history_limit);
+        crate::DeepMerge::merge_from(&mut self.job_template, other.job_template);
+        crate::DeepMerge::merge_from(&mut self.schedule, other.schedule);
+        crate::DeepMerge::merge_from(&mut self.starting_deadline_seconds, other.starting_deadline_seconds);
+        crate::DeepMerge::merge_from(&mut self.successful_jobs_history_limit, other.successful_jobs_history_limit);
+        crate::DeepMerge::merge_from(&mut self.suspend, other.suspend);
+        crate::DeepMerge::merge_from(&mut self.time_zone, other.time_zone);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CronJobSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

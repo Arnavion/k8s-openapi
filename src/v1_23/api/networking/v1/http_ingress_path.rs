@@ -23,6 +23,14 @@ pub struct HTTPIngressPath {
     pub path_type: String,
 }
 
+impl crate::DeepMerge for HTTPIngressPath {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.backend, other.backend);
+        crate::DeepMerge::merge_from(&mut self.path, other.path);
+        crate::DeepMerge::merge_from(&mut self.path_type, other.path_type);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HTTPIngressPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

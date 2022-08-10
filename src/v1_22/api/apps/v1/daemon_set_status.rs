@@ -34,6 +34,21 @@ pub struct DaemonSetStatus {
     pub updated_number_scheduled: Option<i32>,
 }
 
+impl crate::DeepMerge for DaemonSetStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.collision_count, other.collision_count);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.current_number_scheduled, other.current_number_scheduled);
+        crate::DeepMerge::merge_from(&mut self.desired_number_scheduled, other.desired_number_scheduled);
+        crate::DeepMerge::merge_from(&mut self.number_available, other.number_available);
+        crate::DeepMerge::merge_from(&mut self.number_misscheduled, other.number_misscheduled);
+        crate::DeepMerge::merge_from(&mut self.number_ready, other.number_ready);
+        crate::DeepMerge::merge_from(&mut self.number_unavailable, other.number_unavailable);
+        crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
+        crate::DeepMerge::merge_from(&mut self.updated_number_scheduled, other.updated_number_scheduled);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

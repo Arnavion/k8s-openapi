@@ -7,6 +7,12 @@ pub struct Overhead {
     pub pod_fixed: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
+impl crate::DeepMerge for Overhead {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.pod_fixed, other.pod_fixed);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Overhead {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

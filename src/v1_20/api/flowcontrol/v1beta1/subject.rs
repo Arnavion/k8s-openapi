@@ -13,6 +13,15 @@ pub struct Subject {
     pub user: Option<crate::api::flowcontrol::v1beta1::UserSubject>,
 }
 
+impl crate::DeepMerge for Subject {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.group, other.group);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.service_account, other.service_account);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Subject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

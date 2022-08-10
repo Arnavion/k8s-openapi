@@ -33,6 +33,18 @@ pub struct PodDisruptionBudgetStatus {
     pub observed_generation: Option<i64>,
 }
 
+impl crate::DeepMerge for PodDisruptionBudgetStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.current_healthy, other.current_healthy);
+        crate::DeepMerge::merge_from(&mut self.desired_healthy, other.desired_healthy);
+        crate::DeepMerge::merge_from(&mut self.disrupted_pods, other.disrupted_pods);
+        crate::DeepMerge::merge_from(&mut self.disruptions_allowed, other.disruptions_allowed);
+        crate::DeepMerge::merge_from(&mut self.expected_pods, other.expected_pods);
+        crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodDisruptionBudgetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

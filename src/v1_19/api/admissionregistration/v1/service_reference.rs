@@ -16,6 +16,15 @@ pub struct ServiceReference {
     pub port: Option<i32>,
 }
 
+impl crate::DeepMerge for ServiceReference {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.namespace, other.namespace);
+        crate::DeepMerge::merge_from(&mut self.path, other.path);
+        crate::DeepMerge::merge_from(&mut self.port, other.port);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServiceReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

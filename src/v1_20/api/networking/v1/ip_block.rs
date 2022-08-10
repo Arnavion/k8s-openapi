@@ -10,6 +10,13 @@ pub struct IPBlock {
     pub except: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for IPBlock {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.cidr, other.cidr);
+        crate::DeepMerge::merge_from(&mut self.except, other.except);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IPBlock {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

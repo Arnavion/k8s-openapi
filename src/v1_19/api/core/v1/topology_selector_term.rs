@@ -7,6 +7,12 @@ pub struct TopologySelectorTerm {
     pub match_label_expressions: Option<Vec<crate::api::core::v1::TopologySelectorLabelRequirement>>,
 }
 
+impl crate::DeepMerge for TopologySelectorTerm {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.match_label_expressions, other.match_label_expressions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TopologySelectorTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

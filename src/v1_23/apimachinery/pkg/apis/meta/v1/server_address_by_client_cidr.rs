@@ -10,6 +10,13 @@ pub struct ServerAddressByClientCIDR {
     pub server_address: String,
 }
 
+impl crate::DeepMerge for ServerAddressByClientCIDR {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.client_cidr, other.client_cidr);
+        crate::DeepMerge::merge_from(&mut self.server_address, other.server_address);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServerAddressByClientCIDR {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

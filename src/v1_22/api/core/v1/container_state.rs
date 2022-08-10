@@ -13,6 +13,14 @@ pub struct ContainerState {
     pub waiting: Option<crate::api::core::v1::ContainerStateWaiting>,
 }
 
+impl crate::DeepMerge for ContainerState {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.running, other.running);
+        crate::DeepMerge::merge_from(&mut self.terminated, other.terminated);
+        crate::DeepMerge::merge_from(&mut self.waiting, other.waiting);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerState {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

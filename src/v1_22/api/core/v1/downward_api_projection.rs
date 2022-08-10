@@ -7,6 +7,12 @@ pub struct DownwardAPIProjection {
     pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
+impl crate::DeepMerge for DownwardAPIProjection {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.items, other.items);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

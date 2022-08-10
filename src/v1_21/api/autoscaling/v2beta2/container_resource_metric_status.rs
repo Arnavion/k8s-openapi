@@ -13,6 +13,14 @@ pub struct ContainerResourceMetricStatus {
     pub name: String,
 }
 
+impl crate::DeepMerge for ContainerResourceMetricStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container, other.container);
+        crate::DeepMerge::merge_from(&mut self.current, other.current);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

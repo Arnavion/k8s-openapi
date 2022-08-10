@@ -17,6 +17,14 @@ pub struct NetworkPolicyPeer {
     pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
+impl crate::DeepMerge for NetworkPolicyPeer {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.ip_block, other.ip_block);
+        crate::DeepMerge::merge_from(&mut self.namespace_selector, other.namespace_selector);
+        crate::DeepMerge::merge_from(&mut self.pod_selector, other.pod_selector);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyPeer {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

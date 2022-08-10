@@ -22,6 +22,17 @@ pub struct ReplicaSetStatus {
     pub replicas: i32,
 }
 
+impl crate::DeepMerge for ReplicaSetStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.available_replicas, other.available_replicas);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.fully_labeled_replicas, other.fully_labeled_replicas);
+        crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
+        crate::DeepMerge::merge_from(&mut self.ready_replicas, other.ready_replicas);
+        crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ReplicaSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

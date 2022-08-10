@@ -13,6 +13,14 @@ pub struct CustomResourceSubresourceScale {
     pub status_replicas_path: String,
 }
 
+impl crate::DeepMerge for CustomResourceSubresourceScale {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.label_selector_path, other.label_selector_path);
+        crate::DeepMerge::merge_from(&mut self.spec_replicas_path, other.spec_replicas_path);
+        crate::DeepMerge::merge_from(&mut self.status_replicas_path, other.status_replicas_path);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresourceScale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

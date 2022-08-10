@@ -7,6 +7,12 @@ pub struct AllowedFlexVolume {
     pub driver: String,
 }
 
+impl crate::DeepMerge for AllowedFlexVolume {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.driver, other.driver);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AllowedFlexVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

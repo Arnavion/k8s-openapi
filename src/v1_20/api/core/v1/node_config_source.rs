@@ -7,6 +7,12 @@ pub struct NodeConfigSource {
     pub config_map: Option<crate::api::core::v1::ConfigMapNodeConfigSource>,
 }
 
+impl crate::DeepMerge for NodeConfigSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.config_map, other.config_map);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

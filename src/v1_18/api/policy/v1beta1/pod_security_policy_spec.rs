@@ -80,6 +80,35 @@ pub struct PodSecurityPolicySpec {
     pub volumes: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for PodSecurityPolicySpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.allow_privilege_escalation, other.allow_privilege_escalation);
+        crate::DeepMerge::merge_from(&mut self.allowed_csi_drivers, other.allowed_csi_drivers);
+        crate::DeepMerge::merge_from(&mut self.allowed_capabilities, other.allowed_capabilities);
+        crate::DeepMerge::merge_from(&mut self.allowed_flex_volumes, other.allowed_flex_volumes);
+        crate::DeepMerge::merge_from(&mut self.allowed_host_paths, other.allowed_host_paths);
+        crate::DeepMerge::merge_from(&mut self.allowed_proc_mount_types, other.allowed_proc_mount_types);
+        crate::DeepMerge::merge_from(&mut self.allowed_unsafe_sysctls, other.allowed_unsafe_sysctls);
+        crate::DeepMerge::merge_from(&mut self.default_add_capabilities, other.default_add_capabilities);
+        crate::DeepMerge::merge_from(&mut self.default_allow_privilege_escalation, other.default_allow_privilege_escalation);
+        crate::DeepMerge::merge_from(&mut self.forbidden_sysctls, other.forbidden_sysctls);
+        crate::DeepMerge::merge_from(&mut self.fs_group, other.fs_group);
+        crate::DeepMerge::merge_from(&mut self.host_ipc, other.host_ipc);
+        crate::DeepMerge::merge_from(&mut self.host_network, other.host_network);
+        crate::DeepMerge::merge_from(&mut self.host_pid, other.host_pid);
+        crate::DeepMerge::merge_from(&mut self.host_ports, other.host_ports);
+        crate::DeepMerge::merge_from(&mut self.privileged, other.privileged);
+        crate::DeepMerge::merge_from(&mut self.read_only_root_filesystem, other.read_only_root_filesystem);
+        crate::DeepMerge::merge_from(&mut self.required_drop_capabilities, other.required_drop_capabilities);
+        crate::DeepMerge::merge_from(&mut self.run_as_group, other.run_as_group);
+        crate::DeepMerge::merge_from(&mut self.run_as_user, other.run_as_user);
+        crate::DeepMerge::merge_from(&mut self.runtime_class, other.runtime_class);
+        crate::DeepMerge::merge_from(&mut self.se_linux, other.se_linux);
+        crate::DeepMerge::merge_from(&mut self.supplemental_groups, other.supplemental_groups);
+        crate::DeepMerge::merge_from(&mut self.volumes, other.volumes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

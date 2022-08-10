@@ -10,6 +10,13 @@ pub struct IDRange {
     pub min: i64,
 }
 
+impl crate::DeepMerge for IDRange {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.max, other.max);
+        crate::DeepMerge::merge_from(&mut self.min, other.min);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IDRange {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

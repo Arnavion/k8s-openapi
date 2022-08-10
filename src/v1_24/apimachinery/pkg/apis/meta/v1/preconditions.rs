@@ -10,6 +10,13 @@ pub struct Preconditions {
     pub uid: Option<String>,
 }
 
+impl crate::DeepMerge for Preconditions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.resource_version, other.resource_version);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Preconditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

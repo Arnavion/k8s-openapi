@@ -16,6 +16,13 @@ pub struct IngressRule {
     pub http: Option<crate::api::networking::v1::HTTPIngressRuleValue>,
 }
 
+impl crate::DeepMerge for IngressRule {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.host, other.host);
+        crate::DeepMerge::merge_from(&mut self.http, other.http);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IngressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

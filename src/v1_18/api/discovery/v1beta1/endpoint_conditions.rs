@@ -7,6 +7,12 @@ pub struct EndpointConditions {
     pub ready: Option<bool>,
 }
 
+impl crate::DeepMerge for EndpointConditions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.ready, other.ready);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EndpointConditions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

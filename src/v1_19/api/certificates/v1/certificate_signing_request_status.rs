@@ -31,6 +31,13 @@ pub struct CertificateSigningRequestStatus {
     pub conditions: Option<Vec<crate::api::certificates::v1::CertificateSigningRequestCondition>>,
 }
 
+impl crate::DeepMerge for CertificateSigningRequestStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.certificate, other.certificate);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct FlowSchemaSpec {
     pub rules: Option<Vec<crate::api::flowcontrol::v1alpha1::PolicyRulesWithSubjects>>,
 }
 
+impl crate::DeepMerge for FlowSchemaSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.distinguisher_method, other.distinguisher_method);
+        crate::DeepMerge::merge_from(&mut self.matching_precedence, other.matching_precedence);
+        crate::DeepMerge::merge_from(&mut self.priority_level_configuration, other.priority_level_configuration);
+        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for FlowSchemaSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

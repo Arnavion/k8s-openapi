@@ -10,6 +10,13 @@ pub struct NodeSelectorTerm {
     pub match_fields: Option<Vec<crate::api::core::v1::NodeSelectorRequirement>>,
 }
 
+impl crate::DeepMerge for NodeSelectorTerm {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.match_expressions, other.match_expressions);
+        crate::DeepMerge::merge_from(&mut self.match_fields, other.match_fields);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeSelectorTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

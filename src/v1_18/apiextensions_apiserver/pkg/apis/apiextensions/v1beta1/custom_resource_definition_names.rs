@@ -22,6 +22,17 @@ pub struct CustomResourceDefinitionNames {
     pub singular: Option<String>,
 }
 
+impl crate::DeepMerge for CustomResourceDefinitionNames {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.categories, other.categories);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.list_kind, other.list_kind);
+        crate::DeepMerge::merge_from(&mut self.plural, other.plural);
+        crate::DeepMerge::merge_from(&mut self.short_names, other.short_names);
+        crate::DeepMerge::merge_from(&mut self.singular, other.singular);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionNames {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

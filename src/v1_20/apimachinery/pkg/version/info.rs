@@ -22,6 +22,20 @@ pub struct Info {
     pub platform: String,
 }
 
+impl crate::DeepMerge for Info {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.build_date, other.build_date);
+        crate::DeepMerge::merge_from(&mut self.compiler, other.compiler);
+        crate::DeepMerge::merge_from(&mut self.git_commit, other.git_commit);
+        crate::DeepMerge::merge_from(&mut self.git_tree_state, other.git_tree_state);
+        crate::DeepMerge::merge_from(&mut self.git_version, other.git_version);
+        crate::DeepMerge::merge_from(&mut self.go_version, other.go_version);
+        crate::DeepMerge::merge_from(&mut self.major, other.major);
+        crate::DeepMerge::merge_from(&mut self.minor, other.minor);
+        crate::DeepMerge::merge_from(&mut self.platform, other.platform);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Info {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

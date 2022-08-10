@@ -18,13 +18,22 @@ async fn test() {
 		plural = "foobars",
 		generate_schema,
 		namespaced,
+		has_subresources = "v1",
+		impl_deep_merge,
 	)]
-	#[custom_resource_definition(has_subresources = "v1")]
 	struct FooBarSpec {
 		prop1: String,
 		prop2: Vec<bool>,
 		#[serde(skip_serializing_if = "Option::is_none")]
 		prop3: Option<i32>,
+	}
+
+	impl k8s_openapi::DeepMerge for FooBarSpec {
+		fn merge_from(&mut self, other: Self) where Self: Sized {
+			self.prop1.merge_from(other.prop1);
+			self.prop2.merge_from(other.prop2);
+			self.prop3.merge_from(other.prop3);
+		}
 	}
 
 	assert_eq!(<FooBar as k8s_openapi::Resource>::API_VERSION, "k8s-openapi-tests-custom-resource-definition.com/v1");
@@ -323,5 +332,29 @@ async fn test() {
 	match client.get_single_value(request, response_body).await {
 		(k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
 		(other, status_code) => panic!("{other:?} {status_code}"),
+	}
+}
+
+#[test]
+fn dont_require_deep_merge_when_not_requested() {
+	#[derive(
+		Clone, Debug, PartialEq,
+		k8s_openapi_derive::CustomResourceDefinition,
+		schemars::JsonSchema,
+		serde::Deserialize, serde::Serialize,
+	)]
+	#[custom_resource_definition(
+		group = "k8s-openapi-tests-custom-resource-definition.com",
+		version = "v1",
+		plural = "foobars",
+		generate_schema,
+		namespaced,
+		has_subresources = "v1",
+	)]
+	struct FooBarSpec {
+		prop1: String,
+		prop2: Vec<bool>,
+		#[serde(skip_serializing_if = "Option::is_none")]
+		prop3: Option<i32>,
 	}
 }

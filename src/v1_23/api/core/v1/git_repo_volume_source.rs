@@ -15,6 +15,14 @@ pub struct GitRepoVolumeSource {
     pub revision: Option<String>,
 }
 
+impl crate::DeepMerge for GitRepoVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.directory, other.directory);
+        crate::DeepMerge::merge_from(&mut self.repository, other.repository);
+        crate::DeepMerge::merge_from(&mut self.revision, other.revision);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GitRepoVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

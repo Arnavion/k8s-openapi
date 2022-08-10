@@ -19,6 +19,16 @@ pub struct PodPresetSpec {
     pub volumes: Option<Vec<crate::api::core::v1::Volume>>,
 }
 
+impl crate::DeepMerge for PodPresetSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.env, other.env);
+        crate::DeepMerge::merge_from(&mut self.env_from, other.env_from);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.volume_mounts, other.volume_mounts);
+        crate::DeepMerge::merge_from(&mut self.volumes, other.volumes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodPresetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

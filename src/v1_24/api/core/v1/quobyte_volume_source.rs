@@ -22,6 +22,17 @@ pub struct QuobyteVolumeSource {
     pub volume: String,
 }
 
+impl crate::DeepMerge for QuobyteVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.group, other.group);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.registry, other.registry);
+        crate::DeepMerge::merge_from(&mut self.tenant, other.tenant);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+        crate::DeepMerge::merge_from(&mut self.volume, other.volume);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for QuobyteVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

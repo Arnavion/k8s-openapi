@@ -37,6 +37,22 @@ pub struct ISCSIPersistentVolumeSource {
     pub target_portal: String,
 }
 
+impl crate::DeepMerge for ISCSIPersistentVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.chap_auth_discovery, other.chap_auth_discovery);
+        crate::DeepMerge::merge_from(&mut self.chap_auth_session, other.chap_auth_session);
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.initiator_name, other.initiator_name);
+        crate::DeepMerge::merge_from(&mut self.iqn, other.iqn);
+        crate::DeepMerge::merge_from(&mut self.iscsi_interface, other.iscsi_interface);
+        crate::DeepMerge::merge_from(&mut self.lun, other.lun);
+        crate::DeepMerge::merge_from(&mut self.portals, other.portals);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
+        crate::DeepMerge::merge_from(&mut self.target_portal, other.target_portal);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ISCSIPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

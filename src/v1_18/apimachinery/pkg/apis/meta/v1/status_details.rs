@@ -22,6 +22,17 @@ pub struct StatusDetails {
     pub uid: Option<String>,
 }
 
+impl crate::DeepMerge for StatusDetails {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.causes, other.causes);
+        crate::DeepMerge::merge_from(&mut self.group, other.group);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.retry_after_seconds, other.retry_after_seconds);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatusDetails {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -13,6 +13,14 @@ pub struct SecretKeySelector {
     pub optional: Option<bool>,
 }
 
+impl crate::DeepMerge for SecretKeySelector {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.key, other.key);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.optional, other.optional);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SecretKeySelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

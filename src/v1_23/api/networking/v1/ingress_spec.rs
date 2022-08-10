@@ -16,6 +16,15 @@ pub struct IngressSpec {
     pub tls: Option<Vec<crate::api::networking::v1::IngressTLS>>,
 }
 
+impl crate::DeepMerge for IngressSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.default_backend, other.default_backend);
+        crate::DeepMerge::merge_from(&mut self.ingress_class_name, other.ingress_class_name);
+        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+        crate::DeepMerge::merge_from(&mut self.tls, other.tls);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IngressSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

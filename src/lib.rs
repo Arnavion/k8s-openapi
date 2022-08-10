@@ -538,6 +538,9 @@ impl ResourceScope for NamespaceResourceScope {}
 pub struct SubResourceScope {}
 impl ResourceScope for SubResourceScope {}
 
+mod deep_merge;
+pub use self::deep_merge::DeepMerge;
+
 /// The type of errors returned by the Kubernetes API functions that prepare the HTTP request.
 #[cfg(feature = "api")]
 #[derive(Debug)]

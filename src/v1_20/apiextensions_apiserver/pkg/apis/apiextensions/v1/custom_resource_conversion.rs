@@ -11,6 +11,13 @@ pub struct CustomResourceConversion {
     pub webhook: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::WebhookConversion>,
 }
 
+impl crate::DeepMerge for CustomResourceConversion {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.strategy, other.strategy);
+        crate::DeepMerge::merge_from(&mut self.webhook, other.webhook);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

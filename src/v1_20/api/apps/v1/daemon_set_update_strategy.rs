@@ -10,6 +10,13 @@ pub struct DaemonSetUpdateStrategy {
     pub type_: Option<String>,
 }
 
+impl crate::DeepMerge for DaemonSetUpdateStrategy {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.rolling_update, other.rolling_update);
+        crate::DeepMerge::merge_from(&mut self.type_, other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetUpdateStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

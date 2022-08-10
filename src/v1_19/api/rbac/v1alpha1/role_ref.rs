@@ -13,6 +13,14 @@ pub struct RoleRef {
     pub name: String,
 }
 
+impl crate::DeepMerge for RoleRef {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_group, other.api_group);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RoleRef {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct VolumeAttachmentStatus {
     pub detach_error: Option<crate::api::storage::v1::VolumeError>,
 }
 
+impl crate::DeepMerge for VolumeAttachmentStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.attach_error, other.attach_error);
+        crate::DeepMerge::merge_from(&mut self.attached, other.attached);
+        crate::DeepMerge::merge_from(&mut self.attachment_metadata, other.attachment_metadata);
+        crate::DeepMerge::merge_from(&mut self.detach_error, other.detach_error);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

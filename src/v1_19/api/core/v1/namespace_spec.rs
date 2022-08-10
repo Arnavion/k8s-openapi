@@ -7,6 +7,12 @@ pub struct NamespaceSpec {
     pub finalizers: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for NamespaceSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.finalizers, other.finalizers);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NamespaceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

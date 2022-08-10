@@ -10,6 +10,13 @@ pub struct IngressTLS {
     pub secret_name: Option<String>,
 }
 
+impl crate::DeepMerge for IngressTLS {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hosts, other.hosts);
+        crate::DeepMerge::merge_from(&mut self.secret_name, other.secret_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IngressTLS {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

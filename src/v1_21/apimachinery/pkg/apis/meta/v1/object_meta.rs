@@ -68,6 +68,27 @@ pub struct ObjectMeta {
     pub uid: Option<String>,
 }
 
+impl crate::DeepMerge for ObjectMeta {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.annotations, other.annotations);
+        crate::DeepMerge::merge_from(&mut self.cluster_name, other.cluster_name);
+        crate::DeepMerge::merge_from(&mut self.creation_timestamp, other.creation_timestamp);
+        crate::DeepMerge::merge_from(&mut self.deletion_grace_period_seconds, other.deletion_grace_period_seconds);
+        crate::DeepMerge::merge_from(&mut self.deletion_timestamp, other.deletion_timestamp);
+        crate::DeepMerge::merge_from(&mut self.finalizers, other.finalizers);
+        crate::DeepMerge::merge_from(&mut self.generate_name, other.generate_name);
+        crate::DeepMerge::merge_from(&mut self.generation, other.generation);
+        crate::DeepMerge::merge_from(&mut self.labels, other.labels);
+        crate::DeepMerge::merge_from(&mut self.managed_fields, other.managed_fields);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.namespace, other.namespace);
+        crate::DeepMerge::merge_from(&mut self.owner_references, other.owner_references);
+        crate::DeepMerge::merge_from(&mut self.resource_version, other.resource_version);
+        crate::DeepMerge::merge_from(&mut self.self_link, other.self_link);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -25,6 +25,18 @@ pub struct DeleteOptions {
     pub propagation_policy: Option<String>,
 }
 
+impl crate::DeepMerge for DeleteOptions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
+        crate::DeepMerge::merge_from(&mut self.dry_run, other.dry_run);
+        crate::DeepMerge::merge_from(&mut self.grace_period_seconds, other.grace_period_seconds);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.orphan_dependents, other.orphan_dependents);
+        crate::DeepMerge::merge_from(&mut self.preconditions, other.preconditions);
+        crate::DeepMerge::merge_from(&mut self.propagation_policy, other.propagation_policy);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -10,6 +10,13 @@ pub struct ObjectFieldSelector {
     pub field_path: String,
 }
 
+impl crate::DeepMerge for ObjectFieldSelector {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
+        crate::DeepMerge::merge_from(&mut self.field_path, other.field_path);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ObjectFieldSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

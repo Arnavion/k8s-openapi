@@ -10,6 +10,13 @@ pub struct NetworkPolicyIngressRule {
     pub ports: Option<Vec<crate::api::networking::v1::NetworkPolicyPort>>,
 }
 
+impl crate::DeepMerge for NetworkPolicyIngressRule {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.from, other.from);
+        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyIngressRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

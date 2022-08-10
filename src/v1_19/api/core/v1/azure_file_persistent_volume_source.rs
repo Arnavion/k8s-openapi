@@ -16,6 +16,15 @@ pub struct AzureFilePersistentVolumeSource {
     pub share_name: String,
 }
 
+impl crate::DeepMerge for AzureFilePersistentVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_name, other.secret_name);
+        crate::DeepMerge::merge_from(&mut self.secret_namespace, other.secret_namespace);
+        crate::DeepMerge::merge_from(&mut self.share_name, other.share_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AzureFilePersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

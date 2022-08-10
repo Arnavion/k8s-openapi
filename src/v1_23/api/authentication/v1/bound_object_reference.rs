@@ -16,6 +16,15 @@ pub struct BoundObjectReference {
     pub uid: Option<String>,
 }
 
+impl crate::DeepMerge for BoundObjectReference {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for BoundObjectReference {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

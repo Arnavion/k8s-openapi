@@ -10,6 +10,13 @@ pub struct Capabilities {
     pub drop: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for Capabilities {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.add, other.add);
+        crate::DeepMerge::merge_from(&mut self.drop, other.drop);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Capabilities {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

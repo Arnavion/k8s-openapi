@@ -7,6 +7,12 @@ pub struct AggregationRule {
     pub cluster_role_selectors: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>>,
 }
 
+impl crate::DeepMerge for AggregationRule {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.cluster_role_selectors, other.cluster_role_selectors);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AggregationRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

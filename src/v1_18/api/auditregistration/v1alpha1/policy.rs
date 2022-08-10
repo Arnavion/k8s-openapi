@@ -10,6 +10,13 @@ pub struct Policy {
     pub stages: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for Policy {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.level, other.level);
+        crate::DeepMerge::merge_from(&mut self.stages, other.stages);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Policy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

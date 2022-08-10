@@ -10,6 +10,13 @@ pub struct PodsMetricStatus {
     pub metric: crate::api::autoscaling::v2beta2::MetricIdentifier,
 }
 
+impl crate::DeepMerge for PodsMetricStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.current, other.current);
+        crate::DeepMerge::merge_from(&mut self.metric, other.metric);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

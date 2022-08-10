@@ -28,6 +28,19 @@ pub struct Probe {
     pub timeout_seconds: Option<i32>,
 }
 
+impl crate::DeepMerge for Probe {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.exec, other.exec);
+        crate::DeepMerge::merge_from(&mut self.failure_threshold, other.failure_threshold);
+        crate::DeepMerge::merge_from(&mut self.http_get, other.http_get);
+        crate::DeepMerge::merge_from(&mut self.initial_delay_seconds, other.initial_delay_seconds);
+        crate::DeepMerge::merge_from(&mut self.period_seconds, other.period_seconds);
+        crate::DeepMerge::merge_from(&mut self.success_threshold, other.success_threshold);
+        crate::DeepMerge::merge_from(&mut self.tcp_socket, other.tcp_socket);
+        crate::DeepMerge::merge_from(&mut self.timeout_seconds, other.timeout_seconds);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Probe {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

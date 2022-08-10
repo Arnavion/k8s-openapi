@@ -74,6 +74,19 @@ pub struct CertificateSigningRequestSpec {
     pub username: Option<String>,
 }
 
+impl crate::DeepMerge for CertificateSigningRequestSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.expiration_seconds, other.expiration_seconds);
+        crate::DeepMerge::merge_from(&mut self.extra, other.extra);
+        crate::DeepMerge::merge_from(&mut self.groups, other.groups);
+        crate::DeepMerge::merge_from(&mut self.request, other.request);
+        crate::DeepMerge::merge_from(&mut self.signer_name, other.signer_name);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+        crate::DeepMerge::merge_from(&mut self.usages, other.usages);
+        crate::DeepMerge::merge_from(&mut self.username, other.username);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CertificateSigningRequestSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

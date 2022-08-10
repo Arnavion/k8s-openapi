@@ -16,6 +16,15 @@ pub struct ContainerResourceMetricSource {
     pub target_average_value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
+impl crate::DeepMerge for ContainerResourceMetricSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container, other.container);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.target_average_utilization, other.target_average_utilization);
+        crate::DeepMerge::merge_from(&mut self.target_average_value, other.target_average_value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

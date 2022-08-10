@@ -17,6 +17,14 @@ pub struct StatusCause {
     pub reason: Option<String>,
 }
 
+impl crate::DeepMerge for StatusCause {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.field, other.field);
+        crate::DeepMerge::merge_from(&mut self.message, other.message);
+        crate::DeepMerge::merge_from(&mut self.reason, other.reason);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatusCause {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

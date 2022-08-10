@@ -33,6 +33,19 @@ pub struct PersistentVolumeClaimSpec {
     pub volume_name: Option<String>,
 }
 
+impl crate::DeepMerge for PersistentVolumeClaimSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.access_modes, other.access_modes);
+        crate::DeepMerge::merge_from(&mut self.data_source, other.data_source);
+        crate::DeepMerge::merge_from(&mut self.data_source_ref, other.data_source_ref);
+        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.storage_class_name, other.storage_class_name);
+        crate::DeepMerge::merge_from(&mut self.volume_mode, other.volume_mode);
+        crate::DeepMerge::merge_from(&mut self.volume_name, other.volume_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

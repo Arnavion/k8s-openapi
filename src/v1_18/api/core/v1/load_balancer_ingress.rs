@@ -10,6 +10,13 @@ pub struct LoadBalancerIngress {
     pub ip: Option<String>,
 }
 
+impl crate::DeepMerge for LoadBalancerIngress {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
+        crate::DeepMerge::merge_from(&mut self.ip, other.ip);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for LoadBalancerIngress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

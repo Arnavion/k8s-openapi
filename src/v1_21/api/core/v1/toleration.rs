@@ -19,6 +19,16 @@ pub struct Toleration {
     pub value: Option<String>,
 }
 
+impl crate::DeepMerge for Toleration {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.effect, other.effect);
+        crate::DeepMerge::merge_from(&mut self.key, other.key);
+        crate::DeepMerge::merge_from(&mut self.operator, other.operator);
+        crate::DeepMerge::merge_from(&mut self.toleration_seconds, other.toleration_seconds);
+        crate::DeepMerge::merge_from(&mut self.value, other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Toleration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -4,6 +4,12 @@
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct MicroTime(pub crate::chrono::DateTime<crate::chrono::Utc>);
 
+impl crate::DeepMerge for MicroTime {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.0, other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for MicroTime {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

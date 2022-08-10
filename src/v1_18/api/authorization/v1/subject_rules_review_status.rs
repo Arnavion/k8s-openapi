@@ -16,6 +16,15 @@ pub struct SubjectRulesReviewStatus {
     pub resource_rules: Vec<crate::api::authorization::v1::ResourceRule>,
 }
 
+impl crate::DeepMerge for SubjectRulesReviewStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.evaluation_error, other.evaluation_error);
+        crate::DeepMerge::merge_from(&mut self.incomplete, other.incomplete);
+        crate::DeepMerge::merge_from(&mut self.non_resource_rules, other.non_resource_rules);
+        crate::DeepMerge::merge_from(&mut self.resource_rules, other.resource_rules);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SubjectRulesReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

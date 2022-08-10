@@ -364,6 +364,14 @@ impl crate::Metadata for ClusterRole {
     }
 }
 
+impl crate::DeepMerge for ClusterRole {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.aggregation_rule, other.aggregation_rule);
+        crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
+        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ClusterRole {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -10,6 +10,13 @@ pub struct GroupVersionForDiscovery {
     pub version: String,
 }
 
+impl crate::DeepMerge for GroupVersionForDiscovery {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.group_version, other.group_version);
+        crate::DeepMerge::merge_from(&mut self.version, other.version);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GroupVersionForDiscovery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

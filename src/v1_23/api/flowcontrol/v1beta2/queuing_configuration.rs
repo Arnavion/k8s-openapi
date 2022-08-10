@@ -13,6 +13,14 @@ pub struct QueuingConfiguration {
     pub queues: Option<i32>,
 }
 
+impl crate::DeepMerge for QueuingConfiguration {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hand_size, other.hand_size);
+        crate::DeepMerge::merge_from(&mut self.queue_length_limit, other.queue_length_limit);
+        crate::DeepMerge::merge_from(&mut self.queues, other.queues);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for QueuingConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

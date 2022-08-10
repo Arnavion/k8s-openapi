@@ -28,6 +28,19 @@ pub struct DeploymentSpec {
     pub template: crate::api::core::v1::PodTemplateSpec,
 }
 
+impl crate::DeepMerge for DeploymentSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.min_ready_seconds, other.min_ready_seconds);
+        crate::DeepMerge::merge_from(&mut self.paused, other.paused);
+        crate::DeepMerge::merge_from(&mut self.progress_deadline_seconds, other.progress_deadline_seconds);
+        crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
+        crate::DeepMerge::merge_from(&mut self.revision_history_limit, other.revision_history_limit);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.strategy, other.strategy);
+        crate::DeepMerge::merge_from(&mut self.template, other.template);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -28,6 +28,19 @@ pub struct CustomResourceDefinitionVersion {
     pub subresources: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceSubresources>,
 }
 
+impl crate::DeepMerge for CustomResourceDefinitionVersion {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.additional_printer_columns, other.additional_printer_columns);
+        crate::DeepMerge::merge_from(&mut self.deprecated, other.deprecated);
+        crate::DeepMerge::merge_from(&mut self.deprecation_warning, other.deprecation_warning);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.schema, other.schema);
+        crate::DeepMerge::merge_from(&mut self.served, other.served);
+        crate::DeepMerge::merge_from(&mut self.storage, other.storage);
+        crate::DeepMerge::merge_from(&mut self.subresources, other.subresources);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionVersion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

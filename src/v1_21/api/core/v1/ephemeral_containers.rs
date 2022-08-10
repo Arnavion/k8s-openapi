@@ -205,6 +205,13 @@ impl crate::Metadata for EphemeralContainers {
     }
 }
 
+impl crate::DeepMerge for EphemeralContainers {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.ephemeral_containers, other.ephemeral_containers);
+        crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EphemeralContainers {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

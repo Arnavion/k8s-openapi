@@ -13,6 +13,14 @@ pub struct WindowsSecurityContextOptions {
     pub run_as_user_name: Option<String>,
 }
 
+impl crate::DeepMerge for WindowsSecurityContextOptions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.gmsa_credential_spec, other.gmsa_credential_spec);
+        crate::DeepMerge::merge_from(&mut self.gmsa_credential_spec_name, other.gmsa_credential_spec_name);
+        crate::DeepMerge::merge_from(&mut self.run_as_user_name, other.run_as_user_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for WindowsSecurityContextOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

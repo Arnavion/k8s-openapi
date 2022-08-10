@@ -8,6 +8,12 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FieldsV1(pub crate::serde_json::Value);
 
+impl crate::DeepMerge for FieldsV1 {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.0, other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for FieldsV1 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

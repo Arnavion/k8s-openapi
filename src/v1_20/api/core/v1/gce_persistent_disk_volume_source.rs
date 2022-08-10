@@ -18,6 +18,15 @@ pub struct GCEPersistentDiskVolumeSource {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for GCEPersistentDiskVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.partition, other.partition);
+        crate::DeepMerge::merge_from(&mut self.pd_name, other.pd_name);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GCEPersistentDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -34,6 +34,21 @@ pub struct ScaleIOPersistentVolumeSource {
     pub volume_name: Option<String>,
 }
 
+impl crate::DeepMerge for ScaleIOPersistentVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.gateway, other.gateway);
+        crate::DeepMerge::merge_from(&mut self.protection_domain, other.protection_domain);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
+        crate::DeepMerge::merge_from(&mut self.ssl_enabled, other.ssl_enabled);
+        crate::DeepMerge::merge_from(&mut self.storage_mode, other.storage_mode);
+        crate::DeepMerge::merge_from(&mut self.storage_pool, other.storage_pool);
+        crate::DeepMerge::merge_from(&mut self.system, other.system);
+        crate::DeepMerge::merge_from(&mut self.volume_name, other.volume_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ScaleIOPersistentVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

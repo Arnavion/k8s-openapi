@@ -25,6 +25,18 @@ pub struct ContainerStateTerminated {
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
+impl crate::DeepMerge for ContainerStateTerminated {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container_id, other.container_id);
+        crate::DeepMerge::merge_from(&mut self.exit_code, other.exit_code);
+        crate::DeepMerge::merge_from(&mut self.finished_at, other.finished_at);
+        crate::DeepMerge::merge_from(&mut self.message, other.message);
+        crate::DeepMerge::merge_from(&mut self.reason, other.reason);
+        crate::DeepMerge::merge_from(&mut self.signal, other.signal);
+        crate::DeepMerge::merge_from(&mut self.started_at, other.started_at);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

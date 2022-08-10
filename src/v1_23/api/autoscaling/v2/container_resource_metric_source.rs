@@ -13,6 +13,14 @@ pub struct ContainerResourceMetricSource {
     pub target: crate::api::autoscaling::v2::MetricTarget,
 }
 
+impl crate::DeepMerge for ContainerResourceMetricSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container, other.container);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.target, other.target);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerResourceMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

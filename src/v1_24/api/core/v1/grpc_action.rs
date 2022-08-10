@@ -11,6 +11,13 @@ pub struct GRPCAction {
     pub service: Option<String>,
 }
 
+impl crate::DeepMerge for GRPCAction {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.port, other.port);
+        crate::DeepMerge::merge_from(&mut self.service, other.service);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GRPCAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

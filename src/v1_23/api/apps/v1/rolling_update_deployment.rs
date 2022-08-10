@@ -10,6 +10,13 @@ pub struct RollingUpdateDeployment {
     pub max_unavailable: Option<crate::apimachinery::pkg::util::intstr::IntOrString>,
 }
 
+impl crate::DeepMerge for RollingUpdateDeployment {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.max_surge, other.max_surge);
+        crate::DeepMerge::merge_from(&mut self.max_unavailable, other.max_unavailable);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateDeployment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

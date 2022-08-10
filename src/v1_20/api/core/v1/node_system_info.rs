@@ -34,6 +34,21 @@ pub struct NodeSystemInfo {
     pub system_uuid: String,
 }
 
+impl crate::DeepMerge for NodeSystemInfo {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.architecture, other.architecture);
+        crate::DeepMerge::merge_from(&mut self.boot_id, other.boot_id);
+        crate::DeepMerge::merge_from(&mut self.container_runtime_version, other.container_runtime_version);
+        crate::DeepMerge::merge_from(&mut self.kernel_version, other.kernel_version);
+        crate::DeepMerge::merge_from(&mut self.kube_proxy_version, other.kube_proxy_version);
+        crate::DeepMerge::merge_from(&mut self.kubelet_version, other.kubelet_version);
+        crate::DeepMerge::merge_from(&mut self.machine_id, other.machine_id);
+        crate::DeepMerge::merge_from(&mut self.operating_system, other.operating_system);
+        crate::DeepMerge::merge_from(&mut self.os_image, other.os_image);
+        crate::DeepMerge::merge_from(&mut self.system_uuid, other.system_uuid);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

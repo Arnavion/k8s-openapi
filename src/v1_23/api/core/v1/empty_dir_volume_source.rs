@@ -10,6 +10,13 @@ pub struct EmptyDirVolumeSource {
     pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
+impl crate::DeepMerge for EmptyDirVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.medium, other.medium);
+        crate::DeepMerge::merge_from(&mut self.size_limit, other.size_limit);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EmptyDirVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

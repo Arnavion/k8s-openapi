@@ -18,6 +18,15 @@ pub struct SecretVolumeSource {
     pub secret_name: Option<String>,
 }
 
+impl crate::DeepMerge for SecretVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.default_mode, other.default_mode);
+        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::DeepMerge::merge_from(&mut self.optional, other.optional);
+        crate::DeepMerge::merge_from(&mut self.secret_name, other.secret_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SecretVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

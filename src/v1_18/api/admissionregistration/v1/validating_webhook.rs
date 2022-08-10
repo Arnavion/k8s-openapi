@@ -70,6 +70,21 @@ pub struct ValidatingWebhook {
     pub timeout_seconds: Option<i32>,
 }
 
+impl crate::DeepMerge for ValidatingWebhook {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.admission_review_versions, other.admission_review_versions);
+        crate::DeepMerge::merge_from(&mut self.client_config, other.client_config);
+        crate::DeepMerge::merge_from(&mut self.failure_policy, other.failure_policy);
+        crate::DeepMerge::merge_from(&mut self.match_policy, other.match_policy);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.namespace_selector, other.namespace_selector);
+        crate::DeepMerge::merge_from(&mut self.object_selector, other.object_selector);
+        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+        crate::DeepMerge::merge_from(&mut self.side_effects, other.side_effects);
+        crate::DeepMerge::merge_from(&mut self.timeout_seconds, other.timeout_seconds);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ValidatingWebhook {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

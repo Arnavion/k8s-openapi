@@ -22,6 +22,17 @@ pub struct JobStatus {
     pub succeeded: Option<i32>,
 }
 
+impl crate::DeepMerge for JobStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.active, other.active);
+        crate::DeepMerge::merge_from(&mut self.completion_time, other.completion_time);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.failed, other.failed);
+        crate::DeepMerge::merge_from(&mut self.start_time, other.start_time);
+        crate::DeepMerge::merge_from(&mut self.succeeded, other.succeeded);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -38,6 +38,22 @@ pub struct NodeStatus {
     pub volumes_in_use: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for NodeStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.addresses, other.addresses);
+        crate::DeepMerge::merge_from(&mut self.allocatable, other.allocatable);
+        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.config, other.config);
+        crate::DeepMerge::merge_from(&mut self.daemon_endpoints, other.daemon_endpoints);
+        crate::DeepMerge::merge_from(&mut self.images, other.images);
+        crate::DeepMerge::merge_from(&mut self.node_info, other.node_info);
+        crate::DeepMerge::merge_from(&mut self.phase, other.phase);
+        crate::DeepMerge::merge_from(&mut self.volumes_attached, other.volumes_attached);
+        crate::DeepMerge::merge_from(&mut self.volumes_in_use, other.volumes_in_use);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

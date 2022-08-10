@@ -19,6 +19,16 @@ pub struct CSIVolumeSource {
     pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
 }
 
+impl crate::DeepMerge for CSIVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.driver, other.driver);
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.node_publish_secret_ref, other.node_publish_secret_ref);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.volume_attributes, other.volume_attributes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

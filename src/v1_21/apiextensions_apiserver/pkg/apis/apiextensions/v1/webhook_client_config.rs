@@ -25,6 +25,14 @@ pub struct WebhookClientConfig {
     pub url: Option<String>,
 }
 
+impl crate::DeepMerge for WebhookClientConfig {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.ca_bundle, other.ca_bundle);
+        crate::DeepMerge::merge_from(&mut self.service, other.service);
+        crate::DeepMerge::merge_from(&mut self.url, other.url);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for WebhookClientConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

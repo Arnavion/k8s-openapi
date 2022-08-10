@@ -7,6 +7,12 @@ pub struct SessionAffinityConfig {
     pub client_ip: Option<crate::api::core::v1::ClientIPConfig>,
 }
 
+impl crate::DeepMerge for SessionAffinityConfig {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.client_ip, other.client_ip);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SessionAffinityConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

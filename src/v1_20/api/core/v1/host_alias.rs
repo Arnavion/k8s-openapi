@@ -10,6 +10,13 @@ pub struct HostAlias {
     pub ip: Option<String>,
 }
 
+impl crate::DeepMerge for HostAlias {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hostnames, other.hostnames);
+        crate::DeepMerge::merge_from(&mut self.ip, other.ip);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HostAlias {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

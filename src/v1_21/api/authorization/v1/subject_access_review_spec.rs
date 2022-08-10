@@ -22,6 +22,17 @@ pub struct SubjectAccessReviewSpec {
     pub user: Option<String>,
 }
 
+impl crate::DeepMerge for SubjectAccessReviewSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.extra, other.extra);
+        crate::DeepMerge::merge_from(&mut self.groups, other.groups);
+        crate::DeepMerge::merge_from(&mut self.non_resource_attributes, other.non_resource_attributes);
+        crate::DeepMerge::merge_from(&mut self.resource_attributes, other.resource_attributes);
+        crate::DeepMerge::merge_from(&mut self.uid, other.uid);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

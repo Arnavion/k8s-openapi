@@ -7,6 +7,12 @@ pub struct LimitRangeSpec {
     pub limits: Vec<crate::api::core::v1::LimitRangeItem>,
 }
 
+impl crate::DeepMerge for LimitRangeSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.limits, other.limits);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for LimitRangeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

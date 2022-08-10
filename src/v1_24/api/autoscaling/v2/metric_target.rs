@@ -16,6 +16,15 @@ pub struct MetricTarget {
     pub value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
+impl crate::DeepMerge for MetricTarget {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.average_utilization, other.average_utilization);
+        crate::DeepMerge::merge_from(&mut self.average_value, other.average_value);
+        crate::DeepMerge::merge_from(&mut self.type_, other.type_);
+        crate::DeepMerge::merge_from(&mut self.value, other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for MetricTarget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

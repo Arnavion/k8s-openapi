@@ -19,6 +19,16 @@ pub struct LeaseSpec {
     pub renew_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
 }
 
+impl crate::DeepMerge for LeaseSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.acquire_time, other.acquire_time);
+        crate::DeepMerge::merge_from(&mut self.holder_identity, other.holder_identity);
+        crate::DeepMerge::merge_from(&mut self.lease_duration_seconds, other.lease_duration_seconds);
+        crate::DeepMerge::merge_from(&mut self.lease_transitions, other.lease_transitions);
+        crate::DeepMerge::merge_from(&mut self.renew_time, other.renew_time);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for LeaseSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

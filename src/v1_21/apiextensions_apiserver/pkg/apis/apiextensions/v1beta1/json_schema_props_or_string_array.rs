@@ -7,6 +7,12 @@ pub enum JSONSchemaPropsOrStringArray {
     Strings(Vec<String>),
 }
 
+impl crate::DeepMerge for JSONSchemaPropsOrStringArray {
+    fn merge_from(&mut self, other: Self) {
+        *self = other;
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaPropsOrStringArray {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

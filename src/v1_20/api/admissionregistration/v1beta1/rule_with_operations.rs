@@ -25,6 +25,16 @@ pub struct RuleWithOperations {
     pub scope: Option<String>,
 }
 
+impl crate::DeepMerge for RuleWithOperations {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_groups, other.api_groups);
+        crate::DeepMerge::merge_from(&mut self.api_versions, other.api_versions);
+        crate::DeepMerge::merge_from(&mut self.operations, other.operations);
+        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
+        crate::DeepMerge::merge_from(&mut self.scope, other.scope);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RuleWithOperations {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

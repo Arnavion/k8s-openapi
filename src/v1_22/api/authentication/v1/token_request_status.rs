@@ -10,6 +10,13 @@ pub struct TokenRequestStatus {
     pub token: String,
 }
 
+impl crate::DeepMerge for TokenRequestStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.expiration_timestamp, other.expiration_timestamp);
+        crate::DeepMerge::merge_from(&mut self.token, other.token);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

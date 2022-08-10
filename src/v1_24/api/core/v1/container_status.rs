@@ -31,6 +31,20 @@ pub struct ContainerStatus {
     pub state: Option<crate::api::core::v1::ContainerState>,
 }
 
+impl crate::DeepMerge for ContainerStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container_id, other.container_id);
+        crate::DeepMerge::merge_from(&mut self.image, other.image);
+        crate::DeepMerge::merge_from(&mut self.image_id, other.image_id);
+        crate::DeepMerge::merge_from(&mut self.last_state, other.last_state);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.ready, other.ready);
+        crate::DeepMerge::merge_from(&mut self.restart_count, other.restart_count);
+        crate::DeepMerge::merge_from(&mut self.started, other.started);
+        crate::DeepMerge::merge_from(&mut self.state, other.state);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

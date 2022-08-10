@@ -10,6 +10,13 @@ pub struct WebhookConversion {
     pub conversion_review_versions: Vec<String>,
 }
 
+impl crate::DeepMerge for WebhookConversion {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.client_config, other.client_config);
+        crate::DeepMerge::merge_from(&mut self.conversion_review_versions, other.conversion_review_versions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for WebhookConversion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

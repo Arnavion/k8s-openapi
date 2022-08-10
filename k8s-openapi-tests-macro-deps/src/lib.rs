@@ -21,6 +21,7 @@
 	version = "v1",
 	plural = "foobars",
 	namespaced,
+	impl_deep_merge,
 )]
 #[custom_resource_definition(has_subresources = "v1")]
 struct FooBarSpec {
@@ -38,5 +39,13 @@ impl<'de> k8s_openapi::serde::Deserialize<'de> for FooBarSpec {
 impl k8s_openapi::serde::Serialize for FooBarSpec {
 	fn serialize<S>(&self, _serializer: S) -> Result<S::Ok, S::Error> where S: k8s_openapi::serde::Serializer {
 		unimplemented!();
+	}
+}
+
+impl k8s_openapi::DeepMerge for FooBarSpec {
+	fn merge_from(&mut self, other: Self) where Self: Sized {
+		self.prop1.merge_from(other.prop1);
+		self.prop2.merge_from(other.prop2);
+		self.prop3.merge_from(other.prop3);
 	}
 }

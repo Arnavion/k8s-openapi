@@ -31,6 +31,20 @@ pub struct StatefulSetSpec {
     pub volume_claim_templates: Option<Vec<crate::api::core::v1::PersistentVolumeClaim>>,
 }
 
+impl crate::DeepMerge for StatefulSetSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.min_ready_seconds, other.min_ready_seconds);
+        crate::DeepMerge::merge_from(&mut self.pod_management_policy, other.pod_management_policy);
+        crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
+        crate::DeepMerge::merge_from(&mut self.revision_history_limit, other.revision_history_limit);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.service_name, other.service_name);
+        crate::DeepMerge::merge_from(&mut self.template, other.template);
+        crate::DeepMerge::merge_from(&mut self.update_strategy, other.update_strategy);
+        crate::DeepMerge::merge_from(&mut self.volume_claim_templates, other.volume_claim_templates);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

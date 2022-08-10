@@ -7,6 +7,12 @@ pub struct ContainerStateRunning {
     pub started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
+impl crate::DeepMerge for ContainerStateRunning {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.started_at, other.started_at);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerStateRunning {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -31,6 +31,20 @@ pub struct StatefulSetStatus {
     pub updated_replicas: Option<i32>,
 }
 
+impl crate::DeepMerge for StatefulSetStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.collision_count, other.collision_count);
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.current_replicas, other.current_replicas);
+        crate::DeepMerge::merge_from(&mut self.current_revision, other.current_revision);
+        crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
+        crate::DeepMerge::merge_from(&mut self.ready_replicas, other.ready_replicas);
+        crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
+        crate::DeepMerge::merge_from(&mut self.update_revision, other.update_revision);
+        crate::DeepMerge::merge_from(&mut self.updated_replicas, other.updated_replicas);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

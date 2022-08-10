@@ -10,6 +10,13 @@ pub struct ResourceQuotaStatus {
     pub used: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
+impl crate::DeepMerge for ResourceQuotaStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hard, other.hard);
+        crate::DeepMerge::merge_from(&mut self.used, other.used);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

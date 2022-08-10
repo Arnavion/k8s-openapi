@@ -16,6 +16,14 @@ pub struct CSIDriverSpec {
     pub volume_lifecycle_modes: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for CSIDriverSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.attach_required, other.attach_required);
+        crate::DeepMerge::merge_from(&mut self.pod_info_on_mount, other.pod_info_on_mount);
+        crate::DeepMerge::merge_from(&mut self.volume_lifecycle_modes, other.volume_lifecycle_modes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CSIDriverSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

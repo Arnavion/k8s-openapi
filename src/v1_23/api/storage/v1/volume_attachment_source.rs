@@ -10,6 +10,13 @@ pub struct VolumeAttachmentSource {
     pub persistent_volume_name: Option<String>,
 }
 
+impl crate::DeepMerge for VolumeAttachmentSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.inline_volume_spec, other.inline_volume_spec);
+        crate::DeepMerge::merge_from(&mut self.persistent_volume_name, other.persistent_volume_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

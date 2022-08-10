@@ -22,6 +22,17 @@ pub struct CephFSVolumeSource {
     pub user: Option<String>,
 }
 
+impl crate::DeepMerge for CephFSVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.monitors, other.monitors);
+        crate::DeepMerge::merge_from(&mut self.path, other.path);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_file, other.secret_file);
+        crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CephFSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

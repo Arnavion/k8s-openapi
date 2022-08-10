@@ -16,6 +16,15 @@ pub struct HorizontalPodAutoscalerSpec {
     pub target_cpu_utilization_percentage: Option<i32>,
 }
 
+impl crate::DeepMerge for HorizontalPodAutoscalerSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.max_replicas, other.max_replicas);
+        crate::DeepMerge::merge_from(&mut self.min_replicas, other.min_replicas);
+        crate::DeepMerge::merge_from(&mut self.scale_target_ref, other.scale_target_ref);
+        crate::DeepMerge::merge_from(&mut self.target_cpu_utilization_percentage, other.target_cpu_utilization_percentage);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -13,6 +13,14 @@ pub struct PodsMetricSource {
     pub target_average_value: crate::apimachinery::pkg::api::resource::Quantity,
 }
 
+impl crate::DeepMerge for PodsMetricSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.metric_name, other.metric_name);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.target_average_value, other.target_average_value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodsMetricSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

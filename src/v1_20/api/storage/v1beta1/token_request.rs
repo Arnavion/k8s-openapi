@@ -10,6 +10,13 @@ pub struct TokenRequest {
     pub expiration_seconds: Option<i64>,
 }
 
+impl crate::DeepMerge for TokenRequest {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.audience, other.audience);
+        crate::DeepMerge::merge_from(&mut self.expiration_seconds, other.expiration_seconds);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TokenRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

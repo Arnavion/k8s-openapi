@@ -16,6 +16,15 @@ pub struct ReplicaSetSpec {
     pub template: Option<crate::api::core::v1::PodTemplateSpec>,
 }
 
+impl crate::DeepMerge for ReplicaSetSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.min_ready_seconds, other.min_ready_seconds);
+        crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.template, other.template);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ReplicaSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

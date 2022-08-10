@@ -28,6 +28,19 @@ pub struct RBDVolumeSource {
     pub user: Option<String>,
 }
 
+impl crate::DeepMerge for RBDVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.image, other.image);
+        crate::DeepMerge::merge_from(&mut self.keyring, other.keyring);
+        crate::DeepMerge::merge_from(&mut self.monitors, other.monitors);
+        crate::DeepMerge::merge_from(&mut self.pool, other.pool);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RBDVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

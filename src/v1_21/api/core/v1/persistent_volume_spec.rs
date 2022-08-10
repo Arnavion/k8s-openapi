@@ -94,6 +94,41 @@ pub struct PersistentVolumeSpec {
     pub vsphere_volume: Option<crate::api::core::v1::VsphereVirtualDiskVolumeSource>,
 }
 
+impl crate::DeepMerge for PersistentVolumeSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.access_modes, other.access_modes);
+        crate::DeepMerge::merge_from(&mut self.aws_elastic_block_store, other.aws_elastic_block_store);
+        crate::DeepMerge::merge_from(&mut self.azure_disk, other.azure_disk);
+        crate::DeepMerge::merge_from(&mut self.azure_file, other.azure_file);
+        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
+        crate::DeepMerge::merge_from(&mut self.cephfs, other.cephfs);
+        crate::DeepMerge::merge_from(&mut self.cinder, other.cinder);
+        crate::DeepMerge::merge_from(&mut self.claim_ref, other.claim_ref);
+        crate::DeepMerge::merge_from(&mut self.csi, other.csi);
+        crate::DeepMerge::merge_from(&mut self.fc, other.fc);
+        crate::DeepMerge::merge_from(&mut self.flex_volume, other.flex_volume);
+        crate::DeepMerge::merge_from(&mut self.flocker, other.flocker);
+        crate::DeepMerge::merge_from(&mut self.gce_persistent_disk, other.gce_persistent_disk);
+        crate::DeepMerge::merge_from(&mut self.glusterfs, other.glusterfs);
+        crate::DeepMerge::merge_from(&mut self.host_path, other.host_path);
+        crate::DeepMerge::merge_from(&mut self.iscsi, other.iscsi);
+        crate::DeepMerge::merge_from(&mut self.local, other.local);
+        crate::DeepMerge::merge_from(&mut self.mount_options, other.mount_options);
+        crate::DeepMerge::merge_from(&mut self.nfs, other.nfs);
+        crate::DeepMerge::merge_from(&mut self.node_affinity, other.node_affinity);
+        crate::DeepMerge::merge_from(&mut self.persistent_volume_reclaim_policy, other.persistent_volume_reclaim_policy);
+        crate::DeepMerge::merge_from(&mut self.photon_persistent_disk, other.photon_persistent_disk);
+        crate::DeepMerge::merge_from(&mut self.portworx_volume, other.portworx_volume);
+        crate::DeepMerge::merge_from(&mut self.quobyte, other.quobyte);
+        crate::DeepMerge::merge_from(&mut self.rbd, other.rbd);
+        crate::DeepMerge::merge_from(&mut self.scale_io, other.scale_io);
+        crate::DeepMerge::merge_from(&mut self.storage_class_name, other.storage_class_name);
+        crate::DeepMerge::merge_from(&mut self.storageos, other.storageos);
+        crate::DeepMerge::merge_from(&mut self.volume_mode, other.volume_mode);
+        crate::DeepMerge::merge_from(&mut self.vsphere_volume, other.vsphere_volume);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

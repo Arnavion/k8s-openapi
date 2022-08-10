@@ -126,6 +126,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 					kind: super::SchemaKind::Ty(super::Type::parse::<D>(&ty, None, None, None)?),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					impl_deep_merge: true,
 				},
 			),
 
@@ -136,6 +137,7 @@ impl<'de> serde::Deserialize<'de> for Parameter {
 					kind: super::SchemaKind::Ty(super::Type::parse::<D>(&ty, None, None, None)?),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					impl_deep_merge: true,
 				},
 			),
 

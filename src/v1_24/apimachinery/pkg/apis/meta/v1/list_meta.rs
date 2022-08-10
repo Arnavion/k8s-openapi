@@ -16,6 +16,15 @@ pub struct ListMeta {
     pub self_link: Option<String>,
 }
 
+impl crate::DeepMerge for ListMeta {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.continue_, other.continue_);
+        crate::DeepMerge::merge_from(&mut self.remaining_item_count, other.remaining_item_count);
+        crate::DeepMerge::merge_from(&mut self.resource_version, other.resource_version);
+        crate::DeepMerge::merge_from(&mut self.self_link, other.self_link);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ListMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

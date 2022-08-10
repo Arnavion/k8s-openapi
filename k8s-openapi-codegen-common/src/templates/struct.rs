@@ -5,34 +5,28 @@ pub(crate) fn generate(
 	generics: super::Generics<'_>,
 	fields: &[super::Property<'_>],
 ) -> Result<(), crate::Error> {
+	use std::fmt::Write;
+
 	let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
 	let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
-	let fields: String = {
-		fields.iter()
-		.try_fold(String::new(), |mut fields, super::Property { comment, field_name, field_type_name, .. }| -> Result<_, std::fmt::Error> {
-			use std::fmt::Write;
+	let mut fields_string = String::new();
+	for super::Property { comment, field_name, field_type_name, .. } in fields {
+		if !fields_string.is_empty() {
+			writeln!(fields_string)?;
+		}
 
-			if !fields.is_empty() {
-				writeln!(fields)?;
+		if let Some(comment) = comment {
+			for line in crate::get_comment_text(comment, "") {
+				writeln!(fields_string, "    ///{line}")?;
 			}
+		}
 
-			if let Some(comment) = comment {
-				for line in crate::get_comment_text(comment, "") {
-					writeln!(fields, "    ///{line}")?;
-				}
-			}
-
-			writeln!(fields,
-				"    {vis}{field_name}: {field_type_name},",
-				vis = vis,
-				field_name = field_name,
-				field_type_name = field_type_name,
-			)?;
-
-			Ok(fields)
-		})?
-	};
+		writeln!(
+			fields_string,
+			"    {vis}{field_name}: {field_type_name},",
+		)?;
+	}
 
 	writeln!(
 		writer,
@@ -40,7 +34,7 @@ pub(crate) fn generate(
 		type_name = type_name,
 		type_generics_type = type_generics_type,
 		type_generics_where = type_generics_where,
-		fields = fields,
+		fields = fields_string,
 	)?;
 
 	Ok(())

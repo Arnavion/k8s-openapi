@@ -10,6 +10,13 @@ pub struct ContainerImage {
     pub size_bytes: Option<i64>,
 }
 
+impl crate::DeepMerge for ContainerImage {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.names, other.names);
+        crate::DeepMerge::merge_from(&mut self.size_bytes, other.size_bytes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ContainerImage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

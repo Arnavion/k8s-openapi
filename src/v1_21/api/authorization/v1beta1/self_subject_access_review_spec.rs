@@ -10,6 +10,13 @@ pub struct SelfSubjectAccessReviewSpec {
     pub resource_attributes: Option<crate::api::authorization::v1beta1::ResourceAttributes>,
 }
 
+impl crate::DeepMerge for SelfSubjectAccessReviewSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.non_resource_attributes, other.non_resource_attributes);
+        crate::DeepMerge::merge_from(&mut self.resource_attributes, other.resource_attributes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SelfSubjectAccessReviewSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

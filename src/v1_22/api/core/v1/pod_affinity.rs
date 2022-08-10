@@ -10,6 +10,13 @@ pub struct PodAffinity {
     pub required_during_scheduling_ignored_during_execution: Option<Vec<crate::api::core::v1::PodAffinityTerm>>,
 }
 
+impl crate::DeepMerge for PodAffinity {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.preferred_during_scheduling_ignored_during_execution, other.preferred_during_scheduling_ignored_during_execution);
+        crate::DeepMerge::merge_from(&mut self.required_during_scheduling_ignored_during_execution, other.required_during_scheduling_ignored_during_execution);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodAffinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

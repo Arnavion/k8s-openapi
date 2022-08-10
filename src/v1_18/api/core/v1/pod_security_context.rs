@@ -35,6 +35,20 @@ pub struct PodSecurityContext {
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
 }
 
+impl crate::DeepMerge for PodSecurityContext {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_group, other.fs_group);
+        crate::DeepMerge::merge_from(&mut self.fs_group_change_policy, other.fs_group_change_policy);
+        crate::DeepMerge::merge_from(&mut self.run_as_group, other.run_as_group);
+        crate::DeepMerge::merge_from(&mut self.run_as_non_root, other.run_as_non_root);
+        crate::DeepMerge::merge_from(&mut self.run_as_user, other.run_as_user);
+        crate::DeepMerge::merge_from(&mut self.se_linux_options, other.se_linux_options);
+        crate::DeepMerge::merge_from(&mut self.supplemental_groups, other.supplemental_groups);
+        crate::DeepMerge::merge_from(&mut self.sysctls, other.sysctls);
+        crate::DeepMerge::merge_from(&mut self.windows_options, other.windows_options);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodSecurityContext {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

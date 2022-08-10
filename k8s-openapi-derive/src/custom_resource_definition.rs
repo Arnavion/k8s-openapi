@@ -13,6 +13,7 @@ pub(super) struct CustomResourceDefinition {
 	generate_schema: bool,
 	namespaced: bool,
 	has_subresources: Option<String>,
+	impl_deep_merge: bool,
 }
 
 impl super::CustomDerive for CustomResourceDefinition {
@@ -21,12 +22,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let vis = input.vis;
 
 		let mut group = None;
-		let mut plural = None;
 		let mut version = None;
-		let mut has_subresources = None;
-
+		let mut plural = None;
 		let mut generate_schema = false;
 		let mut namespaced = false;
+		let mut has_subresources = None;
+		let mut impl_deep_merge = false;
 
 		for attr in &input.attrs {
 			#[allow(clippy::needless_continue)]
@@ -58,14 +59,6 @@ impl super::CustomDerive for CustomResourceDefinition {
 
 							return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
 						}
-						else if meta.path.is_ident("plural") {
-							if let syn::Lit::Str(lit) = &meta.lit {
-								plural = Some(lit.value());
-								continue;
-							}
-
-							return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
-						}
 						else if meta.path.is_ident("version") {
 							if let syn::Lit::Str(lit) = &meta.lit {
 								version = Some(lit.value());
@@ -73,6 +66,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}
 
 							return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
+						}
+						else if meta.path.is_ident("plural") {
+							if let syn::Lit::Str(lit) = &meta.lit {
+								plural = Some(lit.value());
+								continue;
+							}
+
+							return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
 						}
 						else if meta.path.is_ident("has_subresources") {
 							if let syn::Lit::Str(lit) = &meta.lit {
@@ -93,6 +94,10 @@ impl super::CustomDerive for CustomResourceDefinition {
 						}
 						else if path.is_ident("namespaced") {
 							namespaced = true;
+							continue;
+						}
+						else if path.is_ident("impl_deep_merge") {
+							impl_deep_merge = true;
 							continue;
 						}
 						else {
@@ -134,11 +139,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 			generate_schema,
 			namespaced,
 			has_subresources,
+			impl_deep_merge,
 		})
 	}
 
 	fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error> {
-		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, generate_schema, namespaced, has_subresources } = self;
+		let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, generate_schema, namespaced, has_subresources, impl_deep_merge } = self;
 
 		let vis: std::borrow::Cow<'_, str> = match vis {
 			syn::Visibility::Inherited => "".into(),
@@ -167,6 +173,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					}),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					impl_deep_merge: true,
 				},
 			});
 
@@ -180,6 +187,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					impl_deep_merge: true,
 				},
 			});
 
@@ -194,6 +202,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 						kubernetes_group_kind_versions: vec![],
 						list_kind: None,
+						impl_deep_merge: true,
 					},
 				})), "/namespaces/{namespace}")
 			}
@@ -215,12 +224,14 @@ impl super::CustomDerive for CustomResourceDefinition {
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}, false)),
 						(swagger20::PropertyName("kind".to_owned()), (swagger20::Schema {
 							description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}, false)),
 						(swagger20::PropertyName("metadata".to_owned()), (swagger20::Schema {
 							description: Some("Standard object's metadata. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata>".to_owned()),
@@ -230,6 +241,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}, true)),
 						(swagger20::PropertyName("spec".to_owned()), (swagger20::Schema {
 							description: Some(format!("Specification of the `{cr_name}` custom resource")),
@@ -239,6 +251,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}, false)),
 					].into_iter().chain(
 						has_subresources.map(|has_subresources|
@@ -247,6 +260,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								kind: swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(has_subresources)),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							}, true)))
 					).collect()),
 					kubernetes_group_kind_versions: vec![
@@ -257,6 +271,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						},
 					],
 					list_kind: Some(format!("{cr_name}List")),
+					impl_deep_merge,
 				}),
 			].into_iter().collect(),
 			operations: vec![
@@ -304,6 +319,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -336,6 +352,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 						Some(std::sync::Arc::new(swagger20::Parameter {
@@ -350,6 +367,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -382,6 +400,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -413,6 +432,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 						Some(name_parameter.clone()),
@@ -429,6 +449,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -460,6 +481,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 						Some(name_parameter.clone()),
@@ -476,6 +498,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -508,6 +531,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}),
 					].into_iter().collect()),
 					tag: None,
@@ -537,6 +561,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							}),
 							kubernetes_group_kind_versions: vec![],
 							list_kind: None,
+							impl_deep_merge: true,
 						}),
 					].into_iter().collect()),
 					tag: None,
@@ -568,6 +593,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -602,6 +628,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),
@@ -634,6 +661,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								impl_deep_merge: true,
 							},
 						})),
 					].into_iter().flatten().collect(),

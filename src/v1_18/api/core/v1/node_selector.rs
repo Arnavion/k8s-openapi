@@ -7,6 +7,12 @@ pub struct NodeSelector {
     pub node_selector_terms: Vec<crate::api::core::v1::NodeSelectorTerm>,
 }
 
+impl crate::DeepMerge for NodeSelector {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.node_selector_terms, other.node_selector_terms);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

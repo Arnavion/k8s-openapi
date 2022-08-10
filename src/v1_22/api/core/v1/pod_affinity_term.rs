@@ -16,6 +16,15 @@ pub struct PodAffinityTerm {
     pub topology_key: String,
 }
 
+impl crate::DeepMerge for PodAffinityTerm {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.label_selector, other.label_selector);
+        crate::DeepMerge::merge_from(&mut self.namespace_selector, other.namespace_selector);
+        crate::DeepMerge::merge_from(&mut self.namespaces, other.namespaces);
+        crate::DeepMerge::merge_from(&mut self.topology_key, other.topology_key);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodAffinityTerm {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

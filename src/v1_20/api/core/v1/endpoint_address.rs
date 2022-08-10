@@ -16,6 +16,15 @@ pub struct EndpointAddress {
     pub target_ref: Option<crate::api::core::v1::ObjectReference>,
 }
 
+impl crate::DeepMerge for EndpointAddress {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
+        crate::DeepMerge::merge_from(&mut self.ip, other.ip);
+        crate::DeepMerge::merge_from(&mut self.node_name, other.node_name);
+        crate::DeepMerge::merge_from(&mut self.target_ref, other.target_ref);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

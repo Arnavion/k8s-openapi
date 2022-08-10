@@ -10,6 +10,13 @@ pub struct RuntimeClassStrategyOptions {
     pub default_runtime_class_name: Option<String>,
 }
 
+impl crate::DeepMerge for RuntimeClassStrategyOptions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.allowed_runtime_class_names, other.allowed_runtime_class_names);
+        crate::DeepMerge::merge_from(&mut self.default_runtime_class_name, other.default_runtime_class_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClassStrategyOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

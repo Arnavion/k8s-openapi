@@ -22,6 +22,17 @@ pub struct AzureDiskVolumeSource {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for AzureDiskVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.caching_mode, other.caching_mode);
+        crate::DeepMerge::merge_from(&mut self.disk_name, other.disk_name);
+        crate::DeepMerge::merge_from(&mut self.disk_uri, other.disk_uri);
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AzureDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct EnvVarSource {
     pub secret_key_ref: Option<crate::api::core::v1::SecretKeySelector>,
 }
 
+impl crate::DeepMerge for EnvVarSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.config_map_key_ref, other.config_map_key_ref);
+        crate::DeepMerge::merge_from(&mut self.field_ref, other.field_ref);
+        crate::DeepMerge::merge_from(&mut self.resource_field_ref, other.resource_field_ref);
+        crate::DeepMerge::merge_from(&mut self.secret_key_ref, other.secret_key_ref);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EnvVarSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

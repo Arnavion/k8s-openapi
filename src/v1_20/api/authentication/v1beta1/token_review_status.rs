@@ -16,6 +16,15 @@ pub struct TokenReviewStatus {
     pub user: Option<crate::api::authentication::v1beta1::UserInfo>,
 }
 
+impl crate::DeepMerge for TokenReviewStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.audiences, other.audiences);
+        crate::DeepMerge::merge_from(&mut self.authenticated, other.authenticated);
+        crate::DeepMerge::merge_from(&mut self.error, other.error);
+        crate::DeepMerge::merge_from(&mut self.user, other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TokenReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

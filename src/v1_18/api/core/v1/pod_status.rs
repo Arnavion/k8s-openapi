@@ -47,6 +47,24 @@ pub struct PodStatus {
     pub start_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
+impl crate::DeepMerge for PodStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::DeepMerge::merge_from(&mut self.container_statuses, other.container_statuses);
+        crate::DeepMerge::merge_from(&mut self.ephemeral_container_statuses, other.ephemeral_container_statuses);
+        crate::DeepMerge::merge_from(&mut self.host_ip, other.host_ip);
+        crate::DeepMerge::merge_from(&mut self.init_container_statuses, other.init_container_statuses);
+        crate::DeepMerge::merge_from(&mut self.message, other.message);
+        crate::DeepMerge::merge_from(&mut self.nominated_node_name, other.nominated_node_name);
+        crate::DeepMerge::merge_from(&mut self.phase, other.phase);
+        crate::DeepMerge::merge_from(&mut self.pod_ip, other.pod_ip);
+        crate::DeepMerge::merge_from(&mut self.pod_ips, other.pod_ips);
+        crate::DeepMerge::merge_from(&mut self.qos_class, other.qos_class);
+        crate::DeepMerge::merge_from(&mut self.reason, other.reason);
+        crate::DeepMerge::merge_from(&mut self.start_time, other.start_time);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -133,6 +133,54 @@ pub struct JSONSchemaProps {
     pub x_kubernetes_preserve_unknown_fields: Option<bool>,
 }
 
+impl crate::DeepMerge for JSONSchemaProps {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.ref_path, other.ref_path);
+        crate::DeepMerge::merge_from(&mut self.schema, other.schema);
+        crate::DeepMerge::merge_from(&mut self.additional_items, other.additional_items);
+        crate::DeepMerge::merge_from(&mut self.additional_properties, other.additional_properties);
+        crate::DeepMerge::merge_from(&mut self.all_of, other.all_of);
+        crate::DeepMerge::merge_from(&mut self.any_of, other.any_of);
+        crate::DeepMerge::merge_from(&mut self.default, other.default);
+        crate::DeepMerge::merge_from(&mut self.definitions, other.definitions);
+        crate::DeepMerge::merge_from(&mut self.dependencies, other.dependencies);
+        crate::DeepMerge::merge_from(&mut self.description, other.description);
+        crate::DeepMerge::merge_from(&mut self.enum_, other.enum_);
+        crate::DeepMerge::merge_from(&mut self.example, other.example);
+        crate::DeepMerge::merge_from(&mut self.exclusive_maximum, other.exclusive_maximum);
+        crate::DeepMerge::merge_from(&mut self.exclusive_minimum, other.exclusive_minimum);
+        crate::DeepMerge::merge_from(&mut self.external_docs, other.external_docs);
+        crate::DeepMerge::merge_from(&mut self.format, other.format);
+        crate::DeepMerge::merge_from(&mut self.id, other.id);
+        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::DeepMerge::merge_from(&mut self.max_items, other.max_items);
+        crate::DeepMerge::merge_from(&mut self.max_length, other.max_length);
+        crate::DeepMerge::merge_from(&mut self.max_properties, other.max_properties);
+        crate::DeepMerge::merge_from(&mut self.maximum, other.maximum);
+        crate::DeepMerge::merge_from(&mut self.min_items, other.min_items);
+        crate::DeepMerge::merge_from(&mut self.min_length, other.min_length);
+        crate::DeepMerge::merge_from(&mut self.min_properties, other.min_properties);
+        crate::DeepMerge::merge_from(&mut self.minimum, other.minimum);
+        crate::DeepMerge::merge_from(&mut self.multiple_of, other.multiple_of);
+        crate::DeepMerge::merge_from(&mut self.not, other.not);
+        crate::DeepMerge::merge_from(&mut self.nullable, other.nullable);
+        crate::DeepMerge::merge_from(&mut self.one_of, other.one_of);
+        crate::DeepMerge::merge_from(&mut self.pattern, other.pattern);
+        crate::DeepMerge::merge_from(&mut self.pattern_properties, other.pattern_properties);
+        crate::DeepMerge::merge_from(&mut self.properties, other.properties);
+        crate::DeepMerge::merge_from(&mut self.required, other.required);
+        crate::DeepMerge::merge_from(&mut self.title, other.title);
+        crate::DeepMerge::merge_from(&mut self.type_, other.type_);
+        crate::DeepMerge::merge_from(&mut self.unique_items, other.unique_items);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_embedded_resource, other.x_kubernetes_embedded_resource);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_int_or_string, other.x_kubernetes_int_or_string);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_list_map_keys, other.x_kubernetes_list_map_keys);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_list_type, other.x_kubernetes_list_type);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_map_type, other.x_kubernetes_map_type);
+        crate::DeepMerge::merge_from(&mut self.x_kubernetes_preserve_unknown_fields, other.x_kubernetes_preserve_unknown_fields);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaProps {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

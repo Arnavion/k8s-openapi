@@ -13,6 +13,14 @@ pub struct HPAScalingPolicy {
     pub value: i32,
 }
 
+impl crate::DeepMerge for HPAScalingPolicy {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.period_seconds, other.period_seconds);
+        crate::DeepMerge::merge_from(&mut self.type_, other.type_);
+        crate::DeepMerge::merge_from(&mut self.value, other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HPAScalingPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

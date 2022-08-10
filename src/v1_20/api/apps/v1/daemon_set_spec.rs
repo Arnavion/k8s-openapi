@@ -19,6 +19,16 @@ pub struct DaemonSetSpec {
     pub update_strategy: Option<crate::api::apps::v1::DaemonSetUpdateStrategy>,
 }
 
+impl crate::DeepMerge for DaemonSetSpec {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.min_ready_seconds, other.min_ready_seconds);
+        crate::DeepMerge::merge_from(&mut self.revision_history_limit, other.revision_history_limit);
+        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::DeepMerge::merge_from(&mut self.template, other.template);
+        crate::DeepMerge::merge_from(&mut self.update_strategy, other.update_strategy);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for DaemonSetSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -10,6 +10,13 @@ pub struct IngressServiceBackend {
     pub port: Option<crate::api::networking::v1::ServiceBackendPort>,
 }
 
+impl crate::DeepMerge for IngressServiceBackend {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.port, other.port);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IngressServiceBackend {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

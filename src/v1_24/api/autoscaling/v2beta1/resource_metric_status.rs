@@ -13,6 +13,14 @@ pub struct ResourceMetricStatus {
     pub name: String,
 }
 
+impl crate::DeepMerge for ResourceMetricStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.current_average_utilization, other.current_average_utilization);
+        crate::DeepMerge::merge_from(&mut self.current_average_value, other.current_average_value);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

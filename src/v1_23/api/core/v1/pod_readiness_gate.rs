@@ -7,6 +7,12 @@ pub struct PodReadinessGate {
     pub condition_type: String,
 }
 
+impl crate::DeepMerge for PodReadinessGate {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.condition_type, other.condition_type);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodReadinessGate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

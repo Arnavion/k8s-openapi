@@ -10,6 +10,13 @@ pub struct PersistentVolumeClaimTemplate {
     pub spec: crate::api::core::v1::PersistentVolumeClaimSpec,
 }
 
+impl crate::DeepMerge for PersistentVolumeClaimTemplate {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
+        crate::DeepMerge::merge_from(&mut self.spec, other.spec);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimTemplate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct CinderVolumeSource {
     pub volume_id: String,
 }
 
+impl crate::DeepMerge for CinderVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
+        crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
+        crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
+        crate::DeepMerge::merge_from(&mut self.volume_id, other.volume_id);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CinderVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

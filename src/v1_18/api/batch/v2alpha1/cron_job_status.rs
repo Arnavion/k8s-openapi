@@ -10,6 +10,13 @@ pub struct CronJobStatus {
     pub last_schedule_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 }
 
+impl crate::DeepMerge for CronJobStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.active, other.active);
+        crate::DeepMerge::merge_from(&mut self.last_schedule_time, other.last_schedule_time);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CronJobStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct Taint {
     pub value: Option<String>,
 }
 
+impl crate::DeepMerge for Taint {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.effect, other.effect);
+        crate::DeepMerge::merge_from(&mut self.key, other.key);
+        crate::DeepMerge::merge_from(&mut self.time_added, other.time_added);
+        crate::DeepMerge::merge_from(&mut self.value, other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Taint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

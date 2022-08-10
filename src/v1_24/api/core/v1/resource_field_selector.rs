@@ -13,6 +13,14 @@ pub struct ResourceFieldSelector {
     pub resource: String,
 }
 
+impl crate::DeepMerge for ResourceFieldSelector {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.container_name, other.container_name);
+        crate::DeepMerge::merge_from(&mut self.divisor, other.divisor);
+        crate::DeepMerge::merge_from(&mut self.resource, other.resource);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceFieldSelector {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

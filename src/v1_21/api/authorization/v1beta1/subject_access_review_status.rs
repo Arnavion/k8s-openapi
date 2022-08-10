@@ -16,6 +16,15 @@ pub struct SubjectAccessReviewStatus {
     pub reason: Option<String>,
 }
 
+impl crate::DeepMerge for SubjectAccessReviewStatus {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.allowed, other.allowed);
+        crate::DeepMerge::merge_from(&mut self.denied, other.denied);
+        crate::DeepMerge::merge_from(&mut self.evaluation_error, other.evaluation_error);
+        crate::DeepMerge::merge_from(&mut self.reason, other.reason);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
