@@ -3,6 +3,7 @@
 #![allow(
     clippy::cognitive_complexity,
     clippy::default_trait_access,
+    clippy::derive_partial_eq_without_eq,
     clippy::doc_markdown,
     clippy::large_enum_variant,
     clippy::match_single_binding,
