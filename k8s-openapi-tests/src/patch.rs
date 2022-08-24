@@ -12,16 +12,16 @@ async fn deployment() {
 	let deployment_spec = apps::DeploymentSpec {
 		replicas: Some(1),
 		selector: meta::LabelSelector {
-			match_labels: Some(vec![
+			match_labels: Some([
 				("k8s-openapi-tests-patch-deployment-key".to_owned(), "k8s-openapi-tests-patch-deployment-value".to_owned()),
-			].into_iter().collect()),
+			].into()),
 			..Default::default()
 		},
 		template: api::PodTemplateSpec {
 			metadata: Some(meta::ObjectMeta {
-				labels: Some(vec![
+				labels: Some([
 					("k8s-openapi-tests-patch-deployment-key".to_owned(), "k8s-openapi-tests-patch-deployment-value".to_owned()),
-				].into_iter().collect()),
+				].into()),
 				..Default::default()
 			}),
 			spec: Some(api::PodSpec {
@@ -56,12 +56,12 @@ async fn deployment() {
 
 	// Use JSON patch to patch deployment with alpine:3.7 container
 	let patch = meta::Patch::Json(vec![
-		serde_json::Value::Object(vec![
+		serde_json::Value::Object([
 			("op".to_owned(), serde_json::Value::String("test".to_owned())),
 			("path".to_owned(), serde_json::Value::String("/spec/template/spec/containers/0/image".to_owned())),
 			("value".to_owned(), serde_json::Value::String("alpine:3.6".to_owned())),
 		].into_iter().collect()),
-		serde_json::Value::Object(vec![
+		serde_json::Value::Object([
 			("op".to_owned(), serde_json::Value::String("replace".to_owned())),
 			("path".to_owned(), serde_json::Value::String("/spec/template/spec/containers/0/image".to_owned())),
 			("value".to_owned(), serde_json::Value::String("alpine:3.7".to_owned())),

@@ -89,10 +89,10 @@ async fn test() {
 
 	let custom_resource_validation = apiextensions::CustomResourceValidation {
 		open_api_v3_schema: Some(apiextensions::JSONSchemaProps {
-			properties: Some(vec![
+			properties: Some([
 				("spec".to_string(), apiextensions::JSONSchemaProps {
 					type_: Some("object".to_owned()),
-					properties: Some(vec![
+					properties: Some([
 						("prop1".to_string(), apiextensions::JSONSchemaProps {
 							type_: Some("string".to_string()),
 							..Default::default()
@@ -110,14 +110,14 @@ async fn test() {
 							type_: Some("integer".to_string()),
 							..Default::default()
 						}),
-					].into_iter().collect()),
+					].into()),
 					required: Some(vec![
 						"prop1".to_string(),
 						"prop2".to_string(),
 					]),
 					..Default::default()
 				}),
-			].into_iter().collect()),
+			].into()),
 			type_: Some("object".to_owned()),
 			..Default::default()
 		}),
@@ -279,13 +279,13 @@ async fn test() {
 
 
 	// Create invalid CR.
-	let fb2 = serde_json::Value::Object(vec![
+	let fb2 = serde_json::Value::Object([
 		("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
 		("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
-		("metadata".to_string(), serde_json::Value::Object(vec![
+		("metadata".to_string(), serde_json::Value::Object([
 			("name".to_string(), serde_json::Value::String("fb2".to_string())),
 		].into_iter().collect())),
-		("spec".to_string(), serde_json::Value::Object(vec![
+		("spec".to_string(), serde_json::Value::Object([
 			("prop1".to_string(), serde_json::Value::String("value1".to_string())),
 		].into_iter().collect())),
 	].into_iter().collect());
@@ -300,13 +300,13 @@ async fn test() {
 		(other, status_code) => panic!("{other:?} {status_code}"),
 	}
 
-	let fb3 = serde_json::Value::Object(vec![
+	let fb3 = serde_json::Value::Object([
 		("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
 		("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
-		("metadata".to_string(), serde_json::Value::Object(vec![
+		("metadata".to_string(), serde_json::Value::Object([
 			("name".to_string(), serde_json::Value::String("fb3".to_string())),
 		].into_iter().collect())),
-		("spec".to_string(), serde_json::Value::Object(vec![
+		("spec".to_string(), serde_json::Value::Object([
 			("prop1".to_string(), serde_json::Value::String("value1".to_string())),
 			("prop2".to_string(), serde_json::Value::Bool(true)),
 		].into_iter().collect())),

@@ -215,10 +215,10 @@ impl super::CustomDerive for CustomResourceDefinition {
 				title: String::new(),
 				version: String::new(),
 			},
-			definitions: vec![
+			definitions: [
 				(swagger20::DefinitionPath(cr_name.clone()), swagger20::Schema {
 					description: Some(format!("Custom resource for `{cr_spec_name}`")),
-					kind: swagger20::SchemaKind::Properties(vec![
+					kind: swagger20::SchemaKind::Properties([
 						(swagger20::PropertyName("apiVersion".to_owned()), (swagger20::Schema {
 							description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources>".to_owned()),
 							kind: swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }),
@@ -273,7 +273,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 					list_kind: Some(format!("{cr_name}List")),
 					impl_deep_merge,
 				}),
-			].into_iter().collect(),
+			].into(),
 			operations: vec![
 				swagger20::Operation {
 					description: Some(format!("Create a `{cr_name}`")),
@@ -285,7 +285,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(body_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
@@ -304,7 +304,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
 						Some(std::sync::Arc::new(swagger20::Parameter {
@@ -338,7 +338,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						namespace_parameter.clone(),
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Query,
@@ -386,7 +386,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						namespace_parameter.clone(),
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Query,
@@ -419,7 +419,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Body,
 							name: "body".to_owned(),
@@ -468,7 +468,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Body,
 							name: "body".to_owned(),
@@ -517,12 +517,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}")),
-					responses: swagger20::OperationResponses::Map(vec![
+					responses: swagger20::OperationResponses::Map([
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
@@ -533,7 +533,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							list_kind: None,
 							impl_deep_merge: true,
 						}),
-					].into_iter().collect()),
+					].into()),
 					tag: None,
 				},
 
@@ -547,12 +547,12 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
 					].into_iter().flatten().collect(),
 					path: swagger20::Path(format!("/apis/{group}/{version}{namespace_path_component}/{plural}/{{name}}/status")),
-					responses: swagger20::OperationResponses::Map(vec![
+					responses: swagger20::OperationResponses::Map([
 						(http::StatusCode::OK, swagger20::Schema {
 							description: Some("OK".to_owned()),
 							kind: swagger20::SchemaKind::Ref(swagger20::RefPath {
@@ -563,7 +563,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							list_kind: None,
 							impl_deep_merge: true,
 						}),
-					].into_iter().collect()),
+					].into()),
 					tag: None,
 				},
 
@@ -577,7 +577,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(body_parameter.clone()),
 						Some(name_parameter.clone()),
 						namespace_parameter.clone(),
@@ -612,7 +612,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						Some(body_parameter),
 						Some(name_parameter),
 						namespace_parameter.clone(),
@@ -647,7 +647,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 						kind: cr_name.clone(),
 						version: version.clone(),
 					}),
-					parameters: vec![
+					parameters: [
 						namespace_parameter,
 						Some(std::sync::Arc::new(swagger20::Parameter {
 							location: swagger20::ParameterLocation::Query,
