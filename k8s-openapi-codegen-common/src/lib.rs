@@ -2049,25 +2049,51 @@ pub fn write_operation(
 
 	writeln!(out, "{indent}    let __request = {local}http::Request::{method}(__url);")?;
 
-	let body_parameter =
-		delete_optional_parameter.as_ref()
-		.or_else(|| parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body));
-
 	write!(out, "{indent}    let __body = ")?;
-	if let Some((parameter_name, parameter_type, parameter)) = body_parameter {
-		if parameter.required {
-			if parameter_type.starts_with('&') {
-				writeln!(out, "{local}serde_json::to_vec({parameter_name}).map_err({local}RequestError::Json)?;")?;
+	let body_parameter =
+		if let Some((parameter_name, _, parameter)) = &delete_optional_parameter {
+			// In v1.25, as of v1.25.0, sending a DeleteCollection request with any request body triggers a server error.
+			// Ref: https://github.com/kubernetes/kubernetes/issues/111985
+			//
+			// This includes a request body of `{}` corresponding to a DeleteOptional with no overridden fields.
+			// This use case is common enough that we make it work by special-casing it to set an empty request body instead.
+			// This happens to be how other language's clients behave with Delete and DeleteCollection API anyway.
+			//
+			// A DeleteOptional with one or more fields set will still serialize to a request body and thus trigger a server error,
+			// but that is upstream's problem to fix.
+
+			writeln!(out, "if {parameter_name} == Default::default() {{")?;
+			writeln!(out, "{indent}        vec![]")?;
+			writeln!(out, "{indent}    }}")?;
+			writeln!(out, "{indent}    else {{")?;
+			writeln!(out, "{indent}        {local}serde_json::to_vec(&{parameter_name}).map_err({local}RequestError::Json)?")?;
+			writeln!(out, "{indent}    }};")?;
+
+			Some((parameter_name, parameter))
+		}
+		else if let Some((parameter_name, parameter_type, parameter)) = parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body) {
+			if parameter.required {
+				if parameter_type.starts_with('&') {
+					writeln!(out, "{local}serde_json::to_vec({parameter_name}).map_err({local}RequestError::Json)?;")?;
+				}
+				else {
+					writeln!(out, "{local}serde_json::to_vec(&{parameter_name}).map_err({local}RequestError::Json)?;")?;
+				}
 			}
 			else {
-				writeln!(out, "{local}serde_json::to_vec(&{parameter_name}).map_err({local}RequestError::Json)?;")?;
+				writeln!(out)?;
+				writeln!(out, "{parameter_name}.unwrap_or(Ok(vec![]), |value| {local}serde_json::to_vec(value).map_err({local}RequestError::Json))?;")?;
 			}
+
+			Some((parameter_name, parameter))
 		}
 		else {
-			writeln!(out)?;
-			writeln!(out, "{parameter_name}.unwrap_or(Ok(vec![]), |value| {local}serde_json::to_vec(value).map_err({local}RequestError::Json))?;")?;
-		}
+			writeln!(out, "vec![];")?;
 
+			None
+		};
+
+	if let Some((parameter_name, parameter)) = body_parameter {
 		let is_patch =
 			if let swagger20::SchemaKind::Ref(ref_path) = &parameter.schema.kind {
 				ref_path.path == "io.k8s.apimachinery.pkg.apis.meta.v1.Patch"
@@ -2088,9 +2114,6 @@ pub fn write_operation(
 			writeln!(out,
 				r#"{indent}    let __request = __request.header({local}http::header::CONTENT_TYPE, {local}http::header::HeaderValue::from_static("application/json"));"#)?;
 		}
-	}
-	else {
-		writeln!(out, "vec![];")?;
 	}
 
 	if operation_result_name.is_some() {

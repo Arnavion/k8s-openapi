@@ -77,7 +77,12 @@ impl StorageVersion {
         let __url = __query_pairs.finish();
 
         let __request = crate::http::Request::delete(__url);
-        let __body = crate::serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?;
+        let __body = if delete_optional == Default::default() {
+            vec![]
+        }
+        else {
+            crate::serde_json::to_vec(&delete_optional).map_err(crate::RequestError::Json)?
+        };
         let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
@@ -112,7 +117,12 @@ impl StorageVersion {
         );
 
         let __request = crate::http::Request::delete(__url);
-        let __body = crate::serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?;
+        let __body = if optional == Default::default() {
+            vec![]
+        }
+        else {
+            crate::serde_json::to_vec(&optional).map_err(crate::RequestError::Json)?
+        };
         let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
         match __request.body(__body) {
             Ok(request) => Ok((request, crate::ResponseBody::new)),
