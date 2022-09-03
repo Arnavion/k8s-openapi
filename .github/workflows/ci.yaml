@@ -22,13 +22,13 @@ jobs:
 
       matrix:
         version:
-        - '1.18'
         - '1.19'
         - '1.20'
         - '1.21'
         - '1.22'
         - '1.23'
         - '1.24'
+        - '1.25'
 
     steps:
     - uses: 'actions/checkout@v2'
