@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/v1_25/list_optional.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>list_optional.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../k8s_openapi/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../k8s_openapi/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../k8s_openapi/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+</pre><pre class="rust"><code><span class="comment">// Generated from definition io.k8s.ListOptional
+
+</span><span class="doccomment">/// Common parameters for all list operations.
+</span><span class="attribute">#[cfg(feature = <span class="string">&quot;api&quot;</span>)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+</span><span class="kw">pub struct </span>ListOptional&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the &quot;next key&quot;.
+    ///
+    /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    </span><span class="kw">pub </span>continue_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+
+    <span class="doccomment">/// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    </span><span class="kw">pub </span>field_selector: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+
+    <span class="doccomment">/// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    </span><span class="kw">pub </span>label_selector: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+
+    <span class="doccomment">/// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    </span><span class="kw">pub </span>limit: <span class="prelude-ty">Option</span>&lt;i64&gt;,
+
+    <span class="doccomment">/// resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.
+    ///
+    /// Defaults to unset
+    </span><span class="kw">pub </span>resource_version: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+
+    <span class="doccomment">/// resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.
+    ///
+    /// Defaults to unset
+    </span><span class="kw">pub </span>resource_version_match: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+
+    <span class="doccomment">/// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    </span><span class="kw">pub </span>timeout_seconds: <span class="prelude-ty">Option</span>&lt;i64&gt;,
+}
+
+<span class="attribute">#[cfg(feature = <span class="string">&quot;api&quot;</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ListOptional&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="attribute">#[doc(hidden)]
+    </span><span class="doccomment">/// Serializes this object to a [`crate::url::form_urlencoded::Serializer`]
+    ///
+    /// This function is only exposed for use by the `k8s-openapi-derive` crate and is not part of the stable public API.
+    </span><span class="kw">pub fn </span>__serialize&lt;T&gt;(
+        <span class="self">self</span>,
+        __query_pairs: <span class="kw-2">&amp;mut </span><span class="kw">crate</span>::url::form_urlencoded::Serializer&lt;<span class="lifetime">&#39;_</span>, T&gt;,
+    ) <span class="kw">where </span>T: <span class="kw">crate</span>::url::form_urlencoded::Target {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.continue_ {
+            __query_pairs.append_pair(<span class="string">&quot;continue&quot;</span>, value);
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.field_selector {
+            __query_pairs.append_pair(<span class="string">&quot;fieldSelector&quot;</span>, value);
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.label_selector {
+            __query_pairs.append_pair(<span class="string">&quot;labelSelector&quot;</span>, value);
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.limit {
+            __query_pairs.append_pair(<span class="string">&quot;limit&quot;</span>, <span class="kw-2">&amp;</span>value.to_string());
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.resource_version {
+            __query_pairs.append_pair(<span class="string">&quot;resourceVersion&quot;</span>, value);
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.resource_version_match {
+            __query_pairs.append_pair(<span class="string">&quot;resourceVersionMatch&quot;</span>, value);
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = <span class="self">self</span>.timeout_seconds {
+            __query_pairs.append_pair(<span class="string">&quot;timeoutSeconds&quot;</span>, <span class="kw-2">&amp;</span>value.to_string());
+        }
+    }
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="k8s_openapi" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (750bd1a7f 2022-09-14)" ></div></body></html>
