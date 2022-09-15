@@ -1,3 +1,34 @@
+# v0.16.0 (2022-09-15)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.25 under the `v1_25` feature.
+
+- FEATURE: All spec types now implement a deep-merge API via a `DeepMerge` trait impl with a `fn merge_from(&mut self, other: Self)` method. This is useful for builder-like operations.
+
+Corresponding Kubernetes API server versions:
+
+- v1.18.20
+- v1.19.16
+- v1.20.15
+- v1.21.14
+- v1.22.14
+- v1.23.11
+- v1.24.5
+- v1.25.1
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- BREAKING CHANGE: `#[derive(CustomResourceDefinition)]` no longer generates a list type alias. For example, when applied to `struct FooSpec`, previously the custom derive would generate `pub type FooList = k8s_openapi::List<Foo>;` It no longer does this, in accordance with the main k8s-openapi crate where such aliases were removed back in v0.7.0
+
+- FEATURE: The generated custom resource type will implement `k8s_openapi::DeepMerge` if the `impl_deep_merge` custom derive attribute is used. Note that this requires you to implement `k8s_openapi::DeepMerge` on the spec type yourself; the custom derive does not do that.
+
+---
+
 # v0.15.0 (2022-05-22)
 
 ## k8s-openapi
