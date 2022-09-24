@@ -126,14 +126,14 @@ Keep these in mind when dropping support for older versions:
 
 - [Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#available-versions)
 
-- [Azure AKS](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#list-currently-supported-versions)
+- [Azure AKS](https://learn.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#azure-portal-and-cli-versions)
 
     ```sh
     az account list-locations --query '[].name' --output tsv |
         while read -r location; do
-            (</dev/null az aks get-versions --location "$location" --query 'min(orchestrators[].orchestratorVersion)' --output tsv 2>/dev/null) & :
+            (</dev/null az aks get-versions --location "$location" --query 'orchestrators[].orchestratorVersion' --output tsv 2>/dev/null) & :
         done |
-        sort |
+        sort --version-sort |
         head -1
     ```
 
