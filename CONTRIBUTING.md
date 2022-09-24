@@ -138,3 +138,5 @@ Keep these in mind when dropping support for older versions:
     ```
 
 - [Google GKE](https://cloud.google.com/kubernetes-engine/docs/release-schedule)
+
+- [Oracle OKE](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengaboutk8sversions.htm#supportedk8sversions)
