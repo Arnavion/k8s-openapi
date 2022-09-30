@@ -31,24 +31,13 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
             }}
 
             fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
-                if v < i64::from(i32::min_value()) || v > i64::from(i32::max_value()) {{
-                    return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Signed(v), &"a 32-bit integer"));
-                }}
-
-                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-                Ok({type_name}::Int(v as i32))
+                let v = v.try_into().map_err(|_| {local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Signed(v), &"a 32-bit integer"))?;
+                Ok({type_name}::Int(v))
             }}
 
             fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
-                #[allow(clippy::cast_sign_loss)]
-                {{
-                    if v > i32::max_value() as u64 {{
-                        return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));
-                    }}
-                }}
-
-                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-                Ok({type_name}::Int(v as i32))
+                let v = v.try_into().map_err(|_| {local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"))?;
+                Ok({type_name}::Int(v))
             }}
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
