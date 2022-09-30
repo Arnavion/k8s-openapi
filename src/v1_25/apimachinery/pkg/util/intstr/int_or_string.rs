@@ -27,7 +27,7 @@ impl<'de> crate::serde::Deserialize<'de> for IntOrString {
             type Value = IntOrString;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "IntOrString")
+                formatter.write_str("IntOrString")
             }
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: crate::serde::de::Error {

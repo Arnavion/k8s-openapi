@@ -23,7 +23,7 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
             type Value = {type_name};
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
-                write!(formatter, {type_name:?})
+                formatter.write_str({type_name:?})
             }}
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: {local}serde::de::Error {{

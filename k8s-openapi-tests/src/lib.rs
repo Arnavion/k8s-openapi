@@ -483,7 +483,7 @@ mod methodstring {
 			type Value = http::Method;
 
 			fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-				write!(formatter, "an HTTP method name")
+				formatter.write_str("an HTTP method name")
 			}
 
 			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {

@@ -420,7 +420,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
             type Value = ByteString;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "a base64-encoded string")
+                formatter.write_str("a base64-encoded string")
             }
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
