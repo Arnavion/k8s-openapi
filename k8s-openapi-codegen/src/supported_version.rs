@@ -62,7 +62,7 @@ impl SupportedVersion {
 	}
 
 	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		#[allow(clippy::match_same_arms)]
+		#[allow(clippy::match_same_arms, clippy::type_complexity)]
 		let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
 			SupportedVersion::V1_18 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
@@ -109,7 +109,7 @@ impl SupportedVersion {
 			],
 		};
 
-		let special_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = &[
+		let special_fixups = &[
 			crate::fixups::special::json_ty::json_schema_props_or_array,
 			crate::fixups::special::json_ty::json_schema_props_or_bool,
 			crate::fixups::special::json_ty::json_schema_props_or_string_array,

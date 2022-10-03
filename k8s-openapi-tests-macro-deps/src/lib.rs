@@ -2,12 +2,6 @@
 
 #![deny(rust_2018_idioms, warnings)]
 #![deny(clippy::all, clippy::pedantic)]
-#![allow(
-	clippy::default_trait_access,
-	clippy::indexing_slicing,
-	clippy::must_use_candidate,
-	clippy::unseparated_literal_suffix,
-)]
 
 //! Test that the custom derive expansion compiles successfully. All third-party crates in the expansion
 //! must be referenced as the re-exports from the k8s-openapi crate, so k8s-openapi is the only required dependency.

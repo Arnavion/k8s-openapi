@@ -1,17 +1,10 @@
 #![deny(rust_2018_idioms, warnings)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
-	clippy::cognitive_complexity,
 	clippy::default_trait_access,
 	clippy::let_underscore_drop,
 	clippy::let_unit_value,
-	clippy::must_use_candidate,
-	clippy::similar_names,
-	clippy::too_many_arguments,
 	clippy::too_many_lines,
-	clippy::type_complexity,
-	clippy::unseparated_literal_suffix,
-	clippy::use_self,
 )]
 
 mod fixups;

@@ -102,6 +102,7 @@ pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Resul
 
 // This fixup extracts the common optional parameters of some operations into common types.
 pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	#[allow(clippy::type_complexity)]
 	const OPTIONALS: &[(
 		&str,
 		&str,
@@ -777,6 +778,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 
 // Define the common types for API responses as `swagger20::Type::<>Def`, and replace all references to the original types with `swagger20::Type::<>Ref` for special codegen.
 pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	#[allow(clippy::type_complexity)]
 	const TYPES: &[(&str, fn(&mut crate::swagger20::Spec) -> Result<(&'static str, crate::swagger20::Type), crate::Error>)] = &[
 		("io.k8s.CreateResponse", create_response),
 		("io.k8s.DeleteResponse", delete_and_delete_collection_response),

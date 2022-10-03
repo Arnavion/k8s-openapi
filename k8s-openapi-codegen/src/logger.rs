@@ -1,10 +1,3 @@
-// TODO:
-//
-// Fires on TASK_LOCAL_LOGGER but cannot be scoped any lower. Ref: https://github.com/tokio-rs/tokio/pull/4837
-//
-// False positive - the only usage of const is in the initializer. Ref: https://github.com/rust-lang/rust-clippy/issues/8493
-#![allow(clippy::declare_interior_mutable_const)]
-
 pub(crate) fn make_local_logger(version_name: &'static str) -> env_logger::Logger {
 	let mut builder = env_logger::Builder::new();
 	builder.format(move |buf, record| {

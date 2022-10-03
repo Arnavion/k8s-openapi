@@ -30,6 +30,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let mut impl_deep_merge = false;
 
 		for attr in &input.attrs {
+			// Clippy wants the loop body moved inside the if arm, which defeats the point of continue'ing to reduce indentation.
 			#[allow(clippy::needless_continue)]
 			{
 				if let syn::AttrStyle::Outer = attr.style {

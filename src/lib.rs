@@ -1,7 +1,6 @@
 #![warn(rust_2018_idioms)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
-    clippy::cognitive_complexity,
     clippy::default_trait_access,
     clippy::derive_partial_eq_without_eq,
     clippy::doc_markdown,
@@ -13,8 +12,6 @@
     clippy::single_match_else,
     clippy::too_many_lines,
     clippy::type_complexity,
-    clippy::upper_case_acronyms,
-    clippy::use_self,
     rustdoc::bare_urls,
 )]
 

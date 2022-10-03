@@ -1,20 +1,11 @@
 #![warn(rust_2018_idioms)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
-	clippy::cognitive_complexity,
 	clippy::default_trait_access,
-	clippy::doc_markdown,
-	clippy::let_and_return,
 	clippy::missing_errors_doc,
-	clippy::missing_panics_doc,
 	clippy::must_use_candidate,
-	clippy::similar_names,
-	clippy::struct_excessive_bools,
 	clippy::too_many_arguments,
 	clippy::too_many_lines,
-	clippy::type_complexity,
-	clippy::unseparated_literal_suffix,
-	clippy::use_self,
 )]
 
 //! This crate contains common code for the [`k8s-openapi` code generator](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-codegen)
@@ -420,10 +411,6 @@ pub fn run(
 								components.next(),
 							);
 
-							// TODO:
-							// The clippy lint doesn't take into account that the order of the arms is significant.
-							// Ref: https://github.com/rust-lang/rust-clippy/issues/860
-							#[allow(clippy::match_same_arms)]
 							let (url_path_segment_, scope_, url_path_segment_and_scope) = match components {
 								("{name}", Some(url_path_segment), Some("{namespace}"), Some("namespaces")) =>
 									(
@@ -1253,7 +1240,7 @@ fn evaluate_trait_bound(
 	mut f: impl FnMut(&swagger20::SchemaKind, bool) -> Result<bool, Error>,
 ) -> Result<bool, Error> {
 	fn evaluate_trait_bound_inner<'a>(
-		#[allow(clippy::ptr_arg)]
+		#[allow(clippy::ptr_arg)] // False positive. Clippy wants this to be `&SchemaKind` but we use Cow-specific operations (`.clone()`).
 		kind: &std::borrow::Cow<'a, swagger20::SchemaKind>,
 		required: bool,
 		array_follows_elements: bool,
@@ -1290,7 +1277,6 @@ fn evaluate_trait_bound(
 			},
 
 			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => {
-				#[allow(clippy::option_if_let_else)]
 				let trait_bound =
 					if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.clone())) {
 						let mut visited = visited.clone();

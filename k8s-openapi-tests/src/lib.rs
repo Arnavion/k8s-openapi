@@ -4,13 +4,10 @@
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
 	clippy::default_trait_access,
-	clippy::indexing_slicing,
 	clippy::let_and_return,
 	clippy::let_underscore_drop,
 	clippy::let_unit_value,
-	clippy::must_use_candidate,
 	clippy::too_many_lines,
-	clippy::unseparated_literal_suffix,
 )]
 
 use std::{future::Future, pin::Pin, task::{Context, Poll}};

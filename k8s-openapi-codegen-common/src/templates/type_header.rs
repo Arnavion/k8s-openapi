@@ -43,6 +43,8 @@ pub(crate) fn generate(
 	Ok(())
 }
 
+// Clippy thinks a struct with lots of bool fields is trying to emulate an enum. This struct is not doing that.
+#[allow(clippy::struct_excessive_bools)]
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct Derives {
 	pub(crate) clone: bool,
