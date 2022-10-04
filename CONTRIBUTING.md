@@ -93,6 +93,8 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 1. `/.github/workflows/ci.yaml`: Add a new `strategy` for the new version.
 
+1. `/devenv.sh`: Update `max_version`.
+
 
 # To make a new crate release
 
