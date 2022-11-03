@@ -21,7 +21,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.18", doc = "v1_18")]
 #![cfg_attr(k8s_openapi_enabled_version="1.19", doc = "v1_19")]
 #![cfg_attr(k8s_openapi_enabled_version="1.20", doc = "v1_20")]
 #![cfg_attr(k8s_openapi_enabled_version="1.21", doc = "v1_21")]
@@ -705,9 +704,6 @@ pub mod percent_encoding2 {
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
-
-#[cfg(k8s_openapi_enabled_version="1.18")] mod v1_18;
-#[cfg(k8s_openapi_enabled_version="1.18")] pub use self::v1_18::*;
 
 #[cfg(k8s_openapi_enabled_version="1.19")] mod v1_19;
 #[cfg(k8s_openapi_enabled_version="1.19")] pub use self::v1_19::*;
