@@ -627,7 +627,7 @@ impl<T> ResponseBody<T> where T: Response {
 
     /// Try to parse all the data buffered so far into a response type.
     pub fn parse(&mut self) -> Result<T, ResponseError> {
-        match T::try_from_parts(self.status_code, &*self.buf) {
+        match T::try_from_parts(self.status_code, &self.buf) {
             Ok((result, read)) => {
                 self.advance(read);
                 Ok(result)
@@ -655,7 +655,7 @@ impl<T> std::ops::Deref for ResponseBody<T> {
     type Target = [u8];
 
     fn deref(&self) -> &Self::Target {
-        &*self.buf
+        &self.buf
     }
 }
 

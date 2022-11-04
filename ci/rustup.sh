@@ -5,7 +5,7 @@ set -euo pipefail
 # CI VMs have rustup and stable pre-installed, but they're not necessarily the latest.
 # So expect them to exist but update them.
 
-export RUSTUP_TOOLCHAIN='stable'
+export RUSTUP_TOOLCHAIN="${RUSTUP_TOOLCHAIN:-stable}"
 
 rustup self update
 

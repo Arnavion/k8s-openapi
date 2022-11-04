@@ -194,7 +194,7 @@ async fn run(
 		let spec_url: url::Url = spec_url.parse()?;
 		if spec_url.scheme() == "file" {
 			let spec_path = spec_url.to_file_path().map_err(|()| "not a file path")?;
-			let spec_file = std::fs::File::open(&spec_path)?;
+			let spec_file = std::fs::File::open(spec_path)?;
 			let spec_file = std::io::BufReader::new(spec_file);
 			serde::Deserialize::deserialize(&mut serde_json::Deserializer::from_reader(spec_file))?
 		}
