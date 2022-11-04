@@ -30,15 +30,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 		let mut impl_deep_merge = false;
 
 		for attr in &input.attrs {
-			// Clippy wants the loop body moved inside the if arm, which defeats the point of continue'ing to reduce indentation.
-			#[allow(clippy::needless_continue)]
-			{
-				if let syn::AttrStyle::Outer = attr.style {
-				}
-				else {
-					continue;
-				}
-			}
+			let syn::AttrStyle::Outer = attr.style else { continue; };
 
 			if !attr.path.is_ident("custom_resource_definition") {
 				continue;
@@ -53,36 +45,32 @@ impl super::CustomDerive for CustomResourceDefinition {
 				let meta: &dyn quote::ToTokens = match &meta {
 					syn::NestedMeta::Meta(syn::Meta::NameValue(meta)) =>
 						if meta.path.is_ident("group") {
-							if let syn::Lit::Str(lit) = &meta.lit {
-								group = Some(lit.value());
-								continue;
-							}
-
-							return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
+							let syn::Lit::Str(lit) = &meta.lit else {
+								return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
+							};
+							group = Some(lit.value());
+							continue;
 						}
 						else if meta.path.is_ident("version") {
-							if let syn::Lit::Str(lit) = &meta.lit {
-								version = Some(lit.value());
-								continue;
-							}
-
-							return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
+							let syn::Lit::Str(lit) = &meta.lit else {
+								return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
+							};
+							version = Some(lit.value());
+							continue;
 						}
 						else if meta.path.is_ident("plural") {
-							if let syn::Lit::Str(lit) = &meta.lit {
-								plural = Some(lit.value());
-								continue;
-							}
-
-							return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
+							let syn::Lit::Str(lit) = &meta.lit else {
+								return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
+							};
+							plural = Some(lit.value());
+							continue;
 						}
 						else if meta.path.is_ident("has_subresources") {
-							if let syn::Lit::Str(lit) = &meta.lit {
-								has_subresources = Some(lit.value());
-								continue;
-							}
-
-							return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
+							let syn::Lit::Str(lit) = &meta.lit else {
+								return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
+							};
+							has_subresources = Some(lit.value());
+							continue;
 						}
 						else {
 							meta

@@ -70,19 +70,14 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 			return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&path), &"path like `#/definitions/$definitionName`"));
 		}
 
-		let ref_path = if let Some(ref_path) = parts.next() {
-			ref_path.to_string()
-		}
-		else {
-			return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&path), &"path like `#/definitions/$definitionName`"));
-		};
+		let ref_path = parts.next().ok_or_else(|| serde::de::Error::invalid_value(serde::de::Unexpected::Str(&path), &"path like `#/definitions/$definitionName`"))?;
 
 		if parts.next().is_some() {
 			return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&path), &"path like `#/definitions/$definitionName`"));
 		}
 
 		Ok(RefPath {
-			path: ref_path,
+			path: ref_path.to_string(),
 			can_be_default: None,
 		})
 	}
