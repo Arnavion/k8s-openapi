@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetStatus {
     /// Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is a beta field and enabled/disabled by StatefulSetMinReadySeconds feature gate.
-    pub available_replicas: i32,
+    pub available_replicas: Option<i32>,
 
     /// collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     pub collision_count: Option<i32>,
@@ -136,7 +136,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetStatus {
                 }
 
                 Ok(StatefulSetStatus {
-                    available_replicas: value_available_replicas.unwrap_or_default(),
+                    available_replicas: value_available_replicas,
                     collision_count: value_collision_count,
                     conditions: value_conditions,
                     current_replicas: value_current_replicas,
@@ -173,7 +173,8 @@ impl crate::serde::Serialize for StatefulSetStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetStatus",
-            2 +
+            1 +
+            self.available_replicas.as_ref().map_or(0, |_| 1) +
             self.collision_count.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.current_replicas.as_ref().map_or(0, |_| 1) +
@@ -183,7 +184,9 @@ impl crate::serde::Serialize for StatefulSetStatus {
             self.update_revision.as_ref().map_or(0, |_| 1) +
             self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
-        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", &self.available_replicas)?;
+        if let Some(value) = &self.available_replicas {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
+        }
         if let Some(value) = &self.collision_count {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
@@ -351,7 +354,6 @@ impl crate::schemars::JsonSchema for StatefulSetStatus {
                     ),
                 ].into(),
                 required: [
-                    "availableReplicas".to_owned(),
                     "replicas".to_owned(),
                 ].into(),
                 ..Default::default()
