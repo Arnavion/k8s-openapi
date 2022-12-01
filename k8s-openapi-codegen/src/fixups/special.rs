@@ -11,8 +11,11 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrArray"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(_))) {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrArray(namespace));
+				if !matches!(
+					definition.kind,
+					crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Array)),
+				) {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Array));
 					found = true;
 				}
 			}
@@ -33,8 +36,11 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrBool"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(_))) {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrBool(namespace));
+				if !matches!(
+					definition.kind,
+					crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Bool)),
+				) {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Bool));
 					found = true;
 				}
 			}
@@ -55,8 +61,11 @@ pub(crate) mod json_ty {
 			let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrStringArray"));
 
 			if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-				if !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(_))) {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOrStringArray(namespace));
+				if !matches!(
+					definition.kind,
+					crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::StringArray)),
+				) {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::StringArray));
 					found = true;
 				}
 			}
@@ -606,16 +615,14 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 			spec.definitions.get(&crate::swagger20::DefinitionPath(item_ref_path.path.clone()))
 			.ok_or_else(|| format!("definition {definition_path} looks like a list but its item's definition does not exist in the spec"))?;
 
-		let item_kubernetes_group_kind_version = match &item_schema.kubernetes_group_kind_versions[..] {
-			[group_kind_version] => group_kind_version,
-			_ => return Err(format!(
-				"definition {definition_path} looks like a list but its item's definition does not have a single group-version-kind").into()),
+		let [item_kubernetes_group_kind_version] = &item_schema.kubernetes_group_kind_versions[..] else {
+			return Err(format!(
+				"definition {definition_path} looks like a list but its item's definition does not have a single group-version-kind").into());
 		};
 
-		let list_kubernetes_group_kind_version = match &definition.kubernetes_group_kind_versions[..] {
-			[group_kind_version] => group_kind_version,
-			_ => return Err(format!(
-				"definition {definition_path} looks like a list but it does not have a single group-version-kind").into()),
+		let [list_kubernetes_group_kind_version] = &definition.kubernetes_group_kind_versions[..] else {
+			return Err(format!(
+				"definition {definition_path} looks like a list but it does not have a single group-version-kind").into());
 		};
 
 		let item_gkv_corresponds_to_list_gkv =

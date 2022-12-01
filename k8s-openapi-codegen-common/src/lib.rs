@@ -596,16 +596,11 @@ pub fn run(
 			run_result.num_generated_structs += 1;
 		},
 
-		swagger20::SchemaKind::Ty(ty @ (
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_)
-		)) => {
-			let (namespace, json_schema_props_or) = match ty {
-				swagger20::Type::JsonSchemaPropsOrArray(namespace) => (namespace, templates::json_schema_props_or::Or::Array),
-				swagger20::Type::JsonSchemaPropsOrBool(namespace) => (namespace, templates::json_schema_props_or::Or::Bool),
-				swagger20::Type::JsonSchemaPropsOrStringArray(namespace) => (namespace, templates::json_schema_props_or::Or::StringArray),
-				_ => unreachable!("unexpected JSONSchemaPropsOr* variant"),
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(namespace, json_schema_props_or)) => {
+			let json_schema_props_or = match json_schema_props_or {
+				swagger20::JsonSchemaPropsOr::Array => templates::json_schema_props_or::Or::Array,
+				swagger20::JsonSchemaPropsOr::Bool => templates::json_schema_props_or::Or::Bool,
+				swagger20::JsonSchemaPropsOr::StringArray => templates::json_schema_props_or::Or::StringArray,
 			};
 
 			let json_schema_props_type_name =
@@ -783,23 +778,13 @@ pub fn run(
 		swagger20::SchemaKind::Ty(swagger20::Type::ListRef { .. }) => return Err(format!("definition {definition_path} is a ListRef").into()),
 
 		swagger20::SchemaKind::Ty(ty @ (
-			swagger20::Type::CreateOptional(_) |
-			swagger20::Type::DeleteOptional(_) |
-			swagger20::Type::ListOptional(_) |
-			swagger20::Type::PatchOptional(_) |
-			swagger20::Type::ReplaceOptional(_) |
-			swagger20::Type::WatchOptional(_)
+			swagger20::Type::CreateOptional(properties) |
+			swagger20::Type::DeleteOptional(properties) |
+			swagger20::Type::ListOptional(properties) |
+			swagger20::Type::PatchOptional(properties) |
+			swagger20::Type::ReplaceOptional(properties) |
+			swagger20::Type::WatchOptional(properties)
 		)) => {
-			let properties = match ty {
-				swagger20::Type::CreateOptional(properties) |
-				swagger20::Type::DeleteOptional(properties) |
-				swagger20::Type::ListOptional(properties) |
-				swagger20::Type::PatchOptional(properties) |
-				swagger20::Type::ReplaceOptional(properties) |
-				swagger20::Type::WatchOptional(properties) => properties,
-				_ => unreachable!("unexpected optional params type"),
-			};
-
 			let template_properties = {
 				let mut result = Vec::with_capacity(properties.len());
 
@@ -1011,9 +996,7 @@ pub fn run(
 				swagger20::Type::Number { .. } |
 				swagger20::Type::Object { .. } |
 				swagger20::Type::String { .. } |
-				swagger20::Type::JsonSchemaPropsOrArray(_) |
-				swagger20::Type::JsonSchemaPropsOrBool(_) |
-				swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+				swagger20::Type::JsonSchemaPropsOr(_, _) |
 				swagger20::Type::Patch
 			) => {
 				templates::impl_schema::generate(
@@ -1124,9 +1107,7 @@ fn get_derives(
 
 		// Enums without a default value
 		swagger20::SchemaKind::Ty(
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+			swagger20::Type::JsonSchemaPropsOr(_, _) |
 			swagger20::Type::Patch |
 			swagger20::Type::WatchEvent(_) |
 			swagger20::Type::CreateResponse |
@@ -1215,9 +1196,7 @@ fn is_default(
 
 		// Enums without a default value
 		swagger20::SchemaKind::Ty(
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_) |
+			swagger20::Type::JsonSchemaPropsOr(_, _) |
 			swagger20::Type::Patch |
 			swagger20::Type::WatchEvent(_) |
 			swagger20::Type::CreateResponse |
@@ -1307,11 +1286,7 @@ fn evaluate_trait_bound(
 					f,
 				),
 
-			swagger20::SchemaKind::Ty(
-				swagger20::Type::JsonSchemaPropsOrArray(namespace) |
-				swagger20::Type::JsonSchemaPropsOrBool(namespace) |
-				swagger20::Type::JsonSchemaPropsOrStringArray(namespace)
-			) => {
+			swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(namespace, _)) => {
 				let json_schema_props_ref_path = swagger20::RefPath {
 					path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaProps"),
 					can_be_default: None,
@@ -1532,11 +1507,7 @@ fn get_rust_borrow_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_)
-		) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(_, _)) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 
@@ -1610,11 +1581,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
-		swagger20::SchemaKind::Ty(
-			swagger20::Type::JsonSchemaPropsOrArray(_) |
-			swagger20::Type::JsonSchemaPropsOrBool(_) |
-			swagger20::Type::JsonSchemaPropsOrStringArray(_)
-		) => Err("JSON schema types not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(_, _)) => Err("JSON schema types not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 

@@ -186,7 +186,7 @@ fn gen_type(
 			writeln!(out,
 				"{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?,
 
-		swagger20::Type::JsonSchemaPropsOrArray(v) => {
+		swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Array) => {
 			let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
 				path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
 				can_be_default: None,
@@ -213,7 +213,7 @@ fn gen_type(
 			writeln!(out, "{indent}}})),")?;
 		}
 
-		swagger20::Type::JsonSchemaPropsOrBool(v) => {
+		swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Bool) => {
 			let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
 				path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
 				can_be_default: None,
@@ -235,7 +235,7 @@ fn gen_type(
 			writeln!(out, "{indent}}})),")?;
 		}
 
-		swagger20::Type::JsonSchemaPropsOrStringArray(v) => {
+		swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::StringArray) => {
 			let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
 				path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
 				can_be_default: None,

@@ -92,11 +92,10 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			let responses: Result<_, _> =
 				value.responses.into_iter()
 				.filter_map(|(status_code_str, response)| {
-					let status_code = match status_code_str.parse() {
-						Ok(status_code) => status_code,
-						Err(_) => return Some(Err(serde::de::Error::invalid_value(
+					let Ok(status_code) = status_code_str.parse() else {
+						return Some(Err(serde::de::Error::invalid_value(
 							serde::de::Unexpected::Str(&status_code_str),
-							&"string representation of an HTTP status code"))),
+							&"string representation of an HTTP status code")));
 					};
 					let schema = response.schema?;
 					Some(Ok((status_code, schema)))

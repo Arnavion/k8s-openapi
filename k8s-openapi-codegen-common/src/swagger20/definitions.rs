@@ -204,9 +204,8 @@ pub enum Type {
 
 	// Special types that need alterative codegen
 	IntOrString,
-	JsonSchemaPropsOrArray(&'static str),
-	JsonSchemaPropsOrBool(&'static str),
-	JsonSchemaPropsOrStringArray(&'static str),
+	JsonSchemaPropsOr(&'static str, JsonSchemaPropsOr),
+
 	Patch,
 	WatchEvent(RefPath),
 
@@ -229,6 +228,13 @@ pub enum Type {
 	PatchResponse,
 	ReplaceResponse,
 	WatchResponse,
+}
+
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+pub enum JsonSchemaPropsOr {
+	Array,
+	Bool,
+	StringArray,
 }
 
 impl Type {
