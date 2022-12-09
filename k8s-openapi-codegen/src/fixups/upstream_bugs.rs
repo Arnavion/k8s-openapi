@@ -111,3 +111,63 @@ pub(crate) mod optional_properties {
 		Err("never applied ContainerImage optional properties override".into())
 	}
 }
+
+// The spec says that this property is optional, but it's required.
+//
+// Override it to be required.
+pub(crate) mod required_properties {
+	// `ValidatingAdmissionPolicyBindingList::items`
+	pub(crate) fn validating_admission_policy_binding_list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingList".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("items".to_string())) {
+					if !property.1 {
+						property.1 = true;
+						return Ok(());
+					}
+				}
+			}
+		}
+
+		Err("never applied ValidatingAdmissionPolicyBindingList required properties override".into())
+	}
+
+	// `ValidatingAdmissionPolicyList::items`
+	pub(crate) fn validating_admission_policy_list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyList".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("items".to_string())) {
+					if !property.1 {
+						property.1 = true;
+						return Ok(());
+					}
+				}
+			}
+		}
+
+		Err("never applied ValidatingAdmissionPolicyList required properties override".into())
+	}
+}
+
+/// `Status` has extra group-version-kind entries than the original `"":v1:Status` that cause it to not be detected as a `Resource`.
+/// Remove the extras.
+pub(crate) fn status_extra_gvk(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
+	if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+		if definition.kubernetes_group_kind_versions.len() > 1 {
+			#[allow(clippy::comparison_to_empty)]
+			definition.kubernetes_group_kind_versions.retain(|gvk| gvk.group == "" && gvk.kind == "Status" && gvk.version == "v1");
+			if definition.kubernetes_group_kind_versions.len() == 1 {
+				return Ok(());
+			}
+
+			return Err(format!(
+				"Status extra group-version-kinds override did not retain the expected group-version-kind: {:?}",
+				definition.kubernetes_group_kind_versions).into());
+		}
+	}
+
+	Err("never applied Status extra group-version-kinds override".into())
+}

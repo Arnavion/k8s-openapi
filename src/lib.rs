@@ -29,6 +29,7 @@
 #![cfg_attr(k8s_openapi_enabled_version="1.23", doc = "v1_23")]
 #![cfg_attr(k8s_openapi_enabled_version="1.24", doc = "v1_24")]
 #![cfg_attr(k8s_openapi_enabled_version="1.25", doc = "v1_25")]
+#![cfg_attr(k8s_openapi_enabled_version="1.26", doc = "v1_26")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -728,5 +729,8 @@ pub mod percent_encoding2 {
 
 #[cfg(k8s_openapi_enabled_version="1.25")] mod v1_25;
 #[cfg(k8s_openapi_enabled_version="1.25")] pub use self::v1_25::*;
+
+#[cfg(k8s_openapi_enabled_version="1.26")] mod v1_26;
+#[cfg(k8s_openapi_enabled_version="1.26")] pub use self::v1_26::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
