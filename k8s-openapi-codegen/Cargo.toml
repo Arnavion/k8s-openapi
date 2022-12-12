@@ -6,7 +6,7 @@ publish = false
 edition = "2021"
 
 [dependencies]
-clap = { version = "3", default-features = false, features = [
+clap = { version = "4", default-features = false, features = [
 	"derive", # for #[derive(clap::Parser)]
 	"std", # "`std` feature is currently required to build `clap`"
 ] }

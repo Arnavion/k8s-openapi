@@ -135,6 +135,7 @@ struct Options {
 	versions: Vec<RequestedVersion>,
 }
 
+#[derive(Clone)]
 struct RequestedVersion {
 	version: supported_version::SupportedVersion,
 	overriden_spec_url: Option<String>,
