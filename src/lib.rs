@@ -21,7 +21,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.19", doc = "v1_19")]
 #![cfg_attr(k8s_openapi_enabled_version="1.20", doc = "v1_20")]
 #![cfg_attr(k8s_openapi_enabled_version="1.21", doc = "v1_21")]
 #![cfg_attr(k8s_openapi_enabled_version="1.22", doc = "v1_22")]
@@ -292,9 +291,9 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.19 or lower is selected.
-//!      k8s_openapi::k8s_if_le_1_19! {
-//!          compile_error!("This crate requires the v1_20 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.20 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_20! {
+//!          compile_error!("This crate requires the v1_21 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
 //!
 //!      ...
@@ -704,9 +703,6 @@ pub mod percent_encoding2 {
         .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
         .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
 }
-
-#[cfg(k8s_openapi_enabled_version="1.19")] mod v1_19;
-#[cfg(k8s_openapi_enabled_version="1.19")] pub use self::v1_19::*;
 
 #[cfg(k8s_openapi_enabled_version="1.20")] mod v1_20;
 #[cfg(k8s_openapi_enabled_version="1.20")] pub use self::v1_20::*;

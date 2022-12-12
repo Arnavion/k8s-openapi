@@ -1,5 +1,4 @@
 pub(crate) const ALL: &[SupportedVersion] = &[
-	SupportedVersion::V1_19,
 	SupportedVersion::V1_20,
 	SupportedVersion::V1_21,
 	SupportedVersion::V1_22,
@@ -11,7 +10,6 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum SupportedVersion {
-	V1_19,
 	V1_20,
 	V1_21,
 	V1_22,
@@ -24,7 +22,6 @@ pub(crate) enum SupportedVersion {
 impl SupportedVersion {
 	pub(crate) fn name(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_19 => "1.19",
 			SupportedVersion::V1_20 => "1.20",
 			SupportedVersion::V1_21 => "1.21",
 			SupportedVersion::V1_22 => "1.22",
@@ -37,7 +34,6 @@ impl SupportedVersion {
 
 	pub(crate) fn mod_root(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_19 => "v1_19",
 			SupportedVersion::V1_20 => "v1_20",
 			SupportedVersion::V1_21 => "v1_21",
 			SupportedVersion::V1_22 => "v1_22",
@@ -50,7 +46,6 @@ impl SupportedVersion {
 
 	pub(crate) fn spec_url(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_19 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.19.16/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_20 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.20.15/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_21 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.21.14/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_22 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.22.17/api/openapi-spec/swagger.json",
@@ -64,12 +59,6 @@ impl SupportedVersion {
 	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		#[allow(clippy::match_same_arms, clippy::type_complexity)]
 		let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
-			SupportedVersion::V1_19 => &[
-				crate::fixups::upstream_bugs::connect_options_gvk,
-				crate::fixups::upstream_bugs::optional_properties::containerimage,
-				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
-			],
-
 			SupportedVersion::V1_20 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
