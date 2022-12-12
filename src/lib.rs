@@ -420,7 +420,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
             }
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
-                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))
+                Ok(ByteString(base64::decode(v).map_err(serde::de::Error::custom)?))
             }
         }
 
@@ -430,7 +430,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
 
 impl serde::Serialize for ByteString {
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {
-        base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)
+        base64::encode(&self.0).serialize(serializer)
     }
 }
 
