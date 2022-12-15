@@ -27,16 +27,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             In case your library crate does not directly depend on k8s-openapi, add a dev-dependency on k8s-openapi and enable the corresponding feature in it.\n\
             \n\
             Alternatively, when running commands that do not build dev dependencies such as `cargo check` and `cargo doc`, you can set the `K8S_OPENAPI_ENABLED_VERSION` \
-            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`.\
+            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`.\n\
             \n\
             Library crates *must not* enable any features in their direct dependency on k8s-openapi, only in their dev-dependency. \
             The choice of which Kubernetes version to support should be left to the final binary crate, so only binary crates should enable a specific feature. \
             If library crates also enabled features, it could cause multiple features to be enabled simultaneously, which k8s-openapi does not support.\n\
             \n\
             If your library crate only supports a single specific version or a specific range of versions of Kubernetes, \
-            please use the k8s_* version-specific macros to emit different code based on which feature gets enabled in the end.\
+            please use the `k8s_if_*` version-specific macros or a build script to emit different code based on which feature gets enabled in the end.\n\
             \n\
-            See the library docs for more details.
+            If you believe you *have* enabled a version feature and should not be seeing this error, check your Cargo.lock or run `cargo tree -i k8s-openapi` \
+            to ensure that this version of k8s-openapi is the only one being used in your project.\n\
+            \n\
+            See the k8s-openapi docs for more details.
         ");
         if let Some(v2) = enabled_versions.next() {
             panic!(
