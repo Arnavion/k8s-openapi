@@ -261,15 +261,25 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //! k8s-openapi = { version = "...", features = ["v1_50"] }
 //! ```
 //!
-//! However, commands like `cargo check` and `cargo doc` do not build dev dependencies, so they would not enable the feature and would fail to build.
-//! One way to resolve this is to add a feature to your library that enables one of the k8s-openapi `v1_*` features and is used only when running such commands.
+//! However, commands like `cargo check` and `cargo doc` do not build dev dependencies, so they will not enable the feature and will fail to build. There are two ways
+//! you can resolve this:
 //!
-//! ```toml
-//! [features]
-//! __check = ["k8s-openapi/v1_50"]   # This feature is used internally for `cargo check` and `cargo doc`
-//! ```
+//! 1. Add a feature to your library that enables one of the k8s-openapi `v1_*` features, and then remember to enable this feature when running such commands.
 //!
-//! Another way is to define the `K8S_OPENAPI_ENABLED_VERSION` env var on the command, such as `K8S_OPENAPI_ENABLED_VERSION=1.50 cargo check`.
+//!    ```toml
+//!    [features]
+//!    __check = ["k8s-openapi/v1_50"]
+//!    ```
+//!
+//!    ```sh
+//!    $ cargo check --features __check
+//!    ```
+//!
+//! 1. Define the `K8S_OPENAPI_ENABLED_VERSION` env var when running such commands:
+//!
+//!    ```sh
+//!    $ K8S_OPENAPI_ENABLED_VERSION=1.50 cargo check
+//!    ```
 //!
 //!
 //! # Conditional compilation
