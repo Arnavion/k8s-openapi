@@ -429,12 +429,20 @@ impl<'de> serde::Deserialize<'de> for ByteString {
                 formatter.write_str("a base64-encoded string")
             }
 
+            fn visit_none<E>(self) -> Result<Self::Value, E> where E: serde::de::Error {
+                Ok(ByteString(vec![]))
+            }
+
+            fn visit_some<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {
+                deserializer.deserialize_str(self)
+            }
+
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                 Ok(ByteString(base64::decode(v).map_err(serde::de::Error::custom)?))
             }
         }
 
-        deserializer.deserialize_str(Visitor)
+        deserializer.deserialize_option(Visitor)
     }
 }
 
