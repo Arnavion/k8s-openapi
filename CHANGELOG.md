@@ -1,3 +1,24 @@
+# v0.17.0 (2023-01-04)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.26 under the `v1_26` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.18 and 1.19.
+
+- FEATURE: Allow deserializing non-optional `ByteString`s from JSON `null`. The API server is known to allow these `null`s in the `ConfigMap::binary_data` and `Secret::data` maps. The deserialization results in an empty `ByteString`, to match the behavior of the API server when given a `null` value in the `ConfigMap::data` map.
+
+Corresponding Kubernetes API server versions:
+
+- v1.20.15
+- v1.21.14
+- v1.22.17
+- v1.23.15
+- v1.24.9
+- v1.25.5
+- v1.26.0
+
+
 # v0.16.0 (2022-09-15)
 
 ## k8s-openapi
