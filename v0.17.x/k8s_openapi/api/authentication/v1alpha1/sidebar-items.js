@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["SelfSubjectReview","SelfSubjectReview contains the user information that the kube-apiserver has about the user making this request. When using impersonation, users will receive the user info of the user being impersonated."],["SelfSubjectReviewStatus","SelfSubjectReviewStatus is filled by the kube-apiserver and sent back to a user."]]};
