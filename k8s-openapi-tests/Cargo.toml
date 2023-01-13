@@ -11,8 +11,8 @@ include = [
 ]
 
 [dependencies]
-base64 = { version = "0.20", default-features = false, features = [
-	"alloc", # for base64::decode and base64::encode
+base64 = { version = "0.21", default-features = false, features = [
+	"alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
 dirs = { version = "4", default-features = false }
 futures-core = { version = "0.3", default-features = false }

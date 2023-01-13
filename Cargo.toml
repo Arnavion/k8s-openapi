@@ -28,8 +28,8 @@ include = [
 links = "k8s-openapi-0.17.0"
 
 [dependencies]
-base64 = { version = "0.20", default-features = false, features = [
-	"alloc", # for base64::decode and base64::encode
+base64 = { version = "0.21", default-features = false, features = [
+	"alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
 bytes = { version = "1", default-features = false}
 chrono = { version = "0.4.1", default-features = false, features = [

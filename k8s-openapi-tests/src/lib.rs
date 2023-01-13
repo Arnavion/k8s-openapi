@@ -87,7 +87,9 @@ impl Client {
 			let ca_certificate = {
 				let ca_cert_pem = match certificate_authority {
 					CertificateAuthority::File(path) => std::fs::read(path).expect("couldn't read CA certificate file"),
-					CertificateAuthority::Inline(data) => base64::decode(data).expect("couldn't parse CA certificate data"),
+					CertificateAuthority::Inline(data) =>
+						base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
+						.expect("couldn't parse CA certificate data"),
 				};
 				let ca_cert = reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate");
 				ca_cert
@@ -114,13 +116,17 @@ impl Client {
 
 				let public_key_pem = match client_certificate {
 					ClientCertificate::File(path) => std::fs::read(path).expect("couldn't read client certificate file"),
-					ClientCertificate::Inline(data) => base64::decode(data).expect("couldn't parse client certificate data"),
+					ClientCertificate::Inline(data) =>
+						base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
+						.expect("couldn't parse client certificate data"),
 				};
 				let public_key = openssl::x509::X509::from_pem(&public_key_pem).expect("couldn't parse client certificate data");
 
 				let private_key_pem = match client_key {
 					ClientKey::File(path) => std::fs::read(path).expect("couldn't read client key file"),
-					ClientKey::Inline(data) => base64::decode(data).expect("couldn't parse client key data"),
+					ClientKey::Inline(data) =>
+						base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
+						.expect("couldn't parse client key data"),
 				};
 				let private_key = openssl::pkey::PKey::private_key_from_pem(&private_key_pem).expect("couldn't parse client key data");
 
