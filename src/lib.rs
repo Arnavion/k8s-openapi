@@ -412,317 +412,33 @@ pub use serde_value;
 #[cfg(feature = "api")]
 pub use url;
 
-/// A wrapper around a list of bytes.
-///
-/// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.
-#[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
-pub struct ByteString(pub Vec<u8>);
-
-impl<'de> serde::Deserialize<'de> for ByteString {
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {
-        struct Visitor;
-
-        impl<'de> serde::de::Visitor<'de> for Visitor {
-            type Value = ByteString;
-
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("a base64-encoded string")
-            }
-
-            fn visit_none<E>(self) -> Result<Self::Value, E> where E: serde::de::Error {
-                Ok(ByteString(vec![]))
-            }
-
-            fn visit_some<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {
-                deserializer.deserialize_str(self)
-            }
-
-            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
-                let v = base64::Engine::decode(&base64::engine::general_purpose::STANDARD, v).map_err(serde::de::Error::custom)?;
-                Ok(ByteString(v))
-            }
-        }
-
-        deserializer.deserialize_option(Visitor)
-    }
-}
-
-impl serde::Serialize for ByteString {
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {
-        let s = base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &self.0);
-        s.serialize(serializer)
-    }
-}
-
-/// A trait applied to all Kubernetes resources.
-pub trait Resource {
-    /// The API version of the resource. This is a composite of [`Resource::GROUP`] and [`Resource::VERSION`] (eg `"apiextensions.k8s.io/v1beta1"`)
-    /// or just the version for resources without a group (eg `"v1"`).
-    ///
-    /// This is the string used in the `apiVersion` field of the resource's serialized form.
-    const API_VERSION: &'static str;
-
-    /// The group of the resource, or the empty string if the resource doesn't have a group.
-    const GROUP: &'static str;
-
-    /// The kind of the resource.
-    ///
-    /// This is the string used in the `kind` field of the resource's serialized form.
-    const KIND: &'static str;
-
-    /// The version of the resource.
-    const VERSION: &'static str;
-
-    /// The URL path segment used to construct URLs related to this resource.
-    ///
-    /// For cluster- and namespaced-scoped resources, this is the plural name of the resource that is followed by the resource name.
-    /// For example, [`api::core::v1::Pod`]'s value is `"pods"` and its URLs look like `.../pods/{name}`.
-    ///
-    /// For subresources, this is the subresource name that comes after the parent resource's name.
-    /// For example, [`api::authentication::v1::TokenRequest`]'s value is `"token"`, and its URLs look like `.../serviceaccounts/{name}/token`.
-    const URL_PATH_SEGMENT: &'static str;
-
-    /// Indicates whether the resource is namespace-scoped or cluster-scoped or a subresource.
-    ///
-    /// If you need to restrict some generic code to resources of a specific scope, use this associated type to create a bound on the generic.
-    /// For example, `fn foo<T: k8s_openapi::Resource<Scope = k8s_openapi::ClusterResourceScope>>() { }` can only be called with cluster-scoped resources.
-    type Scope: ResourceScope;
-}
-
-/// A trait applied to all Kubernetes resources that can be part of a corresponding list.
-pub trait ListableResource: Resource {
-    /// The kind of the list type of the resource.
-    ///
-    /// This is the string used in the `kind` field of the list type's serialized form.
-    const LIST_KIND: &'static str;
-}
-
-/// A trait applied to all Kubernetes resources that have metadata.
-pub trait Metadata: Resource {
-    /// The type of the metadata object.
-    type Ty;
-
-    /// Gets a reference to the metadata of this resource value.
-    fn metadata(&self) -> &<Self as Metadata>::Ty;
-
-    /// Gets a mutable reference to the metadata of this resource value.
-    fn metadata_mut(&mut self) -> &mut<Self as Metadata>::Ty;
-}
-
-/// Extracts the API version of the given resource value.
-///
-/// This just returns the [`Resource::API_VERSION`] value for the argument's type, but is useful when you already have a value
-/// and don't want to explicitly write its type.
-pub fn api_version<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::API_VERSION
-}
-
-/// Extracts the group of the given resource value.
-///
-/// This just returns the [`Resource::GROUP`] value for the argument's type, but is useful when you already have a value
-/// and don't want to explicitly write its type.
-pub fn group<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::GROUP
-}
-
-/// Extracts the kind of the given resource value.
-///
-/// This just returns the [`Resource::KIND`] value for the argument's type, but is useful when you already have a value
-/// and don't want to explicitly write its type.
-pub fn kind<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::KIND
-}
-
-/// Extracts the version of the given resource value.
-///
-/// This just returns the [`Resource::VERSION`] value for the argument's type, but is useful when you already have a value
-/// and don't want to explicitly write its type.
-pub fn version<T>(_: &T) -> &'static str where T: Resource {
-    <T as Resource>::VERSION
-}
-
-/// The scope of a [`Resource`].
-pub trait ResourceScope {}
-
-/// Indicates that a [`Resource`] is cluster-scoped.
-pub struct ClusterResourceScope {}
-impl ResourceScope for ClusterResourceScope {}
-
-/// Indicates that a [`Resource`] is namespace-scoped.
-pub struct NamespaceResourceScope {}
-impl ResourceScope for NamespaceResourceScope {}
-
-/// Indicates that a [`Resource`] is neither cluster-scoped nor namespace-scoped.
-pub struct SubResourceScope {}
-impl ResourceScope for SubResourceScope {}
-
-mod deep_merge;
-pub use self::deep_merge::DeepMerge;
-
-/// The type of errors returned by the Kubernetes API functions that prepare the HTTP request.
 #[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum RequestError {
-    /// An error from preparing the HTTP request.
-    Http(http::Error),
-
-    /// An error while serializing a value into the JSON body of the HTTP request.
-    Json(serde_json::Error),
-}
-
+#[path = "api.rs"]
+mod _api;
 #[cfg(feature = "api")]
-impl std::fmt::Display for RequestError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            RequestError::Http(err) => write!(f, "{err}"),
-            RequestError::Json(err) => write!(f, "{err}"),
-        }
-    }
-}
+pub use _api::{
+    RequestError,
+    Response, ResponseBody, ResponseError,
+    percent_encoding2,
+};
 
-#[cfg(feature = "api")]
-impl std::error::Error for RequestError {
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            RequestError::Http(err) => Some(err),
-            RequestError::Json(err) => Some(err),
-        }
-    }
-}
+#[path = "byte_string.rs"]
+mod _byte_string;
+pub use _byte_string::ByteString;
 
-/// A trait implemented by all response types corresponding to Kubernetes API functions.
-#[cfg(feature = "api")]
-pub trait Response: Sized {
-    /// Tries to parse the response from the given status code and response body.
-    ///
-    /// If an instance of `Self` can be successfully parsed from the given byte buffer, the instance is returned,
-    /// along with the number of bytes used up from the buffer. Remove those bytes from the buffer before calling
-    /// this function again.
-    ///
-    /// If the buffer does not contain enough bytes to be able to parse an instance of `Self`, the function returns
-    /// `Err(ResponseError::NeedMoreData)`. Append more bytes into the buffer, then call this function again.
-    ///
-    /// Also see the [`ResponseBody`] type.
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
-}
+#[path = "deep_merge.rs"]
+mod _deep_merge;
+pub use self::_deep_merge::DeepMerge;
 
-/// This struct provides an easy way to parse a byte buffer into a Kubernetes API function's response.
-///
-/// All API function responses implement the [`Response`] trait, and are constructed by calling their [`Response::try_from_parts`] function.
-/// If this function returns `Err(ResponseError::NeedMoreData)`, that means more bytes need to be appended to the function. Alternatively,
-/// if the function returns `Ok((value, num_bytes_read))`, then `num_bytes_read` bytes need to be popped off from the front of the buffer.
-///
-/// The `ResponseBody` struct contains an internal dynamic buffer, and provides `append_slice` and `parse` functions to help with this.
-/// `append_slice` appends the slice you give it to its internal buffer, and `parse` uses the [`Response::try_from_parts`] function to parse
-/// the response out of the buffer, and truncates it accordingly.
-///
-/// You do not *have* to use this type to parse the response, say if you want to manage your own byte buffers. You can use
-/// `<T as Response>::try_from_parts` directly instead.
-#[cfg(feature = "api")]
-pub struct ResponseBody<T> {
-    /// The HTTP status code of the response.
-    pub status_code: http::StatusCode,
-
-    buf: bytes::BytesMut,
-
-    _response: std::marker::PhantomData<fn() -> T>,
-}
-
-#[cfg(feature = "api")]
-impl<T> ResponseBody<T> where T: Response {
-    /// Construct a value for a response that has the specified HTTP status code.
-    pub fn new(status_code: http::StatusCode) -> Self {
-        ResponseBody {
-            status_code,
-            buf: Default::default(),
-            _response: Default::default(),
-        }
-    }
-
-    /// Append a slice of data from the HTTP response to this buffer.
-    pub fn append_slice(&mut self, buf: &[u8]) {
-        self.buf.extend_from_slice(buf);
-    }
-
-    /// Try to parse all the data buffered so far into a response type.
-    pub fn parse(&mut self) -> Result<T, ResponseError> {
-        match T::try_from_parts(self.status_code, &self.buf) {
-            Ok((result, read)) => {
-                self.advance(read);
-                Ok(result)
-            },
-
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Drop the first `cnt` bytes of this buffer.
-    ///
-    /// This is useful for skipping over malformed bytes, such as invalid utf-8 sequences when parsing streaming `String` responses
-    /// like from [`api::core::v1::Pod::read_log`].
-    ///
-    /// # Panics
-    ///
-    /// This function panics if `cnt` is greater than the length of the internal buffer.
-    pub fn advance(&mut self, cnt: usize) {
-        bytes::Buf::advance(&mut self.buf, cnt);
-    }
-}
-
-#[cfg(feature = "api")]
-impl<T> std::ops::Deref for ResponseBody<T> {
-    type Target = [u8];
-
-    fn deref(&self) -> &Self::Target {
-        &self.buf
-    }
-}
-
-/// The type of errors from parsing an HTTP response as one of the Kubernetes API functions' response types.
-#[cfg(feature = "api")]
-#[derive(Debug)]
-pub enum ResponseError {
-    /// An error from deserializing the HTTP response, indicating more data is needed to complete deserialization.
-    NeedMoreData,
-
-    /// An error while deserializing the HTTP response as a JSON value, indicating the response is malformed.
-    Json(serde_json::Error),
-
-    /// An error while deserializing the HTTP response as a string, indicating that the response data is not UTF-8.
-    Utf8(std::str::Utf8Error),
-}
-
-#[cfg(feature = "api")]
-impl std::fmt::Display for ResponseError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ResponseError::NeedMoreData => f.write_str("need more response data"),
-            ResponseError::Json(err) => write!(f, "{err}"),
-            ResponseError::Utf8(err) => write!(f, "{err}"),
-        }
-    }
-}
-
-#[cfg(feature = "api")]
-impl std::error::Error for ResponseError {
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            ResponseError::NeedMoreData => None,
-            ResponseError::Json(err) => Some(err),
-            ResponseError::Utf8(err) => Some(err),
-        }
-    }
-}
-
-/// Extensions to the percent-encoding crate
-#[cfg(feature = "api")]
-pub mod percent_encoding2 {
-    /// Ref <https://url.spec.whatwg.org/#path-percent-encode-set>
-    pub const PATH_SEGMENT_ENCODE_SET: &percent_encoding::AsciiSet =
-        &percent_encoding::CONTROLS
-        .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`') // fragment percent-encode set
-        .add(b'#').add(b'?').add(b'{').add(b'}'); // path percent-encode set
-}
+#[path = "resource.rs"]
+mod _resource;
+pub use _resource::{
+    Resource,
+    ResourceScope, ClusterResourceScope, NamespaceResourceScope, SubResourceScope,
+    ListableResource,
+    Metadata,
+    api_version, group, kind, version,
+};
 
 #[cfg(k8s_openapi_enabled_version="1.20")] mod v1_20;
 #[cfg(k8s_openapi_enabled_version="1.20")] pub use self::v1_20::*;
