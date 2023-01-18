@@ -1,8 +1,9 @@
 // Generated from definition io.k8s.api.apps.v1.StatefulSet
 
 /// StatefulSet represents a set of pods with consistent identities. Identities are defined as:
-///  - Network: A single stable DNS and hostname.
-///  - Storage: As many VolumeClaims as requested.
+///   - Network: A single stable DNS and hostname.
+///   - Storage: As many VolumeClaims as requested.
+///
 /// The StatefulSet guarantees that a given network identity will always map to the same storage identity.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSet {
@@ -798,7 +799,7 @@ impl crate::schemars::JsonSchema for StatefulSet {
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n - Network: A single stable DNS and hostname.\n - Storage: As many VolumeClaims as requested.\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.".to_owned()),
+                description: Some("StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n  - Network: A single stable DNS and hostname.\n  - Storage: As many VolumeClaims as requested.\n\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.".to_owned()),
                 ..Default::default()
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),

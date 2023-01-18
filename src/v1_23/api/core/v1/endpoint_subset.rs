@@ -1,12 +1,15 @@
 // Generated from definition io.k8s.api.core.v1.EndpointSubset
 
 /// EndpointSubset is a group of addresses with a common set of ports. The expanded set of endpoints is the Cartesian product of Addresses x Ports. For example, given:
+///
 ///   {
-///     Addresses: \[{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}\],
-///     Ports:     \[{"name": "a", "port": 8675}, {"name": "b", "port": 309}\]
-///   }
+///       Addresses: \[{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}\],
+///       Ports:     \[{"name": "a", "port": 8675}, {"name": "b", "port": 309}\]
+///     }
+///
 /// The resulting set of endpoints can be viewed as:
-///     a: \[ 10.10.1.1:8675, 10.10.2.2:8675 \],
+///
+///   a: \[ 10.10.1.1:8675, 10.10.2.2:8675 \],
 ///     b: \[ 10.10.1.1:309, 10.10.2.2:309 \]
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointSubset {
@@ -136,7 +139,7 @@ impl crate::schemars::JsonSchema for EndpointSubset {
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("EndpointSubset is a group of addresses with a common set of ports. The expanded set of endpoints is the Cartesian product of Addresses x Ports. For example, given:\n  {\n    Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n    Ports:     [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n  }\nThe resulting set of endpoints can be viewed as:\n    a: [ 10.10.1.1:8675, 10.10.2.2:8675 ],\n    b: [ 10.10.1.1:309, 10.10.2.2:309 ]".to_owned()),
+                description: Some("EndpointSubset is a group of addresses with a common set of ports. The expanded set of endpoints is the Cartesian product of Addresses x Ports. For example, given:\n\n\t{\n\t  Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n\t  Ports:     [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n\t}\n\nThe resulting set of endpoints can be viewed as:\n\n\ta: [ 10.10.1.1:8675, 10.10.2.2:8675 ],\n\tb: [ 10.10.1.1:309, 10.10.2.2:309 ]".to_owned()),
                 ..Default::default()
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),

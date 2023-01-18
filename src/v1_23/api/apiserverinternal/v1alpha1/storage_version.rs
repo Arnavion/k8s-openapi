@@ -1,7 +1,6 @@
 // Generated from definition io.k8s.api.apiserverinternal.v1alpha1.StorageVersion
 
-///
-///  Storage version of a specific resource.
+/// Storage version of a specific resource.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StorageVersion {
     /// The name is \<group\>.\<resource\>.
@@ -656,7 +655,7 @@ impl crate::schemars::JsonSchema for StorageVersion {
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("\n Storage version of a specific resource.".to_owned()),
+                description: Some("Storage version of a specific resource.".to_owned()),
                 ..Default::default()
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
