@@ -1,17 +1,18 @@
 // Generated from definition io.k8s.api.core.v1.Endpoints
 
 /// Endpoints is a collection of endpoints that implement the actual service. Example:
+///
 ///   Name: "mysvc",
-///   Subsets: \[
-///     {
-///       Addresses: \[{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}\],
-///       Ports: \[{"name": "a", "port": 8675}, {"name": "b", "port": 309}\]
-///     },
-///     {
-///       Addresses: \[{"ip": "10.10.3.3"}\],
-///       Ports: \[{"name": "a", "port": 93}, {"name": "b", "port": 76}\]
-///     },
-///  \]
+///      Subsets: \[
+///        {
+///          Addresses: \[{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}\],
+///          Ports: \[{"name": "a", "port": 8675}, {"name": "b", "port": 309}\]
+///        },
+///        {
+///          Addresses: \[{"ip": "10.10.3.3"}\],
+///          Ports: \[{"name": "a", "port": 93}, {"name": "b", "port": 76}\]
+///        },
+///     \]
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Endpoints {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -621,7 +622,7 @@ impl crate::schemars::JsonSchema for Endpoints {
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("Endpoints is a collection of endpoints that implement the actual service. Example:\n  Name: \"mysvc\",\n  Subsets: [\n    {\n      Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n      Ports: [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n    },\n    {\n      Addresses: [{\"ip\": \"10.10.3.3\"}],\n      Ports: [{\"name\": \"a\", \"port\": 93}, {\"name\": \"b\", \"port\": 76}]\n    },\n ]".to_owned()),
+                description: Some("Endpoints is a collection of endpoints that implement the actual service. Example:\n\n\t Name: \"mysvc\",\n\t Subsets: [\n\t   {\n\t     Addresses: [{\"ip\": \"10.10.1.1\"}, {\"ip\": \"10.10.2.2\"}],\n\t     Ports: [{\"name\": \"a\", \"port\": 8675}, {\"name\": \"b\", \"port\": 309}]\n\t   },\n\t   {\n\t     Addresses: [{\"ip\": \"10.10.3.3\"}],\n\t     Ports: [{\"name\": \"a\", \"port\": 93}, {\"name\": \"b\", \"port\": 76}]\n\t   },\n\t]".to_owned()),
                 ..Default::default()
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),

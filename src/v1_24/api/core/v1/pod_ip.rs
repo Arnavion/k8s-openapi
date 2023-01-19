@@ -1,7 +1,8 @@
 // Generated from definition io.k8s.api.core.v1.PodIP
 
 /// IP address information for entries in the (plural) PodIPs field. Each entry includes:
-///    IP: An IP address allocated to the pod. Routable at least within the cluster.
+///
+///   IP: An IP address allocated to the pod. Routable at least within the cluster.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodIP {
     /// ip is an IP address (IPv4 or IPv6) assigned to the pod
@@ -102,7 +103,7 @@ impl crate::schemars::JsonSchema for PodIP {
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("IP address information for entries in the (plural) PodIPs field. Each entry includes:\n   IP: An IP address allocated to the pod. Routable at least within the cluster.".to_owned()),
+                description: Some("IP address information for entries in the (plural) PodIPs field. Each entry includes:\n\n\tIP: An IP address allocated to the pod. Routable at least within the cluster.".to_owned()),
                 ..Default::default()
             })),
             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
