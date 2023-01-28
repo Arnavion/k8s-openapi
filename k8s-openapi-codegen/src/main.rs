@@ -2,7 +2,6 @@
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
 	clippy::default_trait_access,
-	clippy::let_underscore_drop,
 	clippy::let_unit_value,
 	clippy::too_many_lines,
 )]
