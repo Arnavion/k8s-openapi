@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.events.v1beta1.Event
 
 /// Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system. Events have a limited retention time and triggers and messages may evolve with time.  Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason.  Events should be treated as informative, best-effort, supplemental data.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Event {
     /// action is what action was taken/failed regarding to the regarding object. It is machine-readable. This field can have at most 128 characters.
     pub action: Option<String>,
@@ -19,7 +19,7 @@ pub struct Event {
     pub deprecated_source: Option<crate::api::core::v1::EventSource>,
 
     /// eventTime is the time when this Event was first observed. It is required.
-    pub event_time: crate::apimachinery::pkg::apis::meta::v1::MicroTime,
+    pub event_time: Option<crate::apimachinery::pkg::apis::meta::v1::MicroTime>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
@@ -654,7 +654,7 @@ impl<'de> crate::serde::Deserialize<'de> for Event {
                         Field::Key_deprecated_first_timestamp => value_deprecated_first_timestamp = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_last_timestamp => value_deprecated_last_timestamp = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_source => value_deprecated_source = crate::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_event_time => value_event_time = Some(crate::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_event_time => value_event_time = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_note => value_note = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = crate::serde::de::MapAccess::next_value(&mut map)?,
@@ -674,7 +674,7 @@ impl<'de> crate::serde::Deserialize<'de> for Event {
                     deprecated_first_timestamp: value_deprecated_first_timestamp,
                     deprecated_last_timestamp: value_deprecated_last_timestamp,
                     deprecated_source: value_deprecated_source,
-                    event_time: value_event_time.ok_or_else(|| crate::serde::de::Error::missing_field("eventTime"))?,
+                    event_time: value_event_time,
                     metadata: value_metadata.unwrap_or_default(),
                     note: value_note,
                     reason: value_reason,
@@ -718,12 +718,13 @@ impl crate::serde::Serialize for Event {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             <Self as crate::Resource>::KIND,
-            4 +
+            3 +
             self.action.as_ref().map_or(0, |_| 1) +
             self.deprecated_count.as_ref().map_or(0, |_| 1) +
             self.deprecated_first_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_last_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_source.as_ref().map_or(0, |_| 1) +
+            self.event_time.as_ref().map_or(0, |_| 1) +
             self.note.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1) +
             self.regarding.as_ref().map_or(0, |_| 1) +
@@ -750,7 +751,9 @@ impl crate::serde::Serialize for Event {
         if let Some(value) = &self.deprecated_source {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedSource", value)?;
         }
-        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", &self.event_time)?;
+        if let Some(value) = &self.event_time {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", value)?;
+        }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.note {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "note", value)?;
@@ -985,7 +988,6 @@ impl crate::schemars::JsonSchema for Event {
                     ),
                 ].into(),
                 required: [
-                    "eventTime".to_owned(),
                     "metadata".to_owned(),
                 ].into(),
                 ..Default::default()

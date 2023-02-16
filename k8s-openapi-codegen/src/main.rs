@@ -103,7 +103,15 @@ async fn main() -> Result<(), Error> {
 			async move {
 				let task_local_logger = logger::make_local_logger(version.name());
 				let spec_url = overriden_spec_url.as_deref().unwrap_or_else(|| version.spec_url());
-				logger::TASK_LOCAL_LOGGER.scope(task_local_logger, run(version, spec_url, &out_dir_base, &client)).await?;
+				logger::TASK_LOCAL_LOGGER.scope(task_local_logger, async {
+					match run(version, spec_url, &out_dir_base, &client).await {
+						Ok(()) => Ok(()),
+						Err(err) => {
+							log::error!("Error: {err}");
+							Err(err)
+						},
+					}
+				}).await?;
 				Ok::<_, Error>(())
 			}
 		})

@@ -62,37 +62,49 @@ impl SupportedVersion {
 			SupportedVersion::V1_20 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_21 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
 				crate::fixups::upstream_bugs::optional_properties::containerimage,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_22 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_23 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_24 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_25 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 			],
 
 			SupportedVersion::V1_26 => &[
 				crate::fixups::upstream_bugs::connect_options_gvk,
+				crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
 				crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
 				crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
 				crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,

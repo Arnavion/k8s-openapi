@@ -28,3 +28,38 @@ fn daemon_set() {
 		assert!(containers.is_empty());
 	}
 }
+
+#[test]
+fn event() {
+	let input = r#"{
+		"apiVersion": "events.k8s.io/v1",
+		"deprecatedCount": 1,
+		"deprecatedFirstTimestamp": "2023-02-16T18:25:07Z",
+		"deprecatedLastTimestamp": "2023-02-16T18:25:07Z",
+		"deprecatedSource": {
+			"component": "default-scheduler"
+		},
+		"eventTime": null,
+		"kind": "Event",
+		"metadata": {
+			"creationTimestamp": "2023-02-16T18:25:07Z",
+			"name": "some-pod.174461445d6d3cff",
+			"namespace": "test-530513",
+			"resourceVersion": "320932",
+			"uid": "f3ac47c9-cc86-4193-a2ed-2e4428b7ad77"
+		},
+		"note": "Successfully assigned test-530513/some-pod to test-pgd-control-plane",
+		"reason": "Scheduled",
+		"regarding": {
+			"apiVersion": "v1",
+			"kind": "Pod",
+			"name": "some-pod",
+			"namespace": "test-530513",
+			"resourceVersion": "320930",
+			"uid": "ace87ee8-15fb-46ae-9dae-c77422c2010f"
+		},
+		"type": "Normal"
+	}"#;
+	let actual: k8s_openapi::api::events::v1::Event = serde_json::from_str(input).expect("couldn't deserialize MicroTime");
+	assert!(actual.event_time.is_none());
+}
