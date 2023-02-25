@@ -1257,7 +1257,7 @@ fn evaluate_trait_bound(
 
 			swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => {
 				let trait_bound =
-					if let Some(target) = definitions.get(&swagger20::DefinitionPath(ref_path.path.clone())) {
+					if let Some(target) = definitions.get(&*ref_path.path) {
 						let mut visited = visited.clone();
 						evaluate_trait_bound_inner(
 							&std::borrow::Cow::Borrowed(&target.kind),

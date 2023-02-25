@@ -87,7 +87,7 @@ pub(crate) mod json_ty {
 // The original `DeleteOptions` type is still kept since it's used as a field of `io.k8s.api.policy.v1beta1.Eviction`
 pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let delete_options_schema =
-		spec.definitions.get(&crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions".to_owned()))
+		spec.definitions.get("io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")
 		.ok_or("could not find io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")?;
 	let crate::swagger20::SchemaKind::Properties(delete_options_properties) = &delete_options_schema.kind else {
 		return Err("io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions is not a SchemaKind::Properties".into());
@@ -188,7 +188,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 		}
 
 		// Not useful for programmatic clients.
-		let _ = optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
+		let _ = optional_definition.remove("pretty");
 
 		spec.definitions.insert(crate::swagger20::DefinitionPath(type_name.to_string()), crate::swagger20::Schema {
 			description: Some(format!("Common parameters for all {description} operations.")),
@@ -408,8 +408,8 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	}
 
 	// Not useful for programmatic clients.
-	let _ = list_optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
-	let _ = watch_optional_definition.remove(&crate::swagger20::PropertyName("pretty".to_owned()));
+	let _ = list_optional_definition.remove("pretty");
+	let _ = watch_optional_definition.remove("pretty");
 
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.ListOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all list operations.".to_string()),
@@ -612,7 +612,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 		};
 
 		let item_schema =
-			spec.definitions.get(&crate::swagger20::DefinitionPath(item_ref_path.path.clone()))
+			spec.definitions.get(&*item_ref_path.path)
 			.ok_or_else(|| format!("definition {definition_path} looks like a list but its item's definition does not exist in the spec"))?;
 
 		let [item_kubernetes_group_kind_version] = &item_schema.kubernetes_group_kind_versions[..] else {
@@ -694,7 +694,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 	// Remove all list types
 
 	for (definition_path, item_ref_path, list_kind) in &list_definition_paths {
-		let item_definition = spec.definitions.get_mut(&crate::swagger20::DefinitionPath(item_ref_path.path.clone())).unwrap();
+		let item_definition = spec.definitions.get_mut(&*item_ref_path.path).unwrap();
 		item_definition.list_kind = Some(list_kind.clone());
 
 		let _ = spec.definitions.remove(definition_path);
@@ -827,7 +827,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 
 							if let Some(kubernetes_group_kind_version) = &operation.kubernetes_group_kind_version {
 								let response_schema =
-									definitions.get(&crate::swagger20::DefinitionPath(ref_path.path.clone()))
+									definitions.get(&*ref_path.path)
 									.unwrap_or_else(|| panic!("operation {} returns undefined type {kubernetes_group_kind_version:?}", operation.id));
 								if response_schema.kubernetes_group_kind_versions.contains(kubernetes_group_kind_version) {
 									return true;
@@ -1125,7 +1125,7 @@ pub(crate) fn resource_metadata_not_optional(spec: &mut crate::swagger20::Spec) 
 			}
 
 			if has_api_version && has_kind && has_optional_metadata {
-				let metadata = properties.get_mut(&crate::swagger20::PropertyName("metadata".to_owned())).unwrap();
+				let metadata = properties.get_mut("metadata").unwrap();
 				metadata.1 = true;
 				found = true;
 			}

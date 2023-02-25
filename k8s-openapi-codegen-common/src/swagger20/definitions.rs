@@ -3,6 +3,12 @@
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct DefinitionPath(pub String);
 
+impl std::borrow::Borrow<str> for DefinitionPath {
+	fn borrow(&self) -> &str {
+		&self.0
+	}
+}
+
 impl std::ops::Deref for DefinitionPath {
 	type Target = str;
 
@@ -34,6 +40,12 @@ pub enum NumberFormat {
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct PropertyName(pub String);
+
+impl std::borrow::Borrow<str> for PropertyName {
+	fn borrow(&self) -> &str {
+		&self.0
+	}
+}
 
 impl std::ops::Deref for PropertyName {
 	type Target = str;

@@ -99,7 +99,7 @@ pub(crate) mod optional_properties {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ContainerImage".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("names".to_string())) {
+				if let Some(property) = properties.get_mut("names") {
 					if property.1 {
 						property.1 = false;
 						return Ok(());
@@ -116,7 +116,7 @@ pub(crate) mod optional_properties {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.events.v1beta1.Event".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("eventTime".to_string())) {
+				if let Some(property) = properties.get_mut("eventTime") {
 					if property.1 {
 						property.1 = false;
 						return Ok(());
@@ -133,7 +133,7 @@ pub(crate) mod optional_properties {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.events.v1.Event".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("eventTime".to_string())) {
+				if let Some(property) = properties.get_mut("eventTime") {
 					if property.1 {
 						property.1 = false;
 						return Ok(());
@@ -155,7 +155,7 @@ pub(crate) mod required_properties {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingList".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("items".to_string())) {
+				if let Some(property) = properties.get_mut("items") {
 					if !property.1 {
 						property.1 = true;
 						return Ok(());
@@ -172,7 +172,7 @@ pub(crate) mod required_properties {
 		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyList".to_owned());
 		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
 			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("items".to_string())) {
+				if let Some(property) = properties.get_mut("items") {
 					if !property.1 {
 						property.1 = true;
 						return Ok(());
