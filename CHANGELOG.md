@@ -18,6 +18,15 @@ Corresponding Kubernetes API server versions:
 - v1.25.5
 - v1.26.0
 
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes.
+
+---
 
 # v0.16.0 (2022-09-15)
 
@@ -77,6 +86,14 @@ Corresponding Kubernetes API server versions:
 - v1.22.9
 - v1.23.6
 - v1.24.0
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes.
 
 ---
 
