@@ -360,7 +360,7 @@ impl crate::ListableResource for CSINode {
 }
 
 impl crate::Metadata for CSINode {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ClusterObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

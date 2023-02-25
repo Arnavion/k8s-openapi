@@ -71,7 +71,7 @@ impl crate::Resource for Eviction {
 }
 
 impl crate::Metadata for Eviction {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::SubObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

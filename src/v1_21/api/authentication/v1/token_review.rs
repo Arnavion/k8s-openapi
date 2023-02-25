@@ -60,7 +60,7 @@ impl crate::Resource for TokenReview {
 }
 
 impl crate::Metadata for TokenReview {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::ClusterObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

@@ -711,7 +711,7 @@ impl crate::Resource for Scale {
 }
 
 impl crate::Metadata for Scale {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::SubObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

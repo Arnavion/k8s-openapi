@@ -1139,3 +1139,67 @@ pub(crate) fn resource_metadata_not_optional(spec: &mut crate::swagger20::Spec) 
 		Err("never applied override to make resource metadata non-optional".into())
 	}
 }
+
+// The default `apimachinery::pkg::apis::meta::v1::ObjectMeta` type has a `namespace: Option<String>` field because it handles both
+// namespaced resources and non-namespaced resources. But it's a pain for Rust code to have to deal with the `Option`-ality for namespaced resources,
+// especially since namespaced resources are far more common than non-namespaced resources.
+//
+// This fixup splits the type into `ObjectMeta`, `ClusterObjectMeta` and `SubObjectMeta`.
+//
+// - `ObjectMeta` has a `namespace: String` field. Namespace-scoped resources will use this as their `metadata` field type.
+// - `ClusterObjectMeta` has no `namespace` field. Cluster-scoped resources will use this as their `metadata` field type.
+// - `SubObjectMeta` has a `namespace: Option<String>` field. Sub resources will use this as their `metadata` field type.
+pub(crate) fn resource_namespace_not_optional_for_namespaced(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let default_object_meta_definition =
+		spec.definitions
+		.get_mut("io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta")
+		.ok_or("could not find ObjectMeta definition")?;
+
+	let crate::swagger20::SchemaKind::Properties(properties) = &mut default_object_meta_definition.kind else {
+		return Err("ObjectMeta does not have SchemaKind::Properties kind".into());
+	};
+
+	let (_, namespace_property_required) = properties.get_mut("namespace").ok_or("ObjectMeta does not have namespace property")?;
+	if *namespace_property_required {
+		return Err("ObjectMeta::namespace is already required".into());
+	}
+
+	*namespace_property_required = true;
+
+	let default_object_meta_definition = default_object_meta_definition.clone();
+
+	{
+		let mut cluster_object_meta_definition = default_object_meta_definition.clone();
+
+		let crate::swagger20::SchemaKind::Properties(properties) = &mut cluster_object_meta_definition.kind else { unreachable!(); };
+
+		properties.remove("namespace");
+
+		let default_cluster_object_meta_definition =
+			spec.definitions.insert(
+				crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.ClusterObjectMeta".to_owned()),
+				cluster_object_meta_definition);
+		if let Some(default_cluster_object_meta_definition) = default_cluster_object_meta_definition {
+			return Err(format!("spec already had definition for ClusterObjectMeta: {default_cluster_object_meta_definition:?}").into());
+		}
+	}
+
+	{
+		let mut sub_object_meta_definition = default_object_meta_definition;
+
+		let crate::swagger20::SchemaKind::Properties(properties) = &mut sub_object_meta_definition.kind else { unreachable!(); };
+
+		let Some((_, namespace_property_required)) = properties.get_mut("namespace") else { unreachable!(); };
+		*namespace_property_required = false;
+
+		let default_sub_object_meta_definition =
+			spec.definitions.insert(
+				crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.SubObjectMeta".to_owned()),
+				sub_object_meta_definition);
+		if let Some(default_sub_object_meta_definition) = default_sub_object_meta_definition {
+			return Err(format!("spec already had definition for SubObjectMeta: {default_sub_object_meta_definition:?}").into());
+		}
+	}
+
+	Ok(())
+}

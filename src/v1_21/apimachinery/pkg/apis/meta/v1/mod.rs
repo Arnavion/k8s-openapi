@@ -14,6 +14,9 @@ pub use self::api_resource_list::APIResourceList;
 mod api_versions;
 pub use self::api_versions::APIVersions;
 
+mod cluster_object_meta;
+pub use self::cluster_object_meta::ClusterObjectMeta;
+
 mod condition;
 pub use self::condition::Condition;
 
@@ -64,6 +67,9 @@ pub use self::status_cause::StatusCause;
 
 mod status_details;
 pub use self::status_details::StatusDetails;
+
+mod sub_object_meta;
+pub use self::sub_object_meta::SubObjectMeta;
 
 mod time;
 pub use self::time::Time;

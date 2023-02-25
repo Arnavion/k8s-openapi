@@ -194,7 +194,7 @@ impl crate::Resource for EphemeralContainers {
 }
 
 impl crate::Metadata for EphemeralContainers {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::SubObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

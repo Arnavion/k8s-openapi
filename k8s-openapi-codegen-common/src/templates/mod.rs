@@ -45,7 +45,7 @@ pub(crate) struct Property<'a> {
 	pub(crate) is_flattened: bool,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub(crate) enum PropertyRequired {
 	Required { is_default: bool },
 	Optional,
@@ -57,15 +57,15 @@ pub(crate) enum PropertyRequired {
 	OptionalDefault,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub(crate) struct ResourceMetadata<'a> {
 	pub(crate) api_version: &'a str,
 	pub(crate) group: &'a str,
 	pub(crate) kind: &'a str,
 	pub(crate) version: &'a str,
 	pub(crate) list_kind: Option<&'a str>,
-	pub(crate) metadata_ty: Option<&'a str>,
-	pub(crate) url_path_segment_and_scope: (&'a str, &'a str),
+	pub(crate) metadata_ty: Option<std::borrow::Cow<'a, str>>,
+	pub(crate) url_path_segment_and_scope: (&'a str, ResourceScope<'a>),
 }
 
 #[derive(Clone, Copy)]
@@ -73,4 +73,23 @@ pub(crate) enum DateTimeSerializationFormat {
 	Default,
 	SixDecimalDigits,
 	ZeroDecimalDigits,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum ResourceScope<'a> {
+	Cluster { local: &'a str },
+	Inherit { ty: &'static str },
+	Namespace { local: &'a str },
+	Sub { local: &'a str },
+}
+
+impl std::fmt::Display for ResourceScope<'_> {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			ResourceScope::Cluster { local } => write!(f, "{local}ClusterResourceScope"),
+			ResourceScope::Inherit { ty } => write!(f, "<{ty} as crate::Resource>::Scope"),
+			ResourceScope::Namespace { local } => write!(f, "{local}NamespaceResourceScope"),
+			ResourceScope::Sub { local } => write!(f, "{local}SubResourceScope"),
+		}
+	}
 }

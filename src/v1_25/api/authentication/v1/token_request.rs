@@ -74,7 +74,7 @@ impl crate::Resource for TokenRequest {
 }
 
 impl crate::Metadata for TokenRequest {
-    type Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+    type Ty = crate::apimachinery::pkg::apis::meta::v1::SubObjectMeta;
 
     fn metadata(&self) -> &<Self as crate::Metadata>::Ty {
         &self.metadata

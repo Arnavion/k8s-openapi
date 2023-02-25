@@ -44,7 +44,7 @@ pub struct ObjectMeta {
     /// Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
     ///
     /// Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces
-    pub namespace: Option<String>,
+    pub namespace: String,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
     pub owner_references: Option<Vec<crate::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
@@ -200,7 +200,7 @@ impl<'de> crate::serde::Deserialize<'de> for ObjectMeta {
                     labels: value_labels,
                     managed_fields: value_managed_fields,
                     name: value_name,
-                    namespace: value_namespace,
+                    namespace: value_namespace.unwrap_or_default(),
                     owner_references: value_owner_references,
                     resource_version: value_resource_version,
                     self_link: value_self_link,
@@ -237,6 +237,7 @@ impl crate::serde::Serialize for ObjectMeta {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
+            1 +
             self.annotations.as_ref().map_or(0, |_| 1) +
             self.creation_timestamp.as_ref().map_or(0, |_| 1) +
             self.deletion_grace_period_seconds.as_ref().map_or(0, |_| 1) +
@@ -247,7 +248,6 @@ impl crate::serde::Serialize for ObjectMeta {
             self.labels.as_ref().map_or(0, |_| 1) +
             self.managed_fields.as_ref().map_or(0, |_| 1) +
             self.name.as_ref().map_or(0, |_| 1) +
-            self.namespace.as_ref().map_or(0, |_| 1) +
             self.owner_references.as_ref().map_or(0, |_| 1) +
             self.resource_version.as_ref().map_or(0, |_| 1) +
             self.self_link.as_ref().map_or(0, |_| 1) +
@@ -283,9 +283,7 @@ impl crate::serde::Serialize for ObjectMeta {
         if let Some(value) = &self.name {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
-        if let Some(value) = &self.namespace {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &self.namespace)?;
         if let Some(value) = &self.owner_references {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
         }
@@ -519,6 +517,9 @@ impl crate::schemars::JsonSchema for ObjectMeta {
                             ..Default::default()
                         }),
                     ),
+                ].into(),
+                required: [
+                    "namespace".to_owned(),
                 ].into(),
                 ..Default::default()
             })),
