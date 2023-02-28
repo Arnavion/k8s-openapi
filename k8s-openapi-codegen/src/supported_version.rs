@@ -49,10 +49,10 @@ impl SupportedVersion {
 			SupportedVersion::V1_20 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.20.15/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_21 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.21.14/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_22 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.22.17/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_23 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.23.16/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_24 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.24.10/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.6/api/openapi-spec/swagger.json",
-			SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.1/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_23 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.23.17/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_24 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.24.11/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.7/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.2/api/openapi-spec/swagger.json",
 		}
 	}
 
