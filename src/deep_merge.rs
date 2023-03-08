@@ -56,16 +56,16 @@
 ///
 /// `self` is just replaced by `other`.
 pub trait DeepMerge {
-    /// Merge `other` into `self`.
-    fn merge_from(&mut self, other: Self);
+  /// Merge `other` into `self`.
+  fn merge_from(&mut self, other: Self);
 }
 
 macro_rules! default_overwriting_impl {
-    () => {
-        fn merge_from(&mut self, other: Self) {
-            *self = other;
-        }
-    };
+  () => {
+    fn merge_from(&mut self, other: Self) {
+      *self = other;
+    }
+  };
 }
 
 impl DeepMerge for bool { default_overwriting_impl! {} }
@@ -77,59 +77,59 @@ impl DeepMerge for crate::ByteString { default_overwriting_impl! {} }
 impl<Tz> DeepMerge for chrono::DateTime<Tz> where Tz: chrono::TimeZone { default_overwriting_impl! {} }
 
 impl DeepMerge for serde_json::Value {
-    fn merge_from(&mut self, other: Self) {
-        if let serde_json::Value::Object(this) = self {
-            if let serde_json::Value::Object(other) = other {
-                for (k, v) in other {
-                    if v.is_null() {
-                        this.remove(&k);
-                    }
-                    else {
-                        this.entry(k).or_insert(serde_json::Value::Null).merge_from(v);
-                    }
-                }
-
-                return;
-            }
+  fn merge_from(&mut self, other: Self) {
+    if let serde_json::Value::Object(this) = self {
+      if let serde_json::Value::Object(other) = other {
+        for (k, v) in other {
+          if v.is_null() {
+            this.remove(&k);
+          }
+          else {
+            this.entry(k).or_insert(serde_json::Value::Null).merge_from(v);
+          }
         }
 
-        *self = other;
+        return;
+      }
     }
+
+    *self = other;
+  }
 }
 
 impl<T> DeepMerge for Box<T> where T: DeepMerge {
-    fn merge_from(&mut self, other: Self) {
-        (**self).merge_from(*other);
-    }
+  fn merge_from(&mut self, other: Self) {
+    (**self).merge_from(*other);
+  }
 }
 
 impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
-    fn merge_from(&mut self, other: Self) {
-        for (k, v) in other {
-            match self.entry(k) {
-                std::collections::btree_map::Entry::Vacant(e) => { e.insert(v); },
-                std::collections::btree_map::Entry::Occupied(e) => e.into_mut().merge_from(v),
-            }
-        }
+  fn merge_from(&mut self, other: Self) {
+    for (k, v) in other {
+      match self.entry(k) {
+        std::collections::btree_map::Entry::Vacant(e) => { e.insert(v); },
+        std::collections::btree_map::Entry::Occupied(e) => e.into_mut().merge_from(v),
+      }
     }
+  }
 }
 
 impl<T> DeepMerge for Option<T> where T: DeepMerge {
-    fn merge_from(&mut self, other: Self) {
-        if let Some(other) = other {
-            if let Some(s) = self {
-                s.merge_from(other);
-            } else {
-                *self = Some(other);
-            }
-        }
+  fn merge_from(&mut self, other: Self) {
+    if let Some(other) = other {
+      if let Some(s) = self {
+        s.merge_from(other);
+      } else {
+        *self = Some(other);
+      }
     }
+  }
 }
 
 impl<T> DeepMerge for Vec<T> {
-    fn merge_from(&mut self, other: Self) {
-        self.extend(other);
-    }
+  fn merge_from(&mut self, other: Self) {
+    self.extend(other);
+  }
 }
 
 pub mod strategies {
