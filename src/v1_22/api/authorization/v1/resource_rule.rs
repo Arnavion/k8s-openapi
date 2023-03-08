@@ -19,10 +19,10 @@ pub struct ResourceRule {
 
 impl crate::DeepMerge for ResourceRule {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.api_groups, other.api_groups);
-        crate::DeepMerge::merge_from(&mut self.resource_names, other.resource_names);
-        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
-        crate::DeepMerge::merge_from(&mut self.verbs, other.verbs);
+        crate::merge_strategies::list::atomic(&mut self.api_groups, other.api_groups);
+        crate::merge_strategies::list::atomic(&mut self.resource_names, other.resource_names);
+        crate::merge_strategies::list::atomic(&mut self.resources, other.resources);
+        crate::merge_strategies::list::atomic(&mut self.verbs, other.verbs);
     }
 }
 

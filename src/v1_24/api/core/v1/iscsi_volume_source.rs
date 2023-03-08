@@ -46,7 +46,7 @@ impl crate::DeepMerge for ISCSIVolumeSource {
         crate::DeepMerge::merge_from(&mut self.iqn, other.iqn);
         crate::DeepMerge::merge_from(&mut self.iscsi_interface, other.iscsi_interface);
         crate::DeepMerge::merge_from(&mut self.lun, other.lun);
-        crate::DeepMerge::merge_from(&mut self.portals, other.portals);
+        crate::merge_strategies::list::atomic(&mut self.portals, other.portals);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
         crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
         crate::DeepMerge::merge_from(&mut self.target_portal, other.target_portal);

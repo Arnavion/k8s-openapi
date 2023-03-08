@@ -12,8 +12,8 @@ pub struct NodeSelectorTerm {
 
 impl crate::DeepMerge for NodeSelectorTerm {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.match_expressions, other.match_expressions);
-        crate::DeepMerge::merge_from(&mut self.match_fields, other.match_fields);
+        crate::merge_strategies::list::atomic(&mut self.match_expressions, other.match_expressions);
+        crate::merge_strategies::list::atomic(&mut self.match_fields, other.match_fields);
     }
 }
 

@@ -18,10 +18,10 @@ pub struct NetworkPolicySpec {
 
 impl crate::DeepMerge for NetworkPolicySpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.egress, other.egress);
-        crate::DeepMerge::merge_from(&mut self.ingress, other.ingress);
+        crate::merge_strategies::list::atomic(&mut self.egress, other.egress);
+        crate::merge_strategies::list::atomic(&mut self.ingress, other.ingress);
         crate::DeepMerge::merge_from(&mut self.pod_selector, other.pod_selector);
-        crate::DeepMerge::merge_from(&mut self.policy_types, other.policy_types);
+        crate::merge_strategies::list::atomic(&mut self.policy_types, other.policy_types);
     }
 }
 

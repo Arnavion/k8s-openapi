@@ -21,7 +21,7 @@ impl crate::DeepMerge for ValidatingAdmissionPolicySpec {
         crate::DeepMerge::merge_from(&mut self.failure_policy, other.failure_policy);
         crate::DeepMerge::merge_from(&mut self.match_constraints, other.match_constraints);
         crate::DeepMerge::merge_from(&mut self.param_kind, other.param_kind);
-        crate::DeepMerge::merge_from(&mut self.validations, other.validations);
+        crate::merge_strategies::list::atomic(&mut self.validations, other.validations);
     }
 }
 

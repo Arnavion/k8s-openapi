@@ -13,7 +13,7 @@ pub struct NamespaceStatus {
 
 impl crate::DeepMerge for NamespaceStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::atomic(&mut self.conditions, other.conditions);
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
     }
 }

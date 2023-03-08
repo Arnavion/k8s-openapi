@@ -20,7 +20,7 @@ impl crate::DeepMerge for PodAffinityTerm {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.label_selector, other.label_selector);
         crate::DeepMerge::merge_from(&mut self.namespace_selector, other.namespace_selector);
-        crate::DeepMerge::merge_from(&mut self.namespaces, other.namespaces);
+        crate::merge_strategies::list::atomic(&mut self.namespaces, other.namespaces);
         crate::DeepMerge::merge_from(&mut self.topology_key, other.topology_key);
     }
 }

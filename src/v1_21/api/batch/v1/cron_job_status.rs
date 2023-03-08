@@ -15,7 +15,7 @@ pub struct CronJobStatus {
 
 impl crate::DeepMerge for CronJobStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.active, other.active);
+        crate::merge_strategies::list::atomic(&mut self.active, other.active);
         crate::DeepMerge::merge_from(&mut self.last_schedule_time, other.last_schedule_time);
         crate::DeepMerge::merge_from(&mut self.last_successful_time, other.last_successful_time);
     }

@@ -12,8 +12,8 @@ pub struct NonResourceRule {
 
 impl crate::DeepMerge for NonResourceRule {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.non_resource_urls, other.non_resource_urls);
-        crate::DeepMerge::merge_from(&mut self.verbs, other.verbs);
+        crate::merge_strategies::list::atomic(&mut self.non_resource_urls, other.non_resource_urls);
+        crate::merge_strategies::list::atomic(&mut self.verbs, other.verbs);
     }
 }
 

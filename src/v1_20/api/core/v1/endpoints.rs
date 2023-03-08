@@ -501,7 +501,7 @@ impl crate::Metadata for Endpoints {
 impl crate::DeepMerge for Endpoints {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.subsets, other.subsets);
+        crate::merge_strategies::list::atomic(&mut self.subsets, other.subsets);
     }
 }
 

@@ -47,8 +47,8 @@ impl crate::DeepMerge for PodSecurityContext {
         crate::DeepMerge::merge_from(&mut self.run_as_user, other.run_as_user);
         crate::DeepMerge::merge_from(&mut self.se_linux_options, other.se_linux_options);
         crate::DeepMerge::merge_from(&mut self.seccomp_profile, other.seccomp_profile);
-        crate::DeepMerge::merge_from(&mut self.supplemental_groups, other.supplemental_groups);
-        crate::DeepMerge::merge_from(&mut self.sysctls, other.sysctls);
+        crate::merge_strategies::list::atomic(&mut self.supplemental_groups, other.supplemental_groups);
+        crate::merge_strategies::list::atomic(&mut self.sysctls, other.sysctls);
         crate::DeepMerge::merge_from(&mut self.windows_options, other.windows_options);
     }
 }

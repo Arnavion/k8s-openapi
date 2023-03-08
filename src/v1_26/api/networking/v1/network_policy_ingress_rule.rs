@@ -12,8 +12,8 @@ pub struct NetworkPolicyIngressRule {
 
 impl crate::DeepMerge for NetworkPolicyIngressRule {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.from, other.from);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::atomic(&mut self.from, other.from);
+        crate::merge_strategies::list::atomic(&mut self.ports, other.ports);
     }
 }
 

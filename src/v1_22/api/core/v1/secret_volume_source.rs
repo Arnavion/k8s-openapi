@@ -21,7 +21,7 @@ pub struct SecretVolumeSource {
 impl crate::DeepMerge for SecretVolumeSource {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.default_mode, other.default_mode);
-        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::merge_strategies::list::atomic(&mut self.items, other.items);
         crate::DeepMerge::merge_from(&mut self.optional, other.optional);
         crate::DeepMerge::merge_from(&mut self.secret_name, other.secret_name);
     }

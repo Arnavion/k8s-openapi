@@ -20,8 +20,8 @@ impl crate::DeepMerge for IngressSpec {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.default_backend, other.default_backend);
         crate::DeepMerge::merge_from(&mut self.ingress_class_name, other.ingress_class_name);
-        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
-        crate::DeepMerge::merge_from(&mut self.tls, other.tls);
+        crate::merge_strategies::list::atomic(&mut self.rules, other.rules);
+        crate::merge_strategies::list::atomic(&mut self.tls, other.tls);
     }
 }
 

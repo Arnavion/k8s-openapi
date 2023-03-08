@@ -13,7 +13,7 @@ pub struct TopologySelectorLabelRequirement {
 impl crate::DeepMerge for TopologySelectorLabelRequirement {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.key, other.key);
-        crate::DeepMerge::merge_from(&mut self.values, other.values);
+        crate::merge_strategies::list::atomic(&mut self.values, other.values);
     }
 }
 

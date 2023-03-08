@@ -9,7 +9,7 @@ pub struct ScopeSelector {
 
 impl crate::DeepMerge for ScopeSelector {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.match_expressions, other.match_expressions);
+        crate::merge_strategies::list::atomic(&mut self.match_expressions, other.match_expressions);
     }
 }
 

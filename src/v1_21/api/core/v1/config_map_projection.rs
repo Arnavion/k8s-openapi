@@ -17,7 +17,7 @@ pub struct ConfigMapProjection {
 
 impl crate::DeepMerge for ConfigMapProjection {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::merge_strategies::list::atomic(&mut self.items, other.items);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
         crate::DeepMerge::merge_from(&mut self.optional, other.optional);
     }

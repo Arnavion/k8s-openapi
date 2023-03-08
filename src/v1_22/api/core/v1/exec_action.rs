@@ -9,7 +9,7 @@ pub struct ExecAction {
 
 impl crate::DeepMerge for ExecAction {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.command, other.command);
+        crate::merge_strategies::list::atomic(&mut self.command, other.command);
     }
 }
 

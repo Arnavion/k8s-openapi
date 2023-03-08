@@ -21,7 +21,7 @@ pub struct ConfigMapVolumeSource {
 impl crate::DeepMerge for ConfigMapVolumeSource {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.default_mode, other.default_mode);
-        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::merge_strategies::list::atomic(&mut self.items, other.items);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
         crate::DeepMerge::merge_from(&mut self.optional, other.optional);
     }

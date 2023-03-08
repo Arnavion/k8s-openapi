@@ -21,8 +21,8 @@ impl crate::Resource for APIVersions {
 
 impl crate::DeepMerge for APIVersions {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.server_address_by_client_cidrs, other.server_address_by_client_cidrs);
-        crate::DeepMerge::merge_from(&mut self.versions, other.versions);
+        crate::merge_strategies::list::atomic(&mut self.server_address_by_client_cidrs, other.server_address_by_client_cidrs);
+        crate::merge_strategies::list::atomic(&mut self.versions, other.versions);
     }
 }
 

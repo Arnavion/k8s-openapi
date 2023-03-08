@@ -25,7 +25,7 @@ pub struct ReplicaSetStatus {
 impl crate::DeepMerge for ReplicaSetStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.available_replicas, other.available_replicas);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::atomic(&mut self.conditions, other.conditions);
         crate::DeepMerge::merge_from(&mut self.fully_labeled_replicas, other.fully_labeled_replicas);
         crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
         crate::DeepMerge::merge_from(&mut self.ready_replicas, other.ready_replicas);

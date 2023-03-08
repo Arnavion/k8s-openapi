@@ -27,10 +27,10 @@ pub struct RuleWithOperations {
 
 impl crate::DeepMerge for RuleWithOperations {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.api_groups, other.api_groups);
-        crate::DeepMerge::merge_from(&mut self.api_versions, other.api_versions);
-        crate::DeepMerge::merge_from(&mut self.operations, other.operations);
-        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
+        crate::merge_strategies::list::atomic(&mut self.api_groups, other.api_groups);
+        crate::merge_strategies::list::atomic(&mut self.api_versions, other.api_versions);
+        crate::merge_strategies::list::atomic(&mut self.operations, other.operations);
+        crate::merge_strategies::list::atomic(&mut self.resources, other.resources);
         crate::DeepMerge::merge_from(&mut self.scope, other.scope);
     }
 }

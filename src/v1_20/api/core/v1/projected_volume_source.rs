@@ -13,7 +13,7 @@ pub struct ProjectedVolumeSource {
 impl crate::DeepMerge for ProjectedVolumeSource {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.default_mode, other.default_mode);
-        crate::DeepMerge::merge_from(&mut self.sources, other.sources);
+        crate::merge_strategies::list::atomic(&mut self.sources, other.sources);
     }
 }
 

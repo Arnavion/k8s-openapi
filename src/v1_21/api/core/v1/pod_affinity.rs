@@ -12,8 +12,8 @@ pub struct PodAffinity {
 
 impl crate::DeepMerge for PodAffinity {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.preferred_during_scheduling_ignored_during_execution, other.preferred_during_scheduling_ignored_during_execution);
-        crate::DeepMerge::merge_from(&mut self.required_during_scheduling_ignored_during_execution, other.required_during_scheduling_ignored_during_execution);
+        crate::merge_strategies::list::atomic(&mut self.preferred_during_scheduling_ignored_during_execution, other.preferred_during_scheduling_ignored_during_execution);
+        crate::merge_strategies::list::atomic(&mut self.required_during_scheduling_ignored_during_execution, other.required_during_scheduling_ignored_during_execution);
     }
 }
 

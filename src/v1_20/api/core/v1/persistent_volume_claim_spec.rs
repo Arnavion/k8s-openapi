@@ -27,7 +27,7 @@ pub struct PersistentVolumeClaimSpec {
 
 impl crate::DeepMerge for PersistentVolumeClaimSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.access_modes, other.access_modes);
+        crate::merge_strategies::list::atomic(&mut self.access_modes, other.access_modes);
         crate::DeepMerge::merge_from(&mut self.data_source, other.data_source);
         crate::DeepMerge::merge_from(&mut self.resources, other.resources);
         crate::DeepMerge::merge_from(&mut self.selector, other.selector);

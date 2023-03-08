@@ -12,7 +12,7 @@ pub struct HostAlias {
 
 impl crate::DeepMerge for HostAlias {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.hostnames, other.hostnames);
+        crate::merge_strategies::list::atomic(&mut self.hostnames, other.hostnames);
         crate::DeepMerge::merge_from(&mut self.ip, other.ip);
     }
 }

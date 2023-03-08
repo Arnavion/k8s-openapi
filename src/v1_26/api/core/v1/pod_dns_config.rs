@@ -15,9 +15,9 @@ pub struct PodDNSConfig {
 
 impl crate::DeepMerge for PodDNSConfig {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.nameservers, other.nameservers);
-        crate::DeepMerge::merge_from(&mut self.options, other.options);
-        crate::DeepMerge::merge_from(&mut self.searches, other.searches);
+        crate::merge_strategies::list::atomic(&mut self.nameservers, other.nameservers);
+        crate::merge_strategies::list::atomic(&mut self.options, other.options);
+        crate::merge_strategies::list::atomic(&mut self.searches, other.searches);
     }
 }
 

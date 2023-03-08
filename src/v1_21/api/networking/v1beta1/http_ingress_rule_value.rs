@@ -9,7 +9,7 @@ pub struct HTTPIngressRuleValue {
 
 impl crate::DeepMerge for HTTPIngressRuleValue {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.paths, other.paths);
+        crate::merge_strategies::list::atomic(&mut self.paths, other.paths);
     }
 }
 

@@ -39,17 +39,17 @@ pub struct NodeStatus {
 
 impl crate::DeepMerge for NodeStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.addresses, other.addresses);
-        crate::DeepMerge::merge_from(&mut self.allocatable, other.allocatable);
-        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::atomic(&mut self.addresses, other.addresses);
+        crate::merge_strategies::map::granular(&mut self.allocatable, other.allocatable);
+        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity);
+        crate::merge_strategies::list::atomic(&mut self.conditions, other.conditions);
         crate::DeepMerge::merge_from(&mut self.config, other.config);
         crate::DeepMerge::merge_from(&mut self.daemon_endpoints, other.daemon_endpoints);
-        crate::DeepMerge::merge_from(&mut self.images, other.images);
+        crate::merge_strategies::list::atomic(&mut self.images, other.images);
         crate::DeepMerge::merge_from(&mut self.node_info, other.node_info);
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
-        crate::DeepMerge::merge_from(&mut self.volumes_attached, other.volumes_attached);
-        crate::DeepMerge::merge_from(&mut self.volumes_in_use, other.volumes_in_use);
+        crate::merge_strategies::list::atomic(&mut self.volumes_attached, other.volumes_attached);
+        crate::merge_strategies::list::atomic(&mut self.volumes_in_use, other.volumes_in_use);
     }
 }
 

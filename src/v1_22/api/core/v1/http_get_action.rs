@@ -22,7 +22,7 @@ pub struct HTTPGetAction {
 impl crate::DeepMerge for HTTPGetAction {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.host, other.host);
-        crate::DeepMerge::merge_from(&mut self.http_headers, other.http_headers);
+        crate::merge_strategies::list::atomic(&mut self.http_headers, other.http_headers);
         crate::DeepMerge::merge_from(&mut self.path, other.path);
         crate::DeepMerge::merge_from(&mut self.port, other.port);
         crate::DeepMerge::merge_from(&mut self.scheme, other.scheme);

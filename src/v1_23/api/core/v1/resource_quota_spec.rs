@@ -15,9 +15,9 @@ pub struct ResourceQuotaSpec {
 
 impl crate::DeepMerge for ResourceQuotaSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.hard, other.hard);
+        crate::merge_strategies::map::granular(&mut self.hard, other.hard);
         crate::DeepMerge::merge_from(&mut self.scope_selector, other.scope_selector);
-        crate::DeepMerge::merge_from(&mut self.scopes, other.scopes);
+        crate::merge_strategies::list::atomic(&mut self.scopes, other.scopes);
     }
 }
 

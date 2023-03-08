@@ -9,7 +9,7 @@ pub struct NamespaceSpec {
 
 impl crate::DeepMerge for NamespaceSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.finalizers, other.finalizers);
+        crate::merge_strategies::list::atomic(&mut self.finalizers, other.finalizers);
     }
 }
 

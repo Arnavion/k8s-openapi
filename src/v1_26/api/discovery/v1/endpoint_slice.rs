@@ -497,9 +497,9 @@ impl crate::Metadata for EndpointSlice {
 impl crate::DeepMerge for EndpointSlice {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.address_type, other.address_type);
-        crate::DeepMerge::merge_from(&mut self.endpoints, other.endpoints);
+        crate::merge_strategies::list::atomic(&mut self.endpoints, other.endpoints);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::atomic(&mut self.ports, other.ports);
     }
 }
 

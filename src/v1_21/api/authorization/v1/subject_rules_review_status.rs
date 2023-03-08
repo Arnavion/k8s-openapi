@@ -20,8 +20,8 @@ impl crate::DeepMerge for SubjectRulesReviewStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.evaluation_error, other.evaluation_error);
         crate::DeepMerge::merge_from(&mut self.incomplete, other.incomplete);
-        crate::DeepMerge::merge_from(&mut self.non_resource_rules, other.non_resource_rules);
-        crate::DeepMerge::merge_from(&mut self.resource_rules, other.resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.non_resource_rules, other.non_resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.resource_rules, other.resource_rules);
     }
 }
 

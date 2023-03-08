@@ -33,7 +33,7 @@ impl crate::DeepMerge for RBDPersistentVolumeSource {
         crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
         crate::DeepMerge::merge_from(&mut self.image, other.image);
         crate::DeepMerge::merge_from(&mut self.keyring, other.keyring);
-        crate::DeepMerge::merge_from(&mut self.monitors, other.monitors);
+        crate::merge_strategies::list::atomic(&mut self.monitors, other.monitors);
         crate::DeepMerge::merge_from(&mut self.pool, other.pool);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
         crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);

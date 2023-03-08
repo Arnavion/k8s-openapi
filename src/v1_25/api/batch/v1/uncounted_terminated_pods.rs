@@ -12,8 +12,8 @@ pub struct UncountedTerminatedPods {
 
 impl crate::DeepMerge for UncountedTerminatedPods {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.failed, other.failed);
-        crate::DeepMerge::merge_from(&mut self.succeeded, other.succeeded);
+        crate::merge_strategies::list::set(&mut self.failed, other.failed);
+        crate::merge_strategies::list::set(&mut self.succeeded, other.succeeded);
     }
 }
 

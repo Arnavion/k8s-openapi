@@ -18,7 +18,7 @@ pub struct TokenReviewStatus {
 
 impl crate::DeepMerge for TokenReviewStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.audiences, other.audiences);
+        crate::merge_strategies::list::atomic(&mut self.audiences, other.audiences);
         crate::DeepMerge::merge_from(&mut self.authenticated, other.authenticated);
         crate::DeepMerge::merge_from(&mut self.error, other.error);
         crate::DeepMerge::merge_from(&mut self.user, other.user);

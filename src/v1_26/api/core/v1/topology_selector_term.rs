@@ -9,7 +9,7 @@ pub struct TopologySelectorTerm {
 
 impl crate::DeepMerge for TopologySelectorTerm {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.match_label_expressions, other.match_label_expressions);
+        crate::merge_strategies::list::atomic(&mut self.match_label_expressions, other.match_label_expressions);
     }
 }
 

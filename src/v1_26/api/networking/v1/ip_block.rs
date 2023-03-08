@@ -13,7 +13,7 @@ pub struct IPBlock {
 impl crate::DeepMerge for IPBlock {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.cidr, other.cidr);
-        crate::DeepMerge::merge_from(&mut self.except, other.except);
+        crate::merge_strategies::list::atomic(&mut self.except, other.except);
     }
 }
 

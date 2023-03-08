@@ -9,7 +9,7 @@ pub struct PriorityLevelConfigurationStatus {
 
 impl crate::DeepMerge for PriorityLevelConfigurationStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &["type"]);
     }
 }
 

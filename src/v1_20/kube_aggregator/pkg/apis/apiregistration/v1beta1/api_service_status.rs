@@ -9,7 +9,7 @@ pub struct APIServiceStatus {
 
 impl crate::DeepMerge for APIServiceStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &["type"]);
     }
 }
 

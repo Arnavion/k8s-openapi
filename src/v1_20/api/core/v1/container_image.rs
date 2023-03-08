@@ -12,7 +12,7 @@ pub struct ContainerImage {
 
 impl crate::DeepMerge for ContainerImage {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.names, other.names);
+        crate::merge_strategies::list::atomic(&mut self.names, other.names);
         crate::DeepMerge::merge_from(&mut self.size_bytes, other.size_bytes);
     }
 }

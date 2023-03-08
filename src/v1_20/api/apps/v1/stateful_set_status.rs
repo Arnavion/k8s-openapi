@@ -34,7 +34,7 @@ pub struct StatefulSetStatus {
 impl crate::DeepMerge for StatefulSetStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.collision_count, other.collision_count);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::atomic(&mut self.conditions, other.conditions);
         crate::DeepMerge::merge_from(&mut self.current_replicas, other.current_replicas);
         crate::DeepMerge::merge_from(&mut self.current_revision, other.current_revision);
         crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);

@@ -57,11 +57,11 @@ pub struct MatchResources {
 
 impl crate::DeepMerge for MatchResources {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.exclude_resource_rules, other.exclude_resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.exclude_resource_rules, other.exclude_resource_rules);
         crate::DeepMerge::merge_from(&mut self.match_policy, other.match_policy);
         crate::DeepMerge::merge_from(&mut self.namespace_selector, other.namespace_selector);
         crate::DeepMerge::merge_from(&mut self.object_selector, other.object_selector);
-        crate::DeepMerge::merge_from(&mut self.resource_rules, other.resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.resource_rules, other.resource_rules);
     }
 }
 

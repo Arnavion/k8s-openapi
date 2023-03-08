@@ -21,7 +21,7 @@ impl crate::DeepMerge for FlowSchemaSpec {
         crate::DeepMerge::merge_from(&mut self.distinguisher_method, other.distinguisher_method);
         crate::DeepMerge::merge_from(&mut self.matching_precedence, other.matching_precedence);
         crate::DeepMerge::merge_from(&mut self.priority_level_configuration, other.priority_level_configuration);
-        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+        crate::merge_strategies::list::atomic(&mut self.rules, other.rules);
     }
 }
 
