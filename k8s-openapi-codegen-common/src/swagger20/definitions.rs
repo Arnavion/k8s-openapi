@@ -108,6 +108,9 @@ pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
 	pub kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
+  pub kubernetes_list_map_keys: Vec<String>,
+  pub kubernetes_list_type: super::KubernetesListType,
+  pub kubernetes_map_type: super::KubernetesMapType,
 
 	/// Used to store the definition path of the corresponding list type, if any.
 	pub list_kind: Option<String>,
@@ -133,6 +136,13 @@ impl<'de> serde::Deserialize<'de> for Schema {
 
 			#[serde(default, rename = "x-kubernetes-group-version-kind")]
 			kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
+
+      #[serde(default, rename = "x-kubernetes-list-map-keys")]
+      kubernetes_list_map_keys: Vec<String>,
+      #[serde(default, rename = "x-kubernetes-list-type")]
+      kubernetes_list_type: super::KubernetesListType,
+      #[serde(default, rename = "x-kubernetes-map-type")]
+      kubernetes_map_type: super::KubernetesMapType,
 
 			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
 
@@ -181,6 +191,9 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
 			list_kind: None,
 			impl_deep_merge: true,
+      kubernetes_list_map_keys: value.kubernetes_list_map_keys,
+      kubernetes_list_type: value.kubernetes_list_type,
+      kubernetes_map_type: value.kubernetes_map_type,
 		})
 	}
 }
