@@ -1,3 +1,5 @@
+use crate::get_rust_ident;
+
 pub(crate) fn generate(
 	mut writer: impl std::io::Write,
 	type_name: &str,
@@ -32,7 +34,7 @@ pub(crate) fn generate(
       } => writeln!(
 			  &mut merge_body,
 			  "        {local}merge_strategies::list::map(&mut self.{field_name}, other.{field_name}, &[{keys}]);",
-        keys = keys.iter().map(|k| format!("\"{k}\"")).collect::<Vec<_>>().join(",")
+        keys = keys.iter().map(|k| format!("|lhs, rhs| lhs.{k} == rhs.{k}", k = get_rust_ident(k))).collect::<Vec<_>>().join(", ")
 		  )?,
       super::MergeType::List {
         strategy: crate::swagger20::KubernetesListType::Set,
