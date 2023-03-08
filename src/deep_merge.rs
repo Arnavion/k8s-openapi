@@ -105,12 +105,7 @@ impl<T> DeepMerge for Box<T> where T: DeepMerge {
 
 impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
   fn merge_from(&mut self, other: Self) {
-    for (k, v) in other {
-      match self.entry(k) {
-        std::collections::btree_map::Entry::Vacant(e) => { e.insert(v); },
-        std::collections::btree_map::Entry::Occupied(e) => e.into_mut().merge_from(v),
-      }
-    }
+    strategies::map::granular(self, other)
   }
 }
 
@@ -128,7 +123,7 @@ impl<T> DeepMerge for Option<T> where T: DeepMerge {
 
 impl<T> DeepMerge for Vec<T> {
   fn merge_from(&mut self, other: Self) {
-    self.extend(other);
+    strategies::list::atomic(self, other)
   }
 }
 
@@ -162,7 +157,7 @@ pub mod strategies {
           *self = new;
         }
       }
-      fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>> {
+      fn as_mut_opt(&mut self) -> Option<&mut Vec<T>> {
         self.as_mut()
       }
       fn into_opt(self) -> Self {
@@ -204,14 +199,16 @@ pub mod strategies {
     use crate::DeepMerge;
 
     pub trait AsOptMap {
+      type Key;
       type Value;
       fn set(&mut self, new: Self);
-      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<String, Self::Value>>;
-      fn into_opt(self) -> Option<BTreeMap<String, Self::Value>>;
+      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<Self::Key, Self::Value>>;
+      fn into_opt(self) -> Option<BTreeMap<Self::Key, Self::Value>>;
     }
 
-    impl<T> AsOptMap for BTreeMap<String, T> {
-      type Value = T;
+    impl<K, V> AsOptMap for BTreeMap<K, V> {
+      type Key = K;
+      type Value = V;
       fn set(&mut self, new: Self) {
         *self = new;
       }
@@ -222,14 +219,15 @@ pub mod strategies {
         Some(self)
       }
     }
-    impl<T> AsOptMap for Option<BTreeMap<String, T>> {
-      type Value = T;
+    impl<K, V> AsOptMap for Option<BTreeMap<K, V>> {
+      type Key = K;
+      type Value = V;
       fn set(&mut self, new: Self) {
         if new.is_some() {
           *self = new;
         }
       }
-      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<String, Self::Value>> {
+      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<K, V>> {
         self.as_mut()
       }
       fn into_opt(self) -> Self {
@@ -237,7 +235,7 @@ pub mod strategies {
       }
     }
 
-    pub fn granular<M: AsOptMap>(old: &mut M, new: M) where M::Value: DeepMerge {
+    pub fn granular<M: AsOptMap>(old: &mut M, new: M) where M::Key: Ord, M::Value: DeepMerge {
       if let Some(old) = old.as_mut_opt() {
         for (k, new_v) in new.into_opt().into_iter().flatten() {
           match old.entry(k) {
