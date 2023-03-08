@@ -81,7 +81,7 @@ impl crate::DeepMerge for Container {
         crate::DeepMerge::merge_from(&mut self.lifecycle, other.lifecycle);
         crate::DeepMerge::merge_from(&mut self.liveness_probe, other.liveness_probe);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
-        crate::merge_strategies::list::map(&mut self.ports, other.ports, &["containerPort","protocol"]);
+        crate::merge_strategies::list::map(&mut self.ports, other.ports, &[|lhs, rhs| lhs.container_port == rhs.container_port, |lhs, rhs| lhs.protocol == rhs.protocol]);
         crate::DeepMerge::merge_from(&mut self.readiness_probe, other.readiness_probe);
         crate::DeepMerge::merge_from(&mut self.resources, other.resources);
         crate::DeepMerge::merge_from(&mut self.security_context, other.security_context);

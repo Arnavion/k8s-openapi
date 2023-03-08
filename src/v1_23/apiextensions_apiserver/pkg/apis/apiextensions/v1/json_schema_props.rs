@@ -181,7 +181,7 @@ impl crate::DeepMerge for JSONSchemaProps {
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_list_type, other.x_kubernetes_list_type);
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_map_type, other.x_kubernetes_map_type);
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_preserve_unknown_fields, other.x_kubernetes_preserve_unknown_fields);
-        crate::merge_strategies::list::map(&mut self.x_kubernetes_validations, other.x_kubernetes_validations, &["rule"]);
+        crate::merge_strategies::list::map(&mut self.x_kubernetes_validations, other.x_kubernetes_validations, &[|lhs, rhs| lhs.rule == rhs.rule]);
     }
 }
 

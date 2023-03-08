@@ -9,7 +9,7 @@ pub struct FlowSchemaStatus {
 
 impl crate::DeepMerge for FlowSchemaStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &["type"]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
     }
 }
 

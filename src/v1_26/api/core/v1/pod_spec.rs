@@ -159,11 +159,11 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.priority, other.priority);
         crate::DeepMerge::merge_from(&mut self.priority_class_name, other.priority_class_name);
         crate::merge_strategies::list::atomic(&mut self.readiness_gates, other.readiness_gates);
-        crate::merge_strategies::list::map(&mut self.resource_claims, other.resource_claims, &["name"]);
+        crate::merge_strategies::list::map(&mut self.resource_claims, other.resource_claims, &[|lhs, rhs| lhs.name == rhs.name]);
         crate::DeepMerge::merge_from(&mut self.restart_policy, other.restart_policy);
         crate::DeepMerge::merge_from(&mut self.runtime_class_name, other.runtime_class_name);
         crate::DeepMerge::merge_from(&mut self.scheduler_name, other.scheduler_name);
-        crate::merge_strategies::list::map(&mut self.scheduling_gates, other.scheduling_gates, &["name"]);
+        crate::merge_strategies::list::map(&mut self.scheduling_gates, other.scheduling_gates, &[|lhs, rhs| lhs.name == rhs.name]);
         crate::DeepMerge::merge_from(&mut self.security_context, other.security_context);
         crate::DeepMerge::merge_from(&mut self.service_account, other.service_account);
         crate::DeepMerge::merge_from(&mut self.service_account_name, other.service_account_name);
@@ -172,7 +172,7 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.subdomain, other.subdomain);
         crate::DeepMerge::merge_from(&mut self.termination_grace_period_seconds, other.termination_grace_period_seconds);
         crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
-        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &["topologyKey","whenUnsatisfiable"]);
+        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &[|lhs, rhs| lhs.topology_key == rhs.topology_key, |lhs, rhs| lhs.when_unsatisfiable == rhs.when_unsatisfiable]);
         crate::merge_strategies::list::atomic(&mut self.volumes, other.volumes);
     }
 }

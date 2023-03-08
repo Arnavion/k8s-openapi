@@ -16,8 +16,8 @@ pub struct StorageVersionStatus {
 impl crate::DeepMerge for StorageVersionStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.common_encoding_version, other.common_encoding_version);
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &["type"]);
-        crate::merge_strategies::list::map(&mut self.storage_versions, other.storage_versions, &["apiServerID"]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.storage_versions, other.storage_versions, &[|lhs, rhs| lhs.api_server_id == rhs.api_server_id]);
     }
 }
 

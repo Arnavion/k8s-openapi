@@ -83,7 +83,7 @@ impl crate::DeepMerge for ServiceSpec {
         crate::DeepMerge::merge_from(&mut self.load_balancer_class, other.load_balancer_class);
         crate::DeepMerge::merge_from(&mut self.load_balancer_ip, other.load_balancer_ip);
         crate::merge_strategies::list::atomic(&mut self.load_balancer_source_ranges, other.load_balancer_source_ranges);
-        crate::merge_strategies::list::map(&mut self.ports, other.ports, &["port","protocol"]);
+        crate::merge_strategies::list::map(&mut self.ports, other.ports, &[|lhs, rhs| lhs.port == rhs.port, |lhs, rhs| lhs.protocol == rhs.protocol]);
         crate::DeepMerge::merge_from(&mut self.publish_not_ready_addresses, other.publish_not_ready_addresses);
         crate::merge_strategies::map::atomic(&mut self.selector, other.selector);
         crate::DeepMerge::merge_from(&mut self.session_affinity, other.session_affinity);

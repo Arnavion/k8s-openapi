@@ -158,7 +158,7 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.subdomain, other.subdomain);
         crate::DeepMerge::merge_from(&mut self.termination_grace_period_seconds, other.termination_grace_period_seconds);
         crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
-        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &["topologyKey","whenUnsatisfiable"]);
+        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &[|lhs, rhs| lhs.topology_key == rhs.topology_key, |lhs, rhs| lhs.when_unsatisfiable == rhs.when_unsatisfiable]);
         crate::merge_strategies::list::atomic(&mut self.volumes, other.volumes);
     }
 }

@@ -19,7 +19,7 @@ pub struct ResourceRequirements {
 
 impl crate::DeepMerge for ResourceRequirements {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.claims, other.claims, &["name"]);
+        crate::merge_strategies::list::map(&mut self.claims, other.claims, &[|lhs, rhs| lhs.name == rhs.name]);
         crate::merge_strategies::map::granular(&mut self.limits, other.limits);
         crate::merge_strategies::map::granular(&mut self.requests, other.requests);
     }

@@ -9,7 +9,7 @@ pub struct PodSchedulingStatus {
 
 impl crate::DeepMerge for PodSchedulingStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.resource_claims, other.resource_claims, &["name"]);
+        crate::merge_strategies::list::map(&mut self.resource_claims, other.resource_claims, &[|lhs, rhs| lhs.name == rhs.name]);
     }
 }
 
