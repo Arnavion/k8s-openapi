@@ -134,6 +134,8 @@ impl<T> DeepMerge for Vec<T> {
 
 pub mod strategies {
   pub mod list {
+    use crate::DeepMerge;
+
     pub trait AsOptVec {
       type Item;
       fn set(&mut self, new: Self);
@@ -171,8 +173,18 @@ pub mod strategies {
     pub fn atomic<V: AsOptVec>(old: &mut V, new: V) {
       *old = new;
     }
-    pub fn map<V: AsOptVec>(old: &mut V, new: V, keys: &[&str]) {
-      todo!()
+    pub fn map<V: AsOptVec>(old: &mut V, new: V, key_comparators: &[fn(&V::Item, &V::Item) -> bool]) where V::Item: DeepMerge {
+      if let Some(old) = old.as_mut_opt() {
+        for new_item in new.into_opt().into_iter().flatten() {
+          if let Some(old_item) = old.iter_mut().find(|old_item| key_comparators.iter().all(|f| f(&new_item, old_item))) {
+            old_item.merge_from(new_item);
+          } else {
+            old.push(new_item);
+          }
+        }
+      } else {
+        old.set(new)
+      }
     }
     pub fn set<V: AsOptVec>(old: &mut V, new: V) where V::Item: PartialEq {
       if let Some(old) = old.as_mut_opt() {
