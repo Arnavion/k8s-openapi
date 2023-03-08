@@ -428,7 +428,7 @@ pub use _byte_string::ByteString;
 
 #[path = "deep_merge.rs"]
 mod _deep_merge;
-pub use self::_deep_merge::DeepMerge;
+pub use self::_deep_merge::{DeepMerge, strategies as merge_strategies};
 
 #[path = "resource.rs"]
 mod _resource;

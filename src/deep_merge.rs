@@ -131,3 +131,114 @@ impl<T> DeepMerge for Vec<T> {
         self.extend(other);
     }
 }
+
+pub mod strategies {
+  pub mod list {
+    pub trait AsOptVec {
+      type Item;
+      fn set(&mut self, new: Self);
+      fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>>;
+      fn into_opt(self) -> Option<Vec<Self::Item>>;
+    }
+
+    impl<T> AsOptVec for Vec<T> {
+      type Item = T;
+      fn set(&mut self, new: Self) {
+        *self = new;
+      }
+      fn as_mut_opt(&mut self) -> Option<&mut Self> {
+        Some(self)
+      }
+      fn into_opt(self) -> Option<Self> {
+        Some(self)
+      }
+    }
+    impl<T> AsOptVec for Option<Vec<T>> {
+      type Item = T;
+      fn set(&mut self, new: Self) {
+        if new.is_some() {
+          *self = new;
+        }
+      }
+      fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>> {
+        self.as_mut()
+      }
+      fn into_opt(self) -> Self {
+        self
+      }
+    }
+
+    pub fn atomic<V: AsOptVec>(old: &mut V, new: V) {
+      *old = new;
+    }
+    pub fn map<V: AsOptVec>(old: &mut V, new: V, keys: &[&str]) {
+      todo!()
+    }
+    pub fn set<V: AsOptVec>(old: &mut V, new: V) where V::Item: PartialEq {
+      if let Some(old) = old.as_mut_opt() {
+        for item in new.into_opt().into_iter().flatten() {
+          if !old.contains(&item) {
+            old.push(item);
+          }
+        }
+      } else {
+        old.set(new)
+      }
+    }
+  }
+  pub mod map {
+    use std::collections::{BTreeMap, btree_map::Entry};
+
+    use crate::DeepMerge;
+
+    pub trait AsOptMap {
+      type Value;
+      fn set(&mut self, new: Self);
+      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<String, Self::Value>>;
+      fn into_opt(self) -> Option<BTreeMap<String, Self::Value>>;
+    }
+
+    impl<T> AsOptMap for BTreeMap<String, T> {
+      type Value = T;
+      fn set(&mut self, new: Self) {
+        *self = new;
+      }
+      fn as_mut_opt(&mut self) -> Option<&mut Self> {
+        Some(self)
+      }
+      fn into_opt(self) -> Option<Self> {
+        Some(self)
+      }
+    }
+    impl<T> AsOptMap for Option<BTreeMap<String, T>> {
+      type Value = T;
+      fn set(&mut self, new: Self) {
+        if new.is_some() {
+          *self = new;
+        }
+      }
+      fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<String, Self::Value>> {
+        self.as_mut()
+      }
+      fn into_opt(self) -> Self {
+        self
+      }
+    }
+
+    pub fn granular<M: AsOptMap>(old: &mut M, new: M) where M::Value: DeepMerge {
+      if let Some(old) = old.as_mut_opt() {
+        for (k, new_v) in new.into_opt().into_iter().flatten() {
+          match old.entry(k) {
+            Entry::Vacant(entry) => { entry.insert(new_v); }
+            Entry::Occupied(mut entry) => entry.get_mut().merge_from(new_v),
+          }
+        }
+      } else {
+        old.set(new)
+      }
+    }
+    pub fn atomic<M: AsOptMap>(old: &mut M, new: M) {
+      old.set(new)
+    }
+  }
+}
