@@ -312,6 +312,21 @@ pub fn run(
 
 					let is_flattened = matches!(&schema.kind, swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)));
 
+          let merge_type = match schema.kind {
+            swagger20::SchemaKind::Ty(swagger20::Type::Array { .. }) => {
+              templates::MergeType::List {
+                strategy: schema.kubernetes_list_type.clone(),
+                keys: schema.kubernetes_list_map_keys.clone(),
+              }
+            },
+            swagger20::SchemaKind::Ty(swagger20::Type::Object { .. }) => {
+              templates::MergeType::Map {
+                strategy: schema.kubernetes_map_type.clone(),
+              }
+            }
+            _ => templates::MergeType::Default,
+          };
+
 					result.push(templates::Property {
 						name,
 						comment: schema.description.as_deref(),
@@ -319,6 +334,7 @@ pub fn run(
 						field_type_name,
 						required,
 						is_flattened,
+            merge_type,
 					});
 				}
 
@@ -674,6 +690,7 @@ pub fn run(
 					field_type_name: "Vec<T>".to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
+          merge_type: templates::MergeType::Default,
 				},
 
 				templates::Property {
@@ -683,6 +700,7 @@ pub fn run(
 					field_type_name: (*metadata_rust_type).to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
+          merge_type: templates::MergeType::Default,
 				},
 			];
 
@@ -808,6 +826,7 @@ pub fn run(
 						field_type_name,
 						required: templates::PropertyRequired::Optional,
 						is_flattened: false,
+            merge_type: templates::MergeType::Default,
 					});
 				}
 

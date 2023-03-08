@@ -43,6 +43,7 @@ pub(crate) struct Property<'a> {
 	pub(crate) field_type_name: String,
 	pub(crate) required: PropertyRequired,
 	pub(crate) is_flattened: bool,
+  pub(crate) merge_type: MergeType,
 }
 
 #[derive(Clone, Copy)]
@@ -55,6 +56,17 @@ pub(crate) enum PropertyRequired {
 	// https://github.com/Arnavion/k8s-openapi/issues/103
 	#[allow(unused)]
 	OptionalDefault,
+}
+
+pub(crate) enum MergeType {
+  Default,
+  List {
+    strategy: crate::swagger20::KubernetesListType,
+    keys: Vec<String>,
+  },
+  Map {
+    strategy: crate::swagger20::KubernetesMapType,
+  },
 }
 
 #[derive(Clone, Copy)]
