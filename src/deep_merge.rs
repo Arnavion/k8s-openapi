@@ -172,7 +172,7 @@ pub mod strategies {
     }
 
     pub fn atomic<V: AsOptVec>(old: &mut V, new: V) {
-      *old = new;
+      old.set(new)
     }
     pub fn map<V: AsOptVec>(old: &mut V, new: V, key_comparators: &[fn(&V::Item, &V::Item) -> bool]) where V::Item: DeepMerge {
       if let Some(old) = old.as_mut_opt() {
