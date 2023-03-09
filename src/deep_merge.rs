@@ -101,7 +101,7 @@ impl<T> DeepMerge for Box<T> where T: DeepMerge {
 
 impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
 	fn merge_from(&mut self, other: Self) {
-		strategies::map::granular(self, other)
+		strategies::map::granular(self, other);
 	}
 }
 
@@ -119,7 +119,7 @@ impl<T> DeepMerge for Option<T> where T: DeepMerge {
 
 impl<T> DeepMerge for Vec<T> {
 	fn merge_from(&mut self, other: Self) {
-		strategies::list::atomic(self, other)
+		strategies::list::atomic(self, other);
 	}
 }
 
@@ -175,7 +175,7 @@ pub mod strategies {
 
 		/// The whole list is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
 		pub fn atomic<V: AsOptVec>(old: &mut V, new: V) {
-			old.set(new)
+			old.set(new);
 		}
 		/// The list is treated as a map.
 		///
@@ -190,7 +190,7 @@ pub mod strategies {
 					}
 				}
 			} else {
-				old.set(new)
+				old.set(new);
 			}
 		}
 		/// The list is treated as a set.
@@ -204,7 +204,7 @@ pub mod strategies {
 					}
 				}
 			} else {
-				old.set(new)
+				old.set(new);
 			}
 		}
 	}
@@ -270,12 +270,12 @@ pub mod strategies {
 					}
 				}
 			} else {
-				old.set(new)
+				old.set(new);
 			}
 		}
 		/// The whole map is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
 		pub fn atomic<M: AsOptMap>(old: &mut M, new: M) {
-			old.set(new)
+			old.set(new);
 		}
 	}
 }
