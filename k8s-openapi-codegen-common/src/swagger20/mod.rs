@@ -32,6 +32,7 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 	}
 }
 
+/// The value of an `x-kubernetes-list-type` annotation on a property.
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
 #[cfg_attr(
 	feature = "serde",
@@ -45,6 +46,7 @@ pub enum KubernetesListType {
 	Map,
 }
 
+/// The value of an `x-kubernetes-map-type` annotation on a property.
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
 #[cfg_attr(
 	feature = "serde",
