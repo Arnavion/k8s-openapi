@@ -131,7 +131,13 @@ pub mod strategies {
   pub mod list {
     use crate::DeepMerge;
 
-    pub trait AsOptVec {
+    mod private {
+      pub trait Sealed {}
+      impl<T> Sealed for Vec<T> {}
+      impl<T> Sealed for Option<Vec<T>> {}
+    }
+
+    pub trait AsOptVec: private::Sealed {
       type Item;
       fn set(&mut self, new: Self);
       fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>>;
@@ -197,6 +203,14 @@ pub mod strategies {
     use std::collections::{BTreeMap, btree_map::Entry};
 
     use crate::DeepMerge;
+
+    mod private {
+      use std::collections::BTreeMap;
+
+      pub trait Sealed {}
+      impl<K, V> Sealed for BTreeMap<K, V> {}
+      impl<K, V> Sealed for Option<BTreeMap<K, V>> {}
+    }
 
     pub trait AsOptMap {
       type Key;
