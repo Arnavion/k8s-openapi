@@ -312,20 +312,20 @@ pub fn run(
 
 					let is_flattened = matches!(&schema.kind, swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(_)));
 
-          let merge_type = match schema.kind {
-            swagger20::SchemaKind::Ty(swagger20::Type::Array { .. }) => {
-              templates::MergeType::List {
-                strategy: schema.kubernetes_list_type.clone(),
-                keys: schema.kubernetes_list_map_keys.clone(),
-              }
-            },
-            swagger20::SchemaKind::Ty(swagger20::Type::Object { .. }) => {
-              templates::MergeType::Map {
-                strategy: schema.kubernetes_map_type.clone(),
-              }
-            }
-            _ => templates::MergeType::Default,
-          };
+					let merge_type = match schema.kind {
+						swagger20::SchemaKind::Ty(swagger20::Type::Array { .. }) => {
+							templates::MergeType::List {
+								strategy: schema.kubernetes_list_type.clone(),
+								keys: schema.kubernetes_list_map_keys.clone(),
+							}
+						},
+						swagger20::SchemaKind::Ty(swagger20::Type::Object { .. }) => {
+							templates::MergeType::Map {
+								strategy: schema.kubernetes_map_type.clone(),
+							}
+						}
+						_ => templates::MergeType::Default,
+					};
 
 					result.push(templates::Property {
 						name,
@@ -334,7 +334,7 @@ pub fn run(
 						field_type_name,
 						required,
 						is_flattened,
-            merge_type,
+						merge_type,
 					});
 				}
 
@@ -690,7 +690,7 @@ pub fn run(
 					field_type_name: "Vec<T>".to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
-          merge_type: templates::MergeType::Default,
+					merge_type: templates::MergeType::Default,
 				},
 
 				templates::Property {
@@ -700,7 +700,7 @@ pub fn run(
 					field_type_name: (*metadata_rust_type).to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
-          merge_type: templates::MergeType::Default,
+					merge_type: templates::MergeType::Default,
 				},
 			];
 
@@ -826,7 +826,7 @@ pub fn run(
 						field_type_name,
 						required: templates::PropertyRequired::Optional,
 						is_flattened: false,
-            merge_type: templates::MergeType::Default,
+						merge_type: templates::MergeType::Default,
 					});
 				}
 
@@ -1027,7 +1027,7 @@ pub fn run(
 					schema_feature,
 					map_namespace,
 				)?;
-			} 
+			}
 
 			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => {
 				templates::impl_schema::generate(
@@ -1710,7 +1710,7 @@ pub fn write_operation(
 					path == "io.k8s.ListOptional" ||
 					path == "io.k8s.PatchOptional" ||
 					path == "io.k8s.ReplaceOptional" ||
-					path == "io.k8s.WatchOptional" 
+					path == "io.k8s.WatchOptional"
 				}
 				else {
 					false

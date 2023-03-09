@@ -34,27 +34,27 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
 #[cfg_attr(
-  feature = "serde",
-  derive(serde::Deserialize),
-  serde(rename_all = "camelCase"),
+	feature = "serde",
+	derive(serde::Deserialize),
+	serde(rename_all = "camelCase"),
 )]
 pub enum KubernetesListType {
-  #[default]
-  Atomic,
-  Set,
-  Map,
+	#[default]
+	Atomic,
+	Set,
+	Map,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
 #[cfg_attr(
-  feature = "serde",
-  derive(serde::Deserialize),
-  serde(rename_all = "camelCase"),
+	feature = "serde",
+	derive(serde::Deserialize),
+	serde(rename_all = "camelCase"),
 )]
 pub enum KubernetesMapType {
-  #[default]
-  Granular,
-  Atomic,
+	#[default]
+	Granular,
+	Atomic,
 }
 
 /// The whole `Spec` object. An OpenAPI spec JSON file can be deserialized into this type.
