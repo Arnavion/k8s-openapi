@@ -275,7 +275,7 @@ pub mod strategies {
 				for (k, new_v) in new.into_opt().into_iter().flatten() {
 					match old.entry(k) {
 						Entry::Vacant(entry) => { entry.insert(new_v); }
-						Entry::Occupied(mut entry) => entry.get_mut().merge_from(new_v),
+						Entry::Occupied(entry) => entry.into_mut().merge_from(new_v),
 					}
 				}
 			} else {
