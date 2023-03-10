@@ -143,6 +143,11 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			kubernetes_list_type: super::KubernetesListType,
 			#[serde(default, rename = "x-kubernetes-map-type")]
 			kubernetes_map_type: super::KubernetesMapType,
+			#[serde(default, rename = "x-kubernetes-patch-merge-key")]
+			kubernetes_patch_merge_key: Option<String>,
+			/// comma-separated list of strategy tags, see https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md
+			#[serde(default, rename = "x-kubernetes-patch-strategy")]
+			kubernetes_patch_strategy: String,
 
 			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
 
@@ -184,6 +189,18 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			else {
 				SchemaKind::Ty(Type::Any)
 			};
+
+		if let Some(key) = value.kubernetes_patch_merge_key {
+			value.kubernetes_list_map_keys = vec![key];
+		}
+		if value.kubernetes_patch_strategy.split(',').any(|x| x == "merge") {
+			value.kubernetes_list_type =
+				if value.kubernetes_list_map_keys.is_empty() {
+					super::KubernetesListType::Set
+				} else {
+					super::KubernetesListType::Map
+				};
+		}
 
 		Ok(Schema {
 			description: value.description,
