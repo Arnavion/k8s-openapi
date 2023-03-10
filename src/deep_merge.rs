@@ -174,13 +174,17 @@ pub mod strategies {
 		}
 
 		/// The whole list is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
-		pub fn atomic<V: AsOptVec>(old: &mut V, new: V) {
+		pub fn atomic<V>(old: &mut V, new: V) where V: AsOptVec {
 			old.set(new);
 		}
 		/// The list is treated as a map.
 		///
 		/// Any items with matching keys will be deep-merged. Any items that are found in `new` but not `old` will be appended to `old`.
-		pub fn map<V: AsOptVec>(old: &mut V, new: V, key_comparators: &[fn(&V::Item, &V::Item) -> bool]) where V::Item: DeepMerge {
+		pub fn map<V>(old: &mut V, new: V, key_comparators: &[fn(&V::Item, &V::Item) -> bool])
+		where
+			V: AsOptVec,
+			V::Item: DeepMerge,
+		{
 			if let Some(old) = old.as_mut_opt() {
 				for new_item in new.into_opt().into_iter().flatten() {
 					if let Some(old_item) = old.iter_mut().find(|old_item| key_comparators.iter().all(|f| f(&new_item, old_item))) {
@@ -196,7 +200,7 @@ pub mod strategies {
 		/// The list is treated as a set.
 		///
 		/// Items from `new` will be appended to `old`, _unless_ `old` already contains an equal item.
-		pub fn set<V: AsOptVec>(old: &mut V, new: V) where V::Item: PartialEq {
+		pub fn set<V>(old: &mut V, new: V) where V: AsOptVec, V::Item: PartialEq {
 			if let Some(old) = old.as_mut_opt() {
 				for item in new.into_opt().into_iter().flatten() {
 					if !old.contains(&item) {
@@ -261,7 +265,12 @@ pub mod strategies {
 
 
 		/// Each value will be merged separately.
-		pub fn granular<M: AsOptMap>(old: &mut M, new: M) where M::Key: Ord, M::Value: DeepMerge {
+		pub fn granular<M>(old: &mut M, new: M)
+		where
+			M: AsOptMap,
+			M::Key: Ord,
+			M::Value: DeepMerge,
+		{
 			if let Some(old) = old.as_mut_opt() {
 				for (k, new_v) in new.into_opt().into_iter().flatten() {
 					match old.entry(k) {
@@ -274,7 +283,7 @@ pub mod strategies {
 			}
 		}
 		/// The whole map is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
-		pub fn atomic<M: AsOptMap>(old: &mut M, new: M) {
+		pub fn atomic<M>(old: &mut M, new: M) where M: AsOptMap {
 			old.set(new);
 		}
 	}
