@@ -34,28 +34,25 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 
 /// The value of an `x-kubernetes-list-type` annotation on a property.
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
-#[cfg_attr(
-	feature = "serde",
-	derive(serde::Deserialize),
-	serde(rename_all = "camelCase"),
-)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub enum KubernetesListType {
 	#[default]
+	#[cfg_attr(feature = "serde", serde(rename = "atomic"))]
 	Atomic,
+	#[cfg_attr(feature = "serde", serde(rename = "set"))]
 	Set,
+	#[cfg_attr(feature = "serde", serde(rename = "map"))]
 	Map,
 }
 
 /// The value of an `x-kubernetes-map-type` annotation on a property.
 #[derive(Clone, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
-#[cfg_attr(
-	feature = "serde",
-	derive(serde::Deserialize),
-	serde(rename_all = "camelCase"),
-)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub enum KubernetesMapType {
 	#[default]
+	#[cfg_attr(feature = "serde", serde(rename = "granular"))]
 	Granular,
+	#[cfg_attr(feature = "serde", serde(rename = "atomic"))]
 	Atomic,
 }
 
