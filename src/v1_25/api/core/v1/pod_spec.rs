@@ -126,19 +126,19 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.active_deadline_seconds, other.active_deadline_seconds);
         crate::DeepMerge::merge_from(&mut self.affinity, other.affinity);
         crate::DeepMerge::merge_from(&mut self.automount_service_account_token, other.automount_service_account_token);
-        crate::merge_strategies::list::atomic(&mut self.containers, other.containers);
+        crate::merge_strategies::list::map(&mut self.containers, other.containers, &[|lhs, rhs| lhs.name == rhs.name]);
         crate::DeepMerge::merge_from(&mut self.dns_config, other.dns_config);
         crate::DeepMerge::merge_from(&mut self.dns_policy, other.dns_policy);
         crate::DeepMerge::merge_from(&mut self.enable_service_links, other.enable_service_links);
-        crate::merge_strategies::list::atomic(&mut self.ephemeral_containers, other.ephemeral_containers);
-        crate::merge_strategies::list::atomic(&mut self.host_aliases, other.host_aliases);
+        crate::merge_strategies::list::map(&mut self.ephemeral_containers, other.ephemeral_containers, &[|lhs, rhs| lhs.name == rhs.name]);
+        crate::merge_strategies::list::map(&mut self.host_aliases, other.host_aliases, &[|lhs, rhs| lhs.ip == rhs.ip]);
         crate::DeepMerge::merge_from(&mut self.host_ipc, other.host_ipc);
         crate::DeepMerge::merge_from(&mut self.host_network, other.host_network);
         crate::DeepMerge::merge_from(&mut self.host_pid, other.host_pid);
         crate::DeepMerge::merge_from(&mut self.host_users, other.host_users);
         crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
-        crate::merge_strategies::list::atomic(&mut self.image_pull_secrets, other.image_pull_secrets);
-        crate::merge_strategies::list::atomic(&mut self.init_containers, other.init_containers);
+        crate::merge_strategies::list::map(&mut self.image_pull_secrets, other.image_pull_secrets, &[|lhs, rhs| lhs.name == rhs.name]);
+        crate::merge_strategies::list::map(&mut self.init_containers, other.init_containers, &[|lhs, rhs| lhs.name == rhs.name]);
         crate::DeepMerge::merge_from(&mut self.node_name, other.node_name);
         crate::merge_strategies::map::atomic(&mut self.node_selector, other.node_selector);
         crate::DeepMerge::merge_from(&mut self.os, other.os);
@@ -158,8 +158,8 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.subdomain, other.subdomain);
         crate::DeepMerge::merge_from(&mut self.termination_grace_period_seconds, other.termination_grace_period_seconds);
         crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
-        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &[|lhs, rhs| lhs.topology_key == rhs.topology_key, |lhs, rhs| lhs.when_unsatisfiable == rhs.when_unsatisfiable]);
-        crate::merge_strategies::list::atomic(&mut self.volumes, other.volumes);
+        crate::merge_strategies::list::map(&mut self.topology_spread_constraints, other.topology_spread_constraints, &[|lhs, rhs| lhs.topology_key == rhs.topology_key]);
+        crate::merge_strategies::list::map(&mut self.volumes, other.volumes, &[|lhs, rhs| lhs.name == rhs.name]);
     }
 }
 

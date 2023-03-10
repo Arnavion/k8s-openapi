@@ -39,10 +39,10 @@ pub struct NodeStatus {
 
 impl crate::DeepMerge for NodeStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::atomic(&mut self.addresses, other.addresses);
+        crate::merge_strategies::list::map(&mut self.addresses, other.addresses, &[|lhs, rhs| lhs.type_ == rhs.type_]);
         crate::merge_strategies::map::granular(&mut self.allocatable, other.allocatable);
         crate::merge_strategies::map::granular(&mut self.capacity, other.capacity);
-        crate::merge_strategies::list::atomic(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
         crate::DeepMerge::merge_from(&mut self.config, other.config);
         crate::DeepMerge::merge_from(&mut self.daemon_endpoints, other.daemon_endpoints);
         crate::merge_strategies::list::atomic(&mut self.images, other.images);

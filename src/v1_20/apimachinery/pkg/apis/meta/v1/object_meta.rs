@@ -75,14 +75,14 @@ impl crate::DeepMerge for ObjectMeta {
         crate::DeepMerge::merge_from(&mut self.creation_timestamp, other.creation_timestamp);
         crate::DeepMerge::merge_from(&mut self.deletion_grace_period_seconds, other.deletion_grace_period_seconds);
         crate::DeepMerge::merge_from(&mut self.deletion_timestamp, other.deletion_timestamp);
-        crate::merge_strategies::list::atomic(&mut self.finalizers, other.finalizers);
+        crate::merge_strategies::list::set(&mut self.finalizers, other.finalizers);
         crate::DeepMerge::merge_from(&mut self.generate_name, other.generate_name);
         crate::DeepMerge::merge_from(&mut self.generation, other.generation);
         crate::merge_strategies::map::granular(&mut self.labels, other.labels);
         crate::merge_strategies::list::atomic(&mut self.managed_fields, other.managed_fields);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
         crate::DeepMerge::merge_from(&mut self.namespace, other.namespace);
-        crate::merge_strategies::list::atomic(&mut self.owner_references, other.owner_references);
+        crate::merge_strategies::list::map(&mut self.owner_references, other.owner_references, &[|lhs, rhs| lhs.uid == rhs.uid]);
         crate::DeepMerge::merge_from(&mut self.resource_version, other.resource_version);
         crate::DeepMerge::merge_from(&mut self.self_link, other.self_link);
         crate::DeepMerge::merge_from(&mut self.uid, other.uid);

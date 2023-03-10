@@ -498,7 +498,7 @@ impl crate::DeepMerge for ServiceAccount {
         crate::DeepMerge::merge_from(&mut self.automount_service_account_token, other.automount_service_account_token);
         crate::merge_strategies::list::atomic(&mut self.image_pull_secrets, other.image_pull_secrets);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::merge_strategies::list::atomic(&mut self.secrets, other.secrets);
+        crate::merge_strategies::list::map(&mut self.secrets, other.secrets, &[|lhs, rhs| lhs.name == rhs.name]);
     }
 }
 
