@@ -101,7 +101,7 @@ impl<T> DeepMerge for Box<T> where T: DeepMerge {
 
 impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
     fn merge_from(&mut self, other: Self) {
-        strategies::map::granular(self, other);
+        strategies::map::granular(self, other, V::merge_from);
     }
 }
 
@@ -134,7 +134,6 @@ pub mod strategies {
     ///
     /// These correspond to [`JSONSchemaProps.x-kubernetes-list-type`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#jsonschemaprops-v1-apiextensions-k8s-io).
     pub mod list {
-        use crate::DeepMerge;
         use private::AsOptVec;
 
         mod private {
@@ -180,15 +179,19 @@ pub mod strategies {
         /// The list is treated as a map.
         ///
         /// Any items with matching keys will be deep-merged. Any items that are found in `new` but not `old` will be appended to `old`.
-        pub fn map<V>(old: &mut V, new: V, key_comparators: &[fn(&V::Item, &V::Item) -> bool])
+        pub fn map<V>(
+            old: &mut V,
+            new: V,
+            key_comparators: &[fn(&V::Item, &V::Item) -> bool],
+            merge_item: fn(&mut V::Item, V::Item),
+        )
         where
             V: AsOptVec,
-            V::Item: DeepMerge,
         {
             if let Some(old) = old.as_mut_opt() {
                 for new_item in new.into_opt().into_iter().flatten() {
                     if let Some(old_item) = old.iter_mut().find(|old_item| key_comparators.iter().all(|f| f(&new_item, old_item))) {
-                        old_item.merge_from(new_item);
+                        merge_item(old_item, new_item);
                     } else {
                         old.push(new_item);
                     }
@@ -219,7 +222,6 @@ pub mod strategies {
     pub mod map {
         use std::collections::btree_map::Entry;
 
-        use crate::DeepMerge;
         use private::AsOptMap;
 
         mod private {
@@ -265,17 +267,16 @@ pub mod strategies {
 
 
         /// Each value will be merged separately.
-        pub fn granular<M>(old: &mut M, new: M)
+        pub fn granular<M>(old: &mut M, new: M, merge_value: fn(&mut M::Value, M::Value))
         where
             M: AsOptMap,
             M::Key: Ord,
-            M::Value: DeepMerge,
         {
             if let Some(old) = old.as_mut_opt() {
                 for (k, new_v) in new.into_opt().into_iter().flatten() {
                     match old.entry(k) {
                         Entry::Vacant(entry) => { entry.insert(new_v); }
-                        Entry::Occupied(entry) => entry.into_mut().merge_from(new_v),
+                        Entry::Occupied(entry) => merge_value(entry.into_mut(), new_v),
                     }
                 }
             } else {

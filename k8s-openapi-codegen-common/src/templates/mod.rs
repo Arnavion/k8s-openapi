@@ -63,9 +63,11 @@ pub(crate) enum MergeType {
 	List {
 		strategy: crate::swagger20::KubernetesListType,
 		keys: Vec<String>,
+		item_merge_type: Box<MergeType>,
 	},
 	Map {
 		strategy: crate::swagger20::KubernetesMapType,
+		value_merge_type: Box<MergeType>,
 	},
 }
 
